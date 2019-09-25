@@ -1,0 +1,47 @@
+# NOTE: Copied from "espoon-voltti/kulta-service", mainly serves as an example,
+# an is not currently directly usable!
+
+# Example Dockerfile for distributing the app and running it in test, staging, and production
+
+# NOTE: There is no guarantee that latest is actually the latest image in the registry. Thus, remember to always
+# override BASE_IMAGE_VERSION with a commit hash in the voltti-dockerfiles repository.
+ARG BASE_IMAGE_VERSION=latest
+
+# Pull Voltti's OpenJDK base image
+FROM 307238562370.dkr.ecr.eu-west-1.amazonaws.com/voltti/flyway:${BASE_IMAGE_VERSION}
+
+# Define the build and commit args and set default values for them.
+# These are used for tracing the image to the commit and build from which the image has been built.
+ARG build=none
+ARG commit=none
+ENV APP_BUILD $build
+ENV APP_COMMIT $commit
+
+# Create labels for build and commit and populate them from the args
+LABEL fi.espoo.build=${build} \
+      fi.espoo.commit=${commit}
+
+USER root
+RUN set -eux \
+    && apt-get update && apt-get -y install \
+       wget \
+    && rm -rf /var/lib/apt/lists/*
+
+USER ${USERNAME}
+
+ENV USERNAME voltti
+ENV SOURCE_DIR /usr/src/app
+
+WORKDIR ${SOURCE_DIR}
+
+USER ${USERNAME}
+
+# Copy entrypoint to the parent directory, so that we can change its permissions
+COPY --chown=voltti:voltti entrypoint-dist.sh ..
+RUN chmod +x ../entrypoint-dist.sh
+
+# Copy the app in layers with the application files that change the most as last
+COPY --chown=voltti:voltti docker-app .
+
+# Use the entrypoint-dist.sh script as the exec entrypoint (adds support for passing Java options)
+ENTRYPOINT ["/usr/src/entrypoint-dist.sh"]

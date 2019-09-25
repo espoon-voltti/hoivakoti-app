@@ -1,0 +1,208 @@
+# NOTE: This currently serves mainly as an example, and might not be
+# directly usable.
+
+version: 2
+
+aliases:
+
+  - &workspace_root ~/repo
+
+  - &defaults
+    working_directory: *workspace_root
+
+  - &build_container_config
+    <<: *defaults
+    docker:
+      - image: circleci/openjdk:8-jdk
+
+  - &dist_image_config
+    docker:
+      - image: 307238562370.dkr.ecr.eu-west-1.amazonaws.com/voltti/builder-aws:cbb7b6ff87b20024b50febb86690b4b413dd8497
+    working_directory: *workspace_root
+    environment:
+      DOCKER_IMAGE_NAME: 307238562370.dkr.ecr.eu-west-1.amazonaws.com/[[PROJECT]]/service
+      BASE_IMAGE_VERSION: cbb7b6ff87b20024b50febb86690b4b413dd8497
+
+  - &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+  - &repo_cache_key v1-repo-{{ .Branch }}-{{ .Revision }}
+
+  - &restore_repo
+    restore_cache:
+      keys:
+        - *repo_cache_key
+
+  - &deps_cache_key >-
+    v1-deps
+    {{ checksum "build.gradle.kts" }}
+    {{ checksum "settings.gradle.kts" }}
+
+  - &restore_deps
+    restore_cache:
+      keys:
+        - *deps_cache_key
+
+  - &deploy
+    docker:
+      - image: 307238562370.dkr.ecr.eu-west-1.amazonaws.com/voltti/builder-aws:cbb7b6ff87b20024b50febb86690b4b413dd8497
+    steps:
+      - run:
+          name: Deploy to $TARGET_ENV
+          environment:
+            SERVICE_NAME: [[PROJECT]]-service
+          command: |
+            cd terraform
+            ecs-deploy
+
+jobs:
+  checkout_code:
+    <<: *build_container_config
+    steps:
+      - *restore_repo
+      - checkout
+      - save_cache:
+          key: *repo_cache_key
+          paths:
+            - .
+
+  build:
+    <<: *build_container_config
+    steps:
+      - *restore_repo
+      - *restore_deps
+      - run: ./gradlew --no-daemon build prepareForDockerDist -x ktlintMainSourceSetCheck -x ktlintTestSourceSetCheck -x test
+      - save_cache:
+          key: *deps_cache_key
+          paths:
+            - *gradle_user_home
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./docker-app
+            - ./*/build
+            - ./*/*/build
+
+  lint:
+    <<: *build_container_config
+    steps:
+      - *attach_workspace
+      - *restore_repo
+      - *restore_deps
+      - run: ./gradlew --no-daemon ktlintCheck
+
+  test:
+    <<: *test_container_config
+    steps:
+      - *attach_workspace
+      - *restore_repo
+      - *restore_deps
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: psql -U postgres -h localhost -p 5432 -c "CREATE USER [[PROJECT]]_service_application WITH PASSWORD 'secret';"
+      - run: ./gradlew --no-daemon flywayMigrate
+      - run: ./gradlew --no-daemon test --stacktrace
+
+  dockerize:
+    <<: *dist_image_config
+    steps:
+      - *attach_workspace
+      - *restore_repo
+      - setup_remote_docker
+      - run:
+          name: Docker login to ECR
+          command: ecr-login
+      - run:
+          name: Build docker image
+          command: |
+            docker build \
+              -f Dockerfile.dist \
+              -t $DOCKER_IMAGE_NAME \
+              --build-arg build=$CIRCLE_BUILD_NUM \
+              --build-arg commit=$CIRCLE_SHA1 \
+              --build-arg BASE_IMAGE_VERSION=$BASE_IMAGE_VERSION \
+              .
+      - run:
+          name: Tag and push docker image
+          command: |
+            docker tag ${DOCKER_IMAGE_NAME} "${DOCKER_IMAGE_NAME}:${CIRCLE_SHA1}"
+            docker tag ${DOCKER_IMAGE_NAME} "${DOCKER_IMAGE_NAME}:${CIRCLE_BUILD_NUM}"
+            [[ ${CIRCLE_TAG} ]] && docker tag ${DOCKER_IMAGE_NAME} "${DOCKER_IMAGE_NAME}:${CIRCLE_TAG}"
+            docker push ${DOCKER_IMAGE_NAME}
+
+  deploy_dev:
+    <<: *deploy
+    environment:
+      TARGET_ENV: dev
+
+  deploy_test:
+    <<: *deploy
+    environment:
+      TARGET_ENV: test
+
+  deploy_staging:
+    <<: *deploy
+    environment:
+      TARGET_ENV: staging
+
+  deploy_prod:
+    <<: *deploy
+    environment:
+      TARGET_ENV: prod
+
+workflows:
+  version: 2
+  build_test_and_deploy:
+    jobs:
+      - checkout_code
+      - build:
+          requires:
+            - checkout_code
+      - lint:
+          requires:
+            - build
+      - test:
+          requires:
+            - build
+      - dockerize:
+          requires:
+            - lint
+            - test
+      - deploy_dev:
+          requires:
+            - dockerize
+          filters:
+            branches:
+              only: master
+      - deploy_test:
+          requires:
+            - dockerize
+          filters:
+            branches:
+              only: master
+      - approve_staging_deploy:
+          type: approval
+          requires:
+            - deploy_test
+          filters:
+            branches:
+              only: master
+      - deploy_staging:
+          requires:
+            - approve_staging_deploy
+          filters:
+            branches:
+              only: master
+      - approve_prod_deploy:
+          type: approval
+          requires:
+            - deploy_staging
+          filters:
+            branches:
+              only: master
+      - deploy_prod:
+          requires:
+            - approve_prod_deploy
+          filters:
+            branches:
+              only: master
