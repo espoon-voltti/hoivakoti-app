@@ -1,4 +1,4 @@
-# [[PROJECT]]-app
+# hoivakoti-app
 
 Example Voltti application repository. Needs modification before using.
 

@@ -1,0 +1,101 @@
+import * as Knex from 'knex';
+import * as uuidv4 from 'uuid/v4';
+
+const options: object = {
+	client: 'postgres',
+	connection: {
+		user: 'postgres',
+		password: 'postgres',
+		host: 'postgres',
+	}
+}
+const knex = new (Knex as any)(options);
+
+knex.schema.hasTable('NurseryHomes').then(async (exists: boolean) => {
+
+	if (exists)
+		await knex.schema.dropTable('NurseryHomes');
+
+	//var count = await knex('pg_class').select("reltuples").where({relname: "NurseryHomes"});
+	//console.log(count);
+
+	knex.schema.createTable('NurseryHomes', (table: any) => {
+		table.uuid('id');
+		table.string('name')
+		table.string('summary')
+	}).then(async () => {
+		console.log("Created Nursery table.");
+
+		const id = await InsertNurseryHomeToDB("Leppävaaran Hoiva ja Turva", "Puutteita hoitohenkilökunnan määrässä; vakava vesivahinko; ikkunat eristämättömiä. Ruoka hyvää, suosittelen!");
+		await InsertNurseryHomeToDB("Vaikea Hoivakoti Ry", "Kaikki tarkastukset tip-top. Tosi hyvä pössis. Ruoka vähän mautonta, en suosittele muuttoa.");
+		await InsertNurseryHomeToDB("Kaskissalmen Puutarha", "Rakenteista puuttuu muunmuassa katto ja seinät. Oma teltta oltava mukana. HUOM! Puutiaisaivokuumetta havaittu!");
+	
+		await SetUpRatingsTable(id);
+	});
+
+	/*.catch((err: any) => { console.log(err); throw err })
+		.finally(() => {
+			knex.destroy();
+	});*/
+})
+
+async function SetUpRatingsTable(id_for_testing: string)
+{
+	knex.schema.hasTable('Ratings').then(async (exists: boolean) => {
+
+		if (exists)
+			await knex.schema.dropTable('Ratings');
+
+		//var count = await knex('pg_class').select("reltuples").where({relname: "NurseryHomes"});
+		//console.log(count);
+
+		knex.schema.createTable('Ratings', (table: any) => {
+			table.uuid('id');
+			table.uuid('nurseryhome');
+			table.integer('time');
+			table.string('ip');
+			table.integer('rating');
+		}).then(async () => {
+			console.log("Created Ratings table.");
+
+			await InsertNurseryHomeRatingToDB(id_for_testing, 2);
+		});
+
+		/*.catch((err: any) => { console.log(err); throw err })
+			.finally(() => {
+				knex.destroy();
+		});*/
+	});
+}
+
+async function InsertNurseryHomeToDB(name: string, summary: string)
+{
+	const uuid = uuidv4();
+	await knex('NurseryHomes').insert({id: uuid, name: name, summary: summary});
+
+	return uuid;
+}
+
+async function InsertNurseryHomeRatingToDB(nursery_id: string, rating: number)
+{
+	const uuid = uuidv4();
+	const seconds = Math.round(new Date().getTime() / 1000);
+	await knex('Ratings').insert({id: uuid, nurseryhome: nursery_id, time: seconds, rating: rating});
+
+	return uuid;
+}
+
+async function GetAllNurseryHomes()
+{
+	return await knex.select().table('NurseryHomes');
+}
+
+async function GetAllRatings()
+{
+	return await knex.select().table('Ratings');
+}
+
+export {
+	InsertNurseryHomeToDB,
+	GetAllNurseryHomes,
+	GetAllRatings};
