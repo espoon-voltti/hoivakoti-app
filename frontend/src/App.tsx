@@ -11,7 +11,7 @@ const App: React.FC = () => {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<img src={process.env.PUBLIC_URL + "hoivakodit-logo-large.png"}/>
+				<img id="logo-large" src={process.env.PUBLIC_URL + "hoivakodit-logo-large.png"}/>
 			</header>
 
 			<NurseryHomes/>

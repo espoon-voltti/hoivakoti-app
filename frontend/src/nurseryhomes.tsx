@@ -13,7 +13,6 @@ function NurseryHomes () {
 		axios.get('http://localhost:3000/nursing-homes')
 			.then(function (response: any) {
 				// handle success
-				console.log(response.data);
 				SetNurseryHomes(response.data);
 			})
 			.catch((error: any) => console.log(error.message));
@@ -21,13 +20,16 @@ function NurseryHomes () {
 		axios.get('http://localhost:3000/ratings')
 			.then(function (response: any) {
 				// handle success
-				console.log(response.data);
 				SetRatings(response.data);
 			})
 			.catch((error: any) => console.log(error.message));
 	}, []);
 
-	let nurseryhome_components: object[] = nurseryhomes.map((nurseryhome: object) => <NurseryHomeSmall nurseryhome={nurseryhome}/>);
+	let nurseryhome_components: object[] = nurseryhomes.map((nurseryhome: any) => 
+		{
+			const rating: any = (ratings as any)[nurseryhome.id];
+			return <NurseryHomeSmall nurseryhome={nurseryhome} rating={rating}/>
+		});
 
 	return (
 		<div>

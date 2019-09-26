@@ -23,7 +23,7 @@ async function ListRatings(ctx: any)
 
 	ratings.forEach((rating: any) =>
 	{
-		const id = rating.id;
+		const id = rating.nurseryhome;
 
 		if (!(id in ratings_as_object))
 		{
