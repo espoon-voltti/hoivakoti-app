@@ -3,13 +3,13 @@ import './nurseryhome-small.css';
 
 const nursery_home_context = React.createContext({});
 
-type NurseryHomeSmallProps = {
+type NurseryHomeProps = {
   nurseryhome: any,
   rating: any,
   expand_callback: (id: string) => void
 }
 
-function NurseryHomeSmall({nurseryhome, rating, expand_callback}: NurseryHomeSmallProps) {
+function NurseryHomeLarge({nurseryhome, rating, expand_callback}: NurseryHomeProps) {
 	console.log(nurseryhome.name);
 	console.log(rating);
 
@@ -28,9 +28,12 @@ function NurseryHomeSmall({nurseryhome, rating, expand_callback}: NurseryHomeSma
 			<p className="nurseryhome-container-child" id="nurseryhome-summary">{nurseryhome && nurseryhome.summary}</p>
 			{rating_dom}
 			{expand_dom}
+			Lots of shit here.
+			<p></p>
+			some more stuff.
 		</div>
 	);
 }
 //			<p className="nurseryhome-container-child" id="nurseryhome-summary">{this.nurseryhome.summary}</p>
 
-export {NurseryHomeSmall};
+export {NurseryHomeLarge};
