@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import {NurseryHomes} from './nurseryhomes'
+import {Feedback} from './feedback'
 import { NurseryHomeProvider } from './nurseryhomes-context'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -34,6 +35,7 @@ const App: React.FC = () => {
 				<Route exact path="/" component={NurseryHomes} />
 				<Route path="/about" component={NurseryHomes} />
 				<Route path="/topics" component={NurseryHomes} />
+				<Route path="/palaute" component={Feedback} />
 			  </div>
 			</Router>
 		</div>

@@ -3,8 +3,9 @@
   width: 100px;
 }
 
-.nurseryhome-container {
-  display: flex;  
+.nurseryhome-expanded-container {
+  display: grid;
+  grid-template-columns: 10% 25% 25% 25%;
   flex-flow: row wrap;
   flex-grow: 1;
   text-align: center;
