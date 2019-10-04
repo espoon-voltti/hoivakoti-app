@@ -3,7 +3,8 @@ import * as Router from '@koa/router';
 import {
 	AddNursingHome,
 	ListNursingHomes,
-	ListRatings} from "./controllers";
+	ListRatings,
+	NursingHomesFromCSV} from "./controllers";
 
 const router = new Router();
 
@@ -19,8 +20,16 @@ router.post('/nursing-homes', async (ctx) => {
 	ctx.body = await AddNursingHome(ctx);
 });
 
+router.post('/nursing-homes/csv', async (ctx) => {
+	ctx.body = await NursingHomesFromCSV(ctx);
+});
+
 router.get('/ratings', async (ctx) => {
 	ctx.body = await ListRatings(ctx);
+});
+
+router.get('*', async (ctx) => {
+	ctx.body = ctx.url;
 });
 
 const routes = router.routes();

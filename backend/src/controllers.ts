@@ -3,9 +3,14 @@ import {
 	GetAllNurseryHomes,
 	GetAllRatings} from "./models";
 
+const parse = require('csv-parse/lib/sync')
+
 async function AddNursingHome(ctx: any)
 {
-	await InsertNurseryHomeToDB(ctx.request.body.name, ctx.request.body.summary);
+	await InsertNurseryHomeToDB({name: ctx.request.body.name,
+		owner: ctx.request.body.name,
+		address: ctx.request.body.address,
+		location: ctx.request.body.location});
 	return "inserted";
 }
 
@@ -46,7 +51,31 @@ async function ListRatings(ctx: any)
 	return ratings_as_object;
 }
 
+async function NursingHomesFromCSV(ctx: any)
+{
+	const records = parse(ctx.request.body.csv, {
+		columns: true,
+		skip_empty_lines: true,
+		skip_lines_with_empty_values: true,
+		delimiter: ';'
+	})
+
+	records.map(async (record: any) =>
+	{
+		await InsertNurseryHomeToDB({name: record.Hoivakoti,
+			owner: record.Yritys,
+			address: record.Katuosoite,
+			location: record.Alue,
+			www: record.www,
+			ara: record.ARA ? record.ARA : false
+		});
+	});
+
+	return (records)
+}
+
 export {
 	AddNursingHome,
 	ListNursingHomes,
-	ListRatings};
+	ListRatings,
+	NursingHomesFromCSV};

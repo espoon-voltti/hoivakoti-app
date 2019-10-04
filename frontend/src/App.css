@@ -1,21 +1,48 @@
-.App {
+.app {
 
 }
 
-.App-header {
-  background-color: #ffffff;
-  min-height: 20vh;
-  display: flex;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.app-header {
+	margin-left: 35px;
+	margin-top: 25px;
+	display: flex;
+	box-shadow:  ;
 }
 
-.App-link {
-  color: #09d3ac;
+#app-name {
+	color: rgb(110, 110, 110);
+	font-size: 36px;
+	font-family: Montserrat-Light;
+	font-weight: 300;
+	box-shadow: ;
 }
 
-#logo-large {
-  vertical-align: top;
-  width: 400px;
-  height: 120px;
+#app-links {
+	box-shadow:  ;
+	color: rgb(110, 110, 110);
+	font-family: Montserrat-Regular;
+	font-size: 15px;
+	font-weight: normal;
+	letter-spacing: 1px;
+	text-align: center;
+	vertical-align: middle;
+	margin-left: 10px;
+	line-height: 40px;
+}
+
+#app-links > a {
+	box-shadow:  ;
+	color: rgb(110, 110, 110);
+	font-family: Montserrat-Regular;
+	font-size: 15px;
+	font-weight: normal;
+	letter-spacing: 1px;
+	text-align: center;
+	vertical-align: middle;
+	padding-left: 20px;
+}
+
+#app-banner {
+	margin-top: 20px;
+	width: 100%;
 }

@@ -1,13 +1,15 @@
 #nurseryhome-review-image {
-  vertical-align: top;
-  width: 100px;
+	vertical-align: top;
 }
 
 .nurseryhome-container {
-  display: flex;  
-  flex-flow: row wrap;
-  flex-grow: 1;
-  text-align: center;
+	display: flex;  
+	flex-flow: row wrap;
+	flex-grow: 1;
+	text-align: left;
+	margin: 10px;
+	border: 1px solid gray;
+
 }
 
 .nurseryhome-container-child {
@@ -20,4 +22,13 @@
 
 #nurseryhome-summary {
 
+}
+
+#nurseryhome-address {
+	margin-top: auto;
+}
+
+#nurseryhome-info {
+	display: flex;
+	flex-direction: column;
 }
