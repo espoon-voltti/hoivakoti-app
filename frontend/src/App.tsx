@@ -5,6 +5,7 @@ import {Feedback} from './feedback'
 import { NurseryHomeProvider } from './nurseryhomes-context'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Button } from "reakit/Button";
+import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
 
 const App: React.FC = () => {
 	/*await fetch('localhost:3000/nursing-homes')
@@ -13,6 +14,10 @@ const App: React.FC = () => {
 		// 				<img id="logo-large" src={process.env.PUBLIC_URL + "hoivakodit-logo-large.png"}/>
 
 		//<Button>Button</Button>;
+
+	const Map = ReactMapboxGl({
+		accessToken: "pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg"
+	});
 
 	return (
 		<div className="app">
@@ -34,8 +39,8 @@ const App: React.FC = () => {
 				<img width="100%" src={process.env.PUBLIC_URL + "person-elderly.jpg"}/>
 			</div>
 
-			<div>
 
+			<div>
 				<Route exact path="/" component={NurseryHomes} />
 				<Route path="/about" component={NurseryHomes} />
 				<Route path="/topics" component={NurseryHomes} />

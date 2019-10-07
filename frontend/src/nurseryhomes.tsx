@@ -12,7 +12,6 @@ function NurseryHomes () {
 
 	const OnExpanded = (id: string) => {
 		SetExpanded(id);
-		console.log(id)
 	};
 
 	useEffect(() => {
@@ -22,14 +21,14 @@ function NurseryHomes () {
 			// handle success
 			SetNurseryHomes(response.data);
 		})
-		.catch((error: any) => console.log(error.message));
+		.catch((error: any) => console.warn(error.message));
 
 		axios.get('http://localhost:3000/ratings')
 		.then(function (response: any) {
 			// handle success
 			SetRatings(response.data);
 		})
-		.catch((error: any) => console.log(error.message));
+		.catch((error: any) => console.warn(error.message));
 	}, []);
 
 	let nurseryhome_components: object[] = nurseryhomes.map((nurseryhome: any) => 
