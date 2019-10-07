@@ -1,44 +1,5 @@
 # hoivakoti-app
 
-Example Voltti application repository. Needs modification before using.
-
-Contains:
-
-- Example CircleCI configuration
-    - Building Gradle apps
-    - Running tests with a PostgreSQL DB
-    - Terraform deploy to `dev`, `test`, `staging` and `prod` -- with gated approval
-- Terraform configuration and tooling for a simple ECS service
-- GitHub PR template
-
-## TEMPLATE INFORMATION
-
-This is the Voltti infra repository template.
-
-Usage:
-
-1. Select "Use this template" on this page to create a new repository
-1. Select all GitHub apps you'd like to use with this repository (at least CircleCI Checks)
-1. Remove this information block from the README
-1. Update all files and directories with your project name:
-
-        # NOTE: Replace $PROJECT with your project name
-        # Rename placeholder references in files
-        git grep --cached -Ilz '' | xargs -0 sed -e 's/\[\[PROJECT\]\]/$PROJECT/g'
-
-1. Configure the GitHub repository settings, at least:
-     - Branch protection rules
-     - Access to `Voltti*` groups
-          - Voltti Admins: admin access
-          - Voltti Developers: write (or maintain) access
-          - Voltti Readers: read access
-     - "Automatically delete head branches"
-
-**************************************************
-**************************************************
-**************************************************
-**************************************************
-
 ## Requirements
 
 * Terraform 0.11.8 (recommended tool: [Terraform version manager](https://github.com/tfutils/tfenv))
@@ -46,16 +7,15 @@ Usage:
 
 ## Development
 
-### Infra and deployment
+### CI setup
 
-1. Go to module directory to be deployed, for example _terraform_
-2. If not done previously do the setup: `terraform init`
-3. To see available workspaces: `terraform workspace list`
-4. To select workspace _dev_: `terraform workspace select dev`
-5. To see the planned changes: `terraform plan`
-6. To apply the planned changes to AWS: `terraform apply`
+- CircleCI workflows:
+     - Build and persist frontend artifacts in S3
+     - Build and publish backend Docker image to Voltti Docker registry (ECR)
+- Deployments are done using CircleCI pipelines in https://github.com/espoon-voltti/hoivakoti-infra
+     - The project's CI user has a personal API token created an stored in Parameter Store that's
+          attached to the CI workflow as `CIRCLECI_TOKEN`
 
-Remember to commit and push changes to this repository
 
 ### Fix forward
 

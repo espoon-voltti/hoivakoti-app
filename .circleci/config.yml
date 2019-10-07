@@ -1,25 +1,212 @@
-jobs:
-  test:
+version: 2.1
+
+aliases:
+  - &workspace_root ~/repo
+  - &repo_cache_key v1-repo-{{ .Branch }}-{{ .Revision }}
+  - &build_image circleci/node:12
+
+  - &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+executors:
+  build_executor:
+    working_directory: *workspace_root
     docker:
-      - image: circleci/node:12
+      - image: *build_image
+
+  test_executor:
+    working_directory: *workspace_root
+    docker:
+      - image: *build_image
+      - image: postgres:11.2-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: hoivakoti_service
+    environment:
+      DATABASE_HOST: localhost
+      DATABASE_PORT: "5432"
+      DATABASE_USER: postgres
+      DATABASE_PASSOWRD: secret
+      DATABASE_NAME: hoivakoti_service
+
+  dist_build_executor:
+    working_directory: *workspace_root
+    docker:
+      - image: 307238562370.dkr.ecr.eu-west-1.amazonaws.com/voltti/builder-aws:master # Contains helper scripts for Voltti Docker registry
+
+
+commands:
+  restore_repo:
+    description: Restore repository from cache
+    steps:
+      - restore_cache:
+          keys:
+            - *repo_cache_key
+
+  restore_yarn_cache:
+    parameters:
+      package:
+        description: Package (i.e. subdirectory) name
+        type: string
+    steps:
+      - restore_cache:
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - yarn-packages-v1-<< parameters.package >>-{{ .Branch }}-{{ checksum "<< parameters.package >>/yarn.lock" }}
+            - yarn-packages-v1-<< parameters.package >>-{{ .Branch }}-
+            - yarn-packages-v1-<< parameters.package >>-
+
+  install_package_deps:
+    description: Configure Voltti npm registry for package
+    parameters:
+      package:
+        description: Package (i.e. subdirectory) name
+        type: string
+    steps:
+      - restore_yarn_cache:
+          package: << parameters.package >>
+      - run:
+          name: Add .npmrc
+          command: ./.circleci/add_npmrc.sh
+      - run:
+          working_directory: << parameters.package >>
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-v1-<< parameters.package >>-{{ .Branch }}-{{ checksum "<< parameters.package >>/yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./<< parameters.package >>/node_modules
+
+jobs:
+  # Separated to avoid extraneous checkouts in next jobs
+  checkout_code:
+    executor: build_executor
     steps:
       - checkout
+      - save_cache:
+          key: *repo_cache_key
+          paths:
+            - .
+
+  test_backend:
+    executor: test_executor
+    steps:
+      - restore_repo
+      - install_package_deps:
+          package: backend
       - run:
-          working_directory:  ~/project/backend
-          command: yarn install
-        
-      - run:
-          working_directory:  ~/project/backend
+          working_directory: backend
           command: yarn test
+
+  test_frontend:
+    executor: test_executor
+    steps:
+      - restore_repo
+      - install_package_deps:
+          package: frontend
       - run:
-          working_directory:  ~/project/frontend-react
-          command: yarn install
-        
-      - run:
-          working_directory:  ~/project/frontend-react
+          working_directory: frontend
           command: yarn test
+
+  build_and_publish_backend:
+    executor: dist_build_executor
+    environment:
+      DOCKER_IMAGE_NAME: hoivakoti/service
+    steps:
+      - restore_repo
+      - setup_remote_docker # Creates a remote Docker environment configured to execute Docker commands
+      - run:
+          name: Docker login to ECR
+          command: ecr-login
+      - run:
+          name: Build docker image
+          working_directory: backend
+          command: |
+            docker build \
+              -f Dockerfile \
+              -t "$DOCKER_IMAGE_NAME" \
+              --build-arg build="$CIRCLE_BUILD_NUM" \
+              --build-arg commit="$CIRCLE_SHA1" \
+              .
+      - run:
+          name: Tag and push docker image
+          command: ecr-push "$DOCKER_IMAGE_NAME"
+
+  build_frontend:
+    executor: build_executor
+    steps:
+      - restore_repo
+      - *attach_workspace
+      - run:
+          working_directory: frontend
+          command: yarn build
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./frontend/build
+
+  publish_frontend:
+    executor: dist_build_executor
+    environment:
+      PROJECT: hoivakoti/frontend
+      ARTIFACT: build
+    steps:
+      - restore_repo
+      - *attach_workspace
+      - run:
+          name: Publish to S3
+          working_directory: frontend
+          command: |
+            export VERSION="$CIRCLE_SHA1"
+            persist-artifact
+
+  trigger_deploy_pipeline:
+    executor: build_executor
+    steps:
+      - restore_repo
+      - run:
+          name: Trigger deploy pipeline via CircleCI API
+          command: ./.circleci/trigger_deploy.sh
+
 workflows:
   version: 2
-  build_and_test:
+  build_test_and_publish:
     jobs:
-      - test
+      - checkout_code
+
+      - test_backend:
+          context: org-global # Provides secrets to environment
+          requires:
+            - checkout_code
+      - test_frontend:
+          context: org-global
+          requires:
+            - checkout_code
+
+      - build_and_publish_backend:
+          context: org-global
+          requires:
+            - test_backend
+
+      - build_frontend:
+          context: org-global
+          requires:
+            - test_frontend
+      - publish_frontend:
+          context: org-global
+          requires:
+            - build_frontend
+
+      - trigger_deploy_pipeline:
+          context: org-global
+          requires:
+            - build_and_publish_backend
+            - publish_frontend
+          filters:
+            branches:
+              only: master
