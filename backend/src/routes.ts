@@ -4,7 +4,7 @@ import {
 	AddNursingHome,
 	ListNursingHomes,
 	ListRatings,
-	NursingHomesFromCSV} from "./controllers";
+	AddNursingHomesFromCSV} from "./controllers";
 
 const router = new Router();
 
@@ -21,7 +21,7 @@ router.post('/nursing-homes', async (ctx) => {
 });
 
 router.post('/nursing-homes/csv', async (ctx) => {
-	ctx.body = await NursingHomesFromCSV(ctx);
+	ctx.body = await AddNursingHomesFromCSV(ctx);
 });
 
 router.get('/ratings', async (ctx) => {

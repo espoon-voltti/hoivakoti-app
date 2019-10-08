@@ -1,5 +1,9 @@
 import * as Knex from 'knex';
 import * as uuidv4 from 'uuid/v4';
+import fs = require('fs');
+
+import {
+	NursingHomesFromCSV} from "./services";
 
 const options: object = {
 	client: 'postgres',
@@ -37,13 +41,16 @@ knex.schema.hasTable('NurseryHomes').then(async (exists: boolean) => {
 		table.boolean('ara');
 		table.string('www');
 	}).then(async () => {
-		console.log("Created Nursery table.");
-
 		//const id = await InsertNurseryHomeToDB("Leppävaaran Hoiva ja Turva", "Puutteita hoitohenkilökunnan määrässä; vakava vesivahinko; ikkunat eristämättömiä. Ruoka hyvää, suosittelen!");
 		//await InsertNurseryHomeToDB("Vaikea Hoivakoti Ry", "Kaikki tarkastukset tip-top. Tosi hyvä pössis. Ruoka vähän mautonta, en suosittele muuttoa.");
 		//await InsertNurseryHomeToDB("Kaskissalmen Puutarha", "Rakenteista puuttuu muunmuassa katto ja seinät. Oma teltta oltava mukana. HUOM! Puutiaisaivokuumetta havaittu!");
-	
+
 		//await SetUpRatingsTable(id);
+
+		console.log("Created Nursery table.");
+		const nurseryhome_contents = fs.readFileSync('data/hoivakodit.csv', 'utf8');
+
+		await NursingHomesFromCSV(nurseryhome_contents);
 	});
 
 	/*.catch((err: any) => { console.log(err); throw err })
