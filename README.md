@@ -13,7 +13,8 @@
      - Build and persist frontend artifacts in S3
      - Build and publish backend Docker image to Voltti Docker registry (ECR)
 - Deployments are done using CircleCI pipelines in https://github.com/espoon-voltti/hoivakoti-infra
-     - The project's CI user has a personal API token created an stored in Parameter Store that's
+     - The project's CI user has write-access to `hoivakoti-infra`
+     - The user has a personal API token created an stored in Parameter Store that's
           attached to the CI workflow as `CIRCLECI_TOKEN`
 
 
