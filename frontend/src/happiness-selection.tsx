@@ -1,80 +1,46 @@
-import React, {useState, useEffect} from 'react';
-const axios = require('axios').default;
+import React, { useState, useEffect } from "react"
+const axios = require("axios").default
 
-function HappinessSelection (label: string) {
+function HappinessSelection(label: string) {
+	const [selection, SetSelection] = useState("")
 
-	const [selection, SetSelection] = useState("");
-
-	useEffect(() => {
-
-	}, []);
-
+	useEffect(() => {}, [])
 
 	const handleRadiochange = (event: any) => {
-		SetSelection(event.target.value);
+		SetSelection(event.target.value)
 	}
 
 	return (
 		<div>
 			<form>
-			<label>
-			{label}
-			</label>
+				<label>{label}</label>
 				<label>
-					<input
-					type="radio"
-					value="0"
-					checked={selection === "0"}
-					onChange={handleRadiochange}
-					/>
+					<input type="radio" value="0" checked={selection === "0"} onChange={handleRadiochange} />
 					Iloinen
 				</label>
 
 				<label>
-					<input
-					type="radio"
-					value="1"
-					checked={selection === "1"}
-					onChange={handleRadiochange}
-					/>
+					<input type="radio" value="1" checked={selection === "1"} onChange={handleRadiochange} />
 					Surullinen
 				</label>
 
-
 				<label>
-					<input
-					type="radio"
-					value="2"
-					checked={selection === "2"}
-					onChange={handleRadiochange}
-					/>
+					<input type="radio" value="2" checked={selection === "2"} onChange={handleRadiochange} />
 					Surullinen
 				</label>
 
-
 				<label>
-					<input
-					type="radio"
-					value="3"
-					checked={selection === "3"}
-					onChange={handleRadiochange}
-					/>
+					<input type="radio" value="3" checked={selection === "3"} onChange={handleRadiochange} />
 					Surullinen
 				</label>
 
-
 				<label>
-					<input
-					type="radio"
-					value="4"
-					checked={selection === "4"}
-					onChange={handleRadiochange}
-					/>
+					<input type="radio" value="4" checked={selection === "4"} onChange={handleRadiochange} />
 					Surullinen
 				</label>
 			</form>
 		</div>
-	);
+	)
 }
 
 /*
@@ -84,4 +50,4 @@ function HappinessSelection (label: string) {
 			</button>
 */
 
-export {HappinessSelection};
+export { HappinessSelection }

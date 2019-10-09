@@ -1,9 +1,9 @@
 import {
 	InsertNurseryHomeToDB,
 	GetAllNurseryHomes,
-	GetAllRatings} from "./models";
+	GetAllRatings} from "./models"
 
-const parse = require('csv-parse/lib/sync')
+const parse = require("csv-parse/lib/sync")
 
 async function NursingHomesFromCSV(csv: string)
 {
@@ -11,7 +11,7 @@ async function NursingHomesFromCSV(csv: string)
 		columns: true,
 		skip_empty_lines: true,
 		skip_lines_with_empty_values: true,
-		delimiter: ';'
+		delimiter: ";"
 	})
 
 	records.map(async (record: any) =>
@@ -22,10 +22,10 @@ async function NursingHomesFromCSV(csv: string)
 			location: record.Alue,
 			www: record.www,
 			ara: record.ARA ? record.ARA : false
-		});
-	});
+		})
+	})
 
 	return (records)
 }
 
-export {NursingHomesFromCSV};
+export {NursingHomesFromCSV}

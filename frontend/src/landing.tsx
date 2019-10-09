@@ -10,7 +10,7 @@ type NurseryHomeProps = {
 	expand_callback: (id: string) => void
 }
 
-function NurseryHomeLarge({ nurseryhome, rating, expand_callback }: NurseryHomeProps) {
+function Landing({ nurseryhome, rating, expand_callback }: NurseryHomeProps) {
 	console.log(nurseryhome.name)
 	console.log(rating)
 
@@ -58,4 +58,4 @@ function NurseryHomeLarge({ nurseryhome, rating, expand_callback }: NurseryHomeP
 }
 //			<p className="nurseryhome-container-child" id="nurseryhome-summary">{this.nurseryhome.summary}</p>
 
-export { NurseryHomeLarge }
+export { Landing }

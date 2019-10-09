@@ -1,34 +1,34 @@
-import React, {useState, useEffect} from 'react';
-import {HappinessSelection} from './happiness-selection'
+import React, { useState, useEffect } from "react"
+import { HappinessSelection } from "./happiness-selection"
 
-const axios = require('axios').default;
+const axios = require("axios").default
 
-function Feedback () {
-	const [text, SetText] = useState("");
-	const [radio, SetRadio] = useState("");
+function Feedback() {
+	const [text, SetText] = useState("")
+	const [radio, SetRadio] = useState("")
 
-	useEffect(() => {
-
-	}, []);
+	useEffect(() => {}, [])
 
 	const handleSubmit = (event: any) => {
-		console.log("Submitting");
-		event.preventDefault();
+		console.log("Submitting")
+		event.preventDefault()
 	}
 	const handleChange = (event: any) => {
-		SetText(event.target.value);
+		SetText(event.target.value)
 	}
 
 	const handleRadiochange = (event: any) => {
-		SetRadio(event.target.value);
+		SetRadio(event.target.value)
 	}
 
-	const happiness_ratings = {"cleanliness": HappinessSelection("Siisteys"),
-		"staff": HappinessSelection("Henkilökunta"),
-		"food": HappinessSelection("Ruoka"),
-		"atmosphere": HappinessSelection("Tunnelma")};
+	const happiness_ratings = {
+		cleanliness: HappinessSelection("Siisteys"),
+		staff: HappinessSelection("Henkilökunta"),
+		food: HappinessSelection("Ruoka"),
+		atmosphere: HappinessSelection("Tunnelma")
+	}
 
-	const ratings_dom = Object.values(happiness_ratings);
+	const ratings_dom = Object.values(happiness_ratings)
 
 	return (
 		<div>
@@ -41,7 +41,7 @@ function Feedback () {
 				{ratings_dom}
 			</form>
 		</div>
-	);
+	)
 }
 
 /*
@@ -51,4 +51,4 @@ function Feedback () {
 			</button>
 */
 
-export {Feedback};
+export { Feedback }
