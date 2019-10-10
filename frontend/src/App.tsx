@@ -2,9 +2,11 @@ import React from "react"
 import "./App.css"
 import { NurseryHomes } from "./nurseryhomes"
 import { Feedback } from "./feedback"
+import { Landing } from "./landing"
 import { NurseryHomeProvider } from "./nurseryhomes-context"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import { Button } from "reakit/Button"
+import { Provider, Button } from "reakit";
+import * as system from "reakit-system-bootstrap";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 
 const App: React.FC = () => {
@@ -20,14 +22,17 @@ const App: React.FC = () => {
 			"pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg"
 	})
 
+	// 						<Link to="/palaute?id=985507e2-735f-48a9-a941-75b38f0e4adb">Hoivakodit</Link>
 	return (
+		    <Provider unstable_system={system}>
+
 		<div className="app">
 			<Router>
 				<header className="app-header">
-					<div id="app-name">Espoon Hoivakodit</div>
+					<div id="app-name"><Link to="/">Espoon Hoivakodit</Link></div>
 
 					<div id="app-links">
-						<Link to="/palaute?id=985507e2-735f-48a9-a941-75b38f0e4adb">Hoivakodit</Link>
+						<Link to="/hoivakodit">Hoivakodit</Link>
 						<Link to="/">Hakeminen</Link>
 						<Link to="/">Tietoa Palvelusta</Link>
 					</div>
@@ -38,13 +43,16 @@ const App: React.FC = () => {
 				</div>
 
 				<div>
-					<Route exact path="/" component={NurseryHomes} />
-					<Route path="/about" component={NurseryHomes} />
+					<Route exact path="/" component={Landing} />
+					<Route path="/hoivakodit" component={NurseryHomes} />
 					<Route path="/topics" component={NurseryHomes} />
 					<Route path="/palaute" component={Feedback} />
 				</div>
 			</Router>
 		</div>
+
+		    </Provider>
+
 	)
 }
 
