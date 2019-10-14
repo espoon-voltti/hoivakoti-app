@@ -43,7 +43,7 @@ function Landing() {
 					{menu_items_dom}
 				</select>
 				<Button onClick={() => {
-					const url = "/hoivakodit" + (selected_area >= 0 ? "&hk=" + selected_area : "");
+					const url = "/hoivakodit" + (selected_area >= 0 ? "?hk=" + selected_area : "");
 					history.push(url);
 				}}>
 					Näytä Hoivakodit

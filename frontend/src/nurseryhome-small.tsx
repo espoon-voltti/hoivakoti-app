@@ -10,9 +10,6 @@ type NurseryHomeSmallProps = {
 }
 
 function NurseryHomeSmall({ nurseryhome, rating, expand_callback }: NurseryHomeSmallProps) {
-	console.log(nurseryhome.name)
-	console.log(rating)
-
 	let rating_dom
 	if (rating)
 		rating_dom = (
@@ -39,6 +36,9 @@ function NurseryHomeSmall({ nurseryhome, rating, expand_callback }: NurseryHomeS
 				</p>
 				<p className="nurseryhome-container-child" id="nurseryhome-summary">
 					{nurseryhome && nurseryhome.owner}
+				</p>
+				<p className="nurseryhome-container-child" id="nurseryhome-location">
+					{nurseryhome && nurseryhome.location}
 				</p>
 				<p className="nurseryhome-container-child" id="nurseryhome-address">
 					{nurseryhome && nurseryhome.address}
