@@ -20,7 +20,7 @@ function Landing() {
 
 	const menu = useMenuState();
 
-	const areas = ["Espoon Keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
+	const areas = ["Espoon keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
 
 	let selected_area = -1;
 
