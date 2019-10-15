@@ -8,3 +8,8 @@
 	margin-right: 70px;
 	padding: 20px;
 }
+
+h2 {
+	color: grey;
+	font: 25px arial, sans-serif;
+}

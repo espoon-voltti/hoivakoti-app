@@ -50,11 +50,21 @@ function Landing() {
 				</Button>
 			</div>
 			<div id="info">
-				Miten saan tehostetun palveluasumisen? - tälle css:ään joku kiva header-stylaus
-				<br/>
-				Mitä on tehostettu blah blah?
-				<br/>
-				Palvelulupaus
+			<h2>Miten saan tehostetun palveluasumisen?</h2>
+			<p>
+			Elikkäs elikkäs.
+			</p>
+
+			<h2>Mitä on tehostettu palveluasuminen?</h2>
+			<p>
+			Elikkäs elikkäs.
+			</p>
+
+			<h2>Palvelulupaus</h2>
+			<p>
+			Elikkäs elikkäs.
+			</p>
+
 			</div>
 		</div>
 	)
