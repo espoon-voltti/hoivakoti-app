@@ -52,19 +52,21 @@ function NurseryHomes() {
 			.catch((error: any) => console.warn(error.message))
 	}, [])
 
-	const menu = useMenuState();
+	const area_select_menu = useMenuState();
+	const language_select_menu = useMenuState();
+	const ara_home_menu = useMenuState();
 
 	const area_select_dom: object[] = areas.map((area, index) => {
 		const name = "valitse " + area;
 		return	(
-			<MenuItem {...menu} name={name} value={index} onClick={(event: any) => {
+			<MenuItem {...area_select_menu} name={name} value={index} onClick={(event: any) => {
 					console.log(event.target.value);
 
 					const search_as_any:any = search as any;
 					search_as_any.hk = index;
 					SetSearch(search_as_any);
 
-					menu.hide();
+					area_select_menu.hide();
 				}
 			}>
 				{area}
@@ -85,9 +87,47 @@ function NurseryHomes() {
 
 	const filters_dom = (
 	<>
-		<MenuDisclosure {...menu}>{selected_area_text}</MenuDisclosure>
-		<Menu {...menu} aria-label="Valitse alue">
+		<MenuDisclosure {...area_select_menu}>{selected_area_text}</MenuDisclosure>
+		<Menu {...area_select_menu} aria-label="Valitse alue">
 			{area_select_dom}
+		</Menu>
+
+		<MenuDisclosure {...language_select_menu}>Palvelukieli: Ei väliä</MenuDisclosure>
+		<Menu {...language_select_menu} aria-label="Palvelukieli">
+			<MenuItem {...language_select_menu} name="Suomi" value="suomi" onClick={(event: any) => {
+					language_select_menu.hide();
+				}
+			}>
+				Suomi
+			</MenuItem>
+			<MenuItem {...language_select_menu} name="Ruotsi" value="ruotsi" onClick={(event: any) => {
+					language_select_menu.hide();
+				}
+			}>
+				Ruotsi
+			</MenuItem>
+			<MenuItem {...language_select_menu} name="Ei väliä" value="either" onClick={(event: any) => {
+					language_select_menu.hide();
+				}
+			}>
+				Ei väliä
+			</MenuItem>
+		</Menu>
+
+		<MenuDisclosure {...ara_home_menu}>Ara-Kohde</MenuDisclosure>
+		<Menu {...ara_home_menu} aria-label="Palvelukieli">
+			<MenuItem {...ara_home_menu} name="Ara" value="ara-yes" onClick={(event: any) => {
+					ara_home_menu.hide();
+				}
+			}>
+				Ara-Kohde
+			</MenuItem>
+			<MenuItem {...ara_home_menu} name="Ei väliä" value="either" onClick={(event: any) => {
+					ara_home_menu.hide();
+				}
+			}>
+				Ei väliä
+			</MenuItem>
 		</Menu>
 	</>
 	);
