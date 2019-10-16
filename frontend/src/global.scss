@@ -1,13 +1,6 @@
-$myColor: red;
+$header-color: grey;
 
-h1 {
-  color: $myColor;
-}
-
-a {
-  color: $myColor;
-}
-
-body {
-  color: $myColor;
+h2 {
+	color: $header-color;
+	font: 25px arial, sans-serif;
 }

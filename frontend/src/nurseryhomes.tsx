@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { NurseryHomeSmall } from "./nurseryhome-small"
 import { NurseryHomeLarge } from "./nurseryhome-large"
+import { MenuSelect, MenuSelectProps } from "./menu-select"
 import { useHistory } from "react-router-dom";
 import {
   useMenuState,
@@ -14,8 +15,7 @@ const queryString = require('query-string');
 const axios = require("axios").default
 
 function NurseryHomes() {
-	// Declare a new state variable, which we'll call "count"
-	const [count, setCount] = useState(0)
+
 	const [nurseryhomes, SetNurseryHomes] = useState([])
 	const [ratings, SetRatings] = useState({})
 	const [expanded, SetExpanded] = useState("")
@@ -56,13 +56,14 @@ function NurseryHomes() {
 	const language_select_menu = useMenuState();
 	const ara_home_menu = useMenuState();
 
+	const search_as_any:any = search as any;
+
 	const area_select_dom: object[] = areas.map((area, index) => {
 		const name = "valitse " + area;
 		return	(
 			<MenuItem {...area_select_menu} name={name} value={index} onClick={(event: any) => {
 					console.log(event.target.value);
 
-					const search_as_any:any = search as any;
 					search_as_any.hk = index;
 					SetSearch(search_as_any);
 
@@ -85,50 +86,34 @@ function NurseryHomes() {
 
 	const selected_area_text = "Sijainti: " + ((search as any).hk ? areas[(search as any).hk] : areas[0]);
 
-	const filters_dom = (
-	<>
+
+	/*
 		<MenuDisclosure {...area_select_menu}>{selected_area_text}</MenuDisclosure>
 		<Menu {...area_select_menu} aria-label="Valitse alue">
 			{area_select_dom}
 		</Menu>
+	*/
 
-		<MenuDisclosure {...language_select_menu}>Palvelukieli: Ei väliä</MenuDisclosure>
-		<Menu {...language_select_menu} aria-label="Palvelukieli">
-			<MenuItem {...language_select_menu} name="Suomi" value="suomi" onClick={(event: any) => {
-					language_select_menu.hide();
-				}
-			}>
-				Suomi
-			</MenuItem>
-			<MenuItem {...language_select_menu} name="Ruotsi" value="ruotsi" onClick={(event: any) => {
-					language_select_menu.hide();
-				}
-			}>
-				Ruotsi
-			</MenuItem>
-			<MenuItem {...language_select_menu} name="Ei väliä" value="either" onClick={(event: any) => {
-					language_select_menu.hide();
-				}
-			}>
-				Ei väliä
-			</MenuItem>
-		</Menu>
-
-		<MenuDisclosure {...ara_home_menu}>Ara-Kohde</MenuDisclosure>
-		<Menu {...ara_home_menu} aria-label="Palvelukieli">
-			<MenuItem {...ara_home_menu} name="Ara" value="ara-yes" onClick={(event: any) => {
-					ara_home_menu.hide();
-				}
-			}>
-				Ara-Kohde
-			</MenuItem>
-			<MenuItem {...ara_home_menu} name="Ei väliä" value="either" onClick={(event: any) => {
-					ara_home_menu.hide();
-				}
-			}>
-				Ei väliä
-			</MenuItem>
-		</Menu>
+	const filters_dom = (
+	
+	<>
+		<MenuSelect prefix="Sijainti: " values={areas} aria_label="Valitse hoivakodin alue" on_changed={(value: any) => 
+			{
+				console.log(value);
+				search_as_any.hk = areas.findIndex((v) => v == value);
+				console.log(search_as_any.hk);
+				SetSearch(search_as_any);
+			}}/>
+		<MenuSelect prefix="Palvelukieli: " values={["Suomi", "Ruotsi", "Ei väliä"]} aria_label="Valitse hoivakodin kieli" on_changed={(value: any) => 
+			{
+				search_as_any.language = value;
+				SetSearch(search_as_any);
+			}}/>
+		<MenuSelect prefix="Ara-kohde: " values={["Kyllä", "Ei väliä"]} aria_label="Valitse, näytetäänkö vain Ara-kohteet" on_changed={(value: any) => 
+			{
+				search_as_any.ara = value;
+				SetSearch(search_as_any);
+			}}/>
 	</>
 	);
 
@@ -141,11 +126,11 @@ function NurseryHomes() {
 		else
 			return false;
 	})
-	.map((nurseryhome: any) => {
+	.map((nurseryhome: any, index) => {
 		const rating: any = (ratings as any)[nurseryhome.id]
 		if (nurseryhome.id === expanded)
 			return <NurseryHomeLarge nurseryhome={nurseryhome} rating={rating} expand_callback={OnExpanded} />
-		else return <NurseryHomeSmall nurseryhome={nurseryhome} rating={rating} expand_callback={OnExpanded} />
+		else return <NurseryHomeSmall nurseryhome={nurseryhome} rating={rating} key={index} expand_callback={OnExpanded} />
 	})
 
 	return (
