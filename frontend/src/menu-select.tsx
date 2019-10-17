@@ -50,9 +50,9 @@ function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
 	);
 
 	return (
-		<div>
-			{menu_dom}
-		</div>
+		<>
+		{menu_dom}
+		</>
 	)
 }
 

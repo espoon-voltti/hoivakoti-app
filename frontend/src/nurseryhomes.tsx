@@ -11,6 +11,8 @@ import {
   MenuSeparator,
   MenuItemCheckbox
 } from "reakit/Menu";
+import "./nurseryhomes.scss";
+import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 const queryString = require('query-string');
 const axios = require("axios").default
 
@@ -99,20 +101,21 @@ function NurseryHomes() {
 	<>
 		<MenuSelect prefix="Sijainti: " values={areas} aria_label="Valitse hoivakodin alue" on_changed={(value: any) => 
 			{
-				console.log(value);
 				search_as_any.hk = areas.findIndex((v) => v == value);
-				console.log(search_as_any.hk);
-				SetSearch(search_as_any);
+				const stringfield = queryString.stringify(search_as_any);
+				history.push("/hoivakodit?" + stringfield);
 			}}/>
 		<MenuSelect prefix="Palvelukieli: " values={["Suomi", "Ruotsi", "Ei väliä"]} aria_label="Valitse hoivakodin kieli" on_changed={(value: any) => 
 			{
 				search_as_any.language = value;
-				SetSearch(search_as_any);
+				const stringfield = queryString.stringify(search_as_any);
+				history.push("/hoivakodit?" + stringfield);
 			}}/>
 		<MenuSelect prefix="Ara-kohde: " values={["Kyllä", "Ei väliä"]} aria_label="Valitse, näytetäänkö vain Ara-kohteet" on_changed={(value: any) => 
 			{
 				search_as_any.ara = value;
-				SetSearch(search_as_any);
+				const stringfield = queryString.stringify(search_as_any);
+				history.push("/hoivakodit?" + stringfield);
 			}}/>
 	</>
 	);
@@ -133,10 +136,31 @@ function NurseryHomes() {
 		else return <NurseryHomeSmall nurseryhome={nurseryhome} rating={rating} key={index} expand_callback={OnExpanded} />
 	})
 
+	const Map = ReactMapboxGl({
+		accessToken:
+			"pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg"
+	})
+
 	return (
 		<div>
 			{filters_dom}
-			{nurseryhome_components}
+			<div id="nurseryhomes-list-and-map">
+				<div id="nurseryhomes">
+					{nurseryhome_components}
+				</div>
+				<div id="map">
+				<Map
+					style="mapbox://styles/mapbox/streets-v9"
+					containerStyle={{
+					height: '100vh',
+					width: '100vw'
+					}}>
+					<Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
+						<Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
+					</Layer>
+				</Map>;
+		</div>
+			</div>
 		</div>
 	)
 }

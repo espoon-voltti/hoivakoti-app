@@ -17,11 +17,6 @@ const App: React.FC = () => {
 
 	//<Button>Button</Button>;
 
-	const Map = ReactMapboxGl({
-		accessToken:
-			"pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg"
-	})
-
 	// 						<Link to="/palaute?id=985507e2-735f-48a9-a941-75b38f0e4adb">Hoivakodit</Link>
 	return (
 		<Provider unstable_system={system}>
