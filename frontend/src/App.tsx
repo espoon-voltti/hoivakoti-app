@@ -37,7 +37,7 @@ const App: React.FC = () => {
 						<img width="100%" src={process.env.PUBLIC_URL + "person-elderly.jpg"} />
 					</div>
 
-					<div>
+					<div id="content">
 						<Route exact path="/" component={Landing} />
 						<Route path="/hoivakodit" component={NurseryHomes} />
 						<Route path="/topics" component={NurseryHomes} />
