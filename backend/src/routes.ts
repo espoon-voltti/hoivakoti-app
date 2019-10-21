@@ -28,6 +28,15 @@ router.get("/ratings", async (ctx) => {
 	ctx.body = await ListRatings(ctx)
 })
 
+router.get("/db-test", async (ctx) => {
+	const db_pass = process.env.DB_PASSWORD;
+	console.log(db_pass);
+	if (db_pass !== undefined)
+		ctx.body = db_pass.substring(0, 2);
+	else
+		ctx.body = "Undefined";
+})
+
 router.get("*", async (ctx) => {
 	ctx.body = ctx.url
 })
