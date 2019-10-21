@@ -12,23 +12,23 @@ router.get("/", async (ctx) => {
 	ctx.body = "maybe docs here"
 })
 
-router.get("/nursing-homes", async (ctx) => {
+router.get("/api/ursing-homes", async (ctx) => {
 	ctx.body = await ListNursingHomes(ctx)
 })
 
-router.post("/nursing-homes", async (ctx) => {
+router.post("/api/nursing-homes", async (ctx) => {
 	ctx.body = await AddNursingHome(ctx)
 })
 
-router.post("/nursing-homes/csv", async (ctx) => {
+router.post("/api/nursing-homes/csv", async (ctx) => {
 	ctx.body = await AddNursingHomesFromCSV(ctx)
 })
 
-router.get("/ratings", async (ctx) => {
+router.get("/api/ratings", async (ctx) => {
 	ctx.body = await ListRatings(ctx)
 })
 
-router.get("/db-test", async (ctx) => {
+router.get("/api/db-test", async (ctx) => {
 	const db_pass = process.env.DB_PASSWORD;
 	console.log(db_pass);
 	if (db_pass !== undefined)
