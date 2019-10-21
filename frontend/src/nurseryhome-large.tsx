@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import "./nurseryhome-large.css"
+import "./nurseryhome-large.scss"
 
 const nursery_home_context = React.createContext({})
 

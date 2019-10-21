@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import "./landing.css"
+import "./landing.scss"
 import { withRouter, Redirect } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 

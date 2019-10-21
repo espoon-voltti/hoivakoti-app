@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "./nurseryhome-small.css"
+import "./nurseryhome-small.scss"
 
 const nursery_home_context = React.createContext({})
 

@@ -8,11 +8,11 @@ import {
 
 const router = new Router()
 
-router.get("/", async (ctx) => {
+router.get("/api", async (ctx) => {
 	ctx.body = "maybe docs here"
 })
 
-router.get("/api/ursing-homes", async (ctx) => {
+router.get("/api/nursing-homes", async (ctx) => {
 	ctx.body = await ListNursingHomes(ctx)
 })
 
