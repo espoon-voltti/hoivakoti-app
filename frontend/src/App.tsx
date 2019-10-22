@@ -1,9 +1,9 @@
 import React from "react"
 import "./App.scss"
-import { NurseryHomes } from "./nurseryhomes"
+import { NursingHomes } from "./nursinghomes"
 import { Feedback } from "./feedback"
 import { Landing } from "./landing"
-import { NurseryHomeProvider } from "./nurseryhomes-context"
+import { NursingHomeProvider } from "./nursinghomes-context"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import { Provider, Button } from "reakit";
 import * as system from "reakit-system-bootstrap";
@@ -39,8 +39,8 @@ const App: React.FC = () => {
 
 					<div id="content">
 						<Route exact path="/" component={Landing} />
-						<Route path="/hoivakodit" component={NurseryHomes} />
-						<Route path="/topics" component={NurseryHomes} />
+						<Route path="/hoivakodit" component={NursingHomes} />
+						<Route path="/topics" component={NursingHomes} />
 						<Route path="/palaute" component={Feedback} />
 					</div>
 				</Router>

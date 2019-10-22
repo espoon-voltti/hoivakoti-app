@@ -37,7 +37,7 @@ function Landing() {
 
 	return (
 		<div id="landing">
-			<div id="pick-nursery">
+			<div id="pick-nursing">
 				<b>Miltä alueelta etsit hoivakotia?</b>
 				<select onChange={on_selected_area}>
 					{menu_items_dom}
@@ -69,6 +69,6 @@ function Landing() {
 		</div>
 	)
 }
-//			<p className="nurseryhome-container-child" id="nurseryhome-summary">{this.nurseryhome.summary}</p>
+//			<p className="nursinghome-container-child" id="nursinghome-summary">{this.nursinghome.summary}</p>
 
 export { Landing }

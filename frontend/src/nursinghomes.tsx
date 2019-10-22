@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { NurseryHomeSmall } from "./nurseryhome-small"
-import { NurseryHomeLarge } from "./nurseryhome-large"
+import { NursingHomeSmall } from "./nursinghome-small"
+import { NursingHomeLarge } from "./nursinghome-large"
 import { MenuSelect, MenuSelectProps } from "./menu-select"
 import { useHistory } from "react-router-dom";
 import {
@@ -11,14 +11,14 @@ import {
   MenuSeparator,
   MenuItemCheckbox
 } from "reakit/Menu";
-import "./nurseryhomes.scss";
+import "./nursinghomes.scss";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 const queryString = require('query-string');
 const axios = require("axios").default
 
-function NurseryHomes() {
+function NursingHomes() {
 
-	const [nurseryhomes, SetNurseryHomes] = useState([])
+	const [nursinghomes, SetNursingHomes] = useState([])
 	const [ratings, SetRatings] = useState({})
 	const [expanded, SetExpanded] = useState("")
 	const [search, SetSearch] = useState({})
@@ -42,7 +42,7 @@ function NurseryHomes() {
 			.get("http://" + window.location.hostname + ":3000/nursing-homes")
 			.then(function(response: any) {
 				// handle success
-				SetNurseryHomes(response.data)
+				SetNursingHomes(response.data)
 			})
 			.catch((error: any) => console.warn(error.message))
 		axios
@@ -120,20 +120,20 @@ function NurseryHomes() {
 	</>
 	);
 
-	const nurseryhome_components: object[] = nurseryhomes.filter((nurseryhome: any) =>
+	const nursinghome_components: object[] = nursinghomes.filter((nursinghome: any) =>
 	{
 		if (!areas[(search as any).hk])
 			return true;
-		else if (nurseryhome.location == areas[(search as any).hk])
+		else if (nursinghome.location == areas[(search as any).hk])
 			return true;
 		else
 			return false;
 	})
-	.map((nurseryhome: any, index) => {
-		const rating: any = (ratings as any)[nurseryhome.id]
-		if (nurseryhome.id === expanded)
-			return <NurseryHomeLarge nurseryhome={nurseryhome} rating={rating} expand_callback={OnExpanded} />
-		else return <NurseryHomeSmall nurseryhome={nurseryhome} rating={rating} key={index} expand_callback={OnExpanded} />
+	.map((nursinghome: any, index) => {
+		const rating: any = (ratings as any)[nursinghome.id]
+		if (nursinghome.id === expanded)
+			return <NursingHomeLarge nursinghome={nursinghome} rating={rating} expand_callback={OnExpanded} />
+		else return <NursingHomeSmall nursinghome={nursinghome} rating={rating} key={index} expand_callback={OnExpanded} />
 	})
 
 	const Map = ReactMapboxGl({
@@ -144,9 +144,9 @@ function NurseryHomes() {
 	return (
 		<div>
 			{filters_dom}
-			<div id="nurseryhomes-list-and-map">
-				<div id="nurseryhomes">
-					{nurseryhome_components}
+			<div id="nursinghomes-list-and-map">
+				<div id="nursinghomes">
+					{nursinghome_components}
 				</div>
 				<div id="map">
 				<Map
@@ -174,4 +174,4 @@ function NurseryHomes() {
 			</button>
 */
 
-export { NurseryHomes }
+export { NursingHomes }

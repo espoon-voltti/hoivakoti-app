@@ -37,6 +37,15 @@ router.get("/api/db-test", async (ctx) => {
 		ctx.body = "Undefined";
 })
 
+router.get("/api/db-test2", async (ctx) => {
+	const db_url = process.env.DB_URL;
+	console.log(db_url);
+	if (db_url !== undefined)
+		ctx.body = db_url;
+	else
+		ctx.body = "Undefined";
+})
+
 router.get("*", async (ctx) => {
 	ctx.body = ctx.url
 })
