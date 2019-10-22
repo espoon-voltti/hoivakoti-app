@@ -8,9 +8,9 @@ import {
 const options: object = {
 	client: "postgres",
 	connection: {
-		user: "postgres",
-		password: "postgres",
-		host: "postgres",
+		user: process.env.DB_URL ? "voltti" : "postgres",
+		password: process.env.DB_PASSWORD ? process.env.DB_PASSWORD : "postgres",
+		host: process.env.DB_URL ? process.env.DB_URL : "postgres",
 	}
 }
 const knex = new (Knex as any)(options)
