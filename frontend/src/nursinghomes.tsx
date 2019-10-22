@@ -37,20 +37,20 @@ function NursingHomes() {
 		console.log("Search:");
 		console.log(parsed);
 
-		let port_string = "";
+		let api_url = "https://" + window.location.hostname;
 		if (window.location.hostname.includes("localhost"))
-			port_string = ":3000";
+			api_url = "http://" + window.location.hostname + ":3000";
 
-		console.log("http://" + window.location.hostname + port_string + "/api/nursing-homes");
+		console.log(api_url + "/api/nursing-homes");
 		axios
-			.get("http://" + window.location.hostname + port_string + "/api/nursing-homes")
+			.get(api_url + "/api/nursing-homes")
 			.then(function(response: any) {
 				// handle success
 				SetNursingHomes(response.data)
 			})
 			.catch((error: any) => console.warn(error.message))
 		axios
-			.get("http://" + window.location.hostname + port_string + "/api/ratings")
+			.get(api_url + "/api/ratings")
 			.then(function(response: any) {
 				// handle success
 				SetRatings(response.data)
