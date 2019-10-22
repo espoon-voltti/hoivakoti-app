@@ -11,6 +11,7 @@ const options: object = {
 		user: process.env.DB_URL ? "voltti" : "postgres",
 		password: process.env.DB_PASSWORD ? process.env.DB_PASSWORD : "postgres",
 		host: process.env.DB_URL ? process.env.DB_URL : "postgres",
+		database: process.env.DB_URL ? "postgres" : "postgres",
 	}
 }
 const knex = new (Knex as any)(options)
