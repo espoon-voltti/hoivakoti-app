@@ -37,16 +37,20 @@ function NursingHomes() {
 		console.log("Search:");
 		console.log(parsed);
 
-		console.log("http://" + window.location.hostname + ":3000/nursing-homes");
+		let port_string = "";
+		if (window.location.hostname.includes("localhost"))
+			port_string = ":3000";
+
+		console.log("http://" + window.location.hostname + port_string + "/api/nursing-homes");
 		axios
-			.get("http://" + window.location.hostname + ":3000/nursing-homes")
+			.get("http://" + window.location.hostname + port_string + "/api/nursing-homes")
 			.then(function(response: any) {
 				// handle success
 				SetNursingHomes(response.data)
 			})
 			.catch((error: any) => console.warn(error.message))
 		axios
-			.get("http://" + window.location.hostname + ":3000/ratings")
+			.get("http://" + window.location.hostname + port_string + "/api/ratings")
 			.then(function(response: any) {
 				// handle success
 				SetRatings(response.data)
@@ -119,7 +123,8 @@ function NursingHomes() {
 			}}/>
 	</>
 	);
-
+	console.log("here");
+	console.log(nursinghomes);
 	const nursinghome_components: object[] = nursinghomes.filter((nursinghome: any) =>
 	{
 		if (!areas[(search as any).hk])
