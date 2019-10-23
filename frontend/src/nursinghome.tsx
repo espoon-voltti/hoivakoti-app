@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import {
 	  useParams
 } from "react-router-dom";
-import "./nursinghome-small.scss"
+import "./nursinghome.scss"
 const axios = require("axios").default
 
 const nursing_home_context = React.createContext({})
@@ -37,19 +37,25 @@ function NursingHome({ _nursinghome }: NursingHomeProps) {
 	}, []);
 
 	return (
-		<div className="nursinghome-container">
-			<p className="nursinghome-container-child" id="nursinghome-name">
-				{nursinghome && (nursinghome as any).name}
-			</p>
-			<p className="nursinghome-container-child" id="nursinghome-summary">
-				{nursinghome && (nursinghome as any).owner}
-			</p>
-			<p className="nursinghome-container-child" id="nursinghome-location">
-				{nursinghome && (nursinghome as any).location}
-			</p>
-			<p className="nursinghome-container-child" id="nursinghome-address">
-				{nursinghome && (nursinghome as any).address}
-			</p>
+		<div id="nurseryhome">
+			<div id="infobox">
+				<p className="nursinghome-container-child" id="nursinghome-name">
+					{nursinghome && (nursinghome as any).name}
+				</p>
+				<p className="nursinghome-container-child" id="nursinghome-summary">
+					{nursinghome && (nursinghome as any).owner}
+				</p>
+				<p className="nursinghome-container-child" id="nursinghome-location">
+					{nursinghome && (nursinghome as any).location}
+				</p>
+				<p className="nursinghome-container-child" id="nursinghome-address">
+					{nursinghome && (nursinghome as any).address}
+				</p>
+			</div>
+
+			<div id="infobox">
+				Infoboxes come here, like contact info, ratings summary.
+			</div>
 		</div>
 	)
 }
