@@ -8,6 +8,12 @@
 	display: flex;
 }
 
+.app-header > img {
+	margin-top: -20px;
+	margin-left: -20px;
+	margin-right: 20px;
+}
+
 #app-name {
 	color: rgb(110, 110, 110);
 	font-size: 36px;

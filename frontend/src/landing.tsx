@@ -52,17 +52,17 @@ function Landing() {
 			<div id="info">
 			<h2>Miten saan tehostetun palveluasumisen?</h2>
 			<p>
-			Elikkäs elikkäs.
+			Tehostetun palveluasumisen tekstiä. Mitä kautta palveluasumista haetaan, mihin tahoon otetaan yhteyttä yms.
 			</p>
 
 			<h2>Mitä on tehostettu palveluasuminen?</h2>
 			<p>
-			Elikkäs elikkäs.
+			Tehostetun palveluasumisen tekstiä. Mitä tehostettu palveluasuminen tarkoittaa - vuokranmaksua, yhteisiä tiloja, hoitajasaatavuus, yms
 			</p>
 
 			<h2>Palvelulupaus</h2>
 			<p>
-			Elikkäs elikkäs.
+			Palvelulupauksen teksti.
 			</p>
 
 			</div>

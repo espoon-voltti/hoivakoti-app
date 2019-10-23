@@ -29,6 +29,8 @@ const App: React.FC = () => {
 			<div className="app">
 				<Router>
 					<header className="app-header">
+						<img width="150px" src={public_url + "/Espoo tunnus.jpg"} />
+
 						<div id="app-name"><Link to="/">Espoon Hoivakodit</Link></div>
 
 						<div id="app-links">
