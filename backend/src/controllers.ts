@@ -1,15 +1,15 @@
 import {
-	InsertNurseryHomeToDB,
-	GetAllNurseryHomes,
+	InsertNursingHomeToDB,
+	GetAllNursingHomes,
 	GetAllRatings,
-	GetNurseryHome} from "./models"
+	GetNursingHome as GetNursingHomeDB} from "./models"
 
 import {
 	NursingHomesFromCSV} from "./services"
 
 async function AddNursingHome(ctx: any)
 {
-	await InsertNurseryHomeToDB({name: ctx.request.body.name,
+	await InsertNursingHomeToDB({name: ctx.request.body.name,
 		owner: ctx.request.body.name,
 		address: ctx.request.body.address,
 		location: ctx.request.body.location})
@@ -18,13 +18,13 @@ async function AddNursingHome(ctx: any)
 
 async function ListNursingHomes(ctx: any)
 {
-	const nursery_homes = await GetAllNurseryHomes()
-	return nursery_homes
+	const nursing_homes = await GetAllNursingHomes()
+	return nursing_homes
 }
 
 async function GetNursingHome(ctx: any)
 {
-	return await GetNurseryHome(ctx.params.id);
+	return await GetNursingHomeDB(ctx.params.id);
 }
 
 async function ListRatings(ctx: any)
@@ -35,12 +35,12 @@ async function ListRatings(ctx: any)
 
 	ratings.forEach((rating: any) =>
 	{
-		const id = rating.nurseryhome
+		const id = rating.nursinghome
 
 		if (!(id in ratings_as_object))
 		{
 			ratings_as_object[id] = {}
-			ratings_as_object[id].total = 0
+			ratings_as_object[id].total = 0	
 			ratings_as_object[id].avg = 0
 		}
 

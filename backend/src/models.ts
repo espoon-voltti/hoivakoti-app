@@ -16,7 +16,7 @@ const options: object = {
 }
 const knex = new (Knex as any)(options)
 
-interface NurseryHome{
+interface NursingHome{
 		name: string,
 		owner: string,
 		address: string,
@@ -25,15 +25,15 @@ interface NurseryHome{
 		www?: string
 }
 
-knex.schema.hasTable("NurseryHomes").then(async (exists: boolean) => {
+knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 
 	if (exists)
-		await knex.schema.dropTable("NurseryHomes")
+		await knex.schema.dropTable("NursingHomes")
 
-	//var count = await knex('pg_class').select("reltuples").where({relname: "NurseryHomes"});
+	//var count = await knex('pg_class').select("reltuples").where({relname: "NursingHomes"});
 	//console.log(count);
 
-	knex.schema.createTable("NurseryHomes", (table: any) => {
+	knex.schema.createTable("NursingHomes", (table: any) => {
 		table.uuid("id")
 		table.string("name")
 		table.string("owner")
@@ -42,13 +42,13 @@ knex.schema.hasTable("NurseryHomes").then(async (exists: boolean) => {
 		table.boolean("ara")
 		table.string("www")
 	}).then(async () => {
-		//const id = await InsertNurseryHomeToDB("Leppävaaran Hoiva ja Turva", "Puutteita hoitohenkilökunnan määrässä; vakava vesivahinko; ikkunat eristämättömiä. Ruoka hyvää, suosittelen!");
-		//await InsertNurseryHomeToDB("Vaikea Hoivakoti Ry", "Kaikki tarkastukset tip-top. Tosi hyvä pössis. Ruoka vähän mautonta, en suosittele muuttoa.");
-		//await InsertNurseryHomeToDB("Kaskissalmen Puutarha", "Rakenteista puuttuu muunmuassa katto ja seinät. Oma teltta oltava mukana. HUOM! Puutiaisaivokuumetta havaittu!");
+		//const id = await InsertNursingHomeToDB("Leppävaaran Hoiva ja Turva", "Puutteita hoitohenkilökunnan määrässä; vakava vesivahinko; ikkunat eristämättömiä. Ruoka hyvää, suosittelen!");
+		//await InsertNursingHomeToDB("Vaikea Hoivakoti Ry", "Kaikki tarkastukset tip-top. Tosi hyvä pössis. Ruoka vähän mautonta, en suosittele muuttoa.");
+		//await InsertNursingHomeToDB("Kaskissalmen Puutarha", "Rakenteista puuttuu muunmuassa katto ja seinät. Oma teltta oltava mukana. HUOM! Puutiaisaivokuumetta havaittu!");
 
 		//await SetUpRatingsTable(id);
 
-		console.log("Created Nursery table.")
+		console.log("Created Nursing table.")
 		const nurseryhome_contents = fs.readFileSync("data/hoivakodit.csv", "utf8")
 
 		await NursingHomesFromCSV(nurseryhome_contents)
@@ -67,7 +67,7 @@ async function SetUpRatingsTable(id_for_testing: string)
 		if (exists)
 			await knex.schema.dropTable("Ratings")
 
-		//var count = await knex('pg_class').select("reltuples").where({relname: "NurseryHomes"});
+		//var count = await knex('pg_class').select("reltuples").where({relname: "NursingHomes"});
 		//console.log(count);
 
 		knex.schema.createTable("Ratings", (table: any) => {
@@ -79,7 +79,7 @@ async function SetUpRatingsTable(id_for_testing: string)
 		}).then(async () => {
 			console.log("Created Ratings table.")
 
-			await InsertNurseryHomeRatingToDB(id_for_testing, 2)
+			await InsertNursingHomeRatingToDB(id_for_testing, 2)
 		})
 
 		/*.catch((err: any) => { console.log(err); throw err })
@@ -89,10 +89,10 @@ async function SetUpRatingsTable(id_for_testing: string)
 	})
 }
 
-async function InsertNurseryHomeToDB(nurseryhome: NurseryHome)
+async function InsertNursingHomeToDB(nurseryhome: NursingHome)
 {
 	const uuid = uuidv4()
-	await knex("NurseryHomes").insert({id: uuid,
+	await knex("NursingHomes").insert({id: uuid,
 		name: nurseryhome.name,
 		owner: nurseryhome.owner,
 		address: nurseryhome.address,
@@ -104,7 +104,7 @@ async function InsertNurseryHomeToDB(nurseryhome: NurseryHome)
 	return uuid
 }
 
-async function InsertNurseryHomeRatingToDB(nursery_id: string, rating: number)
+async function InsertNursingHomeRatingToDB(nursery_id: string, rating: number)
 {
 	const uuid = uuidv4()
 	const seconds = Math.round(new Date().getTime() / 1000)
@@ -113,9 +113,9 @@ async function InsertNurseryHomeRatingToDB(nursery_id: string, rating: number)
 	return uuid
 }
 
-async function GetAllNurseryHomes()
+async function GetAllNursingHomes()
 {
-	return await knex.select().table("NurseryHomes")
+	return await knex.select().table("NursingHomes")
 }
 
 async function GetAllRatings()
@@ -123,14 +123,14 @@ async function GetAllRatings()
 	return await knex.select().table("Ratings")
 }
 
-async function GetNurseryHome(id: string)
+async function GetNursingHome(id: string)
 {
-	const result = await knex.select().table("NurseryHomes").where({id: id});
+	const result = await knex.select().table("NursingHomes").where({id: id});
 	return result;
 }
 
 export {
-	InsertNurseryHomeToDB,
-	GetAllNurseryHomes,
+	InsertNursingHomeToDB,
+	GetAllNursingHomes,
 	GetAllRatings,
-	GetNurseryHome}
+	GetNursingHome}

@@ -1,6 +1,6 @@
 import {
-	InsertNurseryHomeToDB,
-	GetAllNurseryHomes,
+	InsertNursingHomeToDB,
+	GetAllNursingHomes,
 	GetAllRatings} from "./models"
 
 const parse = require("csv-parse/lib/sync")
@@ -16,7 +16,7 @@ async function NursingHomesFromCSV(csv: string)
 
 	records.map(async (record: any) =>
 	{
-		await InsertNurseryHomeToDB({name: record.Hoivakoti,
+		await InsertNursingHomeToDB({name: record.Hoivakoti,
 			owner: record.Yritys,
 			address: record.Katuosoite,
 			location: record.Alue,
