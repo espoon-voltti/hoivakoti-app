@@ -48,12 +48,12 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 					{nursinghome && nursinghome.address}
 				</p>
 			</div>
-
-			{/*rating_dom*/}
-			{/*expand_dom*/}
 		</div>
 	)
 }
 //			<p className="nursinghome-container-child" id="nursinghome-summary">{this.nursinghome.summary}</p>
+//			{/*rating_dom*/}
+//			{/*expand_dom*/}
+//
 
 export { NursingHomeSmall }
