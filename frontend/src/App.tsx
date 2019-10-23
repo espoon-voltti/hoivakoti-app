@@ -19,6 +19,10 @@ const App: React.FC = () => {
 	//<Button>Button</Button>;
 
 	// 						<Link to="/palaute?id=985507e2-735f-48a9-a941-75b38f0e4adb">Hoivakodit</Link>
+	let public_url = "https://" + window.location.hostname;
+	if (window.location.hostname.includes("localhost"))
+		public_url = "http://" + window.location.hostname + ":4000";
+
 	return (
 		<Provider unstable_system={system}>
 
@@ -35,7 +39,7 @@ const App: React.FC = () => {
 					</header>
 
 					<div id="app-banner">
-						<img width="100%" src={"http://" + window.location.hostname + "	:4000/person-elderly.jpg"} />
+						<img width="100%" src={public_url + "/person-elderly.jpg"} />
 					</div>
 
 					<div id="content">
