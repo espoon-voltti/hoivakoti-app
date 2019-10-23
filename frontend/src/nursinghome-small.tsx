@@ -26,8 +26,8 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 			<img
 				className="nursinghome-container-child"
 				id="nursinghome-review-image"
-				src="https://upload.wikimedia.org/wikipedia/commons/b/b6/%27Banks%27%2C_near_Tunshill%2C_Milnrow%2C_Lancashire_-_geograph.org.uk_-_305445.jpg"
-				width="300px"
+				src={"http://" + window.location.hostname + "	:4000/icon-house.svg"}
+				width="100px"
 			/>
 
 			<div id="nursinghome-info">
@@ -46,7 +46,7 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 			</div>
 
 			{rating_dom}
-			{expand_dom}
+			{/*expand_dom*/}
 		</div>
 	)
 }

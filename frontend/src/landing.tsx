@@ -31,7 +31,7 @@ function Landing() {
 
 	const menu_items_dom: object[] = areas.map((area, index) => {
 		return (
-			<option value={index}>{area}</option>
+			<option value={index} key={index}>{area}</option>
 		)
 	});
 

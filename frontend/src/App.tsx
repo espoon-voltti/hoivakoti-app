@@ -1,6 +1,7 @@
 import React from "react"
 import "./App.scss"
 import { NursingHomes } from "./nursinghomes"
+import { NursingHome } from "./nursinghome"
 import { Feedback } from "./feedback"
 import { Landing } from "./landing"
 import { NursingHomeProvider } from "./nursinghomes-context"
@@ -34,14 +35,15 @@ const App: React.FC = () => {
 					</header>
 
 					<div id="app-banner">
-						<img width="100%" src={process.env.PUBLIC_URL + "person-elderly.jpg"} />
+						<img width="100%" src={"http://" + window.location.hostname + "	:4000/person-elderly.jpg"} />
 					</div>
 
 					<div id="content">
 						<Route exact path="/" component={Landing} />
-						<Route path="/hoivakodit" component={NursingHomes} />
-						<Route path="/topics" component={NursingHomes} />
-						<Route path="/palaute" component={Feedback} />
+						<Route exact path="/hoivakodit" component={NursingHomes} />
+						<Route exact path="/hoivakodit/:id" component={NursingHome} />
+						<Route exact path="/topics" component={NursingHomes} />
+						<Route exact path="/palaute" component={Feedback} />
 					</div>
 				</Router>
 			</div>

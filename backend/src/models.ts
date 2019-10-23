@@ -123,7 +123,14 @@ async function GetAllRatings()
 	return await knex.select().table("Ratings")
 }
 
+async function GetNurseryHome(id: string)
+{
+	const result = await knex.select().table("NurseryHomes").where({id: id});
+	return result;
+}
+
 export {
 	InsertNurseryHomeToDB,
 	GetAllNurseryHomes,
-	GetAllRatings}
+	GetAllRatings,
+	GetNurseryHome}

@@ -1,7 +1,8 @@
 import {
 	InsertNurseryHomeToDB,
 	GetAllNurseryHomes,
-	GetAllRatings} from "./models"
+	GetAllRatings,
+	GetNurseryHome} from "./models"
 
 import {
 	NursingHomesFromCSV} from "./services"
@@ -19,6 +20,11 @@ async function ListNursingHomes(ctx: any)
 {
 	const nursery_homes = await GetAllNurseryHomes()
 	return nursery_homes
+}
+
+async function GetNursingHome(ctx: any)
+{
+	return await GetNurseryHome(ctx.params.id);
 }
 
 async function ListRatings(ctx: any)
@@ -65,4 +71,5 @@ export {
 	AddNursingHome,
 	ListNursingHomes,
 	ListRatings,
-	AddNursingHomesFromCSV}
+	AddNursingHomesFromCSV,
+	GetNursingHome}

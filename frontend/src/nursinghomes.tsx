@@ -156,14 +156,18 @@ function NursingHomes() {
 				<div id="map">
 				<Map
 					style="mapbox://styles/mapbox/streets-v9"
+					center={[24.6559, 60.2055]}
 					containerStyle={{
 					height: '100vh',
 					width: '50vw',
 					position: 'sticky',
 					top: 0
 					}}>
-					<Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-						<Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
+					<Layer type="symbol" id="marker" layout={{'icon-image': 'town-hall-15', 'icon-size': 1.5}}>
+						<Feature coordinates={[24.6559, 60.2055]} />
+						<Feature coordinates={[24.6, 60.2053]} />
+						<Feature coordinates={[24.62, 60.2]} />
+						<Feature coordinates={[24.7, 60.17]} />
 					</Layer>
 				</Map>
 		</div>
