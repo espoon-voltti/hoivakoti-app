@@ -49,7 +49,7 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 				</p>
 			</div>
 
-			{rating_dom}
+			{/*rating_dom*/}
 			{/*expand_dom*/}
 		</div>
 	)

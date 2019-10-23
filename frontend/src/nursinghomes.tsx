@@ -148,7 +148,9 @@ function NursingHomes() {
 
 	return (
 		<div>
-			{filters_dom}
+			<div id="filters">
+				{filters_dom}
+			</div>
 			<div id="nursinghomes-list-and-map">
 				<div id="nursinghomes">
 					{nursinghome_components}
