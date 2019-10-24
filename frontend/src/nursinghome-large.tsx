@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import * as config from "./config";
 import "./nursinghome-large.scss"
 
 const nursing_home_context = React.createContext({})
@@ -36,7 +37,7 @@ function NursingHomeLarge({ nursinghome, rating, expand_callback }: NursingHomeP
 			<img
 				className="nursinghome-container-child"
 				id="nursinghome-review-image"
-				src="https://upload.wikimedia.org/wikipedia/commons/b/b6/%27Banks%27%2C_near_Tunshill%2C_Milnrow%2C_Lancashire_-_geograph.org.uk_-_305445.jpg"
+				src={config.PUBLIC_FILES_URL + "/icon-house.svg"}
 				width="25%"
 				height="25%"
 			/>

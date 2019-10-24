@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import { Provider, Button } from "reakit";
 import * as system from "reakit-system-bootstrap";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
+import * as config from "./config";
 
 const App: React.FC = () => {
 	/*await fetch('localhost:3000/nursing-homes')
@@ -19,9 +20,10 @@ const App: React.FC = () => {
 	//<Button>Button</Button>;
 
 	// 						<Link to="/palaute?id=985507e2-735f-48a9-a941-75b38f0e4adb">Hoivakodit</Link>
-	let public_url = "https://" + window.location.hostname;
-	if (window.location.hostname.includes("localhost"))
-		public_url = "http://" + window.location.hostname + ":4000";
+
+	console.log("ENV");
+	console.log(Object.keys(process.env));
+	console.log(process.env.NODE_ENV);
 
 	return (
 		<Provider unstable_system={system}>
@@ -29,7 +31,7 @@ const App: React.FC = () => {
 			<div className="app">
 				<Router>
 					<header className="app-header">
-						<img width="150px" src={public_url + "/espoo-tunnus.jpg"} />
+						<img width="150px" src={config.PUBLIC_FILES_URL + "/espoo-tunnus.jpg"} />
 
 						<div id="app-name"><Link to="/">Espoon Hoivakodit</Link></div>
 
@@ -41,7 +43,7 @@ const App: React.FC = () => {
 					</header>
 
 					<div id="app-banner">
-						<img width="100%" src={public_url + "/person-elderly.jpg"} />
+						<img width="100%" src={config.PUBLIC_FILES_URL + "/person-elderly.jpg"} />
 					</div>
 
 					<div id="content">

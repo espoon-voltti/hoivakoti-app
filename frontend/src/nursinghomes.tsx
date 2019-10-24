@@ -13,6 +13,7 @@ import {
 } from "reakit/Menu";
 import "./nursinghomes.scss";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
+import * as config from "./config";
 const queryString = require('query-string');
 const axios = require("axios").default
 
@@ -37,20 +38,16 @@ function NursingHomes() {
 		console.log("Search:");
 		console.log(parsed);
 
-		let api_url = "https://" + window.location.hostname;
-		if (window.location.hostname.includes("localhost"))
-			api_url = "http://" + window.location.hostname + ":3000";
-
-		console.log(api_url + "/api/nursing-homes");
+		console.log(config.API_URL + "/nursing-homes");
 		axios
-			.get(api_url + "/api/nursing-homes")
+			.get(config.API_URL + "/nursing-homes")
 			.then(function(response: any) {
 				// handle success
 				SetNursingHomes(response.data)
 			})
 			.catch((error: any) => console.warn(error.message))
 		axios
-			.get(api_url + "/api/ratings")
+			.get(config.API_URL + "/ratings")
 			.then(function(response: any) {
 				// handle success
 				SetRatings(response.data)

@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import * as config from "./config";
 import "./nursinghome-small.scss"
 
 const nursing_home_context = React.createContext({})
@@ -20,17 +21,12 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 
 	let expand_dom
 	if (expand_callback) expand_dom = <button onClick={() => expand_callback(nursinghome.id)}>Avaa</button>
-
-	let public_url = "https://" + window.location.hostname;
-	if (window.location.hostname.includes("localhost"))
-		public_url = "http://" + window.location.hostname + ":4000";
-
 	return (
 		<div className="nursinghome-container">
 			<img
 				className="nursinghome-container-child"
 				id="nursinghome-review-image"
-				src={public_url+ "/icon-house.svg"}
+				src={config.PUBLIC_FILES_URL + "/icon-house.svg"}
 				width="100px"
 			/>
 

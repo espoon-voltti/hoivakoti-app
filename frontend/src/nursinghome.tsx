@@ -3,6 +3,7 @@ import {
 	  useParams
 } from "react-router-dom";
 import "./nursinghome.scss"
+import * as config from "./config";
 const axios = require("axios").default
 
 const nursing_home_context = React.createContext({})
@@ -15,10 +16,6 @@ function NursingHome({ _nursinghome }: NursingHomeProps) {
 	const [nursinghome, SetNursingHome] = useState({})
 	let { id } = useParams();
 
-	let api_url = "https://" + window.location.hostname;
-	if (window.location.hostname.includes("localhost"))
-		api_url = "http://" + window.location.hostname + ":3000";
-
 	console.log("id: " + id);
 
 	useEffect(() => {
@@ -26,7 +23,7 @@ function NursingHome({ _nursinghome }: NursingHomeProps) {
 			SetNursingHome(_nursinghome)
 		else
 			axios
-				.get(api_url + "/api/nursing-homes/" + id)
+				.get(config.API_URL + "/nursing-homes/" + id)
 				.then(function(response: any) {
 					// handle success
 					console.log("Got data:")
