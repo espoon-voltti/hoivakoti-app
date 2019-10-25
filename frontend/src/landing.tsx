@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import "./landing.scss"
 import { withRouter, Redirect } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
+import * as config from "./config";
 
 import {
 	useMenuState,
@@ -37,6 +38,10 @@ function Landing() {
 
 	return (
 		<div id="landing">
+			<div id="landing-banner">
+				<img width="100%" src={config.PUBLIC_FILES_URL + "/person-elderly.jpg"} />
+			</div>
+
 			<div id="pick-nursing">
 				<b>Miltä alueelta etsit hoivakotia?</b>
 				<select onChange={on_selected_area}>

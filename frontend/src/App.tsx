@@ -42,10 +42,6 @@ const App: React.FC = () => {
 						</div>
 					</header>
 
-					<div id="app-banner">
-						<img width="100%" src={config.PUBLIC_FILES_URL + "/person-elderly.jpg"} />
-					</div>
-
 					<div id="content">
 						<Route exact path="/" component={Landing} />
 						<Route exact path="/hoivakodit" component={NursingHomes} />
