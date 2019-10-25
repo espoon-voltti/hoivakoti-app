@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import * as config from "./config";
-import "./nursinghome-small.scss"
+import "../styles/nursinghome-small.scss"
 
 const nursing_home_context = React.createContext({})
 

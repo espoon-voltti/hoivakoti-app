@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import * as config from "./config";
-import "./nursinghome-large.scss"
+import "../styles/nursinghome-large.scss"
 
 const nursing_home_context = React.createContext({})
 

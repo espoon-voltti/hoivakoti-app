@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import {
 	  useParams
 } from "react-router-dom";
-import "./nursinghome.scss"
+import "../styles/nursinghome.scss"
 import * as config from "./config";
 const axios = require("axios").default
 

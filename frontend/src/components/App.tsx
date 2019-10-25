@@ -1,5 +1,5 @@
 import React from "react"
-import "./App.scss"
+import "../styles/App.scss"
 import { NursingHomes } from "./nursinghomes"
 import { NursingHome } from "./nursinghome"
 import { Feedback } from "./feedback"

@@ -11,7 +11,7 @@ import {
   MenuSeparator,
   MenuItemCheckbox
 } from "reakit/Menu";
-import "./nursinghomes.scss";
+import "../styles/nursinghomes.scss";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 import * as config from "./config";
 const queryString = require('query-string');
