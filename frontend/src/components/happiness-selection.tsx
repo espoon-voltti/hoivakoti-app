@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-const axios = require("axios").default
+//const axios = require("axios").default
 
 function HappinessSelection(label: string) {
 	const [selection, SetSelection] = useState("")

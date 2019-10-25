@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { HappinessSelection } from "./happiness-selection"
 
-const axios = require("axios").default
+//const axios = require("axios").default
 
 function Feedback() {
 	const [text, SetText] = useState("")
-	const [radio, SetRadio] = useState("")
 
 	useEffect(() => {}, [])
 
@@ -15,10 +14,6 @@ function Feedback() {
 	}
 	const handleChange = (event: any) => {
 		SetText(event.target.value)
-	}
-
-	const handleRadiochange = (event: any) => {
-		SetRadio(event.target.value)
 	}
 
 	const happiness_ratings = {

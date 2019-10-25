@@ -4,11 +4,9 @@ import { NursingHomes } from "./nursinghomes"
 import { NursingHome } from "./nursinghome"
 import { Feedback } from "./feedback"
 import { Landing } from "./landing"
-import { NursingHomeProvider } from "./nursinghomes-context"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import { Provider, Button } from "reakit";
+import { Provider } from "reakit";
 import * as system from "reakit-system-bootstrap";
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 import * as config from "./config";
 
 const App: React.FC = () => {
@@ -31,7 +29,7 @@ const App: React.FC = () => {
 			<div className="app">
 				<Router>
 					<header className="app-header">
-						<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} />
+						<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} alt="Espoon kaupungin logo"/>
 
 						<h1 className="app-name"><Link to="/">Espoon hoivakodit</Link></h1>
 

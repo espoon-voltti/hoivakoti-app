@@ -1,25 +1,11 @@
-import React, { useState } from "react"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import React from "react"
 import "../styles/landing.scss"
-import { withRouter, Redirect } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import * as config from "./config";
-
-import {
-	useMenuState,
-	Menu,
-	MenuItem,
-	MenuDisclosure,
-	MenuSeparator
-} from "reakit/Menu";
-
 import { Button } from "reakit/Button";
 
 
 function Landing() {
 	let history = useHistory();
-
-	const menu = useMenuState();
 
 	const areas = ["Espoon keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
 

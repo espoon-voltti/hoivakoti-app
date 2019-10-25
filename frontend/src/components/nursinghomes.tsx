@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { NursingHomeSmall } from "./nursinghome-small"
-import { NursingHomeLarge } from "./nursinghome-large"
-import { MenuSelect, MenuSelectProps } from "./menu-select"
+import { MenuSelect } from "./menu-select"
 import { useHistory } from "react-router-dom";
-import {
-  useMenuState,
-  Menu,
-  MenuItem,
-  MenuDisclosure,
-  MenuSeparator,
-  MenuItemCheckbox
-} from "reakit/Menu";
 import "../styles/nursinghomes.scss";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 import * as config from "./config";
@@ -21,16 +12,11 @@ function NursingHomes() {
 
 	const [nursinghomes, SetNursingHomes] = useState([])
 	const [ratings, SetRatings] = useState({})
-	const [expanded, SetExpanded] = useState("")
 	const [search, SetSearch] = useState({})
 
 	let history = useHistory();
 
 	const areas = ["Espoon keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
-
-	const OnExpanded = (id: string) => {
-		SetExpanded(id)
-	}
 
 	useEffect(() => {
 		const parsed = queryString.parse(history.location.search);
@@ -55,54 +41,16 @@ function NursingHomes() {
 			.catch((error: any) => console.warn(error.message))
 	}, [])
 
-	const area_select_menu = useMenuState();
-	const language_select_menu = useMenuState();
-	const ara_home_menu = useMenuState();
-
 	const search_as_any:any = search as any;
 
-	const area_select_dom: object[] = areas.map((area, index) => {
-		const name = "valitse " + area;
-		return	(
-			<MenuItem {...area_select_menu} name={name} value={index} onClick={(event: any) => {
-					console.log(event.target.value);
-
-					search_as_any.hk = index;
-					SetSearch(search_as_any);
-
-					area_select_menu.hide();
-				}
-			}>
-				{area}
-			</MenuItem>
-		)
-	});
-
-	/*
-	onClick={() => {
-		menu.hide();
-		console.log("clicked on button");
-	}}
-
-
-	*/
-
 	const selected_area_text = "Sijainti: " + ((search as any).hk ? areas[(search as any).hk] : areas[0]);
-
-
-	/*
-		<MenuDisclosure {...area_select_menu}>{selected_area_text}</MenuDisclosure>
-		<Menu {...area_select_menu} aria-label="Valitse alue">
-			{area_select_dom}
-		</Menu>
-	*/
 
 	const filters_dom = (
 	
 	<>
 		<MenuSelect prefix="Sijainti: " values={areas} aria_label="Valitse hoivakodin alue" on_changed={(value: any) => 
 			{
-				search_as_any.hk = areas.findIndex((v) => v == value);
+				search_as_any.hk = areas.findIndex((v) => v === value);
 				const stringfield = queryString.stringify(search_as_any);
 				history.push("/hoivakodit?" + stringfield);
 			}}/>
@@ -126,16 +74,14 @@ function NursingHomes() {
 	{
 		if (!areas[(search as any).hk])
 			return true;
-		else if (nursinghome.location == areas[(search as any).hk])
+		else if (nursinghome.location === areas[(search as any).hk])
 			return true;
 		else
 			return false;
 	})
 	.map((nursinghome: any, index) => {
 		const rating: any = (ratings as any)[nursinghome.id]
-		if (nursinghome.id === expanded)
-			return <NursingHomeLarge nursinghome={nursinghome} rating={rating} expand_callback={OnExpanded} />
-		else return <NursingHomeSmall nursinghome={nursinghome} rating={rating} key={index} expand_callback={OnExpanded} />
+		return <NursingHomeSmall nursinghome={nursinghome} rating={rating} key={index} />
 	})
 
 	const Map = ReactMapboxGl({

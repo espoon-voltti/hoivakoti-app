@@ -4,7 +4,6 @@ import {
   Menu,
   MenuItem,
   MenuDisclosure,
-  MenuSeparator,
   MenuItemCheckbox
 } from "reakit/Menu";
 

@@ -1,16 +1,13 @@
-import React, { useState } from "react"
+import React from "react"
 import * as config from "./config";
 import "../styles/nursinghome-small.scss"
-
-const nursing_home_context = React.createContext({})
 
 type NursingHomeSmallProps = {
 	nursinghome: any
 	rating: any
-	expand_callback: (id: string) => void
 }
 
-function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeSmallProps) {
+function NursingHomeSmall({ nursinghome, rating}: NursingHomeSmallProps) {
 	let rating_dom
 	if (rating)
 		rating_dom = (
@@ -19,16 +16,13 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 			</p>
 		)
 
-	let expand_dom
-	if (expand_callback) expand_dom = <button onClick={() => expand_callback(nursinghome.id)}>Avaa</button>
-
 	let ara_dom 
 	if (nursinghome && nursinghome.ara) ara_dom = <div className="card-list-item__tag">ARA-kohde</div>
 
 	return (
 		<div className="card-list-item">
 			<div className="card-list-item__image-container">
-				<img className="card-list-item__image" src={config.PUBLIC_FILES_URL + "/placeholder.jpg"}/>
+				<img className="card-list-item__image" src={config.PUBLIC_FILES_URL + "/placeholder.jpg"} alt="Hoivakodin preview-kuva"/>
 			</div>
 
 			<div className="card-list-item__content">

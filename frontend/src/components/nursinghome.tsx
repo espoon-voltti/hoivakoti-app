@@ -6,8 +6,6 @@ import "../styles/nursinghome.scss"
 import * as config from "./config";
 const axios = require("axios").default
 
-const nursing_home_context = React.createContext({})
-
 type NursingHomeProps = {
 	_nursinghome: any
 }
