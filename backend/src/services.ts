@@ -16,12 +16,15 @@ async function NursingHomesFromCSV(csv: string)
 
 	records.map(async (record: any) =>
 	{
+		console.log(record.Asunnot);
 		await InsertNursingHomeToDB({name: record.Hoivakoti,
 			owner: record.Yritys,
 			address: record.Katuosoite,
 			location: record.Alue,
 			www: record.www,
-			ara: record.ARA ? record.ARA : false
+			ara: record.ARA ? record.ARA : false,
+			apartment_count: record.Asunnot,
+			language: record.Kieli,
 		})
 	})
 

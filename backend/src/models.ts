@@ -22,7 +22,9 @@ interface NursingHome{
 		address: string,
 		location: string,
 		ara?: boolean,
-		www?: string
+		www?: string,
+		apartment_count?: number,
+		language?: string,
 }
 
 knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
@@ -41,6 +43,8 @@ knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 		table.string("location")
 		table.boolean("ara")
 		table.string("www")
+		table.integer("apartment_count")
+		table.string("language")
 	}).then(async () => {
 		//const id = await InsertNursingHomeToDB("Leppävaaran Hoiva ja Turva", "Puutteita hoitohenkilökunnan määrässä; vakava vesivahinko; ikkunat eristämättömiä. Ruoka hyvää, suosittelen!");
 		//await InsertNursingHomeToDB("Vaikea Hoivakoti Ry", "Kaikki tarkastukset tip-top. Tosi hyvä pössis. Ruoka vähän mautonta, en suosittele muuttoa.");
@@ -79,7 +83,7 @@ async function SetUpRatingsTable(id_for_testing: string)
 		}).then(async () => {
 			console.log("Created Ratings table.")
 
-			await InsertNursingHomeRatingToDB(id_for_testing, 2)
+			//await InsertNursingHomeRatingToDB(id_for_testing, 2)
 		})
 
 		/*.catch((err: any) => { console.log(err); throw err })
@@ -93,13 +97,9 @@ async function InsertNursingHomeToDB(nurseryhome: NursingHome)
 {
 	const uuid = uuidv4()
 	await knex("NursingHomes").insert({id: uuid,
-		name: nurseryhome.name,
-		owner: nurseryhome.owner,
-		address: nurseryhome.address,
-		location: nurseryhome.location,
-		www: nurseryhome.www,
-		ara: nurseryhome.ara})
-	await SetUpRatingsTable(uuid)
+		...nurseryhome
+	})
+	//await SetUpRatingsTable(uuid)
 
 	return uuid
 }
