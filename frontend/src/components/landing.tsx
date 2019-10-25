@@ -38,8 +38,8 @@ function Landing() {
 
 	return (
 		<div id="landing">
-			<div id="landing-banner">
-				<img width="100%" src={config.PUBLIC_FILES_URL + "/person-elderly.jpg"} />
+			<div className="jumbotron">
+				<h2 className="jumbotron__header">Löydä sopiva hoivakoti<span>Tutustu Espoon kaupungin hyväksymiin hoivakoteihin.</span></h2>		
 			</div>
 
 			<div id="pick-nursing">

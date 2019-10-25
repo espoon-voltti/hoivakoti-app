@@ -28,7 +28,7 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 	return (
 		<div className="card-list-item">
 			<div className="card-list-item__image-container">
-				<img className="card-list-item__image" src={config.PUBLIC_FILES_URL + "/img-placeholder.jpg"}/>
+				<img className="card-list-item__image" src={config.PUBLIC_FILES_URL + "/placeholder.jpg"}/>
 			</div>
 
 			<div className="card-list-item__content">

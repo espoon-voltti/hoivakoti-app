@@ -33,12 +33,15 @@ const App: React.FC = () => {
 					<header className="app-header">
 						<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} />
 
-						<h1 className="app-name"><Link to="/">Espoon Hoivakodit</Link></h1>
+						<h1 className="app-name"><Link to="/">Espoon hoivakodit</Link></h1>
 
-						<div className="app-links">
+						<div className="app-nav">
+							<Link to="/">Etusivu</Link>
 							<Link to="/hoivakodit">Hoivakodit</Link>
 						</div>
-
+						<div className="app-language-nav">
+							<Link to="#">Suomi</Link> | <Link to="#">Ruotsi</Link>
+						</div>
 
 
 					</header>
