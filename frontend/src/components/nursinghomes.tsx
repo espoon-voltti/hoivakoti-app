@@ -145,20 +145,20 @@ function NursingHomes() {
 
 	return (
 		<div>
-			<div id="filters">
+			<div className="filters">
 				{filters_dom}
 			</div>
-			<div id="nursinghomes-list-and-map">
-				<div id="nursinghomes">
+			<div className="card-list-and-map-container">
+				<div className="card-list">
 					{nursinghome_components}
 				</div>
-				<div id="map">
+				<div id="map" className="map-container">
 				<Map
 					style="mapbox://styles/mapbox/streets-v9"
 					center={[24.6559, 60.2055]}
 					containerStyle={{
 					height: '100vh',
-					width: '50vw',
+					width: '100%',
 					position: 'sticky',
 					top: 0
 					}}>

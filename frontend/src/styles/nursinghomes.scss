@@ -1,8 +1,17 @@
-#nursinghomes-list-and-map
-{
+.card-list-and-map-container{
 	display: flex;
+	margin:0 20px;
 }
 
-#filters > * {
-	margin: 1px
+.filters  {
+	margin: 20px;
+}
+
+.card-list {
+	margin-right: 20px;
+	min-width: 780px;
+}
+
+.map-container {
+	width: 100%;
 }

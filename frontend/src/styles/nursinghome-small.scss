@@ -1,6 +1,6 @@
 @import "global.scss";
 
-.list-card {
+.card-list-item {
 	display: flex;  
 	flex-flow: row;
 	flex-grow: 1;
@@ -11,7 +11,7 @@
 	padding: 10px;
 }
 
-.list-card__image-container {
+.card-list-item__image-container {
 	width: 300px;
 	height: 200px;
 	border-radius: $border-radius;
@@ -19,34 +19,35 @@
 	background: $border-color url('/icon-house.svg') 50% 50% no-repeat;
 }
 
-.list-card__image {
+.card-list-item__image {
 	width: 100%;
 }
 
-.list-card__content {
+.card-list-item__content {
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
 }
 
-.list-card__subheader {
+.card-list-item__subheader {
 	text-transform: uppercase;
 	line-height: 16px;
 	font-size: 14px;
 }
 
-.list-card__header {
+.card-list-item__header {
 	font-size: 19px;
 	font-weight: bold;
 	line-height: 24px;
+	margin: 3px 0 3px 0;
 }
 
-.list-card__text {
-	line-height: 16px;
+.card-list-item__text {
+	line-height: 18px;
 	font-size: 14px;
 }
 
-.list-card__tag {
+.card-list-item__tag {
 	height: 25px;
 	background-color: $primery-blue;
 	border-radius: $border-radius;
