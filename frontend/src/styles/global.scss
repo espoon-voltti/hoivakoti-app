@@ -52,6 +52,7 @@ table {
 /* Site global styles */
 
 
+
 /* Colors */
 $border-color: #e8e8e8;
 $primery-blue: #0050BB;
@@ -60,11 +61,18 @@ $link-color: #3273C9;
 
 $headline-color: #6E6E6E;
 
+$border-radius: 2px;
+
 h2 {
 	color: $headline-color;
 	font-size: 48px;
 	font-family: Montserrat, sans-serif;
 	line-height: 58px;
+}
+
+body {
+	font-family: Open-sans, sans-serif;
+	font-size: 15px;
 }
 
 p { 

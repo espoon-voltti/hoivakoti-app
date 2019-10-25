@@ -22,39 +22,38 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 	let expand_dom
 	if (expand_callback) expand_dom = <button onClick={() => expand_callback(nursinghome.id)}>Avaa</button>
 	return (
-		<div className="nursinghome-container">
-			<img
-				className="nursinghome-container-child"
-				id="nursinghome-review-image"
-				src={config.PUBLIC_FILES_URL + "/icon-house.svg"}
-				width="100px"
-			/>
+		<div className="list-card">
+			<div className="list-card__image-container">
+				<img className="list-card__image" src={config.PUBLIC_FILES_URL + "/img-placeholder.jpg"}/>
+			</div>
 
-			<div id="nursinghome-info">
-				<p className="nursinghome-container-child" id="nursinghome-name">
-					{nursinghome && nursinghome.name}
-				</p>
-				<p className="nursinghome-container-child" id="nursinghome-summary">
-					{nursinghome && nursinghome.owner}
-				</p>
-				<p className="nursinghome-container-child" id="nursinghome-location">
-					{nursinghome && nursinghome.location}
-				</p>
-				<p className="nursinghome-container-child" id="nursinghome-ara">
-					ARA-kohde: {nursinghome && nursinghome.ara ? "Kyllä" : "Ei"}
-				</p>
-				<p className="nursinghome-container-child" id="nursinghome-lah">
-					LAH-kohde: {nursinghome && nursinghome.lah ? "Kyllä" : "Ei"}
-				</p>
-				<p className="nursinghome-container-child" id="nursinghome-apartments">
-					Asuntoja: {nursinghome && nursinghome.apartment_count}
-				</p>
-				<p className="nursinghome-container-child" id="nursinghome-language">
-					Kieli: {nursinghome && nursinghome.language}
-				</p>
-				<p className="nursinghome-container-child" id="nursinghome-address">
-					{nursinghome && nursinghome.address}
-				</p>
+			<div className="list-card__content">
+				
+				<div className="list-card__content--top">
+					<div className="list-card__subheader">
+						{nursinghome && nursinghome.owner}
+					</div>
+
+					<h3 className="list-card__header">
+						{nursinghome && nursinghome.name}
+					</h3>
+					
+					<div className="list-card__text">
+						{nursinghome && nursinghome.address}
+					</div>
+					<div className="list-card__tag">
+						{nursinghome && nursinghome.ara ? "ARA-kohde" : ""}
+					</div>
+				</div>
+				
+				<div className="list-card__content--bottom">
+					<div className="list-card__text">
+						Palvelukieli: {nursinghome && nursinghome.language} <span className="list-card__text--dot"> • </span> Asuntojen määrä: {nursinghome && nursinghome.apartment_count}
+					</div>
+					<div className="list-card__text">
+						{nursinghome && nursinghome.lah ? "Myös lyhytaikainen asuminen" : ""}
+					</div>
+				</div>
 			</div>
 		</div>
 	)
