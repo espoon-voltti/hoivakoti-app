@@ -25,6 +25,7 @@ async function NursingHomesFromCSV(csv: string)
 			ara: record.ARA ? record.ARA : false,
 			apartment_count: record.Asunnot,
 			language: record.Kieli,
+			lah: record.LAH ? record.LAH : false,
 		})
 	})
 

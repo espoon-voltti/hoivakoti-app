@@ -25,6 +25,7 @@ interface NursingHome{
 		www?: string,
 		apartment_count?: number,
 		language?: string,
+		lah?: boolean,
 }
 
 knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
@@ -45,6 +46,7 @@ knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 		table.string("www")
 		table.integer("apartment_count")
 		table.string("language")
+		table.boolean("lah")
 	}).then(async () => {
 		//const id = await InsertNursingHomeToDB("Leppävaaran Hoiva ja Turva", "Puutteita hoitohenkilökunnan määrässä; vakava vesivahinko; ikkunat eristämättömiä. Ruoka hyvää, suosittelen!");
 		//await InsertNursingHomeToDB("Vaikea Hoivakoti Ry", "Kaikki tarkastukset tip-top. Tosi hyvä pössis. Ruoka vähän mautonta, en suosittele muuttoa.");

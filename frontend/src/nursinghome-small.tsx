@@ -41,7 +41,10 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 					{nursinghome && nursinghome.location}
 				</p>
 				<p className="nursinghome-container-child" id="nursinghome-ara">
-					Ara-kohde: {nursinghome && nursinghome.ara ? "Kyllä" : "Ei"}
+					ARA-kohde: {nursinghome && nursinghome.ara ? "Kyllä" : "Ei"}
+				</p>
+				<p className="nursinghome-container-child" id="nursinghome-lah">
+					LAH-kohde: {nursinghome && nursinghome.lah ? "Kyllä" : "Ei"}
 				</p>
 				<p className="nursinghome-container-child" id="nursinghome-apartments">
 					Asuntoja: {nursinghome && nursinghome.apartment_count}
