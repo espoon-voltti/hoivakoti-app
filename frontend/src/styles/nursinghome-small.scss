@@ -1,39 +1,71 @@
-#nursinghome-review-image {
-	vertical-align: top;
-}
+@import "global.scss";
 
-.nursinghome-container {
+.card-list-item {
 	display: flex;  
-	flex-flow: row wrap;
+	flex-flow: row;
 	flex-grow: 1;
 	text-align: left;
-	margin: 10px;
-	border: 1px solid gray;
+	border: 1px solid $border-color;
+	border-radius: $border-radius;
+	margin-bottom: 20px;
+	padding: 10px;
 }
 
-.nursinghome-container > img {
-	background-color: #D8D8D8;
-	padding: 20px;
+.card-list-item__image-container {
+	width: 300px;
+	height: 200px;
+	border-radius: $border-radius;
+	margin-right: 20px;
+	background: $border-color url('/icon-house.svg') 50% 50% no-repeat;
 }
 
-.nursinghome-container-child {
-	margin: 5px;
+.card-list-item__image {
+	width: 100%;
 }
 
-#nursinghome-name {
-	font-weight: bold;
-}
-
-#nursinghome-summary {
-
-}
-
-#nursinghome-address {
-	margin-top: auto;
-}
-
-#nursinghome-info {
-	font-size: small;
+.card-list-item__content {
 	display: flex;
+	justify-content: space-between;
 	flex-direction: column;
 }
+
+.card-list-item__subheader {
+	text-transform: uppercase;
+	line-height: 16px;
+	font-size: 14px;
+}
+
+.card-list-item__header {
+	font-size: 19px;
+	font-weight: bold;
+	line-height: 24px;
+	margin: 3px 0 3px 0;
+}
+
+.card-list-item__text {
+	line-height: 18px;
+	font-size: 14px;
+}
+
+.card-list-item__text--lah {
+	margin-top:4px;
+}
+
+.card-list-item__tag {
+	height: 25px;
+	background-color: $primary-blue;
+	border-radius: $border-radius;
+	display: inline-block;
+	line-height: 25px;
+	padding: 0 5px;
+	margin-top: 5px;
+	color: #fff;
+}
+
+
+
+
+
+
+
+

@@ -1,48 +1,60 @@
-.app {
-
-}
+@import "global.scss";
 
 .app-header {
-	margin-left: 35px;
-	margin-top: 25px;
-	display: flex;
+	display:flex;
+	height:120px;
+	padding: 20px;
+	align-items: center;
 }
 
-.app-header > img {
-	margin-top: -20px;
-	margin-left: -20px;
-	margin-right: 20px;
+.logo {
+	height:80px;
+	margin: 0 40px 0 10px;
 }
 
-#app-name {
-	color: rgb(110, 110, 110);
+.app-name a {
+	color: $headline-color;
 	font-size: 36px;
 	font-family: Montserrat-Light;
-	font-weight: 300;
+	text-decoration: none;
+	margin-top: 5px;
 }
 
-#app-links {
-	color: rgb(110, 110, 110);
+.app-nav {
+	margin-left: 80px;
+}
+
+.app-language-nav {
+	margin-left: auto;
+}
+
+.app-nav a, .app-language-nav a {
+	color: $headline-color;
 	font-family: Montserrat-Regular;
 	font-size: 15px;
 	font-weight: normal;
 	letter-spacing: 1px;
 	text-align: center;
 	vertical-align: middle;
-	margin-left: 10px;
+	margin-left: 50px;
 	line-height: 40px;
+	display:inline-block;
+	text-decoration: none;
+	text-transform: uppercase;
+	border-bottom: 5px solid transparent;
 }
 
-#app-links > a {
-	color: rgb(110, 110, 110);
-	font-family: Montserrat-Regular;
-	font-size: 15px;
-	font-weight: normal;
-	letter-spacing: 1px;
-	text-align: center;
-	vertical-align: middle;
-	padding-left: 20px;
+.app-nav a:hover {
+	border-bottom: 5px solid $primary-blue;
 }
+
+.app-language-nav a {
+	text-transform: none;
+	margin: 0;
+}
+
+
+	
 
 /*
 #content {

@@ -31,15 +31,19 @@ const App: React.FC = () => {
 			<div className="app">
 				<Router>
 					<header className="app-header">
-						<img width="150px" src={config.PUBLIC_FILES_URL + "/espoo-tunnus.jpg"} />
+						<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} />
 
-						<div id="app-name"><Link to="/">Espoon Hoivakodit</Link></div>
+						<h1 className="app-name"><Link to="/">Espoon hoivakodit</Link></h1>
 
-						<div id="app-links">
+						<div className="app-nav">
+							<Link to="/">Etusivu</Link>
 							<Link to="/hoivakodit">Hoivakodit</Link>
-							<Link to="/">Hakeminen</Link>
-							<Link to="/">Tietoa Palvelusta</Link>
 						</div>
+						<div className="app-language-nav">
+							<Link to="#">Suomi</Link> | <Link to="#">Ruotsi</Link>
+						</div>
+
+
 					</header>
 
 					<div id="content">
