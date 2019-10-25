@@ -1,17 +1,27 @@
+@import "global.scss";
+
 .card-list-and-map-container{
 	display: flex;
-	margin:0 20px;
 }
 
 .filters  {
-	margin: 20px;
+	padding: 20px;
+	border-bottom: 1px solid $border-color;
+	border-top: 1px solid $border-color;
 }
 
 .card-list {
-	margin-right: 20px;
+	margin: 0 20px;
 	min-width: 780px;
 }
 
 .map-container {
 	width: 100%;
+}
+
+.results-summary {
+	font-size: 22px;
+	font-family: Montserrat, sans-serif;
+	line-height: 27px;
+	margin: 25px 0 25px 10px;
 }

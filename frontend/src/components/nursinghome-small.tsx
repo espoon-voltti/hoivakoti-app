@@ -52,7 +52,7 @@ function NursingHomeSmall({ nursinghome, rating, expand_callback }: NursingHomeS
 					<div className="card-list-item__text">
 						Palvelukieli: {nursinghome && nursinghome.language} <span className="card-list-item__text--dot"> • </span> Asuntojen määrä: {nursinghome && nursinghome.apartment_count}
 					</div>
-					<div className="card-list-item__text">
+					<div className="card-list-item__text card-list-item__text--lah">
 						{nursinghome && nursinghome.lah ? "Myös lyhytaikainen asuminen" : ""}
 					</div>
 				</div>

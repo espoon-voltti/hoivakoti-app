@@ -1,27 +1,26 @@
-.app {
-
-}
+@import "global.scss";
 
 .app-header {
-	margin-left: 35px;
-	margin-top: 25px;
-	display: flex;
+	display:flex;
+	height:120px;
+	padding: 20px;
+	align-items: center;
 }
 
-.app-header > img {
-	margin-top: -20px;
-	margin-left: -20px;
-	margin-right: 20px;
+.logo {
+	height:80px;
+	margin-right: 30px;
 }
 
-#app-name {
-	color: rgb(110, 110, 110);
+.app-name a {
+	color: $headline-color;
 	font-size: 36px;
 	font-family: Montserrat-Light;
-	font-weight: 300;
+	text-decoration: none;
+	margin-top:5px;
 }
 
-#app-links {
+.app-links {
 	color: rgb(110, 110, 110);
 	font-family: Montserrat-Regular;
 	font-size: 15px;
@@ -33,7 +32,7 @@
 	line-height: 40px;
 }
 
-#app-links > a {
+.app-links > a {
 	color: rgb(110, 110, 110);
 	font-family: Montserrat-Regular;
 	font-size: 15px;
