@@ -30,7 +30,7 @@ const App: React.FC = () => {
 				<Router>
 					<header className="header">
 						<div className="logo-container">
-							<a href="#">	
+							<a href="/">	
 								<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} alt="Espoo logo"/>
 								<h1 className="title">Espoon hoivakodit</h1>
 							</a>
