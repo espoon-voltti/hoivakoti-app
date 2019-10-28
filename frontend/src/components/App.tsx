@@ -4,7 +4,7 @@ import { NursingHomes } from "./nursinghomes"
 import { NursingHome } from "./nursinghome"
 import { Feedback } from "./feedback"
 import { Landing } from "./landing"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom"
 import { Provider } from "reakit";
 import * as system from "reakit-system-bootstrap";
 import * as config from "./config";
@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
 	//<Button>Button</Button>;
 
-	// 						<Link to="/palaute?id=985507e2-735f-48a9-a941-75b38f0e4adb">Hoivakodit</Link>
+	// 						<NavLink to="/palaute?id=985507e2-735f-48a9-a941-75b38f0e4adb">Hoivakodit</NavLink>
 
 	console.log("ENV");
 	console.log(Object.keys(process.env));
@@ -37,13 +37,13 @@ const App: React.FC = () => {
 						</div>
 						<nav className="nav-container">
 							<ul className="nav-menu">
-								<li className="selected"><Link to="/">Etusivu</Link></li>
-								<li><Link to="/hoivakodit">Hoivakodit</Link></li>
+								<li><NavLink activeClassName="selected" exact to="/">Etusivu</NavLink></li>
+								<li><NavLink activeClassName="selected" exact to="/hoivakodit">Hoivakodit</NavLink></li>
 							</ul>
 							<ul className="nav-menu--language">
 								<li className="selected">Suomeksi</li>
 								<li>|</li> 
-								<li><Link to="#" lang="sv">På Svenska</Link></li>
+								<li><NavLink to="#" lang="sv">På Svenska</NavLink></li>
 							</ul>
 						</nav>
 

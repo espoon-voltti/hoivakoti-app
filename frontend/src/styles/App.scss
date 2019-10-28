@@ -61,7 +61,8 @@
 	padding-top: 11px;
 }
 
-.nav-menu a:hover, .nav-menu li.selected a {
+.nav-menu a:hover, .nav-menu li a.selected {
+	font-weight: bold;
 	border-bottom: 5px solid $primary-blue;
 }
 
