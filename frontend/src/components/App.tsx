@@ -28,29 +28,35 @@ const App: React.FC = () => {
 
 			<div className="app">
 				<Router>
-					<header className="app-header">
-						<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} alt="Espoon kaupungin logo"/>
-
-						<h1 className="app-name"><Link to="/">Espoon hoivakodit</Link></h1>
-
-						<div className="app-nav">
-							<Link to="/">Etusivu</Link>
-							<Link to="/hoivakodit">Hoivakodit</Link>
+					<header className="header">
+						<div className="logo-container">
+							<a href="#">	
+								<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} alt="Espoo logo"/>
+								<h1 className="title">Espoon hoivakodit</h1>
+							</a>
 						</div>
-						<div className="app-language-nav">
-							<Link to="#">Suomi</Link> | <Link to="#">Ruotsi</Link>
-						</div>
+						<nav className="nav-container">
+							<ul className="nav-menu">
+								<li className="selected"><Link to="/">Etusivu</Link></li>
+								<li><Link to="/hoivakodit">Hoivakodit</Link></li>
+							</ul>
+							<ul className="nav-menu--language">
+								<li className="selected">Suomeksi</li>
+								<li>|</li> 
+								<li><Link to="#" lang="sv">På Svenska</Link></li>
+							</ul>
+						</nav>
 
 
 					</header>
 
-					<div id="content">
+					<main id="content">
 						<Route exact path="/" component={Landing} />
 						<Route exact path="/hoivakodit" component={NursingHomes} />
 						<Route exact path="/hoivakodit/:id" component={NursingHome} />
 						<Route exact path="/topics" component={NursingHomes} />
 						<Route exact path="/palaute" component={Feedback} />
-					</div>
+					</main>
 				</Router>
 			</div>
 

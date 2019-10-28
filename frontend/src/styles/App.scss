@@ -1,18 +1,25 @@
 @import "global.scss";
 
-.app-header {
+.header {
 	display:flex;
 	height:120px;
 	padding: 20px;
 	align-items: center;
 }
 
-.logo {
-	height:80px;
-	margin: 0 40px 0 10px;
+.logo-container a {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	white-space: nowrap;
 }
 
-.app-name a {
+.logo {
+	height:60px;
+	margin: 0 40px 6px 10px;
+}
+
+.title {
 	color: $headline-color;
 	font-size: 36px;
 	font-family: Montserrat-Light;
@@ -20,15 +27,20 @@
 	margin-top: 5px;
 }
 
-.app-nav {
+.nav-container {
+	display:flex;
+	height:120px;
+	padding: 20px 0 20px 20px;
+	align-items: center;
+	width: 100%;
+}
+
+.nav-menu {
 	margin-left: 80px;
+	display:flex;
 }
 
-.app-language-nav {
-	margin-left: auto;
-}
-
-.app-nav a, .app-language-nav a {
+.nav-menu a {
 	color: $headline-color;
 	font-family: Montserrat-Regular;
 	font-size: 15px;
@@ -38,33 +50,45 @@
 	vertical-align: middle;
 	margin-left: 50px;
 	line-height: 40px;
+	padding:0 10px;
 	display:inline-block;
 	text-decoration: none;
 	text-transform: uppercase;
 	border-bottom: 5px solid transparent;
 }
 
-.app-nav a:hover {
+.nav-menu a {
+	padding-top: 11px;
+}
+
+.nav-menu a:hover, .nav-menu li.selected a {
 	border-bottom: 5px solid $primary-blue;
 }
 
-.app-language-nav a {
+.nav-menu li.selected a, .nav-menu--language li.selected {
+	font-weight: bold;
+}
+
+.nav-menu--language {
+	margin-left: auto;
+	display: flex;
+	align-self: flex-start;
+}
+
+.nav-menu--language li {
 	text-transform: none;
 	margin: 0;
-}
-
-
+	color: $headline-color;
+	font-family: Montserrat-Regular;
+	font-size: 15px;
+	font-weight: normal;
+	letter-spacing: 1px;
+	text-align: center;
+	vertical-align: middle;
+	padding:0 10px;
 	
-
-/*
-#content {
-	border-radius: 5px;
-	margin-top: -80px;
-	z-index: 1000;
-	background: rgba(255, 255, 255, 1.0);
-	opacity: 0.999;
-	margin-left: 70px;
-	margin-right: 70px;
-	padding: 20px;
 }
-*/
+.nav-menu--language a {
+	color: $headline-color;
+	text-decoration: none;
+}
