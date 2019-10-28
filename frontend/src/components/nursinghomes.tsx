@@ -62,7 +62,7 @@ function NursingHomes() {
 			}}/>
 		<MenuSelect prefix="Ara-kohde: " values={["Kyllä", "Ei väliä"]} aria_label="Valitse, näytetäänkö vain Ara-kohteet" on_changed={(value: any) => 
 			{
-				search_as_any.ara = value;
+				search_as_any.ara = value == "Kyllä" ? true : null;
 				const stringfield = queryString.stringify(search_as_any);
 				history.push("/hoivakodit?" + stringfield);
 			}}/>
@@ -72,12 +72,14 @@ function NursingHomes() {
 	console.log(nursinghomes);
 	const nursinghome_components: object[] = nursinghomes.filter((nursinghome: any) =>
 	{
-		if (!areas[(search as any).hk])
-			return true;
-		else if (nursinghome.location === areas[(search as any).hk])
-			return true;
-		else
+		if (areas[(search as any).hk] && nursinghome.location !== areas[(search as any).hk])
 			return false;
+		if ((search as any).language && nursinghome.language !== (search as any).language)
+			return false;
+		if ((search as any).ara && nursinghome.ara !== (search as any).ara)
+			return false;
+		
+		return true;
 	})
 	.map((nursinghome: any, index) => {
 		const rating: any = (ratings as any)[nursinghome.id]
