@@ -88,7 +88,10 @@ function NursingHomes() {
 
 	const Map = ReactMapboxGl({
 		accessToken:
-			"pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg"
+			"pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
+		scrollZoom: false,
+		minZoom: 11,
+		maxZoom: 11
 	})
 
 	return (
