@@ -101,7 +101,7 @@ function NursingHomes() {
 			</div>
 			<div className="card-list-and-map-container">
 				<div className="card-list">
-					<h2 className="results-summary">x hoivakotia</h2>
+					<h2 className="results-summary">{Object.keys(nursinghome_components).length} hoivakotia</h2>
 					{nursinghome_components}
 				</div>
 				<div id="map" className="map-container">
