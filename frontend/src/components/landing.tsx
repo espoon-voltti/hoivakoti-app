@@ -64,6 +64,18 @@ function Landing() {
 					<dl className="faq-list">
 						<dt>Kuuluuko ikkunanpesu palveluun? </dt>
 						<dd>Kuuluu tarpeen mukaisesti.</dd>
+
+						<dt>Kuka hoitaa asiakkaan vaatteet?</dt>
+						<dd>Asiakkaalla omat vaatteet (normaalin vesipesun kestävät). Erikoispesuista asiakas vastaa itse.</dd>
+
+						<dt>Kuuluvatko tyynyt, peitot ja liinavaatteet palveluun?</dt>
+						<dd>Hoivakotikohtainen käytäntö</dd>
+
+						<dt>Miten lääkkeet hoituvat?</dt>
+						<dd>Asiakas maksaa itse, annosjakelu kuuluu palveluun.</dd>
+
+						<dt>Asiakaskohtaisten apuvälineiden noudot </dt>
+						<dd>Asiakas kustantaa, palveluntuottajalla avustusvelvollisuus.</dd>
 					</dl>
 				</section>
 			</div>

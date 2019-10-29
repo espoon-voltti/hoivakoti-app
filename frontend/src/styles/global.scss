@@ -63,6 +63,22 @@ $headline-color: #6E6E6E;
 
 $border-radius: 2px;
 
+
+
+
+body {
+	font-family: Open-sans, sans-serif;
+	font-size: 15px;
+}
+
+p { 
+	font-family: Open-sans, sans-serif;
+	font-size: 15px;
+	line-height: 20px;
+	margin-bottom:1.5em;
+	color: $text-color;
+}
+
 h1 {
 	color: $headline-color;
 	font-size: 36px;
@@ -80,19 +96,22 @@ h2 {
 	margin-bottom: 20px;
 }
 
-
-
-body {
-	font-family: Open-sans, sans-serif;
-	font-size: 15px;
+h3 {
+	color: $headline-color;
+	font-size: 22px;
+	font-family: Montserrat, sans-serif;
+	font-weight: 300;
+	line-height: 27px;
+	margin-bottom: 20px;
 }
 
-p { 
-	font-family: Open-sans, sans-serif;
-	font-size: 15px;
-	line-height: 20px;
-	margin-bottom:1em;
-	color: $text-color;
+a {
+	color: $link-color;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 .ingress {

@@ -61,6 +61,7 @@
 
 .nav-menu a:hover {
 	border-bottom: 5px solid $primary-blue;
+	text-decoration: none;
 }
 
 .nav-menu li a.selected, .nav-menu--language li.selected {
