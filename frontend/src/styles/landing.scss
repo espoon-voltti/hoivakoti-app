@@ -1,8 +1,17 @@
 @import "global.scss";
 
-#pick-nursing > * {
-	margin: 10px;
+$column-width: 1180px;
+
+.location-picker {
+	max-width: $column-width;
+	margin:-70px auto 50px auto;
+	background-color: #fff;
+	border-radius: $border-radius;
+	padding: 20px;
 }
+
+
+
 
 .jumbotron{
 	width: 100%;
@@ -30,3 +39,14 @@
 	font-size: 19px;
 	line-height: 26px;
 }
+
+.content-column {
+	max-width: $column-width;
+	margin:0 auto;
+	padding: 20px;
+}
+
+.content-column p {
+	max-width: 900px;
+}
+

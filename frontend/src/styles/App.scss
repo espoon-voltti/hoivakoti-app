@@ -20,9 +20,7 @@
 }
 
 .title {
-	color: $headline-color;
-	font-size: 36px;
-	font-family: Montserrat-Light;
+	font-family: Montserrat-Light, sans-serif;
 	text-decoration: none;
 	margin-top: 5px;
 }
@@ -61,13 +59,16 @@
 	padding-top: 11px;
 }
 
-.nav-menu a:hover, .nav-menu li a.selected {
-	font-weight: bold;
+.nav-menu a:hover {
 	border-bottom: 5px solid $primary-blue;
 }
 
-.nav-menu li.selected a, .nav-menu--language li.selected {
+.nav-menu li a.selected, .nav-menu--language li.selected {
 	font-weight: bold;
+}
+
+.nav-menu li a.selected{
+	border-bottom: 5px solid $primary-blue;	
 }
 
 .nav-menu--language {
@@ -92,4 +93,8 @@
 .nav-menu--language a {
 	color: $headline-color;
 	text-decoration: none;
+}
+
+.nav-menu--language a:hover {
+	text-decoration: underline;
 }
