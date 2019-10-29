@@ -28,7 +28,7 @@ function Landing() {
 				<h2 className="jumbotron__header">Löydä sopiva hoivakoti<span>Tutustu Espoon kaupungin hyväksymiin hoivakoteihin.</span></h2>		
 			</div>
 
-			<div id="pick-nursing">
+			<div className="location-picker">
 				<b>Miltä alueelta etsit hoivakotia?</b>
 				<select onChange={on_selected_area}>
 					{menu_items_dom}
@@ -40,22 +40,44 @@ function Landing() {
 					Näytä Hoivakodit
 				</Button>
 			</div>
-			<div id="info">
-			<h2>Miten saan tehostetun palveluasumisen?</h2>
-			<p>
-			Tehostetun palveluasumisen tekstiä. Mitä kautta palveluasumista haetaan, mihin tahoon otetaan yhteyttä yms.
-			</p>
+			<div className="content-column">
+				<section className="content-block">
+					<p className="ingress">Sivustolta löydät tiedot Espoon kaupungin hyväksymistä hoivakodeista. Saadaksesi hoivakotipaikan tarvitset myönteisen päätöksen tehostetun palveluasumisen tarpeesta.</p>
+					<p className="ingress">Etsitkö hoivakotia palvelusetelillä? Katso hoivakoteja osoitteessa <a href="https://www.parastapalvelua.fi/" target="_blank">www.parastapalvelua.fi</a></p>
+				</section>
 
-			<h2>Mitä on tehostettu palveluasuminen?</h2>
-			<p>
-			Tehostetun palveluasumisen tekstiä. Mitä tehostettu palveluasuminen tarkoittaa - vuokranmaksua, yhteisiä tiloja, hoitajasaatavuus, yms
-			</p>
+				<section className="content-block">
+					<h2>Miten saat tehostetun palveluasumisen päätöksen?</h2>
+					<p>Lisätietoja hakemisesta</p>
+				</section>
 
-			<h2>Palvelulupaus</h2>
-			<p>
-			Palvelulupauksen teksti.
-			</p>
+				<section className="content-block">
+					<h2>Mitä on tehostettu palveluasuminen?</h2>
+					<p>Espoon kaupunki järjestää tehostettua palveluasumista useissa yksityisten palveluntuottajien hoivakodeissa sekä omissa hoivakodeissaan. Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa. Näissä hoivakodeissa on terveydenhuollon ammattikoulutuksen saanutta henkilökuntaa paikalla jatkuvasti. Hoivakodissa saa tarpeiden mukaista hoivaa ja huolenpitoa elämän loppuun saakka.</p>
+				</section>
 
+				<section className="content-block">
+					<h2>Mitä hoivakodin antamaan palveluun kuuluu?</h2>
+					<p>Kaikki tällä sivustolla esillä olevat hoivakodit ovat sitoutuneet noudattamaan Espoon kaupungin palvelukonseptia, joka määrittää vähimmäisvaatimukset palvelun sisällölle ja laadulle.</p>
+
+					<h3>Usein kysyttyjä kysymyksiä palvelusta</h3>
+					<dl className="faq-list">
+						<dt>Kuuluuko ikkunanpesu palveluun? </dt>
+						<dd>Kuuluu tarpeen mukaisesti.</dd>
+
+						<dt>Kuka hoitaa asiakkaan vaatteet?</dt>
+						<dd>Asiakkaalla omat vaatteet (normaalin vesipesun kestävät). Erikoispesuista asiakas vastaa itse.</dd>
+
+						<dt>Kuuluvatko tyynyt, peitot ja liinavaatteet palveluun?</dt>
+						<dd>Hoivakotikohtainen käytäntö</dd>
+
+						<dt>Miten lääkkeet hoituvat?</dt>
+						<dd>Asiakas maksaa itse, annosjakelu kuuluu palveluun.</dd>
+
+						<dt>Asiakaskohtaisten apuvälineiden noudot </dt>
+						<dd>Asiakas kustantaa, palveluntuottajalla avustusvelvollisuus.</dd>
+					</dl>
+				</section>
 			</div>
 		</div>
 	)

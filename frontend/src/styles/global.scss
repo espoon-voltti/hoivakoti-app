@@ -63,12 +63,6 @@ $headline-color: #6E6E6E;
 
 $border-radius: 2px;
 
-h2 {
-	color: $headline-color;
-	font-size: 48px;
-	font-family: Montserrat, sans-serif;
-	line-height: 58px;
-}
 
 
 
@@ -81,4 +75,50 @@ p {
 	font-family: Open-sans, sans-serif;
 	font-size: 15px;
 	line-height: 20px;
+	margin-bottom:1.5em;
+	color: $text-color;
+}
+
+h1 {
+	color: $headline-color;
+	font-size: 36px;
+	font-family: Montserrat, sans-serif;
+	font-weight: 300;
+	line-height: 44px;
+}
+
+h2 {
+	color: $headline-color;
+	font-size: 36px;
+	font-family: Montserrat, sans-serif;
+	font-weight: 300;
+	line-height: 44px;
+	margin-bottom: 20px;
+}
+
+h3 {
+	color: $headline-color;
+	font-size: 22px;
+	font-family: Montserrat, sans-serif;
+	font-weight: 300;
+	line-height: 27px;
+	margin-bottom: 20px;
+}
+
+a {
+	color: $link-color;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.ingress {
+	font-size: 19px;
+	line-height: 26px;
+}
+
+.content-block {
+	margin-bottom: 50px;
 }
