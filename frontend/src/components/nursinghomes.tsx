@@ -21,6 +21,10 @@ function NursingHomes() {
 	useEffect(() => {
 		const parsed = queryString.parse(history.location.search);
 		SetSearch(parsed);
+		if (parsed.alue && !Array.isArray(parsed.alue))
+			parsed.alue = [parsed.alue];
+		if (!parsed.alue)
+			parsed.alue = []
 		console.log("Search:");
 		console.log(parsed);
 
@@ -43,36 +47,46 @@ function NursingHomes() {
 
 	const search_as_any:any = search as any;
 
-	const selected_area_text = "Sijainti: " + ((search as any).hk ? areas[(search as any).hk] : areas[0]);
+	const selected_area_text = "Sijainti: " + ((search as any).alue ? (search as any).alue : areas[0]);
+
+	const area_options = areas.map((value: string) => {
+		return {text: value, type: "checkbox"};
+	})
 
 	const filters_dom = (
 	
 	<>
-		<MenuSelect prefix="Sijainti: " values={areas} aria_label="Valitse hoivakodin alue" on_changed={(value: any) => 
+		<MenuSelect prefix="Sijainti: " values={area_options} aria_label="Valitse hoivakodin alue" on_changed={(changed_object: any) => 
 			{
-				search_as_any.hk = areas.findIndex((v) => v === value);
+				console.log("tulee:");
+				console.log(changed_object.value);
+				//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
+				if (!changed_object.checked)
+					search_as_any.alue = search_as_any.alue.filter((value: string) => {return value !== changed_object.value})
+				else
+					if (!search_as_any.alue.includes(changed_object.value))
+						search_as_any.alue.push(changed_object.value);
 				const stringfield = queryString.stringify(search_as_any);
 				history.push("/hoivakodit?" + stringfield);
 			}}/>
-		<MenuSelect prefix="Palvelukieli: " values={["Suomi", "Ruotsi", "Ei väliä"]} aria_label="Valitse hoivakodin kieli" on_changed={(value: any) => 
+		<MenuSelect prefix="Palvelukieli: " values={["Suomi", "Ruotsi", "Ei väliä"]} aria_label="Valitse hoivakodin kieli" on_changed={(changed_object: any) => 
 			{
-				search_as_any.language = value;
+				search_as_any.language = changed_object.value;
 				const stringfield = queryString.stringify(search_as_any);
 				history.push("/hoivakodit?" + stringfield);
 			}}/>
-		<MenuSelect prefix="Ara-kohde: " values={["Kyllä", "Ei väliä"]} aria_label="Valitse, näytetäänkö vain Ara-kohteet" on_changed={(value: any) => 
+		<MenuSelect prefix="Ara-kohde: " values={["Kyllä", "Ei väliä"]} aria_label="Valitse, näytetäänkö vain Ara-kohteet" on_changed={(changed_object: any) => 
 			{
-				search_as_any.ara = value == "Kyllä" ? true : null;
+				search_as_any.ara = changed_object.value == "Kyllä" ? true : null;
 				const stringfield = queryString.stringify(search_as_any);
 				history.push("/hoivakodit?" + stringfield);
 			}}/>
 	</>
 	);
-	console.log("here");
-	console.log(nursinghomes);
+
 	const nursinghome_components: object[] = nursinghomes.filter((nursinghome: any) =>
 	{
-		if (areas[(search as any).hk] && nursinghome.location !== areas[(search as any).hk])
+		if ((search as any).alue && !(search as any).alue.includes(nursinghome.location))
 			return false;
 		if ((search as any).language && nursinghome.language !== (search as any).language)
 			return false;

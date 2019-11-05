@@ -9,7 +9,7 @@ import {
 
 export type MenuSelectProps = {
 	prefix: string,
-	values: string[],
+	values: any,
 	aria_label: string,
 	on_changed: any
 }
@@ -23,18 +23,34 @@ function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
 
 	const select_menu = useMenuState();
 
-	const items_dom: object[] = values.map((value, index) => {
+	const items_dom: object[] = values.map((value: any, index: any) => {
 		const name = "valitse " + value;
-		return	(
-			<MenuItem {...select_menu} name={name} value={value} key={index} onClick={(event: any) => {
-					SetSelected(event.target.value);
-					on_changed(event.target.value);
-					select_menu.hide();
-				}
-			}>
-				{value}
-			</MenuItem>
-		)
+
+		if (typeof value !== "object")
+			return	(
+				<MenuItem {...select_menu} name={name} value={value} key={index} onClick={(event: any) => {
+						SetSelected(event.target.value);
+						on_changed(event.target);
+						select_menu.hide();
+					}
+				}>
+					{value}
+				</MenuItem>
+			)
+		else if (value.type === "checkbox")
+		{
+			return	(
+				<MenuItemCheckbox {...select_menu} name={name} value={value.text} key={index} onChange={(event: any) => {
+						console.log(event.target.checked);
+						SetSelected(event.target.value);
+						on_changed(event.target);
+						select_menu.hide();
+					}
+				}>
+					{value.text}
+				</MenuItemCheckbox>
+			)
+		}
 	});
 
 	const selected_text = prefix + selected;
