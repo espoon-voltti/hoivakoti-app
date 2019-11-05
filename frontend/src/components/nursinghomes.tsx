@@ -50,11 +50,11 @@ function NursingHomes() {
 	const selected_area_text = "Sijainti: " + ((search as any).alue ? (search as any).alue : areas[0]);
 
 	const area_options = areas.map((value: string) => {
-		return {text: value, type: "checkbox"};
+		const checked = search_as_any.alue ? search_as_any.alue.includes(value) : false;
+		return {text: value, type: "checkbox", checked: checked};
 	})
 
 	const filters_dom = (
-	
 	<>
 		<MenuSelect prefix="Sijainti: " values={area_options} aria_label="Valitse hoivakodin alue" on_changed={(changed_object: any) => 
 			{
@@ -86,7 +86,9 @@ function NursingHomes() {
 
 	const nursinghome_components: object[] = nursinghomes.filter((nursinghome: any) =>
 	{
-		if ((search as any).alue && !(search as any).alue.includes(nursinghome.location))
+		if ((search as any).alue &&
+			(search as any).alue.length > 0 &&
+			!(search as any).alue.includes(nursinghome.location))
 			return false;
 		if ((search as any).language && nursinghome.language !== (search as any).language)
 			return false;

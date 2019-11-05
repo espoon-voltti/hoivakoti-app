@@ -17,6 +17,7 @@ export type MenuSelectProps = {
 function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
 	// Declare a new state variable, which we'll call "count"
 	const [selected, SetSelected] = useState("")
+	const [checked, setChecked] = useState(false);
 
 	useEffect(() => {
 	}, [])
@@ -25,7 +26,7 @@ function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
 
 	const items_dom: object[] = values.map((value: any, index: any) => {
 		const name = "valitse " + value;
-
+		console.log("Recreating..");
 		if (typeof value !== "object")
 			return	(
 				<MenuItem {...select_menu} name={name} value={value} key={index} onClick={(event: any) => {
@@ -40,11 +41,12 @@ function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
 		else if (value.type === "checkbox")
 		{
 			return	(
-				<MenuItemCheckbox {...select_menu} name={name} value={value.text} key={index} onChange={(event: any) => {
+				<MenuItemCheckbox {...select_menu} name={name} value={value.text} key={index} checked={checked} onChange={(event: any) => {
 						console.log(event.target.checked);
 						SetSelected(event.target.value);
 						on_changed(event.target);
 						select_menu.hide();
+						setChecked(!checked);
 					}
 				}>
 					{value.text}
