@@ -1,0 +1,24 @@
+// This is for a single menu, including the button clicked to open the menu.
+.menu
+{
+	
+}
+
+// The button child
+.menu > button
+{
+	
+}
+
+
+// The container, under which items are
+.menu > .menu-item-container
+{
+	color: #ff0000;
+}
+
+// Checkbox menu items
+.menu > .menu-item-container > * > .checkbox-item
+{
+	color: #ff0000;
+}
