@@ -5,11 +5,17 @@
 }
 
 .filters  {
-	padding: 20px;
+	margin: 20px;
 	border-bottom: 1px solid $border-color;
 	border-top: 1px solid $border-color;
 	display: flex;
 	flex-grow: 1;
+}
+
+// Spacing between the buttons for different filters comes from here.
+.filters > *
+{
+	margin: 2px;
 }
 
 .card-list {

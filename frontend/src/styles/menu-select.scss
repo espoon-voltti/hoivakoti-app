@@ -1,24 +1,43 @@
+// We use the #app ID identifier to become more specific than Bootstrap styles.
+
 // This is for a single menu, including the button clicked to open the menu.
-.menu
+#app .menu
 {
-	
+
 }
 
-// The button child
-.menu > button
+// The button child - the button clicked to open the menu.
+#app .menu > button
 {
-	
+	border-radius: 0px;
 }
 
+#app .menu > button:hover
+{
+	background-color: #ff0000;
+}
 
-// The container, under which items are
-.menu > .menu-item-container
+// The button when the menu is expanded.
+#app .menu > button[aria-expanded="true"]
+{
+	background-color: #ffff00;
+}
+
+// The container, under which items are. Includes the background on which the menu items are.
+#app .menu > .menu-item-container
+{
+	background-color: #ffffff;
+}
+
+// Checkbox menu items.
+#app .checkbox-item
 {
 	color: #ff0000;
 }
 
-// Checkbox menu items
-.menu > .menu-item-container > * > .checkbox-item
+// Checkbox menu items.
+// Weird specifity hack - from some reason high specificity inline css is being generated *somewhere* that overrides this otherwise.
+#app .radio-item
 {
 	color: #ff0000;
 }

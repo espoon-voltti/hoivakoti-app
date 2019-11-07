@@ -26,7 +26,7 @@ const App: React.FC = () => {
 	return (
 		<Provider unstable_system={system}>
 
-			<div className="app">
+			<div id="app">
 				<Router>
 					<header className="header">
 						<div className="logo-container">
