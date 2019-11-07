@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import "../styles/nursinghomes.scss";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
 import * as config from "./config";
+import { Link } from "react-router-dom"
 const queryString = require('query-string');
 const axios = require("axios").default
 
@@ -112,7 +113,11 @@ function NursingHomes() {
 	})
 	.map((nursinghome: any, index) => {
 		const rating: any = (ratings as any)[nursinghome.id]
-		return <NursingHomeSmall nursinghome={nursinghome} rating={rating} key={index} />
+		return (
+			<Link to={"/hoivakodit/" + nursinghome.id} style={{ textDecoration: 'none' }}>
+				<NursingHomeSmall nursinghome={nursinghome} rating={rating} key={index} />
+			</Link>
+		)
 	})
 
 	const Map = ReactMapboxGl({
