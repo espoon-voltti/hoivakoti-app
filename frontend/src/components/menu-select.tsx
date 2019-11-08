@@ -23,11 +23,16 @@ function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
 	const [selected, SetSelected] = useState("")
 	const [checked, setChecked] = useState([]);
 
-	useEffect(() => {
-		values.map((value: any) => value.checked)
-	}, [])
+	const checked_values: string[] = [];
+	values.forEach((value: any)  => {
+		if (value.checked)
+			checked_values.push(value.text);
+	});
 
-	const select_menu = useMenuState();
+	console.log("Checked:");
+	console.log(checked_values);
+
+	const select_menu = useMenuState({unstable_values: {items: checked_values}});
 
 	const items_dom: object[] = values.map((value: any, index: any) => {
 		const name = "valitse " + value;
@@ -45,9 +50,8 @@ function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
 			)
 		else if (value.type === "checkbox")
 		{
-			let check = true;
 			const checkbox = (
-				<MenuItemCheckbox {...select_menu} name={name} value={value.text} className="checkbox-item" key={index} checked={true} onChange={(event: any) => {
+				<MenuItemCheckbox {...select_menu} name="items" value={value.text} className="checkbox-item" key={index} onChange={(event: any) => {
 						console.log(event.target.checked);
 						SetSelected(event.target.value);
 						on_changed(event.target);

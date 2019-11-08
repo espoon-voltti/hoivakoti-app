@@ -9,7 +9,7 @@ function Landing() {
 
 	const areas = ["Espoon keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
 
-	let selected_area = -1;
+	let selected_area = 0;
 
 	const on_selected_area = function(event: any) {
 		console.log(event.target.value)
