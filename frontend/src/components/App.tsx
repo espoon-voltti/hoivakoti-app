@@ -36,16 +36,20 @@ const App: React.FC = () => {
 							</a>
 						</div>
 						
-						<nav className="nav-container">
-							<ul className="nav-menu">
-								<li><NavLink activeClassName="selected" exact to="/">Etusivu</NavLink></li>
-								<li><NavLink activeClassName="selected" exact to="/hoivakodit">Hoivakodit</NavLink></li>
-							</ul>
-							<ul className="nav-menu--language">
-								<li className="selected">Suomeksi</li>
-								<li className="separator">|</li> 
-								<li><NavLink to="#" lang="sv">På Svenska</NavLink></li>
-						</ul>
+						<nav id="page-nav">
+							<label htmlFor="hamburger" className="menu-btn">&#9776; valikko</label>
+      						<input type="checkbox" role="button" aria-haspopup="true" id="hamburger"/>
+      						<div className="nav-menus">
+								<ul className="nav-menu" role="menu">
+									<li><NavLink activeClassName="selected" exact to="/">Etusivu</NavLink></li>
+									<li><NavLink activeClassName="selected" exact to="/hoivakodit">Hoivakodit</NavLink></li>
+								</ul>
+								<ul className="nav-menu--language" role="menu">
+									<li className="selected">Suomeksi</li>
+									<li className="separator">|</li> 
+									<li><NavLink to="#" lang="sv">På Svenska</NavLink></li>
+								</ul>
+							</div>
 						</nav>
 						
 

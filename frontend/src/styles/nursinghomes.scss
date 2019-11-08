@@ -33,3 +33,13 @@
 	line-height: 27px;
 	margin: 25px 0 25px 10px;
 }
+
+@media screen and (max-width: 1000px){ 
+	.map-container {
+		display: none;
+	}
+
+	.card-list {
+		width: 100%;
+	}
+}
