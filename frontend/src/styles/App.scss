@@ -56,13 +56,12 @@ $header-height: 80px;
     height: 80px;
     align-items: center;
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .nav-menu {
 	display:flex;
 	height: $header-height;
-	margin-left:auto;
 }
 
 .nav-menu a {
@@ -111,7 +110,6 @@ $header-height: 80px;
 
 .nav-menu--language {
 	display: flex;
-	margin-left: auto;
 }
 
 .nav-menu--language li {
@@ -136,6 +134,7 @@ $header-height: 80px;
 	padding:0 10px;
 	height: $header-height;
 	line-height: 86px;
+	white-space: nowrap;
 }
 
 .nav-menu--language a:hover {
@@ -143,6 +142,12 @@ $header-height: 80px;
 	text-decoration: none;
 }
 
+  .link-fi:after {
+  	content: "Suomeksi";
+  }
+  .link-sv:after {
+  	content: "På Svenska";
+  }
 
 
 /* [ON SMALL SCREENS] */
@@ -152,6 +157,7 @@ $header-height: 80px;
   #page-nav, .nav-menus {
   	justify-content: flex-end;
   }
+
 
   #hamburger {
   	display: inline;
@@ -184,7 +190,7 @@ $header-height: 80px;
     display: block;
   }
   
-  #page-nav ul li {
+  #page-nav ul.nav-menu li {
     border-top: 1px solid $border-color;
     display: block;
     background-color: #fff;
@@ -192,7 +198,7 @@ $header-height: 80px;
     line-height: 60px;
     text-align: center;
   }
-  #page-nav ul li a {
+  #page-nav ul.nav-menu li a {
   	height: 60px;	
   	line-height: 60px;
   	width: 100%;
@@ -201,16 +207,13 @@ $header-height: 80px;
   	display: block;
   }
 
-  #page-nav ul li a:hover, #page-nav ul li a.selected {
+  #page-nav ul.nav-menu li a:hover, #page-nav ul.nav-menu li a.selected {
   	background-color: $primary-blue;
   	color: #fff;
   }
 
-  #page-nav ul li.separator {
-  	display:none;
-  }
 
-  #page-nav ul.nav-menu, #page-nav ul.nav-menu--language {
+  #page-nav ul.nav-menu {
   	display: block;
   	margin:0;
   	height:auto;
@@ -221,8 +224,13 @@ $header-height: 80px;
   }
 
   #page-nav ul.nav-menu--language {
-  	margin-top:60px;
+  	margin-left: 20px;
+  	display: flex;
   }
+
+   #page-nav ul.nav-menu--language a:hover {
+   	border:0;
+   }
 
   /* Toggle show/hide menu on checkbox click */
   #page-nav .nav-menus {
@@ -251,14 +259,40 @@ $header-height: 80px;
   	outline: 1px dotted #212121;
   	outline: 5px auto -webkit-focus-ring-color;
   }
+
+
+  .link-fi:after {
+  	content: "FI";
+  }
+  .link-sv:after {
+  	content: "SV";
+  }
 }
 
-@media screen and (max-width: 510px){
+@media screen and (max-width: 640px){
+	#page-nav {
+	justify-content: space-between;
+  	}
+  	
+  	#page-nav ul.nav-menu--language {
+  		margin-left: auto;
+  	}
+
+  	.menu-btn {
+  		margin-left:auto;
+  	}
+
 	.title {
 		display: none;
 	}
 	#page-nav .nav-menus {
 		width: 100%;
+	}
+	.logo-container {
+		margin:0;
+	}
+	.logo {
+		margin-right: 30px;
 	}
 
 }

@@ -44,12 +44,13 @@ const App: React.FC = () => {
 									<li><NavLink activeClassName="selected" exact to="/">Etusivu</NavLink></li>
 									<li><NavLink activeClassName="selected" exact to="/hoivakodit">Hoivakodit</NavLink></li>
 								</ul>
-								<ul className="nav-menu--language" role="menu">
-									<li className="selected">Suomeksi</li>
-									<li className="separator">|</li> 
-									<li><NavLink to="#" lang="sv">På Svenska</NavLink></li>
-								</ul>
 							</div>
+								<ul className="nav-menu--language" role="menu">
+									<li className="selected link-fi"></li>
+									<li className="separator">|</li> 
+									<li><NavLink to="#" lang="sv" className="link-sv"></NavLink></li>
+								</ul>
+							
 						</nav>
 						
 
