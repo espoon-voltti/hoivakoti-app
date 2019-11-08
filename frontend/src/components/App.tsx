@@ -37,8 +37,8 @@ const App: React.FC = () => {
 						</div>
 						
 						<nav id="page-nav">
+							<input type="checkbox" role="button" aria-haspopup="true" id="hamburger"/>
 							<label htmlFor="hamburger" className="menu-btn">&#9776; valikko</label>
-      						<input type="checkbox" role="button" aria-haspopup="true" id="hamburger"/>
       						<div className="nav-menus">
 								<ul className="nav-menu" role="menu">
 									<li><NavLink activeClassName="selected" exact to="/">Etusivu</NavLink></li>

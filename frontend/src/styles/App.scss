@@ -153,6 +153,17 @@ $header-height: 80px;
   	justify-content: flex-end;
   }
 
+  #hamburger {
+  	display: inline;
+  	position: absolute !important;
+	clip: rect(1px, 1px, 1px, 1px);
+	padding:0 !important;
+	border:0 !important;
+	height: 1px !important;
+	width: 1px !important;
+  	overflow: hidden;
+  }
+
   #page-nav label.menu-btn {
     display: inline-block;
     color: $headline-color;
@@ -230,8 +241,15 @@ $header-height: 80px;
     display: block;
   }
 
-  #page-nav input:checked  .menu-btn {
-   	background-color: red;
+  #page-nav input:checked ~ .menu-btn {
+   	background-color: $primary-blue;
+   	color: #fff;
+   	border: 1px solid $primary-blue;
+  }
+
+  [type="checkbox"]:focus ~ .menu-btn {
+  	outline: 1px dotted #212121;
+  	outline: 5px auto -webkit-focus-ring-color;
   }
 }
 
