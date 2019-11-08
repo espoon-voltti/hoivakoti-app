@@ -1,10 +1,14 @@
 @import "global.scss";
 
+
+$header-height: 80px;
+
 .header {
 	display:flex;
-	height:120px;
-	padding: 20px;
+	height: $header-height;
+	padding: 0 20px;
 	align-items: center;
+	justify-content: space-between;
 }
 
 .logo-container a {
@@ -14,8 +18,12 @@
 	white-space: nowrap;
 }
 
+.logo-container a:hover {
+	text-decoration: none;
+}
+
 .logo {
-	height:60px;
+	height:40px;
 	margin: 0 40px 6px 10px;
 }
 
@@ -23,19 +31,20 @@
 	font-family: Montserrat-Light, sans-serif;
 	text-decoration: none;
 	margin-top: 5px;
+	font-size: 24px;
 }
 
 .nav-container {
 	display:flex;
-	height:120px;
-	padding: 20px 0 20px 20px;
+	height:80px;
 	align-items: center;
 	width: 100%;
+	justify-content: space-between;
 }
 
 .nav-menu {
-	margin-left: 80px;
 	display:flex;
+	height: $header-height;
 }
 
 .nav-menu a {
@@ -46,8 +55,9 @@
 	letter-spacing: 1px;
 	text-align: center;
 	vertical-align: middle;
-	margin-left: 50px;
-	line-height: 40px;
+	margin: 0 25px;
+	line-height: 86px;
+	height: $header-height;
 	padding:0 10px;
 	display:inline-block;
 	text-decoration: none;
@@ -56,26 +66,33 @@
 }
 
 .nav-menu a {
-	padding-top: 11px;
+
 }
 
 .nav-menu a:hover {
-	border-bottom: 5px solid $primary-blue;
+	border-bottom: 3px solid $primary-blue;
 	text-decoration: none;
 }
 
-.nav-menu li a.selected, .nav-menu--language li.selected {
+.nav-menu li a.selected {
 	font-weight: bold;
 }
 
 .nav-menu li a.selected{
-	border-bottom: 5px solid $primary-blue;	
+	border-bottom: 3px solid $primary-blue;	
+}
+
+.nav-menu--language li.selected {
+	font-weight: bold;
+	padding:0 10px;
+}
+
+.nav-menu--language li.separator {
+	padding: 0 10px;
 }
 
 .nav-menu--language {
-	margin-left: auto;
 	display: flex;
-	align-self: flex-start;
 }
 
 .nav-menu--language li {
@@ -88,14 +105,21 @@
 	letter-spacing: 1px;
 	text-align: center;
 	vertical-align: middle;
-	padding:0 10px;
-	
+	line-height: 86px;
+	height: $header-height;
+	max-height: 80px;
 }
+
 .nav-menu--language a {
 	color: $headline-color;
 	text-decoration: none;
+	display: inline-block;
+	padding:0 10px;
+	height: $header-height;
+	line-height: 86px;
 }
 
 .nav-menu--language a:hover {
-	text-decoration: underline;
+	border-bottom: 3px solid $primary-blue;
+	text-decoration: none;
 }

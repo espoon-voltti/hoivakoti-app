@@ -35,6 +35,7 @@ const App: React.FC = () => {
 								<h1 className="title">Espoon hoivakodit</h1>
 							</a>
 						</div>
+						
 						<nav className="nav-container">
 							<ul className="nav-menu">
 								<li><NavLink activeClassName="selected" exact to="/">Etusivu</NavLink></li>
@@ -42,10 +43,11 @@ const App: React.FC = () => {
 							</ul>
 							<ul className="nav-menu--language">
 								<li className="selected">Suomeksi</li>
-								<li>|</li> 
+								<li className="separator">|</li> 
 								<li><NavLink to="#" lang="sv">På Svenska</NavLink></li>
-							</ul>
+						</ul>
 						</nav>
+						
 
 
 					</header>
