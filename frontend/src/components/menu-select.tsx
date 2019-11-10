@@ -15,11 +15,12 @@ export type MenuSelectProps = {
 	prefix: string,
 	values: any,
 	aria_label: string,
-	on_changed: any
+	on_changed: any,
+	on_emptied: any
 }
 
-function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
-	// Declare a new state variable, which we'll call "count"
+function MenuSelect({prefix, values, aria_label, on_changed, on_emptied}: MenuSelectProps) {
+
 	const [selected, SetSelected] = useState("")
 	const [checked, setChecked] = useState([]);
 
@@ -29,23 +30,26 @@ function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
 			checked_values.push(value.text);
 	});
 
-	console.log("Checked:");
-	console.log(checked_values);
-
 	const select_menu = useMenuState({unstable_values: {items: checked_values}});
 
 	const items_dom: object[] = values.map((value: any, index: any) => {
 		const name = "valitse " + value;
 		console.log("Recreating..");
-		if (typeof value !== "object")
+		if (value.type === "header")
 			return	(
-				<MenuItem {...select_menu} name={name} value={value} className="text-item" key={index} onClick={(event: any) => {
+				<MenuItem {...select_menu} name={name} value={value.text} className="header-item" key={index} disabled={true}>
+					{value.text}
+				</MenuItem>
+			)
+		else if (value.type === "button")
+			return	(
+				<MenuItem {...select_menu} name={name} value={value.text} className="text-item" key={index} onClick={(event: any) => {
 						SetSelected(event.target.value);
 						on_changed(event.target);
 						select_menu.hide();
 					}
 				}>
-					{value}
+					{value.text}
 				</MenuItem>
 			)
 		else if (value.type === "checkbox")
@@ -78,7 +82,39 @@ function MenuSelect({prefix, values, aria_label, on_changed}: MenuSelectProps) {
 			)
 			return radio
 		}
+		else if (value.type === "text")
+		{
+			return (
+				<MenuItem {...select_menu} name={name} value={value.text} className="text-item" key={index} disabled={true}>
+					{value.text}
+				</MenuItem>
+			)
+		}
 	});
+
+	const empty_values: object = {items: []};
+
+	items_dom.push(
+		<MenuItem {...select_menu} name="Tyhjennä" value={"Tyhjennä"} className="empty-selections-item" key={"Tyhjennä"}
+		onClick={(event: any) => {
+				select_menu.unstable_setValue("items", []);
+				select_menu.hide();
+				on_emptied();
+			}
+		}>
+			Tyhjennä
+		</MenuItem>
+	)
+
+	items_dom.push(
+		<MenuItem {...select_menu} name="Tallenna" value={"Tallenna"} className="save-selections-item" key={"Tallenna"}
+		onClick={(event: any) => {
+				select_menu.hide();
+			}
+		}>
+			Tallenna
+		</MenuItem>
+	)
 
 	const selected_text = prefix + selected;
 

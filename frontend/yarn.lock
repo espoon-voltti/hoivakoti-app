@@ -9568,7 +9568,7 @@ reakit-utils@^0.7.0:
   resolved "https://registry.yarnpkg.com/reakit-utils/-/reakit-utils-0.7.0.tgz#06af652edca1b1ae3fc93f07ac952db39f4be4c3"
   integrity sha512-DU3I0QnqYo7ewbSGQhUl/vJjnJlHe8sZGEJpX60uLiBepkBbf63Ns5xxQz6FoOVN1WqxKH+bm6yQ3KpkhE4CTw==
 
-reakit@^1.0.0-beta.11:
+reakit@^1.0.0-alpha.4:
   version "1.0.0-beta.11"
   resolved "https://registry.yarnpkg.com/reakit/-/reakit-1.0.0-beta.11.tgz#cc881ffef5b802cd56cf0662605d4197125a79ac"
   integrity sha512-v2Pr3IPav+YiPDv8bRvwMsq3317Fkm+q/5xnJsR/nasBDg6ZBiv6Fg4HfGPR6BmlQSn1Ieasbtt5HBNFObDTCw==
