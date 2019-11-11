@@ -30,3 +30,22 @@
 	width: 200px;
 	padding: 4px;
 }
+
+.menu-empty-button
+{
+	margin-top: 10px;
+	font-weight: normal;
+	border: none;
+	background: none;
+}
+
+.menu-save-button
+{
+	margin-top: 10px;
+	font-weight: normal;
+	border: none;
+	background: none;
+	color: $primary-blue;
+	margin-left: auto;
+	float: right;
+}

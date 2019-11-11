@@ -28,6 +28,8 @@ function NursingHomes() {
 			parsed.alue = []
 		if (parsed.ara)
 			parsed.ara = parsed.ara === "true" ? true : false;
+		if (parsed.lah)
+			parsed.lah = parsed.lah === "true" ? true : false;
 		console.log("Search:");
 		console.log(parsed);
 
@@ -64,8 +66,9 @@ function NursingHomes() {
 		{text: "ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat hakijan palvelutaloasunnon tarve sekä varallisuus.", type: "text"}
 	];
 
-	const language_options = [{text: "Suomi", type: "checkbox"},
-		{text: "Ruotsi", type: "checkbox"},
+	const language_options = [{text: "Hoivakodin palvelukieli", type: "header"},
+		{text: "Suomi", type: "radio", checked: search_as_any.language === "Suomi"},
+		{text: "Ruotsi", type: "radio", checked: search_as_any.language === "Ruotsi"},
 		{type: "separator"}
 	];
 
@@ -111,7 +114,7 @@ function NursingHomes() {
 				history.push("/hoivakodit?" + stringfield);
 			}}/>
 
-		<MenuSelect prefix="Lyhytaikainen asuminen" values={[{text: "Lyhytaikainen asuminen LAH", type: "checkbox"}]} aria_label="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet." on_changed={(changed_object: any) => 
+		<MenuSelect prefix="Lyhytaikainen asuminen" values={[{text: "Lyhytaikainen asuminen LAH", type: "checkbox", checked: search_as_any.lah === true}]} aria_label="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet." on_changed={(changed_object: any) => 
 			{
 				//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
 				if (changed_object.checked)

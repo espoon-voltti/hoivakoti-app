@@ -71,11 +71,11 @@ function MenuSelect({prefix, values, aria_label, on_changed, on_emptied}: MenuSe
 			})}
 
 			<div className="save-and-empty-container">
-				<button onClick={() => {on_emptied(); OnToggleExpand();}}>	
+				<button onClick={() => {on_emptied(); OnToggleExpand();}} className="menu-empty-button">	
 					Tyhjennä
 				</button>
 
-				<button onClick={OnToggleExpand}>	
+				<button onClick={OnToggleExpand} className="menu-save-button">	
 					Tallenna
 				</button>
 			</div>
