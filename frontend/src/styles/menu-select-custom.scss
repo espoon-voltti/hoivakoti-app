@@ -1,0 +1,32 @@
+@import "variables.scss";
+
+.background {
+	width: 110%;
+	height: 110%;
+	color: #ff0000;
+	position: fixed;
+	background: rgba(255, 255, 255, 0.7);
+	top: -10px;
+	left: -10px;
+	margin: 0px;
+	padding: 0px;
+	z-index: 90;
+	border-radius: 0px;
+	border: none;
+}
+
+.menu[aria-expanded="true"] {
+	z-index: 100;
+}
+
+.menu > .items {
+	position: absolute;
+	//color: #ff0000;
+	background: rgba(255, 255, 255, 255);
+	display: flex;
+	flex-flow: column wrap;
+	border: solid;
+	border-width: 1px;
+	width: 200px;
+	padding: 4px;
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { NursingHomeSmall } from "./nursinghome-small"
-import { MenuSelect } from "./menu-select"
+import { MenuSelect } from "./menu-select-custom"
 import { useHistory } from "react-router-dom";
 import "../styles/nursinghomes.scss";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl"
@@ -26,6 +26,8 @@ function NursingHomes() {
 			parsed.alue = [parsed.alue];
 		if (!parsed.alue)
 			parsed.alue = []
+		if (parsed.ara)
+			parsed.ara = parsed.ara === "true" ? true : false;
 		console.log("Search:");
 		console.log(parsed);
 
@@ -56,8 +58,8 @@ function NursingHomes() {
 			return {text: value, type: "checkbox", checked: checked};
 	}), {type: "separator"}]
 
-	const ara_options = [{text: "ARA-kohde", type: "radio"},
-		{text: "Ei ARA-kohde", type: "radio"},
+	const ara_options = [{text: "ARA-kohde", type: "radio", checked: search_as_any.ara === true ? true : false},
+		{text: "Ei ARA-kohde", type: "radio", checked: search_as_any.ara === false ? true : false},
 		{type: "separator"},
 		{text: "ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat hakijan palvelutaloasunnon tarve sekä varallisuus.", type: "text"}
 	];
