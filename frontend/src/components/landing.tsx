@@ -25,21 +25,23 @@ function Landing() {
 	return (
 		<div id="landing">
 			<div className="jumbotron">
-				<h2 className="jumbotron__header">Löydä sopiva hoivakoti<span>Tutustu Espoon kaupungin hyväksymiin hoivakoteihin.</span></h2>		
+				<h2 className="jumbotron__header">Löydä näköisesi hoivakoti</h2>	
+
+				<div className="location-picker">
+					<b>Miltä alueelta etsit hoivakotia?</b>
+					<select onChange={on_selected_area}>
+						{menu_items_dom}
+					</select>
+					<Button onClick={() => {
+						const url = "/hoivakodit" + (selected_area >= 0 ? "?alue=" + areas[selected_area] : "");
+						history.push(url);
+					}}>
+						Näytä Hoivakodit
+					</Button>
+				</div>	
 			</div>
 
-			<div className="location-picker">
-				<b>Miltä alueelta etsit hoivakotia?</b>
-				<select onChange={on_selected_area}>
-					{menu_items_dom}
-				</select>
-				<Button onClick={() => {
-					const url = "/hoivakodit" + (selected_area >= 0 ? "?alue=" + areas[selected_area] : "");
-					history.push(url);
-				}}>
-					Näytä Hoivakodit
-				</Button>
-			</div>
+			
 			<div className="content-column">
 				<section className="content-block">
 					<p className="ingress">Sivustolta löydät tiedot Espoon kaupungin hyväksymistä hoivakodeista. Saadaksesi hoivakotipaikan tarvitset myönteisen päätöksen tehostetun palveluasumisen tarpeesta.</p>
@@ -47,14 +49,16 @@ function Landing() {
 				</section>
 
 				<section className="content-block">
+					<h2>Mitä on tehostettu palveluasuminen?</h2>
+					<p>Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa. Näissä hoivakodeissa on terveydenhuollon ammattikoulutuksen saanutta henkilökuntaa paikalla jatkuvasti. Espoon kaupunki järjestää tehostettua palveluasumista useissa yksityisten palveluntuottajien hoivakodeissa sekä omissa hoivakodeissaan. Hoivakodissa saa tarpeiden mukaista hoivaa ja huolenpitoa elämän loppuun saakka.</p>
+				</section>
+
+				<section className="content-block">
 					<h2>Miten saat tehostetun palveluasumisen päätöksen?</h2>
 					<p>Lisätietoja hakemisesta</p>
 				</section>
 
-				<section className="content-block">
-					<h2>Mitä on tehostettu palveluasuminen?</h2>
-					<p>Espoon kaupunki järjestää tehostettua palveluasumista useissa yksityisten palveluntuottajien hoivakodeissa sekä omissa hoivakodeissaan. Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa. Näissä hoivakodeissa on terveydenhuollon ammattikoulutuksen saanutta henkilökuntaa paikalla jatkuvasti. Hoivakodissa saa tarpeiden mukaista hoivaa ja huolenpitoa elämän loppuun saakka.</p>
-				</section>
+			
 
 				<section className="content-block">
 					<h2>Mitä hoivakodin antamaan palveluun kuuluu?</h2>
