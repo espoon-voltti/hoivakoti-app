@@ -5,7 +5,7 @@
 }
 
 .filters  {
-	margin: 20px;
+	padding: 20px;
 	border-bottom: 1px solid $border-color;
 	border-top: 1px solid $border-color;
 	display: flex;
@@ -32,4 +32,14 @@
 	font-family: Montserrat, sans-serif;
 	line-height: 27px;
 	margin: 25px 0 25px 10px;
+}
+
+@media screen and (max-width: 1000px){ 
+	.map-container {
+		display: none;
+	}
+
+	.card-list {
+		width: 100%;
+	}
 }
