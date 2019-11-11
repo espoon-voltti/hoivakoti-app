@@ -1,4 +1,5 @@
 import React from "react"
+import "../styles/global.scss"
 import "../styles/App.scss"
 import { NursingHomes } from "./nursinghomes"
 import { NursingHome } from "./nursinghome"
