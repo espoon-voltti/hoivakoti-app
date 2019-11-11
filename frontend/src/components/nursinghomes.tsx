@@ -54,24 +54,28 @@ function NursingHomes() {
 		...areas.map((value: string) => {
 			const checked = search_as_any.alue ? search_as_any.alue.includes(value) : false;
 			return {text: value, type: "checkbox", checked: checked};
-	})]
+	}), {type: "separator"}]
 
 	const ara_options = [{text: "ARA-kohde", type: "radio"},
-		{text: "Ei ARA-kohde", type: "radio"}
+		{text: "Ei ARA-kohde", type: "radio"},
+		{type: "separator"},
+		{text: "ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat hakijan palvelutaloasunnon tarve sekä varallisuus.", type: "text"}
 	];
-	ara_options.push({text: "ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat hakijan palvelutaloasunnon tarve sekä varallisuus.", type: "text"})
 
 	const language_options = [{text: "Suomi", type: "checkbox"},
-		{text: "Ruotsi", type: "checkbox"}
+		{text: "Ruotsi", type: "checkbox"},
+		{type: "separator"}
 	];
 
 	const filters_dom = (
 	<>
-		<MenuSelect prefix="Sijainti: " values={area_options} aria_label="Valitse hoivakodin alue" on_changed={(changed_object: any) => 
+		<MenuSelect prefix="Sijainti" values={area_options} aria_label="Valitse hoivakodin alue" on_changed={(changed_object: any) => 
 			{
 				console.log("tulee:");
 				console.log(changed_object.value);
 				//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
+				if (!search_as_any.alue)
+					search_as_any.alue = []
 				if (!changed_object.checked)
 					search_as_any.alue = search_as_any.alue.filter((value: string) => {return value !== changed_object.value})
 				else
@@ -84,7 +88,7 @@ function NursingHomes() {
 				const stringfield = queryString.stringify(search_as_any);
 				history.push("/hoivakodit?" + stringfield);
 			}}/>
-		<MenuSelect prefix="Palvelukieli: " values={language_options} aria_label="Valitse hoivakodin kieli" on_changed={(changed_object: any) => 
+		<MenuSelect prefix="Palvelukieli" values={language_options} aria_label="Valitse hoivakodin kieli" on_changed={(changed_object: any) => 
 			{
 				search_as_any.language = changed_object.value;
 				const stringfield = queryString.stringify(search_as_any);
@@ -94,9 +98,9 @@ function NursingHomes() {
 				const stringfield = queryString.stringify(search_as_any);
 				history.push("/hoivakodit?" + stringfield);
 			}}/>
-		<MenuSelect prefix="Ara-kohde: " values={ara_options} aria_label="Valitse, näytetäänkö vain Ara-kohteet" on_changed={(changed_object: any) => 
+		<MenuSelect prefix="Ara-kohde" values={ara_options} aria_label="Valitse, näytetäänkö vain Ara-kohteet" on_changed={(changed_object: any) => 
 			{
-				search_as_any.ara = changed_object.value == "Kyllä" ? true : null;
+				search_as_any.ara = changed_object.value == "ARA-kohde" ? true : false;
 				const stringfield = queryString.stringify(search_as_any);
 				history.push("/hoivakodit?" + stringfield);
 			}} on_emptied={() => {
@@ -105,7 +109,7 @@ function NursingHomes() {
 				history.push("/hoivakodit?" + stringfield);
 			}}/>
 
-		<MenuSelect prefix="Lyhytaikainen asuminen: " values={[{text: "Lyhytaikainen asuminen LAH", type: "checkbox"}]} aria_label="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet." on_changed={(changed_object: any) => 
+		<MenuSelect prefix="Lyhytaikainen asuminen" values={[{text: "Lyhytaikainen asuminen LAH", type: "checkbox"}]} aria_label="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet." on_changed={(changed_object: any) => 
 			{
 				//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
 				if (changed_object.checked)
@@ -130,7 +134,7 @@ function NursingHomes() {
 			return false;
 		if ((search as any).language && nursinghome.language !== (search as any).language)
 			return false;
-		if ((search as any).ara && nursinghome.ara !== (search as any).ara)
+		if ((search as any).ara !==	 undefined && nursinghome.ara !== (search as any).ara)
 			return false;
 		if ((search as any).lah && nursinghome.lah !== (search as any).lah)
 			return false;

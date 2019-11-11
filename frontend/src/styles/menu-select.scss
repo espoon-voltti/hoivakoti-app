@@ -13,7 +13,6 @@
 {
 	background-color: #f0f0f0;
 	color: #000000;
-	border-radius: 4px;
 }
 
 #app .menu > button:hover
@@ -35,7 +34,6 @@
 	width: 300px;
 
 	white-space: normal;
-
 }
 
 // Header menu item
@@ -51,6 +49,7 @@
 	color: #000000;
 	font-weight: bold;
 	opacity: 0.99;
+	margin-bottom: 10px;
 }
 
 // Checkbox menu items.

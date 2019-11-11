@@ -6,7 +6,8 @@ import {
   MenuDisclosure,
   MenuItemCheckbox,
   MenuItemRadio,
-  MenuGroup
+  MenuGroup,
+  MenuSeparator
 } from "reakit/Menu";
 import { useCheckboxState } from "reakit/Checkbox";
 import "../styles/menu-select.scss";
@@ -44,7 +45,6 @@ function MenuSelect({prefix, values, aria_label, on_changed, on_emptied}: MenuSe
 		else if (value.type === "button")
 			return	(
 				<MenuItem {...select_menu} name={name} value={value.text} className="text-item" key={index} onClick={(event: any) => {
-						SetSelected(event.target.value);
 						on_changed(event.target);
 						select_menu.hide();
 					}
@@ -57,7 +57,6 @@ function MenuSelect({prefix, values, aria_label, on_changed, on_emptied}: MenuSe
 			const checkbox = (
 				<MenuItemCheckbox {...select_menu} name="items" value={value.text} className="checkbox-item" key={index} onChange={(event: any) => {
 						console.log(event.target.checked);
-						SetSelected(event.target.value);
 						on_changed(event.target);
 						select_menu.hide();
 					}
@@ -72,7 +71,6 @@ function MenuSelect({prefix, values, aria_label, on_changed, on_emptied}: MenuSe
 			const radio = (
 				<MenuItemRadio {...select_menu} name={name} value={value.text} className="radio-item" key={index} onChange={(event: any) => {
 						console.log(event.target.checked);
-						SetSelected(event.target.value);
 						on_changed(event.target);
 						select_menu.hide();
 					}
@@ -88,6 +86,14 @@ function MenuSelect({prefix, values, aria_label, on_changed, on_emptied}: MenuSe
 				<MenuItem {...select_menu} name={name} value={value.text} className="text-item" key={index} disabled={true}>
 					{value.text}
 				</MenuItem>
+			)
+		}
+		else if (value.type === "separator")
+		{
+			return (
+				<MenuSeparator {...select_menu}>
+
+				</MenuSeparator>
 			)
 		}
 	});
