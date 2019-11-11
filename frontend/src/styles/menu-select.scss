@@ -13,6 +13,7 @@
 {
 	background-color: #f0f0f0;
 	color: #000000;
+	border-radius: 4px;
 }
 
 #app .menu > button:hover
@@ -56,17 +57,18 @@
 #app .checkbox-item
 {
 	color: #000000;
+	font-weight: normal;
 }
 #app .checkbox-item::before
 {
 	color: #000000;
-	border-style: solid;
 }
 
 // Radio menu items.
 #app .radio-item
 {
 	color: #000000;
+	font-weight: normal;
 }
 
 // The button to empty selection
