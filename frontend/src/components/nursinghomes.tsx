@@ -166,6 +166,9 @@ function NursingHomes() {
 	return (
 		<div>
 			<div className="filters">
+				<div className="filters-text">
+					Rajaa tuloksia:
+				</div>
 				{nursinghomes.length && filters_dom}
 			</div>
 			<div className="card-list-and-map-container">
