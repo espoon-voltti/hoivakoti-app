@@ -171,7 +171,7 @@ const NursingHomes: FC = () => {
 			const rating: any = (ratings as any)[nursinghome.id];
 			return (
 				<Link to={"/hoivakodit/" + nursinghome.id} style={{ textDecoration: "none" }}>
-					<NursingHomeSmall nursinghome={nursinghome} rating={rating} key={index} />
+					<NursingHomeSmall nursinghome={nursinghome} key={index} />
 				</Link>
 			);
 		});
