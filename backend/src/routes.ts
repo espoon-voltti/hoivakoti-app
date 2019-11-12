@@ -33,6 +33,10 @@ router.get("/api/ratings", async (ctx) => {
 	ctx.body = await ListRatings(ctx)
 })
 
+router.get("/api/health", async (ctx) => {
+	ctx.body = "healthy";
+})
+
 router.get("/api/db-test", async (ctx) => {
 	const db_pass = process.env.DB_PASSWORD;
 	console.log(db_pass);
@@ -51,8 +55,8 @@ router.get("/api/db-test2", async (ctx) => {
 		ctx.body = "Undefined";
 })
 
-router.get("*", async (ctx) => {
-	ctx.body = ctx.url
+router.get("/api/envis", async (ctx) => {
+	ctx.body = Object.keys(process.env);
 })
 
 const routes = router.routes()

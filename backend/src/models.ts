@@ -54,7 +54,7 @@ knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 
 		//await SetUpRatingsTable(id);
 
-		console.log("Created Nursing table.")
+		console.debug("Created Nursing table.")
 		const nurseryhome_contents = fs.readFileSync("data/hoivakodit.csv", "utf8")
 
 		await NursingHomesFromCSV(nurseryhome_contents)
@@ -83,7 +83,7 @@ async function SetUpRatingsTable(id_for_testing: string)
 			table.string("ip")
 			table.integer("rating")
 		}).then(async () => {
-			console.log("Created Ratings table.")
+			console.debug("Created Ratings table.")
 
 			//await InsertNursingHomeRatingToDB(id_for_testing, 2)
 		})

@@ -46,15 +46,11 @@ async function ListRatings(ctx: any)
 
 		ratings_as_object[id].total += 1
 		ratings_as_object[id].avg += rating.rating
-
-		console.log(rating)
 	})
 
 	for (var key in ratings_as_object)
 		ratings_as_object[key].avg = ratings_as_object[key].avg/ratings_as_object[key].total
-
-	console.log(ratings_as_object)
-
+	
 	return ratings_as_object
 }
 
