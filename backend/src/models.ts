@@ -1,6 +1,7 @@
 import * as Knex from "knex"
 import * as uuidv4 from "uuid/v4"
 import fs = require("fs");
+import {NursingHome} from "./nursinghome-typings"
 
 import {
 	NursingHomesFromCSV} from "./services"
@@ -16,18 +17,6 @@ const options: object = {
 }
 const knex = new (Knex as any)(options)
 
-interface NursingHome{
-		name: string,
-		owner: string,
-		address: string,
-		location: string,
-		ara?: boolean,
-		www?: string,
-		apartment_count?: number,
-		language?: string,
-		lah?: boolean,
-}
-
 knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 
 	if (exists)
@@ -41,12 +30,42 @@ knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 		table.string("name")
 		table.string("owner")
 		table.string("address")
-		table.string("location")
 		table.boolean("ara")
 		table.string("www")
 		table.integer("apartment_count")
 		table.string("language")
 		table.boolean("lah")
+		table.string("summary")
+		table.string("postal_code")
+		table.string("city")
+		table.string("arrival_guide_public_transit")
+		table.string("arrival_guide_car")
+		table.integer("construction_year")
+		table.string("building_info")
+		table.boolean("apartments_have_bathroom")
+		table.string("apartment_count_info")
+		table.float("apartment_square_meters")
+		table.float("rent")
+		table.string("rent_info")
+		table.string("language_info")
+		table.string("menu_link")
+		table.string("meals_preparation")
+		table.string("meals_info")
+		table.string("activities_info")
+		table.string("activities_link")
+		table.string("outdoors_possibilities_info")
+		table.string("outdoors_possibilities_link")
+		table.string("tour_info")
+		table.string("contact_name")
+		table.string("contact_title")
+		table.string("contact_phone")
+		table.string("contact_phone_info")
+		table.string("email")
+		table.string("accessibility_info")
+		table.string("staff_info")
+		table.string("staff_satisfaction_info")
+		table.string("other_services")
+		table.string("nearby_services")
 	}).then(async () => {
 		//const id = await InsertNursingHomeToDB("Leppävaaran Hoiva ja Turva", "Puutteita hoitohenkilökunnan määrässä; vakava vesivahinko; ikkunat eristämättömiä. Ruoka hyvää, suosittelen!");
 		//await InsertNursingHomeToDB("Vaikea Hoivakoti Ry", "Kaikki tarkastukset tip-top. Tosi hyvä pössis. Ruoka vähän mautonta, en suosittele muuttoa.");

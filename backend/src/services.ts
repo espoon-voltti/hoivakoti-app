@@ -19,12 +19,14 @@ async function NursingHomesFromCSV(csv: string)
 		await InsertNursingHomeToDB({name: record.Hoivakoti,
 			owner: record.Yritys,
 			address: record.Katuosoite,
-			location: record.Alue,
+			//location: record.Alue,
 			www: record.www,
 			ara: record.ARA ? record.ARA : false,
 			apartment_count: record.Asunnot ? record.Asunnot : -1,
 			language: record.Kieli,
 			lah: record.LAH ? record.LAH : false,
+			city: record.city ? record.city : false,
+			postal_code: record.postal_code ? record.postal_code : false
 		})
 	})
 

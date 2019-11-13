@@ -12,7 +12,9 @@ async function AddNursingHome(ctx: any)
 	await InsertNursingHomeToDB({name: ctx.request.body.name,
 		owner: ctx.request.body.name,
 		address: ctx.request.body.address,
-		location: ctx.request.body.location})
+		city: ctx.request.body.city,
+		postal_code: ctx.request.body.postal_code
+	})
 	return "inserted"
 }
 
