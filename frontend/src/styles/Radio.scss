@@ -1,24 +1,24 @@
 @import "variables.scss";
 
-.checkbox-container {
+.radio-container {
 	flex: 1;
 	display: flex;
 	align-items: center;
 	margin: 16px 0;
 }
 
-.checkbox-button {
+.radio-button {
 	position: absolute;
 	width: 1px;
 	height: 1px;
 	opacity: 0;
 }
 
-.checkbox-button:focus + .checkbox-label .checkbox-box {
+.radio-button:focus + .radio-label .radio-box {
 	box-shadow: 0px 0px 1px 1px $link-color;
 }
 
-.checkbox-box {
+.radio-box {
 	width: 20px;
 	height: 20px;
 	background-color: transparent;
@@ -29,21 +29,22 @@
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
+	border-radius: 50%;
 }
 
-.checkbox-box-selected {
+.radio-box-selected {
 	background-color: $link-color;
 }
 
-.checkbox-checkmark {
+.radio-checkmark {
 	vertical-align: middle;
 }
 
-.checkbox-label {
+.radio-label {
 	display: flex;
 	align-items: center;
 }
 
-.checkbox-label-children {
+.radio-label-children {
 	margin-left: 16px;
 }

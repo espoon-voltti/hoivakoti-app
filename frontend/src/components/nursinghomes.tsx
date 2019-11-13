@@ -108,8 +108,8 @@ const NursingHomes: FC = () => {
 				value={searchFilters.language || null}
 				values={optionsLanguage}
 				ariaLabel="Valitse hoivakodin kieli"
-				onChange={(newValue: any): void => {
-					const newSearchFilters = { ...searchFilters, language: newValue };
+				onChange={({ newValue, name }): void => {
+					const newSearchFilters = { ...searchFilters, language: name };
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
@@ -123,10 +123,10 @@ const NursingHomes: FC = () => {
 				value={searchFilters.ara !== undefined ? (searchFilters.ara ? "Kyllä" : "Ei") : null}
 				values={optionsAra}
 				ariaLabel="Valitse, näytetäänkö vain Ara-kohteet"
-				onChange={(newValue: any) => {
+				onChange={({ newValue, name }) => {
 					const newSearchFilters = {
 						...searchFilters,
-						ara: newValue === "ARA-kohde" ? true : false,
+						ara: name === "ARA-kohde" ? true : false,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);

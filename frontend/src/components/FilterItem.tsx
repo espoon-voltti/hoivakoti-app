@@ -2,6 +2,7 @@ import React, { useState, FC } from "react";
 import "../styles/FilterItem.scss";
 import ButtonDropdown from "./ButtonDropdown";
 import Checkbox from "./Checkbox";
+import Radio from "./Radio";
 
 export type Props = {
 	prefix: string;
@@ -39,14 +40,14 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 				} else if (value.type === "radio") {
 					return (
 						<div className="radio-item" key={index}>
-							<input
-								type="radio"
+							<Radio
+								id={`filter-${index}`}
 								name={prefix + "-radio-group"}
-								defaultChecked={value.checked}
-								value={value.text}
-								onChange={event => handleChange(event.target.value)}
-							/>{" "}
-							{value.text}
+								isSelected={value.checked}
+								onChange={newValue => handleChange({ newValue, name: value.text })}
+							>
+								{value.text}
+							</Radio>
 						</div>
 					);
 				} else if (value.type === "text") {
