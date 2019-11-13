@@ -1,21 +1,23 @@
-import React, { useState, FC, ChangeEvent } from "react";
+import React, { useState, FC } from "react";
 import "../styles/FilterItem.scss";
 import ButtonDropdown from "./ButtonDropdown";
+import Checkbox from "./Checkbox";
 
 export type Props = {
 	prefix: string;
 	value: string | null;
 	values: Array<any>;
 	ariaLabel: string;
-	onChange: (target: EventTarget & HTMLInputElement) => void;
+	onChange: (newValue: any) => void;
 	onReset: () => void;
 };
 
 const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => {
 	const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-		onChange(event.target);
+	const handleChange = (newValue: any): void => {
+		console.log(newValue);
+		onChange(newValue);
 	};
 
 	const subMenu = (
@@ -24,14 +26,14 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 				if (value.type === "checkbox") {
 					return (
 						<div className="checkbox-item" key={index}>
-							<input
-								type="checkbox"
+							<Checkbox
+								id={`filter-${index}`}
 								name={value.text}
-								value={value.text}
-								defaultChecked={value.checked}
-								onChange={handleChange}
-							/>{" "}
-							{value.text}
+								isChecked={value.checked}
+								onChange={newValue => handleChange({ newValue, name: value.text })}
+							>
+								{value.text}
+							</Checkbox>
 						</div>
 					);
 				} else if (value.type === "radio") {
@@ -42,7 +44,7 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 								name={prefix + "-radio-group"}
 								defaultChecked={value.checked}
 								value={value.text}
-								onChange={handleChange}
+								onChange={event => handleChange(event.target.value)}
 							/>{" "}
 							{value.text}
 						</div>

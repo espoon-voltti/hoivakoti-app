@@ -86,15 +86,14 @@ const NursingHomes: FC = () => {
 				}
 				values={optionsArea}
 				ariaLabel="Valitse hoivakodin alue"
-				onChange={(changedObject: any) => {
+				onChange={({ newValue, name }) => {
 					const newSearchFilters = { ...searchFilters };
 					if (!newSearchFilters.alue) newSearchFilters.alue = [];
-					if (!changedObject.checked)
+					if (!newValue)
 						newSearchFilters.alue = newSearchFilters.alue.filter((value: string) => {
-							return value !== changedObject.value;
+							return value !== name;
 						});
-					else if (!newSearchFilters.alue.includes(changedObject.value))
-						newSearchFilters.alue.push(changedObject.value);
+					else if (!newSearchFilters.alue.includes(name)) newSearchFilters.alue.push(name);
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
@@ -109,8 +108,8 @@ const NursingHomes: FC = () => {
 				value={searchFilters.language || null}
 				values={optionsLanguage}
 				ariaLabel="Valitse hoivakodin kieli"
-				onChange={(changedObject: any): void => {
-					const newSearchFilters = { ...searchFilters, language: changedObject.value };
+				onChange={(newValue: any): void => {
+					const newSearchFilters = { ...searchFilters, language: newValue };
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
@@ -124,10 +123,10 @@ const NursingHomes: FC = () => {
 				value={searchFilters.ara !== undefined ? (searchFilters.ara ? "Kyllä" : "Ei") : null}
 				values={optionsAra}
 				ariaLabel="Valitse, näytetäänkö vain Ara-kohteet"
-				onChange={(changedObject: any) => {
+				onChange={(newValue: any) => {
 					const newSearchFilters = {
 						...searchFilters,
-						ara: changedObject.value === "ARA-kohde" ? true : false,
+						ara: newValue === "ARA-kohde" ? true : false,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
@@ -144,8 +143,8 @@ const NursingHomes: FC = () => {
 				value={searchFilters.lah !== undefined ? (searchFilters.lah ? "Kyllä" : "Ei") : null}
 				values={[{ text: "Lyhytaikainen asuminen LAH", type: "checkbox", checked: searchFilters.lah === true }]}
 				ariaLabel="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
-				onChange={(changedObject: any): void => {
-					const newSearchFilters = { ...searchFilters, lah: changedObject.checked };
+				onChange={({ newValue }): void => {
+					const newSearchFilters = { ...searchFilters, lah: newValue === true ? true : undefined };
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
