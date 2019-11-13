@@ -1,7 +1,6 @@
 import React, { FC, useState, ChangeEvent } from "react";
 import "../styles/landing.scss";
 import { useHistory } from "react-router-dom";
-import { Button } from "reakit/Button";
 
 type Area = "Espoon keskus" | "Espoonlahti" | "Leppävaara" | "Matinkylä" | "Tapiola";
 
@@ -31,14 +30,15 @@ const Landing: FC = () => {
 							</option>
 						))}
 					</select>
-					<Button
+					<button
+						className="landing-cta"
 						onClick={(): void => {
 							const url = "/hoivakodit" + (selectedArea && `?alue=${selectedArea}`);
 							history.push(url);
 						}}
 					>
 						Näytä Hoivakodit
-					</Button>
+					</button>
 				</div>
 			</div>
 
