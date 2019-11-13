@@ -72,6 +72,10 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 			})}
 
 			<div className="save-and-empty-container">
+				<button onClick={() => setIsDropdownExpanded(false)} className="menu-save-button">
+					Tallenna
+				</button>
+
 				<button
 					onClick={(): void => {
 						onReset();
@@ -80,10 +84,6 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 					className="menu-empty-button"
 				>
 					Tyhjennä
-				</button>
-
-				<button onClick={() => setIsDropdownExpanded(false)} className="menu-save-button">
-					Tallenna
 				</button>
 			</div>
 		</div>

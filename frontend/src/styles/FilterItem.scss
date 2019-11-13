@@ -1,5 +1,10 @@
 @import "variables.scss";
 
+.save-and-empty-container {
+	display: flex;
+	flex-direction: row-reverse;
+}
+
 .menu-empty-button,
 .menu-save-button {
 	margin-top: 16px;
