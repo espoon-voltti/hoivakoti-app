@@ -1,10 +1,10 @@
 import React from "react";
 import "../styles/global.scss";
 import "../styles/App.scss";
-import { NursingHomes } from "./nursinghomes";
-import { NursingHome } from "./nursinghome";
-import { Feedback } from "./feedback";
-import { Landing } from "./landing";
+import PageNursingHomes from "./PageNursingHomes";
+import PageNursingHome from "./PageNursingHome";
+import PageFeedback from "./PageFeedback";
+import PageLanding from "./PageLanding";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import * as config from "./config";
 
@@ -50,11 +50,11 @@ const App: React.FC = () => {
 				</header>
 
 				<main id="content">
-					<Route exact path="/" component={Landing} />
-					<Route exact path="/hoivakodit" component={NursingHomes} />
-					<Route exact path="/hoivakodit/:id" component={NursingHome} />
-					<Route exact path="/topics" component={NursingHomes} />
-					<Route exact path="/palaute" component={Feedback} />
+					<Route exact path="/" component={PageLanding} />
+					<Route exact path="/hoivakodit" component={PageNursingHomes} />
+					<Route exact path="/hoivakodit/:id" component={PageNursingHome} />
+					<Route exact path="/topics" component={PageNursingHomes} />
+					<Route exact path="/palaute" component={PageFeedback} />
 				</main>
 			</Router>
 		</div>

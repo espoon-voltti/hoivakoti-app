@@ -18,7 +18,7 @@ interface SearchFilters {
 	readonly lah?: boolean;
 }
 
-const NursingHomes: FC = () => {
+const PageNursingHomes: FC = () => {
 	const [nursingHomes, setNursingHomes] = useState<any[] | null>(null);
 
 	const history = useHistory();
@@ -239,4 +239,4 @@ const NursingHomes: FC = () => {
 	);
 };
 
-export { NursingHomes };
+export default PageNursingHomes;

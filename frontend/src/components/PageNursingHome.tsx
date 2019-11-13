@@ -4,11 +4,11 @@ import "../styles/nursinghome.scss";
 import * as config from "./config";
 import axios from "axios";
 
-type NursingHomeProps = {
+type Props = {
 	_nursinghome: any;
 };
 
-const NursingHome: FC<NursingHomeProps> = ({ _nursinghome }) => {
+const PageNursingHome: FC<Props> = ({ _nursinghome }) => {
 	const [nursinghome, SetNursingHome] = useState({});
 	const { id } = useParams();
 
@@ -47,6 +47,5 @@ const NursingHome: FC<NursingHomeProps> = ({ _nursinghome }) => {
 		</div>
 	);
 };
-//			<p className="nursinghome-container-child" id="nursinghome-summary">{this.nursinghome.summary}</p>
 
-export { NursingHome };
+export default PageNursingHome;
