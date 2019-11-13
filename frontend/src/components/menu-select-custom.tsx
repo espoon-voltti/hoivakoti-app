@@ -3,13 +3,14 @@ import "../styles/menu-select-custom.scss";
 
 export type MenuSelectProps = {
 	prefix: string;
+	value: string | null;
 	values: any;
 	aria_label: string;
 	on_changed: any;
 	on_emptied: any;
 };
 
-const MenuSelect: FC<MenuSelectProps> = ({ prefix, values, aria_label, on_changed, on_emptied }) => {
+const MenuSelect: FC<MenuSelectProps> = ({ prefix, value, values, aria_label, on_changed, on_emptied }) => {
 	const [expanded, SetExpanded] = useState(false);
 
 	const OnToggleExpand = (): void => {
@@ -84,9 +85,17 @@ const MenuSelect: FC<MenuSelectProps> = ({ prefix, values, aria_label, on_change
 		</div>
 	);
 
+	console.log({ prefix, value });
+
 	const menu_dom = (
-		<div className="menu" aria-expanded={expanded}>
-			<button onClick={OnToggleExpand}>{prefix}</button>
+		<div className="filter-menu" aria-expanded={expanded}>
+			<button
+				onClick={OnToggleExpand}
+				className={`filter-button ${value !== null ? "filter-button-has-value" : ""}`}
+			>
+				{prefix}
+				{value ? `: ${value}` : null}
+			</button>
 			{expanded && items_dom}
 		</div>
 	);

@@ -9,45 +9,47 @@ import { Link } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
 
+type Language = "fi" | "se";
+
+interface SearchFilters {
+	alue?: string[];
+	language?: Language;
+	ara?: boolean;
+	lah?: boolean;
+}
+
 const NursingHomes: FC = () => {
-	const [nursinghomes, SetNursingHomes] = useState([]);
-	const [ratings, SetRatings] = useState({});
-	const [search, SetSearch] = useState({});
+	const [nursingHomes, setNursingHomes] = useState<any[] | null>(null);
+	const [searchFilters, setSearchFilters] = useState<SearchFilters>({});
 
 	const history = useHistory();
 
 	const areas = ["Espoon keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
 
 	useEffect(() => {
-		const parsed: any = queryString.parse(history.location.search);
-		SetSearch(parsed);
-		if (parsed.alue && !Array.isArray(parsed.alue)) parsed.alue = [parsed.alue];
-		if (!parsed.alue) parsed.alue = [];
-		if (parsed.ara) parsed.ara = parsed.ara === "true" ? true : false;
-		if (parsed.lah) parsed.lah = parsed.lah === "true" ? true : false;
-		console.log("Search:");
-		console.log(parsed);
-
-		console.log(config.API_URL + "/nursing-homes");
 		axios
 			.get(config.API_URL + "/nursing-homes")
 			.then(function(response: any) {
-				// handle success
-				SetNursingHomes(response.data);
+				setNursingHomes(response.data);
 			})
-			.catch((error: any) => console.warn(error.message));
-		axios
-			.get(config.API_URL + "/ratings")
-			.then(function(response: any) {
-				// handle success
-				SetRatings(response.data);
-			})
-			.catch((error: any) => console.warn(error.message));
+			.catch((error: Error) => console.warn(error.message));
 	}, []);
 
-	const search_as_any: any = search as any;
+	useEffect(() => {
+		const parsed = queryString.parse(history.location.search);
+		const alue = parsed.alue ? (!Array.isArray(parsed.alue) ? [parsed.alue] : parsed.alue) : undefined;
+		const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
+		const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
+		const newSearchFilters: SearchFilters = {
+			alue,
+			ara,
+			lah,
+			language: parsed.language as Language,
+		};
+		setSearchFilters(newSearchFilters);
+	}, [history.location.search]);
 
-	const selected_area_text = "Sijainti: " + ((search as any).alue ? (search as any).alue : areas[0]);
+	const search_as_any: any = searchFilters as any;
 
 	const area_options = [
 		{ text: "Valitse alueet joilta etsit hoivakotia", type: "header" },
@@ -80,11 +82,10 @@ const NursingHomes: FC = () => {
 		<>
 			<MenuSelect
 				prefix="Sijainti"
+				value={searchFilters.alue ? searchFilters.alue.join(", ") : null}
 				values={area_options}
 				aria_label="Valitse hoivakodin alue"
 				on_changed={(changed_object: any) => {
-					console.log("tulee:");
-					console.log(changed_object.value);
 					//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
 					if (!search_as_any.alue) search_as_any.alue = [];
 					if (!changed_object.checked)
@@ -96,7 +97,7 @@ const NursingHomes: FC = () => {
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
-				on_emptied={() => {
+				on_emptied={(): void => {
 					delete search_as_any.alue;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
@@ -104,14 +105,15 @@ const NursingHomes: FC = () => {
 			/>
 			<MenuSelect
 				prefix="Palvelukieli"
+				value={searchFilters.language || null}
 				values={language_options}
 				aria_label="Valitse hoivakodin kieli"
-				on_changed={(changed_object: any) => {
+				on_changed={(changed_object: any): void => {
 					search_as_any.language = changed_object.value;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
-				on_emptied={() => {
+				on_emptied={(): void => {
 					delete search_as_any.language;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
@@ -119,6 +121,7 @@ const NursingHomes: FC = () => {
 			/>
 			<MenuSelect
 				prefix="Ara-kohde"
+				value={searchFilters.ara ? String(searchFilters.ara) : null}
 				values={ara_options}
 				aria_label="Valitse, näytetäänkö vain Ara-kohteet"
 				on_changed={(changed_object: any) => {
@@ -126,7 +129,7 @@ const NursingHomes: FC = () => {
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
-				on_emptied={() => {
+				on_emptied={(): void => {
 					delete search_as_any.ara;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
@@ -135,16 +138,17 @@ const NursingHomes: FC = () => {
 
 			<MenuSelect
 				prefix="Lyhytaikainen asuminen"
+				value={searchFilters.lah ? String(searchFilters.lah) : null}
 				values={[{ text: "Lyhytaikainen asuminen LAH", type: "checkbox", checked: search_as_any.lah === true }]}
 				aria_label="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
-				on_changed={(changed_object: any) => {
+				on_changed={(changed_object: any): void => {
 					//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
 					if (changed_object.checked) search_as_any.lah = true;
 					else search_as_any.lah = false;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
-				on_emptied={() => {
+				on_emptied={(): void => {
 					delete search_as_any.lah;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
@@ -153,28 +157,32 @@ const NursingHomes: FC = () => {
 		</>
 	);
 
-	const nursinghome_components: object[] = nursinghomes
-		.filter((nursinghome: any) => {
-			if (
-				(search as any).alue &&
-				(search as any).alue.length > 0 &&
-				!(search as any).alue.includes(nursinghome.location)
-			)
-				return false;
-			if ((search as any).language && nursinghome.language !== (search as any).language) return false;
-			if ((search as any).ara !== undefined && nursinghome.ara !== (search as any).ara) return false;
-			if ((search as any).lah && nursinghome.lah !== (search as any).lah) return false;
+	const nursinghomeComponents: object[] | null =
+		nursingHomes &&
+		nursingHomes
+			.filter((nursinghome: any) => {
+				if (
+					(searchFilters as any).alue &&
+					(searchFilters as any).alue.length > 0 &&
+					!(searchFilters as any).alue.includes(nursinghome.location)
+				)
+					return false;
+				if ((searchFilters as any).language && nursinghome.language !== (searchFilters as any).language)
+					return false;
+				if ((searchFilters as any).ara !== undefined && nursinghome.ara !== (searchFilters as any).ara)
+					return false;
+				if ((searchFilters as any).lah && nursinghome.lah !== (searchFilters as any).lah) return false;
 
-			return true;
-		})
-		.map((nursinghome: any, index) => {
-			const rating: any = (ratings as any)[nursinghome.id];
-			return (
-				<Link to={"/hoivakodit/" + nursinghome.id} style={{ textDecoration: "none" }}>
-					<NursingHomeSmall nursinghome={nursinghome} key={index} />
-				</Link>
-			);
-		});
+				return true;
+			})
+			.map((nursinghome: any, index) => {
+				// const rating: any = (ratings as any)[nursinghome.id];
+				return (
+					<Link key={index} to={"/hoivakodit/" + nursinghome.id} style={{ textDecoration: "none" }}>
+						<NursingHomeSmall nursinghome={nursinghome} key={index} />
+					</Link>
+				);
+			});
 
 	const Map = ReactMapboxGl({
 		accessToken:
@@ -188,33 +196,43 @@ const NursingHomes: FC = () => {
 		<div>
 			<div className="filters">
 				<div className="filters-text">Rajaa tuloksia:</div>
-				{nursinghomes.length && filters_dom}
+				{nursingHomes && filters_dom}
 			</div>
-			<div className="card-list-and-map-container">
-				<div className="card-list">
-					<h2 className="results-summary">{Object.keys(nursinghome_components).length} hoivakotia</h2>
-					{nursinghome_components}
+			{!nursingHomes ? (
+				"Ladataan..."
+			) : (
+				<div className="card-list-and-map-container">
+					<div className="card-list">
+						<h2 className="results-summary">
+							{Object.keys(nursinghomeComponents || {}).length} hoivakotia
+						</h2>
+						{nursinghomeComponents}
+					</div>
+					<div id="map" className="map-container">
+						<Map
+							style="mapbox://styles/mapbox/streets-v9"
+							center={[24.6559, 60.2055]}
+							containerStyle={{
+								height: "100vh",
+								width: "100%",
+								position: "sticky",
+								top: 0,
+							}}
+						>
+							<Layer
+								type="symbol"
+								id="marker"
+								layout={{ "icon-image": "town-hall-15", "icon-size": 1.5 }}
+							>
+								<Feature coordinates={[24.6559, 60.2055]} />
+								<Feature coordinates={[24.6, 60.2053]} />
+								<Feature coordinates={[24.62, 60.2]} />
+								<Feature coordinates={[24.7, 60.17]} />
+							</Layer>
+						</Map>
+					</div>
 				</div>
-				<div id="map" className="map-container">
-					<Map
-						style="mapbox://styles/mapbox/streets-v9"
-						center={[24.6559, 60.2055]}
-						containerStyle={{
-							height: "100vh",
-							width: "100%",
-							position: "sticky",
-							top: 0,
-						}}
-					>
-						<Layer type="symbol" id="marker" layout={{ "icon-image": "town-hall-15", "icon-size": 1.5 }}>
-							<Feature coordinates={[24.6559, 60.2055]} />
-							<Feature coordinates={[24.6, 60.2053]} />
-							<Feature coordinates={[24.62, 60.2]} />
-							<Feature coordinates={[24.7, 60.17]} />
-						</Layer>
-					</Map>
-				</div>
-			</div>
+			)}
 		</div>
 	);
 };

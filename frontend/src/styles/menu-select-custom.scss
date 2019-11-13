@@ -15,11 +15,27 @@
 	border: none;
 }
 
-.menu[aria-expanded="true"] {
+.filter-button {
+	font-size: 14px;
+	font-weight: bold;
+	color: $headline-color;
+	background: none;
+	padding: 10px;
+	border: 1px solid $light-gray;
+	border-radius: 4px;
+	text-transform: uppercase;
+}
+
+.filter-button-has-value {
+	background-color: $link-color;
+	color: white;
+}
+
+.filter-menu[aria-expanded="true"] {
 	z-index: 100;
 }
 
-.menu > .items {
+.filter-menu > .items {
 	position: absolute;
 	//color: #ff0000;
 	background: rgba(255, 255, 255, 255);
@@ -31,21 +47,19 @@
 	padding: 4px;
 }
 
-.menu-empty-button
-{
+.menu-empty-button {
 	margin-top: 10px;
 	font-weight: normal;
 	border: none;
 	background: none;
 }
 
-.menu-save-button
-{
+.menu-save-button {
 	margin-top: 10px;
 	font-weight: normal;
 	border: none;
 	background: none;
 	color: $primary-blue;
 	margin-left: auto;
-	float: right;	
+	float: right;
 }
