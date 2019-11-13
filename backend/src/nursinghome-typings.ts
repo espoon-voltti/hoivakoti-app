@@ -41,7 +41,6 @@ export interface NursingHome{
 }
 
 export const nursing_home_columns_info:any = [
-{csv: "", sql: "id", type: "uuid"},
 {csv: "Hoivakodin nimi", sql: "name", type: "string"},
 {csv: "Omistajan nimi", sql: "owner", type: "string"},
 {csv: "Käyntiosoite", sql: "address", type: "string"},
