@@ -144,7 +144,7 @@ const NursingHomes: FC = () => {
 				on_changed={(changed_object: any): void => {
 					//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
 					if (changed_object.checked) search_as_any.lah = true;
-					else search_as_any.lah = false;
+					else search_as_any.lah = undefined;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
