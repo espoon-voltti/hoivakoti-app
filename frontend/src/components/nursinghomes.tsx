@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC } from "react";
 import { NursingHomeSmall } from "./nursinghome-small";
 import FilterItem from "./FilterItem";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import "../styles/nursinghomes.scss";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
 import * as config from "./config";
@@ -12,17 +12,17 @@ import axios from "axios";
 type Language = string;
 
 interface SearchFilters {
-	alue?: string[];
-	language?: Language;
-	ara?: boolean;
-	lah?: boolean;
+	readonly alue?: string[];
+	readonly language?: Language;
+	readonly ara?: boolean;
+	readonly lah?: boolean;
 }
 
 const NursingHomes: FC = () => {
 	const [nursingHomes, setNursingHomes] = useState<any[] | null>(null);
-	const [searchFilters, setSearchFilters] = useState<SearchFilters>({});
 
 	const history = useHistory();
+	const { search } = useLocation();
 
 	const areas = ["Espoon keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
 
@@ -35,34 +35,29 @@ const NursingHomes: FC = () => {
 			.catch((error: Error) => console.warn(error.message));
 	}, []);
 
-	useEffect(() => {
-		const parsed = queryString.parse(history.location.search);
-		const alue = parsed.alue ? (!Array.isArray(parsed.alue) ? [parsed.alue] : parsed.alue) : undefined;
-		const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
-		const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
-		const newSearchFilters: SearchFilters = {
-			alue,
-			ara,
-			lah,
-			language: parsed.language as Language,
-		};
-		setSearchFilters(newSearchFilters);
-	}, [history.location.search]);
+	const parsed = queryString.parse(search);
+	const alue = parsed.alue ? (!Array.isArray(parsed.alue) ? [parsed.alue] : parsed.alue) : undefined;
+	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
+	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
+	const searchFilters: SearchFilters = {
+		alue,
+		ara,
+		lah,
+		language: parsed.language as Language,
+	};
 
-	const search_as_any: any = searchFilters as any;
-
-	const area_options = [
+	const optionsArea = [
 		{ text: "Valitse alueet joilta etsit hoivakotia", type: "header" },
 		...areas.map((value: string) => {
-			const checked = search_as_any.alue ? search_as_any.alue.includes(value) : false;
+			const checked = searchFilters.alue ? searchFilters.alue.includes(value) : false;
 			return { text: value, type: "checkbox", checked: checked };
 		}),
 		{ type: "separator" },
 	];
 
-	const ara_options = [
-		{ text: "ARA-kohde", type: "radio", checked: search_as_any.ara === true ? true : false },
-		{ text: "Ei ARA-kohde", type: "radio", checked: search_as_any.ara === false ? true : false },
+	const optionsAra = [
+		{ text: "ARA-kohde", type: "radio", checked: searchFilters.ara === true },
+		{ text: "Ei ARA-kohde", type: "radio", checked: searchFilters.ara === false },
 		{ type: "separator" },
 		{
 			text:
@@ -71,67 +66,69 @@ const NursingHomes: FC = () => {
 		},
 	];
 
-	const language_options = [
+	const optionsLanguage = [
 		{ text: "Hoivakodin palvelukieli", type: "header" },
-		{ text: "Suomi", type: "radio", checked: search_as_any.language === "Suomi" },
-		{ text: "Ruotsi", type: "radio", checked: search_as_any.language === "Ruotsi" },
+		{ text: "Suomi", type: "radio", checked: searchFilters.language === "Suomi" },
+		{ text: "Ruotsi", type: "radio", checked: searchFilters.language === "Ruotsi" },
 		{ type: "separator" },
 	];
 
-	const filters_dom = (
+	const filterElements = (
 		<>
 			<FilterItem
 				prefix="Sijainti"
 				value={searchFilters.alue !== undefined ? searchFilters.alue.join(", ") : null}
-				values={area_options}
+				values={optionsArea}
 				ariaLabel="Valitse hoivakodin alue"
-				onChange={(changed_object: any) => {
-					//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
-					if (!search_as_any.alue) search_as_any.alue = [];
-					if (!changed_object.checked)
-						search_as_any.alue = search_as_any.alue.filter((value: string) => {
-							return value !== changed_object.value;
+				onChange={(changedObject: any) => {
+					const newSearchFilters = { ...searchFilters };
+					if (!newSearchFilters.alue) newSearchFilters.alue = [];
+					if (!changedObject.checked)
+						newSearchFilters.alue = newSearchFilters.alue.filter((value: string) => {
+							return value !== changedObject.value;
 						});
-					else if (!search_as_any.alue.includes(changed_object.value))
-						search_as_any.alue.push(changed_object.value);
-					const stringfield = queryString.stringify(search_as_any);
+					else if (!newSearchFilters.alue.includes(changedObject.value))
+						newSearchFilters.alue.push(changedObject.value);
+					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 				onReset={(): void => {
-					delete search_as_any.alue;
-					const stringfield = queryString.stringify(search_as_any);
+					const newSearchFilters = { ...searchFilters, alue: undefined };
+					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 			/>
 			<FilterItem
 				prefix="Palvelukieli"
 				value={searchFilters.language || null}
-				values={language_options}
+				values={optionsLanguage}
 				ariaLabel="Valitse hoivakodin kieli"
-				onChange={(changed_object: any): void => {
-					search_as_any.language = changed_object.value;
-					const stringfield = queryString.stringify(search_as_any);
+				onChange={(changedObject: any): void => {
+					const newSearchFilters = { ...searchFilters, language: changedObject.value };
+					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 				onReset={(): void => {
-					delete search_as_any.language;
-					const stringfield = queryString.stringify(search_as_any);
+					const stringfield = queryString.stringify({ ...searchFilters, language: undefined });
 					history.push("/hoivakodit?" + stringfield);
 				}}
 			/>
 			<FilterItem
 				prefix="Ara-kohde"
 				value={searchFilters.ara !== undefined ? (searchFilters.ara ? "Kyllä" : "Ei") : null}
-				values={ara_options}
+				values={optionsAra}
 				ariaLabel="Valitse, näytetäänkö vain Ara-kohteet"
-				onChange={(changed_object: any) => {
-					search_as_any.ara = changed_object.value === "ARA-kohde" ? true : false;
-					const stringfield = queryString.stringify(search_as_any);
+				onChange={(changedObject: any) => {
+					const newSearchFilters = {
+						...searchFilters,
+						ara: changedObject.value === "ARA-kohde" ? true : false,
+					};
+					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 				onReset={(): void => {
-					delete search_as_any.ara;
-					const stringfield = queryString.stringify(search_as_any);
+					const newSearchFilters = { ...searchFilters, ara: undefined };
+					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 			/>
@@ -139,18 +136,16 @@ const NursingHomes: FC = () => {
 			<FilterItem
 				prefix="Lyhytaikainen asuminen"
 				value={searchFilters.lah !== undefined ? (searchFilters.lah ? "Kyllä" : "Ei") : null}
-				values={[{ text: "Lyhytaikainen asuminen LAH", type: "checkbox", checked: search_as_any.lah === true }]}
+				values={[{ text: "Lyhytaikainen asuminen LAH", type: "checkbox", checked: searchFilters.lah === true }]}
 				ariaLabel="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
-				onChange={(changed_object: any): void => {
-					//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
-					if (changed_object.checked) search_as_any.lah = true;
-					else search_as_any.lah = undefined;
-					const stringfield = queryString.stringify(search_as_any);
+				onChange={(changedObject: any): void => {
+					const newSearchFilters = { ...searchFilters, lah: changedObject.checked };
+					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 				onReset={(): void => {
-					delete search_as_any.lah;
-					const stringfield = queryString.stringify(search_as_any);
+					const newSearchFilters = { ...searchFilters, lah: undefined };
+					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 			/>
@@ -162,27 +157,22 @@ const NursingHomes: FC = () => {
 		nursingHomes
 			.filter((nursinghome: any) => {
 				if (
-					(searchFilters as any).alue &&
-					(searchFilters as any).alue.length > 0 &&
-					!(searchFilters as any).alue.includes(nursinghome.location)
+					searchFilters.alue &&
+					searchFilters.alue.length > 0 &&
+					!searchFilters.alue.includes(nursinghome.location)
 				)
 					return false;
-				if ((searchFilters as any).language && nursinghome.language !== (searchFilters as any).language)
-					return false;
-				if ((searchFilters as any).ara !== undefined && nursinghome.ara !== (searchFilters as any).ara)
-					return false;
-				if ((searchFilters as any).lah && nursinghome.lah !== (searchFilters as any).lah) return false;
+				if (searchFilters.language && nursinghome.language !== searchFilters.language) return false;
+				if (searchFilters.ara !== undefined && nursinghome.ara !== searchFilters.ara) return false;
+				if (searchFilters.lah && nursinghome.lah !== searchFilters.lah) return false;
 
 				return true;
 			})
-			.map((nursinghome: any, index) => {
-				// const rating: any = (ratings as any)[nursinghome.id];
-				return (
-					<Link key={index} to={"/hoivakodit/" + nursinghome.id} style={{ textDecoration: "none" }}>
-						<NursingHomeSmall nursinghome={nursinghome} key={index} />
-					</Link>
-				);
-			});
+			.map((nursinghome: any, index) => (
+				<Link key={index} to={"/hoivakodit/" + nursinghome.id} style={{ textDecoration: "none" }}>
+					<NursingHomeSmall nursinghome={nursinghome} key={index} />
+				</Link>
+			));
 
 	const Map = ReactMapboxGl({
 		accessToken:
@@ -196,7 +186,7 @@ const NursingHomes: FC = () => {
 		<div>
 			<div className="filters">
 				<div className="filters-text">Rajaa tuloksia:</div>
-				{nursingHomes && filters_dom}
+				{nursingHomes && filterElements}
 			</div>
 			{!nursingHomes ? (
 				"Ladataan..."
