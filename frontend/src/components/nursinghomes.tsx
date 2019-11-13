@@ -77,7 +77,13 @@ const NursingHomes: FC = () => {
 		<>
 			<FilterItem
 				prefix="Sijainti"
-				value={searchFilters.alue !== undefined ? searchFilters.alue.join(", ") : null}
+				value={
+					searchFilters.alue !== undefined
+						? searchFilters.alue.length <= 2
+							? searchFilters.alue.join(", ")
+							: `(${searchFilters.alue.length} valintaa)`
+						: null
+				}
 				values={optionsArea}
 				ariaLabel="Valitse hoivakodin alue"
 				onChange={(changedObject: any) => {
