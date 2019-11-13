@@ -20,7 +20,7 @@ const knex = new (Knex as any)(options)
 knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 
 	if (exists)
-		await knex.schema.dropTable("NursingHomes")
+		return;
 
 	//var count = await knex('pg_class').select("reltuples").where({relname: "NursingHomes"});
 	//console.log(count);
@@ -73,10 +73,10 @@ knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 
 		//await SetUpRatingsTable(id);
 
-		console.debug("Created Nursing table.")
-		const nurseryhome_contents = fs.readFileSync("data/hoivakodit.csv", "utf8")
+		//console.debug("Created Nursing table.")
+		//const nurseryhome_contents = fs.readFileSync("data/hoivakodit.csv", "utf8")
 
-		await NursingHomesFromCSV(nurseryhome_contents)
+		//await NursingHomesFromCSV(nurseryhome_contents)
 	})
 
 	/*.catch((err: any) => { console.log(err); throw err })
@@ -114,7 +114,7 @@ async function SetUpRatingsTable(id_for_testing: string)
 	})
 }
 
-async function InsertNursingHomeToDB(nurseryhome: NursingHome)
+export async function InsertNursingHomeToDB(nurseryhome: NursingHome)
 {
 	const uuid = uuidv4()
 	await knex("NursingHomes").insert({id: uuid,
@@ -125,7 +125,7 @@ async function InsertNursingHomeToDB(nurseryhome: NursingHome)
 	return uuid
 }
 
-async function InsertNursingHomeRatingToDB(nursery_id: string, rating: number)
+export async function InsertNursingHomeRatingToDB(nursery_id: string, rating: number)
 {
 	const uuid = uuidv4()
 	const seconds = Math.round(new Date().getTime() / 1000)
@@ -134,24 +134,24 @@ async function InsertNursingHomeRatingToDB(nursery_id: string, rating: number)
 	return uuid
 }
 
-async function GetAllNursingHomes()
+export async function GetAllNursingHomes()
 {
 	return await knex.select().table("NursingHomes")
 }
 
-async function GetAllRatings()
+export async function GetAllRatings()
 {
 	return await knex.select().table("Ratings")
 }
 
-async function GetNursingHome(id: string)
+export async function GetNursingHome(id: string)
 {
 	const result = await knex.select().table("NursingHomes").where({id: id});
 	return result;
 }
 
-export {
-	InsertNursingHomeToDB,
-	GetAllNursingHomes,
-	GetAllRatings,
-	GetNursingHome}
+export async function DeleteAllNursingHomes()
+{
+	const result = await knex.select().table("NursingHomes").del();
+	return result;
+}

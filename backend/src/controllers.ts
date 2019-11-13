@@ -2,12 +2,13 @@ import {
 	InsertNursingHomeToDB,
 	GetAllNursingHomes,
 	GetAllRatings,
-	GetNursingHome as GetNursingHomeDB} from "./models"
+	GetNursingHome as GetNursingHomeDB,
+	DeleteAllNursingHomes} from "./models"
 
 import {
 	NursingHomesFromCSV} from "./services"
 
-async function AddNursingHome(ctx: any)
+export async function AddNursingHome(ctx: any)
 {
 	await InsertNursingHomeToDB({name: ctx.request.body.name,
 		owner: ctx.request.body.name,
@@ -18,18 +19,18 @@ async function AddNursingHome(ctx: any)
 	return "inserted"
 }
 
-async function ListNursingHomes(ctx: any)
+export async function ListNursingHomes(ctx: any)
 {
 	const nursing_homes = await GetAllNursingHomes()
 	return nursing_homes
 }
 
-async function GetNursingHome(ctx: any)
+export async function GetNursingHome(ctx: any)
 {
 	return await GetNursingHomeDB(ctx.params.id);
 }
 
-async function ListRatings(ctx: any)
+export async function ListRatings(ctx: any)
 {
 	const ratings = await GetAllRatings()
 
@@ -56,7 +57,7 @@ async function ListRatings(ctx: any)
 	return ratings_as_object
 }
 
-async function AddNursingHomesFromCSV(ctx: any)
+export async function AddNursingHomesFromCSV(ctx: any)
 {
 	const csv: string = ctx.request.body.csv
 
@@ -65,9 +66,8 @@ async function AddNursingHomesFromCSV(ctx: any)
 	return (records)
 }
 
-export {
-	AddNursingHome,
-	ListNursingHomes,
-	ListRatings,
-	AddNursingHomesFromCSV,
-	GetNursingHome}
+export async function DeleteNursingHomes(ctx: any)
+{
+	const result = await DeleteAllNursingHomes();
+	return result;
+}

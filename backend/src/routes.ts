@@ -5,7 +5,8 @@ import {
 	ListNursingHomes,
 	ListRatings,
 	GetNursingHome,
-	AddNursingHomesFromCSV} from "./controllers"
+	AddNursingHomesFromCSV,
+	DeleteNursingHomes} from "./controllers"
 
 const router = new Router()
 
@@ -27,6 +28,10 @@ router.post("/api/nursing-homes", async (ctx) => {
 
 router.post("/api/nursing-homes/csv", async (ctx) => {
 	ctx.body = await AddNursingHomesFromCSV(ctx)
+})
+
+router.get("/api/nursing-homes/delete-all", async (ctx) => {
+	ctx.body = await DeleteNursingHomes(ctx);
 })
 
 router.get("/api/ratings", async (ctx) => {

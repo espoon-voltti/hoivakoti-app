@@ -31,20 +31,20 @@ export interface NursingHome{
 	contact_name?: string,
 	contact_title?: string,
 	contact_phone?: string,
+	contact_phone_info?: string,
 	email?: string,
 	accessibility_info?: string,
 	staff_info?: string,
 	staff_satisfaction_info?: string,
 	other_services?: string,
 	nearby_services?: string
-
 }
 
-const nursing_home_columns_info:any = [
+export const nursing_home_columns_info:any = [
 {csv: "", sql: "id", type: "uuid"},
 {csv: "Hoivakodin nimi", sql: "name", type: "string"},
 {csv: "Omistajan nimi", sql: "owner", type: "string"},
-{csv: "Käyntiosoite", sql: "addres", type: "string"},
+{csv: "Käyntiosoite", sql: "address", type: "string"},
 {csv: "ARA-kohde", sql: "ara", type: "boolean"},
 {csv: "Verkkosivujen osoite", sql: "www", type: "string"},
 {csv: "Asuntojen määrä", sql: "apartment_count", type: "integer"},
