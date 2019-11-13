@@ -4,20 +4,19 @@ import "../styles/nursinghome-small.scss";
 
 type NursingHomeSmallProps = {
 	nursinghome: any;
-	rating: any;
+	// rating: any;
 };
 
-const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome, rating }) => {
-	let rating_dom;
-	if (rating)
-		rating_dom = (
-			<p>
-				{rating && rating.avg}/5.0 n: {rating && rating.total}
-			</p>
-		);
-
-	let ara_dom;
-	if (nursinghome && nursinghome.ara) ara_dom = <div className="card-list-item__tag">ARA-kohde</div>;
+const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome }) => {
+	//
+	// let rating_dom;
+	// if (rating)
+	// 	rating_dom = (
+	// 		<p>
+	// 			{rating && rating.avg}/5.0 n: {rating && rating.total}
+	// 		</p>
+	// 	);
+	//
 
 	return (
 		<div className="card-list-item">
@@ -36,7 +35,7 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome, rating }) =>
 					<h3 className="card-list-item__header">{nursinghome && nursinghome.name}</h3>
 
 					<div className="card-list-item__text">{nursinghome && nursinghome.address}</div>
-					{ara_dom}
+					{nursinghome && nursinghome.ara && <div className="card-list-item__tag">ARA-kohde</div>}
 				</div>
 
 				<div className="card-list-item__content--bottom">
