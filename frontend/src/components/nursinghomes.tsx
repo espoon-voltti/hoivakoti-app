@@ -121,7 +121,7 @@ const NursingHomes: FC = () => {
 			/>
 			<FilterItem
 				prefix="Ara-kohde"
-				value={searchFilters.ara !== undefined ? String(searchFilters.ara) : null}
+				value={searchFilters.ara !== undefined ? (searchFilters.ara ? "Kyllä" : "Ei") : null}
 				values={ara_options}
 				ariaLabel="Valitse, näytetäänkö vain Ara-kohteet"
 				onChange={(changed_object: any) => {
@@ -138,7 +138,7 @@ const NursingHomes: FC = () => {
 
 			<FilterItem
 				prefix="Lyhytaikainen asuminen"
-				value={searchFilters.lah !== undefined ? String(searchFilters.lah) : null}
+				value={searchFilters.lah !== undefined ? (searchFilters.lah ? "Kyllä" : "Ei") : null}
 				values={[{ text: "Lyhytaikainen asuminen LAH", type: "checkbox", checked: search_as_any.lah === true }]}
 				ariaLabel="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
 				onChange={(changed_object: any): void => {
