@@ -15,6 +15,8 @@ async function NursingHomesFromCSV(csv: string)
 		delimiter: ","
 	})
 
+	console.log(records.length);
+
 	records.map(async (record: any) =>
 	{
 		const nursing_home:any = {};
