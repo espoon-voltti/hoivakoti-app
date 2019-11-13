@@ -1,5 +1,6 @@
 import React, { useState, FC } from "react";
 import "../styles/menu-select-custom.scss";
+import { ReactComponent as ImageFilterCaret } from "./filter-caret.svg";
 
 export type MenuSelectProps = {
 	prefix: string;
@@ -95,6 +96,7 @@ const MenuSelect: FC<MenuSelectProps> = ({ prefix, value, values, aria_label, on
 			>
 				{prefix}
 				{value ? `: ${value}` : null}
+				<ImageFilterCaret className="filter-button-caret" />
 			</button>
 			{expanded && items_dom}
 		</div>

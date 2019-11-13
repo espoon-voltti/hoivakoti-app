@@ -1,25 +1,25 @@
 @import "variables.scss";
 
-.card-list-and-map-container{
+.card-list-and-map-container {
 	display: flex;
 }
 
-.filters  {
+.filters {
 	padding: 20px;
 	border-bottom: 1px solid $border-color;
 	border-top: 1px solid $border-color;
 	display: flex;
 	flex-grow: 1;
+	align-items: center;
 }
 
-.filters > .filters-text
-{
-	margin-top: 9px;
+.filters > .filters-text {
+	color: $headline-color;
+	font-weight: bold;
 }
 
 // Spacing between the buttons for different filters comes from here.
-.filters > *
-{
+.filters > * {
 	margin: 6px;
 }
 
@@ -39,7 +39,7 @@
 	margin: 25px 0 25px 10px;
 }
 
-@media screen and (max-width: 1000px){ 
+@media screen and (max-width: 1000px) {
 	.map-container {
 		display: none;
 	}
