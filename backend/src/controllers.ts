@@ -3,7 +3,8 @@ import {
 	GetAllNursingHomes,
 	GetAllRatings,
 	GetNursingHome as GetNursingHomeDB,
-	DeleteAllNursingHomes} from "./models"
+	DeleteAllNursingHomes,
+	DropAndRecreateNursingHomeTable} from "./models"
 
 import {
 	NursingHomesFromCSV} from "./services"
@@ -69,5 +70,11 @@ export async function AddNursingHomesFromCSV(ctx: any)
 export async function DeleteNursingHomes(ctx: any)
 {
 	const result = await DeleteAllNursingHomes();
+	return result;
+}
+
+export async function DropAndRecreateTables(ctx: any)
+{
+	const result = await DropAndRecreateNursingHomeTable();
 	return result;
 }

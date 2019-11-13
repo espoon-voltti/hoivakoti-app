@@ -6,7 +6,8 @@ import {
 	ListRatings,
 	GetNursingHome,
 	AddNursingHomesFromCSV,
-	DeleteNursingHomes} from "./controllers"
+	DeleteNursingHomes,
+	DropAndRecreateTables} from "./controllers"
 
 const router = new Router()
 
@@ -32,6 +33,10 @@ router.post("/api/nursing-homes/csv", async (ctx) => {
 
 router.get("/api/nursing-homes/delete-all", async (ctx) => {
 	ctx.body = await DeleteNursingHomes(ctx);
+})
+
+router.get("/api/nursing_homes/drop_table", async (ctx) => {
+	ctx.body = await DropAndRecreateTables(ctx);
 })
 
 router.get("/api/ratings", async (ctx) => {

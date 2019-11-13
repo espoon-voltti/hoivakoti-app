@@ -25,7 +25,17 @@ knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 	//var count = await knex('pg_class').select("reltuples").where({relname: "NursingHomes"});
 	//console.log(count);
 
-	knex.schema.createTable("NursingHomes", (table: any) => {
+	await CreateNursingHomeTable();
+	
+	/*.catch((err: any) => { console.log(err); throw err })
+		.finally(() => {
+			knex.destroy();
+	});*/
+})
+
+async function CreateNursingHomeTable()
+{
+	await knex.schema.createTable("NursingHomes", (table: any) => {
 		table.uuid("id")
 		table.string("name")
 		table.string("owner")
@@ -66,24 +76,17 @@ knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 		table.string("staff_satisfaction_info")
 		table.string("other_services")
 		table.string("nearby_services")
-	}).then(async () => {
-		//const id = await InsertNursingHomeToDB("Leppävaaran Hoiva ja Turva", "Puutteita hoitohenkilökunnan määrässä; vakava vesivahinko; ikkunat eristämättömiä. Ruoka hyvää, suosittelen!");
-		//await InsertNursingHomeToDB("Vaikea Hoivakoti Ry", "Kaikki tarkastukset tip-top. Tosi hyvä pössis. Ruoka vähän mautonta, en suosittele muuttoa.");
-		//await InsertNursingHomeToDB("Kaskissalmen Puutarha", "Rakenteista puuttuu muunmuassa katto ja seinät. Oma teltta oltava mukana. HUOM! Puutiaisaivokuumetta havaittu!");
-
-		//await SetUpRatingsTable(id);
-
-		//console.debug("Created Nursing table.")
-		//const nurseryhome_contents = fs.readFileSync("data/hoivakodit.csv", "utf8")
-
-		//await NursingHomesFromCSV(nurseryhome_contents)
 	})
+}
 
-	/*.catch((err: any) => { console.log(err); throw err })
-		.finally(() => {
-			knex.destroy();
-	});*/
-})
+export async function DropAndRecreateNursingHomeTable()
+{
+	const exists = await knex.schema.hasTable("NursingHomes");
+	if (exists)
+		await knex.schema.dropTable("NursingHomes");
+	const result = await CreateNursingHomeTable();
+	return result;
+}
 
 async function SetUpRatingsTable(id_for_testing: string)
 {
