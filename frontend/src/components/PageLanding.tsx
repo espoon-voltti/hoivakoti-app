@@ -6,7 +6,7 @@ type Area = "Espoon keskus" | "Espoonlahti" | "Leppävaara" | "Matinkylä" | "Ta
 
 const areas: Area[] = ["Espoon keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
 
-const Landing: FC = () => {
+const PageLanding: FC = () => {
 	const history = useHistory();
 
 	const [selectedArea, setSelectedArea] = useState<Area | null>(null);
@@ -106,4 +106,4 @@ const Landing: FC = () => {
 	);
 };
 
-export { Landing };
+export default PageLanding;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC, FormEvent, ChangeEvent } from "react";
 import { HappinessSelection } from "./happiness-selection";
 
-const Feedback: FC = () => {
+const PageFeedback: FC = () => {
 	const [text, SetText] = useState("");
 
 	useEffect(() => {}, []);
@@ -37,4 +37,4 @@ const Feedback: FC = () => {
 	);
 };
 
-export { Feedback };
+export default PageFeedback;
