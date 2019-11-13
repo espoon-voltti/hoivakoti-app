@@ -17,7 +17,6 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 	const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
 
 	const handleChange = (newValue: any): void => {
-		console.log(newValue);
 		onChange(newValue);
 	};
 
@@ -68,6 +67,9 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 							{value.text}
 						</div>
 					);
+				} else {
+					console.warn("[FilterItem] Unknown value: ", value);
+					return null;
 				}
 			})}
 

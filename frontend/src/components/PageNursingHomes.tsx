@@ -52,13 +52,11 @@ const PageNursingHomes: FC = () => {
 			const checked = searchFilters.alue ? searchFilters.alue.includes(value) : false;
 			return { text: value, type: "checkbox", checked: checked };
 		}),
-		{ type: "separator" },
 	];
 
 	const optionsAra = [
 		{ text: "ARA-kohde", subText: "Näytä vain ARA-kohteet", type: "radio", checked: searchFilters.ara === true },
 		{ text: "Ei ARA-kohde", subText: "Piilota ARA-kohteet", type: "radio", checked: searchFilters.ara === false },
-		{ type: "separator" },
 		{
 			text:
 				"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat palvelutarve sekä varallisuus.",
@@ -70,7 +68,6 @@ const PageNursingHomes: FC = () => {
 		{ text: "Hoivakodin palvelukieli", type: "header" },
 		{ text: "Suomi", type: "radio", checked: searchFilters.language === "Suomi" },
 		{ text: "Ruotsi", type: "radio", checked: searchFilters.language === "Ruotsi" },
-		{ type: "separator" },
 	];
 
 	const filterElements = (
@@ -212,6 +209,7 @@ const PageNursingHomes: FC = () => {
 					</div>
 					<div id="map" className="map-container">
 						<Map
+							/* eslint-disable-next-line react/style-prop-object */
 							style="mapbox://styles/mapbox/streets-v9"
 							center={[24.6559, 60.2055]}
 							containerStyle={{

@@ -1,0 +1,100 @@
+@import "./variables.scss";
+
+.nursinghome-page-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 80px;
+}
+
+.nursinghome-hero {
+	width: 100%;
+	margin-bottom: 48px;
+	max-height: 480px;
+	overflow: hidden;
+}
+
+.nursinghome-hero img {
+	margin-top: -20%;
+	width: 100%;
+}
+
+.nursinghome-back-link {
+	display: block;
+	margin-bottom: 32px;
+
+	&::before {
+		content: "←";
+		margin-right: 8px;
+	}
+}
+
+.nursinghome-info-container {
+	width: 100%;
+	max-width: 1100px;
+	display: flex;
+	align-items: flex-start;
+	padding: 0 50px;
+}
+
+.nursinghome-info {
+	flex-grow: 1;
+}
+
+.nursinghome-title {
+	font-size: 48px;
+	font-weight: bold;
+	color: $headline-color;
+	margin-bottom: 32px;
+}
+
+.nursinghome-info h3 {
+	font-size: 36px;
+	color: $headline-color;
+	margin-bottom: 32px;
+	font-weight: 500;
+	margin-top: 64px;
+}
+
+.nursinghome-info p {
+	margin-bottom: 32px;
+}
+
+.nursinghome-info-paragraph-title {
+	font-weight: bold;
+	margin-bottom: 8px !important;
+}
+
+.nursinghome-details-box {
+	flex-basis: 360px;
+	flex-shrink: 0;
+	border: 1px solid $light-gray;
+	border-radius: 5px;
+	padding: 24px;
+	margin-left: 64px;
+}
+
+.nursinghome-details-box h3 {
+	color: inherit;
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 8px;
+
+	&:not(:first-child) {
+		margin-top: 16px;
+	}
+}
+
+.nursinghome-details-box p {
+	margin-bottom: 8px;
+	word-break: break-all;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.nursinghome-details-name {
+	font-size: 19px;
+	font-weight: bold;
+}
