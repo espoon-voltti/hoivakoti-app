@@ -1,16 +1,38 @@
 @import "variables.scss";
 
+.save-and-empty-container {
+	display: flex;
+	flex-direction: row-reverse;
+}
+
 .menu-empty-button,
 .menu-save-button {
-	margin-top: 32px;
+	margin-top: 16px;
 	font-weight: normal;
 	border: none;
 	background: none;
+	font-family: Open-sans, sans-serif;
 	font-size: 16px;
+	cursor: pointer;
 }
 
 .menu-save-button {
 	color: $primary-blue;
 	margin-left: auto;
 	float: right;
+}
+
+.header-item {
+	font-weight: bold;
+	margin-bottom: 32px;
+}
+
+.text-item {
+	margin-bottom: 16px;
+}
+
+.option-text-has-subtext {
+	font-weight: bold;
+	margin-top: 1px;
+	margin-bottom: 8px;
 }

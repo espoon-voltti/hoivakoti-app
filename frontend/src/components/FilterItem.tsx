@@ -1,21 +1,24 @@
-import React, { useState, FC, ChangeEvent } from "react";
+import React, { useState, FC } from "react";
 import "../styles/FilterItem.scss";
 import ButtonDropdown from "./ButtonDropdown";
+import Checkbox from "./Checkbox";
+import Radio from "./Radio";
 
 export type Props = {
 	prefix: string;
 	value: string | null;
 	values: Array<any>;
 	ariaLabel: string;
-	onChange: (target: EventTarget & HTMLInputElement) => void;
+	onChange: (newValue: any) => void;
 	onReset: () => void;
 };
 
 const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => {
 	const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-		onChange(event.target);
+	const handleChange = (newValue: any): void => {
+		console.log(newValue);
+		onChange(newValue);
 	};
 
 	const subMenu = (
@@ -24,27 +27,33 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 				if (value.type === "checkbox") {
 					return (
 						<div className="checkbox-item" key={index}>
-							<input
-								type="checkbox"
+							<Checkbox
+								id={`filter-${index}`}
 								name={value.text}
-								value={value.text}
-								defaultChecked={value.checked}
-								onChange={handleChange}
-							/>{" "}
-							{value.text}
+								isChecked={value.checked}
+								onChange={newValue => handleChange({ newValue, name: value.text })}
+							>
+								<div className={`option-header ${value.subText ? "option-text-has-subtext" : ""}`}>
+									{value.text}
+								</div>
+								{value.subText && <div className="option-subtext">{value.subText}</div>}
+							</Checkbox>
 						</div>
 					);
 				} else if (value.type === "radio") {
 					return (
 						<div className="radio-item" key={index}>
-							<input
-								type="radio"
+							<Radio
+								id={`filter-${index}`}
 								name={prefix + "-radio-group"}
-								defaultChecked={value.checked}
-								value={value.text}
-								onChange={handleChange}
-							/>{" "}
-							{value.text}
+								isSelected={value.checked}
+								onChange={newValue => handleChange({ newValue, name: value.text })}
+							>
+								<div className={`option-header ${value.subText ? "option-text-has-subtext" : ""}`}>
+									{value.text}
+								</div>
+								{value.subText && <div className="option-subtext">{value.subText}</div>}
+							</Radio>
 						</div>
 					);
 				} else if (value.type === "text") {
@@ -63,6 +72,10 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 			})}
 
 			<div className="save-and-empty-container">
+				<button onClick={() => setIsDropdownExpanded(false)} className="menu-save-button">
+					Tallenna
+				</button>
+
 				<button
 					onClick={(): void => {
 						onReset();
@@ -71,10 +84,6 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 					className="menu-empty-button"
 				>
 					Tyhjennä
-				</button>
-
-				<button onClick={() => setIsDropdownExpanded(false)} className="menu-save-button">
-					Tallenna
 				</button>
 			</div>
 		</div>

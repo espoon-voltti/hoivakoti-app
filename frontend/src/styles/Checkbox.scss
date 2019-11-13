@@ -1,0 +1,51 @@
+@import "variables.scss";
+
+.checkbox-container {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.checkbox-button {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+}
+
+.checkbox-button:focus + .checkbox-label .checkbox-box {
+	box-shadow: 0px 0px 1px 1px $link-color;
+}
+
+.checkbox-box {
+	width: 20px;
+	height: 20px;
+	flex-basis: 20px;
+	flex-shrink: 0;
+	background-color: transparent;
+	border-radius: 2px;
+	border: 2px solid $link-color;
+	display: flex;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.checkbox-box-selected {
+	background-color: $link-color;
+}
+
+.checkbox-checkmark {
+	vertical-align: middle;
+}
+
+.checkbox-label {
+	display: flex;
+}
+
+.checkbox-label-children {
+	margin-left: 16px;
+	align-self: center;
+}

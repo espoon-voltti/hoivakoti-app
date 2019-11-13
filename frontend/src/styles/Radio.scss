@@ -1,0 +1,50 @@
+@import "variables.scss";
+
+.radio-container {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.radio-button {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+}
+
+.radio-button:focus + .radio-label .radio-box {
+	box-shadow: 0px 0px 1px 1px $link-color;
+}
+
+.radio-box {
+	width: 20px;
+	height: 20px;
+	background-color: transparent;
+	border-radius: 2px;
+	border: 2px solid $link-color;
+	display: flex;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+.radio-box-selected {
+	background-color: $link-color;
+}
+
+.radio-checkmark {
+	vertical-align: middle;
+}
+
+.radio-label {
+	display: flex;
+}
+
+.radio-label-children {
+	margin-left: 16px;
+	align-self: center;
+}
