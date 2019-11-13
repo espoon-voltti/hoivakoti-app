@@ -4,7 +4,7 @@
 	flex: 1;
 	display: flex;
 	align-items: center;
-	margin: 16px 0;
+	margin-bottom: 16px;
 }
 
 .radio-button {
@@ -42,9 +42,9 @@
 
 .radio-label {
 	display: flex;
-	align-items: center;
 }
 
 .radio-label-children {
 	margin-left: 16px;
+	align-self: center;
 }

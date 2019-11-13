@@ -33,7 +33,10 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 								isChecked={value.checked}
 								onChange={newValue => handleChange({ newValue, name: value.text })}
 							>
-								{value.text}
+								<div className={`option-header ${value.subText ? "option-text-has-subtext" : ""}`}>
+									{value.text}
+								</div>
+								{value.subText && <div className="option-subtext">{value.subText}</div>}
 							</Checkbox>
 						</div>
 					);
@@ -46,7 +49,10 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 								isSelected={value.checked}
 								onChange={newValue => handleChange({ newValue, name: value.text })}
 							>
-								{value.text}
+								<div className={`option-header ${value.subText ? "option-text-has-subtext" : ""}`}>
+									{value.text}
+								</div>
+								{value.subText && <div className="option-subtext">{value.subText}</div>}
 							</Radio>
 						</div>
 					);

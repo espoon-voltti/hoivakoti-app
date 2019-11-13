@@ -47,7 +47,7 @@ const NursingHomes: FC = () => {
 	};
 
 	const optionsArea = [
-		{ text: "Valitse alueet joilta etsit hoivakotia", type: "header" },
+		{ text: "Miltä alueelta etsit hoivakotia?", type: "header" },
 		...areas.map((value: string) => {
 			const checked = searchFilters.alue ? searchFilters.alue.includes(value) : false;
 			return { text: value, type: "checkbox", checked: checked };
@@ -56,12 +56,12 @@ const NursingHomes: FC = () => {
 	];
 
 	const optionsAra = [
-		{ text: "ARA-kohde", type: "radio", checked: searchFilters.ara === true },
-		{ text: "Ei ARA-kohde", type: "radio", checked: searchFilters.ara === false },
+		{ text: "ARA-kohde", subText: "Näytä vain ARA-kohteet", type: "radio", checked: searchFilters.ara === true },
+		{ text: "Ei ARA-kohde", subText: "Piilota ARA-kohteet", type: "radio", checked: searchFilters.ara === false },
 		{ type: "separator" },
 		{
 			text:
-				"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat hakijan palvelutaloasunnon tarve sekä varallisuus.",
+				"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat palvelutarve sekä varallisuus.",
 			type: "text",
 		},
 	];
@@ -141,7 +141,14 @@ const NursingHomes: FC = () => {
 			<FilterItem
 				prefix="Lyhytaikainen asuminen"
 				value={searchFilters.lah !== undefined ? (searchFilters.lah ? "Kyllä" : "Ei") : null}
-				values={[{ text: "Lyhytaikainen asuminen LAH", type: "checkbox", checked: searchFilters.lah === true }]}
+				values={[
+					{
+						text: "Lyhytaikainen asuminen LAH",
+						subText: "Näytä vain lyhytaikaista asumista tarjoavat paikat.",
+						type: "checkbox",
+						checked: searchFilters.lah === true,
+					},
+				]}
 				ariaLabel="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
 				onChange={({ newValue }): void => {
 					const newSearchFilters = { ...searchFilters, lah: newValue === true ? true : undefined };

@@ -1,10 +1,9 @@
 @import "variables.scss";
 
-
 $header-height: 80px;
 
 .header {
-	display:flex;
+	display: flex;
 	height: $header-height;
 	padding: 0 20px;
 	align-items: center;
@@ -27,46 +26,46 @@ $header-height: 80px;
 }
 
 .logo {
-	height:40px;
+	height: 40px;
 	margin: 0 40px 6px 10px;
 }
 
 .title {
-	font-family: Montserrat-Light, sans-serif;
+	font-family: Montserrat, sans-serif;
 	text-decoration: none;
 	margin-top: 5px;
 	font-size: 24px;
 }
 
 #page-nav {
-	display:flex;
-	height:80px;
+	display: flex;
+	height: 80px;
 	align-items: center;
 	width: 100%;
 	justify-content: space-between;
 }
 
-#page-nav label, #hamburger {
-  display: none;
+#page-nav label,
+#hamburger {
+	display: none;
 }
-
 
 .nav-menus {
 	display: flex;
-    height: 80px;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
+	height: 80px;
+	align-items: center;
+	width: 100%;
+	justify-content: center;
 }
 
 .nav-menu {
-	display:flex;
+	display: flex;
 	height: $header-height;
 }
 
 .nav-menu a {
 	color: $headline-color;
-	font-family: Montserrat-Regular;
+	font-family: Montserrat;
 	font-size: 15px;
 	font-weight: normal;
 	letter-spacing: 1px;
@@ -75,15 +74,14 @@ $header-height: 80px;
 	margin: 0 25px;
 	line-height: 86px;
 	height: $header-height;
-	padding:0 10px;
-	display:inline-block;
+	padding: 0 10px;
+	display: inline-block;
 	text-decoration: none;
 	text-transform: uppercase;
 	border-bottom: 5px solid transparent;
 }
 
 .nav-menu a {
-
 }
 
 .nav-menu a:hover {
@@ -95,13 +93,13 @@ $header-height: 80px;
 	font-weight: bold;
 }
 
-.nav-menu li a.selected{
-	border-bottom: 3px solid $primary-blue;	
+.nav-menu li a.selected {
+	border-bottom: 3px solid $primary-blue;
 }
 
 .nav-menu--language li.selected {
 	font-weight: bold;
-	padding:0 10px;
+	padding: 0 10px;
 }
 
 .nav-menu--language li.separator {
@@ -116,7 +114,7 @@ $header-height: 80px;
 	text-transform: none;
 	margin: 0;
 	color: $headline-color;
-	font-family: Montserrat-Regular;
+	font-family: Montserrat;
 	font-size: 15px;
 	font-weight: normal;
 	letter-spacing: 1px;
@@ -131,7 +129,7 @@ $header-height: 80px;
 	color: $headline-color;
 	text-decoration: none;
 	display: inline-block;
-	padding:0 10px;
+	padding: 0 10px;
 	height: $header-height;
 	line-height: 86px;
 	white-space: nowrap;
@@ -142,145 +140,143 @@ $header-height: 80px;
 	text-decoration: none;
 }
 
-  .link-fi:after {
-  	content: "Suomeksi";
-  }
-  .link-sv:after {
-  	content: "På Svenska";
-  }
-
-
-/* [ON SMALL SCREENS] */
-@media screen and (max-width: 1000px){
-  /* Show Hamburger */
-
-  #page-nav, .nav-menus {
-  	justify-content: flex-end;
-  }
-
-
-  #hamburger {
-  	display: inline;
-  	position: absolute !important;
-	clip: rect(1px, 1px, 1px, 1px);
-	padding:0 !important;
-	border:0 !important;
-	height: 1px !important;
-	width: 1px !important;
-  	overflow: hidden;
-  }
-
-  #page-nav label.menu-btn {
-    display: inline-block;
-    color: $headline-color;
-    background: #fff;
-    font-style: normal;
-    font-size: 15px;
-    padding: 10px;
-    white-space: nowrap;
-    user-select: none;
-    text-transform: uppercase;
-    border: 1px $border-color solid;
-    border-radius: $border-radius;
-    cursor: pointer;
-  }
-
-  /* Break down menu items into vertical */
-  #page-nav ul li {
-    display: block;
-  }
-  
-  #page-nav ul.nav-menu li {
-    border-top: 1px solid $border-color;
-    display: block;
-    background-color: #fff;
-    height: auto;
-    line-height: 60px;
-    text-align: center;
-  }
-  #page-nav ul.nav-menu li a {
-  	height: 60px;	
-  	line-height: 60px;
-  	width: 100%;
-  	margin:0;
-  	border:0;
-  	display: block;
-  }
-
-  #page-nav ul.nav-menu li a:hover, #page-nav ul.nav-menu li a.selected {
-  	background-color: $primary-blue;
-  	color: #fff;
-  }
-
-
-  #page-nav ul.nav-menu {
-  	display: block;
-  	margin:0;
-  	height:auto;
-  }
-
-  #page-nav ul.nav-menu {
-  	 border-bottom: 1px solid $border-color;
-  }
-
-  #page-nav ul.nav-menu--language {
-  	margin-left: 20px;
-  	display: flex;
-  }
-
-   #page-nav ul.nav-menu--language a:hover {
-   	border:0;
-   }
-
-  /* Toggle show/hide menu on checkbox click */
-  #page-nav .nav-menus {
-  	z-index: 10;
-    display: none;
-    position: absolute;
-    top: 80px;
-    right: 0;
-    width: 350px;
-    background-color: #fff;
-  	height: auto;
-  	border-radius: $border-radius;
-  	box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-  }
-  #page-nav input:checked ~ .nav-menus {
-    display: block;
-  }
-
-  #page-nav input:checked ~ .menu-btn {
-   	background-color: $primary-blue;
-   	color: #fff;
-   	border: 1px solid $primary-blue;
-  }
-
-  [type="checkbox"]:focus ~ .menu-btn {
-  	outline: 1px dotted #212121;
-  	outline: 5px auto -webkit-focus-ring-color;
-  }
-
-
-  .link-fi:after {
-  	content: "FI";
-  }
-  .link-sv:after {
-  	content: "SV";
-  }
+.link-fi:after {
+	content: "Suomeksi";
+}
+.link-sv:after {
+	content: "På Svenska";
 }
 
-@media screen and (max-width: 640px){
-	#page-nav {
-	justify-content: space-between;
-  	}
-  	
-  	#page-nav ul.nav-menu--language {
-  		margin-left: auto;
-  	}
+/* [ON SMALL SCREENS] */
+@media screen and (max-width: 1000px) {
+	/* Show Hamburger */
 
-  	.menu-btn {
-  		margin-left:auto;
-  	}
+	#page-nav,
+	.nav-menus {
+		justify-content: flex-end;
+	}
+
+	#hamburger {
+		display: inline;
+		position: absolute !important;
+		clip: rect(1px, 1px, 1px, 1px);
+		padding: 0 !important;
+		border: 0 !important;
+		height: 1px !important;
+		width: 1px !important;
+		overflow: hidden;
+	}
+
+	#page-nav label.menu-btn {
+		display: inline-block;
+		color: $headline-color;
+		background: #fff;
+		font-style: normal;
+		font-size: 15px;
+		padding: 10px;
+		white-space: nowrap;
+		user-select: none;
+		text-transform: uppercase;
+		border: 1px $border-color solid;
+		border-radius: $border-radius;
+		cursor: pointer;
+	}
+
+	/* Break down menu items into vertical */
+	#page-nav ul li {
+		display: block;
+	}
+
+	#page-nav ul.nav-menu li {
+		border-top: 1px solid $border-color;
+		display: block;
+		background-color: #fff;
+		height: auto;
+		line-height: 60px;
+		text-align: center;
+	}
+	#page-nav ul.nav-menu li a {
+		height: 60px;
+		line-height: 60px;
+		width: 100%;
+		margin: 0;
+		border: 0;
+		display: block;
+	}
+
+	#page-nav ul.nav-menu li a:hover,
+	#page-nav ul.nav-menu li a.selected {
+		background-color: $primary-blue;
+		color: #fff;
+	}
+
+	#page-nav ul.nav-menu {
+		display: block;
+		margin: 0;
+		height: auto;
+	}
+
+	#page-nav ul.nav-menu {
+		border-bottom: 1px solid $border-color;
+	}
+
+	#page-nav ul.nav-menu--language {
+		margin-left: 20px;
+		display: flex;
+	}
+
+	#page-nav ul.nav-menu--language a:hover {
+		border: 0;
+	}
+
+	/* Toggle show/hide menu on checkbox click */
+	#page-nav .nav-menus {
+		z-index: 10;
+		display: none;
+		position: absolute;
+		top: 80px;
+		right: 0;
+		width: 350px;
+		background-color: #fff;
+		height: auto;
+		border-radius: $border-radius;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+	}
+	#page-nav input:checked ~ .nav-menus {
+		display: block;
+	}
+
+	#page-nav input:checked ~ .menu-btn {
+		background-color: $primary-blue;
+		color: #fff;
+		border: 1px solid $primary-blue;
+	}
+
+	[type="checkbox"]:focus ~ .menu-btn {
+		outline: 1px dotted #212121;
+		outline: 5px auto -webkit-focus-ring-color;
+	}
+
+	.link-fi:after {
+		content: "FI";
+	}
+	.link-sv:after {
+		content: "SV";
+	}
+}
+
+@media screen and (max-width: 640px) {
+	#page-nav {
+		justify-content: space-between;
+	}
+
+	#page-nav ul.nav-menu--language {
+		margin-left: auto;
+	}
+
+	.menu-btn {
+		margin-left: auto;
+	}
 
 	.title {
 		display: none;
@@ -289,10 +285,9 @@ $header-height: 80px;
 		width: 100%;
 	}
 	.logo-container {
-		margin:0;
+		margin: 0;
 	}
 	.logo {
 		margin-right: 30px;
 	}
-
 }
