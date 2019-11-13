@@ -1,61 +1,59 @@
-import React from "react"
-import "../styles/global.scss"
-import "../styles/App.scss"
-import { NursingHomes } from "./nursinghomes"
-import { NursingHome } from "./nursinghome"
-import { Feedback } from "./feedback"
-import { Landing } from "./landing"
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom"
+import React from "react";
+import "../styles/global.scss";
+import "../styles/App.scss";
+import { NursingHomes } from "./nursinghomes";
+import { NursingHome } from "./nursinghome";
+import { Feedback } from "./feedback";
+import { Landing } from "./landing";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { Provider } from "reakit";
 import * as system from "reakit-system-bootstrap";
 import * as config from "./config";
 
 const App: React.FC = () => {
-	/*await fetch('localhost:3000/nursing-homes')
-		.then(response => response.json())
-		.then(data => this.setState({ data }));*/
-	// 				<img id="logo-large" src={process.env.PUBLIC_URL + "hoivakodit-logo-large.png"}/>
-
-	//<Button>Button</Button>;
-
-	// 						<NavLink to="/palaute?id=985507e2-735f-48a9-a941-75b38f0e4adb">Hoivakodit</NavLink>
-
-	console.log("ENV");
-	console.log(Object.keys(process.env));
-	console.log(process.env.NODE_ENV);
-
 	return (
 		<Provider unstable_system={system}>
-
 			<div id="app">
 				<Router>
 					<header className="header">
 						<div className="logo-container">
-							<a href="/">	
-								<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} alt="Espoo logo"/>
+							<a href="/">
+								<img
+									className="logo"
+									src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"}
+									alt="Espoo logo"
+								/>
 								<h1 className="title">Espoon hoivakodit</h1>
 							</a>
 						</div>
-						
+
 						<nav id="page-nav">
-							<input type="checkbox" role="button" aria-haspopup="true" id="hamburger"/>
-							<label htmlFor="hamburger" className="menu-btn">&#9776; valikko</label>
-      						<div className="nav-menus">
+							<input type="checkbox" role="button" aria-haspopup="true" id="hamburger" />
+							<label htmlFor="hamburger" className="menu-btn">
+								&#9776; valikko
+							</label>
+							<div className="nav-menus">
 								<ul className="nav-menu" role="menu">
-									<li><NavLink activeClassName="selected" exact to="/">Etusivu</NavLink></li>
-									<li><NavLink activeClassName="selected" exact to="/hoivakodit">Hoivakodit</NavLink></li>
+									<li>
+										<NavLink activeClassName="selected" exact to="/">
+											Etusivu
+										</NavLink>
+									</li>
+									<li>
+										<NavLink activeClassName="selected" exact to="/hoivakodit">
+											Hoivakodit
+										</NavLink>
+									</li>
 								</ul>
 							</div>
-								<ul className="nav-menu--language" role="menu">
-									<li className="selected link-fi"></li>
-									<li className="separator">|</li> 
-									<li><NavLink to="#" lang="sv" className="link-sv"></NavLink></li>
-								</ul>
-							
+							<ul className="nav-menu--language" role="menu">
+								<li className="selected link-fi"></li>
+								<li className="separator">|</li>
+								<li>
+									<NavLink to="#" lang="sv" className="link-sv"></NavLink>
+								</li>
+							</ul>
 						</nav>
-						
-
-
 					</header>
 
 					<main id="content">
@@ -67,10 +65,8 @@ const App: React.FC = () => {
 					</main>
 				</Router>
 			</div>
-
 		</Provider>
+	);
+};
 
-	)
-}
-
-export default App
+export default App;

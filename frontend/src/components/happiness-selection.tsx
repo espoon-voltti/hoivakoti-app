@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react"
-//const axios = require("axios").default
+import React, { useState, useEffect, FC, ChangeEvent } from "react";
 
-function HappinessSelection(label: string) {
-	const [selection, SetSelection] = useState("")
+interface Props {
+	label: string;
+}
 
-	useEffect(() => {}, [])
+const HappinessSelection: FC<Props> = ({ label }) => {
+	const [selection, SetSelection] = useState("");
 
-	const handleRadiochange = (event: any) => {
-		SetSelection(event.target.value)
-	}
+	useEffect(() => {}, []);
+
+	const handleRadiochange = (event: ChangeEvent<HTMLInputElement>): void => {
+		SetSelection(event.target.value);
+	};
 
 	return (
 		<div>
@@ -40,14 +43,7 @@ function HappinessSelection(label: string) {
 				</label>
 			</form>
 		</div>
-	)
-}
+	);
+};
 
-/*
-			<p>You clicked {count} times</p>
-			<button onClick={() => setCount(count + 1)}>
-				Click me
-			</button>
-*/
-
-export { HappinessSelection }
+export { HappinessSelection };

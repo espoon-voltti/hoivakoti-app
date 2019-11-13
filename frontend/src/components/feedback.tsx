@@ -1,29 +1,27 @@
-import React, { useState, useEffect } from "react"
-import { HappinessSelection } from "./happiness-selection"
+import React, { useState, useEffect, FC, FormEvent, ChangeEvent } from "react";
+import { HappinessSelection } from "./happiness-selection";
 
-//const axios = require("axios").default
+const Feedback: FC = () => {
+	const [text, SetText] = useState("");
 
-function Feedback() {
-	const [text, SetText] = useState("")
+	useEffect(() => {}, []);
 
-	useEffect(() => {}, [])
+	const handleSubmit = (event: FormEvent): void => {
+		console.log("Submitting");
+		event.preventDefault();
+	};
+	const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+		SetText(event.target.value);
+	};
 
-	const handleSubmit = (event: any) => {
-		console.log("Submitting")
-		event.preventDefault()
-	}
-	const handleChange = (event: any) => {
-		SetText(event.target.value)
-	}
+	const happinessRatings = {
+		cleanliness: <HappinessSelection label="Siisteys" />,
+		staff: <HappinessSelection label="Henkilökunta" />,
+		food: <HappinessSelection label="Ruoka" />,
+		atmosphere: <HappinessSelection label="Tunnelma" />,
+	};
 
-	const happiness_ratings = {
-		cleanliness: HappinessSelection("Siisteys"),
-		staff: HappinessSelection("Henkilökunta"),
-		food: HappinessSelection("Ruoka"),
-		atmosphere: HappinessSelection("Tunnelma")
-	}
-
-	const ratings_dom = Object.values(happiness_ratings)
+	const ratingsDom = Object.values(happinessRatings);
 
 	return (
 		<div>
@@ -33,17 +31,10 @@ function Feedback() {
 				</label>
 				<input type="submit" value="Submit" />
 
-				{ratings_dom}
+				{ratingsDom}
 			</form>
 		</div>
-	)
-}
+	);
+};
 
-/*
-			<p>You clicked {count} times</p>
-			<button onClick={() => setCount(count + 1)}>
-				Click me
-			</button>
-*/
-
-export { Feedback }
+export { Feedback };
