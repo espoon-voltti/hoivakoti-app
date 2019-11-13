@@ -1,6 +1,6 @@
 import React, { useState, FC, ChangeEvent } from "react";
 import "../styles/FilterItem.scss";
-import { ReactComponent as ImageFilterCaret } from "./filter-caret.svg";
+import ButtonDropdown from "./ButtonDropdown";
 
 export type Props = {
 	prefix: string;
@@ -12,20 +12,14 @@ export type Props = {
 };
 
 const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => {
-	const [isExpanded, setIsExpanded] = useState(false);
-
-	const handleToggleExpand = (): void => {
-		setIsExpanded(!isExpanded);
-	};
-
-	const background = <div className="background" onClick={handleToggleExpand}></div>;
+	const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
 		onChange(event.target);
 	};
 
 	const subMenu = (
-		<div className="items">
+		<div>
 			{values.map((value: any, index) => {
 				if (value.type === "checkbox") {
 					return (
@@ -72,35 +66,32 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 				<button
 					onClick={(): void => {
 						onReset();
-						setIsExpanded(false);
+						setIsDropdownExpanded(false);
 					}}
 					className="menu-empty-button"
 				>
 					Tyhjennä
 				</button>
 
-				<button onClick={handleToggleExpand} className="menu-save-button">
+				<button onClick={() => setIsDropdownExpanded(false)} className="menu-save-button">
 					Tallenna
 				</button>
 			</div>
 		</div>
 	);
 
+	const label = `${prefix}${value ? `: ${value}` : ""}`;
+	const filterActive = value !== null;
+
 	return (
-		<>
-			{isExpanded && background}
-			<div className="filter-menu" aria-expanded={isExpanded}>
-				<button
-					onClick={handleToggleExpand}
-					className={`filter-button ${value !== null ? "filter-button-has-value" : ""}`}
-				>
-					{prefix}
-					{value ? `: ${value}` : null}
-					<ImageFilterCaret className="filter-button-caret" />
-				</button>
-				{isExpanded && subMenu}
-			</div>
-		</>
+		<ButtonDropdown
+			isExpanded={isDropdownExpanded}
+			onExpandedChange={setIsDropdownExpanded}
+			label={label}
+			active={filterActive}
+		>
+			{subMenu}
+		</ButtonDropdown>
 	);
 };
 

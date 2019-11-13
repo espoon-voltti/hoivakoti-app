@@ -36,5 +36,12 @@ module.exports = {
 		quotes: ["error", "double"],
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "error",
+		"@typescript-eslint/explicit-function-return-type": [
+			"error",
+			{
+				allowExpressions: true,
+				allowTypedFunctionExpressions: true,
+			},
+		],
 	},
 };

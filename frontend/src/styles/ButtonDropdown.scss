@@ -1,0 +1,61 @@
+@import "variables.scss";
+
+.button-dropdown-background {
+	width: 110%;
+	height: 110%;
+	color: #ff0000;
+	position: fixed;
+	background: rgba(255, 255, 255, 0.7);
+	top: -10px;
+	left: -10px;
+	margin: 0px;
+	padding: 0px;
+	z-index: 90;
+	border-radius: 0px;
+	border: none;
+}
+
+.button-dropdown {
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	color: $headline-color;
+	background: none;
+	padding: 10px;
+	border: 1px solid $light-gray;
+	border-radius: 4px;
+	text-transform: uppercase;
+}
+
+.button-dropdown-active {
+	background-color: $link-color;
+	color: white;
+}
+
+.button-dropdown-caret {
+	margin-left: 10px;
+	stroke: $headline-color;
+}
+
+.button-dropdown-active .button-dropdown-caret {
+	stroke: white;
+}
+
+.button-dropdown-container[aria-expanded="true"] {
+	z-index: 100;
+}
+
+.button-dropdown-items {
+	min-width: 300px;
+	position: absolute;
+	margin-top: 10px;
+	//color: #ff0000;
+	padding: 20px;
+	background-color: white;
+	display: flex;
+	flex-flow: column wrap;
+	border: 1px solid $light-gray;
+	border-radius: 4px;
+	box-shadow: 0 2px 6px $light-gray;
+	width: 200px;
+}
