@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from "react";
 import { NursingHomeSmall } from "./nursinghome-small";
-import { MenuSelect } from "./menu-select-custom";
+import FilterItem from "./FilterItem";
 import { useHistory } from "react-router-dom";
 import "../styles/nursinghomes.scss";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
 
-type Language = "fi" | "se";
+type Language = string;
 
 interface SearchFilters {
 	alue?: string[];
@@ -80,12 +80,12 @@ const NursingHomes: FC = () => {
 
 	const filters_dom = (
 		<>
-			<MenuSelect
+			<FilterItem
 				prefix="Sijainti"
-				value={searchFilters.alue ? searchFilters.alue.join(", ") : null}
+				value={searchFilters.alue !== undefined ? searchFilters.alue.join(", ") : null}
 				values={area_options}
-				aria_label="Valitse hoivakodin alue"
-				on_changed={(changed_object: any) => {
+				ariaLabel="Valitse hoivakodin alue"
+				onChange={(changed_object: any) => {
 					//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
 					if (!search_as_any.alue) search_as_any.alue = [];
 					if (!changed_object.checked)
@@ -97,58 +97,58 @@ const NursingHomes: FC = () => {
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
-				on_emptied={(): void => {
+				onReset={(): void => {
 					delete search_as_any.alue;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 			/>
-			<MenuSelect
+			<FilterItem
 				prefix="Palvelukieli"
 				value={searchFilters.language || null}
 				values={language_options}
-				aria_label="Valitse hoivakodin kieli"
-				on_changed={(changed_object: any): void => {
+				ariaLabel="Valitse hoivakodin kieli"
+				onChange={(changed_object: any): void => {
 					search_as_any.language = changed_object.value;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
-				on_emptied={(): void => {
+				onReset={(): void => {
 					delete search_as_any.language;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 			/>
-			<MenuSelect
+			<FilterItem
 				prefix="Ara-kohde"
-				value={searchFilters.ara ? String(searchFilters.ara) : null}
+				value={searchFilters.ara !== undefined ? String(searchFilters.ara) : null}
 				values={ara_options}
-				aria_label="Valitse, näytetäänkö vain Ara-kohteet"
-				on_changed={(changed_object: any) => {
+				ariaLabel="Valitse, näytetäänkö vain Ara-kohteet"
+				onChange={(changed_object: any) => {
 					search_as_any.ara = changed_object.value === "ARA-kohde" ? true : false;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
-				on_emptied={(): void => {
+				onReset={(): void => {
 					delete search_as_any.ara;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 			/>
 
-			<MenuSelect
+			<FilterItem
 				prefix="Lyhytaikainen asuminen"
-				value={searchFilters.lah ? String(searchFilters.lah) : null}
+				value={searchFilters.lah !== undefined ? String(searchFilters.lah) : null}
 				values={[{ text: "Lyhytaikainen asuminen LAH", type: "checkbox", checked: search_as_any.lah === true }]}
-				aria_label="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
-				on_changed={(changed_object: any): void => {
+				ariaLabel="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
+				onChange={(changed_object: any): void => {
 					//search_as_any.alue = areas.findIndex((v) => v === changed_object.value);
 					if (changed_object.checked) search_as_any.lah = true;
 					else search_as_any.lah = undefined;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
 				}}
-				on_emptied={(): void => {
+				onReset={(): void => {
 					delete search_as_any.lah;
 					const stringfield = queryString.stringify(search_as_any);
 					history.push("/hoivakodit?" + stringfield);
