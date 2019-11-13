@@ -33,7 +33,8 @@ const Landing: FC = () => {
 					<button
 						className="landing-cta"
 						onClick={(): void => {
-							const url = "/hoivakodit" + (selectedArea && `?alue=${selectedArea}`);
+							const query = selectedArea ? `?alue=${selectedArea}` : "";
+							const url = `/hoivakodit${query}`;
 							history.push(url);
 						}}
 					>
