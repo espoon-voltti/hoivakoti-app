@@ -123,7 +123,7 @@ export async function InsertNursingHomeToDB(nurseryhome: NursingHome)
 {
 	// Prolly should not do in models but WIP / MVP
 	const geo_query = [nurseryhome.address, nurseryhome.city, "Finland"];
-	const geoloc = JSON.parse(await rp("https://api.mapbox.com/geocoding/v5/mapbox.places/Rajamännynahde 6, Espoo, Finland.json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg"));
+	const geoloc = JSON.parse(await rp("https://api.mapbox.com/geocoding/v5/mapbox.places/" + geo_query + ".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg"));
 
 	const uuid = uuidv4()
 	await knex("NursingHomes").insert({id: uuid,
