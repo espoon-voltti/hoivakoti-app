@@ -30,19 +30,43 @@ $column-width: 1024px;
 .location-picker {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
 	max-width: $column-width;
 	width: $column-width;
 	background-color: #fff;
-	border-radius: $border-radius;
+	border-radius: 5px;
+	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
 	padding: 20px;
 	margin: 0 auto 80px auto;
+}
+
+.location-picker-label {
+	font-weight: bold;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.location-picker-select {
+	border-bottom: 1px solid #9e9e9e;
+	flex-grow: 1;
+	height: 100%;
+	margin: 0 40px;
+}
+
+.location-picker-select select {
+	height: 100%;
+	width: 100%;
+	background: none;
+	border: none;
+	border-radius: 0;
+	font-size: 16px;
 }
 
 .landing-cta {
 	width: 200px;
 	height: 45px;
-	background-color: $primary-blue;
+	background-color: $link-color;
+	border: none;
 	border-radius: 2px;
 	color: white;
 	text-transform: uppercase;

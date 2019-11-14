@@ -22,14 +22,16 @@ const PageLanding: FC = () => {
 				<h2 className="jumbotron__header">Löydä näköisesi hoivakoti</h2>
 
 				<div className="location-picker">
-					<b>Miltä alueelta etsit hoivakotia?</b>
-					<select onChange={handleSelectArea}>
-						{areas.map(area => (
-							<option value={area} key={area}>
-								{area}
-							</option>
-						))}
-					</select>
+					<div className="location-picker-label">Miltä alueelta etsit hoivakotia?</div>
+					<div className="location-picker-select">
+						<select onChange={handleSelectArea}>
+							{areas.map(area => (
+								<option value={area} key={area}>
+									{area}
+								</option>
+							))}
+						</select>
+					</div>
 					<button
 						className="landing-cta"
 						onClick={(): void => {
