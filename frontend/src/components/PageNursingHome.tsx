@@ -5,6 +5,7 @@ import "../styles/PageNursingHome.scss";
 import * as config from "./config";
 import axios from "axios";
 import { NursingHome } from "./types";
+import { MapSmall } from "./Map";
 
 interface GetNursingHomeResponse {
 	data: [NursingHome];
@@ -82,6 +83,15 @@ const PageNursingHome: FC = () => {
 
 					<div className="nursinghome-details-box">
 						<Paragraph text={nursingHome.name} className="nursinghome-details-name" />
+						<a
+							href={`https://www.google.com/maps/search/${
+								nursingHome.name
+							}/@${nursingHome.geolocation.center.join(",")}z`}
+							target="_blank"
+							rel="noreferrer noopener"
+						>
+							<MapSmall nursingHome={nursingHome} />
+						</a>
 						<h3>Yhteystiedot</h3>
 						<Paragraph text={nursingHome.address} />
 						<Paragraph text={nursingHome.contact_name} />

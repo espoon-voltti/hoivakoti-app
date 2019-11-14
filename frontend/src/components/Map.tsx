@@ -62,3 +62,23 @@ const Map: FC<Props> = ({ nursingHomes }) => {
 };
 
 export default React.memo(Map);
+
+interface PropsMapSmall {
+	nursingHome: NursingHome;
+}
+
+export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
+	<MapComponent
+		/* eslint-disable-next-line react/style-prop-object */
+		style="mapbox://styles/mapbox/streets-v9"
+		center={nursingHome.geolocation.center}
+		containerStyle={{
+			height: "200px",
+			width: "100%",
+		}}
+	>
+		<Layer type="symbol" id="marker" layout={{ "icon-image": "circle-15", "icon-size": 1.5 }}>
+			<Feature coordinates={nursingHome.geolocation.center} />
+		</Layer>
+	</MapComponent>
+);
