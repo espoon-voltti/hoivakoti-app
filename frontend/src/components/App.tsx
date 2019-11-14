@@ -33,7 +33,12 @@ const App: React.FC = () => {
 									</NavLink>
 								</li>
 								<li>
-									<NavLink activeClassName="selected" exact to="/hoivakodit">
+									<NavLink
+										activeClassName="selected"
+										exact
+										to="/hoivakodit"
+										isActive={(match, location) => location.pathname.startsWith("/hoivakodit")}
+									>
 										Hoivakodit
 									</NavLink>
 								</li>

@@ -3,11 +3,12 @@ import { NursingHomeSmall } from "./nursinghome-small";
 import FilterItem from "./FilterItem";
 import { useHistory, useLocation } from "react-router-dom";
 import "../styles/nursinghomes.scss";
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
 import * as config from "./config";
 import { Link } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
+import Map from "./Map";
+import { NursingHome } from "./types";
 
 type Language = string;
 
@@ -19,7 +20,7 @@ interface SearchFilters {
 }
 
 const PageNursingHomes: FC = () => {
-	const [nursingHomes, setNursingHomes] = useState<any[] | null>(null);
+	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(null);
 
 	const history = useHistory();
 	const { search } = useLocation();
@@ -164,7 +165,7 @@ const PageNursingHomes: FC = () => {
 	const nursinghomeComponents: object[] | null =
 		nursingHomes &&
 		nursingHomes
-			.filter((nursinghome: any) => {
+			.filter(nursinghome => {
 				if (
 					searchFilters.alue &&
 					searchFilters.alue.length > 0 &&
@@ -177,19 +178,16 @@ const PageNursingHomes: FC = () => {
 
 				return true;
 			})
-			.map((nursinghome: any, index) => (
-				<Link key={index} to={"/hoivakodit/" + nursinghome.id} style={{ textDecoration: "none" }}>
+			.map((nursinghome, index) => (
+				<Link
+					key={index}
+					to={"/hoivakodit/" + nursinghome.id}
+					style={{ textDecoration: "none" }}
+					className="card-list-item-borders"
+				>
 					<NursingHomeSmall nursinghome={nursinghome} key={index} />
 				</Link>
 			));
-
-	const Map = ReactMapboxGl({
-		accessToken:
-			"pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
-		scrollZoom: false,
-		minZoom: 11,
-		maxZoom: 11,
-	});
 
 	return (
 		<div>
@@ -208,28 +206,7 @@ const PageNursingHomes: FC = () => {
 						{nursinghomeComponents}
 					</div>
 					<div id="map" className="map-container">
-						<Map
-							/* eslint-disable-next-line react/style-prop-object */
-							style="mapbox://styles/mapbox/streets-v9"
-							center={[24.6559, 60.2055]}
-							containerStyle={{
-								height: "100vh",
-								width: "100%",
-								position: "sticky",
-								top: 0,
-							}}
-						>
-							<Layer
-								type="symbol"
-								id="marker"
-								layout={{ "icon-image": "town-hall-15", "icon-size": 1.5 }}
-							>
-								<Feature coordinates={[24.6559, 60.2055]} />
-								<Feature coordinates={[24.6, 60.2053]} />
-								<Feature coordinates={[24.62, 60.2]} />
-								<Feature coordinates={[24.7, 60.17]} />
-							</Layer>
-						</Map>
+						<Map nursingHomes={nursingHomes} />
 					</div>
 				</div>
 			)}

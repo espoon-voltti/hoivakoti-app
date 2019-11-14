@@ -1,4 +1,6 @@
 export interface NursingHome {
+	location: any;
+	id: string;
 	name: string;
 	owner: string;
 	address: string;
@@ -38,4 +40,7 @@ export interface NursingHome {
 	staff_satisfaction_info?: string;
 	other_services?: string;
 	nearby_services?: string;
+	geolocation: {
+		center: [number, number];
+	};
 }

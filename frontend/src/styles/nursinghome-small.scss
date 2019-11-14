@@ -1,29 +1,59 @@
 @import "variables.scss";
 
 .card-list-item {
-	display: flex;  
-	flex-flow: row;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
 	flex-grow: 1;
 	text-align: left;
-	border-top: 1px solid $border-color;
 	border-radius: $border-radius;
-	padding: 20px 0px;
 	color: $text-color;
+	word-wrap: break-all;
 }
 
-.card-list-item:last-child {
-	border-bottom: 1px solid $border-color;
+.card-list-item-borders {
+	display: block;
+	padding: 20px 0px;
+	border-top: 1px solid $border-color;
+	&:last-child {
+		border-bottom: 1px solid $border-color;
+	}
+}
+
+@mixin card-wide {
+	flex-direction: row;
+
+	max-width: none;
+
+	.card-list-item__image-container {
+		max-width: 300px;
+		margin-bottom: 0;
+	}
+
+	.card-list-item__content {
+		padding: 0;
+	}
+}
+
+.card-narrow {
+	max-width: 350px;
+}
+
+@media (min-width: 800px) {
+	.card-list-item:not(.card-narrow) {
+		@include card-wide;
+	}
 }
 
 .card-list-item__image-container {
-	width: 300px;
-	height: 200px;
+	width: 100%;
 	border-radius: $border-radius;
 	margin-right: 20px;
-	background: $border-color url('/icon-house.svg') 50% 50% no-repeat;
+	background: $border-color url("/icon-house.svg") 50% 50% no-repeat;
 }
 
 .card-list-item__image {
+	display: block;
 	width: 100%;
 }
 
@@ -31,6 +61,7 @@
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
+	padding: 30px;
 }
 
 .card-list-item__subheader {
@@ -52,7 +83,7 @@
 }
 
 .card-list-item__text--lah {
-	margin-top:4px;
+	margin-top: 4px;
 }
 
 .card-list-item__tag {
