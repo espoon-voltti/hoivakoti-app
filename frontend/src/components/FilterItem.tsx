@@ -4,6 +4,34 @@ import ButtonDropdown from "./ButtonDropdown";
 import Checkbox from "./Checkbox";
 import Radio from "./Radio";
 
+// TODO: MOVE TO RIGHT PLACE
+export const postal_code_to_district:any = {}
+postal_code_to_district["02070"] = "Espoon keskus";
+postal_code_to_district["02780"] = "Espoon keskus";
+postal_code_to_district["02770"] = "Espoon keskus";
+postal_code_to_district["02320"] = "Espoonlahti";
+postal_code_to_district["02330"] = "Espoonlahti";
+postal_code_to_district["02280"] = "Espoonlahti";
+postal_code_to_district["02620"] = "Leppävaara";
+postal_code_to_district["02720"] = "Leppävaara";
+postal_code_to_district["02940"] = "Leppävaara";
+postal_code_to_district["02770"] = "Leppävaara";
+postal_code_to_district["02660"] = "Leppävaara";
+postal_code_to_district["02710"] = "Leppävaara";
+postal_code_to_district["02230"] = "Leppävaara";
+postal_code_to_district["02660"] = "Leppävaara";
+postal_code_to_district["02650"] = "Leppävaara";
+postal_code_to_district["02200"] = "Matinkylä";
+postal_code_to_district["02210"] = "Matinkylä";
+postal_code_to_district["02230"] = "Matinkylä";
+postal_code_to_district["02250"] = "Matinkylä";
+postal_code_to_district["02140"] = "Tapiola";
+postal_code_to_district["02770"] = "Tapiola";
+postal_code_to_district["02100"] = "Tapiola";
+postal_code_to_district["02160"] = "Tapiola";
+postal_code_to_district["02140"] = "Tapiola";
+postal_code_to_district["02130"] = "Tapiola";
+
 export type Props = {
 	prefix: string;
 	value: string | null;
