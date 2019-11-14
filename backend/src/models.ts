@@ -1,5 +1,6 @@
 import * as Knex from "knex"
 import * as uuidv4 from "uuid/v4"
+import * as rp from "request-promise-native"
 import fs = require("fs");
 import {NursingHome} from "./nursinghome-typings"
 
@@ -76,6 +77,7 @@ async function CreateNursingHomeTable()
 		table.text("staff_satisfaction_info")
 		table.text("other_services")
 		table.text("nearby_services")
+		table.json("geolocation")
 	})
 }
 
@@ -119,9 +121,14 @@ async function SetUpRatingsTable(id_for_testing: string)
 
 export async function InsertNursingHomeToDB(nurseryhome: NursingHome)
 {
+	// Prolly should not do in models but WIP / MVP
+	const geo_query = [nurseryhome.address, nurseryhome.city, "Finland"];
+	const geoloc = JSON.parse(await rp("https://api.mapbox.com/geocoding/v5/mapbox.places/Rajamännynahde 6, Espoo, Finland.json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg"));
+
 	const uuid = uuidv4()
 	await knex("NursingHomes").insert({id: uuid,
-		...nurseryhome
+		...nurseryhome,
+		geolocation: geoloc["features"][0]
 	})
 	//await SetUpRatingsTable(uuid)
 
