@@ -2,7 +2,7 @@ import * as Knex from "knex"
 import * as uuidv4 from "uuid/v4"
 import * as rp from "request-promise-native"
 import fs = require("fs");
-import {NursingHome} from "./nursinghome-typings"
+import {NursingHome, nursing_home_pictures_columns_info, postal_code_to_district} from "./nursinghome-typings"
 
 import {
 	NursingHomesFromCSV} from "./services"
@@ -19,20 +19,34 @@ const options: object = {
 const knex = new (Knex as any)(options)
 
 knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
-
 	if (exists)
 		return;
 
-	//var count = await knex('pg_class').select("reltuples").where({relname: "NursingHomes"});
-	//console.log(count);
-
 	await CreateNursingHomeTable();
-	
-	/*.catch((err: any) => { console.log(err); throw err })
-		.finally(() => {
-			knex.destroy();
-	});*/
 })
+
+knex.schema.hasTable("NursingHomePictures").then(async (exists: boolean) => {
+	if (exists)
+		await knex.schema.dropTable("NursingHomePictures");
+
+	await CreateNursingHomePicturesTable();
+})
+
+async function CreateNursingHomePicturesTable()
+{
+	await knex.schema.createTable("NursingHomePictures", (table: any) => {
+		nursing_home_pictures_columns_info.map((row_info: any) => {
+			if (row_info.sql.includes("caption"))
+			{
+				table.string(row_info.sql);
+			}
+			else
+			{
+				table.binary(row_info.sql);
+			}
+		})
+	})
+}
 
 async function CreateNursingHomeTable()
 {
@@ -78,6 +92,7 @@ async function CreateNursingHomeTable()
 		table.text("other_services")
 		table.text("nearby_services")
 		table.json("geolocation")
+		table.string("district")
 	})
 }
 
@@ -128,7 +143,8 @@ export async function InsertNursingHomeToDB(nurseryhome: NursingHome)
 	const uuid = uuidv4()
 	await knex("NursingHomes").insert({id: uuid,
 		...nurseryhome,
-		geolocation: geoloc["features"][0]
+		geolocation: geoloc["features"][0],
+		district: postal_code_to_district[nurseryhome.postal_code]
 	})
 	//await SetUpRatingsTable(uuid)
 
