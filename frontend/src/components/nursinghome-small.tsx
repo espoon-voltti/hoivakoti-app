@@ -1,25 +1,17 @@
 import React, { FC } from "react";
 import * as config from "./config";
 import "../styles/nursinghome-small.scss";
+import { NursingHome } from "./types";
 
 type NursingHomeSmallProps = {
-	nursinghome: any;
-	// rating: any;
+	nursinghome: NursingHome;
+	isNarrow?: boolean;
+	className?: string;
 };
 
-const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome }) => {
-	//
-	// let rating_dom;
-	// if (rating)
-	// 	rating_dom = (
-	// 		<p>
-	// 			{rating && rating.avg}/5.0 n: {rating && rating.total}
-	// 		</p>
-	// 	);
-	//
-
+const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome, isNarrow, className }) => {
 	return (
-		<div className="card-list-item">
+		<div className={`card-list-item ${isNarrow ? "card-narrow" : ""} ${className || ""}`}>
 			<div className="card-list-item__image-container">
 				<img
 					className="card-list-item__image"
@@ -52,9 +44,5 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome }) => {
 		</div>
 	);
 };
-//			<p className="nursinghome-container-child" id="nursinghome-summary">{this.nursinghome.summary}</p>
-//			{/*rating_dom*/}
-//			{/*expand_dom*/}
-//
 
 export { NursingHomeSmall };
