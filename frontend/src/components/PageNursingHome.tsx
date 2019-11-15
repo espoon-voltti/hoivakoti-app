@@ -41,6 +41,7 @@ const PageNursingHome: FC = () => {
 						<Paragraph text={`${nursingHome.district}, ${nursingHome.city}`} />
 						<Paragraph text={nursingHome.summary} />
 						<h3>Perustiedot</h3>
+						<Paragraph title="Omistaja" text={nursingHome.owner} />
 						<Paragraph title="ARA-kohde" text={nursingHome.ara ? "Kyllä" : "Ei"} />
 						<Paragraph title="Rakennusvuosi" text={String(nursingHome.construction_year)} />
 						<Paragraph title="Asuntojen määrä" text={String(nursingHome.apartment_count)} />
