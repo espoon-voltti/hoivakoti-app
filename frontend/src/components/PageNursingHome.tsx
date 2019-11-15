@@ -38,6 +38,7 @@ const PageNursingHome: FC = () => {
 							Takaisin hoivakotilistaukseen
 						</Link>
 						<h2 className="nursinghome-title">{nursingHome && nursingHome.name}</h2>
+						<Paragraph text={nursingHome.district} />
 						<Paragraph text={nursingHome.summary} />
 						<h3>Perustiedot</h3>
 						<Paragraph title="ARA-kohde" text={nursingHome.ara ? "Kyllä" : "Ei"} />

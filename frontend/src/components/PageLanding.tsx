@@ -9,7 +9,7 @@ const areas: Area[] = ["Espoon keskus", "Espoonlahti", "LeppÃ¤vaara", "MatinkylÃ
 const PageLanding: FC = () => {
 	const history = useHistory();
 
-	const [selectedArea, setSelectedArea] = useState<Area | null>(null);
+	const [selectedArea, setSelectedArea] = useState<Area | null>(areas[0]);
 
 	const handleSelectArea = (event: ChangeEvent<HTMLSelectElement>): void => {
 		const area = event.target.value as Area;

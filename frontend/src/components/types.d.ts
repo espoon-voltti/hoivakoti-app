@@ -1,7 +1,9 @@
+// This interface declaration is duplicated in frontend and backend. Please
+// modify both at the same time to keep them in sync
 export interface NursingHome {
-	location: any;
 	id: string;
 	name: string;
+	district: string;
 	owner: string;
 	address: string;
 	ara?: boolean;
