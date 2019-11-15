@@ -3,36 +3,42 @@
 .save-and-empty-container {
 	display: flex;
 	flex-direction: row-reverse;
+	justify-content: space-between;
+	margin-top: 20px;
+	margin-right: 5px;
 }
 
-.menu-empty-button,
-.menu-save-button {
-	margin-top: 16px;
+.menu-empty-button {
 	font-weight: normal;
 	border: none;
 	background: none;
-	font-family: Open-sans, sans-serif;
+	font-family: 'Open sans', sans-serif;
 	font-size: 16px;
 	cursor: pointer;
+	padding: 0;
 }
 
-.menu-save-button {
+.menu-empty-button:hover {
 	color: $primary-blue;
-	margin-left: auto;
-	float: right;
 }
+
 
 .header-item {
-	font-weight: bold;
-	margin-bottom: 32px;
+	font-weight: 600;
+	margin-bottom: 25px;
 }
 
 .text-item {
-	margin-bottom: 16px;
+	margin: 25px 0;
+	padding-right: 5px;
 }
 
 .option-text-has-subtext {
-	font-weight: bold;
-	margin-top: 1px;
-	margin-bottom: 8px;
+	font-weight: 600;
+	font-family: 'Open sans', sans-serif;
+	line-height: 22px;
+}
+
+.option-subtext {
+	line-height: 22px;
 }

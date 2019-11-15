@@ -33,7 +33,7 @@ const PageLanding: FC = () => {
 						</select>
 					</div>
 					<button
-						className="landing-cta"
+						className="btn landing-cta"
 						onClick={(): void => {
 							const query = selectedArea ? `?alue=${selectedArea}` : "";
 							const url = `/hoivakodit${query}`;
@@ -48,8 +48,7 @@ const PageLanding: FC = () => {
 			<div className="content-column">
 				<section className="content-block">
 					<p className="ingress">
-						Sivustolta löydät tiedot Espoon kaupungin hyväksymistä hoivakodeista. Saadaksesi hoivakotipaikan
-						tarvitset myönteisen päätöksen tehostetun palveluasumisen tarpeesta.
+						Tältä sivustolta löydät Espoon kaupungin hyväksymät <strong>tehostetun palveluasumisen</strong> hoivakodit <strong>ikäihmisille</strong>. Saadaksesi hoivakotipaikan tarvitset myönteisen päätöksen tehostetun palveluasumisen tarpeesta.
 					</p>
 					<p className="ingress">
 						Etsitkö hoivakotia palvelusetelillä? Katso hoivakoteja osoitteessa{" "}
@@ -62,11 +61,8 @@ const PageLanding: FC = () => {
 				<section className="content-block">
 					<h2>Mitä on tehostettu palveluasuminen?</h2>
 					<p>
-						Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti
-						hoivaa ja huolenpitoa. Näissä hoivakodeissa on terveydenhuollon ammattikoulutuksen saanutta
-						henkilökuntaa paikalla jatkuvasti. Espoon kaupunki järjestää tehostettua palveluasumista useissa
-						yksityisten palveluntuottajien hoivakodeissa sekä omissa hoivakodeissaan. Hoivakodissa saa
-						tarpeiden mukaista hoivaa ja huolenpitoa elämän loppuun saakka.
+						Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa ja jotka eivät voi enää asua omassa kodissaan. Tehostetun palveluasumisen hoivakodeissa on terveydenhuollon ammattikoulutuksen saanutta henkilökuntaa paikalla jatkuvasti. Espoon kaupunki järjestää tehostettua palveluasumista useissa yksityisten palveluntuottajien hoivakodeissa sekä omissa hoivakodeissaan. Hoivakodissa asiakas saa tarpeidensa mukaista hoivaa ja huolenpitoa elämänsä loppuun saakka.
+
 					</p>
 				</section>
 
@@ -79,7 +75,7 @@ const PageLanding: FC = () => {
 					<h2>Mitä hoivakodin antamaan palveluun kuuluu?</h2>
 					<p>
 						Kaikki tällä sivustolla esillä olevat hoivakodit ovat sitoutuneet noudattamaan Espoon kaupungin
-						palvelukonseptia, joka määrittää vähimmäisvaatimukset palvelun sisällölle ja laadulle.
+						<a href="#" target="_blank">palvelukonseptia</a>, joka määrittää vähimmäisvaatimukset palvelun sisällölle ja laadulle.
 					</p>
 
 					<h3>Usein kysyttyjä kysymyksiä palvelusta</h3>

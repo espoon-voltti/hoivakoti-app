@@ -66,19 +66,21 @@
 
 .card-list-item__subheader {
 	text-transform: uppercase;
-	line-height: 16px;
+	line-height: 26px;
 	font-size: 14px;
 }
 
 .card-list-item__header {
 	font-size: 19px;
-	font-weight: bold;
-	line-height: 24px;
+	font-weight: 600;
+	font-family: 'Open sans', sans-serif;
+	color: $text-color;
+	line-height: 26px;
 	margin: 3px 0 3px 0;
 }
 
 .card-list-item__text {
-	line-height: 18px;
+	line-height: 26px;
 	font-size: 14px;
 }
 
