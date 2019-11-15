@@ -140,11 +140,8 @@ $header-height: 80px;
 	text-decoration: none;
 }
 
-.link-fi:after {
-	content: "Suomeksi";
-}
-.link-sv:after {
-	content: "På Svenska";
+.lang-link.active {
+	font-weight: bold;
 }
 
 /* [ON SMALL SCREENS] */
