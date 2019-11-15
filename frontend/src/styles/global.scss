@@ -134,13 +134,13 @@ table {
 /* Site global styles */
 
 body {
-	font-family: Open-sans, sans-serif;
+	font-family: 'Open sans', sans-serif;
 	font-size: 16px;
 	color: $text-color;
 }
 
 p {
-	font-family: Open-sans, sans-serif;
+	font-family: 'Open sans', sans-serif;
 	font-size: 16px;
 	line-height: 26px;
 	margin-bottom: 1.5em;
@@ -183,7 +183,7 @@ a:hover {
 }
 
 strong {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .btn {
