@@ -21,6 +21,7 @@ interface SearchFilters {
 
 const PageNursingHomes: FC = () => {
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(null);
+	const [selectedNursingHome, setSelectedNursingHome] = useState<NursingHome | null>(null);
 
 	const history = useHistory();
 	const { search } = useLocation();
@@ -162,32 +163,36 @@ const PageNursingHomes: FC = () => {
 		</>
 	);
 
-	const nursinghomeComponents: object[] | null =
+	const filteredNursingHomes: NursingHome[] | null =
 		nursingHomes &&
-		nursingHomes
-			.filter(nursinghome => {
-				if (
-					searchFilters.alue &&
-					searchFilters.alue.length > 0 &&
-					!searchFilters.alue.includes(nursinghome.location)
-				)
-					return false;
-				if (searchFilters.language && nursinghome.language !== searchFilters.language) return false;
-				if (searchFilters.ara !== undefined && nursinghome.ara !== searchFilters.ara) return false;
-				if (searchFilters.lah && nursinghome.lah !== searchFilters.lah) return false;
+		nursingHomes.filter(nursinghome => {
+			if (
+				searchFilters.alue &&
+				searchFilters.alue.length > 0 &&
+				!searchFilters.alue.includes(nursinghome.district)
+			)
+				return false;
+			if (searchFilters.language && nursinghome.language !== searchFilters.language) return false;
+			if (searchFilters.ara !== undefined && nursinghome.ara !== searchFilters.ara) return false;
+			if (searchFilters.lah && nursinghome.lah !== searchFilters.lah) return false;
 
-				return true;
-			})
-			.map((nursinghome, index) => (
-				<Link
-					key={index}
-					to={"/hoivakodit/" + nursinghome.id}
-					style={{ textDecoration: "none" }}
-					className="card-list-item-borders"
-				>
-					<NursingHomeSmall nursinghome={nursinghome} key={index} />
-				</Link>
-			));
+			return true;
+		});
+
+	const nursingHomeComponents: JSX.Element[] | null =
+		filteredNursingHomes &&
+		filteredNursingHomes.map((nursingHome, index) => (
+			<Link
+				key={index}
+				to={"/hoivakodit/" + nursingHome.id}
+				style={{ textDecoration: "none" }}
+				className="card-list-item-borders"
+				onMouseEnter={() => setSelectedNursingHome(nursingHome)}
+				onMouseLeave={() => setSelectedNursingHome(null)}
+			>
+				<NursingHomeSmall nursinghome={nursingHome} key={index} />
+			</Link>
+		));
 
 	return (
 		<div>
@@ -195,18 +200,22 @@ const PageNursingHomes: FC = () => {
 				<div className="filters-text">Rajaa tuloksia:</div>
 				{nursingHomes && filterElements}
 			</div>
-			{!nursingHomes ? (
+			{!nursingHomes || !filteredNursingHomes ? (
 				"Ladataan..."
 			) : (
 				<div className="card-list-and-map-container">
 					<div className="card-list">
 						<h2 className="results-summary">
-							{Object.keys(nursinghomeComponents || {}).length} hoivakotia
+							{Object.keys(nursingHomeComponents || {}).length} hoivakotia
 						</h2>
-						{nursinghomeComponents}
+						{nursingHomeComponents}
 					</div>
 					<div id="map" className="map-container">
-						<Map nursingHomes={nursingHomes} />
+						<Map
+							nursingHomes={filteredNursingHomes}
+							selectedNursingHome={selectedNursingHome}
+							onSelectNursingHome={setSelectedNursingHome}
+						/>
 					</div>
 				</div>
 			)}

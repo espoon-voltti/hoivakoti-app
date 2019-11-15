@@ -5,6 +5,7 @@ import "../styles/PageNursingHome.scss";
 import * as config from "./config";
 import axios from "axios";
 import { NursingHome } from "./types";
+import { MapSmall } from "./Map";
 
 interface GetNursingHomeResponse {
 	data: [NursingHome];
@@ -37,8 +38,10 @@ const PageNursingHome: FC = () => {
 							Takaisin hoivakotilistaukseen
 						</Link>
 						<h2 className="nursinghome-title">{nursingHome && nursingHome.name}</h2>
+						<Paragraph text={`${nursingHome.district}, ${nursingHome.city}`} />
 						<Paragraph text={nursingHome.summary} />
 						<h3>Perustiedot</h3>
+						<Paragraph title="Omistaja" text={nursingHome.owner} />
 						<Paragraph title="ARA-kohde" text={nursingHome.ara ? "Kyllä" : "Ei"} />
 						<Paragraph title="Rakennusvuosi" text={String(nursingHome.construction_year)} />
 						<Paragraph title="Asuntojen määrä" text={String(nursingHome.apartment_count)} />
@@ -82,6 +85,15 @@ const PageNursingHome: FC = () => {
 
 					<div className="nursinghome-details-box">
 						<Paragraph text={nursingHome.name} className="nursinghome-details-name" />
+						<a
+							href={`https://www.google.com/maps/search/${
+								nursingHome.name
+							}/@${nursingHome.geolocation.center.join(",")}z`}
+							target="_blank"
+							rel="noreferrer noopener"
+						>
+							<MapSmall nursingHome={nursingHome} />
+						</a>
 						<h3>Yhteystiedot</h3>
 						<Paragraph text={nursingHome.address} />
 						<Paragraph text={nursingHome.contact_name} />
