@@ -24,12 +24,7 @@ const Header: FC = () => (
 						</NavLink>
 					</li>
 					<li>
-						<NavLink
-							activeClassName="selected"
-							exact
-							to="/hoivakodit"
-							isActive={(match, location) => location.pathname.startsWith("/hoivakodit")}
-						>
+						<NavLink activeClassName="selected" to="/hoivakodit">
 							Hoivakodit
 						</NavLink>
 					</li>

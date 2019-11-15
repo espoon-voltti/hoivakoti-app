@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React, { FC, useState } from "react";
-import ReactMapboxGl, { Layer, Feature, Popup } from "react-mapbox-gl";
+import ReactMapboxGl, { Layer, Feature, Popup, Marker } from "react-mapbox-gl";
 import { NursingHomeSmall } from "./nursinghome-small";
 import { NursingHome } from "./types";
 import "../styles/Map.scss";
@@ -32,16 +32,22 @@ const Map: FC<Props> = ({ nursingHomes }) => {
 				top: 0,
 			}}
 		>
-			<Layer type="symbol" id="marker" layout={{ "icon-image": "circle-15", "icon-size": 1.5 }}>
+			<>
 				{nursingHomes.map((nursingHome, index) => (
-					<Feature
+					<Marker
 						key={`${index}:${nursingHome.name}`}
 						coordinates={nursingHome.geolocation.center}
 						onMouseEnter={() => setPopup({ center: nursingHome.geolocation.center, nursingHome })}
 						onMouseLeave={() => setPopup(null)}
-					/>
+					>
+						<img
+							src={`/icon-location${
+								popup && popup.nursingHome.id === nursingHome.id ? "-selected" : ""
+							}.svg`}
+						/>
+					</Marker>
 				))}
-			</Layer>
+			</>
 
 			{popup ? (
 				<Popup
@@ -77,8 +83,8 @@ export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
 			width: "100%",
 		}}
 	>
-		<Layer type="symbol" id="marker" layout={{ "icon-image": "circle-15", "icon-size": 1.5 }}>
-			<Feature coordinates={nursingHome.geolocation.center} />
-		</Layer>
+		<Marker coordinates={nursingHome.geolocation.center}>
+			<img src="/icon-location-selected.svg" />
+		</Marker>
 	</MapComponent>
 );
