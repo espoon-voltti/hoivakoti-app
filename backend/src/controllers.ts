@@ -86,7 +86,7 @@ export async function DropAndRecreateTables(ctx: any)
 
 export async function UploadPics(ctx: any)
 {
-	const drive = google.drive({
+	/*const drive = google.drive({
 		version: 'v3',
 		auth: 'AIzaSyDpM7dvcX4cck9-rRcP3r7nUUVe2pU56kU'
 	});
@@ -124,7 +124,7 @@ export async function UploadPics(ctx: any)
 	catch (e)
 	{
 		console.log(e);
-	}
+	}*/
 
 	//console.log(ctx.request.files);
 	ctx.body = ctx.request.files;
