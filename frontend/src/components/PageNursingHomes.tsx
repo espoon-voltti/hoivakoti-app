@@ -21,6 +21,7 @@ interface SearchFilters {
 
 const PageNursingHomes: FC = () => {
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(null);
+	const [selectedNursingHome, setSelectedNursingHome] = useState<NursingHome | null>(null);
 
 	const history = useHistory();
 	const { search } = useLocation();
@@ -180,14 +181,16 @@ const PageNursingHomes: FC = () => {
 
 	const nursingHomeComponents: JSX.Element[] | null =
 		filteredNursingHomes &&
-		filteredNursingHomes.map((nursinghome, index) => (
+		filteredNursingHomes.map((nursingHome, index) => (
 			<Link
 				key={index}
-				to={"/hoivakodit/" + nursinghome.id}
+				to={"/hoivakodit/" + nursingHome.id}
 				style={{ textDecoration: "none" }}
 				className="card-list-item-borders"
+				onMouseEnter={() => setSelectedNursingHome(nursingHome)}
+				onMouseLeave={() => setSelectedNursingHome(null)}
 			>
-				<NursingHomeSmall nursinghome={nursinghome} key={index} />
+				<NursingHomeSmall nursinghome={nursingHome} key={index} />
 			</Link>
 		));
 
@@ -208,7 +211,11 @@ const PageNursingHomes: FC = () => {
 						{nursingHomeComponents}
 					</div>
 					<div id="map" className="map-container">
-						<Map nursingHomes={filteredNursingHomes} />
+						<Map
+							nursingHomes={filteredNursingHomes}
+							selectedNursingHome={selectedNursingHome}
+							onSelectNursingHome={setSelectedNursingHome}
+						/>
 					</div>
 				</div>
 			)}
