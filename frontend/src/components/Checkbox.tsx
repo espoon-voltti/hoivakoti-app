@@ -1,5 +1,4 @@
 import React from "react";
-import { ReactComponent as Checkmark } from "./Checkmark.svg";
 import "../styles/Checkbox.scss";
 
 interface Props {
@@ -23,9 +22,7 @@ const Checkbox: React.FunctionComponent<Props> = ({ name, id, onChange, children
 				className="checkbox-button"
 			/>
 			<label htmlFor={id} className="checkbox-label">
-				<span className={`checkbox-box ${isChecked ? "checkbox-box-selected" : ""}`}>
-					{isChecked ? <Checkmark className="checkbox-checkmark" /> : null}
-				</span>
+				<span className={`checkbox-box ${isChecked ? "checkbox-box-selected" : ""}`}></span>
 				<span className="checkbox-label-children">{children}</span>
 			</label>
 		</div>

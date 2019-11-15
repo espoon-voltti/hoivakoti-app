@@ -33,7 +33,7 @@ const PageLanding: FC = () => {
 						</select>
 					</div>
 					<button
-						className="landing-cta"
+						className="btn landing-cta"
 						onClick={(): void => {
 							const query = selectedArea ? `?alue=${selectedArea}` : "";
 							const url = `/hoivakodit${query}`;

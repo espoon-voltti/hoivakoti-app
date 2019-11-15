@@ -4,7 +4,7 @@
 	flex: 1;
 	display: flex;
 	align-items: center;
-	margin-bottom: 16px;
+	margin-bottom: 10px;
 }
 
 .checkbox-button {
@@ -16,6 +16,7 @@
 
 .checkbox-button:focus + .checkbox-label .checkbox-box {
 	box-shadow: 0px 0px 1px 1px $link-color;
+	border-color: $link-color;
 }
 
 .checkbox-box {
@@ -24,8 +25,8 @@
 	flex-basis: 20px;
 	flex-shrink: 0;
 	background-color: transparent;
-	border-radius: 2px;
-	border: 2px solid $link-color;
+	border-radius: $border-radius;
+	border: 1px solid $input-border;
 	display: flex;
 	justify-items: center;
 	align-items: center;
@@ -34,7 +35,8 @@
 }
 
 .checkbox-box-selected {
-	background-color: $link-color;
+	background: $link-color url('/icon-checkmark.svg') 50% 50% no-repeat;
+	border-color: $link-color;
 }
 
 .checkbox-checkmark {
@@ -43,6 +45,23 @@
 
 .checkbox-label {
 	display: flex;
+	width: 100%;
+	padding: 4px 5px;
+	cursor: pointer;
+	margin-left: -5px;
+	color: $text-color;
+}
+
+.checkbox-label:hover {
+	background-color: #F5F5F5;
+}
+
+.checkbox-label:hover .checkbox-box {
+	background: transparent url('/icon-checkmark-hover.svg') 50% 50% no-repeat;
+}
+
+.checkbox-label:hover .checkbox-box-selected {
+	background: $link-color url('/icon-checkmark.svg') 50% 50% no-repeat;
 }
 
 .checkbox-label-children {

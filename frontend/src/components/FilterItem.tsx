@@ -57,9 +57,9 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 					);
 				} else if (value.type === "text") {
 					return (
-						<div className="text-item" key={index}>
+						<p className="text-item" key={index}>
 							{value.text}
-						</div>
+						</p>
 					);
 				} else if (value.type === "header") {
 					return (
@@ -74,7 +74,7 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 			})}
 
 			<div className="save-and-empty-container">
-				<button onClick={() => setIsDropdownExpanded(false)} className="menu-save-button">
+				<button onClick={() => setIsDropdownExpanded(false)} className="btn">
 					Tallenna
 				</button>
 

@@ -48,7 +48,6 @@ $column-width: 1024px;
 	flex-grow: 1;
 	height: 100%;
 	margin: 0 40px 0 20px;
-	color: $text-color;
 }
 
 .location-picker-select select {
@@ -58,32 +57,14 @@ $column-width: 1024px;
 	border: none;
 	border-radius: 0;
 	font-size: 16px;
+	color: $text-color;
 }
 
 .landing-cta {
 	width: 200px;
 	height: 45px;
-	padding-bottom: calc(0.375em - 1px);
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-    padding-top: calc(0.375em - 1px);
-	background-color: $link-color;
-	border: none;
-	border-radius: $border-radius;
-	color: white;
-	text-transform: uppercase;
-	font-size: 14px;
-	font-weight: bold;
-	cursor: pointer;
 }
 
-.landing-cta:hover {
-	background-color: #0050bb;
-}
-
-.landing-cta:active {
-	background-color: #044090;
-}
 
 .content-column {
 	max-width: $column-width;

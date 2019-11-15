@@ -1,5 +1,4 @@
 import React from "react";
-import { ReactComponent as Checkmark } from "./Checkmark.svg";
 import "../styles/Radio.scss";
 
 interface Props {
@@ -24,7 +23,7 @@ const Radio: React.FunctionComponent<Props> = ({ name, id, onChange, children, i
 			/>
 			<label htmlFor={id} className="radio-label">
 				<span className={`radio-box ${isSelected ? "radio-box-selected" : ""}`}>
-					{isSelected ? <Checkmark className="radio-checkmark" /> : null}
+					
 				</span>
 				<span className="radio-label-children">{children}</span>
 			</label>
