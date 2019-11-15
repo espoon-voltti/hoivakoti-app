@@ -45,6 +45,7 @@ async function CreateNursingHomePicturesTable()
 				table.binary(row_info.sql);
 			}
 		})
+		table.uuid("nursinghome_id");
 	})
 }
 
@@ -160,6 +161,12 @@ export async function InsertNursingHomeRatingToDB(nursery_id: string, rating: nu
 	return uuid
 }
 
+export async function GetNursingHomeIDFromName(name: string)
+{
+	const result = await knex.select("name", "id").table("NursingHomes").where({"name": name});
+	return result;
+}
+
 export async function GetAllNursingHomes()
 {
 	return await knex.select().table("NursingHomes")
@@ -180,4 +187,21 @@ export async function DeleteAllNursingHomes()
 {
 	const result = await knex.select().table("NursingHomes").del();
 	return result;
+}
+
+export async function AddPicturesAndDescriptionsForNursingHome(id: string, pictures:any)
+{
+	await knex("NursingHomePictures").insert({nursinghome_id: id,
+		...pictures
+	})
+}
+
+export async function GetAllPicturesAndDescriptions()
+{
+	return await knex.select().table("NursingHomePictures")
+}
+
+export async function GetPicturesAndDescriptions(id: string)
+{
+	return await knex.select().table("NursingHomePictures").where({nursinghome_id: id})
 }

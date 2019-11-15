@@ -4,15 +4,13 @@ import {
 	GetAllRatings,
 	GetNursingHome as GetNursingHomeDB,
 	DeleteAllNursingHomes,
-	DropAndRecreateNursingHomeTable} from "./models"
+	DropAndRecreateNursingHomeTable,
+	GetAllPicturesAndDescriptions,
+	GetPicturesAndDescriptions} from "./models"
 
 import {
-	NursingHomesFromCSV} from "./services"
-
-const fs = require('fs');
-
-//import * as google from "googleapis"
-const {google} = require('googleapis');
+	NursingHomesFromCSV,
+	FetchAndSaveImagesFromCSV} from "./services"
 
 export async function AddNursingHome(ctx: any)
 {
@@ -86,46 +84,19 @@ export async function DropAndRecreateTables(ctx: any)
 
 export async function UploadPics(ctx: any)
 {
-	/*const drive = google.drive({
-		version: 'v3',
-		auth: 'AIzaSyDpM7dvcX4cck9-rRcP3r7nUUVe2pU56kU'
-	});
-	
-	try {
-		//const data = await drive.files.get({fileId: "1SvVLVlbjwR6_l1iKv6OEi9f8PXuFXVWz", alt: 'media'}, {responseType: 'stream'});
+	const csv: string = ctx.request.body.csv
 
-		var fileId = '1SvVLVlbjwR6_l1iKv6OEi9f8PXuFXVWz';
-		await fs.promises.mkdir('./tmp');
-		var dest = fs.createWriteStream('./tmp/photo.jpg');
-		drive.files..get({fileId, alt: 'media'}, {responseType: 'stream'})
-		.then((res: any) => {
-		 	return new Promise((resolve, reject) => {
-		 		res.data
-          .on('end', () => {
-            console.log('Done downloading file.');
-            resolve('./tmp/photo.jpg');
-          })
-          .on('error', err: any => {
-            console.error('Error downloading file.');
-            reject(err);
-          })
-          .on('data', d => {
-            progress += d.length;
-            if (process.stdout.isTTY) {
-              process.stdout.clearLine();
-              process.stdout.cursorTo(0);
-              process.stdout.write(`Downloaded ${progress} bytes`);
-            }
-          })
-          .pipe(dest);
-      });
-    });
-	}
-	catch (e)
-	{
-		console.log(e);
-	}*/
+	const result = await FetchAndSaveImagesFromCSV(csv);
 
-	//console.log(ctx.request.files);
-	ctx.body = ctx.request.files;
+	return result;
+}
+
+export async function GetAllPicsAndDescriptions(ctx: any)
+{
+	return await GetAllPicturesAndDescriptions();
+}
+
+export async function GetPicsAndDescriptions(ctx: any)
+{
+	return await GetPicturesAndDescriptions(ctx.params.id);
 }

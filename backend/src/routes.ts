@@ -8,7 +8,9 @@ import {
 	AddNursingHomesFromCSV,
 	DeleteNursingHomes,
 	DropAndRecreateTables,
-	UploadPics} from "./controllers"
+	UploadPics,
+	GetAllPicsAndDescriptions,
+	GetPicsAndDescriptions} from "./controllers"
 
 const router = new Router()
 
@@ -26,6 +28,10 @@ router.get("/api/nursing-homes/:id", async (ctx) => {
 
 router.post("/api/nursing-homes/:id/upload-pics", async (ctx) => {
 	ctx.body = await UploadPics(ctx);
+})
+
+router.get("/api/nursing-homes/:id/pics", async (ctx) => {
+	ctx.body = await GetPicsAndDescriptions(ctx);
 })
 
 router.post("/api/nursing-homes", async (ctx) => {
@@ -54,6 +60,10 @@ router.get("/api/health", async (ctx) => {
 
 router.get("/api/node-env-test", async (ctx) => {
 	ctx.body = process.env.NODE_ENV;
+})
+
+router.get("/api/all-pics", async (ctx) => {
+	ctx.body = await GetAllPicsAndDescriptions(ctx);
 })
 
 const routes = router.routes()

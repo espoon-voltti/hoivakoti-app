@@ -3,7 +3,7 @@
 export interface NursingHome {
 	id?: string
 	name: string
-	district?: string
+	district?	: string
 	owner: string
 	address: string
 	ara?: boolean
