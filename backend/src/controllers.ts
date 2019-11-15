@@ -9,6 +9,11 @@ import {
 import {
 	NursingHomesFromCSV} from "./services"
 
+const fs = require('fs');
+
+//import * as google from "googleapis"
+const {google} = require('googleapis');
+
 export async function AddNursingHome(ctx: any)
 {
 	await InsertNursingHomeToDB({name: ctx.request.body.name,
@@ -77,4 +82,50 @@ export async function DropAndRecreateTables(ctx: any)
 {
 	const result = await DropAndRecreateNursingHomeTable();
 	return result;
+}
+
+export async function UploadPics(ctx: any)
+{
+	const drive = google.drive({
+		version: 'v3',
+		auth: 'AIzaSyDpM7dvcX4cck9-rRcP3r7nUUVe2pU56kU'
+	});
+	
+	try {
+		//const data = await drive.files.get({fileId: "1SvVLVlbjwR6_l1iKv6OEi9f8PXuFXVWz", alt: 'media'}, {responseType: 'stream'});
+
+		var fileId = '1SvVLVlbjwR6_l1iKv6OEi9f8PXuFXVWz';
+		await fs.promises.mkdir('./tmp');
+		var dest = fs.createWriteStream('./tmp/photo.jpg');
+		drive.files..get({fileId, alt: 'media'}, {responseType: 'stream'})
+		.then((res: any) => {
+		 	return new Promise((resolve, reject) => {
+		 		res.data
+          .on('end', () => {
+            console.log('Done downloading file.');
+            resolve('./tmp/photo.jpg');
+          })
+          .on('error', err: any => {
+            console.error('Error downloading file.');
+            reject(err);
+          })
+          .on('data', d => {
+            progress += d.length;
+            if (process.stdout.isTTY) {
+              process.stdout.clearLine();
+              process.stdout.cursorTo(0);
+              process.stdout.write(`Downloaded ${progress} bytes`);
+            }
+          })
+          .pipe(dest);
+      });
+    });
+	}
+	catch (e)
+	{
+		console.log(e);
+	}
+
+	//console.log(ctx.request.files);
+	ctx.body = ctx.request.files;
 }

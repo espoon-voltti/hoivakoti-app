@@ -7,7 +7,8 @@ import {
 	GetNursingHome,
 	AddNursingHomesFromCSV,
 	DeleteNursingHomes,
-	DropAndRecreateTables} from "./controllers"
+	DropAndRecreateTables,
+	UploadPics} from "./controllers"
 
 const router = new Router()
 
@@ -21,6 +22,10 @@ router.get("/api/nursing-homes", async (ctx) => {
 
 router.get("/api/nursing-homes/:id", async (ctx) => {
 	ctx.body = await GetNursingHome(ctx)
+})
+
+router.post("/api/nursing-homes/:id/upload-pics", async (ctx) => {
+	ctx.body = await UploadPics(ctx);
 })
 
 router.post("/api/nursing-homes", async (ctx) => {
