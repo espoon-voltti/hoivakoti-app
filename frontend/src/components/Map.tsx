@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React, { FC } from "react";
-import ReactMapboxGl, { Popup, Marker } from "react-mapbox-gl";
+import ReactMapboxGl, { Popup, Marker, ZoomControl } from "react-mapbox-gl";
 import { NursingHomeSmall } from "./nursinghome-small";
 import { NursingHome } from "./types";
 import "../styles/Map.scss";
+import { FactoryParameters } from "react-mapbox-gl/lib/map";
 
 interface Props {
 	nursingHomes: NursingHome[];
@@ -11,15 +12,20 @@ interface Props {
 	onSelectNursingHome: (nursingHome: NursingHome | null) => void;
 }
 
-const MapComponent = ReactMapboxGl({
+const mapConfig: FactoryParameters = {
 	accessToken: "pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
-	scrollZoom: true,
-	interactive: true,
+	scrollZoom: false,
 	dragRotate: false,
 	pitchWithRotate: false,
-	minZoom: 11,
-	maxZoom: 11,
-});
+};
+
+const mapConfigNonInteractive: FactoryParameters = {
+	...mapConfig,
+	interactive: false,
+};
+
+const MapComponent = ReactMapboxGl(mapConfig);
+const MapComponentNonInteractive = ReactMapboxGl(mapConfigNonInteractive);
 
 const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 	const createMarkerClickHandler = (nursingHome: NursingHome) => () => {
@@ -42,6 +48,8 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 			}}
 			onClick={() => onSelectNursingHome(null)}
 		>
+			<ZoomControl position="top-left" />
+
 			<>
 				{nursingHomes.map((nursingHome, index) => (
 					<Marker
@@ -85,7 +93,7 @@ interface PropsMapSmall {
 }
 
 export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
-	<MapComponent
+	<MapComponentNonInteractive
 		/* eslint-disable-next-line react/style-prop-object */
 		style="mapbox://styles/mapbox/streets-v9"
 		center={nursingHome.geolocation.center}
@@ -97,5 +105,5 @@ export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
 		<Marker coordinates={nursingHome.geolocation.center}>
 			<img src="/icon-location-selected.svg" alt="Hoivakoti kartalla" />
 		</Marker>
-	</MapComponent>
+	</MapComponentNonInteractive>
 );
