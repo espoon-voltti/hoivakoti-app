@@ -5,8 +5,12 @@ import {
 	GetNursingHome as GetNursingHomeDB,
 	DeleteAllNursingHomes,
 	DropAndRecreateNursingHomeTable,
+	DropAndRecreateNursingHomePicturesTable,
 	GetAllPicturesAndDescriptions,
-	GetPicturesAndDescriptions} from "./models"
+	GetPicturesAndDescriptions,
+	GetPicData,
+	GetPicCaptions,
+	GetPicDigests} from "./models"
 
 import {
 	NursingHomesFromCSV,
@@ -31,7 +35,16 @@ export async function ListNursingHomes(ctx: any)
 
 export async function GetNursingHome(ctx: any)
 {
-	return await GetNursingHomeDB(ctx.params.id);
+	const nursing_home_data = (await GetNursingHomeDB(ctx.params.id))[0];
+	const pic_digests = (await GetPicDigests(ctx.params.id))[0];
+	//const pic_digests = Object.keys((await GetPicDigests(ctx.params.id))[0]).filter((item: any) => {item !== null ? true : false});
+	const available_pics = Object.keys(pic_digests)
+		.filter((item: any) => pic_digests[item] != null ? true : false)
+		.map((item: any) => item.replace("_hash", ""));
+
+	nursing_home_data["pic_digests"] = pic_digests;
+	nursing_home_data["pics"] = available_pics;
+	return nursing_home_data;
 }
 
 export async function ListRatings(ctx: any)
@@ -78,8 +91,9 @@ export async function DeleteNursingHomes(ctx: any)
 
 export async function DropAndRecreateTables(ctx: any)
 {
-	const result = await DropAndRecreateNursingHomeTable();
-	return result;
+	const result1 = await DropAndRecreateNursingHomeTable();
+	const result2 = await DropAndRecreateNursingHomePicturesTable();
+	return result1;
 }
 
 export async function UploadPics(ctx: any)
@@ -99,4 +113,30 @@ export async function GetAllPicsAndDescriptions(ctx: any)
 export async function GetPicsAndDescriptions(ctx: any)
 {
 	return await GetPicturesAndDescriptions(ctx.params.id);
+}
+
+export async function GetPic(ctx: any)
+{
+	const pic_and_hash = (await GetPicData(ctx.params.id, ctx.params.pic))[0];
+	const pic_data = pic_and_hash[ctx.params.pic];
+	if (pic_data)
+	{
+		ctx.response.set("Content-Type", "image/jpeg");
+		ctx.response.set("Content-Length", pic_data.length);
+		ctx.response.set("Digest", "sha-256=" + pic_and_hash[ctx.params.pic + "_hash"]);
+
+		console.log("Length:" + pic_data.length);
+		return pic_data;
+	}
+	else
+	{
+		ctx.response.status = 404;
+		return "No image found";
+	}
+}
+
+export async function GetCaptions(ctx: any)
+{
+	const captions = (await GetPicCaptions(ctx.params.id))[0];
+	return captions;
 }

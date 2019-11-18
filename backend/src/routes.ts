@@ -10,7 +10,9 @@ import {
 	DropAndRecreateTables,
 	UploadPics,
 	GetAllPicsAndDescriptions,
-	GetPicsAndDescriptions} from "./controllers"
+	GetPicsAndDescriptions,
+	GetPic,
+	GetCaptions} from "./controllers"
 
 const router = new Router()
 
@@ -36,6 +38,14 @@ router.get("/api/nursing-homes/:id/pics", async (ctx) => {
 
 router.post("/api/nursing-homes", async (ctx) => {
 	ctx.body = await AddNursingHome(ctx)
+})
+
+router.get("/api/nursing-homes/:id/pics/captions", async (ctx) => {
+	ctx.body = await GetCaptions(ctx);
+})
+
+router.get("/api/nursing-homes/:id/pics/:pic", async (ctx) => {
+	ctx.body = await GetPic(ctx);
 })
 
 router.post("/api/nursing-homes/csv", async (ctx) => {

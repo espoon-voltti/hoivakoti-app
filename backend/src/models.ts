@@ -27,7 +27,10 @@ knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 
 knex.schema.hasTable("NursingHomePictures").then(async (exists: boolean) => {
 	if (exists)
-		await knex.schema.dropTable("NursingHomePictures");
+		return
+
+	//if (exists)
+	//	await knex.schema.dropTable("NursingHomePictures");
 
 	await CreateNursingHomePicturesTable();
 })
@@ -39,10 +42,13 @@ async function CreateNursingHomePicturesTable()
 			if (row_info.sql.includes("caption"))
 			{
 				table.string(row_info.sql);
+				console.log("Setting string row: " + row_info.sql);
 			}
 			else
 			{
 				table.binary(row_info.sql);
+				table.string(row_info.sql + "_hash");
+				console.log("Setting binary row: " + row_info.sql);
 			}
 		})
 		table.uuid("nursinghome_id");
@@ -103,6 +109,15 @@ export async function DropAndRecreateNursingHomeTable()
 	if (exists)
 		await knex.schema.dropTable("NursingHomes");
 	const result = await CreateNursingHomeTable();
+	return result;
+}
+
+export async function DropAndRecreateNursingHomePicturesTable()
+{
+	const exists = await knex.schema.hasTable("NursingHomePictures");
+	if (exists)
+		await knex.schema.dropTable("NursingHomePictures");
+	const result = await CreateNursingHomePicturesTable();
 	return result;
 }
 
@@ -204,4 +219,42 @@ export async function GetAllPicturesAndDescriptions()
 export async function GetPicturesAndDescriptions(id: string)
 {
 	return await knex.select().table("NursingHomePictures").where({nursinghome_id: id})
+}
+
+// Returns data and hash
+export async function GetPicData(nursinghome_id: string, pic: string)
+{
+	return await knex.select(pic, pic + "_hash").table("NursingHomePictures").where({nursinghome_id: nursinghome_id})
+}
+
+export async function GetPicCaptions(nursinghome_id: string)
+{
+	const columns = nursing_home_pictures_columns_info
+	.filter((row_info: any) => {
+			if (row_info.sql.includes("caption"))
+				return true;
+			return false;
+	})
+	.map((row_info: any) => {
+			if (row_info.sql.includes("caption"))
+				return row_info.sql;
+	});
+
+	return await knex.select(columns).table("NursingHomePictures").where({nursinghome_id: nursinghome_id})
+}
+
+export async function GetPicDigests(nursinghome_id: string)
+{
+	const columns = nursing_home_pictures_columns_info
+	.filter((row_info: any) => {
+			if (row_info.sql.includes("caption"))
+				return false;
+			return true;
+	})
+	.map((row_info: any) => {
+			if (!row_info.sql.includes("caption"))
+				return row_info.sql + "_hash";
+	});
+
+	return await knex.select(columns).table("NursingHomePictures").where({nursinghome_id: nursinghome_id})
 }

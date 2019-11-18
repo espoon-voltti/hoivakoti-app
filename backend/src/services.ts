@@ -15,6 +15,14 @@ const fs = require('fs');
 //import * as google from "googleapis"
 const {google} = require('googleapis');
 
+const crypto = require('crypto')
+function checksum(str: string) {
+  return crypto
+    .createHash('SHA256')
+    .update(str)
+    .digest('hex')
+}
+
 const drive = google.drive({
 	version: 'v3',
 	auth: 'AIzaSyDpM7dvcX4cck9-rRcP3r7nUUVe2pU56kU'
@@ -85,7 +93,12 @@ export async function FetchAndSaveImagesFromCSV(csv: string)
 					const name = await DownloadAndSaveFile(pic_id);
 					console.log(name)
 					const file = await fs.promises.readFile(name);
+					//nursinghome_pics[field_info.sql] = '\\x' + file;
+
+					const hash = checksum(file);
+
 					nursinghome_pics[field_info.sql] = file;
+					nursinghome_pics[field_info.sql + "_hash"] = hash;
 					console.log("File: " + name + " Length: " + file.length + " SQL: " + field_info.sql);
 				}
 			}
