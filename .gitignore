@@ -78,3 +78,5 @@ dist/
 .terraform
 terraform.tfstate.backup
 terraform.tfstate.d
+
+tmp
