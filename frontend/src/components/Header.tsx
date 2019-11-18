@@ -14,7 +14,7 @@ const Header: FC = () => {
 		<header className="header">
 			<div className="logo-container">
 				<Link to="/">
-					<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} alt="Espoo logo" />
+					<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} alt="Espoo – Esbo" />
 					<h1 className="title">{useT("appTitle")}</h1>
 				</Link>
 			</div>

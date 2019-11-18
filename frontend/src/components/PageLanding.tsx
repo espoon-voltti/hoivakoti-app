@@ -1,5 +1,6 @@
 import React, { FC, useState, ChangeEvent } from "react";
 import "../styles/landing.scss";
+import { useT, Language, useCurrentLanguage } from "../translations";
 import { useHistory } from "react-router-dom";
 
 type Area = "Espoon keskus" | "Espoonlahti" | "Leppävaara" | "Matinkylä" | "Tapiola";
@@ -19,10 +20,10 @@ const PageLanding: FC = () => {
 	return (
 		<div id="landing">
 			<div className="jumbotron">
-				<h2 className="jumbotron__header">Löydä näköisesi hoivakoti</h2>
+				<h2 className="jumbotron__header">{useT("jumbotronHeadline")}</h2>
 
 				<div className="location-picker">
-					<div className="location-picker-label">Miltä alueelta etsit hoivakotia?</div>
+					<div className="location-picker-label">{useT("locationPickerLabel")}</div>
 					<div className="location-picker-select">
 						<select onChange={handleSelectArea}>
 							{areas.map(area => (
@@ -40,7 +41,7 @@ const PageLanding: FC = () => {
 							history.push(url);
 						}}
 					>
-						Näytä Hoivakodit
+						{useT("jumbotronBtn")}
 					</button>
 				</div>
 			</div>
@@ -48,55 +49,77 @@ const PageLanding: FC = () => {
 			<div className="content-column">
 				<section className="content-block">
 					<p className="ingress">
-						Tältä sivustolta löydät Espoon kaupungin hyväksymät <strong>tehostetun palveluasumisen</strong> hoivakodit <strong>ikäihmisille</strong>. Saadaksesi hoivakotipaikan tarvitset myönteisen päätöksen tehostetun palveluasumisen tarpeesta.
+						{useT("landingIngress1")}
 					</p>
 					<p className="ingress">
-						Etsitkö hoivakotia palvelusetelillä? Katso hoivakoteja osoitteessa{" "}
-						<a href="https://www.parastapalvelua.fi/" target="_blank" rel="noopener noreferrer">
+						{useT("landingIngress2")}{" "}
+						<a href={useT("urlParastapalvelua")} target="_blank" rel="noopener noreferrer">
 							www.parastapalvelua.fi
 						</a>
 					</p>
 				</section>
 
 				<section className="content-block">
-					<h2>Mitä on tehostettu palveluasuminen?</h2>
-					<p>
-						Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa ja jotka eivät voi enää asua omassa kodissaan. Tehostetun palveluasumisen hoivakodeissa on terveydenhuollon ammattikoulutuksen saanutta henkilökuntaa paikalla jatkuvasti. Espoon kaupunki järjestää tehostettua palveluasumista useissa yksityisten palveluntuottajien hoivakodeissa sekä omissa hoivakodeissaan. Hoivakodissa asiakas saa tarpeidensa mukaista hoivaa ja huolenpitoa elämänsä loppuun saakka.
-
-					</p>
+					<h2>{useT("whatisNursinghomeHeadline")}</h2>
+					<p>{useT("whatisNursinghomeText")}</p>
 				</section>
 
 				<section className="content-block">
-					<h2>Miten saat tehostetun palveluasumisen päätöksen?</h2>
-					<p>Lisätietoja hakemisesta</p>
+					<div className="apply-process">
+						<h2>{useT("decisionStepsHeadline")}</h2>
+						<div>
+							<h3>{useT("decisionStep1Headline")}</h3>
+							<p>{useT("decisionStep1Text")}</p>
+						</div>
+						<div>
+							<h3>{useT("decisionStep2Headline")}</h3>
+							<p>{useT("decisionStep2Text")}</p>
+						</div>
+						<div>
+							<h3>{useT("decisionStep3Headline")}</h3>
+							<p>{useT("decisionStep3Text")}</p>
+						</div>
+					</div>
+					
+					<p><a href={useT("urlDecisionMoreInfo")} target="_blank">{useT("decisionMoreInfo")}</a></p>
 				</section>
 
 				<section className="content-block">
-					<h2>Mitä hoivakodin antamaan palveluun kuuluu?</h2>
-					<p>
-						Kaikki tällä sivustolla esillä olevat hoivakodit ovat sitoutuneet noudattamaan Espoon kaupungin
-						<a href="#" target="_blank">palvelukonseptia</a>, joka määrittää vähimmäisvaatimukset palvelun sisällölle ja laadulle.
-					</p>
+					<h2>{useT("selectingHeadline")}</h2>
+					<p>{useT("selectingText")}</p>
+				</section>
 
-					<h3>Usein kysyttyjä kysymyksiä palvelusta</h3>
+				<section className="content-block">
+					<h2>{useT("serviceDescriptionHeadline")}</h2>
+					<p>{useT("serviceDescriptionText")}</p>
+					<p><a href={useT("urlServiceDescription")}target="_blank">{useT("serviceDescriptionLink")}</a></p>
+
+					<h3 className="faqHeadline">{useT("faqSectionHeadline")}</h3>
 					<dl className="faq-list">
-						<dt>Kuuluuko ikkunanpesu palveluun?</dt>
-						<dd>Kuuluu tarpeen mukaisesti.</dd>
-
-						<dt>Kuka hoitaa asiakkaan vaatteet?</dt>
-						<dd>
-							Asiakkaalla omat vaatteet (normaalin vesipesun kestävät). Erikoispesuista asiakas vastaa
-							itse.
-						</dd>
-
-						<dt>Kuuluvatko tyynyt, peitot ja liinavaatteet palveluun?</dt>
-						<dd>Hoivakotikohtainen käytäntö</dd>
-
-						<dt>Miten lääkkeet hoituvat?</dt>
-						<dd>Asiakas maksaa itse, annosjakelu kuuluu palveluun.</dd>
-
-						<dt>Asiakaskohtaisten apuvälineiden noudot</dt>
-						<dd>Asiakas kustantaa, palveluntuottajalla avustusvelvollisuus.</dd>
+						<dt>{useT("faqItem1Headline")}</dt>
+						<dd>{useT("faqItem1Text")}</dd>
+						<dt>{useT("faqItem2Headline")}</dt>
+						<dd>{useT("faqItem2Text")}</dd>
+						<dt>{useT("faqItem3Headline")}</dt>
+						<dd>{useT("faqItem3Text")}</dd>
+						<dt>{useT("faqItem4Headline")}</dt>
+						<dd>{useT("faqItem4Text")}</dd>
+						<dt>{useT("faqItem5Headline")}</dt>
+						<dd>{useT("faqItem5Text")}</dd>
+						<dt>{useT("faqItem6Headline")}</dt>
+						<dd>{useT("faqItem6Text")}</dd>
+						<dt>{useT("faqItem7Headline")}</dt>
+						<dd>{useT("faqItem7Text")}</dd>
+						<dt>{useT("faqItem8Headline")}</dt>
+						<dd>{useT("faqItem8Text")}</dd>
+						<dt>{useT("faqItem9Headline")}</dt>
+						<dd>{useT("faqItem9Text")}</dd>
+						<dt>{useT("faqItem10Headline")}</dt>
+						<dd>{useT("faqItem10Text")}</dd>
+						<dt>{useT("faqItem11Headline")}</dt>
+						<dd>{useT("faqItem11Text")}</dd>
+						<dt>{useT("faqItem12Headline")}</dt>
+						<dd>{useT("faqItem12Text")}</dd>
 					</dl>
 				</section>
 			</div>
