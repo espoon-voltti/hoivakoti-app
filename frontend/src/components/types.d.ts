@@ -45,4 +45,5 @@ export interface NursingHome {
 	geolocation: {
 		center: [number, number];
 	};
+	pic_digests: any;
 }

@@ -44,7 +44,7 @@ router.get("/api/nursing-homes/:id/pics/captions", async (ctx) => {
 	ctx.body = await GetCaptions(ctx);
 })
 
-router.get("/api/nursing-homes/:id/pics/:pic", async (ctx) => {
+router.get("/api/nursing-homes/:id/pics/:pic/:digest", async (ctx) => {
 	ctx.body = await GetPic(ctx);
 })
 

@@ -124,8 +124,8 @@ export async function GetPic(ctx: any)
 		ctx.response.set("Content-Type", "image/jpeg");
 		ctx.response.set("Content-Length", pic_data.length);
 		ctx.response.set("Digest", "sha-256=" + pic_and_hash[ctx.params.pic + "_hash"]);
+		if (ctx.params.digest) ctx.response.set("Cache-Control", "public,max-age=31536000,immutable");
 
-		console.log("Length:" + pic_data.length);
 		return pic_data;
 	}
 	else

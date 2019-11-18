@@ -8,7 +8,7 @@ import { NursingHome } from "./types";
 import { MapSmall } from "./Map";
 
 interface GetNursingHomeResponse {
-	data: [NursingHome];
+	data: NursingHome;
 }
 
 const PageNursingHome: FC = () => {
@@ -19,7 +19,7 @@ const PageNursingHome: FC = () => {
 		axios
 			.get(config.API_URL + "/nursing-homes/" + id)
 			.then((response: GetNursingHomeResponse) => {
-				setNursingHome(response.data[0]);
+				setNursingHome(response.data);
 			})
 			.catch(console.error);
 	}, [id]);
@@ -84,6 +84,10 @@ const PageNursingHome: FC = () => {
 					</div>
 
 					<div className="nursinghome-details-box">
+						<img
+							src={`${config.API_URL}/nursing-homes/${nursingHome.id}/pics/owner_logo/${nursingHome.pic_digests.owner_logo_hash}`}
+							alt="Omistajan logo"
+						/>
 						<Paragraph text={nursingHome.name} className="nursinghome-details-name" />
 						<a
 							href={`https://www.google.com/maps/search/${
