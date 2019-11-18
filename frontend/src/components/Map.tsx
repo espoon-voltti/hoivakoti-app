@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React, { FC } from "react";
 import ReactMapboxGl, { Popup, Marker, ZoomControl } from "react-mapbox-gl";
-import { NursingHomeSmall } from "./nursinghome-small";
+import { NursingHomeSmall } from "./NursingHomeSmall";
 import { NursingHome } from "./types";
 import "../styles/Map.scss";
 import { FactoryParameters } from "react-mapbox-gl/lib/map";
@@ -33,13 +33,16 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 		else onSelectNursingHome(nursingHome);
 	};
 
-	console.log("Render");
+	const selectedMarkerPos = popup && popup.isExpanded ? popup.selectedNursingHome.geolocation.center : null;
+	const center: [number, number] = selectedMarkerPos
+		? [selectedMarkerPos[0], selectedMarkerPos[1] + 0.02]
+		: [24.6559, 60.2055];
 
 	return (
 		<MapComponent
 			/* eslint-disable-next-line react/style-prop-object */
 			style="mapbox://styles/mapbox/streets-v9"
-			center={[24.6559, 60.2055]}
+			center={center}
 			containerStyle={{
 				height: "100vh",
 				width: "100%",
@@ -72,6 +75,7 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 				{popup && popup.isExpanded && (
 					<Popup
 						coordinates={popup.selectedNursingHome.geolocation.center}
+						anchor="bottom"
 						offset={{
 							"bottom-left": [12, -38],
 							bottom: [0, -38],
