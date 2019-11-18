@@ -1,39 +1,48 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React, { FC } from "react";
-import ReactMapboxGl, { Popup, Marker } from "react-mapbox-gl";
-import { NursingHomeSmall } from "./nursinghome-small";
+import ReactMapboxGl, { Popup, Marker, ZoomControl } from "react-mapbox-gl";
+import { NursingHomeSmall } from "./NursingHomeSmall";
 import { NursingHome } from "./types";
 import "../styles/Map.scss";
+import { FactoryParameters } from "react-mapbox-gl/lib/map";
 
 interface Props {
 	nursingHomes: NursingHome[];
-	selectedNursingHome: NursingHome | null;
+	popup: { selectedNursingHome: NursingHome; isExpanded: boolean } | null;
 	onSelectNursingHome: (nursingHome: NursingHome | null) => void;
 }
 
-const MapComponent = ReactMapboxGl({
+const mapConfig: FactoryParameters = {
 	accessToken: "pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
-	scrollZoom: true,
-	interactive: true,
+	scrollZoom: false,
 	dragRotate: false,
 	pitchWithRotate: false,
-	minZoom: 11,
-	maxZoom: 11,
-});
+};
 
-const Map: FC<Props> = ({ nursingHomes, selectedNursingHome, onSelectNursingHome }) => {
+const mapConfigNonInteractive: FactoryParameters = {
+	...mapConfig,
+	interactive: false,
+};
+
+const MapComponent = ReactMapboxGl(mapConfig);
+const MapComponentNonInteractive = ReactMapboxGl(mapConfigNonInteractive);
+
+const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 	const createMarkerClickHandler = (nursingHome: NursingHome) => () => {
-		if (selectedNursingHome && selectedNursingHome.id === nursingHome.id) onSelectNursingHome(null);
+		if (popup && popup.selectedNursingHome.id === nursingHome.id) onSelectNursingHome(null);
 		else onSelectNursingHome(nursingHome);
 	};
 
-	console.log("Render");
+	const selectedMarkerPos = popup && popup.isExpanded ? popup.selectedNursingHome.geolocation.center : null;
+	const center: [number, number] = selectedMarkerPos
+		? [selectedMarkerPos[0], selectedMarkerPos[1] + 0.02]
+		: [24.6559, 60.2055];
 
 	return (
 		<MapComponent
 			/* eslint-disable-next-line react/style-prop-object */
 			style="mapbox://styles/mapbox/streets-v9"
-			center={[24.6559, 60.2055]}
+			center={center}
 			containerStyle={{
 				height: "100vh",
 				width: "100%",
@@ -42,6 +51,8 @@ const Map: FC<Props> = ({ nursingHomes, selectedNursingHome, onSelectNursingHome
 			}}
 			onClick={() => onSelectNursingHome(null)}
 		>
+			<ZoomControl position="top-right" />
+
 			<>
 				{nursingHomes.map((nursingHome, index) => (
 					<Marker
@@ -52,7 +63,7 @@ const Map: FC<Props> = ({ nursingHomes, selectedNursingHome, onSelectNursingHome
 					>
 						<img
 							src={`/icon-location${
-								selectedNursingHome && selectedNursingHome.id === nursingHome.id ? "-selected" : ""
+								popup && popup.selectedNursingHome.id === nursingHome.id ? "-selected" : ""
 							}.svg`}
 							alt="Hoivakoti kartalla"
 						/>
@@ -61,16 +72,17 @@ const Map: FC<Props> = ({ nursingHomes, selectedNursingHome, onSelectNursingHome
 			</>
 
 			<>
-				{selectedNursingHome && (
+				{popup && popup.isExpanded && (
 					<Popup
-						coordinates={selectedNursingHome.geolocation.center}
+						coordinates={popup.selectedNursingHome.geolocation.center}
+						anchor="bottom"
 						offset={{
 							"bottom-left": [12, -38],
 							bottom: [0, -38],
 							"bottom-right": [-12, -38],
 						}}
 					>
-						<NursingHomeSmall nursinghome={selectedNursingHome} isNarrow={true} />
+						<NursingHomeSmall nursinghome={popup.selectedNursingHome} isNarrow={true} />
 					</Popup>
 				)}
 			</>
@@ -85,7 +97,7 @@ interface PropsMapSmall {
 }
 
 export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
-	<MapComponent
+	<MapComponentNonInteractive
 		/* eslint-disable-next-line react/style-prop-object */
 		style="mapbox://styles/mapbox/streets-v9"
 		center={nursingHome.geolocation.center}
@@ -93,9 +105,10 @@ export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
 			height: "200px",
 			width: "100%",
 		}}
+		zoom={[14]}
 	>
 		<Marker coordinates={nursingHome.geolocation.center}>
 			<img src="/icon-location-selected.svg" alt="Hoivakoti kartalla" />
 		</Marker>
-	</MapComponent>
+	</MapComponentNonInteractive>
 );

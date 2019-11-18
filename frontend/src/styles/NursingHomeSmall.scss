@@ -33,6 +33,10 @@
 	.card-list-item__content {
 		padding: 0;
 	}
+
+	.card-list-item__link {
+		display: none;
+	}
 }
 
 .card-narrow {
@@ -61,7 +65,7 @@
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
-	padding: 30px;
+	padding: 20px;
 }
 
 .card-list-item__subheader {
@@ -73,7 +77,7 @@
 .card-list-item__header {
 	font-size: 19px;
 	font-weight: 600;
-	font-family: 'Open sans', sans-serif;
+	font-family: "Open sans", sans-serif;
 	color: $text-color;
 	line-height: 26px;
 	margin: 3px 0 3px 0;
