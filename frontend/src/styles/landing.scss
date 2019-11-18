@@ -77,6 +77,36 @@ $column-width: 1024px;
 	max-width: 680px;
 	margin: 0 auto 70px auto;
 }
+.content-block--wide {
+	max-width: 1024px;
+	margin: 0 auto 70px auto;
+	text-align: center; 
+}
+
+
+p.content-block-paragraph {
+	text-align: center;
+}
+.process-diagram {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.process-diagram__item {
+	margin:0 10px;
+	text-align: center;
+	max-width: 250px;
+}
+
+.process-diagram__item__img {
+	display: inline-block;
+	height: 150px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
 
 .faqHeadline {
 	margin-top:50px;
@@ -107,3 +137,11 @@ $column-width: 1024px;
 		padding:20px;
 	}
 }
+
+@media screen and (max-width: 850px){
+	.process-diagram__item {
+	width: 100vw;
+	max-width: 100vw;
+	margin:0;
+	}
+}	

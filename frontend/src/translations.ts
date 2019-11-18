@@ -93,7 +93,7 @@ const translationsFi: TranslationsBundle = {
 	whatisNursinghomeText: "Tehostettu palveluasuminen on tarkoitettu ikääntyneille , jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa ja jotka eivät voi enää asua omassa kodissaan. Tehostetun palveluasumisen hoivakodeissa on terveydenhuollon ammattikoulutuksen saanutta henkilökuntaa paikalla jatkuvasti. Espoon kaupunki järjestää tehostettua palveluasumista useissa yksityisten palveluntuottajien hoivakodeissa sekä omissa hoivakodeissaan. Hoivakodissa asiakas saa tarpeidensa mukaista hoivaa ja huolenpitoa elämänsä loppuun saakka.",
 	decisionStepsHeadline: "Miten saat tehostetun palveluasumisen päätöksen?",
 	decisionStep1Headline: "1. Ota yhteyttä Nestoriin",
-	decisionStep1Text: "Nestori on Espoon kaupungin seniorineuvonnan yksikkö, p. 09 816 33 333",
+	decisionStep1Text: "Nestori on Espoon kaupungin seniorineuvonnan yksikkö, <span class='no-wrap'>p. 09 816 33 333</span>",
 	decisionStep2Headline: "2. Palvelutarpeen selvittäminen ",
 	decisionStep2Text: "Nestorin sosiaalityöntekijä tulee luoksesi selvittämään palvelutarpeesi",
 	decisionStep3Headline: "3. Palvelupäätös",
