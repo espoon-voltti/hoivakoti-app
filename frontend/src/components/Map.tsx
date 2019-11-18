@@ -7,7 +7,7 @@ import "../styles/Map.scss";
 
 interface Props {
 	nursingHomes: NursingHome[];
-	selectedNursingHome: NursingHome | null;
+	popup: { selectedNursingHome: NursingHome; isExpanded: boolean } | null;
 	onSelectNursingHome: (nursingHome: NursingHome | null) => void;
 }
 
@@ -21,9 +21,9 @@ const MapComponent = ReactMapboxGl({
 	maxZoom: 11,
 });
 
-const Map: FC<Props> = ({ nursingHomes, selectedNursingHome, onSelectNursingHome }) => {
+const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 	const createMarkerClickHandler = (nursingHome: NursingHome) => () => {
-		if (selectedNursingHome && selectedNursingHome.id === nursingHome.id) onSelectNursingHome(null);
+		if (popup && popup.selectedNursingHome.id === nursingHome.id) onSelectNursingHome(null);
 		else onSelectNursingHome(nursingHome);
 	};
 
@@ -52,7 +52,7 @@ const Map: FC<Props> = ({ nursingHomes, selectedNursingHome, onSelectNursingHome
 					>
 						<img
 							src={`/icon-location${
-								selectedNursingHome && selectedNursingHome.id === nursingHome.id ? "-selected" : ""
+								popup && popup.selectedNursingHome.id === nursingHome.id ? "-selected" : ""
 							}.svg`}
 							alt="Hoivakoti kartalla"
 						/>
@@ -61,16 +61,16 @@ const Map: FC<Props> = ({ nursingHomes, selectedNursingHome, onSelectNursingHome
 			</>
 
 			<>
-				{selectedNursingHome && (
+				{popup && popup.isExpanded && (
 					<Popup
-						coordinates={selectedNursingHome.geolocation.center}
+						coordinates={popup.selectedNursingHome.geolocation.center}
 						offset={{
 							"bottom-left": [12, -38],
 							bottom: [0, -38],
 							"bottom-right": [-12, -38],
 						}}
 					>
-						<NursingHomeSmall nursinghome={selectedNursingHome} isNarrow={true} />
+						<NursingHomeSmall nursinghome={popup.selectedNursingHome} isNarrow={true} />
 					</Popup>
 				)}
 			</>

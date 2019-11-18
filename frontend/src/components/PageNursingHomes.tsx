@@ -21,7 +21,10 @@ interface SearchFilters {
 
 const PageNursingHomes: FC = () => {
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(null);
-	const [selectedNursingHome, setSelectedNursingHome] = useState<NursingHome | null>(null);
+	const [mapPopup, setMapPopup] = useState<{
+		selectedNursingHome: NursingHome;
+		isExpanded: boolean;
+	} | null>(null);
 
 	const history = useHistory();
 	const { search } = useLocation();
@@ -187,8 +190,8 @@ const PageNursingHomes: FC = () => {
 				to={"/hoivakodit/" + nursingHome.id}
 				style={{ textDecoration: "none" }}
 				className="card-list-item-borders"
-				onMouseEnter={() => setSelectedNursingHome(nursingHome)}
-				onMouseLeave={() => setSelectedNursingHome(null)}
+				onMouseEnter={() => setMapPopup({ selectedNursingHome: nursingHome, isExpanded: false })}
+				onMouseLeave={() => setMapPopup(null)}
 			>
 				<NursingHomeSmall nursinghome={nursingHome} key={index} />
 			</Link>
@@ -213,8 +216,10 @@ const PageNursingHomes: FC = () => {
 					<div id="map" className="map-container">
 						<Map
 							nursingHomes={filteredNursingHomes}
-							selectedNursingHome={selectedNursingHome}
-							onSelectNursingHome={setSelectedNursingHome}
+							popup={mapPopup}
+							onSelectNursingHome={selectedNursingHome =>
+								setMapPopup(selectedNursingHome && { selectedNursingHome, isExpanded: true })
+							}
 						/>
 					</div>
 				</div>
