@@ -64,24 +64,27 @@ const PageLanding: FC = () => {
 					<p>{useT("whatisNursinghomeText")}</p>
 				</section>
 
-				<section className="content-block">
-					<div className="apply-process">
-						<h2>{useT("decisionStepsHeadline")}</h2>
-						<div>
+				<section className="content-block content-block--wide">
+					<h2>{useT("decisionStepsHeadline")}</h2>
+					<div className="process-diagram">
+						<div className="process-diagram__item">
+							<div className="process-diagram__item__img"><img src="/icon-contact.svg" alt="" /></div>
 							<h3>{useT("decisionStep1Headline")}</h3>
 							<p>{useT("decisionStep1Text")}</p>
 						</div>
-						<div>
+						<div className="process-diagram__item">
+							<div className="process-diagram__item__img"><img src="/icon-meeting.svg" alt="" /></div>
 							<h3>{useT("decisionStep2Headline")}</h3>
 							<p>{useT("decisionStep2Text")}</p>
 						</div>
-						<div>
+						<div className="process-diagram__item">
+							<div className="process-diagram__item__img"><img src="/icon-decision.svg" alt=""/></div>
 							<h3>{useT("decisionStep3Headline")}</h3>
 							<p>{useT("decisionStep3Text")}</p>
 						</div>
 					</div>
 					
-					<p><a href={useT("urlDecisionMoreInfo")} target="_blank">{useT("decisionMoreInfo")}</a></p>
+					<p className="content-block-paragraph"><a href={useT("urlDecisionMoreInfo")} target="_blank">{useT("decisionMoreInfo")}</a></p>
 				</section>
 
 				<section className="content-block">
