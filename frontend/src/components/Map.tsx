@@ -48,7 +48,7 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 			}}
 			onClick={() => onSelectNursingHome(null)}
 		>
-			<ZoomControl position="top-left" />
+			<ZoomControl position="top-right" />
 
 			<>
 				{nursingHomes.map((nursingHome, index) => (
@@ -101,6 +101,7 @@ export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
 			height: "200px",
 			width: "100%",
 		}}
+		zoom={[14]}
 	>
 		<Marker coordinates={nursingHome.geolocation.center}>
 			<img src="/icon-location-selected.svg" alt="Hoivakoti kartalla" />
