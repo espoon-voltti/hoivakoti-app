@@ -15,6 +15,7 @@ export type Props = {
 
 const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => {
 	const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
+	const canEmpty = value !== null;
 
 	const handleChange = (newValue: any): void => {
 		onChange(newValue);
@@ -81,8 +82,8 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 				<button
 					onClick={(): void => {
 						onReset();
-						setIsDropdownExpanded(false);
 					}}
+					disabled={!canEmpty}
 					className="menu-empty-button"
 				>
 					Tyhjennä
