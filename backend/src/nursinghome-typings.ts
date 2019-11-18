@@ -20,8 +20,8 @@ export interface NursingHome {
 	building_info?: string
 	apartments_have_bathroom?: boolean
 	apartment_count_info?: string
-	apartment_square_meters?: number
-	rent?: number
+	apartment_square_meters?: string
+	rent?: string
 	rent_info?: string
 	language_info?: string
 	menu_link?: string
