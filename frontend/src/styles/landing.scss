@@ -7,7 +7,7 @@ $column-width: 1024px;
 	max-height: calc(100vh - 80px - 200px);
 	min-height: 350px;
 	height: 100vh;
-	background: $border-color url("/frontpage-jumbotron-image.jpg") 50% -82px no-repeat;
+	background: $primary-blue;
 	background-size: cover;
 	position: relative;
 	display: flex;
