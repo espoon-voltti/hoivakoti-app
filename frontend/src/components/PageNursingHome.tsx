@@ -44,10 +44,10 @@ const PageNursingHome: FC = () => {
 						<Paragraph title="Omistaja" text={nursingHome.owner} />
 						<Paragraph title="ARA-kohde" text={nursingHome.ara ? "Kyllä" : "Ei"} />
 						<Paragraph title="Rakennusvuosi" text={String(nursingHome.construction_year)} />
-						<Paragraph title="Asuntojen määrä" text={String(nursingHome.apartment_count)} />
-						<Paragraph title="Asuntojen neliömäärä" text={String(nursingHome.apartment_square_meters)} />
+						<Paragraph title="Asuntojen määrä" text={`${nursingHome.apartment_count} kpl`} />
+						<Paragraph title="Asuntojen neliömäärä" text={`${nursingHome.apartment_square_meters} m²`} />
 						<Paragraph title="Asunnon peruskalustus" text="Sänky, pöytä, wc" />
-						<Paragraph title="Vuokran määrä" text={String(nursingHome.rent)} />
+						<Paragraph title="Vuokran määrä" text={`${nursingHome.rent} € / kk`} />
 						<Paragraph title="Palvelukieli" text={nursingHome.language} />
 						<Paragraph title="Lyhytaikaisen hoivan asuntoja" text={nursingHome.lah ? "Kyllä" : "Ei"} />
 						<h3>Ruoka</h3>

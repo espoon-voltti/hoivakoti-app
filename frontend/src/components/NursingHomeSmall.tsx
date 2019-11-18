@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import * as config from "./config";
-import "../styles/nursinghome-small.scss";
+import "../styles/NursingHomeSmall.scss";
 import { NursingHome } from "./types";
+import { Link } from "react-router-dom";
 
 type NursingHomeSmallProps = {
 	nursinghome: NursingHome;
@@ -40,6 +41,14 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome, isNarrow, cl
 						{nursinghome && nursinghome.lah ? "Myös lyhytaikainen asuminen" : ""}
 					</div>
 				</div>
+
+				{isNarrow && (
+					<div className="card-list-item__link">
+						<div className="card-list-item__text">
+							<Link to={`/hoivakodit/${nursinghome.id}`}>Hoivakodin tiedot</Link>
+						</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);

@@ -11,7 +11,7 @@ interface TranslationsBundle {
 
 export type TranslationKey = keyof TranslationsBundle;
 
-export type Language = "fi" | "sv";
+export type Language = "fi-FI" | "sv-FI";
 
 export const useT = (key: TranslationKey): string => {
 	const { t } = useTranslation(ns);
@@ -35,6 +35,6 @@ const translationsSe: TranslationsBundle = {
 	navNursingHomes: "Vårdhem",
 };
 
-i18n.addResources("fi", ns, translationsFi);
+i18n.addResources("fi-FI", ns, translationsFi);
 
-i18n.addResources("sv", ns, translationsSe);
+i18n.addResources("sv-FI", ns, translationsSe);

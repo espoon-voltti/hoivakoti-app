@@ -12,16 +12,18 @@
 	font-weight: normal;
 	border: none;
 	background: none;
-	font-family: 'Open sans', sans-serif;
+	font-family: "Open sans", sans-serif;
 	font-size: 16px;
-	cursor: pointer;
 	padding: 0;
+
+	&:not(:disabled) {
+		cursor: pointer;
+	}
 }
 
-.menu-empty-button:hover {
+.menu-empty-button:not(:disabled):hover {
 	color: $primary-blue;
 }
-
 
 .header-item {
 	font-weight: 600;
@@ -35,7 +37,7 @@
 
 .option-text-has-subtext {
 	font-weight: 600;
-	font-family: 'Open sans', sans-serif;
+	font-family: "Open sans", sans-serif;
 	line-height: 22px;
 }
 
