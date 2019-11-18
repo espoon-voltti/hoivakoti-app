@@ -42,11 +42,13 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome, isNarrow, cl
 					</div>
 				</div>
 
-				<div className="card-list-item__link">
-					<div className="card-list-item__text">
-						<Link to={`/hoivakodit/${nursinghome.id}`}>Hoivakodin tiedot</Link>
+				{isNarrow && (
+					<div className="card-list-item__link">
+						<div className="card-list-item__text">
+							<Link to={`/hoivakodit/${nursinghome.id}`}>Hoivakodin tiedot</Link>
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</div>
 	);

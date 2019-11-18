@@ -1,26 +1,29 @@
-import React from "react";
+import React, { useEffect, FC } from "react";
 import "../styles/global.scss";
 import "../styles/App.scss";
 import PageNursingHomes from "./PageNursingHomes";
 import PageNursingHome from "./PageNursingHome";
-import PageFeedback from "./PageFeedback";
 import PageLanding from "./PageLanding";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useCurrentLanguage } from "../translations";
 
 const App: React.FC = () => {
+	const currentLanguage = useCurrentLanguage();
+	const currentPath = window.location.pathname;
+	useEffect(() => {
+		if (currentPath === "/") window.location.pathname = `/${currentLanguage}/`;
+	}, [currentLanguage, currentPath]);
 	return (
 		<div id="app">
-			<Router>
+			<Router basename={`/${currentLanguage}`}>
 				<Header />
 
 				<main id="content">
 					<Route exact path="/" component={PageLanding} />
 					<Route exact path="/hoivakodit" component={PageNursingHomes} />
 					<Route exact path="/hoivakodit/:id" component={PageNursingHome} />
-					<Route exact path="/topics" component={PageNursingHomes} />
-					<Route exact path="/palaute" component={PageFeedback} />
 				</main>
 
 				<Footer />

@@ -10,22 +10,33 @@ i18next
 		nsSeparator: false,
 		keySeparator: false,
 
-		whitelist: ["fi", "sv"],
-		fallbackLng: "fi",
+		whitelist: ["fi-FI", "sv-FI"],
+		fallbackLng: "fi-FI",
 
 		react: {
 			useSuspense: false,
 		},
 
+		detection: {
+			checkWhitelist: true,
+			order: ["path"],
+			caches: [],
+		},
+
+		load: "currentOnly",
+
 		resources: {},
 
 		debug: true,
-
-		// do not load a fallback
-		load: "languageOnly",
 
 		// allow an empty value to count as invalid (by default is true)
 		returnEmptyString: false,
 	});
 
 export default i18next;
+
+i18next.on("languageChanged", lng => {
+	const oldPath = window.location.pathname;
+	const newPath = oldPath.replace(/^\/[^/]+\//, `/${lng}/`);
+	window.location.href = `${window.location.origin}${newPath}${window.location.search}`;
+});

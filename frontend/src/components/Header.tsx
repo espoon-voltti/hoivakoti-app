@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import * as config from "./config";
 import { useT, Language, useCurrentLanguage } from "../translations";
 import i18next from "i18next";
@@ -13,10 +13,10 @@ const Header: FC = () => {
 	return (
 		<header className="header">
 			<div className="logo-container">
-				<a href="/">
+				<Link to="/">
 					<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} alt="Espoo logo" />
 					<h1 className="title">{useT("appTitle")}</h1>
-				</a>
+				</Link>
 			</div>
 
 			<nav id="page-nav">
@@ -42,13 +42,13 @@ const Header: FC = () => {
 					<li>
 						<NavLink
 							to="#"
-							lang="fi"
+							lang="fi-FI"
 							className="lang-link"
 							onClick={e => {
 								e.preventDefault();
-								setLanguage("fi");
+								setLanguage("fi-FI");
 							}}
-							isActive={() => currentLanguage === "fi"}
+							isActive={() => currentLanguage === "fi-FI"}
 						>
 							Suomeksi
 						</NavLink>
@@ -57,13 +57,13 @@ const Header: FC = () => {
 					<li>
 						<NavLink
 							to="#"
-							lang="sv"
+							lang="sv-SV"
 							className="lang-link"
 							onClick={e => {
 								e.preventDefault();
-								setLanguage("sv");
+								setLanguage("sv-FI");
 							}}
-							isActive={() => currentLanguage === "sv"}
+							isActive={() => currentLanguage === "sv-FI"}
 						>
 							På svenska
 						</NavLink>
