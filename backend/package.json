@@ -42,7 +42,8 @@
 	"scripts": {
 		"watch-server": "nodemon --watch 'src/**/*' --watch '../shared/**/*' -e ts,tsx --exec ts-node ./src/index.ts",
 		"start": "ts-node ./src/index.ts",
-		"test": "tsc --skipLibCheck && ava"
+		"test": "tsc --skipLibCheck && ava",
+		"lint": "eslint . --ext .ts"
 	},
 	"ava": {
 		"files": [

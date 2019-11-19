@@ -1,4 +1,4 @@
 {
-	"eslint.workingDirectories": ["./frontend"],
+	"eslint.workingDirectories": ["./backend", "./frontend"],
 	"eslint.packageManager": "yarn"
 }
