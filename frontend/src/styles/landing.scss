@@ -44,10 +44,23 @@ $column-width: 1024px;
 }
 
 .location-picker-select {
-	border-bottom: 1px solid #9e9e9e;
 	flex-grow: 1;
 	height: 100%;
-	margin: 0 40px 0 20px;
+	margin: 0 40px 0 40px;
+	position: relative;
+}
+
+.location-picker-select .button-dropdown-container {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+
+	.button-dropdown {
+		height: 100%;
+		width: 100%;
+	}
 }
 
 .location-picker-select select {

@@ -1,8 +1,10 @@
-import React, { FC, useState, ChangeEvent } from "react";
+import React, { FC, useState } from "react";
 import "../styles/landing.scss";
 import { useT } from "../translations";
 import { useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
+import FilterItem, { FilterOption } from "./FilterItem";
+import queryString from "query-string";
 
 type Area =
 	| "Espoon keskus"
@@ -22,12 +24,17 @@ const areas: Area[] = [
 const PageLanding: FC = () => {
 	const history = useHistory();
 
-	const [selectedArea, setSelectedArea] = useState<Area | null>(areas[0]);
+	const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
 
-	const handleSelectArea = (event: ChangeEvent<HTMLSelectElement>): void => {
-		const area = event.target.value as Area;
-		setSelectedArea(area);
-	};
+	const optionsArea: FilterOption[] = [
+		{ text: "Miltä alueelta etsit hoivakotia?", type: "header" },
+		...areas.map<FilterOption>((value: Area) => {
+			const checked = selectedAreas
+				? selectedAreas.includes(value)
+				: false;
+			return { text: value, type: "checkbox", checked: checked };
+		}),
+	];
 
 	return (
 		<div id="landing">
@@ -41,21 +48,43 @@ const PageLanding: FC = () => {
 						{useT("locationPickerLabel")}
 					</div>
 					<div className="location-picker-select">
-						<select onChange={handleSelectArea}>
-							{areas.map(area => (
-								<option value={area} key={area}>
-									{area}
-								</option>
-							))}
-						</select>
+						<FilterItem
+							prefix="Sijainti"
+							value={
+								selectedAreas.length !== 0
+									? selectedAreas.length <= 2
+										? selectedAreas.join(", ")
+										: `(${selectedAreas.length} valintaa)`
+									: null
+							}
+							values={optionsArea}
+							ariaLabel="Valitse hoivakodin alue"
+							onChange={({ newValue, name }) => {
+								let newSelectedAreas = selectedAreas
+									? [...selectedAreas]
+									: [];
+								if (!newValue)
+									newSelectedAreas = newSelectedAreas.filter(
+										(value: string) => {
+											return value !== name;
+										},
+									);
+								else if (!newSelectedAreas.includes(name))
+									newSelectedAreas.push(name);
+								setSelectedAreas(newSelectedAreas);
+							}}
+							onReset={(): void => {
+								setSelectedAreas([]);
+							}}
+						/>
 					</div>
 					<button
 						className="btn landing-cta"
 						onClick={(): void => {
-							const query = selectedArea
-								? `?alue=${selectedArea}`
-								: "";
-							const url = `/hoivakodit${query}`;
+							const query = queryString.stringify({
+								area: selectedAreas,
+							});
+							const url = `/hoivakodit?${query}`;
 							history.push(url);
 						}}
 					>
