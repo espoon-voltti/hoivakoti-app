@@ -154,16 +154,34 @@ export async function InsertNursingHomeToDB(
 		),
 	);
 
-	const uuid = uuidv4();
-	await knex("NursingHomes").insert({
-		id: uuid,
-		...nurseryhome,
-		geolocation: geoloc["features"][0],
-		district: postal_code_to_district[nurseryhome.postal_code],
-	});
-	//await SetUpRatingsTable(uuid)
+	const existing_id = await GetNursingHomeIDFromName(nurseryhome.name);
+	// Nursing home with this name already exists
+	if (existing_id.length > 0)
+	{
+		const uuid = existing_id[0].id;
+		await knex("NursingHomes")
+			.where({id: uuid})
+			.update({
+				...nurseryhome,
+				geolocation: geoloc["features"][0],
+				district: postal_code_to_district[nurseryhome.postal_code],
+			})
 
-	return uuid;
+		return uuid;
+	}
+	else
+	{
+		const uuid = uuidv4();
+		await knex("NursingHomes").insert({
+			id: uuid,
+			...nurseryhome,
+			geolocation: geoloc["features"][0],
+			district: postal_code_to_district[nurseryhome.postal_code],
+		});
+		//await SetUpRatingsTable(uuid)
+
+		return uuid;
+	}
 }
 
 export async function InsertNursingHomeRatingToDB(
