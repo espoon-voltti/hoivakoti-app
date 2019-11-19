@@ -1,3 +1,15 @@
+export type NursingHomeImageName =
+	| "apartment"
+	| "apartment_layout"
+	| "bathroom"
+	| "dining_room"
+	| "entrance"
+	| "lounge"
+	| "nursinghome_layout"
+	| "outside"
+	| "overview_outside"
+	| "owner_logo";
+
 // This interface declaration is duplicated in frontend and backend. Please
 // modify both at the same time to keep them in sync
 export interface NursingHome {
@@ -57,5 +69,5 @@ export interface NursingHome {
 		overview_outside_hash: string | null;
 		owner_logo_hash: string | null;
 	};
-	pics: string[];
+	pics: NursingHomeImageName[];
 }

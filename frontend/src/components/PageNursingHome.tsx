@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import "../styles/PageNursingHome.scss";
 import config from "./config";
 import axios from "axios";
-import { NursingHome } from "./types";
+import { NursingHome, NursingHomeImageName } from "./types";
 import { MapSmall } from "./Map";
 
 interface GetNursingHomeResponse {
@@ -27,7 +27,13 @@ const PageNursingHome: FC = () => {
 	return (
 		<div className="nursinghome-page-container">
 			<div className="nursinghome-hero">
-				<img alt="Kuva hoivakodista" src="/placeholder.jpg" />
+				{/* <img alt="Kuva hoivakodista" src="/placeholder.jpg" /> */}
+				{nursingHome && (
+					<Image
+						nursingHome={nursingHome}
+						imageName="overview_outside"
+					/>
+				)}
 			</div>
 			{!nursingHome ? (
 				"Loading..."
@@ -129,8 +135,9 @@ const PageNursingHome: FC = () => {
 					</div>
 
 					<div className="nursinghome-details-box">
-						<img
-							src={`${config.API_URL}/nursing-homes/${nursingHome.id}/pics/owner_logo/${nursingHome.pic_digests.owner_logo_hash}`}
+						<Image
+							nursingHome={nursingHome}
+							imageName="owner_logo"
 							className="nursinghome-details-logo"
 							alt="Omistajan logo"
 						/>
@@ -208,4 +215,19 @@ const ParagraphLink: FC<ParagraphLinkProps> = ({ text, to }) => {
 			</a>
 		</p>
 	);
+};
+
+interface ImageProps {
+	nursingHome: NursingHome;
+	imageName: NursingHomeImageName;
+	className?: string;
+	alt?: string;
+}
+
+const Image: FC<ImageProps> = ({ nursingHome, imageName, className, alt }) => {
+	const digest: string = (nursingHome.pic_digests as any)[
+		`${imageName}_hash`
+	];
+	const srcUrl = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`;
+	return <img src={srcUrl} className={className} alt={alt} />;
 };
