@@ -5,11 +5,16 @@
 		"noImplicitAny": true,
 		"outDir": "./dist",
 		"sourceMap": true,
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true
 	},
-	"include": [
-		"./src/**/*"
-	],
-	"exclude": [
-		"./node_modules/*"
-	]
+	"include": ["./src/**/*"],
+	"exclude": ["./node_modules/*"]
 }
