@@ -11,6 +11,7 @@ import {
 	GetPicData,
 	GetPicCaptions,
 	GetPicDigests,
+	GetAllPicDigests,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -29,13 +30,38 @@ export async function AddNursingHome(ctx: any): Promise<string> {
 
 export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 	const nursing_homes = await GetAllNursingHomes();
+
+	const pic_digests = await GetAllPicDigests();
+	/*const available_pics = Object.keys(pic_digests)
+		.filter((item: any) => (pic_digests[item] != null ? true : false))
+		.map((item: any) => item.replace("_hash", ""));*/
+	//nursing_homes[0].digests = pic_digests;
+	nursing_homes.map((nursinghome: any) =>
+	{
+		nursinghome.pic_digests = {};
+		nursinghome.pics = [];
+		pic_digests.map((digests: any) => 
+		{
+			if (digests.nursinghome_id === nursinghome.id)
+			{
+				nursinghome.pic_digests = digests;
+
+				const available_pics = Object.keys(digests)
+					.filter((item: any) => (digests[item] != null ? true : false))
+					.map((item: any) => item.replace("_hash", ""));
+				nursinghome.pics = available_pics;
+			}
+		})
+
+
+	});
+
 	return nursing_homes;
 }
 
 export async function GetNursingHome(ctx: any): Promise<any> {
 	const nursing_home_data = (await GetNursingHomeDB(ctx.params.id))[0];
 	const pic_digests = (await GetPicDigests(ctx.params.id))[0];
-	//const pic_digests = Object.keys((await GetPicDigests(ctx.params.id))[0]).filter((item: any) => {item !== null ? true : false});
 	const available_pics = Object.keys(pic_digests)
 		.filter((item: any) => (pic_digests[item] != null ? true : false))
 		.map((item: any) => item.replace("_hash", ""));

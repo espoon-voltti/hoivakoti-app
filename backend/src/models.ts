@@ -190,7 +190,7 @@ export async function GetNursingHomeIDFromName(name: string): Promise<any[]> {
 	return result;
 }
 
-export async function GetAllNursingHomes(): Promise<Knex.Table> {
+export async function GetAllNursingHomes(): Promise<any> {
 	return await knex.select().table("NursingHomes");
 }
 
@@ -277,4 +277,22 @@ export async function GetPicDigests(nursinghome_id: string): Promise<any[]> {
 		.select(columns)
 		.table("NursingHomePictures")
 		.where({ nursinghome_id: nursinghome_id });
+}
+
+export async function GetAllPicDigests(): Promise<any[]> {
+	const columns = nursing_home_pictures_columns_info
+		.filter((row_info: any) => {
+			if (row_info.sql.includes("caption")) return false;
+			return true;
+		})
+		.map((row_info: any) => {
+			if (!row_info.sql.includes("caption"))
+				return row_info.sql + "_hash";
+		});
+
+	columns.push("nursinghome_id");
+
+	return await knex
+		.select(columns)
+		.table("NursingHomePictures");
 }
