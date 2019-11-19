@@ -7,7 +7,7 @@ i18next
 	.use(initReactI18next)
 	.init({
 		// allow keys to be phrases having `:`, `.`
-		nsSeparator: false,
+		nsSeparator: ":",
 		keySeparator: false,
 
 		whitelist: ["fi-FI", "sv-FI"],

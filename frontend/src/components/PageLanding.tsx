@@ -1,7 +1,8 @@
 import React, { FC, useState, ChangeEvent } from "react";
 import "../styles/landing.scss";
-import { useT, Language, useCurrentLanguage } from "../translations";
+import { useT } from "../translations";
 import { useHistory } from "react-router-dom";
+import { Trans } from "react-i18next";
 
 type Area = "Espoon keskus" | "Espoonlahti" | "Leppävaara" | "Matinkylä" | "Tapiola";
 
@@ -49,7 +50,10 @@ const PageLanding: FC = () => {
 			<div className="content-column">
 				<section className="content-block">
 					<p className="ingress">
-						{useT("landingIngress1")}
+						<Trans i18nKey="defaultNamespace:landingIngress1">
+							<strong></strong>
+							<strong></strong>
+						</Trans>
 					</p>
 					<p className="ingress">
 						{useT("landingIngress2")}{" "}
@@ -68,23 +72,38 @@ const PageLanding: FC = () => {
 					<h2>{useT("decisionStepsHeadline")}</h2>
 					<div className="process-diagram">
 						<div className="process-diagram__item">
-							<div className="process-diagram__item__img"><img src="/icon-contact.svg" alt="" /></div>
+							<div className="process-diagram__item__img">
+								<img src="/icon-contact.svg" alt="" />
+							</div>
 							<h3>{useT("decisionStep1Headline")}</h3>
-							<p>{useT("decisionStep1Text")}</p>
+							<p>
+								{/* {useT("decisionStep1Text")} */}
+								<Trans i18nKey="defaultNamespace:decisionStep1Text">
+									<span className="no-wrap"></span>
+								</Trans>
+							</p>
 						</div>
 						<div className="process-diagram__item">
-							<div className="process-diagram__item__img"><img src="/icon-meeting.svg" alt="" /></div>
+							<div className="process-diagram__item__img">
+								<img src="/icon-meeting.svg" alt="" />
+							</div>
 							<h3>{useT("decisionStep2Headline")}</h3>
 							<p>{useT("decisionStep2Text")}</p>
 						</div>
 						<div className="process-diagram__item">
-							<div className="process-diagram__item__img"><img src="/icon-decision.svg" alt=""/></div>
+							<div className="process-diagram__item__img">
+								<img src="/icon-decision.svg" alt="" />
+							</div>
 							<h3>{useT("decisionStep3Headline")}</h3>
 							<p>{useT("decisionStep3Text")}</p>
 						</div>
 					</div>
-					
-					<p className="content-block-paragraph"><a href={useT("urlDecisionMoreInfo")} target="_blank">{useT("decisionMoreInfo")}</a></p>
+
+					<p className="content-block-paragraph">
+						<a href={useT("urlDecisionMoreInfo")} target="_blank" rel="noopener noreferrer">
+							{useT("decisionMoreInfo")}
+						</a>
+					</p>
 				</section>
 
 				<section className="content-block">
@@ -95,7 +114,11 @@ const PageLanding: FC = () => {
 				<section className="content-block">
 					<h2>{useT("serviceDescriptionHeadline")}</h2>
 					<p>{useT("serviceDescriptionText")}</p>
-					<p><a href={useT("urlServiceDescription")}target="_blank">{useT("serviceDescriptionLink")}</a></p>
+					<p>
+						<a href={useT("urlServiceDescription")} target="_blank" rel="noopener noreferrer">
+							{useT("serviceDescriptionLink")}
+						</a>
+					</p>
 
 					<h3 className="faqHeadline">{useT("faqSectionHeadline")}</h3>
 					<dl className="faq-list">
