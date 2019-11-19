@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import config from "./config";
 import "../styles/NursingHomeSmall.scss";
 import { NursingHome } from "./types";
 import { Link } from "react-router-dom";
+import { Image } from "./PageNursingHome";
 
 type NursingHomeSmallProps = {
 	nursinghome: NursingHome;
@@ -22,10 +22,11 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
 			} ${className || ""}`}
 		>
 			<div className="card-list-item__image-container">
-				<img
-					className="card-list-item__image"
-					src={config.PUBLIC_FILES_URL + "/placeholder.jpg"}
+				<Image
+					nursingHome={nursinghome}
+					imageName="overview_outside"
 					alt="Hoivakodin preview-kuva"
+					className="card-list-item__image"
 				/>
 			</div>
 

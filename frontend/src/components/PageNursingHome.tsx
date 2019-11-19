@@ -224,10 +224,17 @@ interface ImageProps {
 	alt?: string;
 }
 
-const Image: FC<ImageProps> = ({ nursingHome, imageName, className, alt }) => {
+export const Image: FC<ImageProps> = ({
+	nursingHome,
+	imageName,
+	className,
+	alt,
+}) => {
+	if (!nursingHome.pic_digests) return null;
 	const digest: string = (nursingHome.pic_digests as any)[
 		`${imageName}_hash`
 	];
+	if (!digest) return null;
 	const srcUrl = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`;
 	return <img src={srcUrl} className={className} alt={alt} />;
 };
