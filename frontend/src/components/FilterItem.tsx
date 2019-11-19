@@ -140,7 +140,7 @@ const FilterItem: FC<Props> = ({
 		</div>
 	);
 
-	const label = `${prefix}${value ? `: ${value}` : ""}`;
+	const label = `${prefix}${value ? `${prefix ? ": " : ""}${value}` : ""}`;
 	const filterActive = value !== null;
 
 	return (

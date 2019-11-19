@@ -36,6 +36,13 @@ const PageLanding: FC = () => {
 		}),
 	];
 
+	const filterText: string | null =
+		selectedAreas.length !== 0
+			? selectedAreas.length <= 2
+				? selectedAreas.join(", ")
+				: `(${selectedAreas.length} valintaa)`
+			: "Espoo, Helsinki, Kirkkonummi, Vihti";
+
 	return (
 		<div id="landing">
 			<div className="jumbotron">
@@ -49,14 +56,8 @@ const PageLanding: FC = () => {
 					</div>
 					<div className="location-picker-select">
 						<FilterItem
-							prefix="Sijainti"
-							value={
-								selectedAreas.length !== 0
-									? selectedAreas.length <= 2
-										? selectedAreas.join(", ")
-										: `(${selectedAreas.length} valintaa)`
-									: null
-							}
+							prefix=""
+							value={filterText}
 							values={optionsArea}
 							ariaLabel="Valitse hoivakodin alue"
 							onChange={({ newValue, name }) => {
