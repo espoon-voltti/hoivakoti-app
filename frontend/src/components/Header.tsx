@@ -62,7 +62,8 @@ const Header: FC = () => {
 							}}
 							isActive={() => currentLanguage === "fi-FI"}
 						>
-							Suomeksi
+							<span className="lang-link-short">FI</span>
+							<span className="lang-link-long">Suomeksi</span>
 						</NavLink>
 					</li>
 					<li className="separator">|</li>
@@ -77,7 +78,8 @@ const Header: FC = () => {
 							}}
 							isActive={() => currentLanguage === "sv-FI"}
 						>
-							På svenska
+							<span className="lang-link-short">SV</span>
+							<span className="lang-link-long">På svenska</span>
 						</NavLink>
 					</li>
 				</ul>
