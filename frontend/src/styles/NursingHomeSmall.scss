@@ -51,6 +51,7 @@
 
 .card-list-item__image-container {
 	width: 100%;
+	min-height: 150px;
 	border-radius: $border-radius;
 	margin-right: 20px;
 	background: $border-color url("/icon-house.svg") 50% 50% no-repeat;
