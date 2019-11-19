@@ -86,6 +86,7 @@ const PageNursingHome: FC = () => {
 					<div className="nursinghome-details-box">
 						<img
 							src={`${config.API_URL}/nursing-homes/${nursingHome.id}/pics/owner_logo/${nursingHome.pic_digests.owner_logo_hash}`}
+							className="nursinghome-details-logo"
 							alt="Omistajan logo"
 						/>
 						<Paragraph text={nursingHome.name} className="nursinghome-details-name" />
