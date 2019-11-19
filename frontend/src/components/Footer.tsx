@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import * as config from "./config";
+import config from "./config";
 
 const Footer: FC = () => (
 	<footer className="header" style={{ borderTop: "1px solid #e8e8e8" }}>

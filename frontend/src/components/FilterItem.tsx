@@ -4,12 +4,18 @@ import ButtonDropdown from "./ButtonDropdown";
 import Checkbox from "./Checkbox";
 import Radio from "./Radio";
 
+export type FilterOption =
+	| { type: "header"; text: string }
+	| { type: "text"; text: string }
+	| { type: "radio"; text: string; subText?: string; checked: boolean }
+	| { type: "checkbox"; text: string; subText?: string; checked: boolean };
+
 export type Props = {
 	prefix: string;
 	value: string | null;
-	values: Array<any>;
+	values: FilterOption[];
 	ariaLabel: string;
-	onChange: (newValue: any) => void;
+	onChange: (newValue: { name: string; newValue: boolean }) => void;
 	onReset: () => void;
 };
 
@@ -17,59 +23,59 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 	const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
 	const canEmpty = value !== null;
 
-	const handleChange = (newValue: any): void => {
+	const handleChange = (newValue: { name: string; newValue: boolean }): void => {
 		onChange(newValue);
 	};
 
 	const subMenu = (
 		<div>
-			{values.map((value: any, index) => {
-				if (value.type === "checkbox") {
+			{values.map((option: FilterOption, index) => {
+				if (option.type === "checkbox") {
 					return (
 						<div className="checkbox-item" key={index}>
 							<Checkbox
 								id={`filter-${index}`}
-								name={value.text}
-								isChecked={value.checked}
-								onChange={newValue => handleChange({ newValue, name: value.text })}
+								name={option.text}
+								isChecked={option.checked}
+								onChange={newValue => handleChange({ newValue, name: option.text })}
 							>
-								<div className={`option-header ${value.subText ? "option-text-has-subtext" : ""}`}>
-									{value.text}
+								<div className={`option-header ${option.subText ? "option-text-has-subtext" : ""}`}>
+									{option.text}
 								</div>
-								{value.subText && <div className="option-subtext">{value.subText}</div>}
+								{option.subText && <div className="option-subtext">{option.subText}</div>}
 							</Checkbox>
 						</div>
 					);
-				} else if (value.type === "radio") {
+				} else if (option.type === "radio") {
 					return (
 						<div className="radio-item" key={index}>
 							<Radio
 								id={`filter-${index}`}
 								name={prefix + "-radio-group"}
-								isSelected={value.checked}
-								onChange={newValue => handleChange({ newValue, name: value.text })}
+								isSelected={option.checked}
+								onChange={newValue => handleChange({ newValue, name: option.text })}
 							>
-								<div className={`option-header ${value.subText ? "option-text-has-subtext" : ""}`}>
-									{value.text}
+								<div className={`option-header ${option.subText ? "option-text-has-subtext" : ""}`}>
+									{option.text}
 								</div>
-								{value.subText && <div className="option-subtext">{value.subText}</div>}
+								{option.subText && <div className="option-subtext">{option.subText}</div>}
 							</Radio>
 						</div>
 					);
-				} else if (value.type === "text") {
+				} else if (option.type === "text") {
 					return (
 						<p className="text-item" key={index}>
-							{value.text}
+							{option.text}
 						</p>
 					);
-				} else if (value.type === "header") {
+				} else if (option.type === "header") {
 					return (
 						<div className="header-item" key={index}>
-							{value.text}
+							{option.text}
 						</div>
 					);
 				} else {
-					console.warn("[FilterItem] Unknown value: ", value);
+					console.warn("[FilterItem] Unknown value: ", option);
 					return null;
 				}
 			})}

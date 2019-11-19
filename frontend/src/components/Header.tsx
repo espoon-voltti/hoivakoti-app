@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { NavLink, Link } from "react-router-dom";
-import * as config from "./config";
+import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../translations";
 import i18next from "i18next";
 

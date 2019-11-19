@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import * as config from "./config";
+import config from "./config";
 import "../styles/NursingHomeSmall.scss";
 import { NursingHome } from "./types";
 import { Link } from "react-router-dom";

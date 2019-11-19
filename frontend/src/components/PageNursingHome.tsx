@@ -2,7 +2,7 @@
 import React, { useState, useEffect, FC } from "react";
 import { useParams, Link } from "react-router-dom";
 import "../styles/PageNursingHome.scss";
-import * as config from "./config";
+import config from "./config";
 import axios from "axios";
 import { NursingHome } from "./types";
 import { MapSmall } from "./Map";

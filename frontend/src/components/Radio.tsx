@@ -22,9 +22,7 @@ const Radio: React.FunctionComponent<Props> = ({ name, id, onChange, children, i
 				className="radio-button"
 			/>
 			<label htmlFor={id} className="radio-label">
-				<span className={`radio-box ${isSelected ? "radio-box-selected" : ""}`}>
-					
-				</span>
+				<span className={`radio-box ${isSelected ? "radio-box-selected" : ""}`}></span>
 				<span className="radio-label-children">{children}</span>
 			</label>
 		</div>

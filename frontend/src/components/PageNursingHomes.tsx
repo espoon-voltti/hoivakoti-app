@@ -1,9 +1,9 @@
 import React, { useState, useEffect, FC } from "react";
 import { NursingHomeSmall } from "./NursingHomeSmall";
-import FilterItem from "./FilterItem";
+import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation } from "react-router-dom";
 import "../styles/nursinghomes.scss";
-import * as config from "./config";
+import config from "./config";
 import { Link } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
@@ -34,7 +34,7 @@ const PageNursingHomes: FC = () => {
 	useEffect(() => {
 		axios
 			.get(config.API_URL + "/nursing-homes")
-			.then(function(response: any) {
+			.then(function(response: { data: NursingHome[] }) {
 				setNursingHomes(response.data);
 			})
 			.catch((error: Error) => console.warn(error.message));
@@ -51,15 +51,15 @@ const PageNursingHomes: FC = () => {
 		language: parsed.language as Language,
 	};
 
-	const optionsArea = [
+	const optionsArea: FilterOption[] = [
 		{ text: "Miltä alueelta etsit hoivakotia?", type: "header" },
-		...areas.map((value: string) => {
+		...areas.map<FilterOption>((value: string) => {
 			const checked = searchFilters.alue ? searchFilters.alue.includes(value) : false;
 			return { text: value, type: "checkbox", checked: checked };
 		}),
 	];
 
-	const optionsAra = [
+	const optionsAra: FilterOption[] = [
 		{ text: "ARA-kohde", subText: "Näytä vain ARA-kohteet", type: "radio", checked: searchFilters.ara === true },
 		{ text: "Ei ARA-kohde", subText: "Piilota ARA-kohteet", type: "radio", checked: searchFilters.ara === false },
 		{
@@ -69,7 +69,7 @@ const PageNursingHomes: FC = () => {
 		},
 	];
 
-	const optionsLanguage = [
+	const optionsLanguage: FilterOption[] = [
 		{ text: "Hoivakodin palvelukieli", type: "header" },
 		{ text: "Suomi", type: "radio", checked: searchFilters.language === "Suomi" },
 		{ text: "Ruotsi", type: "radio", checked: searchFilters.language === "Ruotsi" },
@@ -110,7 +110,7 @@ const PageNursingHomes: FC = () => {
 				value={searchFilters.language || null}
 				values={optionsLanguage}
 				ariaLabel="Valitse hoivakodin kieli"
-				onChange={({ newValue, name }): void => {
+				onChange={({ name }): void => {
 					const newSearchFilters = { ...searchFilters, language: name };
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
@@ -125,7 +125,7 @@ const PageNursingHomes: FC = () => {
 				value={searchFilters.ara !== undefined ? (searchFilters.ara ? "Kyllä" : "Ei") : null}
 				values={optionsAra}
 				ariaLabel="Valitse, näytetäänkö vain Ara-kohteet"
-				onChange={({ newValue, name }) => {
+				onChange={({ name }) => {
 					const newSearchFilters = {
 						...searchFilters,
 						ara: name === "ARA-kohde" ? true : false,
