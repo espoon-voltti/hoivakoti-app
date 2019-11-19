@@ -35,7 +35,7 @@
 }
 
 .checkbox-box-selected {
-	background: $link-color url('/icon-checkmark.svg') 50% 50% no-repeat;
+	background: $link-color url("/icon-checkmark.svg") 50% 50% no-repeat;
 	border-color: $link-color;
 }
 
@@ -53,15 +53,15 @@
 }
 
 .checkbox-label:hover {
-	background-color: #F5F5F5;
+	background-color: #f5f5f5;
 }
 
 .checkbox-label:hover .checkbox-box {
-	background: transparent url('/icon-checkmark-hover.svg') 50% 50% no-repeat;
+	background: transparent url("/icon-checkmark-hover.svg") 50% 50% no-repeat;
 }
 
 .checkbox-label:hover .checkbox-box-selected {
-	background: $link-color url('/icon-checkmark.svg') 50% 50% no-repeat;
+	background: $link-color url("/icon-checkmark.svg") 50% 50% no-repeat;
 }
 
 .checkbox-label-children {

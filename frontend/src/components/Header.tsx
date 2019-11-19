@@ -14,13 +14,22 @@ const Header: FC = () => {
 		<header className="header">
 			<div className="logo-container">
 				<Link to="/">
-					<img className="logo" src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"} alt="Espoo – Esbo" />
+					<img
+						className="logo"
+						src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"}
+						alt="Espoo – Esbo"
+					/>
 					<h1 className="title">{useT("appTitle")}</h1>
 				</Link>
 			</div>
 
 			<nav id="page-nav">
-				<input type="checkbox" role="button" aria-haspopup="true" id="hamburger" />
+				<input
+					type="checkbox"
+					role="button"
+					aria-haspopup="true"
+					id="hamburger"
+				/>
 				<label htmlFor="hamburger" className="menu-btn">
 					&#9776; valikko
 				</label>
@@ -32,7 +41,10 @@ const Header: FC = () => {
 							</NavLink>
 						</li>
 						<li>
-							<NavLink activeClassName="selected" to="/hoivakodit">
+							<NavLink
+								activeClassName="selected"
+								to="/hoivakodit"
+							>
 								{useT("navNursingHomes")}
 							</NavLink>
 						</li>

@@ -1,6 +1,9 @@
 import { Context } from "koa";
 
-export async function LogRequest(ctx: Context, next: () => Promise<void>): Promise<void> {
+export async function LogRequest(
+	ctx: Context,
+	next: () => Promise<void>,
+): Promise<void> {
 	const timeStart = Date.now();
 	await next();
 	const log = {

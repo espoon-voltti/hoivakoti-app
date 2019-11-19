@@ -9,19 +9,37 @@ interface Props {
 	active: boolean;
 }
 
-const ButtonDropdown: FC<Props> = ({ isExpanded, onExpandedChange, label, active, children }) => {
+const ButtonDropdown: FC<Props> = ({
+	isExpanded,
+	onExpandedChange,
+	label,
+	active,
+	children,
+}) => {
 	return (
 		<>
-			{isExpanded && <div className="button-dropdown-background" onClick={() => onExpandedChange(false)} />}
-			<div className="button-dropdown-container" aria-expanded={isExpanded}>
+			{isExpanded && (
+				<div
+					className="button-dropdown-background"
+					onClick={() => onExpandedChange(false)}
+				/>
+			)}
+			<div
+				className="button-dropdown-container"
+				aria-expanded={isExpanded}
+			>
 				<button
 					onClick={() => onExpandedChange(!isExpanded)}
-					className={`button-dropdown ${active ? "button-dropdown-active" : ""}`}
+					className={`button-dropdown ${
+						active ? "button-dropdown-active" : ""
+					}`}
 				>
 					{label}
 					<Caret className="button-dropdown-caret" />
 				</button>
-				{isExpanded && <div className="button-dropdown-items">{children}</div>}
+				{isExpanded && (
+					<div className="button-dropdown-items">{children}</div>
+				)}
 			</div>
 		</>
 	);

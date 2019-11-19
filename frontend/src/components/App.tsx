@@ -13,7 +13,8 @@ const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
 	const currentPath = window.location.pathname;
 	useEffect(() => {
-		if (currentPath === "/") window.location.pathname = `/${currentLanguage}/`;
+		if (currentPath === "/")
+			window.location.pathname = `/${currentLanguage}/`;
 	}, [currentLanguage, currentPath]);
 	return (
 		<div id="app">
@@ -22,8 +23,16 @@ const App: React.FC = () => {
 
 				<main id="content">
 					<Route exact path="/" component={PageLanding} />
-					<Route exact path="/hoivakodit" component={PageNursingHomes} />
-					<Route exact path="/hoivakodit/:id" component={PageNursingHome} />
+					<Route
+						exact
+						path="/hoivakodit"
+						component={PageNursingHomes}
+					/>
+					<Route
+						exact
+						path="/hoivakodit/:id"
+						component={PageNursingHome}
+					/>
 				</main>
 
 				<Footer />

@@ -18,27 +18,52 @@ const HappinessSelection: FC<Props> = ({ label }) => {
 			<form>
 				<label>{label}</label>
 				<label>
-					<input type="radio" value="0" checked={selection === "0"} onChange={handleRadiochange} />
+					<input
+						type="radio"
+						value="0"
+						checked={selection === "0"}
+						onChange={handleRadiochange}
+					/>
 					Iloinen
 				</label>
 
 				<label>
-					<input type="radio" value="1" checked={selection === "1"} onChange={handleRadiochange} />
+					<input
+						type="radio"
+						value="1"
+						checked={selection === "1"}
+						onChange={handleRadiochange}
+					/>
 					Surullinen
 				</label>
 
 				<label>
-					<input type="radio" value="2" checked={selection === "2"} onChange={handleRadiochange} />
+					<input
+						type="radio"
+						value="2"
+						checked={selection === "2"}
+						onChange={handleRadiochange}
+					/>
 					Surullinen
 				</label>
 
 				<label>
-					<input type="radio" value="3" checked={selection === "3"} onChange={handleRadiochange} />
+					<input
+						type="radio"
+						value="3"
+						checked={selection === "3"}
+						onChange={handleRadiochange}
+					/>
 					Surullinen
 				</label>
 
 				<label>
-					<input type="radio" value="4" checked={selection === "4"} onChange={handleRadiochange} />
+					<input
+						type="radio"
+						value="4"
+						checked={selection === "4"}
+						onChange={handleRadiochange}
+					/>
 					Surullinen
 				</label>
 			</form>

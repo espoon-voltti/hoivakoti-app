@@ -19,11 +19,20 @@ export type Props = {
 	onReset: () => void;
 };
 
-const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => {
+const FilterItem: FC<Props> = ({
+	prefix,
+	value,
+	values,
+	onChange,
+	onReset,
+}) => {
 	const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
 	const canEmpty = value !== null;
 
-	const handleChange = (newValue: { name: string; newValue: boolean }): void => {
+	const handleChange = (newValue: {
+		name: string;
+		newValue: boolean;
+	}): void => {
 		onChange(newValue);
 	};
 
@@ -37,12 +46,27 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 								id={`filter-${index}`}
 								name={option.text}
 								isChecked={option.checked}
-								onChange={newValue => handleChange({ newValue, name: option.text })}
+								onChange={newValue =>
+									handleChange({
+										newValue,
+										name: option.text,
+									})
+								}
 							>
-								<div className={`option-header ${option.subText ? "option-text-has-subtext" : ""}`}>
+								<div
+									className={`option-header ${
+										option.subText
+											? "option-text-has-subtext"
+											: ""
+									}`}
+								>
 									{option.text}
 								</div>
-								{option.subText && <div className="option-subtext">{option.subText}</div>}
+								{option.subText && (
+									<div className="option-subtext">
+										{option.subText}
+									</div>
+								)}
 							</Checkbox>
 						</div>
 					);
@@ -53,12 +77,27 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 								id={`filter-${index}`}
 								name={prefix + "-radio-group"}
 								isSelected={option.checked}
-								onChange={newValue => handleChange({ newValue, name: option.text })}
+								onChange={newValue =>
+									handleChange({
+										newValue,
+										name: option.text,
+									})
+								}
 							>
-								<div className={`option-header ${option.subText ? "option-text-has-subtext" : ""}`}>
+								<div
+									className={`option-header ${
+										option.subText
+											? "option-text-has-subtext"
+											: ""
+									}`}
+								>
 									{option.text}
 								</div>
-								{option.subText && <div className="option-subtext">{option.subText}</div>}
+								{option.subText && (
+									<div className="option-subtext">
+										{option.subText}
+									</div>
+								)}
 							</Radio>
 						</div>
 					);
@@ -81,7 +120,10 @@ const FilterItem: FC<Props> = ({ prefix, value, values, onChange, onReset }) => 
 			})}
 
 			<div className="save-and-empty-container">
-				<button onClick={() => setIsDropdownExpanded(false)} className="btn">
+				<button
+					onClick={() => setIsDropdownExpanded(false)}
+					className="btn"
+				>
 					Tallenna
 				</button>
 

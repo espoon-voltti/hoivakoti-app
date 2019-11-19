@@ -20,7 +20,9 @@ interface SearchFilters {
 }
 
 const PageNursingHomes: FC = () => {
-	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(null);
+	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
+		null,
+	);
 	const [mapPopup, setMapPopup] = useState<{
 		selectedNursingHome: NursingHome;
 		isExpanded: boolean;
@@ -29,7 +31,13 @@ const PageNursingHomes: FC = () => {
 	const history = useHistory();
 	const { search } = useLocation();
 
-	const areas = ["Espoon keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
+	const areas = [
+		"Espoon keskus",
+		"Espoonlahti",
+		"Leppävaara",
+		"Matinkylä",
+		"Tapiola",
+	];
 
 	useEffect(() => {
 		axios
@@ -41,7 +49,11 @@ const PageNursingHomes: FC = () => {
 	}, []);
 
 	const parsed = queryString.parse(search);
-	const alue = parsed.alue ? (!Array.isArray(parsed.alue) ? [parsed.alue] : parsed.alue) : undefined;
+	const alue = parsed.alue
+		? !Array.isArray(parsed.alue)
+			? [parsed.alue]
+			: parsed.alue
+		: undefined;
 	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
 	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
 	const searchFilters: SearchFilters = {
@@ -54,14 +66,26 @@ const PageNursingHomes: FC = () => {
 	const optionsArea: FilterOption[] = [
 		{ text: "Miltä alueelta etsit hoivakotia?", type: "header" },
 		...areas.map<FilterOption>((value: string) => {
-			const checked = searchFilters.alue ? searchFilters.alue.includes(value) : false;
+			const checked = searchFilters.alue
+				? searchFilters.alue.includes(value)
+				: false;
 			return { text: value, type: "checkbox", checked: checked };
 		}),
 	];
 
 	const optionsAra: FilterOption[] = [
-		{ text: "ARA-kohde", subText: "Näytä vain ARA-kohteet", type: "radio", checked: searchFilters.ara === true },
-		{ text: "Ei ARA-kohde", subText: "Piilota ARA-kohteet", type: "radio", checked: searchFilters.ara === false },
+		{
+			text: "ARA-kohde",
+			subText: "Näytä vain ARA-kohteet",
+			type: "radio",
+			checked: searchFilters.ara === true,
+		},
+		{
+			text: "Ei ARA-kohde",
+			subText: "Piilota ARA-kohteet",
+			type: "radio",
+			checked: searchFilters.ara === false,
+		},
 		{
 			text:
 				"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat palvelutarve sekä varallisuus.",
@@ -71,8 +95,16 @@ const PageNursingHomes: FC = () => {
 
 	const optionsLanguage: FilterOption[] = [
 		{ text: "Hoivakodin palvelukieli", type: "header" },
-		{ text: "Suomi", type: "radio", checked: searchFilters.language === "Suomi" },
-		{ text: "Ruotsi", type: "radio", checked: searchFilters.language === "Ruotsi" },
+		{
+			text: "Suomi",
+			type: "radio",
+			checked: searchFilters.language === "Suomi",
+		},
+		{
+			text: "Ruotsi",
+			type: "radio",
+			checked: searchFilters.language === "Ruotsi",
+		},
 	];
 
 	const filterElements = (
@@ -92,15 +124,21 @@ const PageNursingHomes: FC = () => {
 					const newSearchFilters = { ...searchFilters };
 					if (!newSearchFilters.alue) newSearchFilters.alue = [];
 					if (!newValue)
-						newSearchFilters.alue = newSearchFilters.alue.filter((value: string) => {
-							return value !== name;
-						});
-					else if (!newSearchFilters.alue.includes(name)) newSearchFilters.alue.push(name);
+						newSearchFilters.alue = newSearchFilters.alue.filter(
+							(value: string) => {
+								return value !== name;
+							},
+						);
+					else if (!newSearchFilters.alue.includes(name))
+						newSearchFilters.alue.push(name);
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 				onReset={(): void => {
-					const newSearchFilters = { ...searchFilters, alue: undefined };
+					const newSearchFilters = {
+						...searchFilters,
+						alue: undefined,
+					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
@@ -111,18 +149,30 @@ const PageNursingHomes: FC = () => {
 				values={optionsLanguage}
 				ariaLabel="Valitse hoivakodin kieli"
 				onChange={({ name }): void => {
-					const newSearchFilters = { ...searchFilters, language: name };
+					const newSearchFilters = {
+						...searchFilters,
+						language: name,
+					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 				onReset={(): void => {
-					const stringfield = queryString.stringify({ ...searchFilters, language: undefined });
+					const stringfield = queryString.stringify({
+						...searchFilters,
+						language: undefined,
+					});
 					history.push("/hoivakodit?" + stringfield);
 				}}
 			/>
 			<FilterItem
 				prefix="Ara-kohde"
-				value={searchFilters.ara !== undefined ? (searchFilters.ara ? "Kyllä" : "Ei") : null}
+				value={
+					searchFilters.ara !== undefined
+						? searchFilters.ara
+							? "Kyllä"
+							: "Ei"
+						: null
+				}
 				values={optionsAra}
 				ariaLabel="Valitse, näytetäänkö vain Ara-kohteet"
 				onChange={({ name }) => {
@@ -134,7 +184,10 @@ const PageNursingHomes: FC = () => {
 					history.push("/hoivakodit?" + stringfield);
 				}}
 				onReset={(): void => {
-					const newSearchFilters = { ...searchFilters, ara: undefined };
+					const newSearchFilters = {
+						...searchFilters,
+						ara: undefined,
+					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
@@ -142,23 +195,36 @@ const PageNursingHomes: FC = () => {
 
 			<FilterItem
 				prefix="Lyhytaikainen asuminen"
-				value={searchFilters.lah !== undefined ? (searchFilters.lah ? "Kyllä" : "Ei") : null}
+				value={
+					searchFilters.lah !== undefined
+						? searchFilters.lah
+							? "Kyllä"
+							: "Ei"
+						: null
+				}
 				values={[
 					{
 						text: "Lyhytaikainen asuminen LAH",
-						subText: "Näytä vain lyhytaikaista asumista tarjoavat paikat.",
+						subText:
+							"Näytä vain lyhytaikaista asumista tarjoavat paikat.",
 						type: "checkbox",
 						checked: searchFilters.lah === true,
 					},
 				]}
 				ariaLabel="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
 				onChange={({ newValue }): void => {
-					const newSearchFilters = { ...searchFilters, lah: newValue === true ? true : undefined };
+					const newSearchFilters = {
+						...searchFilters,
+						lah: newValue === true ? true : undefined,
+					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 				onReset={(): void => {
-					const newSearchFilters = { ...searchFilters, lah: undefined };
+					const newSearchFilters = {
+						...searchFilters,
+						lah: undefined,
+					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
@@ -175,9 +241,18 @@ const PageNursingHomes: FC = () => {
 				!searchFilters.alue.includes(nursinghome.district)
 			)
 				return false;
-			if (searchFilters.language && nursinghome.language !== searchFilters.language) return false;
-			if (searchFilters.ara !== undefined && nursinghome.ara !== searchFilters.ara) return false;
-			if (searchFilters.lah && nursinghome.lah !== searchFilters.lah) return false;
+			if (
+				searchFilters.language &&
+				nursinghome.language !== searchFilters.language
+			)
+				return false;
+			if (
+				searchFilters.ara !== undefined &&
+				nursinghome.ara !== searchFilters.ara
+			)
+				return false;
+			if (searchFilters.lah && nursinghome.lah !== searchFilters.lah)
+				return false;
 
 			return true;
 		});
@@ -190,7 +265,12 @@ const PageNursingHomes: FC = () => {
 				to={"/hoivakodit/" + nursingHome.id}
 				style={{ textDecoration: "none" }}
 				className="card-list-item-borders"
-				onMouseEnter={() => setMapPopup({ selectedNursingHome: nursingHome, isExpanded: false })}
+				onMouseEnter={() =>
+					setMapPopup({
+						selectedNursingHome: nursingHome,
+						isExpanded: false,
+					})
+				}
 				onMouseLeave={() => setMapPopup(null)}
 			>
 				<NursingHomeSmall nursinghome={nursingHome} key={index} />
@@ -209,7 +289,8 @@ const PageNursingHomes: FC = () => {
 				<div className="card-list-and-map-container">
 					<div className="card-list">
 						<h2 className="results-summary">
-							{Object.keys(nursingHomeComponents || {}).length} hoivakotia
+							{Object.keys(nursingHomeComponents || {}).length}{" "}
+							hoivakotia
 						</h2>
 						{nursingHomeComponents}
 					</div>
@@ -218,7 +299,12 @@ const PageNursingHomes: FC = () => {
 							nursingHomes={filteredNursingHomes}
 							popup={mapPopup}
 							onSelectNursingHome={selectedNursingHome =>
-								setMapPopup(selectedNursingHome && { selectedNursingHome, isExpanded: true })
+								setMapPopup(
+									selectedNursingHome && {
+										selectedNursingHome,
+										isExpanded: true,
+									},
+								)
 							}
 						/>
 					</div>

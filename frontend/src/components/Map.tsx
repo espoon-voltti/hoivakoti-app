@@ -13,7 +13,8 @@ interface Props {
 }
 
 const mapConfig: FactoryParameters = {
-	accessToken: "pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
+	accessToken:
+		"pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
 	scrollZoom: false,
 	dragRotate: false,
 	pitchWithRotate: false,
@@ -29,11 +30,15 @@ const MapComponentNonInteractive = ReactMapboxGl(mapConfigNonInteractive);
 
 const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 	const createMarkerClickHandler = (nursingHome: NursingHome) => () => {
-		if (popup && popup.selectedNursingHome.id === nursingHome.id) onSelectNursingHome(null);
+		if (popup && popup.selectedNursingHome.id === nursingHome.id)
+			onSelectNursingHome(null);
 		else onSelectNursingHome(nursingHome);
 	};
 
-	const selectedMarkerPos = popup && popup.isExpanded ? popup.selectedNursingHome.geolocation.center : null;
+	const selectedMarkerPos =
+		popup && popup.isExpanded
+			? popup.selectedNursingHome.geolocation.center
+			: null;
 	const center: [number, number] = selectedMarkerPos
 		? [selectedMarkerPos[0], selectedMarkerPos[1] + 0.02]
 		: [24.6559, 60.2055];
@@ -63,7 +68,10 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 					>
 						<img
 							src={`/icon-location${
-								popup && popup.selectedNursingHome.id === nursingHome.id ? "-selected" : ""
+								popup &&
+								popup.selectedNursingHome.id === nursingHome.id
+									? "-selected"
+									: ""
 							}.svg`}
 							alt="Hoivakoti kartalla"
 						/>
@@ -74,7 +82,9 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 			<>
 				{popup && popup.isExpanded && (
 					<Popup
-						coordinates={popup.selectedNursingHome.geolocation.center}
+						coordinates={
+							popup.selectedNursingHome.geolocation.center
+						}
 						anchor="bottom"
 						offset={{
 							"bottom-left": [12, -38],
@@ -82,7 +92,10 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 							"bottom-right": [-12, -38],
 						}}
 					>
-						<NursingHomeSmall nursinghome={popup.selectedNursingHome} isNarrow={true} />
+						<NursingHomeSmall
+							nursinghome={popup.selectedNursingHome}
+							isNarrow={true}
+						/>
 					</Popup>
 				)}
 			</>

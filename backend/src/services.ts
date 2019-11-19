@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { InsertNursingHomeToDB, AddPicturesAndDescriptionsForNursingHome, GetNursingHomeIDFromName } from "./models";
-import { NursingHome, nursing_home_columns_info, nursing_home_pictures_columns_info } from "./nursinghome-typings";
+import {
+	InsertNursingHomeToDB,
+	AddPicturesAndDescriptionsForNursingHome,
+	GetNursingHomeIDFromName,
+} from "./models";
+import {
+	NursingHome,
+	nursing_home_columns_info,
+	nursing_home_pictures_columns_info,
+} from "./nursinghome-typings";
 
 import sharp from "sharp";
 import parse from "csv-parse/lib/sync";
@@ -33,9 +41,14 @@ async function NursingHomesFromCSV(csv: string): Promise<object[]> {
 	records.map(async (record: any) => {
 		const nursing_home: any = {};
 		nursing_home_columns_info.map((info: any) => {
-			if (info.type === "float") nursing_home[info.sql] = parseFloat(record[info.csv]);
+			if (info.type === "float")
+				nursing_home[info.sql] = parseFloat(record[info.csv]);
 			else if (info.type === "boolean")
-				nursing_home[info.sql] = record[info.csv] ? (record[info.csv] === "True" ? true : false) : false;
+				nursing_home[info.sql] = record[info.csv]
+					? record[info.csv] === "True"
+						? true
+						: false
+					: false;
 			else nursing_home[info.sql] = record[info.csv];
 		});
 		await InsertNursingHomeToDB(nursing_home as NursingHome);
@@ -58,13 +71,18 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 		console.log(record);
 		const nursinghome_pics: any = {};
 
-		const nursing_home_id = (await GetNursingHomeIDFromName(record["Hoivakodin nimi"]))[0].id;
+		const nursing_home_id = (await GetNursingHomeIDFromName(
+			record["Hoivakodin nimi"],
+		))[0].id;
 		console.log("ID: " + JSON.stringify(nursing_home_id));
 
 		for (const field_info of nursing_home_pictures_columns_info) {
-			if (field_info.sql.includes("_caption")) nursinghome_pics[field_info.sql] = record[field_info.csv];
+			if (field_info.sql.includes("_caption"))
+				nursinghome_pics[field_info.sql] = record[field_info.csv];
 			else {
-				const pic_id = record[field_info.csv].substring(record[field_info.csv].lastIndexOf("=") + 1);
+				const pic_id = record[field_info.csv].substring(
+					record[field_info.csv].lastIndexOf("=") + 1,
+				);
 				if (pic_id.length > 0) {
 					const name = await DownloadAndSaveFile(pic_id);
 					console.log(name);
@@ -75,14 +93,24 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 
 					nursinghome_pics[field_info.sql] = file;
 					nursinghome_pics[field_info.sql + "_hash"] = hash;
-					console.log("File: " + name + " Length: " + file.length + " SQL: " + field_info.sql);
+					console.log(
+						"File: " +
+							name +
+							" Length: " +
+							file.length +
+							" SQL: " +
+							field_info.sql,
+					);
 				}
 			}
 		}
 		//console.log(nursinghome_pics);
 		console.log("Uploaded and read to memory; saving to database.");
 		console.log(Object.keys(nursinghome_pics));
-		await AddPicturesAndDescriptionsForNursingHome(nursing_home_id, nursinghome_pics);
+		await AddPicturesAndDescriptionsForNursingHome(
+			nursing_home_id,
+			nursinghome_pics,
+		);
 	}
 
 	return "Wooh";
@@ -112,9 +140,12 @@ async function DownloadAndSaveFile(id: string): Promise<any> {
 								console.debug("Done downloading file.");
 								sharp(file_name)
 									.resize(1024)
-									.toFile(file_name + "-small", (err: any, info: any) => {
-										resolve(file_name + "-small");
-									});
+									.toFile(
+										file_name + "-small",
+										(err: any, info: any) => {
+											resolve(file_name + "-small");
+										},
+									);
 							})
 							.on("error", (err: any) => {
 								console.error("Error downloading file.");
@@ -123,7 +154,9 @@ async function DownloadAndSaveFile(id: string): Promise<any> {
 							.on("data", (d: any) => {
 								progress += d.length;
 								if (process.stdout.isTTY) {
-									process.stdout.write(`Downloaded ${progress} bytes`);
+									process.stdout.write(
+										`Downloaded ${progress} bytes`,
+									);
 								}
 							})
 							.pipe(dest);

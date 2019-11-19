@@ -4,9 +4,20 @@ import { useT } from "../translations";
 import { useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
 
-type Area = "Espoon keskus" | "Espoonlahti" | "Leppävaara" | "Matinkylä" | "Tapiola";
+type Area =
+	| "Espoon keskus"
+	| "Espoonlahti"
+	| "Leppävaara"
+	| "Matinkylä"
+	| "Tapiola";
 
-const areas: Area[] = ["Espoon keskus", "Espoonlahti", "Leppävaara", "Matinkylä", "Tapiola"];
+const areas: Area[] = [
+	"Espoon keskus",
+	"Espoonlahti",
+	"Leppävaara",
+	"Matinkylä",
+	"Tapiola",
+];
 
 const PageLanding: FC = () => {
 	const history = useHistory();
@@ -21,10 +32,14 @@ const PageLanding: FC = () => {
 	return (
 		<div id="landing">
 			<div className="jumbotron">
-				<h2 className="jumbotron__header">{useT("jumbotronHeadline")}</h2>
+				<h2 className="jumbotron__header">
+					{useT("jumbotronHeadline")}
+				</h2>
 
 				<div className="location-picker">
-					<div className="location-picker-label">{useT("locationPickerLabel")}</div>
+					<div className="location-picker-label">
+						{useT("locationPickerLabel")}
+					</div>
 					<div className="location-picker-select">
 						<select onChange={handleSelectArea}>
 							{areas.map(area => (
@@ -37,7 +52,9 @@ const PageLanding: FC = () => {
 					<button
 						className="btn landing-cta"
 						onClick={(): void => {
-							const query = selectedArea ? `?alue=${selectedArea}` : "";
+							const query = selectedArea
+								? `?alue=${selectedArea}`
+								: "";
 							const url = `/hoivakodit${query}`;
 							history.push(url);
 						}}
@@ -57,7 +74,11 @@ const PageLanding: FC = () => {
 					</p>
 					<p className="ingress">
 						{useT("landingIngress2")}{" "}
-						<a href={useT("urlParastapalvelua")} target="_blank" rel="noopener noreferrer">
+						<a
+							href={useT("urlParastapalvelua")}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
 							www.parastapalvelua.fi
 						</a>
 					</p>
@@ -100,7 +121,11 @@ const PageLanding: FC = () => {
 					</div>
 
 					<p className="content-block-paragraph">
-						<a href={useT("urlDecisionMoreInfo")} target="_blank" rel="noopener noreferrer">
+						<a
+							href={useT("urlDecisionMoreInfo")}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
 							{useT("decisionMoreInfo")}
 						</a>
 					</p>
@@ -115,12 +140,18 @@ const PageLanding: FC = () => {
 					<h2>{useT("serviceDescriptionHeadline")}</h2>
 					<p>{useT("serviceDescriptionText")}</p>
 					<p>
-						<a href={useT("urlServiceDescription")} target="_blank" rel="noopener noreferrer">
+						<a
+							href={useT("urlServiceDescription")}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
 							{useT("serviceDescriptionLink")}
 						</a>
 					</p>
 
-					<h3 className="faqHeadline">{useT("faqSectionHeadline")}</h3>
+					<h3 className="faqHeadline">
+						{useT("faqSectionHeadline")}
+					</h3>
 					<dl className="faq-list">
 						<dt>{useT("faqItem1Headline")}</dt>
 						<dd>{useT("faqItem1Text")}</dd>

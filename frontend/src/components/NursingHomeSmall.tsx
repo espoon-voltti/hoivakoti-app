@@ -10,9 +10,17 @@ type NursingHomeSmallProps = {
 	className?: string;
 };
 
-const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome, isNarrow, className }) => {
+const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
+	nursinghome,
+	isNarrow,
+	className,
+}) => {
 	return (
-		<div className={`card-list-item ${isNarrow ? "card-narrow" : ""} ${className || ""}`}>
+		<div
+			className={`card-list-item ${
+				isNarrow ? "card-narrow" : ""
+			} ${className || ""}`}
+		>
 			<div className="card-list-item__image-container">
 				<img
 					className="card-list-item__image"
@@ -23,29 +31,42 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({ nursinghome, isNarrow, cl
 
 			<div className="card-list-item__content">
 				<div className="card-list-item__content--top">
-					<div className="card-list-item__subheader">{nursinghome && nursinghome.owner}</div>
+					<div className="card-list-item__subheader">
+						{nursinghome && nursinghome.owner}
+					</div>
 
-					<h3 className="card-list-item__header">{nursinghome && nursinghome.name}</h3>
+					<h3 className="card-list-item__header">
+						{nursinghome && nursinghome.name}
+					</h3>
 
-					<div className="card-list-item__text">{nursinghome && nursinghome.address}</div>
-					{nursinghome && nursinghome.ara && <div className="card-list-item__tag">ARA-kohde</div>}
+					<div className="card-list-item__text">
+						{nursinghome && nursinghome.address}
+					</div>
+					{nursinghome && nursinghome.ara && (
+						<div className="card-list-item__tag">ARA-kohde</div>
+					)}
 				</div>
 
 				<div className="card-list-item__content--bottom">
 					<div className="card-list-item__text">
 						Palvelukieli: {nursinghome && nursinghome.language}{" "}
-						<span className="card-list-item__text--dot"> • </span> Asuntojen määrä:{" "}
+						<span className="card-list-item__text--dot"> • </span>{" "}
+						Asuntojen määrä:{" "}
 						{nursinghome && nursinghome.apartment_count}
 					</div>
 					<div className="card-list-item__text card-list-item__text--lah">
-						{nursinghome && nursinghome.lah ? "Myös lyhytaikainen asuminen" : ""}
+						{nursinghome && nursinghome.lah
+							? "Myös lyhytaikainen asuminen"
+							: ""}
 					</div>
 				</div>
 
 				{isNarrow && (
 					<div className="card-list-item__link">
 						<div className="card-list-item__text">
-							<Link to={`/hoivakodit/${nursinghome.id}`}>Hoivakodin tiedot</Link>
+							<Link to={`/hoivakodit/${nursinghome.id}`}>
+								Hoivakodin tiedot
+							</Link>
 						</div>
 					</div>
 				)}

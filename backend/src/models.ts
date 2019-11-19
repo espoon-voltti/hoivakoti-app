@@ -2,13 +2,19 @@
 import Knex from "knex";
 import uuidv4 from "uuid/v4";
 import rp from "request-promise-native";
-import { NursingHome, nursing_home_pictures_columns_info, postal_code_to_district } from "./nursinghome-typings";
+import {
+	NursingHome,
+	nursing_home_pictures_columns_info,
+	postal_code_to_district,
+} from "./nursinghome-typings";
 
 const options: Knex.Config = {
 	client: "postgres",
 	connection: {
 		user: process.env.DB_URL ? "voltti" : "postgres",
-		password: process.env.DB_PASSWORD ? process.env.DB_PASSWORD : "postgres",
+		password: process.env.DB_PASSWORD
+			? process.env.DB_PASSWORD
+			: "postgres",
 		host: process.env.DB_URL ? process.env.DB_URL : "postgres",
 		database: process.env.DB_URL ? "postgres" : "postgres",
 	},
@@ -135,7 +141,9 @@ export async function DropAndRecreateNursingHomePicturesTable(): Promise<void> {
 // 	});
 // }
 
-export async function InsertNursingHomeToDB(nurseryhome: NursingHome): Promise<string> {
+export async function InsertNursingHomeToDB(
+	nurseryhome: NursingHome,
+): Promise<string> {
 	// Prolly should not do in models but WIP / MVP
 	const geo_query = [nurseryhome.address, nurseryhome.city, "Finland"];
 	const geoloc = JSON.parse(
@@ -158,10 +166,18 @@ export async function InsertNursingHomeToDB(nurseryhome: NursingHome): Promise<s
 	return uuid;
 }
 
-export async function InsertNursingHomeRatingToDB(nursery_id: string, rating: number): Promise<string> {
+export async function InsertNursingHomeRatingToDB(
+	nursery_id: string,
+	rating: number,
+): Promise<string> {
 	const uuid = uuidv4();
 	const seconds = Math.round(new Date().getTime() / 1000);
-	await knex("Ratings").insert({ id: uuid, nurseryhome: nursery_id, time: seconds, rating: rating });
+	await knex("Ratings").insert({
+		id: uuid,
+		nurseryhome: nursery_id,
+		time: seconds,
+		rating: rating,
+	});
 
 	return uuid;
 }
@@ -198,8 +214,14 @@ export async function DeleteAllNursingHomes(): Promise<number> {
 	return result;
 }
 
-export async function AddPicturesAndDescriptionsForNursingHome(id: string, pictures: any): Promise<void> {
-	await knex("NursingHomePictures").insert({ nursinghome_id: id, ...pictures });
+export async function AddPicturesAndDescriptionsForNursingHome(
+	id: string,
+	pictures: any,
+): Promise<void> {
+	await knex("NursingHomePictures").insert({
+		nursinghome_id: id,
+		...pictures,
+	});
 }
 
 export async function GetAllPicturesAndDescriptions(): Promise<Knex.Table> {
@@ -214,7 +236,10 @@ export async function GetPicturesAndDescriptions(id: string): Promise<any[]> {
 }
 
 // Returns data and hash
-export async function GetPicData(nursinghome_id: string, pic: string): Promise<any[]> {
+export async function GetPicData(
+	nursinghome_id: string,
+	pic: string,
+): Promise<any[]> {
 	return await knex
 		.select(pic, pic + "_hash")
 		.table("NursingHomePictures")
@@ -244,7 +269,8 @@ export async function GetPicDigests(nursinghome_id: string): Promise<any[]> {
 			return true;
 		})
 		.map((row_info: any) => {
-			if (!row_info.sql.includes("caption")) return row_info.sql + "_hash";
+			if (!row_info.sql.includes("caption"))
+				return row_info.sql + "_hash";
 		});
 
 	return await knex
