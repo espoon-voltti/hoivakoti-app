@@ -14,6 +14,7 @@ import {
 	GetPicsAndDescriptions,
 	GetPic,
 	GetCaptions,
+	GetCities
 } from "./controllers";
 
 const router = new Router();
@@ -24,6 +25,10 @@ router.get("/api", async ctx => {
 
 router.get("/api/nursing-homes", async ctx => {
 	ctx.body = await ListNursingHomes(ctx);
+});
+
+router.get("/api/nursing-homes/cities", async ctx => {
+	ctx.body = await GetCities(ctx);
 });
 
 router.get("/api/nursing-homes/:id", async ctx => {

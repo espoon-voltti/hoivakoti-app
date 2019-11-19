@@ -314,3 +314,7 @@ export async function GetAllPicDigests(): Promise<any[]> {
 		.select(columns)
 		.table("NursingHomePictures");
 }
+
+export async function GetDistinctCities(): Promise<any[]> {
+	return await knex("NursingHomes").distinct('city');
+}

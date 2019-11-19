@@ -12,6 +12,7 @@ import {
 	GetPicCaptions,
 	GetPicDigests,
 	GetAllPicDigests,
+	GetDistinctCities
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -155,4 +156,9 @@ export async function GetPic(ctx: any): Promise<any> {
 export async function GetCaptions(ctx: any): Promise<any> {
 	const captions = (await GetPicCaptions(ctx.params.id))[0];
 	return captions;
+}
+
+export async function GetCities(ctx: any): Promise<any> {
+	const cities = await GetDistinctCities();
+	return cities.map((item: any) => item.city);
 }
