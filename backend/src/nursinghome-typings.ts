@@ -84,9 +84,9 @@ export const nursing_home_columns_info: any = [
 	{
 		csv: "Asuntojen neliömäärä",
 		sql: "apartment_square_meters",
-		type: "float",
+		type: "string",
 	},
-	{ csv: "Vuokra", sql: "rent", type: "float" },
+	{ csv: "Vuokra", sql: "rent", type: "string" },
 	{ csv: "Lisätietoja vuokrasta", sql: "rent_info", type: "string" },
 	{ csv: "Palvelukielen lisätietoja", sql: "language_info", type: "string" },
 	{ csv: "Linkki ruokalistaan", sql: "menu_link", type: "string" },
