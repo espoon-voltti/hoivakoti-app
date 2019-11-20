@@ -14,9 +14,9 @@ import sharp from "sharp";
 import parse from "csv-parse/lib/sync";
 import fs from "fs";
 import { google } from "googleapis";
-import crypto, { Binary } from "crypto";
+import crypto, { BinaryLike } from "crypto";
 
-function checksum(str: string | Binary): string {
+function checksum(str: string | BinaryLike): string {
 	return crypto
 		.createHash("SHA256")
 		.update(str)
