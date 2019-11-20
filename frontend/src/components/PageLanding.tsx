@@ -83,7 +83,7 @@ const PageLanding: FC = () => {
 						className="btn landing-cta"
 						onClick={(): void => {
 							const query = queryString.stringify({
-								area: selectedAreas,
+								alue: selectedAreas,
 							});
 							const url = `/hoivakodit?${query}`;
 							history.push(url);

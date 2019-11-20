@@ -9,7 +9,6 @@ $column-width: 1024px;
 	height: 100vh;
 	background: $primary-blue;
 	background-size: cover;
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
@@ -47,15 +46,10 @@ $column-width: 1024px;
 	flex-grow: 1;
 	height: 100%;
 	margin: 0 40px 0 40px;
-	position: relative;
 }
 
 .location-picker-select .button-dropdown-container {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
+	height: 100%;
 
 	.button-dropdown {
 		height: 100%;
@@ -151,7 +145,6 @@ p.content-block-paragraph {
 			margin: 0;
 		}
 
-		.location-picker-select,
 		.landing-cta {
 			flex-basis: 45px;
 		}

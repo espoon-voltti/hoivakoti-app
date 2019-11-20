@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { ReactComponent as Caret } from "./Caret.svg";
 import "../styles/ButtonDropdown.scss";
+import { ReactComponent as CloseX } from "./CloseX.svg";
 
 interface Props {
 	isExpanded: boolean;
@@ -38,7 +39,15 @@ const ButtonDropdown: FC<Props> = ({
 					<Caret className="button-dropdown-caret" />
 				</button>
 				{isExpanded && (
-					<div className="button-dropdown-items">{children}</div>
+					<div className="button-dropdown-items">
+						<div
+							className="button-dropdown-items-close"
+							onClick={() => onExpandedChange(false)}
+						>
+							<CloseX />
+						</div>
+						{children}
+					</div>
 				)}
 			</div>
 		</>
