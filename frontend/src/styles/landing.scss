@@ -137,13 +137,32 @@ p.content-block-paragraph {
 		max-height: 520px;
 		background-position-y: 0;
 	}
+
 	.location-picker {
+		flex-direction: column;
 		margin-bottom: 0;
 		width: 100vw;
 		border-radius: 0;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+
+		.location-picker-select {
+			height: auto;
+			align-self: stretch;
+			margin: 0;
+		}
+
+		.location-picker-select,
+		.landing-cta {
+			flex-basis: 45px;
+		}
+
+		& > *:not(:last-child) {
+			margin-bottom: 16px;
+		}
 	}
+
 	.jumbotron__header {
+		max-width: 100%;
 		padding: 20px;
 	}
 }
