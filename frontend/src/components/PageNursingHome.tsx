@@ -24,15 +24,22 @@ const PageNursingHome: FC = () => {
 			.catch(console.error);
 	}, [id]);
 
+	const hasHero =
+		nursingHome &&
+		nursingHome.pic_digests &&
+		nursingHome.pic_digests.overview_outside_hash;
+
 	return (
 		<div className="nursinghome-page-container">
 			<div className="nursinghome-hero">
 				{/* <img alt="Kuva hoivakodista" src="/placeholder.jpg" /> */}
-				{nursingHome && (
+				{nursingHome && hasHero ? (
 					<Image
 						nursingHome={nursingHome}
 						imageName="overview_outside"
 					/>
+				) : (
+					<div className="nursinghome-hero-placeholder" />
 				)}
 			</div>
 			{!nursingHome ? (
