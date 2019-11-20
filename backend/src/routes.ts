@@ -31,6 +31,22 @@ router.get("/api/nursing-homes/cities", async ctx => {
 	ctx.body = await GetCities(ctx);
 });
 
+router.post("/api/nursing-homes", async ctx => {
+	ctx.body = await AddNursingHome(ctx);
+});
+
+router.post("/api/nursing-homes/csv", async ctx => {
+	ctx.body = await AddNursingHomesFromCSV(ctx);
+});
+
+router.get("/api/nursing-homes/delete-all", async ctx => {
+	ctx.body = await DeleteNursingHomes(ctx);
+});
+
+router.get("/api/nursing-homes/drop_table", async ctx => {
+	ctx.body = await DropAndRecreateTables(ctx);
+});
+
 router.get("/api/nursing-homes/:id", async ctx => {
 	ctx.body = await GetNursingHome(ctx);
 });
@@ -43,28 +59,12 @@ router.get("/api/nursing-homes/:id/pics", async ctx => {
 	ctx.body = await GetPicsAndDescriptions(ctx);
 });
 
-router.post("/api/nursing-homes", async ctx => {
-	ctx.body = await AddNursingHome(ctx);
-});
-
 router.get("/api/nursing-homes/:id/pics/captions", async ctx => {
 	ctx.body = await GetCaptions(ctx);
 });
 
 router.get("/api/nursing-homes/:id/pics/:pic/:digest", async ctx => {
 	ctx.body = await GetPic(ctx);
-});
-
-router.post("/api/nursing-homes/csv", async ctx => {
-	ctx.body = await AddNursingHomesFromCSV(ctx);
-});
-
-router.get("/api/nursing-homes/delete-all", async ctx => {
-	ctx.body = await DeleteNursingHomes(ctx);
-});
-
-router.get("/api/nursing_homes/drop_table", async ctx => {
-	ctx.body = await DropAndRecreateTables(ctx);
 });
 
 // router.get("/api/ratings", async ctx => {
