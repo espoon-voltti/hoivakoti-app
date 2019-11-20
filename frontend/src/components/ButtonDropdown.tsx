@@ -3,9 +3,12 @@ import { ReactComponent as Caret } from "./Caret.svg";
 import "../styles/ButtonDropdown.scss";
 import { ReactComponent as CloseX } from "./CloseX.svg";
 
+export type DropdownVariant = "primary" | "subtle";
+
 interface Props {
 	isExpanded: boolean;
 	onExpandedChange: (isExpanded: boolean) => void;
+	variant: DropdownVariant;
 	label: string;
 	active: boolean;
 }
@@ -13,6 +16,7 @@ interface Props {
 const ButtonDropdown: FC<Props> = ({
 	isExpanded,
 	onExpandedChange,
+	variant,
 	label,
 	active,
 	children,
@@ -26,7 +30,7 @@ const ButtonDropdown: FC<Props> = ({
 				/>
 			)}
 			<div
-				className="button-dropdown-container"
+				className={`button-dropdown-container button-dropdown-variant-${variant}`}
 				aria-expanded={isExpanded}
 			>
 				<button
@@ -35,7 +39,7 @@ const ButtonDropdown: FC<Props> = ({
 						active ? "button-dropdown-active" : ""
 					}`}
 				>
-					{label}
+					<span className="button-dropdown-label">{label}</span>
 					<Caret className="button-dropdown-caret" />
 				</button>
 				{isExpanded && (

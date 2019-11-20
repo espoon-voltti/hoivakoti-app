@@ -60,6 +60,7 @@ const PageLanding: FC = () => {
 							value={filterText}
 							values={optionsArea}
 							ariaLabel="Valitse hoivakodin alue"
+							dropdownVariant="subtle"
 							onChange={({ newValue, name }) => {
 								let newSelectedAreas = selectedAreas
 									? [...selectedAreas]

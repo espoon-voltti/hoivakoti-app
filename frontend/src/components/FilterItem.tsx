@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import "../styles/FilterItem.scss";
-import ButtonDropdown from "./ButtonDropdown";
+import ButtonDropdown, { DropdownVariant } from "./ButtonDropdown";
 import Checkbox from "./Checkbox";
 import Radio from "./Radio";
 
@@ -15,6 +15,7 @@ export type Props = {
 	value: string | null;
 	values: FilterOption[];
 	ariaLabel: string;
+	dropdownVariant?: DropdownVariant;
 	onChange: (newValue: { name: string; newValue: boolean }) => void;
 	onReset: () => void;
 };
@@ -23,6 +24,7 @@ const FilterItem: FC<Props> = ({
 	prefix,
 	value,
 	values,
+	dropdownVariant = "primary",
 	onChange,
 	onReset,
 }) => {
@@ -147,6 +149,7 @@ const FilterItem: FC<Props> = ({
 		<ButtonDropdown
 			isExpanded={isDropdownExpanded}
 			onExpandedChange={setIsDropdownExpanded}
+			variant={dropdownVariant}
 			label={label}
 			active={filterActive}
 		>
