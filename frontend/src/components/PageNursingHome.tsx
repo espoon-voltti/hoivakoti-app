@@ -6,6 +6,29 @@ import config from "./config";
 import axios from "axios";
 import { NursingHome, NursingHomeImageName } from "./types";
 import { MapSmall } from "./Map";
+import Lightbox from "./Lightbox";
+
+function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const { pic_digests = [] }: { pic_digests: any } = nursingHome;
+
+	const availablePicHashes =
+		nursingHome &&
+		nursingHome.pic_digests &&
+		Object.keys(nursingHome.pic_digests)
+			.filter(name => pic_digests[name] !== null)
+			.filter(hashName => hashName !== "owner_logo_hash");
+
+	if (!availablePicHashes || availablePicHashes.length === 0) return null;
+
+	const availablePics = availablePicHashes.map<[string, string]>(hashName => {
+		const imageName = hashName.replace("_hash", "");
+		const digest: string = pic_digests[imageName];
+		return [imageName, digest];
+	});
+
+	return availablePics;
+}
 
 interface GetNursingHomeResponse {
 	data: NursingHome;
@@ -14,6 +37,7 @@ interface GetNursingHomeResponse {
 const PageNursingHome: FC = () => {
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const { id } = useParams();
+	const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
 	useEffect(() => {
 		axios
@@ -24,9 +48,36 @@ const PageNursingHome: FC = () => {
 			.catch(console.error);
 	}, [id]);
 
+	const availablePics = nursingHome && getAvailablePics(nursingHome);
+
+	const images =
+		nursingHome &&
+		availablePics &&
+		availablePics.map(([imageName, digest]) => {
+			return (
+				`${config.API_URL}/nursing-homes/${nursingHome.id}` +
+				`/pics/${imageName}/${digest}`
+			);
+		});
+
 	return (
 		<div className="nursinghome-page-container">
+			{images && (
+				<Lightbox
+					isOpen={isLightboxOpen}
+					onClose={() => setIsLightboxOpen(false)}
+					imageUrls={images}
+				/>
+			)}
 			<div className="nursinghome-hero">
+				{images && (
+					<button
+						onClick={() => setIsLightboxOpen(true)}
+						className="nursinghome-hero-lightbox-button"
+					>
+						Katso kuvat
+					</button>
+				)}
 				<Image
 					nursingHome={nursingHome}
 					imageName="overview_outside"

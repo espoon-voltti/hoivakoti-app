@@ -121,7 +121,10 @@ export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
 		}}
 		zoom={[14]}
 	>
-		<Marker coordinates={nursingHome.geolocation.center}>
+		<Marker
+			coordinates={nursingHome.geolocation.center}
+			style={{ zIndex: 1 }}
+		>
 			<img src="/icon-location-selected.svg" alt="Hoivakoti kartalla" />
 		</Marker>
 	</MapComponentNonInteractive>
