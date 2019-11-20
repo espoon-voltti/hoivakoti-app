@@ -260,21 +260,31 @@ const PageNursingHomes: FC = () => {
 	const nursingHomeComponents: JSX.Element[] | null =
 		filteredNursingHomes &&
 		filteredNursingHomes.map((nursingHome, index) => (
-			<Link
-				key={index}
-				to={"/hoivakodit/" + nursingHome.id}
-				style={{ textDecoration: "none" }}
-				className="card-list-item-borders"
-				onMouseEnter={() =>
-					setMapPopup({
-						selectedNursingHome: nursingHome,
-						isExpanded: false,
-					})
-				}
-				onMouseLeave={() => setMapPopup(null)}
-			>
-				<NursingHomeSmall nursinghome={nursingHome} key={index} />
-			</Link>
+			<React.Fragment key={index}>
+				<Link
+					to={"/hoivakodit/" + nursingHome.id}
+					style={{ textDecoration: "none" }}
+					className="card-list-item-borders card-desktop"
+					onMouseEnter={() =>
+						setMapPopup({
+							selectedNursingHome: nursingHome,
+							isExpanded: false,
+						})
+					}
+					onMouseLeave={() => setMapPopup(null)}
+				>
+					<NursingHomeSmall
+						nursinghome={nursingHome}
+						isNarrow={false}
+					/>
+				</Link>
+				<div className="card-list-item-borders card-mobile">
+					<NursingHomeSmall
+						nursinghome={nursingHome}
+						isNarrow={true}
+					/>
+				</div>
+			</React.Fragment>
 		));
 
 	return (

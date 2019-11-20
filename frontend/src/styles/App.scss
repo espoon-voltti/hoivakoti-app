@@ -144,6 +144,10 @@ $header-height: 80px;
 	font-weight: bold;
 }
 
+.lang-link-short {
+	display: none;
+}
+
 /* [ON SMALL SCREENS] */
 @media screen and (max-width: 1000px) {
 	/* Show Hamburger */
@@ -254,11 +258,12 @@ $header-height: 80px;
 		outline: 5px auto -webkit-focus-ring-color;
 	}
 
-	.link-fi:after {
-		content: "FI";
+	.lang-link-long {
+		display: none;
 	}
-	.link-sv:after {
-		content: "SV";
+
+	.lang-link-short {
+		display: block;
 	}
 }
 

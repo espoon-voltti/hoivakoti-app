@@ -9,7 +9,6 @@ $column-width: 1024px;
 	height: 100vh;
 	background: $primary-blue;
 	background-size: cover;
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
@@ -47,15 +46,10 @@ $column-width: 1024px;
 	flex-grow: 1;
 	height: 100%;
 	margin: 0 40px 0 40px;
-	position: relative;
 }
 
 .location-picker-select .button-dropdown-container {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
+	height: 100%;
 
 	.button-dropdown {
 		height: 100%;
@@ -137,13 +131,31 @@ p.content-block-paragraph {
 		max-height: 520px;
 		background-position-y: 0;
 	}
+
 	.location-picker {
+		flex-direction: column;
 		margin-bottom: 0;
 		width: 100vw;
 		border-radius: 0;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+
+		.location-picker-select {
+			height: auto;
+			align-self: stretch;
+			margin: 0;
+		}
+
+		.landing-cta {
+			flex-basis: 45px;
+		}
+
+		& > *:not(:last-child) {
+			margin-bottom: 16px;
+		}
 	}
+
 	.jumbotron__header {
+		max-width: 100%;
 		padding: 20px;
 	}
 }

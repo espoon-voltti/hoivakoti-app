@@ -40,17 +40,30 @@
 }
 
 .card-narrow {
-	max-width: 350px;
+	// max-width: 350px;
+}
+
+.card-desktop {
+	display: none;
 }
 
 @media (min-width: 800px) {
 	.card-list-item:not(.card-narrow) {
 		@include card-wide;
 	}
+
+	.card-desktop {
+		display: block;
+	}
+
+	.card-mobile {
+		display: none;
+	}
 }
 
 .card-list-item__image-container {
 	width: 100%;
+	min-height: 150px;
 	border-radius: $border-radius;
 	margin-right: 20px;
 	background: $border-color url("/icon-house.svg") 50% 50% no-repeat;

@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { NavLink, Link } from "react-router-dom";
+import React, { FC, useState, useEffect } from "react";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../translations";
 import i18next from "i18next";
@@ -10,6 +10,13 @@ const setLanguage = (lng: Language): void => {
 
 const Header: FC = () => {
 	const currentLanguage = useCurrentLanguage();
+	const location = useLocation();
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+	useEffect(() => {
+		setIsMobileMenuOpen(false);
+	}, [location.pathname]);
+
 	return (
 		<header className="header">
 			<div className="logo-container">
@@ -26,6 +33,8 @@ const Header: FC = () => {
 			<nav id="page-nav">
 				<input
 					type="checkbox"
+					checked={isMobileMenuOpen}
+					onChange={e => setIsMobileMenuOpen(e.target.checked)}
 					role="button"
 					aria-haspopup="true"
 					id="hamburger"
@@ -35,15 +44,21 @@ const Header: FC = () => {
 				</label>
 				<div className="nav-menus">
 					<ul className="nav-menu" role="menu">
-						<li>
-							<NavLink activeClassName="selected" exact to="/">
+						<li role="menuitem">
+							<NavLink
+								activeClassName="selected"
+								exact
+								to="/"
+								onClick={() => setIsMobileMenuOpen(false)}
+							>
 								{useT("navHome")}
 							</NavLink>
 						</li>
-						<li>
+						<li role="menuitem">
 							<NavLink
 								activeClassName="selected"
 								to="/hoivakodit"
+								onClick={() => setIsMobileMenuOpen(false)}
 							>
 								{useT("navNursingHomes")}
 							</NavLink>
@@ -51,7 +66,7 @@ const Header: FC = () => {
 					</ul>
 				</div>
 				<ul className="nav-menu--language" role="menu">
-					<li>
+					<li role="menuitem">
 						<NavLink
 							to="#"
 							lang="fi-FI"
@@ -62,11 +77,12 @@ const Header: FC = () => {
 							}}
 							isActive={() => currentLanguage === "fi-FI"}
 						>
-							Suomeksi
+							<span className="lang-link-short">FI</span>
+							<span className="lang-link-long">Suomeksi</span>
 						</NavLink>
 					</li>
 					<li className="separator">|</li>
-					<li>
+					<li role="menuitem">
 						<NavLink
 							to="#"
 							lang="sv-SV"
@@ -77,7 +93,8 @@ const Header: FC = () => {
 							}}
 							isActive={() => currentLanguage === "sv-FI"}
 						>
-							På svenska
+							<span className="lang-link-short">SV</span>
+							<span className="lang-link-long">På svenska</span>
 						</NavLink>
 					</li>
 				</ul>
