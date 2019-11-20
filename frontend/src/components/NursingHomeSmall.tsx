@@ -31,7 +31,7 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
 			</div>
 
 			<div className="card-list-item__content">
-				<div className="card-list-item__content--top">
+				<div>
 					<div className="card-list-item__subheader">
 						{nursinghome && nursinghome.owner}
 					</div>
@@ -48,7 +48,7 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
 					)}
 				</div>
 
-				<div className="card-list-item__content--bottom">
+				<div>
 					<div className="card-list-item__text">
 						Palvelukieli: {nursinghome && nursinghome.language}{" "}
 						<span className="card-list-item__text--dot"> • </span>{" "}

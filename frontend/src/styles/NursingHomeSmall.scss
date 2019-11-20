@@ -40,12 +40,24 @@
 }
 
 .card-narrow {
-	max-width: 350px;
+	// max-width: 350px;
+}
+
+.card-desktop {
+	display: none;
 }
 
 @media (min-width: 800px) {
 	.card-list-item:not(.card-narrow) {
 		@include card-wide;
+	}
+
+	.card-desktop {
+		display: block;
+	}
+
+	.card-mobile {
+		display: none;
 	}
 }
 

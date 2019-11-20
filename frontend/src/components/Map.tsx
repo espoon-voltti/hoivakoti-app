@@ -91,6 +91,7 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 							bottom: [0, -38],
 							"bottom-right": [-12, -38],
 						}}
+						style={{ maxWidth: 350 }}
 					>
 						<NursingHomeSmall
 							nursinghome={popup.selectedNursingHome}
