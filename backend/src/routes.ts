@@ -83,6 +83,10 @@ router.get("/api/all-pics", async ctx => {
 	ctx.body = await GetAllPicsAndDescriptions(ctx);
 });
 
+router.get("/api/version", async ctx => {
+	ctx.body = "v1";
+});
+
 const routes = router.routes();
 
 export { routes };
