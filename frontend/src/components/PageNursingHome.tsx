@@ -106,7 +106,7 @@ const PageNursingHome: FC = () => {
 							text="Lisätietoja toiminnasta"
 							to={nursingHome.activities_link}
 						/>
-						<h3>Ulkoilumahdollisuudet</h3>
+						<h3>Ulkoilu&shy;mahdolli&shy;suudet</h3>
 						<Paragraph
 							text={nursingHome.outdoors_possibilities_info}
 						/>
