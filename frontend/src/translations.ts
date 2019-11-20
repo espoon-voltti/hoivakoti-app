@@ -109,7 +109,7 @@ const translationsFi: TranslationsBundle = {
 		"https://www.espoo.fi/fi-FI/Seniorit/Seniorineuvonta_Nestori/Palvelutarpeen_selvittaminen",
 	selectingHeadline: "Hoivakodin valinta",
 	selectingText:
-		"Voit valita hoivakodin, jossa on vapaita paikkoja. Voit käydä tutustumassa hoivakoteihin ennen päätöksen tekemistä. Kerro valinnastasi Nestorin sosiaalityöntekijälle. Jos mieluisin vaihtoehtosi on hoivakoti, jossa ei ole vapaita paikkoja, voit ilmoittautua tämän hoivakodin jonoon, Halutessasi voit vaihtaa hoivakotia kun paikka vapautuu.",
+		" Voit valita hoivakodin, jossa on vapaita paikkoja. Voit käydä tutustumassa hoivakoteihin ennen päätöksen tekemistä. Kerro valinnastasi Nestoriin omalle sosiaalityöntekijällesi. Jos mieluisin vaihtoehtosi on hoivakoti, jossa ei ole vapaita paikkoja, voit ilmoittautua Nestoriin tämän hoivakodin jonoon, Nestori on sinuun  yhteydessä kun paikka vapautuu ja halutessasi voit silloin vaihtaa hoivakotia.",
 	serviceDescriptionHeadline: "Mitä hoivakodin antamaan palveluun kuuluu?",
 	serviceDescriptionText:
 		"Kaikki tällä sivustolla esillä olevat hoivakodit ovat sitoutuneet noudattamaan Espoon kaupungin palvelukonseptia, joka määrittää vähimmäisvaatimukset palvelun sisällölle ja laadulle.",
