@@ -134,46 +134,10 @@ const PageNursingHome: FC = () => {
 						<Paragraph text={nursingHome.nearby_services} />
 					</div>
 
-					<div className="nursinghome-details-box">
-						<Image
-							nursingHome={nursingHome}
-							imageName="owner_logo"
-							className="nursinghome-details-logo"
-							alt="Omistajan logo"
-						/>
-						<Paragraph
-							text={nursingHome.name}
-							className="nursinghome-details-name"
-						/>
-						<a
-							href={`https://www.google.com/maps/search/${
-								nursingHome.name
-							}/@${nursingHome.geolocation.center.join(",")}z`}
-							target="_blank"
-							rel="noreferrer noopener"
-						>
-							<MapSmall nursingHome={nursingHome} />
-						</a>
-						<h3>Yhteystiedot</h3>
-						<Paragraph text={nursingHome.address} />
-						<Paragraph text={nursingHome.contact_name} />
-						<Paragraph text={nursingHome.contact_title} />
-						<Paragraph text={nursingHome.contact_phone} />
-						<ParagraphLink
-							text={nursingHome.email}
-							to={
-								nursingHome.email
-									? `mailto:${nursingHome.email}`
-									: undefined
-							}
-						/>
-						<ParagraphLink to={nursingHome.www} />
-						<h3>Kulkuyhteydet</h3>
-						<Paragraph
-							text={nursingHome.arrival_guide_public_transit}
-						/>
-						<Paragraph text={nursingHome.arrival_guide_car} />
-					</div>
+					<NursingHomeDetailsBox
+						nursingHome={nursingHome}
+						className="nursinghome-details-box"
+					/>
 				</div>
 			)}
 		</div>
@@ -238,3 +202,48 @@ export const Image: FC<ImageProps> = ({
 	const srcUrl = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`;
 	return <img src={srcUrl} className={className} alt={alt} />;
 };
+
+interface NursingHomeDetailsBoxProps {
+	nursingHome: NursingHome;
+	className?: string;
+}
+
+const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
+	nursingHome,
+	className,
+}) => (
+	<div className={className}>
+		<Image
+			nursingHome={nursingHome}
+			imageName="owner_logo"
+			className="nursinghome-details-logo"
+			alt="Omistajan logo"
+		/>
+		<Paragraph
+			text={nursingHome.name}
+			className="nursinghome-details-name"
+		/>
+		<a
+			href={`https://www.google.com/maps/search/${
+				nursingHome.name
+			}/@${nursingHome.geolocation.center.join(",")}z`}
+			target="_blank"
+			rel="noreferrer noopener"
+		>
+			<MapSmall nursingHome={nursingHome} />
+		</a>
+		<h3>Yhteystiedot</h3>
+		<Paragraph text={nursingHome.address} />
+		<Paragraph text={nursingHome.contact_name} />
+		<Paragraph text={nursingHome.contact_title} />
+		<Paragraph text={nursingHome.contact_phone} />
+		<ParagraphLink
+			text={nursingHome.email}
+			to={nursingHome.email ? `mailto:${nursingHome.email}` : undefined}
+		/>
+		<ParagraphLink to={nursingHome.www} />
+		<h3>Kulkuyhteydet</h3>
+		<Paragraph text={nursingHome.arrival_guide_public_transit} />
+		<Paragraph text={nursingHome.arrival_guide_car} />
+	</div>
+);
