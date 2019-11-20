@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import React, { FC, useState, useEffect } from "react";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../translations";
 import i18next from "i18next";
@@ -10,7 +10,13 @@ const setLanguage = (lng: Language): void => {
 
 const Header: FC = () => {
 	const currentLanguage = useCurrentLanguage();
+	const location = useLocation();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+	useEffect(() => {
+		setIsMobileMenuOpen(false);
+	}, [location.pathname]);
+
 	return (
 		<header className="header">
 			<div className="logo-container">
