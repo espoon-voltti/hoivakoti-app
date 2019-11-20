@@ -96,7 +96,7 @@ const translationsFi: TranslationsBundle = {
 	decisionStepsHeadline: "Miten saat tehostetun palveluasumisen päätöksen?",
 	decisionStep1Headline: "1. Ota yhteyttä Nestoriin",
 	decisionStep1Text:
-		"Nestori on Espoon kaupungin seniorineuvonnan yksikkö, <0>p. 09 816 33 333</0>",
+		"Espoon Seniorineuvonta Nestori palvelee arkisin klo 9–15 <0>p. 09 816 33 333</0>",
 	decisionStep2Headline: "2. Palvelutarpeen selvittäminen ",
 	decisionStep2Text:
 		"Nestorin sosiaalityöntekijä tulee luoksesi selvittämään palvelutarpeesi",

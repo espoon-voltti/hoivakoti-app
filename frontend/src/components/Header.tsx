@@ -35,12 +35,12 @@ const Header: FC = () => {
 				</label>
 				<div className="nav-menus">
 					<ul className="nav-menu" role="menu">
-						<li>
+						<li role="menuitem">
 							<NavLink activeClassName="selected" exact to="/">
 								{useT("navHome")}
 							</NavLink>
 						</li>
-						<li>
+						<li role="menuitem">
 							<NavLink
 								activeClassName="selected"
 								to="/hoivakodit"
@@ -51,7 +51,7 @@ const Header: FC = () => {
 					</ul>
 				</div>
 				<ul className="nav-menu--language" role="menu">
-					<li>
+					<li role="menuitem">
 						<NavLink
 							to="#"
 							lang="fi-FI"
@@ -66,7 +66,7 @@ const Header: FC = () => {
 						</NavLink>
 					</li>
 					<li className="separator">|</li>
-					<li>
+					<li role="menuitem">
 						<NavLink
 							to="#"
 							lang="sv-SV"
