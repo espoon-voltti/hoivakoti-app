@@ -24,23 +24,38 @@ const PageNursingHome: FC = () => {
 			.catch(console.error);
 	}, [id]);
 
-	const hasHero =
-		nursingHome &&
-		nursingHome.pic_digests &&
-		nursingHome.pic_digests.overview_outside_hash;
-
 	return (
 		<div className="nursinghome-page-container">
 			<div className="nursinghome-hero">
-				{/* <img alt="Kuva hoivakodista" src="/placeholder.jpg" /> */}
-				{nursingHome && hasHero ? (
+				<Image
+					nursingHome={nursingHome}
+					imageName="overview_outside"
+					className="nursinghome-hero-img nursinghome-hero-main"
+					variant="background"
+					placeholder={
+						<div className="nursinghome-hero-placeholder" />
+					}
+				/>
+				<div className="nursinghome-hero-extras-wrapper">
 					<Image
 						nursingHome={nursingHome}
-						imageName="overview_outside"
+						imageName="lounge"
+						className="nursinghome-hero-img nursinghome-hero-extra"
+						variant="background"
+						placeholder={
+							<div className="nursinghome-hero-placeholder" />
+						}
 					/>
-				) : (
-					<div className="nursinghome-hero-placeholder" />
-				)}
+					<Image
+						nursingHome={nursingHome}
+						imageName="outside"
+						className="nursinghome-hero-img nursinghome-hero-extra"
+						variant="background"
+						placeholder={
+							<div className="nursinghome-hero-placeholder" />
+						}
+					/>
+				</div>
 			</div>
 			{!nursingHome ? (
 				"Loading..."
@@ -189,10 +204,12 @@ const ParagraphLink: FC<ParagraphLinkProps> = ({ text, to }) => {
 };
 
 interface ImageProps {
-	nursingHome: NursingHome;
+	nursingHome: NursingHome | null;
 	imageName: NursingHomeImageName;
 	className?: string;
 	alt?: string;
+	placeholder?: JSX.Element;
+	variant?: "img" | "background";
 }
 
 export const Image: FC<ImageProps> = ({
@@ -200,14 +217,28 @@ export const Image: FC<ImageProps> = ({
 	imageName,
 	className,
 	alt,
+	placeholder = null,
+	variant = "img",
 }) => {
-	if (!nursingHome.pic_digests) return null;
+	if (!nursingHome || !nursingHome.pic_digests) return placeholder;
 	const digest: string = (nursingHome.pic_digests as any)[
 		`${imageName}_hash`
 	];
-	if (!digest) return null;
+	if (!digest) return placeholder;
 	const srcUrl = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`;
-	return <img src={srcUrl} className={className} alt={alt} />;
+	if (variant === "img")
+		return <img src={srcUrl} className={className} alt={alt} />;
+	else
+		return (
+			<div
+				style={{
+					backgroundImage: `url(${srcUrl})`,
+					backgroundPosition: "center",
+					backgroundSize: "cover",
+				}}
+				className={className}
+			/>
+		);
 };
 
 interface NursingHomeDetailsBoxProps {
