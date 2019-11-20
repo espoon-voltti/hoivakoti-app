@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../translations";
@@ -10,6 +10,7 @@ const setLanguage = (lng: Language): void => {
 
 const Header: FC = () => {
 	const currentLanguage = useCurrentLanguage();
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	return (
 		<header className="header">
 			<div className="logo-container">
@@ -26,6 +27,8 @@ const Header: FC = () => {
 			<nav id="page-nav">
 				<input
 					type="checkbox"
+					checked={isMobileMenuOpen}
+					onChange={e => setIsMobileMenuOpen(e.target.checked)}
 					role="button"
 					aria-haspopup="true"
 					id="hamburger"
@@ -36,7 +39,12 @@ const Header: FC = () => {
 				<div className="nav-menus">
 					<ul className="nav-menu" role="menu">
 						<li role="menuitem">
-							<NavLink activeClassName="selected" exact to="/">
+							<NavLink
+								activeClassName="selected"
+								exact
+								to="/"
+								onClick={() => setIsMobileMenuOpen(false)}
+							>
 								{useT("navHome")}
 							</NavLink>
 						</li>
@@ -44,6 +52,7 @@ const Header: FC = () => {
 							<NavLink
 								activeClassName="selected"
 								to="/hoivakodit"
+								onClick={() => setIsMobileMenuOpen(false)}
 							>
 								{useT("navNursingHomes")}
 							</NavLink>
