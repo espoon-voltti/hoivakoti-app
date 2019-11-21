@@ -3,6 +3,7 @@ import "../styles/FilterItem.scss";
 import ButtonDropdown, { DropdownVariant } from "./ButtonDropdown";
 import Checkbox from "./Checkbox";
 import Radio from "./Radio";
+import { useT } from "../translations";
 
 export type FilterOption =
 	| { type: "header"; text: string }
@@ -37,6 +38,9 @@ const FilterItem: FC<Props> = ({
 	}): void => {
 		onChange(newValue);
 	};
+
+	const btnClear = useT('btnClear');
+	const btnSave = useT('btnSave');
 
 	const subMenu = (
 		<div>
@@ -126,7 +130,7 @@ const FilterItem: FC<Props> = ({
 					onClick={() => setIsDropdownExpanded(false)}
 					className="btn"
 				>
-					Tallenna
+					{btnSave}
 				</button>
 
 				<button
@@ -136,7 +140,7 @@ const FilterItem: FC<Props> = ({
 					disabled={!canEmpty}
 					className="menu-empty-button"
 				>
-					Tyhjennä
+					{btnClear}
 				</button>
 			</div>
 		</div>

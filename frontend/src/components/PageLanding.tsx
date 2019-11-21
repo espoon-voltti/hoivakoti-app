@@ -23,11 +23,11 @@ const areas: Area[] = [
 
 const PageLanding: FC = () => {
 	const history = useHistory();
-
+	const locationPickerLabel = useT("locationPickerLabel");
 	const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
 
 	const optionsArea: FilterOption[] = [
-		{ text: "Miltä alueelta etsit hoivakotia?", type: "header" },
+		{ text: locationPickerLabel, type: "header" },
 		...areas.map<FilterOption>((value: Area) => {
 			const checked = selectedAreas
 				? selectedAreas.includes(value)
@@ -52,7 +52,7 @@ const PageLanding: FC = () => {
 
 				<div className="location-picker">
 					<div className="location-picker-label">
-						{useT("locationPickerLabel")}
+						{locationPickerLabel}
 					</div>
 					<div className="location-picker-select">
 						<FilterItem

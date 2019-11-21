@@ -62,6 +62,37 @@ interface TranslationsBundle {
 	faqItem11Text: string;
 	faqItem12Headline: string;
 	faqItem12Text: string;
+
+	filterLabel: string;
+
+	filterAraLabel: string;
+	filterAraText: string;
+	filterAraLabel2: string;
+	filterAraText2: string;
+	filterAraDesc: string;
+
+ 	serviceLanguage: string;
+	serviceLanguageLabel: string;
+	filterFinnish: string;
+	filterSwedish: string;
+	
+	filterYes: string;
+	filterNo: string;
+	filterLocation: string;
+	filterLAH: string;
+	filterLAHText: string;
+	alsoLAHText: string;
+
+	btnClear: string;
+	btnSave: string;
+
+	summaryLabel:string;
+	loadingText:string;
+
+	numApartments: string;
+
+
+
 }
 
 export type TranslationKey = keyof TranslationsBundle;
@@ -153,6 +184,33 @@ const translationsFi: TranslationsBundle = {
 	faqItem12Headline: "Miten saattohoito järjestetään?",
 	faqItem12Text:
 		"Asiakas voi asua hoivakodissa elämänsä loppuun asti. Kivun ja muiden oireiden hoidosta huolehditaan kaikkina vuorokauden aikoina. Hoivakodissa kunnioitetaan kuolevan vakaumusta ja hänen henkisestä hyvinvoinnistaan huolehditaan.",
+	filterLabel: "Rajaa tuloksia:",
+	filterAraLabel:
+		"ARA-kohde",
+	filterAraText:
+		"Näytä vain ARA-kohteet",
+	filterAraLabel2:
+		"Ei ARA-kohde",
+	filterAraText2:
+		"Piilosta ARA-kohteet",
+	filterAraDesc: 
+		"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat palvelutarve sekä varallisuus.",
+	serviceLanguage: "Palvelukieli",
+	serviceLanguageLabel: "Hoivakodin palvelukieli",
+	filterFinnish: "Suomi",
+	filterSwedish: "Ruotsi",
+	filterYes: "Kyllä",
+	filterNo: "Ei",
+	filterLocation: "Sijainti",
+	filterLAH: "Lyhytaikainen asuminen",
+	filterLAHText: "Näytä vain Lyhytaikaista asumista tarjoavat paikat.",
+	alsoLAHText: "Myös Lyhytaikaista asumista",
+	btnClear: "Tyhjennä",
+	btnSave: "Tallenna",
+	summaryLabel: "hoivakotia",
+	loadingText: "Ladataan...",
+	numApartments: "Asuntojen määrä",
+
 };
 
 const translationsSe: TranslationsBundle = {
@@ -232,6 +290,32 @@ const translationsSe: TranslationsBundle = {
 	faqItem12Headline: "sv_Miten saattohoito järjestetään?",
 	faqItem12Text:
 		"sv_Asiakas voi asua hoivakodissa elämänsä loppuun asti. Kivun ja muiden oireiden hoidosta huolehditaan kaikkina vuorokauden aikoina. Hoivakodissa kunnioitetaan kuolevan vakaumusta ja hänen henkisestä hyvinvoinnistaan huolehditaan.",
+	filterLabel: "Filter resulter:",
+	filterAraLabel:
+		"ARA-boende",
+	filterAraText:
+		"Visa bara ARA-boende",
+	filterAraLabel2:	
+		"Ingen ARA-boende",
+	filterAraText2:
+		"Döljä ARA-boende",
+	filterAraDesc: 
+		"ARA-boende är finansierad med statligt stöd och invånare väljs utifrån behov av tjänster och förmögenhet.",
+	serviceLanguage: "Språk",
+	serviceLanguageLabel: "Vårhemets pråk",
+	filterFinnish: "Finska",
+	filterSwedish: "Svenska",
+	filterYes: "Ja",
+	filterNo: "Nej",
+	filterLocation: "Location",
+	filterLAH: "Kortvarigt boende",
+	filterLAHText: "Visa bara platser med kortvarigt boende.",
+	alsoLAHText: "Också kortvarigt boende",
+	btnClear: "Rensa",
+	btnSave: "Spara",
+	summaryLabel: "vårhem",
+	loadingText: "Laddar...",
+	numApartments: "Antal bostäder",
 };
 
 i18n.addResources("fi-FI", ns, translationsFi);

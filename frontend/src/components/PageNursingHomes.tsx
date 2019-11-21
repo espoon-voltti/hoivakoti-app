@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
 import Map from "./Map";
+import { useT } from "../translations";
 import { NursingHome } from "./types";
 
 type Language = string;
@@ -66,8 +67,10 @@ const PageNursingHomes: FC = () => {
 		language: parsed.language as Language,
 	};
 
+	const locationPickerLabel = useT('locationPickerLabel');
+
 	const optionsArea: FilterOption[] = [
-		{ text: "Miltä alueelta etsit hoivakotia?", type: "header" },
+		{ text: locationPickerLabel, type: "header" },
 		...areas.map<FilterOption>((value: string) => {
 			const checked = searchFilters.alue
 				? searchFilters.alue.includes(value)
@@ -76,35 +79,63 @@ const PageNursingHomes: FC = () => {
 		}),
 	];
 
+
+	const filterLabel = useT('filterLabel');
+	const filterAraLabel = useT('filterAraLabel');
+	const filterAraText = useT('filterAraText');
+	const filterAraLabel2 = useT('filterAraLabel2');
+	const filterAraText2 = useT('filterAraText2');
+	const filterAraDesc = useT('filterAraDesc');
+
+	const filterLAH = useT('filterLAH');	
+	const filterLAHLabel = useT('filterLAH');	
+	const filterLAHText = useT('filterLAHText');	
+
+
+	const serviceLanguage = useT('serviceLanguage');
+	const serviceLanguageLabel = useT('serviceLanguageLabel');
+	const filterFinnish = useT('filterFinnish');
+	const filterSwedish = useT('filterSwedish');
+
+	const filterYes = useT('filterYes');
+	const filterNo = useT('filterNo');
+	const filterLocation = useT('filterLocation');
+
+	const summaryLabel = useT('summaryLabel');
+	const loadingText = useT('loadingText');
+
+
+
+
 	const optionsAra: FilterOption[] = [
 		{
-			text: "ARA-kohde",
-			subText: "Näytä vain ARA-kohteet",
+			text: filterAraLabel,
+			subText: filterAraText,
 			type: "radio",
 			checked: searchFilters.ara === true,
 		},
 		{
-			text: "Ei ARA-kohde",
-			subText: "Piilota ARA-kohteet",
+			text: filterAraLabel2,
+			subText: filterAraText2,
 			type: "radio",
 			checked: searchFilters.ara === false,
 		},
 		{
 			text:
-				"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat palvelutarve sekä varallisuus.",
+				filterAraDesc,
 			type: "text",
 		},
 	];
 
 	const optionsLanguage: FilterOption[] = [
-		{ text: "Hoivakodin palvelukieli", type: "header" },
+		{ text: serviceLanguageLabel, type: "header" },
 		{
-			text: "Suomi",
+			text: filterFinnish,
 			type: "radio",
 			checked: searchFilters.language === "Suomi",
 		},
 		{
-			text: "Ruotsi",
+			text: filterSwedish,
 			type: "radio",
 			checked: searchFilters.language === "Ruotsi",
 		},
@@ -113,7 +144,7 @@ const PageNursingHomes: FC = () => {
 	const filterElements = (
 		<>
 			<FilterItem
-				prefix="Sijainti"
+				prefix= {filterLocation}
 				value={
 					searchFilters.alue !== undefined
 						? searchFilters.alue.length <= 2
@@ -147,7 +178,7 @@ const PageNursingHomes: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix="Palvelukieli"
+				prefix={serviceLanguage}
 				value={searchFilters.language || null}
 				values={optionsLanguage}
 				ariaLabel="Valitse hoivakodin kieli"
@@ -168,7 +199,7 @@ const PageNursingHomes: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix="Ara-kohde"
+				prefix= {filterAraLabel}
 				value={
 					searchFilters.ara !== undefined
 						? searchFilters.ara
@@ -197,7 +228,7 @@ const PageNursingHomes: FC = () => {
 			/>
 
 			<FilterItem
-				prefix="Lyhytaikainen asuminen"
+				prefix= {filterLAH}
 				value={
 					searchFilters.lah !== undefined
 						? searchFilters.lah
@@ -207,9 +238,9 @@ const PageNursingHomes: FC = () => {
 				}
 				values={[
 					{
-						text: "Lyhytaikainen asuminen LAH",
+						text: filterLAHLabel,
 						subText:
-							"Näytä vain lyhytaikaista asumista tarjoavat paikat.",
+							filterLAHText,
 						type: "checkbox",
 						checked: searchFilters.lah === true,
 					},
@@ -293,17 +324,17 @@ const PageNursingHomes: FC = () => {
 	return (
 		<div>
 			<div className="filters">
-				<div className="filters-text">Rajaa tuloksia:</div>
+				<div className="filters-text">{filterLabel}</div>
 				{nursingHomes && filterElements}
 			</div>
 			{!nursingHomes || !filteredNursingHomes ? (
-				"Ladataan..."
+				loadingText
 			) : (
 				<div className="card-list-and-map-container">
 					<div className="card-list">
 						<h2 className="results-summary">
 							{Object.keys(nursingHomeComponents || {}).length}{" "}
-							hoivakotia
+							{summaryLabel}
 						</h2>
 						{nursingHomeComponents}
 					</div>

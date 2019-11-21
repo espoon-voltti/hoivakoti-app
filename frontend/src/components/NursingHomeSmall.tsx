@@ -3,6 +3,7 @@ import "../styles/NursingHomeSmall.scss";
 import { NursingHome } from "./types";
 import { Link } from "react-router-dom";
 import { Image } from "./PageNursingHome";
+import { useT } from "../translations";
 
 type NursingHomeSmallProps = {
 	nursinghome: NursingHome;
@@ -10,12 +11,18 @@ type NursingHomeSmallProps = {
 	className?: string;
 };
 
+
+
 const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
 	nursinghome,
 	isNarrow,
 	className,
 }) => {
+	const serviceLanguage = useT('serviceLanguage');
+	const numApartments = useT('numApartments');
+	const alsoLAHText = useT('alsoLAHText');
 	return (
+
 		<div
 			className={`card-list-item ${
 				isNarrow ? "card-narrow" : ""
@@ -44,20 +51,20 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
 						{nursinghome && nursinghome.address}
 					</div>
 					{nursinghome && nursinghome.ara && (
-						<div className="card-list-item__tag">ARA-kohde</div>
+						<div className="card-list-item__tag">filterAraLabel</div>
 					)}
 				</div>
 
 				<div>
 					<div className="card-list-item__text">
-						Palvelukieli: {nursinghome && nursinghome.language}{" "}
+						{serviceLanguage}: {nursinghome && nursinghome.language}{" "}
 						<span className="card-list-item__text--dot"> • </span>{" "}
-						Asuntojen määrä:{" "}
+						{numApartments}:{" "}
 						{nursinghome && nursinghome.apartment_count}
 					</div>
 					<div className="card-list-item__text card-list-item__text--lah">
 						{nursinghome && nursinghome.lah
-							? "Myös lyhytaikainen asuminen"
+							? {alsoLAHText}
 							: ""}
 					</div>
 				</div>
