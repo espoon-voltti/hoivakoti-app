@@ -4,7 +4,7 @@ import "../styles/App.scss";
 import PageNursingHomes from "./PageNursingHomes";
 import PageNursingHome from "./PageNursingHome";
 import PageLanding from "./PageLanding";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import ErrorBoundary from "./ErrorBoundary";
@@ -25,18 +25,22 @@ const App: React.FC = () => {
 					<Header />
 
 					<main id="content">
-						<Route exact path="/" component={PageLanding} />
-						<Route
-							exact
-							path="/hoivakodit"
-							component={PageNursingHomes}
-						/>
-						<Route
-							exact
-							path="/hoivakodit/:id"
-							component={PageNursingHome}
-						/>
-						<Route component={() => <PageError error="404" />} />
+						<Switch>
+							<Route exact path="/" component={PageLanding} />
+							<Route
+								exact
+								path="/hoivakodit"
+								component={PageNursingHomes}
+							/>
+							<Route
+								exact
+								path="/hoivakodit/:id"
+								component={PageNursingHome}
+							/>
+							<Route
+								component={() => <PageError error="404" />}
+							/>
+						</Switch>
 					</main>
 
 					<Footer />
