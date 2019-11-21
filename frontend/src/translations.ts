@@ -130,10 +130,10 @@ const translationsFi: TranslationsBundle = {
 		"Nämä eivät kuulu palveluun. Näiden osalta on hoivakotikohtainen käytäntö; toisissa hoivakodeissa asiakas tuo ne itse ja toisissa ne järjestyvät hoivakodin toimesta.",
 	faqItem5Headline: "Mitä siivousta kuuluu palveluun?",
 	faqItem5Text:
-		"Asiakkaalla omat normaalin vesipesun kestävä vaatteet. Jos asiakkaalla on erikoispesuja vaativia vaatteita tai muita tekstiilejä, niin niiden pesuista asiakas vastaa itse.",
+		"Asunto siivotaan vähintään kerran viikossa. Lisäksi asunnossa huolehditaan päivittäin huolehditaan vuoteen sijaamisesta, roskien viemisestä, tahrojen poistamisesta ja tarvittaessa vuodevaatteiden vaihtamisesta. Asiakas voi halutessaan osallistua näihin tehtäviin. Ikkunat pestään tarpeen mukaan.",
 	faqItem6Headline: "Kuka hoitaa asiakkaan vaatteet?",
 	faqItem6Text:
-		"Asunto siivotaan vähintään kerran viikossa. Lisäksi asunnossa huolehditaan päivittäin huolehditaan vuoteen sijaamisesta, roskien viemisestä, tahrojen poistamisesta ja tarvittaessa vuodevaatteiden vaihtamisesta. Asiakas voi halutessaan osallistua näihin tehtäviin. Ikkunat pestään tarpeen mukaan.",
+		"Asiakkaalla omat normaalin vesipesun kestävä vaatteet. Jos asiakkaalla on erikoispesuja vaativia vaatteita tai muita tekstiilejä, niin niiden pesuista asiakas vastaa itse.",
 	faqItem7Headline: "Miten lääkkeet hoituvat?",
 	faqItem7Text:
 		"Lääkkeiden annosjakelu kuuluu palveluun ja asiakas maksaa itse omat lääkkeet.",
