@@ -2,12 +2,24 @@
 
 $header-height: 80px;
 
+#app {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+#content {
+	flex-grow: 1;
+	position: relative;
+}
+
 .header {
 	display: flex;
 	height: $header-height;
 	padding: 0 20px;
 	align-items: center;
 	justify-content: space-between;
+	box-sizing: content-box;
 }
 
 .logo-container a {
