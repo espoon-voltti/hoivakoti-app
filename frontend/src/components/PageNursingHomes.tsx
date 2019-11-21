@@ -307,12 +307,7 @@ const PageNursingHomes: FC = () => {
 						isNarrow={false}
 					/>
 				</Link>
-				<div className="card-list-item-borders card-mobile">
-					<NursingHomeSmall
-						nursinghome={nursingHome}
-						isNarrow={true}
-					/>
-				</div>
+				
 			</React.Fragment>
 		));
 
