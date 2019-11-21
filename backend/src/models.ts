@@ -11,12 +11,12 @@ import {
 const options: Knex.Config = {
 	client: "postgres",
 	connection: {
-		user: process.env.DB_URL ? "voltti" : "postgres",
+		user: process.env.DB_USER ? process.env.DB_USER : "postgres",
 		password: process.env.DB_PASSWORD
 			? process.env.DB_PASSWORD
 			: "postgres",
 		host: process.env.DB_URL ? process.env.DB_URL : "postgres",
-		database: process.env.DB_URL ? "postgres" : "postgres",
+		database: process.env.DB_NAME ? process.env.DB_NAME : "postgres",
 	},
 };
 const knex = Knex(options);
