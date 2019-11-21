@@ -45,7 +45,10 @@ const PageNursingHome: FC = () => {
 			.then((response: GetNursingHomeResponse) => {
 				setNursingHome(response.data);
 			})
-			.catch(console.error);
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
 	}, [id]);
 
 	const availablePics = nursingHome && getAvailablePics(nursingHome);

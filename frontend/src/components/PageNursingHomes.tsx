@@ -45,7 +45,10 @@ const PageNursingHomes: FC = () => {
 			.then(function(response: { data: NursingHome[] }) {
 				setNursingHomes(response.data);
 			})
-			.catch((error: Error) => console.warn(error.message));
+			.catch((error: Error) => {
+				console.error(error.message);
+				throw error;
+			});
 	}, []);
 
 	const parsed = queryString.parse(search);
