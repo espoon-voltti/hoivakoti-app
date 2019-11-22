@@ -37,8 +37,8 @@
 .nursinghome-hero {
 	position: relative;
 	width: 100%;
-	margin-bottom: 48px;
-	height: 500px;
+	margin-bottom: 40px;
+	height: 640px;
 	overflow: hidden;
 	display: flex;
 	align-items: stretch;
@@ -191,4 +191,10 @@
 .nursinghome-details-name {
 	font-size: 19px;
 	font-weight: bold;
+}
+
+@media screen and (max-width: 1024px) {
+	.nursinghome-hero {
+		height: 400px;
+	}
 }
