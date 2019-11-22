@@ -7,7 +7,7 @@ import "../styles/Map.scss";
 import { FactoryParameters } from "react-mapbox-gl/lib/map";
 
 interface Props {
-	nursingHomes: NursingHome[];
+	nursingHomes: NursingHome[] | null;
 	popup: { selectedNursingHome: NursingHome; isExpanded: boolean } | null;
 	onSelectNursingHome: (nursingHome: NursingHome | null) => void;
 }
@@ -59,7 +59,7 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 			<ZoomControl position="top-right" />
 
 			<>
-				{nursingHomes.map((nursingHome, index) => (
+				{(nursingHomes || []).map((nursingHome, index) => (
 					<Marker
 						key={`${index}:${nursingHome.name}`}
 						coordinates={nursingHome.geolocation.center}

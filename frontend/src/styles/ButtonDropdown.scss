@@ -30,6 +30,11 @@
 	text-transform: uppercase;
 	white-space: nowrap;
 	user-select: none;
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
 }
 
 .button-dropdown-variant-primary .button-dropdown-active {

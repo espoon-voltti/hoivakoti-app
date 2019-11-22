@@ -150,6 +150,8 @@ const PageNursingHomes: FC = () => {
 		},
 	];
 
+	const isFilterDisabled = nursingHomes === null;
+
 	const filterElements = (
 		<>
 			<FilterItem
@@ -163,6 +165,7 @@ const PageNursingHomes: FC = () => {
 				}
 				values={optionsArea}
 				ariaLabel="Valitse hoivakodin alue"
+				disabled={isFilterDisabled}
 				onChange={({ newValue, name }) => {
 					const newSearchFilters = { ...searchFilters };
 					if (!newSearchFilters.alue) newSearchFilters.alue = [];
@@ -191,6 +194,7 @@ const PageNursingHomes: FC = () => {
 				value={searchFilters.language || null}
 				values={optionsLanguage}
 				ariaLabel="Valitse hoivakodin kieli"
+				disabled={isFilterDisabled}
 				onChange={({ name }): void => {
 					const newSearchFilters = {
 						...searchFilters,
@@ -218,6 +222,7 @@ const PageNursingHomes: FC = () => {
 				}
 				values={optionsAra}
 				ariaLabel="Valitse, näytetäänkö vain Ara-kohteet"
+				disabled={isFilterDisabled}
 				onChange={({ name }) => {
 					const newSearchFilters = {
 						...searchFilters,
@@ -254,6 +259,7 @@ const PageNursingHomes: FC = () => {
 					},
 				]}
 				ariaLabel="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
+				disabled={isFilterDisabled}
 				onChange={({ newValue }): void => {
 					const newSearchFilters = {
 						...searchFilters,
@@ -326,36 +332,34 @@ const PageNursingHomes: FC = () => {
 		<div>
 			<div className="filters">
 				<div className="filters-text">{filterLabel}</div>
-				{nursingHomes && filterElements}
+				{filterElements}
 			</div>
-			{!nursingHomes || !filteredNursingHomes ? (
-				loadingText
-			) : (
-				<div className="card-list-and-map-container">
-					<div className="card-list">
-						<h2 className="results-summary">
-							{Object.keys(cards || {}).length} {summaryLabel}
-						</h2>
-						<div className="card-container">{cards}</div>
-					</div>
-					<div id="map" className="map-container">
-						{isMapVisible && (
-							<Map
-								nursingHomes={filteredNursingHomes}
-								popup={mapPopup}
-								onSelectNursingHome={selectedNursingHome =>
-									setMapPopup(
-										selectedNursingHome && {
-											selectedNursingHome,
-											isExpanded: true,
-										},
-									)
-								}
-							/>
-						)}
-					</div>
+			<div className="card-list-and-map-container">
+				<div className="card-list">
+					<h2 className="results-summary">
+						{filteredNursingHomes
+							? `${filteredNursingHomes.length} ${summaryLabel}`
+							: loadingText}
+					</h2>
+					<div className="card-container">{cards}</div>
 				</div>
-			)}
+				<div id="map" className="map-container">
+					{isMapVisible && (
+						<Map
+							nursingHomes={filteredNursingHomes}
+							popup={mapPopup}
+							onSelectNursingHome={selectedNursingHome =>
+								setMapPopup(
+									selectedNursingHome && {
+										selectedNursingHome,
+										isExpanded: true,
+									},
+								)
+							}
+						/>
+					)}
+				</div>
+			</div>
 		</div>
 	);
 };

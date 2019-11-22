@@ -16,6 +16,7 @@ export type Props = {
 	value: string | null;
 	values: FilterOption[];
 	ariaLabel: string;
+	disabled?: boolean;
 	dropdownVariant?: DropdownVariant;
 	onChange: (newValue: { name: string; newValue: boolean }) => void;
 	onReset: () => void;
@@ -25,6 +26,7 @@ const FilterItem: FC<Props> = ({
 	prefix,
 	value,
 	values,
+	disabled,
 	dropdownVariant = "primary",
 	onChange,
 	onReset,
@@ -39,8 +41,8 @@ const FilterItem: FC<Props> = ({
 		onChange(newValue);
 	};
 
-	const btnClear = useT('btnClear');
-	const btnSave = useT('btnSave');
+	const btnClear = useT("btnClear");
+	const btnSave = useT("btnSave");
 
 	const subMenu = (
 		<div>
@@ -156,6 +158,7 @@ const FilterItem: FC<Props> = ({
 			variant={dropdownVariant}
 			label={label}
 			active={filterActive}
+			disabled={disabled}
 		>
 			{subMenu}
 		</ButtonDropdown>

@@ -11,6 +11,7 @@ interface Props {
 	variant: DropdownVariant;
 	label: string;
 	active: boolean;
+	disabled?: boolean;
 }
 
 const ButtonDropdown: FC<Props> = ({
@@ -20,6 +21,7 @@ const ButtonDropdown: FC<Props> = ({
 	label,
 	active,
 	children,
+	disabled,
 }) => {
 	return (
 		<>
@@ -34,7 +36,10 @@ const ButtonDropdown: FC<Props> = ({
 				aria-expanded={isExpanded}
 			>
 				<button
-					onClick={() => onExpandedChange(!isExpanded)}
+					onClick={() => {
+						if (!disabled) onExpandedChange(!isExpanded);
+					}}
+					disabled={disabled}
 					className={`button-dropdown ${
 						active ? "button-dropdown-active" : ""
 					}`}
