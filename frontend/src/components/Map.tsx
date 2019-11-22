@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React, { FC } from "react";
 import ReactMapboxGl, { Popup, Marker, ZoomControl } from "react-mapbox-gl";
-import { NursingHomeSmall } from "./CardNursingHome";
+import { CardNursingHome } from "./CardNursingHome";
 import { NursingHome } from "./types";
 import "../styles/Map.scss";
 import { FactoryParameters } from "react-mapbox-gl/lib/map";
@@ -93,9 +93,9 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 						}}
 						style={{ maxWidth: 350 }}
 					>
-						<NursingHomeSmall
+						<CardNursingHome
 							nursinghome={popup.selectedNursingHome}
-							isNarrow={true}
+							className="card-narrow"
 						/>
 					</Popup>
 				)}

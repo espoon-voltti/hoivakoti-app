@@ -1,10 +1,10 @@
 import React, { useState, useEffect, FC } from "react";
-import { NursingHomeSmall } from "./CardNursingHome";
+import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation } from "react-router-dom";
 import "../styles/PageNursingHomes.scss";
 import config from "./config";
-import { Link } from "react-router-dom";
+import { Link as div } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
 import Map from "./Map";
@@ -286,14 +286,16 @@ const PageNursingHomes: FC = () => {
 			return true;
 		});
 
-	const nursingHomeComponents: JSX.Element[] | null =
+	const cards: JSX.Element[] | null =
 		filteredNursingHomes &&
 		filteredNursingHomes.map((nursingHome, index) => (
-			<React.Fragment key={index}>
-				<Link
-					to={"/hoivakodit/" + nursingHome.id}
-					style={{ textDecoration: "none" }}
-					className="card-list-item-borders card-desktop"
+			<div key={index}>
+				<div
+					className={`card-list-item-borders ${
+						index === filteredNursingHomes.length - 1
+							? "card-list-item-borders-last"
+							: ""
+					}`}
 					onMouseEnter={() =>
 						setMapPopup({
 							selectedNursingHome: nursingHome,
@@ -302,12 +304,9 @@ const PageNursingHomes: FC = () => {
 					}
 					onMouseLeave={() => setMapPopup(null)}
 				>
-					<NursingHomeSmall
-						nursinghome={nursingHome}
-						isNarrow={false}
-					/>
-				</Link>
-			</React.Fragment>
+					<CardNursingHome nursinghome={nursingHome} />
+				</div>
+			</div>
 		));
 
 	return (
@@ -322,10 +321,9 @@ const PageNursingHomes: FC = () => {
 				<div className="card-list-and-map-container">
 					<div className="card-list">
 						<h2 className="results-summary">
-							{Object.keys(nursingHomeComponents || {}).length}{" "}
-							{summaryLabel}
+							{Object.keys(cards || {}).length} {summaryLabel}
 						</h2>
-						{nursingHomeComponents}
+						<div className="card-container">{cards}</div>
 					</div>
 					<div id="map" className="map-container">
 						<Map

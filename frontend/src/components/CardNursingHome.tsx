@@ -2,37 +2,40 @@ import React, { FC } from "react";
 import "../styles/CardNursingHome.scss";
 import { NursingHome } from "./types";
 import { Link } from "react-router-dom";
-import { Image } from "./PageNursingHome";
 import { useT } from "../translations";
+import config from "./config";
 
 type NursingHomeSmallProps = {
 	nursinghome: NursingHome;
-	isNarrow?: boolean;
 	className?: string;
 };
 
-const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
+const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	nursinghome,
-	isNarrow,
 	className,
 }) => {
 	const serviceLanguage = useT("serviceLanguage");
 	const numApartments = useT("numApartments");
 	const alsoLAHText = useT("alsoLAHText");
+	const imageDigest =
+		nursinghome.pic_digests &&
+		nursinghome.pic_digests.overview_outside_hash;
+	const imageUrl =
+		nursinghome.pic_digests &&
+		nursinghome.pic_digests.overview_outside_hash &&
+		`${config.API_URL}/nursing-homes/${nursinghome.id}` +
+			`/pics/overview_outside/${imageDigest}`;
 	return (
-		<div
-			className={`card-list-item ${
-				isNarrow ? "card-narrow" : ""
-			} ${className || ""}`}
+		<Link
+			to={`/hoivakodit/${nursinghome.id}`}
+			className={`card-list-item ${className || ""}`}
 		>
-			<div className="card-list-item__image-container">
-				<Image
-					nursingHome={nursinghome}
-					imageName="overview_outside"
-					alt="Hoivakodin preview-kuva"
-					className="card-list-item__image"
-				/>
-			</div>
+			<div
+				className={`card-list-item__image-container ${
+					imageUrl ? "has-pic" : ""
+				}`}
+				style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : {}}
+			/>
 
 			<div className="card-list-item__content">
 				<div>
@@ -65,19 +68,19 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
 						{nursinghome && nursinghome.lah ? { alsoLAHText } : ""}
 					</div>
 				</div>
-
-				{isNarrow && (
-					<div className="card-list-item__link">
-						<div className="card-list-item__text">
-							<Link to={`/hoivakodit/${nursinghome.id}`}>
-								Hoivakodin tiedot
-							</Link>
-						</div>
-					</div>
-				)}
 			</div>
-		</div>
+
+			<div className="card-list-item__spacer" />
+
+			<div>
+				<div className="card-list-item__link">
+					<button className="card-list-item__link-button">
+						Hoivakodin tiedot
+					</button>
+				</div>
+			</div>
+		</Link>
 	);
 };
 
-export { NursingHomeSmall };
+export { CardNursingHome };

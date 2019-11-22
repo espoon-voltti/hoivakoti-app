@@ -2,6 +2,7 @@
 
 .card-list-item {
 	width: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
@@ -9,14 +10,31 @@
 	border-radius: $border-radius;
 	color: $text-color;
 	word-wrap: break-all;
+	font-family: "Open sans", sans-serif;
+	font-size: 14px;
+
+	&,
+	&:hover {
+		text-decoration: none;
+	}
 }
 
 .card-list-item-borders {
-	display: block;
-	padding: 20px 0px;
-	border-top: 1px solid $border-color;
-	&:last-child {
-		border-bottom: 1px solid $border-color;
+	border: 1px solid $border-color;
+	border-radius: $border-radius-lg;
+	height: 100%;
+}
+
+@media (min-width: 1130px) {
+	.card-list-item-borders {
+		display: block;
+		padding: 20px 0px;
+		border: 0;
+		border-radius: 0;
+		border-top: 1px solid $border-color;
+		&.card-list-item-borders-last {
+			border-bottom: 1px solid $border-color;
+		}
 	}
 }
 
@@ -39,7 +57,7 @@
 	}
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1130px) {
 	.card-list-item:not(.card-narrow) {
 		@include card-wide;
 	}
@@ -55,22 +73,38 @@
 
 .card-list-item__image-container {
 	width: 100%;
-	border-radius: $border-radius;
+	border-top-left-radius: $border-radius-lg;
+	border-top-right-radius: $border-radius-lg;
 	margin-right: 20px;
-	min-height: 200px;
+	height: 200px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	background: $border-color url("/icon-house.svg") 50% 50% no-repeat;
+
+	&.has-pic {
+		background-size: cover;
+		background-position: center;
+	}
+
+	@media (min-width: 1130px) {
+		border-bottom-left-radius: $border-radius-lg;
+		border-bottom-right-radius: $border-radius-lg;
+	}
 }
 
-.card-list-item__image {
-	display: block;
-	width: 100%;
-}
+// .card-list-item__image {
+// 	display: block;
+// 	width: 100%;
+// }
 
 .card-list-item__content {
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
 	padding: 20px;
+	padding-bottom: 0;
 }
 
 .card-list-item__subheader {
@@ -106,4 +140,25 @@
 	padding: 0 5px;
 	margin-top: 5px;
 	color: #fff;
+}
+
+.card-list-item__spacer {
+	flex-grow: 1;
+}
+
+.card-list-item__link {
+	padding: 20px;
+	padding-top: 0;
+}
+
+.card-list-item__link-button {
+	margin-top: 0.5em;
+	cursor: pointer;
+	font-weight: normal;
+	border: none;
+	background: none;
+	font-family: "Open sans", sans-serif;
+	font-size: 14px;
+	padding: 0;
+	color: $primary-blue;
 }

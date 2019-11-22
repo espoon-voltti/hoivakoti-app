@@ -6,6 +6,7 @@
 
 .card-list {
 	margin: 0 20px;
+	padding-bottom: 60px;
 	flex-grow: 1;
 }
 
@@ -22,6 +23,27 @@
 	.card-list {
 		flex-basis: 780px;
 		flex-grow: 0;
+	}
+}
+
+.card-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	& > * {
+		padding: 12px;
+		flex-basis: 100%;
+		@media screen and (min-width: 650px) {
+			flex-basis: 50%;
+		}
+		@media screen and (min-width: 900px) {
+			flex-basis: 33.333%;
+		}
+		@media screen and (min-width: 1130px) {
+			flex-basis: 100%;
+			padding: 0;
+		}
 	}
 }
 
