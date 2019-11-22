@@ -6,16 +6,18 @@ const reactImages = require("react-images");
 
 const { default: Carousel, ModalGateway, Modal } = reactImages;
 
+export interface ImageView {
+	src: string;
+	caption: string | null;
+}
+
 interface Props {
 	isOpen: boolean;
 	onClose: () => void;
-	imageUrls: string[];
+	images: ImageView[];
 }
 
-const Lightbox: FC<Props> = ({ isOpen, onClose, imageUrls }) => {
-	const images = imageUrls.map<{ src: string }>(src => ({
-		src,
-	}));
+const Lightbox: FC<Props> = ({ isOpen, onClose, images }) => {
 	return (
 		<ModalGateway>
 			{isOpen ? (
