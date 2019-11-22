@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import ReactMapboxGl, { Popup, Marker, ZoomControl } from "react-mapbox-gl";
 import { CardNursingHome } from "./CardNursingHome";
 import { NursingHome } from "./types";
 import "../styles/Map.scss";
-import { FactoryParameters } from "react-mapbox-gl/lib/map";
+import { FactoryParameters, FitBounds } from "react-mapbox-gl/lib/map";
+import { LngLatBounds, LngLat } from "mapbox-gl";
 
 interface Props {
 	nursingHomes: NursingHome[] | null;
@@ -28,35 +29,68 @@ const mapConfigNonInteractive: FactoryParameters = {
 const MapComponent = ReactMapboxGl(mapConfig);
 const MapComponentNonInteractive = ReactMapboxGl(mapConfigNonInteractive);
 
+const calculateBounds = (
+	nursingHomes: NursingHome[] | null,
+): FitBounds | null => {
+	if (!nursingHomes) return null;
+
+	const bounds = new LngLatBounds();
+
+	for (const nursingHome of nursingHomes) {
+		const [lng, lat] = nursingHome.geolocation.center;
+		bounds.extend(new LngLat(lng, lat));
+	}
+
+	return [
+		[bounds.getWest(), bounds.getSouth()],
+		[bounds.getEast(), bounds.getNorth()],
+	];
+};
+
 const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
+	const [isMapLoaded, setIsMapLoaded] = useState(false);
+	const [viewportPos, setViewportPos] = useState<[number, number]>([
+		24.6559,
+		60.2055,
+	]);
+
 	const createMarkerClickHandler = (nursingHome: NursingHome) => () => {
+		const [lat, lng] = nursingHome.geolocation.center;
 		if (popup && popup.selectedNursingHome.id === nursingHome.id)
 			onSelectNursingHome(null);
 		else onSelectNursingHome(nursingHome);
+		if (isMapLoaded) setViewportPos([lat, lng]);
 	};
 
-	const selectedMarkerPos =
-		popup && popup.isExpanded
-			? popup.selectedNursingHome.geolocation.center
-			: null;
-	const center: [number, number] = selectedMarkerPos
-		? [selectedMarkerPos[0], selectedMarkerPos[1] + 0.02]
-		: [24.6559, 60.2055];
+	const fitBounds = calculateBounds(nursingHomes) || [
+		[24.318755, 60.189911],
+		[24.742739, 60.416317],
+	];
 
 	return (
 		<MapComponent
 			/* eslint-disable-next-line react/style-prop-object */
 			style="mapbox://styles/mapbox/streets-v9"
-			center={center}
+			center={viewportPos}
 			containerStyle={{
 				height: "100vh",
 				width: "100%",
 				position: "sticky",
 				top: 0,
 			}}
+			fitBounds={!isMapLoaded ? fitBounds : undefined}
+			fitBoundsOptions={{ padding: 100 }}
 			onClick={() => onSelectNursingHome(null)}
+			onMoveEnd={map => {
+				const { lat, lng } = map.getCenter();
+				if (isMapLoaded) setViewportPos([lat, lng]);
+			}}
+			onStyleLoad={() => {
+				setIsMapLoaded(true);
+			}}
 		>
-			<ZoomControl position="top-right" 
+			<ZoomControl
+				position="top-right"
 				className="ZoomControl--hoivakoti"
 			/>
 
@@ -80,7 +114,6 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 					</Marker>
 				))}
 			</>
-
 			<>
 				{popup && popup.isExpanded && (
 					<Popup
@@ -88,11 +121,7 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 							popup.selectedNursingHome.geolocation.center
 						}
 						anchor="bottom"
-						offset={{
-							"bottom-left": [12, -38],
-							bottom: [0, -38],
-							"bottom-right": [-12, -38],
-						}}
+						offset={[0, -38]}
 						style={{ maxWidth: 350 }}
 					>
 						<CardNursingHome
