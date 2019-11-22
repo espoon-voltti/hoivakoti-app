@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React, { FC } from "react";
 import ReactMapboxGl, { Popup, Marker, ZoomControl } from "react-mapbox-gl";
-import { NursingHomeSmall } from "./NursingHomeSmall";
+import { NursingHomeSmall } from "./CardNursingHome";
 import { NursingHome } from "./types";
 import "../styles/Map.scss";
 import { FactoryParameters } from "react-mapbox-gl/lib/map";

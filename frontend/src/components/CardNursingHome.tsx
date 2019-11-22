@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import "../styles/NursingHomeSmall.scss";
+import "../styles/CardNursingHome.scss";
 import { NursingHome } from "./types";
 import { Link } from "react-router-dom";
 import { Image } from "./PageNursingHome";
@@ -11,18 +11,15 @@ type NursingHomeSmallProps = {
 	className?: string;
 };
 
-
-
 const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
 	nursinghome,
 	isNarrow,
 	className,
 }) => {
-	const serviceLanguage = useT('serviceLanguage');
-	const numApartments = useT('numApartments');
-	const alsoLAHText = useT('alsoLAHText');
+	const serviceLanguage = useT("serviceLanguage");
+	const numApartments = useT("numApartments");
+	const alsoLAHText = useT("alsoLAHText");
 	return (
-
 		<div
 			className={`card-list-item ${
 				isNarrow ? "card-narrow" : ""
@@ -51,7 +48,9 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
 						{nursinghome && nursinghome.address}
 					</div>
 					{nursinghome && nursinghome.ara && (
-						<div className="card-list-item__tag">filterAraLabel</div>
+						<div className="card-list-item__tag">
+							filterAraLabel
+						</div>
 					)}
 				</div>
 
@@ -63,9 +62,7 @@ const NursingHomeSmall: FC<NursingHomeSmallProps> = ({
 						{nursinghome && nursinghome.apartment_count}
 					</div>
 					<div className="card-list-item__text card-list-item__text--lah">
-						{nursinghome && nursinghome.lah
-							? {alsoLAHText}
-							: ""}
+						{nursinghome && nursinghome.lah ? { alsoLAHText } : ""}
 					</div>
 				</div>
 

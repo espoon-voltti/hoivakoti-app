@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from "react";
-import { NursingHomeSmall } from "./NursingHomeSmall";
+import { NursingHomeSmall } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation } from "react-router-dom";
 import "../styles/PageNursingHomes.scss";
