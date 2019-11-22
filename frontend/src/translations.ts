@@ -71,11 +71,11 @@ interface TranslationsBundle {
 	filterAraText2: string;
 	filterAraDesc: string;
 
- 	serviceLanguage: string;
+	serviceLanguage: string;
 	serviceLanguageLabel: string;
 	filterFinnish: string;
 	filterSwedish: string;
-	
+
 	filterYes: string;
 	filterNo: string;
 	filterLocation: string;
@@ -86,8 +86,8 @@ interface TranslationsBundle {
 	btnClear: string;
 	btnSave: string;
 
-	summaryLabel:string;
-	loadingText:string;
+	summaryLabel: string;
+	loadingText: string;
 
 	numApartments: string;
 	filterSelections: string;
@@ -120,8 +120,6 @@ interface TranslationsBundle {
 	linkMoreInfoOutdoor: string;
 	linkMoreInfoActivies: string;
 	linkMoreInfoPersonnel: string;
-
-
 }
 
 export type TranslationKey = keyof TranslationsBundle;
@@ -214,15 +212,11 @@ const translationsFi: TranslationsBundle = {
 	faqItem12Text:
 		"Asiakas voi asua hoivakodissa elämänsä loppuun asti. Kivun ja muiden oireiden hoidosta huolehditaan kaikkina vuorokauden aikoina. Hoivakodissa kunnioitetaan kuolevan vakaumusta ja hänen henkisestä hyvinvoinnistaan huolehditaan.",
 	filterLabel: "Rajaa tuloksia:",
-	filterAraLabel:
-		"ARA-kohde",
-	filterAraText:
-		"Näytä vain ARA-kohteet",
-	filterAraLabel2:
-		"Ei ARA-kohde",
-	filterAraText2:
-		"Piilosta ARA-kohteet",
-	filterAraDesc: 
+	filterAraLabel: "ARA-kohde",
+	filterAraText: "Näytä vain ARA-kohteet",
+	filterAraLabel2: "Ei ARA-kohde",
+	filterAraText2: "Piilosta ARA-kohteet",
+	filterAraDesc:
 		"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat palvelutarve sekä varallisuus.",
 	serviceLanguage: "Palvelukieli",
 	serviceLanguageLabel: "Hoivakodin palvelukieli",
@@ -349,15 +343,11 @@ const translationsSe: TranslationsBundle = {
 	faqItem12Text:
 		"sv_Asiakas voi asua hoivakodissa elämänsä loppuun asti. Kivun ja muiden oireiden hoidosta huolehditaan kaikkina vuorokauden aikoina. Hoivakodissa kunnioitetaan kuolevan vakaumusta ja hänen henkisestä hyvinvoinnistaan huolehditaan.",
 	filterLabel: "Filter resulter:",
-	filterAraLabel:
-		"ARA-boende",
-	filterAraText:
-		"Visa bara ARA-boende",
-	filterAraLabel2:	
-		"Ingen ARA-boende",
-	filterAraText2:
-		"Döljä ARA-boende",
-	filterAraDesc: 
+	filterAraLabel: "ARA-boende",
+	filterAraText: "Visa bara ARA-boende",
+	filterAraLabel2: "Ingen ARA-boende",
+	filterAraText2: "Döljä ARA-boende",
+	filterAraDesc:
 		"ARA-boende är finansierad med statligt stöd och invånare väljs utifrån behov av tjänster och förmögenhet.",
 	serviceLanguage: "Språk",
 	serviceLanguageLabel: "Vårhemets pråk",

@@ -54,46 +54,44 @@ const PageNursingHome: FC = () => {
 
 	const availablePics = nursingHome && getAvailablePics(nursingHome);
 
-	const linkBacktoList = useT('linkBacktoList');
-	const loadingText = useT('loadingText');
-	const filterAraLabel = 	useT('filterAraLabel');
-	const numApartments = 	useT('numApartments');
-	const serviceLanguage = useT('serviceLanguage');
+	const linkBacktoList = useT("linkBacktoList");
+	const loadingText = useT("loadingText");
+	const filterAraLabel = useT("filterAraLabel");
+	const numApartments = useT("numApartments");
+	const serviceLanguage = useT("serviceLanguage");
 
-	
+	const basicInformation = useT("basicInformation");
+	const owner = useT("owner");
+	const yearofConst = useT("yearofConst");
+	const apartmentSize = useT("apartmentSize");
+	const apartmentFurnitureLabel = useT("apartmentFurnitureLabel");
+	const apartmentFurnitureText = useT("apartmentFurnitureText");
+	const rent = useT("rent");
+	const LAHapartments = useT("LAHapartments");
+	const foodHeader = useT("foodHeader");
+	const cookingMethod = useT("cookingMethod");
 
-	const basicInformation = useT('basicInformation');
-	const owner = useT('owner');
-	const yearofConst = useT('yearofConst');
-	const apartmentSize = useT('apartmentSize');
-	const apartmentFurnitureLabel = useT('apartmentFurnitureLabel');
-	const apartmentFurnitureText = useT('apartmentFurnitureText');
-	const rent = useT('rent');
-	const LAHapartments = useT('LAHapartments');
-	const foodHeader = useT('foodHeader');
-	const cookingMethod = useT('cookingMethod');
+	// const ownKitchen = useT("ownKitchen");
+	const foodMoreInfo = useT("foodMoreInfo");
+	const linkMenu = useT("linkMenu");
+	const activies = useT("activies");
+	const outdoorActivies = useT("outdoorActivies");
+	const visitingInfo = useT("visitingInfo");
+	const accessibility = useT("accessibility");
+	const personnel = useT("personnel");
+	const otherServices = useT("otherServices");
+	const nearbyServices = useT("nearbyServices");
 
-	const ownKitchen = useT('ownKitchen');
-	const foodMoreInfo = useT('foodMoreInfo');
-	const linkMenu = useT('linkMenu');
-	const activies = useT('activies');
-	const outdoorActivies = useT('outdoorActivies');
-	const visitingInfo = useT('visitingInfo');
-	const accessibility = useT('accessibility');
-	const personnel = useT('personnel');
-	const otherServices = useT('otherServices');
-	const nearbyServices = useT('nearbyServices');
+	// const webpage = useT("webpage");
 
-	const webpage = useT('webpage');
+	const linkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
+	const linkMoreInfoActivies = useT("linkMoreInfoActivies");
+	const linkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
 
-	const linkMoreInfoOutdoor = useT('linkMoreInfoOutdoor');
-	const linkMoreInfoActivies = useT('linkMoreInfoActivies');
-	const linkMoreInfoPersonnel = useT('linkMoreInfoPersonnel');
-
-	const filterFinnish = useT('filterFinnish');
-	const filterSwedish = useT('filterSwedish');
-	const filterYes = useT('filterYes');
-	const filterNo = useT('filterNo');
+	// const filterFinnish = useT("filterFinnish");
+	// const filterSwedish = useT("filterSwedish");
+	const filterYes = useT("filterYes");
+	const filterNo = useT("filterNo");
 
 	const images =
 		nursingHome &&
@@ -346,40 +344,46 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	nursingHome,
 	className,
 }) => {
-	const contactInfo = useT('contactInfo');
-	const directions = useT('directions');
-	 return <div className={className}>
-		<Image
-			nursingHome={nursingHome}
-			imageName="owner_logo"
-			className="nursinghome-details-logo"
-			alt="Omistajan logo"
-		/>
-		<Paragraph
-			text={nursingHome.name}
-			className="nursinghome-details-name"
-		/>
-		<a
-			href={`https://www.google.com/maps/search/${
-				nursingHome.name
-			}/@${nursingHome.geolocation.center.join(",")}z`}
-			target="_blank"
-			rel="noreferrer noopener"
-		>
-			<MapSmall nursingHome={nursingHome} />
-		</a>
-		<h3>{contactInfo}</h3>
-		<Paragraph text={nursingHome.address} />
-		<Paragraph text={nursingHome.contact_name} />
-		<Paragraph text={nursingHome.contact_title} />
-		<Paragraph text={nursingHome.contact_phone} />
-		<ParagraphLink
-			text={nursingHome.email}
-			to={nursingHome.email ? `mailto:${nursingHome.email}` : undefined}
-		/>
-		<ParagraphLink to={nursingHome.www} />
-		<h3>{directions}</h3>
-		<Paragraph text={nursingHome.arrival_guide_public_transit} />
-		<Paragraph text={nursingHome.arrival_guide_car} />
-	</div>
+	const contactInfo = useT("contactInfo");
+	const directions = useT("directions");
+	return (
+		<div className={className}>
+			<Image
+				nursingHome={nursingHome}
+				imageName="owner_logo"
+				className="nursinghome-details-logo"
+				alt="Omistajan logo"
+			/>
+			<Paragraph
+				text={nursingHome.name}
+				className="nursinghome-details-name"
+			/>
+			<a
+				href={`https://www.google.com/maps/search/${
+					nursingHome.name
+				}/@${nursingHome.geolocation.center.join(",")}z`}
+				target="_blank"
+				rel="noreferrer noopener"
+			>
+				<MapSmall nursingHome={nursingHome} />
+			</a>
+			<h3>{contactInfo}</h3>
+			<Paragraph text={nursingHome.address} />
+			<Paragraph text={nursingHome.contact_name} />
+			<Paragraph text={nursingHome.contact_title} />
+			<Paragraph text={nursingHome.contact_phone} />
+			<ParagraphLink
+				text={nursingHome.email}
+				to={
+					nursingHome.email
+						? `mailto:${nursingHome.email}`
+						: undefined
+				}
+			/>
+			<ParagraphLink to={nursingHome.www} />
+			<h3>{directions}</h3>
+			<Paragraph text={nursingHome.arrival_guide_public_transit} />
+			<Paragraph text={nursingHome.arrival_guide_car} />
+		</div>
+	);
 };

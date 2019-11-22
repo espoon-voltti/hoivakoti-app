@@ -67,7 +67,7 @@ const PageNursingHomes: FC = () => {
 		language: parsed.language as Language,
 	};
 
-	const locationPickerLabel = useT('locationPickerLabel');
+	const locationPickerLabel = useT("locationPickerLabel");
 
 	const optionsArea: FilterOption[] = [
 		{ text: locationPickerLabel, type: "header" },
@@ -79,35 +79,30 @@ const PageNursingHomes: FC = () => {
 		}),
 	];
 
+	const filterLabel = useT("filterLabel");
+	const filterAraLabel = useT("filterAraLabel");
+	const filterAraText = useT("filterAraText");
+	const filterAraLabel2 = useT("filterAraLabel2");
+	const filterAraText2 = useT("filterAraText2");
+	const filterAraDesc = useT("filterAraDesc");
 
-	const filterLabel = useT('filterLabel');
-	const filterAraLabel = useT('filterAraLabel');
-	const filterAraText = useT('filterAraText');
-	const filterAraLabel2 = useT('filterAraLabel2');
-	const filterAraText2 = useT('filterAraText2');
-	const filterAraDesc = useT('filterAraDesc');
+	const filterLAH = useT("filterLAH");
+	const filterLAHLabel = useT("filterLAH");
+	const filterLAHText = useT("filterLAHText");
 
-	const filterLAH = useT('filterLAH');	
-	const filterLAHLabel = useT('filterLAH');	
-	const filterLAHText = useT('filterLAHText');	
+	const serviceLanguage = useT("serviceLanguage");
+	const serviceLanguageLabel = useT("serviceLanguageLabel");
+	const filterFinnish = useT("filterFinnish");
+	const filterSwedish = useT("filterSwedish");
 
+	const filterYes = useT("filterYes");
+	const filterNo = useT("filterNo");
+	const filterLocation = useT("filterLocation");
 
-	const serviceLanguage = useT('serviceLanguage');
-	const serviceLanguageLabel = useT('serviceLanguageLabel');
-	const filterFinnish = useT('filterFinnish');
-	const filterSwedish = useT('filterSwedish');
+	const summaryLabel = useT("summaryLabel");
+	const loadingText = useT("loadingText");
 
-	const filterYes = useT('filterYes');
-	const filterNo = useT('filterNo');
-	const filterLocation = useT('filterLocation');
-
-	const summaryLabel = useT('summaryLabel');
-	const loadingText = useT('loadingText');
-
-	const filterSelections = useT('filterSelections');
-
-
-
+	const filterSelections = useT("filterSelections");
 
 	const optionsAra: FilterOption[] = [
 		{
@@ -123,8 +118,7 @@ const PageNursingHomes: FC = () => {
 			checked: searchFilters.ara === false,
 		},
 		{
-			text:
-				filterAraDesc,
+			text: filterAraDesc,
 			type: "text",
 		},
 	];
@@ -146,7 +140,7 @@ const PageNursingHomes: FC = () => {
 	const filterElements = (
 		<>
 			<FilterItem
-				prefix= {filterLocation}
+				prefix={filterLocation}
 				value={
 					searchFilters.alue !== undefined
 						? searchFilters.alue.length <= 2
@@ -201,12 +195,12 @@ const PageNursingHomes: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix= {filterAraLabel}
+				prefix={filterAraLabel}
 				value={
 					searchFilters.ara !== undefined
 						? searchFilters.ara
-							? "Kyllä"
-							: "Ei"
+							? filterYes
+							: filterNo
 						: null
 				}
 				values={optionsAra}
@@ -230,19 +224,18 @@ const PageNursingHomes: FC = () => {
 			/>
 
 			<FilterItem
-				prefix= {filterLAH}
+				prefix={filterLAH}
 				value={
 					searchFilters.lah !== undefined
 						? searchFilters.lah
-							? "Kyllä"
-							: "Ei"
+							? filterYes
+							: filterNo
 						: null
 				}
 				values={[
 					{
 						text: filterLAHLabel,
-						subText:
-							filterLAHText,
+						subText: filterLAHText,
 						type: "checkbox",
 						checked: searchFilters.lah === true,
 					},
