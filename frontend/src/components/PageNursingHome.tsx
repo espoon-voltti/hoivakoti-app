@@ -170,39 +170,50 @@ const PageNursingHome: FC = () => {
 						/>
 						<Paragraph text={nursingHome.summary} />
 						<h3>{basicInformation}</h3>
-						<Paragraph title={owner} text={nursingHome.owner} />
-						<Paragraph
-							title={filterAraLabel}
-							text={nursingHome.ara ? filterYes : filterNo}
-						/>
-						<Paragraph
-							title={yearofConst}
-							text={String(nursingHome.construction_year)}
-						/>
-						<Paragraph
-							title={numApartments}
-							text={`${nursingHome.apartment_count} kpl`}
-						/>
-						<Paragraph
-							title={apartmentSize}
-							text={`${nursingHome.apartment_square_meters} m²`}
-						/>
-						<Paragraph
-							title={apartmentFurnitureLabel}
-							text={apartmentFurnitureText}
-						/>
-						<Paragraph
-							title={rent}
-							text={`${nursingHome.rent} € / kk`}
-						/>
-						<Paragraph
-							title={serviceLanguage}
-							text={nursingHome.language}
-						/>
-						<Paragraph
-							title={LAHapartments}
-							text={nursingHome.lah ? filterYes : filterNo}
-						/>
+						<dl>
+							<DefinitionItem
+								term={owner}
+								definition={nursingHome.owner}
+							/>
+							<DefinitionItem
+								term={filterAraLabel}
+								definition={
+									nursingHome.ara ? filterYes : filterNo
+								}
+							/>
+							<DefinitionItem
+								term={yearofConst}
+								definition={String(
+									nursingHome.construction_year,
+								)}
+							/>
+							<DefinitionItem
+								term={numApartments}
+								definition={`${nursingHome.apartment_count} kpl`}
+							/>
+							<DefinitionItem
+								term={apartmentSize}
+								definition={`${nursingHome.apartment_square_meters} m²`}
+							/>
+							<DefinitionItem
+								term={apartmentFurnitureLabel}
+								definition={apartmentFurnitureText}
+							/>
+							<DefinitionItem
+								term={rent}
+								definition={`${nursingHome.rent} € / kk`}
+							/>
+							<DefinitionItem
+								term={serviceLanguage}
+								definition={nursingHome.language}
+							/>
+							<DefinitionItem
+								term={LAHapartments}
+								definition={
+									nursingHome.lah ? filterYes : filterNo
+								}
+							/>
+						</dl>
 						<h3>{foodHeader}</h3>
 						<Paragraph
 							title={cookingMethod}
@@ -277,6 +288,29 @@ const Paragraph: FC<ParagraphProps> = ({ title, text, className }) => {
 				<p className="nursinghome-info-paragraph-title">{title}</p>
 			)}
 			<p className={className}>{text}</p>
+		</>
+	);
+};
+
+interface DefinitionItemProps {
+	term?: string;
+	definition?: string;
+	className?: string;
+}
+
+const DefinitionItem: FC<DefinitionItemProps> = ({
+	term,
+	definition,
+	className,
+}) => {
+	if (!definition) return null;
+
+	return (
+		<>
+			{term && (
+				<dt className="nursinghome-info-paragraph-title">{term}</dt>
+			)}
+			<dd className={className}>{definition}</dd>
 		</>
 	);
 };
