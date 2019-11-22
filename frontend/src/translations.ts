@@ -120,6 +120,8 @@ interface TranslationsBundle {
 	linkMoreInfoOutdoor: string;
 	linkMoreInfoActivies: string;
 	linkMoreInfoPersonnel: string;
+
+	monthShort: string;
 }
 
 export type TranslationKey = keyof TranslationsBundle;
@@ -263,6 +265,7 @@ const translationsFi: TranslationsBundle = {
 	linkMoreInfoOutdoor: "Lisätietoa ulkoilumahdollisuuksista",
 	linkMoreInfoActivies: "Lisätietoa toiminnasta",
 	linkMoreInfoPersonnel: "Lisätietoa henkilöstön tyytyväisyydestä",
+	monthShort: "kk",
 };
 
 const translationsSe: TranslationsBundle = {
@@ -394,6 +397,7 @@ const translationsSe: TranslationsBundle = {
 	linkMoreInfoOutdoor: "Läs mera om friluftsliv",
 	linkMoreInfoActivies: "Läs mera om aktiviteter",
 	linkMoreInfoPersonnel: "Läs mera om personnel",
+	monthShort: "mm",
 };
 
 i18n.addResources("fi-FI", ns, translationsFi);

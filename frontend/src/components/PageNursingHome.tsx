@@ -81,6 +81,7 @@ const PageNursingHome: FC = () => {
 	const personnel = useT("personnel");
 	const otherServices = useT("otherServices");
 	const nearbyServices = useT("nearbyServices");
+	const monthShort = useT("monthShort");
 
 	// const webpage = useT("webpage");
 
@@ -170,6 +171,7 @@ const PageNursingHome: FC = () => {
 						/>
 						<Paragraph text={nursingHome.summary} />
 						<h3>{basicInformation}</h3>
+						
 						<dl>
 							<DefinitionItem
 								term={owner}
@@ -189,7 +191,7 @@ const PageNursingHome: FC = () => {
 							/>
 							<DefinitionItem
 								term={numApartments}
-								definition={`${nursingHome.apartment_count} kpl`}
+								definition={`${nursingHome.apartment_count}`}
 							/>
 							<DefinitionItem
 								term={apartmentSize}
@@ -201,7 +203,7 @@ const PageNursingHome: FC = () => {
 							/>
 							<DefinitionItem
 								term={rent}
-								definition={`${nursingHome.rent} € / kk`}
+								definition={`${nursingHome.rent} € / ${monthShort}`}
 							/>
 							<DefinitionItem
 								term={serviceLanguage}
@@ -214,6 +216,7 @@ const PageNursingHome: FC = () => {
 								}
 							/>
 						</dl>
+
 						<h3>{foodHeader}</h3>
 						<Paragraph
 							title={cookingMethod}
