@@ -36,12 +36,14 @@ const PageLanding: FC = () => {
 		}),
 	];
 
+	const filterSelections = useT('filterSelections');
+
 	const filterText: string | null =
 		selectedAreas.length !== 0
 			? selectedAreas.length <= 2
 				? selectedAreas.join(", ")
-				: `(${selectedAreas.length} valintaa)`
-			: "Espoo, Helsinki, Kirkkonummi, Vihti";
+				: `${selectedAreas.length} ${filterSelections}`
+			: "Kaikki alueet (Espoo, Helsinki, Kirkkonummi)";
 
 	return (
 		<div id="landing">

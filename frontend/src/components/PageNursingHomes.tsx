@@ -104,6 +104,8 @@ const PageNursingHomes: FC = () => {
 	const summaryLabel = useT('summaryLabel');
 	const loadingText = useT('loadingText');
 
+	const filterSelections = useT('filterSelections');
+
 
 
 
@@ -149,7 +151,7 @@ const PageNursingHomes: FC = () => {
 					searchFilters.alue !== undefined
 						? searchFilters.alue.length <= 2
 							? searchFilters.alue.join(", ")
-							: `(${searchFilters.alue.length} valintaa)`
+							: `(${searchFilters.alue.length} ${filterSelections})`
 						: null
 				}
 				values={optionsArea}

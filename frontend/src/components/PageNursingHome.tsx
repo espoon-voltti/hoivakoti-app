@@ -6,6 +6,7 @@ import config from "./config";
 import axios from "axios";
 import { NursingHome, NursingHomeImageName } from "./types";
 import { MapSmall } from "./Map";
+import { useT } from "../translations";
 import Lightbox from "./Lightbox";
 
 function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
@@ -52,6 +53,47 @@ const PageNursingHome: FC = () => {
 	}, [id]);
 
 	const availablePics = nursingHome && getAvailablePics(nursingHome);
+
+	const linkBacktoList = useT('linkBacktoList');
+	const loadingText = useT('loadingText');
+	const filterAraLabel = 	useT('filterAraLabel');
+	const numApartments = 	useT('numApartments');
+	const serviceLanguage = useT('serviceLanguage');
+
+	
+
+	const basicInformation = useT('basicInformation');
+	const owner = useT('owner');
+	const yearofConst = useT('yearofConst');
+	const apartmentSize = useT('apartmentSize');
+	const apartmentFurnitureLabel = useT('apartmentFurnitureLabel');
+	const apartmentFurnitureText = useT('apartmentFurnitureText');
+	const rent = useT('rent');
+	const LAHapartments = useT('LAHapartments');
+	const foodHeader = useT('foodHeader');
+	const cookingMethod = useT('cookingMethod');
+
+	const ownKitchen = useT('ownKitchen');
+	const foodMoreInfo = useT('foodMoreInfo');
+	const linkMenu = useT('linkMenu');
+	const activies = useT('activies');
+	const outdoorActivies = useT('outdoorActivies');
+	const visitingInfo = useT('visitingInfo');
+	const accessibility = useT('accessibility');
+	const personnel = useT('personnel');
+	const otherServices = useT('otherServices');
+	const nearbyServices = useT('nearbyServices');
+
+	const webpage = useT('webpage');
+
+	const linkMoreInfoOutdoor = useT('linkMoreInfoOutdoor');
+	const linkMoreInfoActivies = useT('linkMoreInfoActivies');
+	const linkMoreInfoPersonnel = useT('linkMoreInfoPersonnel');
+
+	const filterFinnish = useT('filterFinnish');
+	const filterSwedish = useT('filterSwedish');
+	const filterYes = useT('filterYes');
+	const filterNo = useT('filterNo');
 
 	const images =
 		nursingHome &&
@@ -112,7 +154,7 @@ const PageNursingHome: FC = () => {
 				</div>
 			</div>
 			{!nursingHome ? (
-				"Loading..."
+				loadingText
 			) : (
 				<div className="nursinghome-info-container">
 					<div className="nursinghome-info">
@@ -120,7 +162,7 @@ const PageNursingHome: FC = () => {
 							to="/hoivakodit"
 							className="nursinghome-back-link"
 						>
-							Takaisin hoivakotilistaukseen
+							{linkBacktoList}
 						</Link>
 						<h2 className="nursinghome-title">
 							{nursingHome && nursingHome.name}
@@ -129,84 +171,84 @@ const PageNursingHome: FC = () => {
 							text={`${nursingHome.district}, ${nursingHome.city}`}
 						/>
 						<Paragraph text={nursingHome.summary} />
-						<h3>Perustiedot</h3>
-						<Paragraph title="Omistaja" text={nursingHome.owner} />
+						<h3>{basicInformation}</h3>
+						<Paragraph title={owner} text={nursingHome.owner} />
 						<Paragraph
-							title="ARA-kohde"
-							text={nursingHome.ara ? "Kyllä" : "Ei"}
+							title={filterAraLabel}
+							text={nursingHome.ara ? filterYes : filterNo}
 						/>
 						<Paragraph
-							title="Rakennusvuosi"
+							title={yearofConst}
 							text={String(nursingHome.construction_year)}
 						/>
 						<Paragraph
-							title="Asuntojen määrä"
+							title={numApartments}
 							text={`${nursingHome.apartment_count} kpl`}
 						/>
 						<Paragraph
-							title="Asuntojen neliömäärä"
+							title={apartmentSize}
 							text={`${nursingHome.apartment_square_meters} m²`}
 						/>
 						<Paragraph
-							title="Asunnon peruskalustus"
-							text="Sänky, pöytä, wc"
+							title={apartmentFurnitureLabel}
+							text={apartmentFurnitureText}
 						/>
 						<Paragraph
-							title="Vuokran määrä"
+							title={rent}
 							text={`${nursingHome.rent} € / kk`}
 						/>
 						<Paragraph
-							title="Palvelukieli"
+							title={serviceLanguage}
 							text={nursingHome.language}
 						/>
 						<Paragraph
-							title="Lyhytaikaisen hoivan asuntoja"
-							text={nursingHome.lah ? "Kyllä" : "Ei"}
+							title={LAHapartments}
+							text={nursingHome.lah ? filterYes : filterNo}
 						/>
-						<h3>Ruoka</h3>
+						<h3>{foodHeader}</h3>
 						<Paragraph
-							title="Ruoan valmistuksen tapa"
+							title={cookingMethod}
 							text={nursingHome.meals_preparation}
 						/>
 						<Paragraph
-							title="Lisätietoa ruoasta"
+							title={foodMoreInfo}
 							text={nursingHome.meals_info}
 						/>
 						<ParagraphLink
-							text="Linkki ruokalistaan"
+							text={linkMenu}
 							to={nursingHome.menu_link}
 						/>
-						<h3>Toiminta</h3>
+						<h3>{activies}</h3>
 						<Paragraph text={nursingHome.activities_info} />
 						<ParagraphLink
-							text="Lisätietoja toiminnasta"
+							text={linkMoreInfoActivies}
 							to={nursingHome.activities_link}
 						/>
-						<h3>Ulkoilu&shy;mahdolli&shy;suudet</h3>
+						<h3>{outdoorActivies}</h3>
 						<Paragraph
 							text={nursingHome.outdoors_possibilities_info}
 						/>
 						<Paragraph
-							title="Lisätietoja ulkoilumahdollisuuksista"
+							title={linkMoreInfoOutdoor}
 							text={nursingHome.outdoors_possibilities_link}
 						/>
-						<h3>Hoivakotiin tutustuminen</h3>
+						<h3>{visitingInfo}</h3>
 						<Paragraph text={nursingHome.tour_info} />
-						<h3>Esteettömyys</h3>
+						<h3>{accessibility}</h3>
 						<Paragraph text={nursingHome.accessibility_info} />
-						<h3>Henkilöstö</h3>
+						<h3>{personnel}</h3>
 						<Paragraph text={nursingHome.staff_info} />
 						<Paragraph
-							title="Lisätietoja henkilöstön tyytyväisyydestä"
+							title={linkMoreInfoPersonnel}
 							text={nursingHome.staff_satisfaction_info}
 						/>
 						{nursingHome.other_services && (
 							<>
-								<h3>Muut hoivakodin palvelut</h3>
+								<h3>{otherServices}</h3>
 								<Paragraph text={nursingHome.other_services} />
 							</>
 						)}
-						<h3>Lähellä olevat palvelut</h3>
+						<h3>{nearbyServices}</h3>
 						<Paragraph text={nursingHome.nearby_services} />
 					</div>
 
@@ -303,8 +345,10 @@ interface NursingHomeDetailsBoxProps {
 const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	nursingHome,
 	className,
-}) => (
-	<div className={className}>
+}) => {
+	const contactInfo = useT('contactInfo');
+	const directions = useT('directions');
+	 return <div className={className}>
 		<Image
 			nursingHome={nursingHome}
 			imageName="owner_logo"
@@ -324,7 +368,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		>
 			<MapSmall nursingHome={nursingHome} />
 		</a>
-		<h3>Yhteystiedot</h3>
+		<h3>{contactInfo}</h3>
 		<Paragraph text={nursingHome.address} />
 		<Paragraph text={nursingHome.contact_name} />
 		<Paragraph text={nursingHome.contact_title} />
@@ -334,8 +378,8 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 			to={nursingHome.email ? `mailto:${nursingHome.email}` : undefined}
 		/>
 		<ParagraphLink to={nursingHome.www} />
-		<h3>Kulkuyhteydet</h3>
+		<h3>{directions}</h3>
 		<Paragraph text={nursingHome.arrival_guide_public_transit} />
 		<Paragraph text={nursingHome.arrival_guide_car} />
 	</div>
-);
+};

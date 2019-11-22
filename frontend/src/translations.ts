@@ -90,7 +90,36 @@ interface TranslationsBundle {
 	loadingText:string;
 
 	numApartments: string;
+	filterSelections: string;
+	linkBacktoList: string;
 
+	basicInformation: string;
+	owner: string;
+	yearofConst: string;
+	apartmentSize: string;
+	apartmentFurnitureLabel: string;
+	apartmentFurnitureText: string;
+	rent: string;
+	LAHapartments: string;
+	foodHeader: string;
+	cookingMethod: string;
+	ownKitchen: string;
+	foodMoreInfo: string;
+	linkMenu: string;
+	activies: string;
+	outdoorActivies: string;
+	visitingInfo: string;
+	accessibility: string;
+	personnel: string;
+	otherServices: string;
+	nearbyServices: string;
+	contactInfo: string;
+	directions: string;
+	webpage: string;
+
+	linkMoreInfoOutdoor: string;
+	linkMoreInfoActivies: string;
+	linkMoreInfoPersonnel: string;
 
 
 }
@@ -210,7 +239,36 @@ const translationsFi: TranslationsBundle = {
 	summaryLabel: "hoivakotia",
 	loadingText: "Ladataan...",
 	numApartments: "Asuntojen määrä",
+	filterSelections: "valintaa",
+	linkBacktoList: "Takaisin hoivakotilistaukseen",
 
+	basicInformation: "Perustiedot",
+	owner: "Omistaja",
+	yearofConst: "Rakennusvuosi",
+	apartmentSize: "Asuntojen neliömäärä",
+	apartmentFurnitureLabel: "Peruskalustus",
+	apartmentFurnitureText: "Sänky, wc, pöytä",
+	rent: "Vuokran määrä",
+	LAHapartments: "Lyhytaikaisen asumisen asuntoja",
+	foodHeader: "Ruoka",
+	cookingMethod: "Ruoan valmistuksen tapa",
+	ownKitchen: "Oma keittiö",
+	foodMoreInfo: "Lisätietoa ruoasta",
+	linkMenu: "Ruokalista",
+	activies: "Toiminta",
+	outdoorActivies: "Ulkoilumahdollisuudet",
+	visitingInfo: "Hoivakotiin tutustuminen",
+	accessibility: "Esteettömyys",
+	personnel: "Henkilökunta",
+	otherServices: "Muut hoivakodin palvelut",
+	nearbyServices: "Lähellä olevat palvelut",
+	contactInfo: "Yhteystiedot",
+	directions: "Kulkuyhteydet",
+	webpage: "Hoivakodin verkkosivut",
+
+	linkMoreInfoOutdoor: "Lisätietoa ulkoilumahdollisuuksista",
+	linkMoreInfoActivies: "Lisätietoa toiminnasta",
+	linkMoreInfoPersonnel: "Lisätietoa henkilöstön tyytyväisyydestä",
 };
 
 const translationsSe: TranslationsBundle = {
@@ -221,7 +279,7 @@ const translationsSe: TranslationsBundle = {
 	jumbotronHeadline: "Hitta ett snyggt vårdhem",
 	locationPickerLabel: "Vart söker du vårdhem?",
 	landingIngress1:
-		"På den här webbplatsen hittar du <strong> Enhanced Service Housing </strong> Vårdhem för <strong> äldre </strong> godkända av staden Esbo. För att få ett vårdhem behöver du ett positivt beslut om behovet av förbättrad servicebostad.",
+		"På den här webbplatsen hittar du <0> Enhanced Service Housing </0> Vårdhem för <1> äldre </1> godkända av staden Esbo. För att få ett vårdhem behöver du ett positivt beslut om behovet av förbättrad servicebostad.",
 	landingIngress2:
 		"Letar du efter ett vårdhem med en servicekupong? Se vårdhem på ",
 	urlParastapalvelua: "https://www.parastapalvelua.fi/sv",
@@ -316,6 +374,36 @@ const translationsSe: TranslationsBundle = {
 	summaryLabel: "vårhem",
 	loadingText: "Laddar...",
 	numApartments: "Antal bostäder",
+	filterSelections: "val",
+	linkBacktoList: "Tillbaka till vårhemlist",
+
+	basicInformation: "Grundläggande",
+	owner: "Ägare",
+	yearofConst: "Byggnadsår",
+	apartmentSize: "Bostadens storlek",
+	apartmentFurnitureLabel: "Möbler",
+	apartmentFurnitureText: "Säng, toalet, bord",
+	rent: "Hyra",
+	LAHapartments: "Kortvarigt boende",
+	foodHeader: "Mat",
+	cookingMethod: "Sättet att laga mat",
+	ownKitchen: "Eget kök",
+	foodMoreInfo: "Mera information om mat",
+	linkMenu: "Matlist",
+	activies: "Aktiviteter",
+	outdoorActivies: "Friluftsliv",
+	visitingInfo: "Besökinformation",
+	accessibility: "Tillgänglighet",
+	personnel: "Personnel",
+	otherServices: "Andra vårdhemstjänster",
+	nearbyServices: "Närliggande tjänster ",
+	contactInfo: "Kontaktinformation",
+	directions: "Riktingar",
+	webpage: "Websidan",
+
+	linkMoreInfoOutdoor: "Läs mera om friluftsliv",
+	linkMoreInfoActivies: "Läs mera om aktiviteter",
+	linkMoreInfoPersonnel: "Läs mera om personnel",
 };
 
 i18n.addResources("fi-FI", ns, translationsFi);
