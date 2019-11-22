@@ -14,8 +14,9 @@ import {
 	GetPicsAndDescriptions,
 	GetPic,
 	GetCaptions,
-	GetCities
+	GetCities,
 } from "./controllers";
+import config from "./config";
 
 const router = new Router();
 
@@ -76,7 +77,7 @@ router.get("/api/health", async ctx => {
 });
 
 router.get("/api/node-env-test", async ctx => {
-	ctx.body = process.env.NODE_ENV;
+	ctx.body = config.nodeEnv;
 });
 
 router.get("/api/all-pics", async ctx => {

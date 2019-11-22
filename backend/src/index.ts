@@ -4,10 +4,7 @@ import Helmet from "koa-helmet";
 import { routes } from "./routes";
 import { LogRequest } from "./logging";
 import cors from "@koa/cors";
-import dotenv from "dotenv"
-dotenv.config()
-
-console.log(process.env.HELLO)
+import config from "./config";
 
 const app = new Koa();
 
@@ -17,6 +14,8 @@ app.use(cors());
 app.use(BodyParser({ multipart: true }));
 app.use(routes);
 
-app.listen(process.env.PORT ? process.env.PORT : 3000);
+const { port } = config;
 
-console.debug("Server running on port " + (process.env.PORT ? process.env.PORT : 3000));
+app.listen(port);
+
+console.debug(`Server running on port ${port}`);

@@ -7,16 +7,15 @@ import {
 	nursing_home_pictures_columns_info,
 	postal_code_to_district,
 } from "./nursinghome-typings";
+import config from "./config";
 
 const options: Knex.Config = {
 	client: "postgres",
 	connection: {
-		user: process.env.DB_USER ? process.env.DB_USER : "postgres",
-		password: process.env.DB_PASSWORD
-			? process.env.DB_PASSWORD
-			: "postgres",
-		host: process.env.DB_URL ? process.env.DB_URL : "postgres",
-		database: process.env.DB_NAME ? process.env.DB_NAME : "postgres",
+		user: config.pgUser,
+		password: config.pgPassword,
+		host: config.pgHost,
+		database: config.pgDatabaseName,
 	},
 };
 const knex = Knex(options);
@@ -156,21 +155,18 @@ export async function InsertNursingHomeToDB(
 
 	const existing_id = await GetNursingHomeIDFromName(nurseryhome.name);
 	// Nursing home with this name already exists
-	if (existing_id.length > 0)
-	{
+	if (existing_id.length > 0) {
 		const uuid = existing_id[0].id;
 		await knex("NursingHomes")
-			.where({id: uuid})
+			.where({ id: uuid })
 			.update({
 				...nurseryhome,
 				geolocation: geoloc["features"][0],
 				district: postal_code_to_district[nurseryhome.postal_code],
-			})
+			});
 
 		return uuid;
-	}
-	else
-	{
+	} else {
 		const uuid = uuidv4();
 		await knex("NursingHomes").insert({
 			id: uuid,
@@ -310,11 +306,9 @@ export async function GetAllPicDigests(): Promise<any[]> {
 
 	columns.push("nursinghome_id");
 
-	return await knex
-		.select(columns)
-		.table("NursingHomePictures");
+	return await knex.select(columns).table("NursingHomePictures");
 }
 
 export async function GetDistinctCities(): Promise<any[]> {
-	return await knex("NursingHomes").distinct('city');
+	return await knex("NursingHomes").distinct("city");
 }
