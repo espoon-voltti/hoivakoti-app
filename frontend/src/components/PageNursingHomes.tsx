@@ -2,7 +2,7 @@ import React, { useState, useEffect, FC } from "react";
 import { NursingHomeSmall } from "./NursingHomeSmall";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation } from "react-router-dom";
-import "../styles/nursinghomes.scss";
+import "../styles/PageNursingHomes.scss";
 import config from "./config";
 import { Link } from "react-router-dom";
 import queryString from "query-string";
