@@ -4,6 +4,27 @@
 	display: flex;
 }
 
+.card-list {
+	margin: 0 20px;
+	flex-grow: 1;
+}
+
+.map-container {
+	display: none;
+	flex-grow: 1;
+}
+
+@media screen and (min-width: 1130px) {
+	.map-container {
+		display: block;
+	}
+
+	.card-list {
+		flex-basis: 780px;
+		flex-grow: 0;
+	}
+}
+
 .filters {
 	padding: 20px;
 	flex-wrap: wrap;
@@ -24,29 +45,9 @@
 	margin: 6px;
 }
 
-.card-list {
-	margin: 0 20px;
-	min-width: 780px;
-}
-
-.map-container {
-	width: 100%;
-}
-
 .results-summary {
 	font-size: 22px;
 	font-family: Montserrat, sans-serif;
 	line-height: 27px;
 	margin: 25px 0 25px 10px;
-}
-
-@media screen and (max-width: 1130px) {
-	.map-container {
-		display: none;
-	}
-
-	.card-list {
-		width: 100%;
-		min-width: 0;
-	}
 }
