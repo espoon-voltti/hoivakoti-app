@@ -48,7 +48,7 @@
 }
 
 .filters {
-	padding: 20px;
+	padding: 14px 20px;
 	flex-wrap: wrap;
 	border-bottom: 1px solid $border-color;
 	border-top: 1px solid $border-color;
@@ -65,7 +65,7 @@
 
 // Spacing between the buttons for different filters comes from here.
 .filters > * {
-	margin: 0 6px;
+	margin: 6px;
 }
 
 .results-summary {
