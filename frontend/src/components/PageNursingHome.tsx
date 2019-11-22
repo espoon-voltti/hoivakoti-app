@@ -83,8 +83,6 @@ const PageNursingHome: FC = () => {
 	const nearbyServices = useT("nearbyServices");
 	const monthShort = useT("monthShort");
 
-	// const webpage = useT("webpage");
-
 	const linkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
 	const linkMoreInfoActivies = useT("linkMoreInfoActivies");
 	const linkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
@@ -171,8 +169,8 @@ const PageNursingHome: FC = () => {
 						/>
 						<Paragraph text={nursingHome.summary} />
 						<h3>{basicInformation}</h3>
-						
-						<dl>
+
+						<dl className="nursingHome-info-list">
 							<DefinitionItem
 								term={owner}
 								definition={nursingHome.owner}
@@ -218,14 +216,16 @@ const PageNursingHome: FC = () => {
 						</dl>
 
 						<h3>{foodHeader}</h3>
-						<Paragraph
-							title={cookingMethod}
-							text={nursingHome.meals_preparation}
-						/>
-						<Paragraph
-							title={foodMoreInfo}
-							text={nursingHome.meals_info}
-						/>
+						<dl className="nursingHome-info-list">
+							<DefinitionItem
+								term={cookingMethod}
+								definition={nursingHome.meals_preparation}
+							/>
+							<DefinitionItem
+								term={foodMoreInfo}
+								definition={nursingHome.meals_info}
+							/>
+						</dl>
 						<ParagraphLink
 							text={linkMenu}
 							to={nursingHome.menu_link}
@@ -298,22 +298,24 @@ const Paragraph: FC<ParagraphProps> = ({ title, text, className }) => {
 interface DefinitionItemProps {
 	term?: string;
 	definition?: string;
-	className?: string;
+	classNameTerm?: string;
+	classNameDefinition?: string;
 }
 
 const DefinitionItem: FC<DefinitionItemProps> = ({
 	term,
 	definition,
-	className,
+	classNameTerm,
+	classNameDefinition,
 }) => {
 	if (!definition) return null;
 
 	return (
 		<>
 			{term && (
-				<dt className="nursinghome-info-paragraph-title">{term}</dt>
+				<dt className={classNameTerm}>{term}</dt>
 			)}
-			<dd className={className}>{definition}</dd>
+			<dd className={classNameDefinition}>{definition}</dd>
 		</>
 	);
 };
@@ -383,6 +385,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 }) => {
 	const contactInfo = useT("contactInfo");
 	const directions = useT("directions");
+	const webpage = useT("webpage");
 	return (
 		<div className={className}>
 			<Image
@@ -404,23 +407,20 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 			>
 				<MapSmall nursingHome={nursingHome} />
 			</a>
-			<h3>{contactInfo}</h3>
-			<Paragraph text={nursingHome.address} />
-			<Paragraph text={nursingHome.contact_name} />
-			<Paragraph text={nursingHome.contact_title} />
-			<Paragraph text={nursingHome.contact_phone} />
-			<ParagraphLink
-				text={nursingHome.email}
-				to={
-					nursingHome.email
-						? `mailto:${nursingHome.email}`
-						: undefined
-				}
-			/>
-			<ParagraphLink to={nursingHome.www} />
-			<h3>{directions}</h3>
-			<Paragraph text={nursingHome.arrival_guide_public_transit} />
-			<Paragraph text={nursingHome.arrival_guide_car} />
+
+			<dl className="nursingHome-info-list nursingHome-info-list--contact">
+				<dt>{contactInfo}</dt>
+				<dd>{nursingHome.address}</dd>	
+				<dd>Puh. {nursingHome.contact_phone}</dd>	
+				<dd><a href="mailto:{nursingHome.email}">{nursingHome.email}</a></dd>
+				<dd><a href={nursingHome.www} target="_blank">{webpage}</a></dd>	
+			</dl>
+			
+			<dl className="nursingHome-info-list nursingHome-info-list--directions">
+				<dt>{directions}</dt>
+				<dd>{nursingHome.arrival_guide_public_transit}</dd>
+				<dd>{nursingHome.arrival_guide_car}</dd>
+			</dl>
 		</div>
 	);
 };

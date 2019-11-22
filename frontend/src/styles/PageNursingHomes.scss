@@ -32,7 +32,7 @@
 	flex-wrap: wrap;
 
 	& > * {
-		padding: 12px;
+		padding: 0 10px 20px 10px;
 		flex-basis: 100%;
 		@media screen and (min-width: 650px) {
 			flex-basis: 50%;
@@ -60,16 +60,17 @@
 .filters > .filters-text {
 	color: $headline-color;
 	font-weight: bold;
+	margin-left: 10px;
 }
 
 // Spacing between the buttons for different filters comes from here.
 .filters > * {
-	margin: 6px;
+	margin: 0 6px;
 }
 
 .results-summary {
 	font-size: 22px;
 	font-family: Montserrat, sans-serif;
 	line-height: 27px;
-	margin: 25px 0 25px 10px;
+	margin: 20px 0 20px 10px;
 }
