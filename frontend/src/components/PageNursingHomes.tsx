@@ -13,6 +13,8 @@ import { NursingHome } from "./types";
 
 type Language = string;
 
+const calculateMapVisible = (width: number): boolean => width >= 1130;
+
 interface SearchFilters {
 	readonly alue?: string[];
 	readonly language?: Language;
@@ -28,9 +30,20 @@ const PageNursingHomes: FC = () => {
 		selectedNursingHome: NursingHome;
 		isExpanded: boolean;
 	} | null>(null);
+	const [isMapVisible, setIsMapVisible] = useState(
+		calculateMapVisible(window.innerWidth),
+	);
 
 	const history = useHistory();
 	const { search } = useLocation();
+
+	useEffect(() => {
+		const listener = (): void => {
+			setIsMapVisible(calculateMapVisible(window.innerWidth));
+		};
+		window.addEventListener("resize", listener);
+		return () => window.removeEventListener("resize", listener);
+	}, []);
 
 	const areas = [
 		"Espoon keskus",
@@ -326,18 +339,20 @@ const PageNursingHomes: FC = () => {
 						<div className="card-container">{cards}</div>
 					</div>
 					<div id="map" className="map-container">
-						<Map
-							nursingHomes={filteredNursingHomes}
-							popup={mapPopup}
-							onSelectNursingHome={selectedNursingHome =>
-								setMapPopup(
-									selectedNursingHome && {
-										selectedNursingHome,
-										isExpanded: true,
-									},
-								)
-							}
-						/>
+						{isMapVisible && (
+							<Map
+								nursingHomes={filteredNursingHomes}
+								popup={mapPopup}
+								onSelectNursingHome={selectedNursingHome =>
+									setMapPopup(
+										selectedNursingHome && {
+											selectedNursingHome,
+											isExpanded: true,
+										},
+									)
+								}
+							/>
+						)}
 					</div>
 				</div>
 			)}
