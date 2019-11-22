@@ -307,7 +307,6 @@ const PageNursingHomes: FC = () => {
 						isNarrow={false}
 					/>
 				</Link>
-				
 			</React.Fragment>
 		));
 
