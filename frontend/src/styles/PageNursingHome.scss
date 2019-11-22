@@ -7,11 +7,38 @@
 	margin-bottom: 80px;
 }
 
+.nursingHome-info-list dt{
+	line-height: 24px;
+	font-weight: 600;
+}
+.nursingHome-info-list dd{
+	line-height: 24px;
+	margin-bottom: 1em;
+
+}
+
+.nursingHome-info-list--contact, .nursingHome-info-list--directions {
+	margin-top: 10px;
+}
+
+.nursingHome-info-list--contact dd, .nursingHome-info-list--directions dd  {
+	line-height: 24px;
+	margin-bottom: 0;
+	word-break: break-all;
+}
+.nursingHome-info-list--directions dd {
+	margin-bottom: 1em;
+}
+
+.nursingHome-info-list--directions dd:last-child {
+	margin-bottom: 0;
+} 
+
 .nursinghome-hero {
 	position: relative;
 	width: 100%;
-	margin-bottom: 48px;
-	height: 500px;
+	margin-bottom: 40px;
+	height: 640px;
 	overflow: hidden;
 	display: flex;
 	align-items: stretch;
@@ -54,6 +81,9 @@
 		text-transform: uppercase;
 		cursor: pointer;
 	}
+	.nursinghome-hero-lightbox-button:hover {
+		color: $text-color;
+	} 
 }
 
 .nursinghome-hero-placeholder {
@@ -99,7 +129,7 @@
 	line-height: 1.1em;
 	font-weight: 300;
 	color: $headline-color;
-	margin-bottom: 32px;
+	margin-bottom: 10px;
 }
 
 .nursinghome-info h3 {
@@ -123,7 +153,7 @@
 	flex-basis: 360px;
 	flex-shrink: 0;
 	border: 1px solid $light-gray;
-	border-radius: 5px;
+	border-radius: $border-radius;
 	padding: 24px;
 	margin-top: 32px;
 
@@ -146,7 +176,6 @@
 
 .nursinghome-details-box p {
 	margin-bottom: 8px;
-	word-break: break-all;
 
 	&:last-child {
 		margin-bottom: 0;
@@ -162,4 +191,10 @@
 .nursinghome-details-name {
 	font-size: 19px;
 	font-weight: bold;
+}
+
+@media screen and (max-width: 1024px) {
+	.nursinghome-hero {
+		height: 400px;
+	}
 }

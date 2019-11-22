@@ -37,14 +37,30 @@ interface GetNursingHomeResponse {
 
 const PageNursingHome: FC = () => {
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
+	const [picCaptions, setPicCaptions] = useState<Record<
+		string,
+		string
+	> | null>(null);
 	const { id } = useParams();
 	const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
 	useEffect(() => {
 		axios
-			.get(config.API_URL + "/nursing-homes/" + id)
+			.get(`${config.API_URL}/nursing-homes/${id}`)
 			.then((response: GetNursingHomeResponse) => {
 				setNursingHome(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+	}, [id]);
+
+	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/nursing-homes/${id}/pics/captions`)
+			.then((response: { data: Record<string, string> }) => {
+				setPicCaptions(response.data);
 			})
 			.catch(e => {
 				console.error(e);
@@ -81,8 +97,7 @@ const PageNursingHome: FC = () => {
 	const personnel = useT("personnel");
 	const otherServices = useT("otherServices");
 	const nearbyServices = useT("nearbyServices");
-
-	// const webpage = useT("webpage");
+	const monthShort = useT("monthShort");
 
 	const linkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
 	const linkMoreInfoActivies = useT("linkMoreInfoActivies");
@@ -97,10 +112,14 @@ const PageNursingHome: FC = () => {
 		nursingHome &&
 		availablePics &&
 		availablePics.map(([imageName, digest]) => {
-			return (
-				`${config.API_URL}/nursing-homes/${nursingHome.id}` +
-				`/pics/${imageName}/${digest}`
-			);
+			return {
+				src:
+					`${config.API_URL}/nursing-homes/${nursingHome.id}` +
+					`/pics/${imageName}/${digest}`,
+				caption:
+					(picCaptions && picCaptions[`${imageName}_caption`]) ||
+					null,
+			};
 		});
 
 	return (
@@ -109,7 +128,7 @@ const PageNursingHome: FC = () => {
 				<Lightbox
 					isOpen={isLightboxOpen}
 					onClose={() => setIsLightboxOpen(false)}
-					imageUrls={images}
+					images={images}
 				/>
 			)}
 			<div className="nursinghome-hero">
@@ -170,7 +189,8 @@ const PageNursingHome: FC = () => {
 						/>
 						<Paragraph text={nursingHome.summary} />
 						<h3>{basicInformation}</h3>
-						<dl>
+
+						<dl className="nursingHome-info-list">
 							<DefinitionItem
 								term={owner}
 								definition={nursingHome.owner}
@@ -189,7 +209,7 @@ const PageNursingHome: FC = () => {
 							/>
 							<DefinitionItem
 								term={numApartments}
-								definition={`${nursingHome.apartment_count} kpl`}
+								definition={`${nursingHome.apartment_count}`}
 							/>
 							<DefinitionItem
 								term={apartmentSize}
@@ -201,7 +221,7 @@ const PageNursingHome: FC = () => {
 							/>
 							<DefinitionItem
 								term={rent}
-								definition={`${nursingHome.rent} € / kk`}
+								definition={`${nursingHome.rent} € / ${monthShort}`}
 							/>
 							<DefinitionItem
 								term={serviceLanguage}
@@ -214,15 +234,18 @@ const PageNursingHome: FC = () => {
 								}
 							/>
 						</dl>
+
 						<h3>{foodHeader}</h3>
-						<Paragraph
-							title={cookingMethod}
-							text={nursingHome.meals_preparation}
-						/>
-						<Paragraph
-							title={foodMoreInfo}
-							text={nursingHome.meals_info}
-						/>
+						<dl className="nursingHome-info-list">
+							<DefinitionItem
+								term={cookingMethod}
+								definition={nursingHome.meals_preparation}
+							/>
+							<DefinitionItem
+								term={foodMoreInfo}
+								definition={nursingHome.meals_info}
+							/>
+						</dl>
 						<ParagraphLink
 							text={linkMenu}
 							to={nursingHome.menu_link}
@@ -295,22 +318,22 @@ const Paragraph: FC<ParagraphProps> = ({ title, text, className }) => {
 interface DefinitionItemProps {
 	term?: string;
 	definition?: string;
-	className?: string;
+	classNameTerm?: string;
+	classNameDefinition?: string;
 }
 
 const DefinitionItem: FC<DefinitionItemProps> = ({
 	term,
 	definition,
-	className,
+	classNameTerm,
+	classNameDefinition,
 }) => {
 	if (!definition) return null;
 
 	return (
 		<>
-			{term && (
-				<dt className="nursinghome-info-paragraph-title">{term}</dt>
-			)}
-			<dd className={className}>{definition}</dd>
+			{term && <dt className={classNameTerm}>{term}</dt>}
+			<dd className={classNameDefinition}>{definition}</dd>
 		</>
 	);
 };
@@ -380,6 +403,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 }) => {
 	const contactInfo = useT("contactInfo");
 	const directions = useT("directions");
+	const webpage = useT("webpage");
 	return (
 		<div className={className}>
 			<Image
@@ -401,23 +425,26 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 			>
 				<MapSmall nursingHome={nursingHome} />
 			</a>
-			<h3>{contactInfo}</h3>
-			<Paragraph text={nursingHome.address} />
-			<Paragraph text={nursingHome.contact_name} />
-			<Paragraph text={nursingHome.contact_title} />
-			<Paragraph text={nursingHome.contact_phone} />
-			<ParagraphLink
-				text={nursingHome.email}
-				to={
-					nursingHome.email
-						? `mailto:${nursingHome.email}`
-						: undefined
-				}
-			/>
-			<ParagraphLink to={nursingHome.www} />
-			<h3>{directions}</h3>
-			<Paragraph text={nursingHome.arrival_guide_public_transit} />
-			<Paragraph text={nursingHome.arrival_guide_car} />
+
+			<dl className="nursingHome-info-list nursingHome-info-list--contact">
+				<dt>{contactInfo}</dt>
+				<dd>{nursingHome.address}</dd>
+				<dd>Puh. {nursingHome.contact_phone}</dd>
+				<dd>
+					<a href="mailto:{nursingHome.email}">{nursingHome.email}</a>
+				</dd>
+				<dd>
+					<a href={nursingHome.www} target="_blank">
+						{webpage}
+					</a>
+				</dd>
+			</dl>
+
+			<dl className="nursingHome-info-list nursingHome-info-list--directions">
+				<dt>{directions}</dt>
+				<dd>{nursingHome.arrival_guide_public_transit}</dd>
+				<dd>{nursingHome.arrival_guide_car}</dd>
+			</dl>
 		</div>
 	);
 };
