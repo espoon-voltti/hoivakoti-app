@@ -8,8 +8,20 @@ import { useT } from "../translations";
 export type FilterOption =
 	| { type: "header"; text: string }
 	| { type: "text"; text: string }
-	| { type: "radio"; text: string; subText?: string; checked: boolean }
-	| { type: "checkbox"; text: string; subText?: string; checked: boolean };
+	| {
+			type: "radio";
+			name: string;
+			label: string;
+			subLabel?: string;
+			checked: boolean;
+	  }
+	| {
+			type: "checkbox";
+			name: string;
+			label: string;
+			subLabel?: string;
+			checked: boolean;
+	  };
 
 export type Props = {
 	prefix: string;
@@ -52,27 +64,27 @@ const FilterItem: FC<Props> = ({
 						<div className="checkbox-item" key={index}>
 							<Checkbox
 								id={`filter-${index}`}
-								name={option.text}
+								name={option.name}
 								isChecked={option.checked}
 								onChange={newValue =>
 									handleChange({
 										newValue,
-										name: option.text,
+										name: option.name,
 									})
 								}
 							>
 								<div
 									className={`option-header ${
-										option.subText
+										option.subLabel
 											? "option-text-has-subtext"
 											: ""
 									}`}
 								>
-									{option.text}
+									{option.label}
 								</div>
-								{option.subText && (
+								{option.subLabel && (
 									<div className="option-subtext">
-										{option.subText}
+										{option.subLabel}
 									</div>
 								)}
 							</Checkbox>
@@ -88,22 +100,22 @@ const FilterItem: FC<Props> = ({
 								onChange={newValue =>
 									handleChange({
 										newValue,
-										name: option.text,
+										name: option.name,
 									})
 								}
 							>
 								<div
 									className={`option-header ${
-										option.subText
+										option.subLabel
 											? "option-text-has-subtext"
 											: ""
 									}`}
 								>
-									{option.text}
+									{option.label}
 								</div>
-								{option.subText && (
+								{option.subLabel && (
 									<div className="option-subtext">
-										{option.subText}
+										{option.subLabel}
 									</div>
 								)}
 							</Radio>

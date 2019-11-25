@@ -88,7 +88,12 @@ const PageNursingHomes: FC = () => {
 			const checked = searchFilters.alue
 				? searchFilters.alue.includes(value)
 				: false;
-			return { text: value, type: "checkbox", checked: checked };
+			return {
+				name: value,
+				label: value,
+				type: "checkbox",
+				checked: checked,
+			};
 		}),
 	];
 
@@ -119,14 +124,16 @@ const PageNursingHomes: FC = () => {
 
 	const optionsAra: FilterOption[] = [
 		{
-			text: filterAraLabel,
-			subText: filterAraText,
+			name: "ARA-kohde",
+			label: filterAraLabel,
+			subLabel: filterAraText,
 			type: "radio",
 			checked: searchFilters.ara === true,
 		},
 		{
-			text: filterAraLabel2,
-			subText: filterAraText2,
+			name: "",
+			label: filterAraLabel,
+			subLabel: filterAraText2,
 			type: "radio",
 			checked: searchFilters.ara === false,
 		},
@@ -139,12 +146,14 @@ const PageNursingHomes: FC = () => {
 	const optionsLanguage: FilterOption[] = [
 		{ text: serviceLanguageLabel, type: "header" },
 		{
-			text: filterFinnish,
+			name: "Suomi",
+			label: filterFinnish,
 			type: "radio",
 			checked: searchFilters.language === "Suomi",
 		},
 		{
-			text: filterSwedish,
+			name: "Ruotsi",
+			label: filterSwedish,
 			type: "radio",
 			checked: searchFilters.language === "Ruotsi",
 		},
@@ -252,8 +261,9 @@ const PageNursingHomes: FC = () => {
 				}
 				values={[
 					{
-						text: filterLAHLabel,
-						subText: filterLAHText,
+						name: "lah",
+						label: filterLAHLabel,
+						subLabel: filterLAHText,
 						type: "checkbox",
 						checked: searchFilters.lah === true,
 					},

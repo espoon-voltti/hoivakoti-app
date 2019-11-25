@@ -32,11 +32,16 @@ const PageLanding: FC = () => {
 			const checked = selectedAreas
 				? selectedAreas.includes(value)
 				: false;
-			return { text: value, type: "checkbox", checked: checked };
+			return {
+				name: value,
+				label: value,
+				type: "checkbox",
+				checked: checked,
+			};
 		}),
 	];
 
-	const filterSelections = useT('filterSelections');
+	const filterSelections = useT("filterSelections");
 
 	const filterText: string | null =
 		selectedAreas.length !== 0
