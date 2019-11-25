@@ -9,17 +9,17 @@ interface Props {
 const PageError: FC<Props> = ({ error }) => {
 	const errorType = error === "404" ? "error-404" : "error-runtime";
 
-	const title = errorType === "error-404" ? "404" : "Palvelussa on häiriö";
+	const title = errorType === "error-404" ? "Hups! Etsimääsi sivua ei löytynyt." : "Palvelussa on häiriö";
 	const subTitle =
 		errorType === "error-404"
-			? "Sivua ei löytynyt."
+			? "Luultavasti etsimäsi sivun osoite on muuttunut tai sivua ei ole enää olemassa."
 			: "Yritä myöhemmin uudelleen.";
 	const linkText = "Palaa etusivulle";
 
 	return (
 		<div className={`page-error ${errorType}`}>
 			<img
-				src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"}
+				src={config.PUBLIC_FILES_URL + "/icon-error.svg"}
 				alt="Espoo – Esbo"
 				className="page-error-logo"
 			/>
