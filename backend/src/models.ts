@@ -329,15 +329,19 @@ export async function GetDistinctCities(): Promise<any[]> {
 export async function GetNursingHomeVacancyStatus(
 	id: string,
 	basicUdpateKey: string,
-): Promise<boolean | null> {
+): Promise<{
+	has_vacancy: boolean;
+	vacancy_last_updated_at: string | null;
+} | null> {
 	const res = await knex("NursingHomes")
 		.where({ id, basic_update_key: basicUdpateKey })
-		.select("has_vacancy");
+		.select("has_vacancy", "vacancy_last_updated_at");
 
 	if (res.length === 0) return null;
 
 	const status = res[0].has_vacancy === true;
-	return status;
+	const { vacancy_last_updated_at } = res[0];
+	return { has_vacancy: status, vacancy_last_updated_at };
 }
 
 export async function UpdateNursingHomeVacancyStatus(
@@ -345,9 +349,14 @@ export async function UpdateNursingHomeVacancyStatus(
 	basicUdpateKey: string,
 	value: boolean,
 ): Promise<boolean> {
+	const now = new Date().toISOString();
+
 	const count = await knex("NursingHomes")
 		.where({ id, basic_update_key: basicUdpateKey })
-		.update({ has_vacancy: value });
+		.update({
+			has_vacancy: value,
+			vacancy_last_updated_at: now,
+		});
 
 	if (count !== 1) return false;
 

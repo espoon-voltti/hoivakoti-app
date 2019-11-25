@@ -133,6 +133,12 @@ interface TranslationsBundle {
 	footerLinkPrivacy: string;
 	footerLinkAccessibility: string;
 	footerLinkFeedback: string;
+
+	vacancyTrue: string;
+	vacancyFalse: string;
+
+	pageUpdateTitle: string;
+	pageUpdateIntro: string;
 }
 
 export type TranslationKey = keyof TranslationsBundle;
@@ -298,6 +304,13 @@ const translationsFi: TranslationsBundle = {
 	footerLinkPrivacy: "Tietosuojaseloste",
 	footerLinkAccessibility: "Saavutettavuusseloste",
 	footerLinkFeedback: "Anna palautetta sivustosta",
+
+	vacancyTrue: "Vapaita paikkoja",
+	vacancyFalse: "Ei vapaita paikkoja",
+
+	pageUpdateTitle: "Päivitä hoivakodin tietoja",
+	pageUpdateIntro:
+		"Tällä sivulla voit päivittää hoivakodin tietoja. Valitse hoivakodin vapaiden asuntojen tilanne allaolevalla lomakkeella:",
 };
 
 const translationsSe: TranslationsBundle = {
@@ -450,6 +463,13 @@ const translationsSe: TranslationsBundle = {
 	footerLinkPrivacy: "sv_Tietosuojaseloste",
 	footerLinkAccessibility: "sv_Saavutettavuusseloste",
 	footerLinkFeedback: "sv_Anna palautetta sivustosta",
+
+	vacancyTrue: "sv_Vapaita paikkoja",
+	vacancyFalse: "sv_Ei vapaita paikkoja",
+
+	pageUpdateTitle: "sv_Päivitä hoivakodin tietoja",
+	pageUpdateIntro:
+		"sv_Tällä sivulla voit päivittää hoivakodin tietoja. Valitse hoivakodin vapaiden asuntojen tilanne allaolevalla lomakkeella:",
 };
 
 i18n.addResources("fi-FI", ns, translationsFi);

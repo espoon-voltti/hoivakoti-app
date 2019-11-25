@@ -176,7 +176,10 @@ export async function GetCities(ctx: any): Promise<any> {
 
 export async function GetNursingHomeVacancyStatus(
 	ctx: Context,
-): Promise<boolean | null> {
+): Promise<{
+	has_vacancy: boolean;
+	vacancy_last_updated_at: string | null;
+} | null> {
 	const { id, key } = ctx.params;
 	return await GetNursingHomeVacancyStatusDB(id, key);
 }

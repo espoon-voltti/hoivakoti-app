@@ -76,7 +76,7 @@ router.get("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 		ctx.response.status = 403;
 		ctx.body = { error: "Forbidden: invalid ID or key" };
 	} else {
-		ctx.body = { has_vacancy: status };
+		ctx.body = status;
 	}
 });
 

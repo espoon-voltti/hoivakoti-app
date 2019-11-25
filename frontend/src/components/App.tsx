@@ -13,6 +13,7 @@ import PageError from "./PageError";
 import ScrollToTop from "./ScrollToTop";
 import PageAccessibility from "./PageAccessibility";
 import Title from "./Title";
+import PageUpdate from "./PageUpdate";
 
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
@@ -42,6 +43,11 @@ const App: React.FC = () => {
 								exact
 								path="/hoivakodit/:id"
 								component={PageNursingHome}
+							/>
+							<Route
+								exact
+								path="/hoivakodit/:id/paivita/:key"
+								component={PageUpdate}
 							/>
 							<Route
 								exact

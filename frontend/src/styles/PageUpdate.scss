@@ -1,0 +1,36 @@
+@import "variables.scss";
+
+.page-update {
+	padding: 20px;
+}
+
+.page-update-content {
+	max-width: 480px;
+	margin: 0 auto 70px auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.page-update-title {
+	margin-bottom: 1em;
+
+	margin-top: 1em;
+}
+
+.page-update-data {
+	margin-bottom: 0.5em;
+}
+
+.page-update-intro {
+	margin: 1.5em 0 3em 0;
+}
+
+.page-update-controls {
+	max-width: 100%;
+	width: 360px;
+	margin: 0 auto;
+
+	& * {
+		cursor: pointer;
+	}
+}

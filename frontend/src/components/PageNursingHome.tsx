@@ -32,7 +32,7 @@ function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
 	return availablePics;
 }
 
-interface GetNursingHomeResponse {
+export interface GetNursingHomeResponse {
 	data: NursingHome;
 }
 
