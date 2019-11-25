@@ -128,8 +128,6 @@ const PageNursingHome: FC = () => {
 			};
 		});
 
-	console.log(nursingHome && nursingHome.pics);
-
 	return (
 		<div className="nursinghome-page-container">
 			<Title title={nursingHome ? nursingHome.name : undefined} />
