@@ -12,7 +12,7 @@ import {
 	GetPicCaptions,
 	GetPicDigests,
 	GetAllPicDigests,
-	GetDistinctCities
+	GetDistinctCities,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -60,7 +60,9 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 export async function GetNursingHome(ctx: any): Promise<any> {
 	const nursing_home_data = (await GetNursingHomeDB(ctx.params.id))[0];
 	const pic_digests = (await GetPicDigests(ctx.params.id))[0];
-	const available_pics = pic_digests;
+	const available_pics = Object.keys(pic_digests || {})
+		.filter((item: any) => (pic_digests[item] != null ? true : false))
+		.map((item: any) => item.replace("_hash", ""));
 	Object.keys(pic_digests || {})
 		.filter((item: any) => (pic_digests[item] != null ? true : false))
 		.map((item: any) => item.replace("_hash", ""));

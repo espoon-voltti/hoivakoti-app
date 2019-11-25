@@ -11,7 +11,7 @@ export interface ImageView {
 }
 
 interface Props {
-	isOpen: boolean;
+	state: "hidden" | number;
 	onClose: () => void;
 	images: ImageView[];
 }
@@ -56,7 +56,8 @@ const stylesCarousel = {
 	}),
 };
 
-const Lightbox: FC<Props> = ({ isOpen, onClose, images }) => {
+const Lightbox: FC<Props> = ({ state, onClose, images }) => {
+	const isOpen = state !== "hidden";
 	return (
 		<ModalGateway>
 			{isOpen ? (
@@ -65,7 +66,11 @@ const Lightbox: FC<Props> = ({ isOpen, onClose, images }) => {
 					allowFullscreen={false}
 					styles={stylesModal}
 				>
-					<Carousel views={images} styles={stylesCarousel} />
+					<Carousel
+						views={images}
+						styles={stylesCarousel}
+						currentIndex={state}
+					/>
 				</Modal>
 			) : null}
 		</ModalGateway>

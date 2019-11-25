@@ -35,6 +35,12 @@
 	margin-bottom: 0;
 }
 
+.nursinghome-img-inner {
+	height: 100%;
+	background-position: center;
+	background-size: cover;
+}
+
 .nursinghome-hero {
 	position: relative;
 	width: 100%;
@@ -60,6 +66,15 @@
 		display: block;
 		flex-grow: 1;
 		flex-basis: 0;
+	}
+
+	.nursinghome-hero-img {
+		overflow: hidden;
+		.nursinghome-img-inner:hover {
+			cursor: pointer;
+			transform: scale(1.025);
+			transition: all 0.1s ease-in;
+		}
 	}
 
 	.nursinghome-hero-placeholder {

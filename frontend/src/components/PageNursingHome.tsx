@@ -43,7 +43,9 @@ const PageNursingHome: FC = () => {
 		string
 	> | null>(null);
 	const { id } = useParams();
-	const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+	const [lightboxState, setLightboxState] = useState<"hidden" | number>(
+		"hidden",
+	);
 
 	useEffect(() => {
 		axios
@@ -126,54 +128,59 @@ const PageNursingHome: FC = () => {
 			};
 		});
 
+	console.log(nursingHome && nursingHome.pics);
+
 	return (
 		<div className="nursinghome-page-container">
 			<Title title={nursingHome ? nursingHome.name : undefined} />
 			{images && (
 				<Lightbox
-					isOpen={isLightboxOpen}
-					onClose={() => setIsLightboxOpen(false)}
+					state={lightboxState}
+					onClose={() => setLightboxState("hidden")}
 					images={images}
 				/>
 			)}
 			<div className="nursinghome-hero">
-				{images && (
-					<button
-						onClick={() => setIsLightboxOpen(true)}
-						className="nursinghome-hero-lightbox-button"
-					>
-						Katso kuvat
-					</button>
-				)}
 				<Image
 					nursingHome={nursingHome}
-					imageName="overview_outside"
+					imageName={nursingHome && nursingHome.pics[0]}
 					className="nursinghome-hero-img nursinghome-hero-main"
 					variant="background"
 					placeholder={
 						<div className="nursinghome-hero-placeholder" />
 					}
+					onClick={() => setLightboxState(0)}
 				/>
 				<div className="nursinghome-hero-extras-wrapper">
 					<Image
 						nursingHome={nursingHome}
-						imageName="lounge"
+						imageName={nursingHome && nursingHome.pics[1]}
 						className="nursinghome-hero-img nursinghome-hero-extra"
 						variant="background"
 						placeholder={
 							<div className="nursinghome-hero-placeholder" />
 						}
+						onClick={() => setLightboxState(1)}
 					/>
 					<Image
 						nursingHome={nursingHome}
-						imageName="outside"
+						imageName={nursingHome && nursingHome.pics[2]}
 						className="nursinghome-hero-img nursinghome-hero-extra"
 						variant="background"
 						placeholder={
 							<div className="nursinghome-hero-placeholder" />
 						}
+						onClick={() => setLightboxState(2)}
 					/>
 				</div>
+				{images && (
+					<button
+						onClick={() => setLightboxState(0)}
+						className="nursinghome-hero-lightbox-button"
+					>
+						Katso kuvat
+					</button>
+				)}
 			</div>
 			{!nursingHome ? (
 				loadingText
@@ -363,11 +370,12 @@ const ParagraphLink: FC<ParagraphLinkProps> = ({ text, to }) => {
 
 interface ImageProps {
 	nursingHome: NursingHome | null;
-	imageName: NursingHomeImageName;
+	imageName: NursingHomeImageName | null | undefined;
 	className?: string;
 	alt?: string;
 	placeholder?: JSX.Element;
 	variant?: "img" | "background";
+	onClick?: () => void;
 }
 
 export const Image: FC<ImageProps> = ({
@@ -377,25 +385,34 @@ export const Image: FC<ImageProps> = ({
 	alt,
 	placeholder = null,
 	variant = "img",
+	onClick,
 }) => {
-	if (!nursingHome || !nursingHome.pic_digests) return placeholder;
+	if (!imageName || !nursingHome || !nursingHome.pic_digests)
+		return placeholder;
 	const digest: string = (nursingHome.pic_digests as any)[
 		`${imageName}_hash`
 	];
 	if (!digest) return placeholder;
 	const srcUrl = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`;
 	if (variant === "img")
-		return <img src={srcUrl} className={className} alt={alt} />;
+		return (
+			<img
+				src={srcUrl}
+				className={className}
+				alt={alt}
+				onClick={onClick}
+			/>
+		);
 	else
 		return (
-			<div
-				style={{
-					backgroundImage: `url(${srcUrl})`,
-					backgroundPosition: "center",
-					backgroundSize: "cover",
-				}}
-				className={className}
-			/>
+			<div className={className} onClick={onClick}>
+				<div
+					className="nursinghome-img-inner"
+					style={{
+						backgroundImage: `url(${srcUrl})`,
+					}}
+				/>
+			</div>
 		);
 };
 
