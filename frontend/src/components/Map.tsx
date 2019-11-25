@@ -32,7 +32,7 @@ const MapComponentNonInteractive = ReactMapboxGl(mapConfigNonInteractive);
 const calculateBounds = (
 	nursingHomes: NursingHome[] | null,
 ): FitBounds | null => {
-	if (!nursingHomes) return null;
+	if (!nursingHomes || nursingHomes.length === 0) return null;
 
 	const bounds = new LngLatBounds();
 
