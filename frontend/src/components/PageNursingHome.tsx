@@ -431,7 +431,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				<dd>{nursingHome.address}</dd>
 				<dd>Puh. {nursingHome.contact_phone}</dd>
 				<dd>
-					<a href="mailto:{nursingHome.email}">{nursingHome.email}</a>
+					<a href={"mailto:" + nursingHome.email}>{nursingHome.email}</a>
 				</dd>
 				<dd>
 					<a href={nursingHome.www} target="_blank">
