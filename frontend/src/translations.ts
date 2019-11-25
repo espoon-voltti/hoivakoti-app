@@ -93,6 +93,8 @@ interface TranslationsBundle {
 	filterSelections: string;
 	linkBacktoList: string;
 
+	anchorDetailsBox: string;
+
 	basicInformation: string;
 	owner: string;
 	yearofConst: string;
@@ -245,6 +247,8 @@ const translationsFi: TranslationsBundle = {
 	filterSelections: "valintaa",
 	linkBacktoList: "Takaisin hoivakotilistaukseen",
 
+	anchorDetailsBox: "Hoivakodin yhteystiedot",
+
 	basicInformation: "Perustiedot",
 	owner: "Omistaja",
 	yearofConst: "Rakennusvuosi",
@@ -393,6 +397,8 @@ const translationsSe: TranslationsBundle = {
 	numApartments: "Antal bostäder",
 	filterSelections: "val",
 	linkBacktoList: "Tillbaka till vårhemlist",
+
+	anchorDetailsBox: "sv_Hoivakodin yhteystiedot",
 
 	basicInformation: "Grundläggande",
 	owner: "Ägare",

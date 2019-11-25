@@ -7,21 +7,22 @@
 	margin-bottom: 80px;
 }
 
-.nursingHome-info-list dt{
+.nursingHome-info-list dt {
 	line-height: 24px;
 	font-weight: 600;
 }
-.nursingHome-info-list dd{
+.nursingHome-info-list dd {
 	line-height: 24px;
 	margin-bottom: 1em;
-
 }
 
-.nursingHome-info-list--contact, .nursingHome-info-list--directions {
+.nursingHome-info-list--contact,
+.nursingHome-info-list--directions {
 	margin-top: 10px;
 }
 
-.nursingHome-info-list--contact dd, .nursingHome-info-list--directions dd  {
+.nursingHome-info-list--contact dd,
+.nursingHome-info-list--directions dd {
 	line-height: 24px;
 	margin-bottom: 0;
 	word-break: break-all;
@@ -32,7 +33,7 @@
 
 .nursingHome-info-list--directions dd:last-child {
 	margin-bottom: 0;
-} 
+}
 
 .nursinghome-hero {
 	position: relative;
@@ -83,7 +84,7 @@
 	}
 	.nursinghome-hero-lightbox-button:hover {
 		color: $text-color;
-	} 
+	}
 }
 
 .nursinghome-hero-placeholder {
@@ -102,6 +103,12 @@
 	&::before {
 		content: "←";
 		margin-right: 8px;
+	}
+}
+
+.nursinghome-anchor-details {
+	@media (min-width: 800px) {
+		display: none;
 	}
 }
 

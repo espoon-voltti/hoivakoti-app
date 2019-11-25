@@ -71,6 +71,9 @@ const PageNursingHome: FC = () => {
 	const availablePics = nursingHome && getAvailablePics(nursingHome);
 
 	const linkBacktoList = useT("linkBacktoList");
+
+	const anchorDetailsBox = useT("anchorDetailsBox");
+
 	const loadingText = useT("loadingText");
 	const filterAraLabel = useT("filterAraLabel");
 	const numApartments = useT("numApartments");
@@ -188,8 +191,10 @@ const PageNursingHome: FC = () => {
 							text={`${nursingHome.district}, ${nursingHome.city}`}
 						/>
 						<Paragraph text={nursingHome.summary} />
+						<p className="nursinghome-anchor-details">
+							<a href="#yhteystiedot">{anchorDetailsBox}</a>
+						</p>
 						<h3>{basicInformation}</h3>
-
 						<dl className="nursingHome-info-list">
 							<DefinitionItem
 								term={owner}
@@ -234,7 +239,6 @@ const PageNursingHome: FC = () => {
 								}
 							/>
 						</dl>
-
 						<h3>{foodHeader}</h3>
 						<dl className="nursingHome-info-list">
 							<DefinitionItem
@@ -286,6 +290,7 @@ const PageNursingHome: FC = () => {
 
 					<NursingHomeDetailsBox
 						nursingHome={nursingHome}
+						id="yhteystiedot"
 						className="nursinghome-details-box"
 					/>
 				</div>
@@ -395,65 +400,70 @@ export const Image: FC<ImageProps> = ({
 interface NursingHomeDetailsBoxProps {
 	nursingHome: NursingHome;
 	className?: string;
+	id?: string;
 }
 
 const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	nursingHome,
 	className,
+	id,
 }) => {
 	const contactInfo = useT("contactInfo");
 	const directions = useT("directions");
 	const webpage = useT("webpage");
 	return (
-		<div className={className}>
-			<Image
-				nursingHome={nursingHome}
-				imageName="owner_logo"
-				className="nursinghome-details-logo"
-				alt="Omistajan logo"
-			/>
-			<Paragraph
-				text={nursingHome.name}
-				className="nursinghome-details-name"
-			/>
-			<a
-				href={`https://www.google.com/maps/search/${
-					nursingHome.name
-				}/@${nursingHome.geolocation.center.join(",")}z`}
-				target="_blank"
-				rel="noreferrer noopener"
-			>
-				<MapSmall nursingHome={nursingHome} />
-			</a>
+		<>
+			{id && <div id={id} />}
+			<div className={className}>
+				<Image
+					nursingHome={nursingHome}
+					imageName="owner_logo"
+					className="nursinghome-details-logo"
+					alt="Omistajan logo"
+				/>
+				<Paragraph
+					text={nursingHome.name}
+					className="nursinghome-details-name"
+				/>
+				<a
+					href={`https://www.google.com/maps/search/${
+						nursingHome.name
+					}/@${nursingHome.geolocation.center.join(",")}z`}
+					target="_blank"
+					rel="noreferrer noopener"
+				>
+					<MapSmall nursingHome={nursingHome} />
+				</a>
 
-			<dl className="nursingHome-info-list nursingHome-info-list--contact">
-				<dt>{contactInfo}</dt>
-				<dd>
-					{nursingHome.address}, {nursingHome.postal_code}{" "}
-					{nursingHome.city}
-				</dd>
-				<dd>Puh. {nursingHome.contact_phone}</dd>
-				<dd>
-					<a href={"mailto:" + nursingHome.email}>
-						{nursingHome.email}
-					</a>
-				</dd>
-				<dd>
-					<a
-						href={nursingHome.www}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						{webpage}
-					</a>
-				</dd>
-			</dl>
+				<dl className="nursingHome-info-list nursingHome-info-list--contact">
+					<dt>{contactInfo}</dt>
+					<dd>
+						{nursingHome.address}, {nursingHome.postal_code}{" "}
+						{nursingHome.city}
+					</dd>
+					<dd>Puh. {nursingHome.contact_phone}</dd>
+					<dd>
+						<a href={"mailto:" + nursingHome.email}>
+							{nursingHome.email}
+						</a>
+					</dd>
+					<dd>
+						<a
+							href={nursingHome.www}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{webpage}
+						</a>
+					</dd>
+				</dl>
 
-			<dl className="nursingHome-info-list nursingHome-info-list--directions">
-				<dt>{directions}</dt>
-				<dd>{nursingHome.arrival_guide_public_transit}</dd>
-				<dd>{nursingHome.arrival_guide_car}</dd>
-			</dl>
-		</div>
+				<dl className="nursingHome-info-list nursingHome-info-list--directions">
+					<dt>{directions}</dt>
+					<dd>{nursingHome.arrival_guide_public_transit}</dd>
+					<dd>{nursingHome.arrival_guide_car}</dd>
+				</dl>
+			</div>
+		</>
 	);
 };
