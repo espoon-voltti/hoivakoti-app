@@ -12,6 +12,7 @@ import { useCurrentLanguage } from "../translations";
 import PageError from "./PageError";
 import ScrollToTop from "./ScrollToTop";
 import PageAccessibility from "./PageAccessibility";
+import Title from "./Title";
 
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
@@ -25,6 +26,7 @@ const App: React.FC = () => {
 			<div id="app">
 				<Router basename={`/${currentLanguage}`}>
 					<ScrollToTop />
+					<Title />
 
 					<Header />
 

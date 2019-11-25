@@ -5,6 +5,8 @@ const ns = "defaultNamespace";
 
 interface TranslationsBundle {
 	appTitle: string;
+	titleTemplate: string;
+
 	navHome: string;
 	navNursingHomes: string;
 
@@ -149,6 +151,8 @@ export const useCurrentLanguage = (): Language => {
 
 const translationsFi: TranslationsBundle = {
 	appTitle: "Espoon hoivakodit",
+	titleTemplate: "%s – Espoon hoivakodit",
+
 	navHome: "Etusivu",
 	navNursingHomes: "Hoivakodit",
 	jumbotronBtn: "Näytä hoivakodit",
@@ -298,6 +302,8 @@ const translationsFi: TranslationsBundle = {
 
 const translationsSe: TranslationsBundle = {
 	appTitle: "Vårdhem i Esbo",
+	titleTemplate: "%s – Vårdhem i Esbo",
+
 	navHome: "Hemsida",
 	navNursingHomes: "Vårdhem",
 	jumbotronBtn: "Visa vårdhem",

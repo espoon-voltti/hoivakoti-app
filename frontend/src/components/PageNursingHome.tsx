@@ -8,6 +8,7 @@ import { NursingHome, NursingHomeImageName } from "./types";
 import { MapSmall } from "./Map";
 import { useT } from "../translations";
 import Lightbox from "./Lightbox";
+import Title from "./Title";
 
 function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -127,6 +128,7 @@ const PageNursingHome: FC = () => {
 
 	return (
 		<div className="nursinghome-page-container">
+			<Title title={nursingHome ? nursingHome.name : undefined} />
 			{images && (
 				<Lightbox
 					isOpen={isLightboxOpen}
