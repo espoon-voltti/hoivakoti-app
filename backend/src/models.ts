@@ -229,6 +229,7 @@ export async function GetNursingHome(id: string): Promise<any[]> {
 		.select()
 		.table("NursingHomes")
 		.where({ id: id });
+
 	return result;
 }
 

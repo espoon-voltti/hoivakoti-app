@@ -55,6 +55,9 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 				nursinghome.pics = available_pics;
 			}
 		});
+
+		delete nursinghome.vacancy_last_updated_at;
+		delete nursinghome.basic_update_key;
 	});
 
 	return nursing_homes;
@@ -69,6 +72,9 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	Object.keys(pic_digests || {})
 		.filter((item: any) => (pic_digests[item] != null ? true : false))
 		.map((item: any) => item.replace("_hash", ""));
+
+	delete nursing_home_data.vacancy_last_updated_at;
+	delete nursing_home_data.basic_update_key;
 
 	nursing_home_data["pic_digests"] = pic_digests;
 	nursing_home_data["pics"] = available_pics;
