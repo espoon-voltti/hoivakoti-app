@@ -80,7 +80,9 @@ const PageUpdate: FC = () => {
 		<div className="page-update">
 			<div className="page-update-content">
 				{!nursingHome || !vacancyStatus || isRequesting ? (
-					loadingText
+					<h1 className="page-update-title">
+						{isRequesting ? "Tallennetaan..." : loadingText}
+					</h1>
 				) : (
 					<>
 						<h1 className="page-update-title">{title}</h1>
