@@ -71,9 +71,9 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 		console.log(record);
 		const nursinghome_pics: any = {};
 
-		const nursing_home_id = (await GetNursingHomeIDFromName(
-			record["Hoivakodin nimi"],
-		))[0].id;
+		const nursing_home_id = (
+			await GetNursingHomeIDFromName(record["Hoivakodin nimi"])
+		)[0].id;
 		console.log("ID: " + JSON.stringify(nursing_home_id));
 
 		for (const field_info of nursing_home_pictures_columns_info) {
@@ -170,6 +170,18 @@ async function DownloadAndSaveFile(id: string): Promise<any> {
 		//console.debug(e);
 		return e;
 	}
+}
+
+export function createBasicUpdateKey(length: number): string {
+	let result = "";
+	const characters = "ABCEFGHJKLMNPQRSTUVWXYZ";
+	const charactersLength = characters.length;
+	for (let i = 0; i < length; i++) {
+		result += characters.charAt(
+			Math.floor(Math.random() * charactersLength),
+		);
+	}
+	return result;
 }
 
 export { NursingHomesFromCSV };

@@ -15,6 +15,8 @@ import {
 	GetPic,
 	GetCaptions,
 	GetCities,
+	GetNursingHomeVacancyStatus,
+	UpdateNursingHomeVacancyStatus,
 } from "./controllers";
 import config from "./config";
 
@@ -66,6 +68,26 @@ router.get("/api/nursing-homes/:id/pics/captions", async ctx => {
 
 router.get("/api/nursing-homes/:id/pics/:pic/:digest", async ctx => {
 	ctx.body = await GetPic(ctx);
+});
+
+router.get("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
+	const status = await GetNursingHomeVacancyStatus(ctx);
+	if (status === null) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or key" };
+	} else {
+		ctx.body = { has_vacancy: status };
+	}
+});
+
+router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
+	const success = await UpdateNursingHomeVacancyStatus(ctx);
+	if (!success) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or key" };
+	} else {
+		ctx.body = { success };
+	}
 });
 
 // router.get("/api/ratings", async ctx => {

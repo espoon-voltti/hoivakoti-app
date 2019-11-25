@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import Knex from "knex";
+import Knex, { CreateTableBuilder } from "knex";
 import uuidv4 from "uuid/v4";
 import rp from "request-promise-native";
 import {
@@ -8,6 +8,7 @@ import {
 	postal_code_to_district,
 } from "./nursinghome-typings";
 import config from "./config";
+import { createBasicUpdateKey } from "./services";
 
 const options: Knex.Config = {
 	client: "postgres",
@@ -52,50 +53,56 @@ async function CreateNursingHomePicturesTable(): Promise<void> {
 }
 
 async function CreateNursingHomeTable(): Promise<void> {
-	await knex.schema.createTable("NursingHomes", (table: any) => {
-		table.uuid("id");
-		table.string("name");
-		table.string("owner");
-		table.string("address");
-		table.boolean("ara");
-		table.string("www");
-		table.integer("apartment_count");
-		table.string("language");
-		table.boolean("lah");
-		table.text("summary");
-		table.string("postal_code");
-		table.string("city");
-		table.text("arrival_guide_public_transit");
-		table.text("arrival_guide_car");
-		table.integer("construction_year");
-		table.text("building_info");
-		table.boolean("apartments_have_bathroom");
-		table.text("apartment_count_info");
-		table.string("apartment_square_meters");
-		table.string("rent");
-		table.text("rent_info");
-		table.text("language_info");
-		table.string("menu_link");
-		table.text("meals_preparation");
-		table.text("meals_info");
-		table.text("activities_info");
-		table.text("activities_link");
-		table.text("outdoors_possibilities_info");
-		table.text("outdoors_possibilities_link");
-		table.text("tour_info");
-		table.string("contact_name");
-		table.string("contact_title");
-		table.string("contact_phone");
-		table.text("contact_phone_info");
-		table.string("email");
-		table.text("accessibility_info");
-		table.text("staff_info");
-		table.text("staff_satisfaction_info");
-		table.text("other_services");
-		table.text("nearby_services");
-		table.json("geolocation");
-		table.string("district");
-	});
+	await knex.schema.createTable(
+		"NursingHomes",
+		(table: CreateTableBuilder) => {
+			table.uuid("id");
+			table.string("name");
+			table.string("owner");
+			table.string("address");
+			table.boolean("ara");
+			table.string("www");
+			table.integer("apartment_count");
+			table.string("language");
+			table.boolean("lah");
+			table.text("summary");
+			table.string("postal_code");
+			table.string("city");
+			table.text("arrival_guide_public_transit");
+			table.text("arrival_guide_car");
+			table.integer("construction_year");
+			table.text("building_info");
+			table.boolean("apartments_have_bathroom");
+			table.text("apartment_count_info");
+			table.string("apartment_square_meters");
+			table.string("rent");
+			table.text("rent_info");
+			table.text("language_info");
+			table.string("menu_link");
+			table.text("meals_preparation");
+			table.text("meals_info");
+			table.text("activities_info");
+			table.text("activities_link");
+			table.text("outdoors_possibilities_info");
+			table.text("outdoors_possibilities_link");
+			table.text("tour_info");
+			table.string("contact_name");
+			table.string("contact_title");
+			table.string("contact_phone");
+			table.text("contact_phone_info");
+			table.string("email");
+			table.text("accessibility_info");
+			table.text("staff_info");
+			table.text("staff_satisfaction_info");
+			table.text("other_services");
+			table.text("nearby_services");
+			table.json("geolocation");
+			table.string("district");
+			table.boolean("has_vacancy");
+			table.string("vacancy_last_updated_at");
+			table.string("basic_update_key");
+		},
+	);
 }
 
 export async function DropAndRecreateNursingHomeTable(): Promise<void> {
@@ -141,10 +148,10 @@ export async function DropAndRecreateNursingHomePicturesTable(): Promise<void> {
 // }
 
 export async function InsertNursingHomeToDB(
-	nurseryhome: NursingHome,
+	nursingHome: NursingHome,
 ): Promise<string> {
 	// Prolly should not do in models but WIP / MVP
-	const geo_query = [nurseryhome.address, nurseryhome.city, "Finland"];
+	const geo_query = [nursingHome.address, nursingHome.city, "Finland"];
 	const geoloc = JSON.parse(
 		await rp(
 			"https://api.mapbox.com/geocoding/v5/mapbox.places/" +
@@ -153,26 +160,28 @@ export async function InsertNursingHomeToDB(
 		),
 	);
 
-	const existing_id = await GetNursingHomeIDFromName(nurseryhome.name);
+	const existing_id = await GetNursingHomeIDFromName(nursingHome.name);
 	// Nursing home with this name already exists
 	if (existing_id.length > 0) {
 		const uuid = existing_id[0].id;
 		await knex("NursingHomes")
 			.where({ id: uuid })
 			.update({
-				...nurseryhome,
+				...nursingHome,
 				geolocation: geoloc["features"][0],
-				district: postal_code_to_district[nurseryhome.postal_code],
+				district: postal_code_to_district[nursingHome.postal_code],
 			});
 
 		return uuid;
 	} else {
 		const uuid = uuidv4();
+		const basicUpdateKey = createBasicUpdateKey(6);
 		await knex("NursingHomes").insert({
 			id: uuid,
-			...nurseryhome,
+			...nursingHome,
 			geolocation: geoloc["features"][0],
-			district: postal_code_to_district[nurseryhome.postal_code],
+			district: postal_code_to_district[nursingHome.postal_code],
+			basic_update_key: basicUpdateKey,
 		});
 		//await SetUpRatingsTable(uuid)
 
@@ -314,4 +323,32 @@ export async function GetAllPicDigests(): Promise<any[]> {
 
 export async function GetDistinctCities(): Promise<any[]> {
 	return await knex("NursingHomes").distinct("city");
+}
+
+export async function GetNursingHomeVacancyStatus(
+	id: string,
+	basicUdpateKey: string,
+): Promise<boolean | null> {
+	const res = await knex("NursingHomes")
+		.where({ id, basic_update_key: basicUdpateKey })
+		.select("has_vacancy");
+
+	if (res.length === 0) return null;
+
+	const status = res[0].has_vacancy === true;
+	return status;
+}
+
+export async function UpdateNursingHomeVacancyStatus(
+	id: string,
+	basicUdpateKey: string,
+	value: boolean,
+): Promise<boolean> {
+	const count = await knex("NursingHomes")
+		.where({ id, basic_update_key: basicUdpateKey })
+		.update({ has_vacancy: value });
+
+	if (count !== 1) return false;
+
+	return true;
 }

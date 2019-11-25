@@ -13,10 +13,13 @@ import {
 	GetPicDigests,
 	GetAllPicDigests,
 	GetDistinctCities,
+	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
+	UpdateNursingHomeVacancyStatus as UpdateNursingHomeVacancyStatusDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
 import Knex = require("knex");
+import { Context } from "koa";
 
 export async function AddNursingHome(ctx: any): Promise<string> {
 	await InsertNursingHomeToDB({
@@ -163,4 +166,21 @@ export async function GetCaptions(ctx: any): Promise<any> {
 export async function GetCities(ctx: any): Promise<any> {
 	const cities = await GetDistinctCities();
 	return cities.map((item: any) => item.city);
+}
+
+export async function GetNursingHomeVacancyStatus(
+	ctx: Context,
+): Promise<boolean | null> {
+	const { id, key } = ctx.params;
+	return await GetNursingHomeVacancyStatusDB(id, key);
+}
+
+export async function UpdateNursingHomeVacancyStatus(
+	ctx: Context,
+): Promise<boolean> {
+	const { id, key } = ctx.params;
+	const value: boolean = ctx.request.body.has_vacancy;
+	if (typeof value !== "boolean")
+		throw new Error("Invalid value in field 'has_vacancy'!");
+	return await UpdateNursingHomeVacancyStatusDB(id, key, value);
 }
