@@ -205,7 +205,10 @@ export async function GetNursingHomeIDFromName(name: string): Promise<any[]> {
 }
 
 export async function GetAllNursingHomes(): Promise<any> {
-	return await knex.select().table("NursingHomes");
+	return await knex
+		.select()
+		.table("NursingHomes")
+		.orderBy("name");
 }
 
 export async function GetAllRatings(): Promise<Knex.Table> {
