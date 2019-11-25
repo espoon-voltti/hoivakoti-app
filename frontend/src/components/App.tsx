@@ -10,6 +10,7 @@ import Footer from "./Footer";
 import ErrorBoundary from "./ErrorBoundary";
 import { useCurrentLanguage } from "../translations";
 import PageError from "./PageError";
+import ScrollToTop from "./ScrollToTop";
 
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
@@ -22,6 +23,8 @@ const App: React.FC = () => {
 		<ErrorBoundary>
 			<div id="app">
 				<Router basename={`/${currentLanguage}`}>
+					<ScrollToTop />
+
 					<Header />
 
 					<main id="content">
