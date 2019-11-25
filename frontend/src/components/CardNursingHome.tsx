@@ -48,7 +48,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					</h3>
 
 					<div className="card-list-item__text">
-						{nursinghome && nursinghome.address}
+						{nursinghome.address}, {nursinghome.postal_code}{" "}
+						{nursinghome.city}
 					</div>
 					{nursinghome && nursinghome.ara && (
 						<div className="card-list-item__tag">

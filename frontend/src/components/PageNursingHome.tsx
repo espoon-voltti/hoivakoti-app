@@ -428,13 +428,22 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 
 			<dl className="nursingHome-info-list nursingHome-info-list--contact">
 				<dt>{contactInfo}</dt>
-				<dd>{nursingHome.address}</dd>
+				<dd>
+					{nursingHome.address}, {nursingHome.postal_code}{" "}
+					{nursingHome.city}
+				</dd>
 				<dd>Puh. {nursingHome.contact_phone}</dd>
 				<dd>
-					<a href={"mailto:" + nursingHome.email}>{nursingHome.email}</a>
+					<a href={"mailto:" + nursingHome.email}>
+						{nursingHome.email}
+					</a>
 				</dd>
 				<dd>
-					<a href={nursingHome.www} target="_blank">
+					<a
+						href={nursingHome.www}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						{webpage}
 					</a>
 				</dd>
