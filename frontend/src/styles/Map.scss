@@ -1,4 +1,17 @@
+@import "variables.scss";
+
 .mapboxgl-popup-content {
 	padding: 0 !important;
 	max-width: 300px;
+}
+
+.ZoomControl--hoivakoti button{
+	color: $text-color !important;
+	height: 30px !important;
+	width: 30px !important;
+	background-size: 30px !important;
+}
+
+.ZoomControl--hoivakoti #zoomOut {
+	background-position: 0 -30px !important;
 }

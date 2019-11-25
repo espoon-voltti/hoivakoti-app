@@ -56,7 +56,9 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 			}}
 			onClick={() => onSelectNursingHome(null)}
 		>
-			<ZoomControl position="top-right" />
+			<ZoomControl position="top-right" 
+				className="ZoomControl--hoivakoti"
+			/>
 
 			<>
 				{nursingHomes.map((nursingHome, index) => (

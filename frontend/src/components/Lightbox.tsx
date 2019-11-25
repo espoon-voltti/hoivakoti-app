@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import "../styles/Lightbox.scss";
 // NOTE: react-images has incorrect ts typings
 // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
 const reactImages = require("react-images");
