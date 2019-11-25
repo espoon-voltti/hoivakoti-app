@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import { useT } from "../translations";
 
 const Footer: FC = () => (
-	<footer className="header" style={{ borderTop: "1px solid #e8e8e8" }}>
+	<footer
+		className="header footer"
+		style={{ borderTop: "1px solid #e8e8e8" }}
+	>
 		<div className="logo-container">
 			<a href="/">
 				<img
