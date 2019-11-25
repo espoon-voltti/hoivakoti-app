@@ -22,6 +22,17 @@ $header-height: 80px;
 	box-sizing: content-box;
 }
 
+.footer-links {
+	flex-grow: 1;
+}
+
+.footer-link {
+	&:not(:last-child)::after {
+		content: "|";
+		margin: 0 20px;
+	}
+}
+
 .logo-container a {
 	display: flex;
 	align-items: center;

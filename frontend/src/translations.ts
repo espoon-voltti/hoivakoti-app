@@ -122,6 +122,13 @@ interface TranslationsBundle {
 	linkMoreInfoPersonnel: string;
 
 	monthShort: string;
+
+	pageAccessibilityHeader: string;
+	pageAccessibilityBody: string;
+
+	footerLinkPrivacy: string;
+	footerLinkAccessibility: string;
+	footerLinkFeedback: string;
 }
 
 export type TranslationKey = keyof TranslationsBundle;
@@ -243,7 +250,8 @@ const translationsFi: TranslationsBundle = {
 	yearofConst: "Rakennusvuosi",
 	apartmentSize: "Asuntojen neliömäärä",
 	apartmentFurnitureLabel: "Peruskalustus",
-	apartmentFurnitureText: "Palveluun kuuluu sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytysmahdollisuus ja yleisvalaisin. Lisäksi asiakas voi kalustaa ja sisustaa asuntonsa omien toiveidensa ja mieltymysten mukaisesti.",
+	apartmentFurnitureText:
+		"Palveluun kuuluu sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytysmahdollisuus ja yleisvalaisin. Lisäksi asiakas voi kalustaa ja sisustaa asuntonsa omien toiveidensa ja mieltymysten mukaisesti.",
 	rent: "Vuokran määrä",
 	LAHapartments: "Lyhytaikaisen asumisen asuntoja",
 	foodHeader: "Ruoka",
@@ -266,6 +274,22 @@ const translationsFi: TranslationsBundle = {
 	linkMoreInfoActivies: "Lisätietoa toiminnasta",
 	linkMoreInfoPersonnel: "Lisätietoa henkilöstön tyytyväisyydestä",
 	monthShort: "kk",
+
+	pageAccessibilityHeader: "Saavutettavuusseloste",
+	pageAccessibilityBody: `
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu tellus ornare, egestas eros sit amet, volutpat eros. Ut vel sodales eros. Proin tristique pellentesque purus sit amet semper. Nullam euismod tristique magna vitae dictum. Quisque aliquam ultricies leo in tempus. Suspendisse convallis neque ut lorem scelerisque, quis accumsan tortor pretium.
+		</p>
+		<p>
+			Integer eu efficitur sem. Vivamus aliquet fermentum placerat. Vivamus suscipit imperdiet pharetra. Pellentesque sollicitudin lorem elit, id consequat augue tempus id. Duis tristique sed ante vel ornare. Sed venenatis eros in augue laoreet, quis sodales orci egestas. Aliquam ut posuere odio. Duis id fermentum lacus. Fusce eget molestie libero, ac dictum nulla. Sed eu magna sed enim tempor posuere et non felis. Proin nec arcu sagittis enim tempus ullamcorper. Aliquam erat volutpat. Vivamus hendrerit urna nec dictum condimentum. Nam eros arcu, varius et metus vel, iaculis tincidunt mauris.
+		</p>
+		<p>
+			Praesent aliquet diam in elementum cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque at eleifend leo, in sollicitudin arcu. Sed fringilla posuere neque tempus accumsan. Donec sollicitudin, tortor pulvinar pellentesque molestie, erat augue viverra lacus, id commodo est libero ac lorem. Phasellus blandit massa et ante porttitor, ultricies laoreet risus porttitor. Etiam nulla dui, dictum a lacinia non, hendrerit ac nisl.
+		</p>`,
+
+	footerLinkPrivacy: "Tietosuojaseloste",
+	footerLinkAccessibility: "Saavutettavuusseloste",
+	footerLinkFeedback: "Anna palautetta sivustosta",
 };
 
 const translationsSe: TranslationsBundle = {
@@ -398,6 +422,22 @@ const translationsSe: TranslationsBundle = {
 	linkMoreInfoActivies: "Läs mera om aktiviteter",
 	linkMoreInfoPersonnel: "Läs mera om personnel",
 	monthShort: "mm",
+
+	pageAccessibilityHeader: "sv_Saavutettavuusseloste",
+	pageAccessibilityBody: `
+		<p>
+			sv_Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu tellus ornare, egestas eros sit amet, volutpat eros. Ut vel sodales eros. Proin tristique pellentesque purus sit amet semper. Nullam euismod tristique magna vitae dictum. Quisque aliquam ultricies leo in tempus. Suspendisse convallis neque ut lorem scelerisque, quis accumsan tortor pretium.
+		</p>
+		<p>
+			sv_Integer eu efficitur sem. Vivamus aliquet fermentum placerat. Vivamus suscipit imperdiet pharetra. Pellentesque sollicitudin lorem elit, id consequat augue tempus id. Duis tristique sed ante vel ornare. Sed venenatis eros in augue laoreet, quis sodales orci egestas. Aliquam ut posuere odio. Duis id fermentum lacus. Fusce eget molestie libero, ac dictum nulla. Sed eu magna sed enim tempor posuere et non felis. Proin nec arcu sagittis enim tempus ullamcorper. Aliquam erat volutpat. Vivamus hendrerit urna nec dictum condimentum. Nam eros arcu, varius et metus vel, iaculis tincidunt mauris.
+		</p>
+		<p>
+			sv_Praesent aliquet diam in elementum cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque at eleifend leo, in sollicitudin arcu. Sed fringilla posuere neque tempus accumsan. Donec sollicitudin, tortor pulvinar pellentesque molestie, erat augue viverra lacus, id commodo est libero ac lorem. Phasellus blandit massa et ante porttitor, ultricies laoreet risus porttitor. Etiam nulla dui, dictum a lacinia non, hendrerit ac nisl.
+		</p>`,
+
+	footerLinkPrivacy: "sv_Tietosuojaseloste",
+	footerLinkAccessibility: "sv_Saavutettavuusseloste",
+	footerLinkFeedback: "sv_Anna palautetta sivustosta",
 };
 
 i18n.addResources("fi-FI", ns, translationsFi);
