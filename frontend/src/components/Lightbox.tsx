@@ -20,7 +20,7 @@ interface Props {
 const stylesModal = {
 	blanket: (base: any) => ({
 		...base,
-		backgroundColor: "rgba(255,255,255,0.85)",
+		backgroundColor: "#fff",
 	}),
 };
 
@@ -31,8 +31,8 @@ const stylesCarousel = {
 	}),
 	headerClose: (base: any) => ({
 		...base,
-		color: "#666",
-		":hover": { color: "#DE350B" },
+		color: "#6e6e6e",
+		":hover": { color: "#0f0f0f" },
 	}),
 	footer: (base: any) => ({
 		...base,
@@ -40,17 +40,20 @@ const stylesCarousel = {
 	}),
 	footerCaption: (base: any) => ({
 		...base,
-		color: "black",
+		color: "#0f0f0f",
+		fontSize: "16px",
+		textAlign: "center",
+		width: "100%",
 	}),
 	navigationNext: (base: any) => ({
 		...base,
-		color: "#666",
-		":hover": { color: "#DE350B" },
+		color: "#6e6e6e",
+		":hover": { color: "#0f0f0f" },
 	}),
 	navigationPrev: (base: any) => ({
 		...base,
-		color: "#666",
-		":hover": { color: "#DE350B" },
+		color: "#6e6e6e",
+		":hover": { color: "#0f0f0f" },
 	}),
 };
 
