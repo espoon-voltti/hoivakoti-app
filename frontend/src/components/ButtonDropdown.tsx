@@ -25,12 +25,12 @@ const ButtonDropdown: FC<Props> = ({
 }) => {
 	return (
 		<>
-			{/* {isExpanded && (
+			{isExpanded && (
 				<div
 					className="button-dropdown-background"
 					onClick={() => onExpandedChange(false)}
 				/>
-			)} */}
+			)}
 			<div
 				className={`button-dropdown-container button-dropdown-variant-${variant}`}
 				aria-expanded={isExpanded}
