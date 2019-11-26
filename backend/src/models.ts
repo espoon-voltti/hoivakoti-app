@@ -362,3 +362,13 @@ export async function UpdateNursingHomeVacancyStatus(
 
 	return true;
 }
+
+export interface BasicUpdateKeyEntry {
+	id: string;
+	basic_update_key: string;
+}
+
+export async function GetAllBasicUpdateKeys(): Promise<BasicUpdateKeyEntry[]> {
+	const res = await knex("NursingHomes").select("id", "basic_update_key");
+	return res.map(({ id, basic_update_key }) => ({ id, basic_update_key }));
+}

@@ -17,6 +17,7 @@ import {
 	GetCities,
 	GetNursingHomeVacancyStatus,
 	UpdateNursingHomeVacancyStatus,
+	AdminRevealSecrets,
 } from "./controllers";
 import config from "./config";
 
@@ -110,8 +111,9 @@ router.get("/api/version", async ctx => {
 	ctx.body = "v1";
 });
 
-router.get("/api/test-match/:pass", async ctx => {
-	ctx.body = ctx.params.pass === process.env.ADMIN_PASSWORD;
+router.post("/api/admin/reveal-secrets", async ctx => {
+	const secrets = await AdminRevealSecrets(ctx);
+	ctx.body = { secrets };
 });
 
 const routes = router.routes();

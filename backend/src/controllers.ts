@@ -15,6 +15,8 @@ import {
 	GetDistinctCities,
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
 	UpdateNursingHomeVacancyStatus as UpdateNursingHomeVacancyStatusDB,
+	GetAllBasicUpdateKeys,
+	BasicUpdateKeyEntry,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -192,4 +194,24 @@ export async function UpdateNursingHomeVacancyStatus(
 	if (typeof value !== "boolean")
 		throw new Error("Invalid value in field 'has_vacancy'!");
 	return await UpdateNursingHomeVacancyStatusDB(id, key, value);
+}
+
+interface Secrets {
+	basicUpdateKeys: BasicUpdateKeyEntry[];
+}
+
+export async function AdminRevealSecrets(
+	ctx: Context,
+): Promise<Secrets | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+	const basicUpdateKeys = await GetAllBasicUpdateKeys();
+	return {
+		basicUpdateKeys,
+	};
 }
