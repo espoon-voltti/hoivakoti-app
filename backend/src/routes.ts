@@ -110,6 +110,12 @@ router.get("/api/version", async ctx => {
 	ctx.body = "v1";
 });
 
+router.get("/api/test-match/:pass", async ctx => {
+	ctx.body = ctx.params.pass === process.env.ADMIN_PASSWORD;
+});
+
+62 {var.region}:${data.aws_caller_identity.current.account_id}:parameter/${terraform.workspace}/hoivakoti/admin_password"
+
 const routes = router.routes();
 
 export { routes };
