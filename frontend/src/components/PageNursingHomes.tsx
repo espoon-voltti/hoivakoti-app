@@ -8,7 +8,7 @@ import { Link as div } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
 import Map from "./Map";
-import { useT } from "../translations";
+import { useT } from "../i18n";
 import { NursingHome } from "./types";
 
 type Language = string;

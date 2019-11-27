@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import ErrorBoundary from "./ErrorBoundary";
-import { useCurrentLanguage } from "../translations";
+import { useCurrentLanguage } from "../i18n";
 import PageError from "./PageError";
 import ScrollToTop from "./ScrollToTop";
 import PageAccessibility from "./PageAccessibility";

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useT } from "../translations";
+import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
 import { useParams } from "react-router-dom";
@@ -12,6 +12,17 @@ interface VacancyStatus {
 	has_vacancy: boolean;
 	vacancy_last_updated_at: string | null;
 }
+
+const formatDate = (dateString: string | null): string => {
+	if (!dateString) return "";
+	const date = new Date(dateString);
+	const YYYY = String(date.getUTCFullYear());
+	const MM = String(date.getUTCMonth() + 1).padStart(2, "0");
+	const DD = String(date.getUTCDate()).padStart(2, "0");
+	const hh = String(date.getUTCHours()).padStart(2, "0");
+	const mm = String(date.getUTCMinutes()).padStart(2, "0");
+	return `${YYYY}-${MM}-${DD} (${hh}:${mm} UTC)`;
+};
 
 const requestVacancyStatusUpdate = async (
 	id: string,
@@ -31,7 +42,10 @@ const PageUpdate: FC = () => {
 	const [vacancyStatus, setVacancyStatus] = useState<VacancyStatus | null>(
 		null,
 	);
-	const [isRequesting, setIsRequesting] = useState(false);
+	const [popupState, setPopupState] = useState<null | "saving" | "saved">(
+		null,
+	);
+	const [formState, setFormState] = useState<boolean>(false);
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
@@ -55,13 +69,15 @@ const PageUpdate: FC = () => {
 				)
 				.then((response: { data: VacancyStatus }) => {
 					setVacancyStatus(response.data);
+					setFormState(response.data.has_vacancy);
+					if (popupState) setTimeout(() => setPopupState(null), 3000);
 				})
 				.catch(e => {
 					console.error(e);
 					throw e;
 				});
 		}
-	}, [id, key, vacancyStatus]);
+	}, [id, key, popupState, vacancyStatus]);
 
 	const title = useT("pageUpdateTitle");
 	const intro = useT("pageUpdateIntro");
@@ -69,20 +85,24 @@ const PageUpdate: FC = () => {
 	const labelFalse = useT("vacancyFalse");
 	const loadingText = useT("loadingText");
 
-	const handleClick = async (value: boolean): Promise<void> => {
-		setIsRequesting(true);
-		await requestVacancyStatusUpdate(id, key, value);
-		setIsRequesting(false);
+	const updatePopupSaved = "Tallennettu!";
+	const updatePopupSaving = "Tallennetaan...";
+
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+	): Promise<void> => {
+		e.preventDefault();
+		setPopupState("saving");
+		await requestVacancyStatusUpdate(id, key, formState);
+		setPopupState("saved");
 		setVacancyStatus(null);
 	};
 
 	return (
 		<div className="page-update">
 			<div className="page-update-content">
-				{!nursingHome || !vacancyStatus || isRequesting ? (
-					<h1 className="page-update-title">
-						{isRequesting ? "Tallennetaan..." : loadingText}
-					</h1>
+				{!nursingHome ? (
+					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
 						<h1 className="page-update-title">{title}</h1>
@@ -92,22 +112,31 @@ const PageUpdate: FC = () => {
 						</p>
 						<p className="page-update-data">
 							<strong>Tilanne: </strong>
-							{vacancyStatus.has_vacancy ? labelTrue : labelFalse}
+							{vacancyStatus
+								? vacancyStatus.has_vacancy
+									? labelTrue
+									: labelFalse
+								: loadingText}
 						</p>
-						{vacancyStatus.vacancy_last_updated_at && (
-							<p className="page-update-data">
-								<strong>Tietoa viimeksi päivitetty: </strong>
-								{vacancyStatus.vacancy_last_updated_at}
-							</p>
-						)}
+						<p className="page-update-data">
+							<strong>Tietoa viimeksi päivitetty: </strong>
+							{vacancyStatus
+								? formatDate(
+										vacancyStatus.vacancy_last_updated_at,
+								  ) || " (ei päivitetty)"
+								: loadingText}
+						</p>
 						<p className="page-update-intro">{intro}</p>
-						<div className="page-update-controls">
+						<form
+							className="page-update-controls"
+							onSubmit={handleSubmit}
+						>
 							<Radio
 								id="update-vacancy-true"
 								name="update-vacancy-true"
-								isSelected={vacancyStatus.has_vacancy}
+								isSelected={formState}
 								onChange={isChecked => {
-									if (isChecked) handleClick(true);
+									if (isChecked) setFormState(true);
 								}}
 							>
 								{labelTrue}
@@ -115,14 +144,28 @@ const PageUpdate: FC = () => {
 							<Radio
 								id="update-vacancy-false"
 								name="update-vacancy-false"
-								isSelected={!vacancyStatus.has_vacancy}
+								isSelected={!formState}
 								onChange={isChecked => {
-									if (isChecked) handleClick(false);
+									if (isChecked) setFormState(false);
 								}}
 							>
 								{labelFalse}
 							</Radio>
-						</div>
+							<div>
+								<input
+									type="submit"
+									className="page-update-submit"
+									value="Tallenna"
+								/>
+								{popupState && (
+									<span className="page-update-popup">
+										{popupState === "saving"
+											? updatePopupSaving
+											: updatePopupSaved}
+									</span>
+								)}
+							</div>
+						</form>
 					</>
 				)}
 			</div>

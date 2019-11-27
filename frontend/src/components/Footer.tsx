@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import config from "./config";
 import { Link } from "react-router-dom";
-import { useT, useCurrentLanguage } from "../translations";
+import { useT, useCurrentLanguage } from "../i18n";
 
 const Footer: FC = () => {
 	const currentLanguage = useCurrentLanguage();

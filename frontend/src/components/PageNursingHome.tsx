@@ -6,7 +6,7 @@ import config from "./config";
 import axios from "axios";
 import { NursingHome, NursingHomeImageName } from "./types";
 import { MapSmall } from "./Map";
-import { useT } from "../translations";
+import { useT } from "../i18n";
 import Lightbox from "./Lightbox";
 import Title from "./Title";
 import VacancyStatusBadge from "./VacancyStatusBadge";

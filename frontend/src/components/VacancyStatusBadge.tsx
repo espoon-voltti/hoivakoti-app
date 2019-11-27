@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useT } from "../translations";
+import { useT } from "../i18n";
 import "../styles/VacancyStatusBadge.scss";
 
 interface Props {

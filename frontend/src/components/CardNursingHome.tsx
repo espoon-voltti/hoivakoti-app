@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import "../styles/CardNursingHome.scss";
 import { NursingHome } from "./types";
 import { Link } from "react-router-dom";
-import { useT } from "../translations";
+import { useT } from "../i18n";
 import config from "./config";
 import VacancyStatusBadge from "./VacancyStatusBadge";
 

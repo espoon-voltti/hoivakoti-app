@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Helmet from "react-helmet";
-import { useT } from "../translations";
+import { useT } from "../i18n";
 
 interface Props {
 	title?: string;
