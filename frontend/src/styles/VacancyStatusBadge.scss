@@ -1,0 +1,22 @@
+@import "variables.scss";
+
+.vacancy-status-badge {
+	font-size: 14px;
+	font-family: "Open Sans", sans-serif;
+	color: $text-color;
+}
+
+.vacancy-status-badge::before {
+	display: inline-block;
+	content: " ";
+	width: 20px;
+	height: 20px;
+	background-color: #d8d8d8;
+	border-radius: 50%;
+	vertical-align: -4px;
+	margin-right: 12px;
+}
+
+.vacancy-status-badge-true::before {
+	background-color: #b1c400;
+}

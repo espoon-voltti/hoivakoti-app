@@ -4,6 +4,7 @@ import { NursingHome } from "./types";
 import { Link } from "react-router-dom";
 import { useT } from "../translations";
 import config from "./config";
+import VacancyStatusBadge from "./VacancyStatusBadge";
 
 type NursingHomeSmallProps = {
 	nursinghome: NursingHome;
@@ -39,6 +40,12 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 
 			<div className="card-list-item__content">
 				<div>
+					{nursinghome.has_vacancy && (
+						<VacancyStatusBadge
+							vacancyStatus={nursinghome.has_vacancy}
+							className="card-nursinghome-vacancy-status-badge"
+						/>
+					)}
 					<div className="card-list-item__subheader">
 						{nursinghome && nursinghome.owner}
 					</div>
