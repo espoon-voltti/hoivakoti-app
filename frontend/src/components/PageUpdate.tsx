@@ -87,10 +87,13 @@ const PageUpdate: FC = () => {
 		setVacancyStatus(null);
 	};
 
+	const lastUpdatedAt =
+		vacancyStatus && vacancyStatus.vacancy_last_updated_at;
+
 	return (
 		<div className="page-update">
 			<div className="page-update-content">
-				{!nursingHome || !vacancyStatus ? (
+				{!nursingHome ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
@@ -101,12 +104,16 @@ const PageUpdate: FC = () => {
 						</p>
 						<p className="page-update-data">
 							<strong>Tilanne: </strong>
-							{vacancyStatus.has_vacancy ? labelTrue : labelFalse}
+							{vacancyStatus
+								? vacancyStatus.has_vacancy
+									? labelTrue
+									: labelFalse
+								: loadingText}
 						</p>
-						{vacancyStatus.vacancy_last_updated_at && (
+						{vacancyStatus && (
 							<p className="page-update-data">
 								<strong>Tietoa viimeksi päivitetty: </strong>
-								{vacancyStatus.vacancy_last_updated_at}
+								{lastUpdatedAt || " (ei päivitetty)"}
 							</p>
 						)}
 						<p className="page-update-intro">{intro}</p>
