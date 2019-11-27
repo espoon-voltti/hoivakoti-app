@@ -72,7 +72,8 @@ interface TranslationsBundle {
 	filterAraText: string;
 	filterAraLabel2: string;
 	filterAraText2: string;
-	filterAraDesc: string;
+	filterAraDesc1: string;
+	filterAraDesc2: string;
 
 	serviceLanguage: string;
 	serviceLanguageLabel: string;
@@ -238,9 +239,11 @@ const translationsFi: TranslationsBundle = {
 	filterAraLabel: "ARA-kohde",
 	filterAraText: "Näytä vain ARA-kohteet",
 	filterAraLabel2: "Ei ARA-kohde",
-	filterAraText2: "Piilota ARA-kohteet",
-	filterAraDesc:
-		"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat palvelutarve sekä varallisuus.",
+	filterAraText2: "Älä näytä ARA-kohteita",
+	filterAraDesc1:
+		"ARA-kohde tarkoittaa hoivakotia, jonka asiakkaan varallisuus ei saa ylittää tiettyjä rajoja.",
+	filterAraDesc2:
+		"Ei ARA-kohde tarkoittaa hoivakotia, jossa ei ole asiakkaan varallisuutta koskevia rajoituksia.",
 	serviceLanguage: "Palvelukieli",
 	serviceLanguageLabel: "Hoivakodin palvelukieli",
 	filterFinnish: "Suomi",
@@ -400,8 +403,10 @@ const translationsSe: TranslationsBundle = {
 	filterAraText: "Visa bara ARA-boende",
 	filterAraLabel2: "Ingen ARA-boende",
 	filterAraText2: "Döljä ARA-boende",
-	filterAraDesc:
-		"ARA-boende är finansierad med statligt stöd och invånare väljs utifrån behov av tjänster och förmögenhet.",
+	filterAraDesc1:
+		"sv_ARA-kohde tarkoittaa hoivakotia, jonka asiakkaan varallisuus ei saa ylittää tiettyjä rajoja.",
+	filterAraDesc2:
+		"sv_Ei ARA-kohde tarkoittaa hoivakotia, jossa ei ole asukkaan varallisuutta koskevia rajoituksia.",
 	serviceLanguage: "Språk",
 	serviceLanguageLabel: "Vårhemets pråk",
 	filterFinnish: "Finska",
