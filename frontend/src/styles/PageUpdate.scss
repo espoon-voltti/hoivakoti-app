@@ -34,3 +34,34 @@
 		cursor: pointer;
 	}
 }
+
+.page-update-submit {
+	display: inline-flex;
+	align-items: center;
+	justify-content: stretch;
+	cursor: pointer;
+	text-align: left;
+	font-size: 14px;
+	font-weight: bold;
+	color: $headline-color;
+	background: none;
+	padding: 10px;
+	border: 1px solid $light-gray;
+	border-radius: $border-radius;
+	text-transform: uppercase;
+	white-space: nowrap;
+	user-select: none;
+
+	margin-top: 20px;
+	margin-right: 20px;
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
+}
+
+.page-update-popup {
+	color: $primary-blue;
+	font-weight: bold;
+}

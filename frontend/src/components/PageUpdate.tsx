@@ -31,7 +31,10 @@ const PageUpdate: FC = () => {
 	const [vacancyStatus, setVacancyStatus] = useState<VacancyStatus | null>(
 		null,
 	);
-	const [isRequesting, setIsRequesting] = useState(false);
+	const [popupState, setPopupState] = useState<null | "saving" | "saved">(
+		null,
+	);
+	const [formState, setFormState] = useState<boolean>(false);
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
@@ -55,13 +58,15 @@ const PageUpdate: FC = () => {
 				)
 				.then((response: { data: VacancyStatus }) => {
 					setVacancyStatus(response.data);
+					setFormState(response.data.has_vacancy);
+					if (popupState) setTimeout(() => setPopupState(null), 3000);
 				})
 				.catch(e => {
 					console.error(e);
 					throw e;
 				});
 		}
-	}, [id, key, vacancyStatus]);
+	}, [id, key, popupState, vacancyStatus]);
 
 	const title = useT("pageUpdateTitle");
 	const intro = useT("pageUpdateIntro");
@@ -69,20 +74,24 @@ const PageUpdate: FC = () => {
 	const labelFalse = useT("vacancyFalse");
 	const loadingText = useT("loadingText");
 
-	const handleClick = async (value: boolean): Promise<void> => {
-		setIsRequesting(true);
-		await requestVacancyStatusUpdate(id, key, value);
-		setIsRequesting(false);
+	const updatePopupSaved = "Tallennettu!";
+	const updatePopupSaving = "Tallennetaan...";
+
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+	): Promise<void> => {
+		e.preventDefault();
+		setPopupState("saving");
+		await requestVacancyStatusUpdate(id, key, formState);
+		setPopupState("saved");
 		setVacancyStatus(null);
 	};
 
 	return (
 		<div className="page-update">
 			<div className="page-update-content">
-				{!nursingHome || !vacancyStatus || isRequesting ? (
-					<h1 className="page-update-title">
-						{isRequesting ? "Tallennetaan..." : loadingText}
-					</h1>
+				{!nursingHome || !vacancyStatus ? (
+					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
 						<h1 className="page-update-title">{title}</h1>
@@ -101,13 +110,16 @@ const PageUpdate: FC = () => {
 							</p>
 						)}
 						<p className="page-update-intro">{intro}</p>
-						<div className="page-update-controls">
+						<form
+							className="page-update-controls"
+							onSubmit={handleSubmit}
+						>
 							<Radio
 								id="update-vacancy-true"
 								name="update-vacancy-true"
-								isSelected={vacancyStatus.has_vacancy}
+								isSelected={formState}
 								onChange={isChecked => {
-									if (isChecked) handleClick(true);
+									if (isChecked) setFormState(true);
 								}}
 							>
 								{labelTrue}
@@ -115,14 +127,28 @@ const PageUpdate: FC = () => {
 							<Radio
 								id="update-vacancy-false"
 								name="update-vacancy-false"
-								isSelected={!vacancyStatus.has_vacancy}
+								isSelected={!formState}
 								onChange={isChecked => {
-									if (isChecked) handleClick(false);
+									if (isChecked) setFormState(false);
 								}}
 							>
 								{labelFalse}
 							</Radio>
-						</div>
+							<div>
+								<input
+									type="submit"
+									className="page-update-submit"
+									value="Tallenna"
+								/>
+								{popupState && (
+									<span className="page-update-popup">
+										{popupState === "saving"
+											? updatePopupSaving
+											: updatePopupSaved}
+									</span>
+								)}
+							</div>
+						</form>
 					</>
 				)}
 			</div>
