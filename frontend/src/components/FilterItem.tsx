@@ -3,7 +3,7 @@ import "../styles/FilterItem.scss";
 import ButtonDropdown, { DropdownVariant } from "./ButtonDropdown";
 import Checkbox from "./Checkbox";
 import Radio from "./Radio";
-import { useT } from "../translations";
+import { useT } from "../i18n";
 
 export type FilterOption =
 	| { type: "header"; text: string }

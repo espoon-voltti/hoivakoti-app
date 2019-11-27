@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import "../styles/landing.scss";
-import { useT } from "../translations";
+import { useT } from "../i18n";
 import { useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
 import FilterItem, { FilterOption } from "./FilterItem";

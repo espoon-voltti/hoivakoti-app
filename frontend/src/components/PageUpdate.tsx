@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useT } from "../translations";
+import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
 import { useParams } from "react-router-dom";
