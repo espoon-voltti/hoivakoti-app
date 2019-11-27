@@ -236,7 +236,7 @@ const translationsFi: TranslationsBundle = {
 	filterAraLabel: "ARA-kohde",
 	filterAraText: "Näytä vain ARA-kohteet",
 	filterAraLabel2: "Ei ARA-kohde",
-	filterAraText2: "Piilosta ARA-kohteet",
+	filterAraText2: "Piilota ARA-kohteet",
 	filterAraDesc:
 		"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat palvelutarve sekä varallisuus.",
 	serviceLanguage: "Palvelukieli",

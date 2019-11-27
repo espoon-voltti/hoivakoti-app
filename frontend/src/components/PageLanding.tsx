@@ -48,7 +48,7 @@ const PageLanding: FC = () => {
 			? selectedAreas.length <= 2
 				? selectedAreas.join(", ")
 				: `${selectedAreas.length} ${filterSelections}`
-			: "Kaikki alueet (Espoo, Helsinki, Kirkkonummi)";
+			: "Kaikki alueet";
 
 	return (
 		<div id="landing">
