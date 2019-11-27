@@ -102,7 +102,8 @@ const PageNursingHomes: FC = () => {
 	const filterAraText = useT("filterAraText");
 	const filterAraLabel2 = useT("filterAraLabel2");
 	const filterAraText2 = useT("filterAraText2");
-	const filterAraDesc = useT("filterAraDesc");
+	const filterAraDesc1 = useT("filterAraDesc1");
+	const filterAraDesc2 = useT("filterAraDesc2");
 
 	const filterLAH = useT("filterLAH");
 	const filterLAHLabel = useT("filterLAH");
@@ -132,13 +133,17 @@ const PageNursingHomes: FC = () => {
 		},
 		{
 			name: "",
-			label: filterAraLabel,
+			label: filterAraLabel2,
 			subLabel: filterAraText2,
 			type: "radio",
 			checked: searchFilters.ara === false,
 		},
 		{
-			text: filterAraDesc,
+			text: filterAraDesc1,
+			type: "text",
+		},
+		{
+			text: filterAraDesc2,
 			type: "text",
 		},
 	];

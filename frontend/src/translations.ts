@@ -72,7 +72,8 @@ interface TranslationsBundle {
 	filterAraText: string;
 	filterAraLabel2: string;
 	filterAraText2: string;
-	filterAraDesc: string;
+	filterAraDesc1: string;
+	filterAraDesc2: string;
 
 	serviceLanguage: string;
 	serviceLanguageLabel: string;
@@ -218,11 +219,11 @@ const translationsFi: TranslationsBundle = {
 	faqItem7Headline: "Mistä saa lääkkeet?",
 	faqItem7Text:
 		"Asukkaan tarvitsemat lääkkeet toimitetaan apteekista annosjakeluna hoivakotiin. Henkilökunta huolehtii lääkkeiden antamisesta. Asukas maksaa itse omat lääkkeensä.",
-	faqItem8Headline:
-		"Saako asukas hoivakodista tarvitsemansa apuvälineet?",
+	faqItem8Headline: "Saako asukas hoivakodista tarvitsemansa apuvälineet?",
 	faqItem8Text:
 		"Jos asukkaalla ei ole henkilökohtaisia apuvälineitä hoivakotiin muutettaessa, apuvälineet voi lainata maksutta HUSin Apuvälinekeskuksesta. joka sijaitsee Espoon sairaalassa. Hoivakoti auttaa tarvittaessa apuvälineiden noutamisessa. Mahdolliset apuvälineiden noutokustannukset asukas maksaa itse.",
-	faqItem9Headline: "Mitkä ruokailut sisältyvät tehostettuun palveluasumiseen?",
+	faqItem9Headline:
+		"Mitkä ruokailut sisältyvät tehostettuun palveluasumiseen?",
 	faqItem9Text:
 		"Asukkaalle tarjotaan aamiainen, lounas, iltapäiväkahvi/välipala, päivällinen ja iltapala. Lounas ja päivällinen ovat lämpimiä aterioita.  Asukas saa yöpalan tarvittaessa.  Kaikki ateriat ovat asukkaan erityisruokavalion mukaisia. Asukas saa lääkärin määräämät täydennysravintovalmisteet hoivakodista, ja niistä ei tarvitse maksaa erikseen.",
 	faqItem10Headline: "Millaista hoivakodin arki on?",
@@ -238,9 +239,11 @@ const translationsFi: TranslationsBundle = {
 	filterAraLabel: "ARA-kohde",
 	filterAraText: "Näytä vain ARA-kohteet",
 	filterAraLabel2: "Ei ARA-kohde",
-	filterAraText2: "Piilota ARA-kohteet",
-	filterAraDesc:
-		"ARA-kohteet on rahoitettu valtion tuella, ja asukkaiden valintaperusteina ovat palvelutarve sekä varallisuus.",
+	filterAraText2: "Älä näytä ARA-kohteita",
+	filterAraDesc1:
+		"ARA-kohde tarkoittaa hoivakotia, jonka asiakkaan varallisuus ei saa ylittää tiettyjä rajoja.",
+	filterAraDesc2:
+		"Ei ARA-kohde tarkoittaa hoivakotia, jossa ei ole asiakkaan varallisuutta koskevia rajoituksia.",
 	serviceLanguage: "Palvelukieli",
 	serviceLanguageLabel: "Hoivakodin palvelukieli",
 	filterFinnish: "Suomi",
@@ -307,12 +310,12 @@ const translationsFi: TranslationsBundle = {
 	footerLinkAccessibility: "Saavutettavuusseloste",
 	footerLinkFeedback: "Anna palautetta sivustosta",
 
-	vacancyTrue: "Vapaita paikkoja",
-	vacancyFalse: "Ei vapaita paikkoja",
+	vacancyTrue: "Vapaita asuntoja",
+	vacancyFalse: "Ei vapaita asuntoja",
 
-	pageUpdateTitle: "Päivitä hoivakodin tietoja",
+	pageUpdateTitle: "Päivitä vapaiden asuntojen tilanne",
 	pageUpdateIntro:
-		"Tällä sivulla voit päivittää hoivakodin tietoja. Valitse hoivakodin vapaiden asuntojen tilanne allaolevalla lomakkeella:",
+		"Valitse hoivakodin vapaiden asuntojen tilanne allaolevista vaihtoehdoista:",
 };
 
 const translationsSe: TranslationsBundle = {
@@ -400,8 +403,10 @@ const translationsSe: TranslationsBundle = {
 	filterAraText: "Visa bara ARA-boende",
 	filterAraLabel2: "Ingen ARA-boende",
 	filterAraText2: "Döljä ARA-boende",
-	filterAraDesc:
-		"ARA-boende är finansierad med statligt stöd och invånare väljs utifrån behov av tjänster och förmögenhet.",
+	filterAraDesc1:
+		"sv_ARA-kohde tarkoittaa hoivakotia, jonka asiakkaan varallisuus ei saa ylittää tiettyjä rajoja.",
+	filterAraDesc2:
+		"sv_Ei ARA-kohde tarkoittaa hoivakotia, jossa ei ole asukkaan varallisuutta koskevia rajoituksia.",
 	serviceLanguage: "Språk",
 	serviceLanguageLabel: "Vårhemets pråk",
 	filterFinnish: "Finska",

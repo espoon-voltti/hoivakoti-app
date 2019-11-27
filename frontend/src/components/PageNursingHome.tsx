@@ -9,6 +9,7 @@ import { MapSmall } from "./Map";
 import { useT } from "../translations";
 import Lightbox from "./Lightbox";
 import Title from "./Title";
+import VacancyStatusBadge from "./VacancyStatusBadge";
 
 function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -192,7 +193,11 @@ const PageNursingHome: FC = () => {
 							{linkBacktoList}
 						</Link>
 						<h2 className="nursinghome-title">
-							{nursingHome && nursingHome.name}
+							{nursingHome.name}
+							<VacancyStatusBadge
+								vacancyStatus={nursingHome.has_vacancy}
+								className="nursinghome-title-vacancy-status-badge"
+							/>
 						</h2>
 						<Paragraph
 							text={`${nursingHome.district}, ${nursingHome.city}`}

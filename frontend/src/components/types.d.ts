@@ -70,4 +70,5 @@ export interface NursingHome {
 		owner_logo_hash: string | null;
 	};
 	pics: NursingHomeImageName[];
+	has_vacancy: boolean | null;
 }

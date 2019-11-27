@@ -105,6 +105,12 @@
 	flex-direction: column;
 	padding: 20px;
 	padding-bottom: 0;
+	flex-grow: 1;
+}
+
+.card-nursinghome-vacancy-status-badge {
+	display: inline;
+	float: right;
 }
 
 .card-list-item__subheader {
@@ -144,6 +150,9 @@
 
 .card-list-item__spacer {
 	flex-grow: 1;
+	@media (min-width: 1130px) {
+		display: none;
+	}
 }
 
 .card-list-item__link {
