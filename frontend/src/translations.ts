@@ -218,11 +218,11 @@ const translationsFi: TranslationsBundle = {
 	faqItem7Headline: "Mistä saa lääkkeet?",
 	faqItem7Text:
 		"Asukkaan tarvitsemat lääkkeet toimitetaan apteekista annosjakeluna hoivakotiin. Henkilökunta huolehtii lääkkeiden antamisesta. Asukas maksaa itse omat lääkkeensä.",
-	faqItem8Headline:
-		"Saako asukas hoivakodista tarvitsemansa apuvälineet?",
+	faqItem8Headline: "Saako asukas hoivakodista tarvitsemansa apuvälineet?",
 	faqItem8Text:
 		"Jos asukkaalla ei ole henkilökohtaisia apuvälineitä hoivakotiin muutettaessa, apuvälineet voi lainata maksutta HUSin Apuvälinekeskuksesta. joka sijaitsee Espoon sairaalassa. Hoivakoti auttaa tarvittaessa apuvälineiden noutamisessa. Mahdolliset apuvälineiden noutokustannukset asukas maksaa itse.",
-	faqItem9Headline: "Mitkä ruokailut sisältyvät tehostettuun palveluasumiseen?",
+	faqItem9Headline:
+		"Mitkä ruokailut sisältyvät tehostettuun palveluasumiseen?",
 	faqItem9Text:
 		"Asukkaalle tarjotaan aamiainen, lounas, iltapäiväkahvi/välipala, päivällinen ja iltapala. Lounas ja päivällinen ovat lämpimiä aterioita.  Asukas saa yöpalan tarvittaessa.  Kaikki ateriat ovat asukkaan erityisruokavalion mukaisia. Asukas saa lääkärin määräämät täydennysravintovalmisteet hoivakodista, ja niistä ei tarvitse maksaa erikseen.",
 	faqItem10Headline: "Millaista hoivakodin arki on?",
@@ -307,12 +307,12 @@ const translationsFi: TranslationsBundle = {
 	footerLinkAccessibility: "Saavutettavuusseloste",
 	footerLinkFeedback: "Anna palautetta sivustosta",
 
-	vacancyTrue: "Vapaita paikkoja",
-	vacancyFalse: "Ei vapaita paikkoja",
+	vacancyTrue: "Vapaita asuntoja",
+	vacancyFalse: "Ei vapaita asuntoja",
 
-	pageUpdateTitle: "Päivitä hoivakodin tietoja",
+	pageUpdateTitle: "Päivitä vapaiden asuntojen tilanne",
 	pageUpdateIntro:
-		"Tällä sivulla voit päivittää hoivakodin tietoja. Valitse hoivakodin vapaiden asuntojen tilanne allaolevalla lomakkeella:",
+		"Valitse hoivakodin vapaiden asuntojen tilanne allaolevista vaihtoehdoista:",
 };
 
 const translationsSe: TranslationsBundle = {
