@@ -10,6 +10,7 @@ const pgUser = process.env.DB_USER ? process.env.DB_USER : "postgres";
 const pgPassword = process.env.DB_PASSWORD
 	? process.env.DB_PASSWORD
 	: "postgres";
+
 const pgHost = process.env.DB_URL ? process.env.DB_URL : "postgres";
 const pgDatabaseName = process.env.DB_NAME ? process.env.DB_NAME : "postgres";
 
