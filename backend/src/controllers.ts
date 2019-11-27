@@ -22,6 +22,7 @@ import {
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
 import Knex = require("knex");
 import { Context } from "koa";
+import { NursingHome } from "./nursinghome-typings";
 
 export async function AddNursingHome(ctx: any): Promise<string> {
 	await InsertNursingHomeToDB({
@@ -36,13 +37,12 @@ export async function AddNursingHome(ctx: any): Promise<string> {
 
 export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 	const nursing_homes = await GetAllNursingHomes();
-	nursing_homes.sort((a: any, b: any) => a.name.localeCompare(b.name));
+	nursing_homes.sort((a: NursingHome, b: NursingHome) =>
+		a.name.localeCompare(b.name),
+	);
 
 	const pic_digests = await GetAllPicDigests();
-	/*const available_pics = Object.keys(pic_digests)
-		.filter((item: any) => (pic_digests[item] != null ? true : false))
-		.map((item: any) => item.replace("_hash", ""));*/
-	//nursing_homes[0].digests = pic_digests;
+
 	nursing_homes.map((nursinghome: any) => {
 		nursinghome.pic_digests = {};
 		nursinghome.pics = [];
@@ -84,31 +84,15 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	return nursing_home_data;
 }
 
-// export async function ListRatings(ctx: any): Promise<any> {
-// 	const ratings = await GetAllRatings();
+export async function AddNursingHomesFromCSV(ctx: any): Promise<object[] | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
 
-// 	let ratings_as_object: any = {};
-
-// 	ratings.forEach((rating: any) => {
-// 		const id = rating.nursinghome;
-
-// 		if (!(id in ratings_as_object)) {
-// 			ratings_as_object[id] = {};
-// 			ratings_as_object[id].total = 0;
-// 			ratings_as_object[id].avg = 0;
-// 		}
-
-// 		ratings_as_object[id].total += 1;
-// 		ratings_as_object[id].avg += rating.rating;
-// 	});
-
-// 	for (var key in ratings_as_object)
-// 		ratings_as_object[key].avg = ratings_as_object[key].avg / ratings_as_object[key].total;
-
-// 	return ratings_as_object;
-// }
-
-export async function AddNursingHomesFromCSV(ctx: any): Promise<object[]> {
 	const csv: string = ctx.request.body.csv;
 
 	const records = await NursingHomesFromCSV(csv);
@@ -127,7 +111,15 @@ export async function DropAndRecreateTables(ctx: any): Promise<void> {
 	return result1;
 }
 
-export async function UploadPics(ctx: any): Promise<string> {
+export async function UploadPics(ctx: any): Promise<string | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
 	const csv: string = ctx.request.body.csv;
 
 	const result = await FetchAndSaveImagesFromCSV(csv);

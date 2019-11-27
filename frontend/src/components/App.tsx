@@ -14,6 +14,7 @@ import ScrollToTop from "./ScrollToTop";
 import PageAccessibility from "./PageAccessibility";
 import Title from "./Title";
 import PageUpdate from "./PageUpdate";
+import PageAdmin from "./PageAdmin";
 
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
@@ -54,6 +55,7 @@ const App: React.FC = () => {
 								path="/saavutettavuus"
 								component={PageAccessibility}
 							/>
+							<Route exact path="/admin" component={PageAdmin} />
 							<Route
 								component={() => <PageError error="404" />}
 							/>

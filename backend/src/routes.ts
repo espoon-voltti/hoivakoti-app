@@ -35,9 +35,10 @@ router.get("/api/nursing-homes/cities", async ctx => {
 	ctx.body = await GetCities(ctx);
 });
 
+/* DON'T ENABLE WITHOUT ADDING AUTHORIZATION TO ADDNURSINGHOME
 router.post("/api/nursing-homes", async ctx => {
 	ctx.body = await AddNursingHome(ctx);
-});
+});*/
 
 router.post("/api/nursing-homes/csv", async ctx => {
 	ctx.body = await AddNursingHomesFromCSV(ctx);
@@ -51,12 +52,12 @@ router.get("/api/nursing-homes/drop_table", async ctx => {
 	ctx.body = await DropAndRecreateTables(ctx);
 });
 
-router.get("/api/nursing-homes/:id", async ctx => {
-	ctx.body = await GetNursingHome(ctx);
+router.post("/api/nursing-homes/upload-pics", async ctx => {
+	ctx.body = await UploadPics(ctx);
 });
 
-router.post("/api/nursing-homes/:id/upload-pics", async ctx => {
-	ctx.body = await UploadPics(ctx);
+router.get("/api/nursing-homes/:id", async ctx => {
+	ctx.body = await GetNursingHome(ctx);
 });
 
 router.get("/api/nursing-homes/:id/pics", async ctx => {
@@ -90,10 +91,6 @@ router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 		ctx.body = { success };
 	}
 });
-
-// router.get("/api/ratings", async ctx => {
-// 	ctx.body = await ListRatings(ctx);
-// });
 
 router.get("/api/health", async ctx => {
 	ctx.body = "healthy";
