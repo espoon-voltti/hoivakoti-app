@@ -13,6 +13,17 @@ interface VacancyStatus {
 	vacancy_last_updated_at: string | null;
 }
 
+const formatDate = (dateString: string | null): string => {
+	if (!dateString) return "";
+	const date = new Date(dateString);
+	const YYYY = String(date.getUTCFullYear());
+	const MM = String(date.getUTCMonth() + 1).padStart(2, "0");
+	const DD = String(date.getUTCDate()).padStart(2, "0");
+	const hh = String(date.getUTCHours()).padStart(2, "0");
+	const mm = String(date.getUTCMinutes()).padStart(2, "0");
+	return `${YYYY}-${MM}-${DD} (${hh}:${mm} UTC)`;
+};
+
 const requestVacancyStatusUpdate = async (
 	id: string,
 	key: string,
@@ -87,9 +98,6 @@ const PageUpdate: FC = () => {
 		setVacancyStatus(null);
 	};
 
-	const lastUpdatedAt =
-		vacancyStatus && vacancyStatus.vacancy_last_updated_at;
-
 	return (
 		<div className="page-update">
 			<div className="page-update-content">
@@ -110,12 +118,14 @@ const PageUpdate: FC = () => {
 									: labelFalse
 								: loadingText}
 						</p>
-						{vacancyStatus && (
-							<p className="page-update-data">
-								<strong>Tietoa viimeksi päivitetty: </strong>
-								{lastUpdatedAt || " (ei päivitetty)"}
-							</p>
-						)}
+						<p className="page-update-data">
+							<strong>Tietoa viimeksi päivitetty: </strong>
+							{vacancyStatus
+								? formatDate(
+										vacancyStatus.vacancy_last_updated_at,
+								  ) || " (ei päivitetty)"
+								: loadingText}
+						</p>
 						<p className="page-update-intro">{intro}</p>
 						<form
 							className="page-update-controls"
