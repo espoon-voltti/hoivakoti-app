@@ -24,6 +24,7 @@ const areas: Area[] = [
 const PageLanding: FC = () => {
 	const history = useHistory();
 	const locationPickerLabel = useT("locationPickerLabel");
+	const locationPickerPlaceholder = useT("locationPickerPlaceholder");
 	const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
 
 	const optionsArea: FilterOption[] = [
@@ -48,7 +49,7 @@ const PageLanding: FC = () => {
 			? selectedAreas.length <= 2
 				? selectedAreas.join(", ")
 				: `${selectedAreas.length} ${filterSelections}`
-			: "Kaikki alueet";
+			: locationPickerPlaceholder;
 
 	return (
 		<div id="landing">

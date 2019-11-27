@@ -13,6 +13,7 @@ interface TranslationsBundle {
 	jumbotronBtn: string;
 	jumbotronHeadline: string;
 	locationPickerLabel: string;
+	locationPickerPlaceholder: string;
 	landingIngress1: string;
 	landingIngress2: string;
 	urlParastapalvelua: string;
@@ -164,6 +165,7 @@ const translationsFi: TranslationsBundle = {
 	jumbotronBtn: "Näytä hoivakodit",
 	jumbotronHeadline: "Löydä näköisesi hoivakoti",
 	locationPickerLabel: "Miltä alueelta etsit hoivakotia?",
+	locationPickerPlaceholder: "Kaikki alueet",
 	landingIngress1:
 		"Tältä sivustolta löydät Espoon kaupungin hyväksymät <0>tehostetun palveluasumisen</0> hoivakodit <1>ikäihmisille</1>. Saadaksesi hoivakotipaikan tarvitset myönteisen päätöksen tehostetun palveluasumisen tarpeesta.",
 	landingIngress2:
@@ -322,6 +324,7 @@ const translationsSe: TranslationsBundle = {
 	jumbotronBtn: "Visa vårdhem",
 	jumbotronHeadline: "Hitta ett snyggt vårdhem",
 	locationPickerLabel: "Vart söker du vårdhem?",
+	locationPickerPlaceholder: "Alla områden",
 	landingIngress1:
 		"På den här webbplatsen hittar du <0> Enhanced Service Housing </0> Vårdhem för <1> äldre </1> godkända av staden Esbo. För att få ett vårdhem behöver du ett positivt beslut om behovet av förbättrad servicebostad.",
 	landingIngress2:
