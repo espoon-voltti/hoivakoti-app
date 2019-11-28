@@ -41,64 +41,96 @@
 	background-size: cover;
 }
 
-.nursinghome-hero {
+.nursinghome-hero-container {
 	position: relative;
 	width: 100%;
+	height: auto;
 	margin-bottom: 40px;
-	height: 640px;
-	overflow: hidden;
+}
+
+.nursinghome-hero-lightbox-button {
+	flex: 0 0 100%;
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+	padding: 10px 20px;
+	background-color: white;
+	border-radius: 2px;
+	border: none;
+	font-size: 16px;
+	font-family: "Open sans", sans-serif;
+	font-weight: 500;
+	color: $headline-color;
+	text-transform: uppercase;
+	cursor: pointer;
+
+	&:hover {
+		color: $text-color;
+	}
+}
+
+.nursinghome-hero {
+	width: 100%;
 	display: flex;
 	align-items: stretch;
-	justify-content: center;
+	flex-flow: column wrap;
 
-	.nursinghome-hero-extras-wrapper {
-		flex-grow: 1;
-		display: none;
-		flex-direction: column;
-
-		@media screen and (min-width: 1024px) {
-			display: flex;
+	&:not(.nursinghome-hero-n0) {
+		height: 480px;
+		@media (min-width: 1024px) {
+			height: 640px;
 		}
 	}
+}
 
-	.nursinghome-hero-img,
-	.nursinghome-hero-placeholder {
+.nursinghome-hero-img {
+	overflow: hidden;
+	flex-basis: 50%;
+	display: none;
+
+	&:first-child {
+		flex-basis: 100%;
 		display: block;
-		flex-grow: 1;
-		flex-basis: 0;
 	}
 
+	.nursinghome-img-inner:hover {
+		cursor: pointer;
+		transform: scale(1.025);
+		transition: all 0.1s ease-in;
+	}
+}
+
+$hero-border: 1px solid white;
+
+@media (min-width: 1024px) {
 	.nursinghome-hero-img {
-		overflow: hidden;
-		.nursinghome-img-inner:hover {
-			cursor: pointer;
-			transform: scale(1.025);
-			transition: all 0.1s ease-in;
+		display: block;
+	}
+
+	.nursinghome-hero-n3 .nursinghome-hero-img {
+		width: 50vw;
+		&:first-child {
+			border-right: $hero-border;
+		}
+		&:nth-child(2) {
+			border-bottom: $hero-border;
 		}
 	}
 
-	.nursinghome-hero-placeholder {
-		height: 100%;
-		// flex-grow: 0;
-	}
-
-	.nursinghome-hero-lightbox-button {
-		position: absolute;
-		right: 20px;
-		bottom: 20px;
-		padding: 10px 20px;
-		background-color: white;
-		border-radius: 2px;
-		border: none;
-		font-size: 16px;
-		font-family: "Open sans", sans-serif;
-		font-weight: 500;
-		color: $headline-color;
-		text-transform: uppercase;
-		cursor: pointer;
-	}
-	.nursinghome-hero-lightbox-button:hover {
-		color: $text-color;
+	.nursinghome-hero-n5 .nursinghome-hero-img {
+		width: 25vw;
+		&:first-child {
+			width: 50vw;
+		}
+		&:first-child,
+		&:nth-child(2),
+		&:nth-child(3) {
+			border-right: $hero-border;
+		}
+		&:nth-child(2),
+		&:nth-child(4) {
+			border-bottom: $hero-border;
+		}
 	}
 }
 
@@ -106,9 +138,7 @@
 	height: 100px;
 	background-color: $primary-blue;
 
-	@media (min-width: 800px) {
-		height: 200px;
-	}
+	height: 200px;
 }
 
 .nursinghome-back-link {
