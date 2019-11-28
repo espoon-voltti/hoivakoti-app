@@ -100,12 +100,28 @@ export async function AddNursingHomesFromCSV(ctx: any): Promise<object[] | null>
 	return records;
 }
 
-export async function DeleteNursingHomes(ctx: any): Promise<number> {
+export async function DeleteNursingHomes(ctx: any): Promise<number | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
 	const result = await DeleteAllNursingHomes();
 	return result;
 }
 
-export async function DropAndRecreateTables(ctx: any): Promise<void> {
+export async function DropAndRecreateTables(ctx: any): Promise<void | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
 	const result1 = await DropAndRecreateNursingHomeTable();
 	const result2 = await DropAndRecreateNursingHomePicturesTable();
 	return result1;
