@@ -207,7 +207,7 @@ const PageNursingHome: FC = () => {
 							/>
 						</h2>
 						<Paragraph
-							text={`${nursingHome.district}, ${nursingHome.city}`}
+							text={`${nursingHome.district != null ? nursingHome.district + `, ` : ""} ${nursingHome.city}`}
 						/>
 						<Paragraph text={nursingHome.summary} />
 						<p className="nursinghome-anchor-details">
