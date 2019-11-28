@@ -31,7 +31,6 @@ module.exports = {
 	plugins: ["react", "@typescript-eslint", "prettier", "react-hooks"],
 	rules: {
 		"react/prop-types": ["off"],
-		indent: ["error", "tab"],
 		"linebreak-style": ["error", "unix"],
 		quotes: ["error", "double"],
 		"react-hooks/rules-of-hooks": "error",

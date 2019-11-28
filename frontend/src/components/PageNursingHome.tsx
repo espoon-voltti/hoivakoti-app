@@ -129,6 +129,19 @@ const PageNursingHome: FC = () => {
 			};
 		});
 
+	const numPics = availablePics
+		? availablePics.length >= 5
+			? 5
+			: availablePics.length >= 3
+			? 3
+			: 1
+		: 0;
+
+	const heroPics =
+		availablePics &&
+		availablePics.length &&
+		availablePics.slice(0, numPics);
+
 	return (
 		<div className="nursinghome-page-container">
 			<Title title={nursingHome ? nursingHome.name : undefined} />
@@ -139,38 +152,32 @@ const PageNursingHome: FC = () => {
 					images={images}
 				/>
 			)}
-			<div className="nursinghome-hero">
-				<Image
-					nursingHome={nursingHome}
-					imageName={nursingHome && nursingHome.pics[0]}
-					className="nursinghome-hero-img nursinghome-hero-main"
-					variant="background"
-					placeholder={
+			<div className="nursinghome-hero-container">
+				<div
+					className={`nursinghome-hero nursinghome-hero-n${numPics}`}
+				>
+					{heroPics ? (
+						heroPics.map(([imageName], idx) => (
+							<Image
+								key={imageName}
+								nursingHome={nursingHome}
+								imageName={imageName as NursingHomeImageName}
+								className="nursinghome-hero-img"
+								variant="background"
+								placeholder={
+									<div
+										className={
+											"nursinghome-hero-img " +
+											"nursinghome-hero-placeholder"
+										}
+									/>
+								}
+								onClick={() => setLightboxState(idx)}
+							/>
+						))
+					) : (
 						<div className="nursinghome-hero-placeholder" />
-					}
-					onClick={() => setLightboxState(0)}
-				/>
-				<div className="nursinghome-hero-extras-wrapper">
-					<Image
-						nursingHome={nursingHome}
-						imageName={nursingHome && nursingHome.pics[1]}
-						className="nursinghome-hero-img nursinghome-hero-extra"
-						variant="background"
-						placeholder={
-							<div className="nursinghome-hero-placeholder" />
-						}
-						onClick={() => setLightboxState(1)}
-					/>
-					<Image
-						nursingHome={nursingHome}
-						imageName={nursingHome && nursingHome.pics[2]}
-						className="nursinghome-hero-img nursinghome-hero-extra"
-						variant="background"
-						placeholder={
-							<div className="nursinghome-hero-placeholder" />
-						}
-						onClick={() => setLightboxState(2)}
-					/>
+					)}
 				</div>
 				{images && (
 					<button
