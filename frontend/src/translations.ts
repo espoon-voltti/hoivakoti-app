@@ -332,7 +332,7 @@ export const translations = {
 	linkMenu: { "fi-FI": "Ruokalista", "sv-FI": "Matlist" },
 	activies: { "fi-FI": "Toiminta", "sv-FI": "Aktiviteter" },
 	outdoorActivies: {
-		"fi-FI": "Ulkoilumahdollisuudet",
+		"fi-FI": "Ulkoilu\u00admahdollisuudet",
 		"sv-FI": "Friluftsliv",
 	},
 	visitingInfo: {
