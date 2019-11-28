@@ -35,7 +35,7 @@ router.get("/api/nursing-homes/cities", async ctx => {
 	ctx.body = await GetCities(ctx);
 });
 
-/* DON'T ENABLE WITHOUT ADDING AUTHORIZATION TO ADDNURSINGHOME
+/* DON'T ENABLE WITHOUT ADDING AUTHORIZATION TO ADDNURSINGHOME CONTROLLER
 router.post("/api/nursing-homes", async ctx => {
 	ctx.body = await AddNursingHome(ctx);
 });*/

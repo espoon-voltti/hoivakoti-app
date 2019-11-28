@@ -8,7 +8,7 @@ import {
 	postal_code_to_district,
 } from "./nursinghome-typings";
 import config from "./config";
-import { createBasicUpdateKey } from "./services";
+import { createBasicUpdateKey, hashWithSalt } from "./services";
 
 const options: Knex.Config = {
 	client: "postgres",
@@ -48,7 +48,7 @@ async function CreateNursingHomePicturesTable(): Promise<void> {
 				console.log("Setting binary row: " + row_info.sql);
 			}
 		});
-		table.uuid("nursinghome_id");
+		table.string("nursinghome_id");
 	});
 }
 
@@ -56,7 +56,7 @@ async function CreateNursingHomeTable(): Promise<void> {
 	await knex.schema.createTable(
 		"NursingHomes",
 		(table: CreateTableBuilder) => {
-			table.uuid("id");
+			table.string("id");
 			table.string("name");
 			table.string("owner");
 			table.string("address");
@@ -174,8 +174,9 @@ export async function InsertNursingHomeToDB(
 
 		return uuid;
 	} else {
-		const uuid = uuidv4();
-		const basicUpdateKey = createBasicUpdateKey(6);
+		const uuid = hashWithSalt(nursingHome.name, nursingHome.postal_code).slice(0, 10);
+		//const basicUpdateKey = createBasicUpdateKey(6);
+		const basicUpdateKey = hashWithSalt(uuid, process.env.ADMIN_PASSWORD as string).slice(0, 10);
 		await knex("NursingHomes").insert({
 			id: uuid,
 			...nursingHome,

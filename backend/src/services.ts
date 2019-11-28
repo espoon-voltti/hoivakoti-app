@@ -184,4 +184,10 @@ export function createBasicUpdateKey(length: number): string {
 	return result;
 }
 
+export function hashWithSalt(data: string, salt: string): string {
+	const hasher = crypto.createHash("sha256");
+	hasher.update(data + salt);
+	return hasher.digest("hex");
+}
+
 export { NursingHomesFromCSV };
