@@ -157,7 +157,7 @@ const PageNursingHome: FC = () => {
 					className={`nursinghome-hero nursinghome-hero-n${numPics}`}
 				>
 					{heroPics ? (
-						heroPics.map(([imageName]) => (
+						heroPics.map(([imageName], idx) => (
 							<Image
 								key={imageName}
 								nursingHome={nursingHome}
@@ -172,7 +172,7 @@ const PageNursingHome: FC = () => {
 										}
 									/>
 								}
-								onClick={() => setLightboxState(0)}
+								onClick={() => setLightboxState(idx)}
 							/>
 						))
 					) : (
