@@ -111,21 +111,32 @@ const PageLanding: FC = () => {
 							<strong></strong>
 						</Trans>
 					</p>
-					<p className="ingress">
-						{useT("landingIngress2")}{" "}
+				</section>
+
+				<section className="content-block">
+					<h2>{useT("whatisNursinghomeHeadline")}</h2>
+					<p>{useT("whatisNursinghomeText")}</p>
+
+					<p>
+						{useT("landingServiceVoucher1")}{" "}
+						<a
+							href={useT("urlServiceVoucher")}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{useT("linkServiceVoucher")}
+						</a>
+
+						{" "}{useT("landingServiceVoucher2")}{" "}
 						<a
 							href={useT("urlParastapalvelua")}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							www.parastapalvelua.fi
-						</a>
+						</a>.
 					</p>
-				</section>
-
-				<section className="content-block">
-					<h2>{useT("whatisNursinghomeHeadline")}</h2>
-					<p>{useT("whatisNursinghomeText")}</p>
+					<p>{useT("landingOwnMoney")}</p>
 				</section>
 
 				<section className="content-block content-block--wide">
@@ -172,7 +183,10 @@ const PageLanding: FC = () => {
 
 				<section className="content-block">
 					<h2>{useT("selectingHeadline")}</h2>
-					<p>{useT("selectingText")}</p>
+					<Trans i18nKey="defaultNamespace:selectingText">
+							<p></p>
+							<p></p>
+						</Trans>
 				</section>
 
 				<section className="content-block">
@@ -184,7 +198,10 @@ const PageLanding: FC = () => {
 					</h3>
 					<dl className="faq-list">
 						<dt>{useT("faqItem1Headline")}</dt>
-						<dd>{useT("faqItem1Text")}</dd>
+						<dd><Trans i18nKey="defaultNamespace:faqItem1Text">
+							<p></p>
+							<p></p>
+						</Trans></dd>
 						<dt>{useT("faqItem2Headline")}</dt>
 						<dd>{useT("faqItem2Text")}</dd>
 						<dt>{useT("faqItem3Headline")}</dt>
@@ -203,10 +220,6 @@ const PageLanding: FC = () => {
 						<dd>{useT("faqItem9Text")}</dd>
 						<dt>{useT("faqItem10Headline")}</dt>
 						<dd>{useT("faqItem10Text")}</dd>
-						<dt>{useT("faqItem11Headline")}</dt>
-						<dd>{useT("faqItem11Text")}</dd>
-						<dt>{useT("faqItem12Headline")}</dt>
-						<dd>{useT("faqItem12Text")}</dd>
 					</dl>
 				</section>
 			</div>

@@ -25,15 +25,33 @@ export const translations = {
 		"sv-FI":
 			"På den här webbplatsen hittar du <0> Enhanced Service Housing </0> Vårdhem för <1> äldre </1> godkända av staden Esbo. För att få ett vårdhem behöver du ett positivt beslut om behovet av förbättrad servicebostad.",
 	},
-	landingIngress2: {
+	landingServiceVoucher1: {
 		"fi-FI":
-			"Etsitkö hoivakotia palvelusetelillä? Katso hoivakoteja osoitteessa ",
+			"Vaihtoehtoisesti asiakas voi ottaa vastaan ",
 		"sv-FI":
-			"Letar du efter ett vårdhem med en servicekupong? Se vårdhem på ",
+			"Letar du efter ett vårdhem med en ",
+	},
+	landingServiceVoucher2: {
+		"fi-FI":
+			"Palvelusetelihoivakoteja voi katsoa osoitteessa ",
+		"sv-FI":
+			"Se vårdhem på ",
+	},
+	urlServiceVoucher: {
+		"fi-FI": "https://www.espoo.fi/fi-FI/Seniorit/Seniorien_asuminen/Hoivaasuminen",
+		"sv-FI": "https://www.esbo.fi/sv-FI/Seniorer/Seniorboende/Vardboende",
+	},
+	linkServiceVoucher: {
+		"fi-FI": "palvelusetelin.",
+		"sv-FI": "servicekupong.",
 	},
 	urlParastapalvelua: {
 		"fi-FI": "https://www.parastapalvelua.fi",
 		"sv-FI": "https://www.parastapalvelua.fi/sv",
+	},
+	landingOwnMoney: {
+		"fi-FI": "Hoivakotiin on mahdollista muuttaa myös itse maksavana asiakkaana, jolloin asiakas sopii palvelun sisällöstä ja kaikista maksuista suoraan hoivakodin kanssa.",
+		"sv-FI": "Det är också möjligt att konvertera till ett vårdhem som betalande klient, varigenom klienten samtycker till innehållet i tjänsten och alla avgifter direkt med vårdhemmet.",
 	},
 	whatisNursinghomeHeadline: {
 		"fi-FI": "Mitä on tehostettu palveluasuminen?",
@@ -41,7 +59,7 @@ export const translations = {
 	},
 	whatisNursinghomeText: {
 		"fi-FI":
-			"Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa, eivätkä voi enää asua omassa kodissaan. Terveydenhuollon ammattilaiset ovat paikalla  keskeytyksettä tehostetun palveluasumisen hoivakodeissa.  Tehostetun palveluasumisen hoivakodissa asukas saa tarpeidensa mukaista hoivaa ja huolenpitoa elämänsä loppuun saakka. Espoon kaupunki järjestää tehostettua palveluasumista omissa hoivakodeissaan sekä hankkii tehostettua palveluasumista yksityisten palveluntuottajien hoivakodeista.",
+			"Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa, eivätkä voi enää asua omassa kodissaan. Tehostetun palveluasumisen hoivakodissa asiakas saa tarpeidensa mukaista hoivaa ja huolenpitoa elämänsä loppuun saakka.  Sosiaali- ja terveydenhuollon ammattilaisia on paikalla hoivakodissa jatkuvasti. Osa hoivakodeista on Espoon kaupungin omia ja osa yksityisten ja kolmannen sektorin toimijoiden omistamia. Asiakas maksaa asumisesta ja palvelusta. Asiakkaan maksut määräytyvät tulojen mukaan ja maksu on sama kaikissa tällä sivustolla esillä olevissa hoivakodeissa.",
 		"sv-FI":
 			"Enhanced Service Housing är designad för äldre som behöver 24-timmars vård och vård och inte längre kan bo i sina egna hem. Det finns en ständig närvaro av personal med professionell vårdutbildning i Enhanced Service Living Nursing Homes. Esbo anordnar förbättrade servicebostäder i flera privata tjänsteleverantörers vårdhem och i sina egna vårdhem. På ett vårdhem får klienten vård och vård som tillgodoser deras behov resten av livet.",
 	},
@@ -50,7 +68,7 @@ export const translations = {
 		"sv-FI": "Hur får du ett beslut om servicehus?",
 	},
 	decisionStep1Headline: {
-		"fi-FI": "1. Ota yhteyttä Nestoriin",
+		"fi-FI": "1. Yhteydenotto Nestoriin",
 		"sv-FI": "1. Ta kontakt av Nestor",
 	},
 	decisionStep1Text: {
@@ -60,7 +78,7 @@ export const translations = {
 			"Nestori är Senior Counselling Unit i staden Espoo, <0>tel. +358 9 816 33 333</0>",
 	},
 	decisionStep2Headline: {
-		"fi-FI": "2. Palvelutarpeen selvittäminen ",
+		"fi-FI": "2. Palvelutarpeen selvittäminen",
 		"sv-FI": "2. Identifiera servicebehov",
 	},
 	decisionStep2Text: {
@@ -80,7 +98,7 @@ export const translations = {
 			"Efter ett positivt servicebeslut kan du börja leta efter ett vårdhem som passar dig",
 	},
 	decisionMoreInfo: {
-		"fi-FI": "Lisätietoa tehostettuun palveluasumiseen hakeutumisesta.",
+		"fi-FI": "Lisätietoa tehostettuun palveluasumiseen hakeutumisesta ja asiakaskriteereistä.",
 		"sv-FI": "Läs mer om ansökan om förbättrad servicehus.",
 	},
 	urlDecisionMoreInfo: {
@@ -95,7 +113,7 @@ export const translations = {
 	},
 	selectingText: {
 		"fi-FI":
-			" Voit valita sellaisen hoivakodin, jossa on vapaita paikkoja. Voit käydä tutustumassa hoivakoteihin ennen päätöksen tekemistä. Kerro valinnastasi Seniorineuvonta Nestorin omalle sosiaalityöntekijällesi. Jos sinulle mieluisin hoivakoti on täynnä, saat paikan toisaalta ja voit ilmoittautua Nestoriin haluamasi hoivakodin jonoon. Halutessasi voit vaihtaa hoivakotia kun paikka vapautuu. <br> Osa hoivakodeista on rahoitettu valtion tuella ja niistä käytetään tällä sivustolla nimitystä ARA-kohde. Hoivakotia valitsevan tehostetun palveluasumisen asiakkaan näkökulmasta ARA-kohde tarkoittaa sitä, että asukkaan varallisuus ei saa ylittää määrättyjä rajoja. Hoivakodeissa, jotka eivät ole ARA-kohteita, ei ole asukkaan varallisuutta koskevia rajoituksia.",
+			"<0>Voit valita sellaisen hoivakodin, jossa on vapaita asuntoja. Voit käydä tutustumassa hoivakotiin ennen päätöksen tekemistä. Kerro valinnastasi Seniorineuvonta Nestorin omalle sosiaalityöntekijällesi. Jos sinulle mieluisin hoivakoti on täynnä, valitset asunnon muusta hoivakodista ja voit ilmoittautua Nestoriin haluamasi hoivakodin jonoon. Halutessasi voit vaihtaa hoivakotia kun asunto vapautuu.</0> <1>Osa hoivakodeista on rahoitettu valtion tuella ja niistä käytetään tällä sivustolla nimitystä ARA-kohde. Hoivakotia valitsevalle asiakkaalle ARA-kohde tarkoittaa sitä, että asiakkaan varallisuus ei saa ylittää määrättyjä rajoja. Hoivakodeissa, jotka eivät ole ARA-kohteita, ei ole asiakkaan varallisuutta koskevia rajoituksia.</1>",
 		"sv-FI":
 			"Du kan välja ett vårdhem med gratisplatser. Du kan besöka vårdhemen innan du fattar ett beslut. Berätta för din Nestor socialarbetare om ditt val. Om ditt föredragna alternativ är ett vårdhem utan lediga platser, kan du anmäla dig till denna vårdkö.",
 	},
@@ -105,7 +123,7 @@ export const translations = {
 	},
 	serviceDescriptionText: {
 		"fi-FI":
-			"Kaikki tällä sivustolla olevat hoivakodit ovat Espoon kaupungin hyväksymiä. Ne ovat sitoutuneet noudattamaan Espoon kaupungin palvelukonseptia, joka määrittää vähimmäisvaatimukset palvelun sisällölle ja laadulle. Tehostetun palveluasumisen asiakkaat asuvat hoivakodissa omassa asunnossaan. Päivittäiset ateriat sisältyvät palveluun. Lisäksi hoivakodit järjestävät asukkaille monipuolista toimintaa.",
+			"Tällä sivustolla olevat hoivakodit ovat sitoutuneet noudattamaan Espoon kaupungin palvelukonseptia, joka määrittää palvelun sisällön ja laadun. Asiakas asuu hoivakodissa omassa asunnossaan. Ateriat sisältyvät palveluun. Hoivakodin asiakas elää aktiivista elämää oman jaksamisensa mukaan ja saa henkilökunnalta tarvitsemansa avun. Lisäksi hoivakodit järjestävät asiakkaille monipuolista toimintaa.",
 		"sv-FI":
 			"Alla vårdhem som visas på denna webbplats har åtagit sig till servicekonceptet City of Espoo, som ställer minimikrav för tjänstens innehåll och kvalitet.",
 	},
@@ -122,123 +140,104 @@ export const translations = {
 		"sv-FI": "Vanliga frågor om tjänsten",
 	},
 	faqItem1Headline: {
-		"fi-FI": "Minkälaisia asunnot ovat?",
-		"sv-FI": "sv_Minkälaisia asunnot ovat?",
+		"fi-FI": "Millaisia asunnot ovat ja voivatko puolisot asua yhdessä?",
+		"sv-FI": "sv_Millaisia asunnot ovat ja voivatko puolisot asua yhdessä??",
 	},
 	faqItem1Text: {
 		"fi-FI":
-			"Asunnot ovat pääasiassa yhden hengen yksiöitä. Osassa hoivakodeissa on kahden hengen asuntoja, joissa voi asua omasta toiveestaan. Asunnossa tai sen välittömässä läheisyydessä on wc ja kylpyhuone. Joissakin hoivakodeissa voi olla yhteisiä wc- ja suihkutiloja.",
+			"<0>Asiakkaalla on yhden hengen asunto.  Asunnossa tai sen välittömässä läheisyydessä on wc ja kylpyhuone. Joissakin hoivakodeissa voi olla yhteisiä wc- ja suihkutiloja.</0><1>Osassa hoivakodeissa on kahden hengen asuntoja. Hoivakotien kahden hengen asunnot on tarkoitettu erityisesti yhdessä asuville puolisoille. Puolisot voivat asua yhdessä myös silloin, jos toinen puolisoista ei ole tehostetun palveluasumisen asiakas. Puolison asumisesta ja siihen liittyvistä maksuista sovitaan suoraan hoivakodin kanssa.</1>",
 		"sv-FI":
 			"sv_Asiakkaalla on yhden hengen asunto. Joissakin hoivakodeissa on kahden hengen asuntoja, joissa asiakas voi asua omasta toiveestaan. Asunnossa tai sen välittömässä läheisyydessä on asiakkaan käytössä oleva wc/kylpyhuone. Joissakin hoivakodeissa voi olla yhteisiä wc- ja suihkutiloja.",
 	},
+
 	faqItem2Headline: {
-		"fi-FI": "Voivatko puolisot asua yhdessä?",
-		"sv-FI": "sv_Voiko puoliso muuttaa samaan asuntoon?",
-	},
-	faqItem2Text: {
-		"fi-FI":
-			"Jos molemmat puolisot ovat tehostetun palveluasumisen asiakkaita, he voivat asua hoivakodissa yhdessä.  Hoivakotien kahden hengen asunnot on tarkoitettu erityisesti yhdessä asuville puolisoille.<br> Puolisot voivat asua yhdessä myös silloin, jos toinen puolisoista ei ole tehostetun palveluasumisen asiakas. Puolison asumisesta ja siihen liittyvistä maksuista sovitaan suoraan hoivakodin kanssa.",
-		"sv-FI":
-			"sv_Pariskunnilla on mahdollisuus asua yhdessä myös tilanteissa, joissa toinen puolisoista ei ole tehostetun palveluasumisen asiakas. Puolison asumisesta ja siihen liittyvistä maksuista tulee sopia suoraan hoivakodin kanssa.",
-	},
-	faqItem3Headline: {
 		"fi-FI": "Onko asunto kalustettu?",
 		"sv-FI": "sv_Kuka kalustaa asunnon?",
 	},
-	faqItem3Text: {
+	faqItem2Text: {
 		"fi-FI":
-			"Asunnoissa on sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytystila ja kattovalaisin. Asuntoon voi tuoda omia kalusteita ja sisustustavaroita.",
+			"Asunnoissa on sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytystila ja kattovalaisin. Asiakas voi tuoda asuntoon omia kalusteita ja tavaroita.",
 		"sv-FI":
 			"sv_Palveluun kuuluu sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytysmahdollisuus ja yleisvalaisin. Lisäksi asiakas voi kalustaa ja sisustaa asuntonsa omien toiveidensa ja mieltymysten mukaisesti.",
 	},
-	faqItem4Headline: {
+	faqItem3Headline: {
 		"fi-FI": "Saako tyynyt, peitot, ja liinavaatteet hoivakodista?",
 		"sv-FI": "sv_Kuuluvatko tyynyt, peitot ja liinavaatteet palveluun?",
 	},
-	faqItem4Text: {
+	faqItem3Text: {
 		"fi-FI":
-			"Tyynyjä, peittoja ja liinavaatteita ei yleensä saa hoivakodista, vaan asukkaan on tuotava omat tyynyt, peitot ja liinavaatteet. Joistakin hoivakodeista on mahdollista saada tyynyt, peitot ja liinavaatteet. Tämä selviää kysymällä hoivakodista.",
+			"Tyynyjä, peittoja ja liinavaatteita ei yleensä saa hoivakodista, vaan asiakkaan on tuotava ne itse. Tämä selviää kysymällä hoivakodista.",
 		"sv-FI":
 			"sv_Nämä eivät kuulu palveluun. Näiden osalta on hoivakotikohtainen käytäntö; toisissa hoivakodeissa asiakas tuo ne itse ja toisissa ne järjestyvät hoivakodin toimesta.",
 	},
-	faqItem5Headline: {
+	faqItem4Headline: {
 		"fi-FI": "Kuka siivoaa asunnon?",
 		"sv-FI": "sv_Mitä siivousta kuuluu palveluun?",
 	},
-	faqItem5Text: {
+	faqItem4Text: {
 		"fi-FI":
-			"Hoivakodin siivooja siivoaa asunnon vähintään kerran viikossa. Lisäksi hoivakodin henkilökunta huolehtii asunnon päivittäisestä siistimisestä: vuoteen sijaamisesta, roskien viemisestä, tahrojen pyyhkimisestä ja tarvittaessa vuodevaatteiden vaihtamisesta. Asukas voi halutessaan osallistua näihin tehtäviin.",
+			"Asunnon viikoittainen siivous sisältyy palveluun. Lisäksi hoivakodin henkilökunta huolehtii asunnon päivittäisestä siistimisestä. Asiakas voi halutessaan osallistua näihin tehtäviin.",
 		"sv-FI":
 			"sv_Asiakkaalla omat normaalin vesipesun kestävä vaatteet. Jos asiakkaalla on erikoispesuja vaativia vaatteita tai muita tekstiilejä, niin niiden pesuista asiakas vastaa itse.",
 	},
-	faqItem6Headline: {
-		"fi-FI": "Kuka vastaa asukkaan vaatehuollosta?",
+	faqItem5Headline: {
+		"fi-FI": "Kuka ostaa ja pesee asiakkaan vaatteet?",
 		"sv-FI": "sv_Kuka hoitaa asiakkaan vaatteet?",
 	},
-	faqItem6Text: {
+	faqItem5Text: {
 		"fi-FI":
-			"Asukkaat pukeutuvat omiin vaatteisiinsa.  Hoivakoti toimittaa likaiset vaatteet ja muut tekstiilit pesulaan. Asukkaat vastaavat itse erikoispesuja vaativien vaatteiden ja tekstiilien pesettämisestä ja sen kustannuksista.",
+			"Asiakas käyttää omia vaatteitaan.  Hoivakoti huolehtii asiakkaan vaatteiden pesusta. Asiakas vastaa itse erikoispesuja vaativien vaatteiden ja tekstiilien pesettämisestä ja kustannuksista.",
 		"sv-FI":
 			"sv_Asunto siivotaan vähintään kerran viikossa. Lisäksi asunnossa huolehditaan päivittäin huolehditaan vuoteen sijaamisesta, roskien viemisestä, tahrojen poistamisesta ja tarvittaessa vuodevaatteiden vaihtamisesta. Asiakas voi halutessaan osallistua näihin tehtäviin. Ikkunat pestään tarpeen mukaan.",
 	},
-	faqItem7Headline: {
+	faqItem6Headline: {
 		"fi-FI": "Mistä saa lääkkeet?",
 		"sv-FI": "sv_Miten lääkkeet hoituvat?",
 	},
-	faqItem7Text: {
+	faqItem6Text: {
 		"fi-FI":
-			"Asukkaan tarvitsemat lääkkeet toimitetaan apteekista annosjakeluna hoivakotiin. Henkilökunta huolehtii lääkkeiden antamisesta. Asukas maksaa itse omat lääkkeensä.",
+			"Asiakas maksaa itse omat lääkkeensä. Asiakkaan lääkkeet toimitetaan apteekista annosjakeluna hoivakotiin. Henkilökunta huolehtii lääkkeiden antamisesta.",
 		"sv-FI":
 			"sv_Lääkkeiden annosjakelu kuuluu palveluun ja asiakas maksaa itse omat lääkkeet.",
 	},
-	faqItem8Headline: {
+	faqItem7Headline: {
 		"fi-FI": "Saako asukas hoivakodista tarvitsemansa apuvälineet?",
 		"sv-FI":
 			"sv_Onko hoivakodissa kaikki asiakkaan tarvitsemat apuvälineet?",
 	},
-	faqItem8Text: {
+	faqItem7Text: {
 		"fi-FI":
-			"Jos asukkaalla ei ole henkilökohtaisia apuvälineitä hoivakotiin muutettaessa, apuvälineet voi lainata maksutta HUSin Apuvälinekeskuksesta. joka sijaitsee Espoon sairaalassa. Hoivakoti auttaa tarvittaessa apuvälineiden noutamisessa. Mahdolliset apuvälineiden noutokustannukset asukas maksaa itse.",
+			"Henkilökohtaiset apuvälineet asiakas voi lainata maksutta HUS Apuvälinekeskuksesta, joka sijaitsee Espoon sairaalassa.  Hoivakoti auttaa asiakasta tarvittaessa apuvälineiden noutamisessa. Mahdolliset apuvälineiden noutokustannukset asiakas maksaa itse. Lisäksi hoivakodissa on muita apuvälineitä. Näitä ovat esimerkiksi nostolaitteet, tukikaiteet, ulkoilupyörätuoli sekä asentohoitoon soveltuvat tyynyt.",
 		"sv-FI":
 			"sv_Hoivakodissa on tarpeellinen määrä yhteiskäyttöisiä apuvälineitä. Näitä ovat esimerkiksi nostolaitteet, tukikaiteet sekä asentohoitoon soveltuvat tyynyt. Lisäksi asiakkaalla voi olla henkilökohtaisia apuvälineita HUS:in Apuvälinekeskuksesta. Asiakas kustantaa henkilökohtaisten apuvälineiden noutamisen ja palveluntuottajalla on avustusvelvollisuus noudon toteuttamisessa.",
 	},
-	faqItem9Headline: {
-		"fi-FI": "Mitkä ruokailut sisältyvät tehostettuun palveluasumiseen?",
+	faqItem8Headline: {
+		"fi-FI": "Mitä ruokailuja palveluun kuuluu?",
 		"sv-FI": "sv_Mitkä ruokailut kuuluvat palveluun?",
 	},
-	faqItem9Text: {
+	faqItem8Text: {
 		"fi-FI":
-			"Asukkaalle tarjotaan aamiainen, lounas, iltapäiväkahvi/välipala, päivällinen ja iltapala. Lounas ja päivällinen ovat lämpimiä aterioita.  Asukas saa yöpalan tarvittaessa.  Kaikki ateriat ovat asukkaan erityisruokavalion mukaisia. Asukas saa lääkärin määräämät täydennysravintovalmisteet hoivakodista, ja niistä ei tarvitse maksaa erikseen.",
+			"Asiakas saa hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Asiakas saa yöpalan tarvittaessa.  Erityisruokavaliot ja lääkäriin määräämät täydennysravintovalmisteet kuuluvat palveluun ja niistä asiakas ei maksa erikseen.",
 		"sv-FI":
 			"sv_Asiakas saa hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Lisäksi asiakas saa tarvittaessa yöpalaa. Erityisruokavaliot ja lääkäriin määräämät täydennysravintovalmisteet kuuluvat palveluun.",
 	},
-	faqItem10Headline: {
-		"fi-FI": "Millaista hoivakodin arki on?",
+	faqItem9Headline: {
+		"fi-FI": "Voivatko läheiset ja omaiset yöpyä asiakkaan luona?",
 		"sv-FI": "sv_Mitä muuta kuin välttämätöntä hoivaa palveluun kuuluu?",
 	},
-	faqItem10Text: {
+	faqItem9Text: {
 		"fi-FI":
-			"Hoivakodin asukas elää aktiivista elämää oman jaksamisen mukaan. Päiviin sisältyy muun muassa ulkoilua, liikuntaa, kulttuuria sekä käsillä tekemistä asukkaiden toiveiden ja aikaisempien tottumusten mukaisesti.",
+			"Läheiset ja omaiset voivat yöpyä tilapäisesti asiakkaan luona.  Yöpymisestä on sovittava hoivakodin kanssa.",
 		"sv-FI":
 			"sv_Asiakas avustetaan päivittäin ylös vuoteesta ja asiakkaalla on mahdollisuus käyttää päivävaatteitaan. Asiakkaalla on mahdollisuus aktiiviseen elämään. Aktiivisuuteen sisältyy muun muassa ulkoilua, liikuntaa, kulttuuria sekä käsillä tekemistä asiakkaan toiveiden ja aikaisempien tottumusten mukaisesti.",
 	},
-	faqItem11Headline: {
-		"fi-FI": "Voivatko läheiset ja omaiset yöpyä asukkaan luona?",
-		"sv-FI": "sv_Miten läheiset voivat olla mukana asiakkaan elämässä?",
-	},
-	faqItem11Text: {
-		"fi-FI":
-			"Läheiset ja omaiset voivat yöpyä tilapäisesti asukkaan luona.  Yöpymisestä on sovittava hoivakodin kanssa.",
-		"sv-FI":
-			"sv_Läheiset voivat olla mukana hoivakodin arjessa ja yöpyä tilapäisesti asiakkaan asunnossa. Asiakas/omainen sopii käytännöt hoivakodin kanssa.",
-	},
-	faqItem12Headline: {
+	faqItem10Headline: {
 		"fi-FI": "Miten saattohoito järjestetään?",
 		"sv-FI": "sv_Miten saattohoito järjestetään?",
 	},
-	faqItem12Text: {
+	faqItem10Text: {
 		"fi-FI":
-			"Hoivakodissa voi asua elämän loppuun saakka. Kivun lievityksestä ja oireiden hoitamisesta huolehditaan kaikkina vuorokauden aikoina. Hoivakodissa kunnioitetaan kuolevan vakaumusta ja hänen henkisestä hyvinvoinnistaan huolehditaan.",
+			"Asiakkaan saattohoito järjestetään pääsääntöisesti hoivakodissa. Asiakas saa tarvitsemansa hoivan ja kivun lievityksen. Hoivakodin henkilökunta kunnioittaa kuolevan vakaumusta ja huolehtii hänen henkisestä hyvinvoinnistaan.",
 		"sv-FI":
 			"sv_Asiakas voi asua hoivakodissa elämänsä loppuun asti. Kivun ja muiden oireiden hoidosta huolehditaan kaikkina vuorokauden aikoina. Hoivakodissa kunnioitetaan kuolevan vakaumusta ja hänen henkisestä hyvinvoinnistaan huolehditaan.",
 	},
