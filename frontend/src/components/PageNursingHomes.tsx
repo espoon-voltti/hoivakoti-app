@@ -122,7 +122,7 @@ const PageNursingHomes: FC = () => {
 
 	const summaryLabel = useT("summaryLabel");
 	const loadingText = useT("loadingText");
-
+	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
 
 	const optionsAra: FilterOption[] = [
@@ -361,7 +361,7 @@ const PageNursingHomes: FC = () => {
 								</span>
 								{hasFilters && (
 									<Link to="/hoivakodit" className="btn--clear-filters">
-											Poista rajaukset
+											{clearFilters}
 									</Link>
 								)}
 							</>

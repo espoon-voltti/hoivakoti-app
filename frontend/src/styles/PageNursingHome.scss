@@ -97,12 +97,12 @@
 
 	.nursinghome-img-inner:hover {
 		cursor: pointer;
-		transform: scale(1.025);
-		transition: all 0.1s ease-in;
+		transform: scale(1.030);
+		transition: all 0.3s ease-in-out;
 	}
 }
 
-$hero-border: 1px solid white;
+$hero-border: 5px solid white;
 
 @media (min-width: 1024px) {
 	.nursinghome-hero-img {
