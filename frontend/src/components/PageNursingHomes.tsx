@@ -10,7 +10,6 @@ import axios from "axios";
 import Map from "./Map";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
-import { ReactComponent as CloseXSmall } from "./CloseXSmall.svg";
 
 type Language = string;
 
@@ -162,7 +161,7 @@ const PageNursingHomes: FC = () => {
 
 	const summaryLabel = useT("summaryLabel");
 	const loadingText = useT("loadingText");
-
+	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
 
 	const optionsAra: FilterOption[] = [
@@ -444,11 +443,8 @@ const PageNursingHomes: FC = () => {
 									{filteredNursingHomes.length} {summaryLabel}
 								</span>
 								{hasFilters && (
-									<Link to="/hoivakodit">
-										<button className="clear-filters-button">
-											<CloseXSmall className="clear-filters-icon" />
-											Poista rajaukset
-										</button>
+									<Link to="/hoivakodit" className="btn--clear-filters">
+											{clearFilters}
 									</Link>
 								)}
 							</>

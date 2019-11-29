@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 14 12">
+  <g fill="none" fill-rule="evenodd" stroke="#979797" stroke-linecap="square" transform="translate(0 -1)">
+    <line x1="1.231" x2="12.653" y1="1.231" y2="12.653"/>
+    <line x1="6.881" x2="6.889" y1="-1.077" y2="15.077" transform="rotate(-135 6.885 7)"/>
+  </g>
+</svg>

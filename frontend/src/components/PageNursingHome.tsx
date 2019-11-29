@@ -105,6 +105,7 @@ const PageNursingHome: FC = () => {
 	const otherServices = useT("otherServices");
 	const nearbyServices = useT("nearbyServices");
 	const monthShort = useT("monthShort");
+	const btnShowImages = useT("btnShowImages");
 
 	const linkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
 	const linkMoreInfoActivies = useT("linkMoreInfoActivies");
@@ -184,7 +185,7 @@ const PageNursingHome: FC = () => {
 						onClick={() => setLightboxState(0)}
 						className="nursinghome-hero-lightbox-button"
 					>
-						Katso kuvat
+						{btnShowImages}
 					</button>
 				)}
 			</div>

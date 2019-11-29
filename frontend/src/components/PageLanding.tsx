@@ -111,21 +111,32 @@ const PageLanding: FC = () => {
 							<strong></strong>
 						</Trans>
 					</p>
-					<p className="ingress">
-						{useT("landingIngress2")}{" "}
+				</section>
+
+				<section className="content-block">
+					<h2>{useT("whatisNursinghomeHeadline")}</h2>
+					<p>{useT("whatisNursinghomeText")}</p>
+
+					<p>
+						{useT("landingServiceVoucher1")}{" "}
+						<a
+							href={useT("urlServiceVoucher")}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{useT("linkServiceVoucher")}
+						</a>
+
+						{" "}{useT("landingServiceVoucher2")}{" "}
 						<a
 							href={useT("urlParastapalvelua")}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							www.parastapalvelua.fi
-						</a>
+						</a>.
 					</p>
-				</section>
-
-				<section className="content-block">
-					<h2>{useT("whatisNursinghomeHeadline")}</h2>
-					<p>{useT("whatisNursinghomeText")}</p>
+					<p>{useT("landingOwnMoney")}</p>
 				</section>
 
 				<section className="content-block content-block--wide">
@@ -133,7 +144,7 @@ const PageLanding: FC = () => {
 					<div className="process-diagram">
 						<div className="process-diagram__item">
 							<div className="process-diagram__item__img">
-								<img src="/icon-contact.svg" alt="" />
+								<img src="/icons/icon-contact.svg" alt="" />
 							</div>
 							<h3>{useT("decisionStep1Headline")}</h3>
 							<p>
@@ -145,14 +156,14 @@ const PageLanding: FC = () => {
 						</div>
 						<div className="process-diagram__item">
 							<div className="process-diagram__item__img">
-								<img src="/icon-meeting.svg" alt="" />
+								<img src="/icons/icon-meeting.svg" alt="" />
 							</div>
 							<h3>{useT("decisionStep2Headline")}</h3>
 							<p>{useT("decisionStep2Text")}</p>
 						</div>
 						<div className="process-diagram__item">
 							<div className="process-diagram__item__img">
-								<img src="/icon-decision.svg" alt="" />
+								<img src="/icons/icon-decision.svg" alt="" />
 							</div>
 							<h3>{useT("decisionStep3Headline")}</h3>
 							<p>{useT("decisionStep3Text")}</p>
@@ -172,28 +183,25 @@ const PageLanding: FC = () => {
 
 				<section className="content-block">
 					<h2>{useT("selectingHeadline")}</h2>
-					<p>{useT("selectingText")}</p>
+					<Trans i18nKey="defaultNamespace:selectingText">
+							<p></p>
+							<p></p>
+						</Trans>
 				</section>
 
 				<section className="content-block">
 					<h2>{useT("serviceDescriptionHeadline")}</h2>
 					<p>{useT("serviceDescriptionText")}</p>
-					<p>
-						<a
-							href={useT("urlServiceDescription")}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							{useT("serviceDescriptionLink")}
-						</a>
-					</p>
 
 					<h3 className="faqHeadline">
 						{useT("faqSectionHeadline")}
 					</h3>
 					<dl className="faq-list">
 						<dt>{useT("faqItem1Headline")}</dt>
-						<dd>{useT("faqItem1Text")}</dd>
+						<dd><Trans i18nKey="defaultNamespace:faqItem1Text">
+							<p></p>
+							<p></p>
+						</Trans></dd>
 						<dt>{useT("faqItem2Headline")}</dt>
 						<dd>{useT("faqItem2Text")}</dd>
 						<dt>{useT("faqItem3Headline")}</dt>
@@ -212,10 +220,6 @@ const PageLanding: FC = () => {
 						<dd>{useT("faqItem9Text")}</dd>
 						<dt>{useT("faqItem10Headline")}</dt>
 						<dd>{useT("faqItem10Text")}</dd>
-						<dt>{useT("faqItem11Headline")}</dt>
-						<dd>{useT("faqItem11Text")}</dd>
-						<dt>{useT("faqItem12Headline")}</dt>
-						<dd>{useT("faqItem12Text")}</dd>
 					</dl>
 				</section>
 			</div>
