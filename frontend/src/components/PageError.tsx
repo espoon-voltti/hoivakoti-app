@@ -19,7 +19,7 @@ const PageError: FC<Props> = ({ error }) => {
 	return (
 		<div className={`page-error ${errorType}`}>
 			<img
-				src={config.PUBLIC_FILES_URL + "/icon-error.svg"}
+				src={config.PUBLIC_FILES_URL + "/icons/icon-error.svg"}
 				alt="Espoo – Esbo"
 				className="page-error-logo"
 			/>

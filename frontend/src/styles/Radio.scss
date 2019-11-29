@@ -34,7 +34,7 @@
 }
 
 .radio-box-selected {
-	background: $link-color url("/icon-checkmark.svg") 50% 50% no-repeat;
+	background: $link-color url("/icons/icon-checkmark.svg") 50% 50% no-repeat;
 	background-size: 20px;
 	border-color: $link-color;
 }
@@ -57,12 +57,12 @@
 }
 
 .radio-label:hover .radio-box {
-	background: transparent url("/icon-checkmark-hover.svg") 50% 50% no-repeat;
+	background: transparent url("/icons/icon-checkmark-hover.svg") 50% 50% no-repeat;
 	background-size: 20px;
 }
 
 .radio-label:hover .radio-box-selected {
-	background: $link-color url("/icon-checkmark.svg") 50% 50% no-repeat;
+	background: $link-color url("/icons/icon-checkmark.svg") 50% 50% no-repeat;
 	background-size: 20px;
 	border-color: $link-color;
 }

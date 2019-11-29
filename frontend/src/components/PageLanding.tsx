@@ -144,7 +144,7 @@ const PageLanding: FC = () => {
 					<div className="process-diagram">
 						<div className="process-diagram__item">
 							<div className="process-diagram__item__img">
-								<img src="/icon-contact.svg" alt="" />
+								<img src="/icons/icon-contact.svg" alt="" />
 							</div>
 							<h3>{useT("decisionStep1Headline")}</h3>
 							<p>
@@ -156,14 +156,14 @@ const PageLanding: FC = () => {
 						</div>
 						<div className="process-diagram__item">
 							<div className="process-diagram__item__img">
-								<img src="/icon-meeting.svg" alt="" />
+								<img src="/icons/icon-meeting.svg" alt="" />
 							</div>
 							<h3>{useT("decisionStep2Headline")}</h3>
 							<p>{useT("decisionStep2Text")}</p>
 						</div>
 						<div className="process-diagram__item">
 							<div className="process-diagram__item__img">
-								<img src="/icon-decision.svg" alt="" />
+								<img src="/icons/icon-decision.svg" alt="" />
 							</div>
 							<h3>{useT("decisionStep3Headline")}</h3>
 							<p>{useT("decisionStep3Text")}</p>
