@@ -70,6 +70,8 @@ const Lightbox: FC<Props> = ({ state, onClose, images }) => {
 						views={images}
 						styles={stylesCarousel}
 						currentIndex={state}
+						hideControlsWhenIdle={1e6}
+						interactionIsIdle={false}
 					/>
 				</Modal>
 			) : null}
