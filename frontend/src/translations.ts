@@ -280,7 +280,7 @@ export const translations = {
 		"sv-FI": "Kortvarigt boende",
 	},
 	filterLAHText: {
-		"fi-FI": "Näytä vain lyhytaikaista asumista tarjoavat paikat.",
+		"fi-FI": "Näytä vain lyhytaikaista asumista tarjoavat hoivakodit.",
 		"sv-FI": "Visa bara platser med kortvarigt boende.",
 	},
 	alsoLAHText: {

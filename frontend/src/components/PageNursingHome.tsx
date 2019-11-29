@@ -207,7 +207,11 @@ const PageNursingHome: FC = () => {
 							/>
 						</h2>
 						<Paragraph
-							text={`${nursingHome.district != null ? nursingHome.district + `, ` : ""} ${nursingHome.city}`}
+							text={`${
+								nursingHome.district != null
+									? nursingHome.district + `, `
+									: ""
+							} ${nursingHome.city}`}
 						/>
 						<Paragraph text={nursingHome.summary} />
 						<p className="nursinghome-anchor-details">
@@ -470,12 +474,6 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						{nursingHome.address}, {nursingHome.postal_code}{" "}
 						{nursingHome.city}
 					</dd>
-					<dd>Puh. {nursingHome.contact_phone}</dd>
-					<dd>
-						<a href={"mailto:" + nursingHome.email}>
-							{nursingHome.email}
-						</a>
-					</dd>
 					<dd>
 						<a
 							href={nursingHome.www}
@@ -483,6 +481,16 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							rel="noopener noreferrer"
 						>
 							{webpage}
+						</a>
+					</dd>
+					<dd style={{ marginTop: 10 }}>
+						{nursingHome.contact_name}
+					</dd>
+					<dd>{nursingHome.contact_title}</dd>
+					<dd>Puh. {nursingHome.contact_phone}</dd>
+					<dd>
+						<a href={"mailto:" + nursingHome.email}>
+							{nursingHome.email}
 						</a>
 					</dd>
 				</dl>

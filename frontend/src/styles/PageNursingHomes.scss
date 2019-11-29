@@ -74,3 +74,30 @@
 	line-height: 27px;
 	margin: 20px 0 20px 10px;
 }
+
+.results-summary-text {
+	margin-right: 20px;
+}
+
+.clear-filters-button {
+	cursor: pointer;
+	text-align: left;
+	font-size: 14px;
+	font-family: "Open Sans", sans-serif;
+	font-weight: bold;
+	color: $headline-color;
+	background: none;
+	padding: 10px;
+	border: 1px solid $light-gray;
+	border-radius: $border-radius;
+	text-transform: uppercase;
+	white-space: nowrap;
+	user-select: none;
+
+	vertical-align: 2px;
+}
+
+.clear-filters-icon {
+	margin-right: 9px;
+	vertical-align: -1px;
+}
