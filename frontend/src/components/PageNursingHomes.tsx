@@ -360,11 +360,8 @@ const PageNursingHomes: FC = () => {
 									{filteredNursingHomes.length} {summaryLabel}
 								</span>
 								{hasFilters && (
-									<Link to="/hoivakodit">
-										<button className="clear-filters-button">
-											<CloseXSmall className="clear-filters-icon" />
+									<Link to="/hoivakodit" className="btn--clear-filters">
 											Poista rajaukset
-										</button>
 									</Link>
 								)}
 							</>
