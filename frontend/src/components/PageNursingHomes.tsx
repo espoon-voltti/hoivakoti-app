@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC } from "react";
 import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Link } from "react-router-dom";
 import "../styles/PageNursingHomes.scss";
 import config from "./config";
 import { Link as div } from "react-router-dom";
@@ -10,6 +10,7 @@ import axios from "axios";
 import Map from "./Map";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
+import { ReactComponent as CloseXSmall } from "./CloseXSmall.svg";
 
 type Language = string;
 
@@ -79,6 +80,7 @@ const PageNursingHomes: FC = () => {
 		lah,
 		language: parsed.language as Language,
 	};
+	const hasFilters = search !== "";
 
 	const locationPickerLabel = useT("locationPickerLabel");
 
@@ -352,9 +354,23 @@ const PageNursingHomes: FC = () => {
 			<div className="card-list-and-map-container">
 				<div className="card-list">
 					<h2 className="results-summary">
-						{filteredNursingHomes
-							? `${filteredNursingHomes.length} ${summaryLabel}`
-							: loadingText}
+						{filteredNursingHomes ? (
+							<>
+								<span className="results-summary-text">
+									{filteredNursingHomes.length} {summaryLabel}
+								</span>
+								{hasFilters && (
+									<Link to="/hoivakodit">
+										<button className="clear-filters-button">
+											<CloseXSmall className="clear-filters-icon" />
+											Poista rajaukset
+										</button>
+									</Link>
+								)}
+							</>
+						) : (
+							loadingText
+						)}
 					</h2>
 					<div className="card-container">{cards}</div>
 				</div>
