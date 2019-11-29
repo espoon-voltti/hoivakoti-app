@@ -178,15 +178,6 @@ const PageLanding: FC = () => {
 				<section className="content-block">
 					<h2>{useT("serviceDescriptionHeadline")}</h2>
 					<p>{useT("serviceDescriptionText")}</p>
-					<p>
-						<a
-							href={useT("urlServiceDescription")}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							{useT("serviceDescriptionLink")}
-						</a>
-					</p>
 
 					<h3 className="faqHeadline">
 						{useT("faqSectionHeadline")}

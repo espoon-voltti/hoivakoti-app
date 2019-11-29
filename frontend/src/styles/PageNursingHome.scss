@@ -79,6 +79,8 @@
 		height: 480px;
 		@media (min-width: 1024px) {
 			height: 640px;
+			max-height: calc(100vh - 280px);
+    		min-height: 350px;
 		}
 	}
 }

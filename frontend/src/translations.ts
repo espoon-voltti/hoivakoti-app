@@ -1,8 +1,8 @@
 export const translations = {
 	appTitle: { "fi-FI": "Espoon hoivakodit", "sv-FI": "Vårdhem i Esbo" },
 	titleTemplate: {
-		"fi-FI": "%s – Espoon hoivakodit",
-		"sv-FI": "%s – Vårdhem i Esbo",
+		"fi-FI": "%s | Espoon hoivakodit",
+		"sv-FI": "%s | Vårdhem i Esbo",
 	},
 	navHome: { "fi-FI": "Etusivu", "sv-FI": "Hemsida" },
 	navNursingHomes: { "fi-FI": "Hoivakodit", "sv-FI": "Vårdhem" },
@@ -311,7 +311,7 @@ export const translations = {
 	apartmentFurnitureLabel: { "fi-FI": "Peruskalustus", "sv-FI": "Möbler" },
 	apartmentFurnitureText: {
 		"fi-FI":
-			"Palveluun kuuluu sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytysmahdollisuus ja yleisvalaisin. Lisäksi asiakas voi kalustaa ja sisustaa asuntonsa omien toiveidensa ja mieltymysten mukaisesti.",
+			"Asunnoissa on sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytystila ja kattovalaisin. Asiakas voi tuoda asuntoon omia kalusteita ja tavaroita.",
 		"sv-FI": "Säng, toalet, bord",
 	},
 	rent: { "fi-FI": "Vuokran määrä", "sv-FI": "Hyra" },
