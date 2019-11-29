@@ -5,6 +5,8 @@ import Checkbox from "./Checkbox";
 import Radio from "./Radio";
 import { useT } from "../i18n";
 
+export type Alignment = "left" | "right";
+
 export type FilterOption =
 	| { type: "header"; text: string }
 	| { type: "text"; text: string }
@@ -21,6 +23,9 @@ export type FilterOption =
 			label: string;
 			subLabel?: string;
 			checked: boolean;
+			withMargin?: boolean;
+			bold?: boolean;
+			alignment?: Alignment;
 	  };
 
 export type Props = {
@@ -34,34 +39,22 @@ export type Props = {
 	onReset: () => void;
 };
 
-const FilterItem: FC<Props> = ({
-	prefix,
-	value,
-	values,
-	disabled,
-	dropdownVariant = "primary",
-	onChange,
-	onReset,
-}) => {
-	const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
-	const canEmpty = value !== null;
-
-	const handleChange = (newValue: {
-		name: string;
-		newValue: boolean;
-	}): void => {
-		onChange(newValue);
-	};
-
-	const btnClear = useT("btnClear");
-	const btnSave = useT("btnSave");
-
-	const subMenu = (
-		<div>
-			{values.map((option: FilterOption, index) => {
+function CreateFilterItems(
+	options: FilterOption[],
+	handleChange: any,
+	prefix: string,
+): any {
+	return (
+		<>
+			{options.map((option: FilterOption, index) => {
 				if (option.type === "checkbox") {
+					let className = "checkbox-item";
+					if (option.withMargin === true) className += " with-margin";
+					if (option.bold === true) className += " with-bold";
+					if (option.alignment === "right")
+						className += " align-right";
 					return (
-						<div className="checkbox-item" key={index}>
+						<div className={className} key={index}>
 							<Checkbox
 								id={`filter-${index}`}
 								name={option.name}
@@ -138,6 +131,61 @@ const FilterItem: FC<Props> = ({
 					return null;
 				}
 			})}
+		</>
+	);
+}
+
+const FilterItem: FC<Props> = ({
+	prefix,
+	value,
+	values,
+	disabled,
+	dropdownVariant = "primary",
+	onChange,
+	onReset,
+}) => {
+	const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
+	const canEmpty = value !== null;
+
+	const handleChange = (newValue: {
+		name: string;
+		newValue: boolean;
+	}): void => {
+		onChange(newValue);
+	};
+
+	const btnClear = useT("btnClear");
+	const btnSave = useT("btnSave");
+
+	// Atm only checkboxes support aligning on left or right...
+	const leftSideOptions = values.filter((option: FilterOption) => {
+		if (option.type !== "checkbox" || option.alignment !== "right")
+			return true;
+		return false;
+	});
+	const rightSideOptions = values.filter((option: FilterOption) => {
+		if (option.type === "checkbox" && option.alignment === "right")
+			return true;
+		return false;
+	});
+
+	const leftSideItems = CreateFilterItems(
+		leftSideOptions,
+		handleChange,
+		prefix,
+	);
+	const rightSideItems = CreateFilterItems(
+		rightSideOptions,
+		handleChange,
+		prefix,
+	);
+
+	const subMenu = (
+		<div>
+			<div className="option-container">
+				<div className="align-left">{leftSideItems}</div>
+				<div className="align-right">{rightSideItems}</div>
+			</div>
 
 			<div className="save-and-empty-container">
 				<button

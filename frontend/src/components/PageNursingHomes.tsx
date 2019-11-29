@@ -10,6 +10,7 @@ import axios from "axios";
 import Map from "./Map";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
+import { DiffieHellman } from "crypto";
 
 type Language = string;
 
@@ -45,12 +46,26 @@ const PageNursingHomes: FC = () => {
 		return () => window.removeEventListener("resize", listener);
 	}, []);
 
-	const areas = [
+	const espooAreas = [
 		"Espoon keskus",
 		"Espoonlahti",
 		"Leppävaara",
 		"Matinkylä",
 		"Tapiola",
+	];
+	const otherCities = [
+		"Helsinki",
+		"Hyvinkää",
+		"Järvenpää",
+		"Karkkila",
+		"Kerava",
+		"Lohja",
+		"Lohja",
+		"Nurmijärvi",
+		"Siuntio",
+		"Tammisaari",
+		"Vantaa",
+		"Vihti",
 	];
 
 	useEffect(() => {
@@ -82,9 +97,21 @@ const PageNursingHomes: FC = () => {
 
 	const locationPickerLabel = useT("locationPickerLabel");
 
+	const espooChecked = searchFilters.alue
+		? searchFilters.alue.includes("Espoo")
+		: false;
+	const espooCheckboxItem: FilterOption = {
+		name: "Espoo",
+		label: "Espoo",
+		type: "checkbox",
+		checked: espooChecked,
+		bold: true,
+	};
+
 	const optionsArea: FilterOption[] = [
 		{ text: locationPickerLabel, type: "header" },
-		...areas.map<FilterOption>((value: string) => {
+		espooCheckboxItem,
+		...espooAreas.map<FilterOption>((value: string) => {
 			const checked = searchFilters.alue
 				? searchFilters.alue.includes(value)
 				: false;
@@ -93,6 +120,20 @@ const PageNursingHomes: FC = () => {
 				label: value,
 				type: "checkbox",
 				checked: checked,
+				withMargin: true,
+			};
+		}),
+		...otherCities.map<FilterOption>((value: string) => {
+			const checked = searchFilters.alue
+				? searchFilters.alue.includes(value)
+				: false;
+			return {
+				name: value,
+				label: value,
+				type: "checkbox",
+				checked: checked,
+				bold: true,
+				alignment: "right",
 			};
 		}),
 	];
@@ -183,14 +224,57 @@ const PageNursingHomes: FC = () => {
 				onChange={({ newValue, name }) => {
 					const newSearchFilters = { ...searchFilters };
 					if (!newSearchFilters.alue) newSearchFilters.alue = [];
-					if (!newValue)
+					// If the district/city was unchecked
+					if (!newValue) {
+						// Normal flow: Remove district/city to search filters if
+						// present
 						newSearchFilters.alue = newSearchFilters.alue.filter(
 							(value: string) => {
 								return value !== name;
 							},
 						);
-					else if (!newSearchFilters.alue.includes(name))
-						newSearchFilters.alue.push(name);
+
+						// Weird flow to accommodate the Espoo special selection
+						if (name === "Espoo")
+							newSearchFilters.alue = newSearchFilters.alue.filter(
+								(value: string) => {
+									if (espooAreas.includes(value))
+										return false;
+									return true;
+								},
+							);
+						else if (espooAreas.includes(name))
+							newSearchFilters.alue = newSearchFilters.alue.filter(
+								(value: string) => {
+									return value !== "Espoo";
+								},
+							);
+						// If the district/city was checked
+					} else {
+						// Normal flow: Add district/city to search filters if
+						// not already added
+						if (!newSearchFilters.alue.includes(name))
+							newSearchFilters.alue.push(name);
+
+						// Weird flow to accommodate the Espoo special selection
+						if (name === "Espoo")
+							for (let i = 0; i < espooAreas.length; i++) {
+								const district = espooAreas[i];
+								if (!newSearchFilters.alue.includes(district))
+									newSearchFilters.alue.push(district);
+							}
+						else if (espooAreas.includes(name)) {
+							let included = 0;
+							for (let i = 0; i < espooAreas.length; i++) {
+								const district = espooAreas[i];
+								if (newSearchFilters.alue.includes(district))
+									included++;
+							}
+							if (included == espooAreas.length) {
+								newSearchFilters.alue.push("Espoo");
+							}
+						}
+					}
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
@@ -301,7 +385,8 @@ const PageNursingHomes: FC = () => {
 			if (
 				searchFilters.alue &&
 				searchFilters.alue.length > 0 &&
-				!searchFilters.alue.includes(nursinghome.district)
+				(!searchFilters.alue.includes(nursinghome.district) &&
+					!searchFilters.alue.includes(nursinghome.city))
 			)
 				return false;
 			if (

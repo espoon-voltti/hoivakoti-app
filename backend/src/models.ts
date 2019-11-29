@@ -174,9 +174,15 @@ export async function InsertNursingHomeToDB(
 
 		return uuid;
 	} else {
-		const uuid = hashWithSalt(nursingHome.name, nursingHome.postal_code).slice(0, 10);
+		const uuid = hashWithSalt(
+			nursingHome.name,
+			nursingHome.postal_code,
+		).slice(0, 10);
 		//const basicUpdateKey = createBasicUpdateKey(6);
-		const basicUpdateKey = hashWithSalt(uuid, process.env.ADMIN_PASSWORD as string).slice(0, 10);
+		const basicUpdateKey = hashWithSalt(
+			uuid,
+			process.env.ADMIN_PASSWORD as string,
+		).slice(0, 10);
 		await knex("NursingHomes").insert({
 			id: uuid,
 			...nursingHome,

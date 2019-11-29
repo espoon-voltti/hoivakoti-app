@@ -54,3 +54,33 @@
 .option-subtext {
 	line-height: 22px;
 }
+
+.with-margin {
+	margin-left: 10px,
+}
+
+.with-bold {
+	font-weight: bold,
+}
+
+.option-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0px;
+}
+
+.align-left {
+	margin-right: 45px;
+}
+
+.align-right {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-top: 55px;
+}
+
+.align-right > * {
+	margin-top: 0;
+}
