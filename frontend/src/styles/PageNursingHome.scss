@@ -189,10 +189,11 @@ $hero-border: 5px solid white;
 .nursinghome-title-vacancy-status-badge {
 	vertical-align: middle;
 	display: block;
+	white-space: nowrap;
 
-	@media (min-width: 800px) {
+	@media (min-width: 1024px) {
 		margin-left: 16px;
-		display: inline;
+		display: inline-block;
 	}
 }
 

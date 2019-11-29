@@ -10,7 +10,6 @@ import axios from "axios";
 import Map from "./Map";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
-import { ReactComponent as CloseXSmall } from "./CloseXSmall.svg";
 
 type Language = string;
 
