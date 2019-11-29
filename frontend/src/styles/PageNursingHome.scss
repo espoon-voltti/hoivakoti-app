@@ -108,7 +108,7 @@ $hero-border: 1px solid white;
 	}
 
 	.nursinghome-hero-n3 .nursinghome-hero-img {
-		width: 50vw;
+		width: 50%;
 		&:first-child {
 			border-right: $hero-border;
 		}
@@ -118,9 +118,9 @@ $hero-border: 1px solid white;
 	}
 
 	.nursinghome-hero-n5 .nursinghome-hero-img {
-		width: 25vw;
+		width: 25%;
 		&:first-child {
-			width: 50vw;
+			width: 50%;
 		}
 		&:first-child,
 		&:nth-child(2),
@@ -223,7 +223,7 @@ $hero-border: 1px solid white;
 		margin-left: 64px;
 		margin-top: 0;
 		position: sticky;
-		top: 0;
+		top: 20px;
 	}
 }
 

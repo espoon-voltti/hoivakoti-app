@@ -3,7 +3,7 @@
 $column-width: 1024px;
 
 .jumbotron {
-	width: 100vw;
+	width: 100%;
 	max-height: calc(100vh - 80px - 200px);
 	min-height: 350px;
 	height: 100vh;
@@ -57,7 +57,7 @@ $column-width: 1024px;
 		width: 100%;
 		font-weight: normal;
 		text-transform: none;
-		font-family: 'Open-sans', sans-serif;
+		font-family: "Open-sans", sans-serif;
 		font-size: 16px;
 		color: $text-color;
 	}
@@ -141,7 +141,7 @@ p.content-block-paragraph {
 	.location-picker {
 		flex-direction: column;
 		margin-bottom: 0;
-		width: 100vw;
+		width: 100%;
 		border-radius: 0;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
 
@@ -172,8 +172,8 @@ p.content-block-paragraph {
 
 @media screen and (max-width: 850px) {
 	.process-diagram__item {
-		width: 100vw;
-		max-width: 100vw;
+		width: 100%;
+		max-width: 100%;
 		margin: 0;
 	}
 }
