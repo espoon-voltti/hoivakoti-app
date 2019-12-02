@@ -34,10 +34,11 @@ async function NursingHomesFromCSV(csv: string): Promise<object[]> {
 		skip_empty_lines: true,
 		skip_lines_with_empty_values: true,
 		delimiter: ",",
+		rtrim: true,
+		ltrim: true,
 	});
 
 	console.log(records.length);
-
 	records.map(async (record: any) => {
 		const nursing_home: any = {};
 		nursing_home_columns_info.map((info: any) => {
@@ -95,11 +96,11 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 					nursinghome_pics[field_info.sql + "_hash"] = hash;
 					console.log(
 						"File: " +
-							name +
-							" Length: " +
-							file.length +
-							" SQL: " +
-							field_info.sql,
+						name +
+						" Length: " +
+						file.length +
+						" SQL: " +
+						field_info.sql,
 					);
 				}
 			}
