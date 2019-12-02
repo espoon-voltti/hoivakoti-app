@@ -16,9 +16,9 @@ const VacancyStatusBadge: FC<Props> = ({ vacancyStatus = true, className }) => {
 		`vacancy-status-badge-${vacancyStatus} ${className || ""}`;
 
 	return (
-		<span className={classes}>
+		<div className={classes}>
 			{vacancyStatus ? labelVacancyTrue : labelVacancyFalse}
-		</span>
+		</div>
 	);
 };
 

@@ -202,11 +202,8 @@ const PageNursingHome: FC = () => {
 						</Link>
 						<h2 className="nursinghome-title">
 							{nursingHome.name}
-							<VacancyStatusBadge
-								vacancyStatus={nursingHome.has_vacancy}
-								className="nursinghome-title-vacancy-status-badge"
-							/>
 						</h2>
+
 						<Paragraph
 							text={`${
 								nursingHome.district != null
@@ -214,6 +211,12 @@ const PageNursingHome: FC = () => {
 									: ""
 							} ${nursingHome.city}`}
 						/>
+
+						<VacancyStatusBadge
+								vacancyStatus={nursingHome.has_vacancy}
+								className="nursinghome-title-vacancy-status-badge"
+						/>
+						
 						<Paragraph text={nursingHome.summary} />
 						<p className="nursinghome-anchor-details">
 							<a href="#yhteystiedot">{anchorDetailsBox}</a>
