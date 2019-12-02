@@ -498,7 +498,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							{webpage}
 						</a>
 					</dd>
-					<dd style={{ marginTop: 10 }}><a href="#visitingInfo">>> {visitingInfo}</a></dd>
+					<dd style={{ marginTop: 8 }}><a href="#visitingInfo">>> {visitingInfo}</a></dd>
 				</dl>
 
 				<dl className="nursingHome-info-list nursingHome-info-list--directions">
