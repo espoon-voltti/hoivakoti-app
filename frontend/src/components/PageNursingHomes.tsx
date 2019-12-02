@@ -443,8 +443,11 @@ const PageNursingHomes: FC = () => {
 									{filteredNursingHomes.length} {summaryLabel}
 								</span>
 								{hasFilters && (
-									<Link to="/hoivakodit" className="btn--clear-filters">
-											{clearFilters}
+									<Link
+										to="/hoivakodit"
+										className="btn--clear-filters"
+									>
+										{clearFilters}
 									</Link>
 								)}
 							</>

@@ -157,9 +157,17 @@ const FilterItem: FC<Props> = ({
 	const btnClear = useT("btnClear");
 	const btnSave = useT("btnSave");
 
+	const header = values.filter((option: FilterOption) => {
+		if (option.type === "header") return true;
+		return false;
+	});
+
 	// Atm only checkboxes support aligning on left or right...
 	const leftSideOptions = values.filter((option: FilterOption) => {
-		if (option.type !== "checkbox" || option.alignment !== "right")
+		if (
+			(option.type !== "checkbox" || option.alignment !== "right") &&
+			option.type !== "header"
+		)
 			return true;
 		return false;
 	});
@@ -169,6 +177,7 @@ const FilterItem: FC<Props> = ({
 		return false;
 	});
 
+	const headerItem = CreateFilterItems(header, handleChange, prefix);
 	const leftSideItems = CreateFilterItems(
 		leftSideOptions,
 		handleChange,
@@ -182,9 +191,12 @@ const FilterItem: FC<Props> = ({
 
 	const subMenu = (
 		<div>
+			{headerItem}
 			<div className="option-container">
 				<div className="align-left">{leftSideItems}</div>
-				<div className="align-right">{rightSideItems}</div>
+				{rightSideOptions.length > 0 ? (
+					<div className="align-right">{rightSideItems}</div>
+				) : null}
 			</div>
 
 			<div className="save-and-empty-container">
