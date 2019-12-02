@@ -204,13 +204,20 @@ const PageNursingHome: FC = () => {
 							{nursingHome.name}
 						</h2>
 
-						<Paragraph
-							text={`${
-								nursingHome.district != null
-									? nursingHome.district + `, `
-									: ""
-							} ${nursingHome.city}`}
-						/>
+						
+						<div className="nursinghomeDistrict-container">
+							<Paragraph
+								className="nursinghomeDistrict"
+								text={`${
+									nursingHome.district != null
+										? nursingHome.district + `, `
+										: ""
+								} ${nursingHome.city}`}
+							/>
+							
+							<a className="nursinghome-anchor-details" href="#yhteystiedot">{anchorDetailsBox}</a>
+							
+						</div>
 
 						<VacancyStatusBadge
 								vacancyStatus={nursingHome.has_vacancy}
@@ -218,9 +225,7 @@ const PageNursingHome: FC = () => {
 						/>
 						
 						<Paragraph text={nursingHome.summary} />
-						<p className="nursinghome-anchor-details">
-							<a href="#yhteystiedot">{anchorDetailsBox}</a>
-						</p>
+						
 						<h3>{basicInformation}</h3>
 						<dl className="nursingHome-info-list">
 							<DefinitionItem

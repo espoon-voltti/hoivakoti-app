@@ -297,8 +297,8 @@ export const translations = {
 		"sv-FI": "Tillbaka till vårhemlist",
 	},
 	anchorDetailsBox: {
-		"fi-FI": "Hoivakodin yhteystiedot",
-		"sv-FI": "sv_Hoivakodin yhteystiedot",
+		"fi-FI": ">> Hoivakodin yhteystiedot",
+		"sv-FI": ">> sv_Hoivakodin yhteystiedot",
 	},
 	basicInformation: { "fi-FI": "Perustiedot", "sv-FI": "Grundläggande" },
 	owner: { "fi-FI": "Omistaja", "sv-FI": "Ägare" },
