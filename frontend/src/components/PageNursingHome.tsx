@@ -292,8 +292,20 @@ const PageNursingHome: FC = () => {
 							title={linkMoreInfoOutdoor}
 							text={nursingHome.outdoors_possibilities_link}
 						/>
-						<h3>{visitingInfo}</h3>
+						<h3 id="visitingInfo">{visitingInfo}</h3>
 						<Paragraph text={nursingHome.tour_info} />
+						<dl className="nursingHome-info-list nursingHome-info-list--contact">
+							<dt>
+								{nursingHome.contact_name}
+							</dt>
+							<dd>{nursingHome.contact_title}</dd>
+							<dd>Puh. {nursingHome.contact_phone}</dd>
+							<dd>
+								<a href={"mailto:" + nursingHome.email}>
+									{nursingHome.email}
+								</a>
+							</dd>
+						</dl>
 						<h3>{accessibility}</h3>
 						<Paragraph text={nursingHome.accessibility_info} />
 						<h3>{personnel}</h3>
@@ -445,6 +457,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const contactInfo = useT("contactInfo");
 	const directions = useT("directions");
 	const webpage = useT("webpage");
+	const visitingInfo = useT("visitingInfo");
 	return (
 		<>
 			{id && <div id={id} />}
@@ -484,16 +497,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							{webpage}
 						</a>
 					</dd>
-					<dd style={{ marginTop: 10 }}>
-						{nursingHome.contact_name}
-					</dd>
-					<dd>{nursingHome.contact_title}</dd>
-					<dd>Puh. {nursingHome.contact_phone}</dd>
-					<dd>
-						<a href={"mailto:" + nursingHome.email}>
-							{nursingHome.email}
-						</a>
-					</dd>
+					<dd style={{ marginTop: 10 }}><a href="#visitingInfo">>> {visitingInfo}</a></dd>
 				</dl>
 
 				<dl className="nursingHome-info-list nursingHome-info-list--directions">
