@@ -28,7 +28,7 @@ const drive = google.drive({
 	auth: "AIzaSyDpM7dvcX4cck9-rRcP3r7nUUVe2pU56kU",
 });
 
-async function NursingHomesFromCSV(csv: string): Promise<object[]> {
+async function NursingHomesFromCSV(csv: string): Promise<string> {
 	const records: object[] = parse(csv, {
 		columns: true,
 		skip_empty_lines: true,
@@ -57,7 +57,7 @@ async function NursingHomesFromCSV(csv: string): Promise<object[]> {
 		await InsertNursingHomeToDB(nursing_home as NursingHome);
 	});
 
-	return records;
+	return "Processed entries for " + records.length + " nursing homes.";
 }
 
 export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
@@ -67,8 +67,6 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 		skip_lines_with_empty_values: true,
 		delimiter: ",",
 	});
-
-	const pictures: any = [];
 
 	for (const record of records) {
 		console.log(record);
@@ -116,7 +114,7 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 		);
 	}
 
-	return "Wooh";
+	return "Uploaded images for " + records.length + " nursing homes.";
 }
 
 async function DownloadAndSaveFile(id: string): Promise<any> {

@@ -84,7 +84,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	return nursing_home_data;
 }
 
-export async function AddNursingHomesFromCSV(ctx: any): Promise<object[] | null> {
+export async function AddNursingHomesFromCSV(ctx: any): Promise<string | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =

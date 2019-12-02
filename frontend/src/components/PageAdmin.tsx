@@ -6,7 +6,7 @@ const uploadNursingHomesCSV = async (
 	password: string,
 	csv: string,
 ): Promise<void> => {
-	await axios.post(
+	return await axios.post(
 		`${config.API_URL}/nursing-homes/csv`,
 		// eslint-disable-next-line @typescript-eslint/camelcase
 		{
@@ -20,7 +20,7 @@ const uploadPicturesCSV = async (
 	password: string,
 	csv: string,
 ): Promise<void> => {
-	await axios.post(
+	return await axios.post(
 		`${config.API_URL}/nursing-homes/upload-pics`,
 		// eslint-disable-next-line @typescript-eslint/camelcase
 		{
@@ -34,6 +34,10 @@ const PageAdmin: FC = () => {
 	const [nursinghomesContent, setNursinghomesContent] = useState("");
 	const [picturesContent, setPicturesContent] = useState("");
 	const [key, setKey] = useState("");
+	const [uploadingInfo, setUploadingInfo] = useState(false);
+	const [uploadingPics, setUploadingPics] = useState(false);
+	const [uploadingInfoResult, setUploadingInfoResult] = useState("");
+	const [uploadingPicsResult, setUploadingPicsResult] = useState("");
 
 	const handleSubmit = (event: any) => {
 		console.log(key);
@@ -41,14 +45,22 @@ const PageAdmin: FC = () => {
 		console.log(picturesContent.length);
 
 		if (nursinghomesContent.length > 0) {
+			setUploadingInfo(true);
 			uploadNursingHomesCSV(key, nursinghomesContent).then(
-				(result: any) => console.log(result),
+				(result: any) => {
+					console.log(result);
+					setUploadingInfo(false);
+					setUploadingInfoResult(result.data);
+				},
 			);
 		}
 		if (picturesContent.length > 0) {
-			uploadPicturesCSV(key, picturesContent).then((result: any) =>
-				console.log(result),
-			);
+			setUploadingPics(true);
+			uploadPicturesCSV(key, picturesContent).then((result: any) => {
+				console.log(result);
+				setUploadingPics(false);
+				setUploadingPicsResult(result.data);
+			});
 		}
 
 		event.preventDefault();
@@ -107,7 +119,20 @@ const PageAdmin: FC = () => {
 				/>
 				<br />
 				<br />
-				<input type="submit" value="Lähetä" />
+				{uploadingInfo || uploadingPics ? (
+					<img
+						src={config.PUBLIC_FILES_URL + "/icons/loading.gif"}
+						alt="Waiting for an admin task"
+						className=""
+					/>
+
+				) : (
+						<input type="submit" value="Lähetä" />
+					)}
+				<br />
+				{uploadingInfoResult}
+				<br />
+				{uploadingPicsResult}
 			</form>
 		</div>
 	);
