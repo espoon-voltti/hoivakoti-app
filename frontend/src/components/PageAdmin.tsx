@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState } from "react";
 import axios from "axios";
 import config from "./config";
 
@@ -35,18 +35,18 @@ const PageAdmin: FC = () => {
 	const [picturesContent, setPicturesContent] = useState("");
 	const [key, setKey] = useState("");
 
-	const handleSubmit = (event:any) => {
+	const handleSubmit = (event: any) => {
 		console.log(key);
 		console.log(nursinghomesContent.length);
 		console.log(picturesContent.length);
 
 		if (nursinghomesContent.length > 0) {
 			uploadNursingHomesCSV(key, nursinghomesContent).then(
-				(result:any) => console.log(result),
+				(result: any) => console.log(result),
 			);
 		}
 		if (picturesContent.length > 0) {
-			uploadPicturesCSV(key, picturesContent).then((result:any) =>
+			uploadPicturesCSV(key, picturesContent).then((result: any) =>
 				console.log(result),
 			);
 		}
@@ -54,26 +54,26 @@ const PageAdmin: FC = () => {
 		event.preventDefault();
 	};
 
-	const onNursinghomesCSVChange = (event:any) => {
+	const onNursinghomesCSVChange = (event: any) => {
 		const file = event.target.files[0];
 		const reader = new FileReader();
 		reader.readAsText(file, "UTF-8");
-		reader.onload = (event:any) => {
+		reader.onload = (event: any) => {
 			setNursinghomesContent(event.target.result);
 		};
-		reader.onerror = (event:any) => {
+		reader.onerror = (event: any) => {
 			alert("Error: " + event.target.result);
 		};
 	};
 
-	const onPicturesCSVChange = (event:any) => {
+	const onPicturesCSVChange = (event: any) => {
 		const file = event.target.files[0];
 		const reader = new FileReader();
 		reader.readAsText(file, "UTF-8");
-		reader.onload = (event:any) => {
+		reader.onload = (event: any) => {
 			setPicturesContent(event.target.result);
 		};
-		reader.onerror = (event:any) => {
+		reader.onerror = (event: any) => {
 			alert("Error: " + event.target.result);
 		};
 	};
@@ -85,7 +85,7 @@ const PageAdmin: FC = () => {
 				<input
 					id="key-set"
 					type="password"
-					onChange={(event:any) => setKey(event.target.value)}
+					onChange={(event: any) => setKey(event.target.value)}
 				/>
 				<br />
 				<br />
