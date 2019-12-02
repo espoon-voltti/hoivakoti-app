@@ -388,7 +388,7 @@ const ParagraphLink: FC<ParagraphLinkProps> = ({ text, to }) => {
 	if (!to) return null;
 	return (
 		<p>
-			<a href={to} target="_blank" rel="noreferrer noopener">
+			<a href={to} target="_blank" rel="noreferrer noopener external">
 				{text || to}
 			</a>
 		</p>
@@ -477,7 +477,8 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						nursingHome.name
 					}/@${nursingHome.geolocation.center.join(",")}z`}
 					target="_blank"
-					rel="noreferrer noopener"
+					rel="noreferrer noopener external"
+					className="mapLink"
 				>
 					<MapSmall nursingHome={nursingHome} />
 				</a>
@@ -492,7 +493,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<a
 							href={nursingHome.www}
 							target="_blank"
-							rel="noopener noreferrer"
+							rel="noopener noreferrer external"
 						>
 							{webpage}
 						</a>

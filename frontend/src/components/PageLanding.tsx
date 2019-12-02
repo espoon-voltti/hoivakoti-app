@@ -122,16 +122,16 @@ const PageLanding: FC = () => {
 						<a
 							href={useT("urlServiceVoucher")}
 							target="_blank"
-							rel="noopener noreferrer"
+							rel="noopener noreferrer external"
 						>
 							{useT("linkServiceVoucher")}
-						</a>
+						</a>.
 
 						{" "}{useT("landingServiceVoucher2")}{" "}
 						<a
 							href={useT("urlParastapalvelua")}
 							target="_blank"
-							rel="noopener noreferrer"
+							rel="noopener noreferrer external"
 						>
 							www.parastapalvelua.fi
 						</a>.
@@ -174,7 +174,7 @@ const PageLanding: FC = () => {
 						<a
 							href={useT("urlDecisionMoreInfo")}
 							target="_blank"
-							rel="noopener noreferrer"
+							rel="noopener noreferrer external"
 						>
 							{useT("decisionMoreInfo")}
 						</a>

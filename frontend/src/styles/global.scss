@@ -182,6 +182,15 @@ a:hover {
 	text-decoration: underline;
 }
 
+a[target=_blank] {
+	padding-right: 23px;
+	background: transparent url('/icons/icon-external-link.svg') calc(100% - 2px) 50% no-repeat;
+}
+a.mapLink {
+	padding-right: 0;
+	background: none;
+}
+
 strong {
 	font-weight: 600;
 }

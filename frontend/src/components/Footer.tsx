@@ -36,7 +36,7 @@ const Footer: FC = () => {
 					<a
 						href={linkPrivacy}
 						target="_blank"
-						rel="noopener noreferrer"
+						rel="noopener noreferrer external"
 					>
 						{useT("footerLinkPrivacy")}
 					</a>
@@ -50,7 +50,7 @@ const Footer: FC = () => {
 					<a
 						href={linkFeedback}
 						target="_blank"
-						rel="noopener noreferrer"
+						rel="noopener noreferrer external"
 					>
 						{useT("footerLinkFeedback")}
 					</a>

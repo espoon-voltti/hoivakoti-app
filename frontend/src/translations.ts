@@ -42,8 +42,8 @@ export const translations = {
 		"sv-FI": "https://www.esbo.fi/sv-FI/Seniorer/Seniorboende/Vardboende",
 	},
 	linkServiceVoucher: {
-		"fi-FI": "palvelusetelin.",
-		"sv-FI": "servicekupong.",
+		"fi-FI": "palvelusetelin",
+		"sv-FI": "servicekupong",
 	},
 	urlParastapalvelua: {
 		"fi-FI": "https://www.parastapalvelua.fi",
