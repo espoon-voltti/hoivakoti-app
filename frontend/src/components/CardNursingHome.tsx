@@ -26,7 +26,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 		nursinghome.pic_digests &&
 		nursinghome.pic_digests.overview_outside_hash &&
 		`${config.API_URL}/nursing-homes/${nursinghome.id}` +
-		`/pics/overview_outside/${imageDigest}`;
+			`/pics/overview_outside/${imageDigest}`;
 	return (
 		<Link
 			to={`/hoivakodit/${nursinghome.id}`}
@@ -35,7 +35,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			<div
 				className={`card-list-item__image-container ${
 					imageUrl ? "has-pic" : ""
-					}`}
+				}`}
 				style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : {}}
 			/>
 
@@ -60,9 +60,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						{nursinghome.city}
 					</div>
 					{nursinghome && nursinghome.ara && (
-						<div className="card-list-item__tag">
-							ARA
-						</div>
+						<div className="card-list-item__tag">ARA</div>
 					)}
 				</div>
 
