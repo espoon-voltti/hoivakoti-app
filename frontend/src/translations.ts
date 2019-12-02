@@ -42,8 +42,8 @@ export const translations = {
 		"sv-FI": "https://www.esbo.fi/sv-FI/Seniorer/Seniorboende/Vardboende",
 	},
 	linkServiceVoucher: {
-		"fi-FI": "palvelusetelin.",
-		"sv-FI": "servicekupong.",
+		"fi-FI": "palvelusetelin",
+		"sv-FI": "servicekupong",
 	},
 	urlParastapalvelua: {
 		"fi-FI": "https://www.parastapalvelua.fi",
@@ -297,8 +297,8 @@ export const translations = {
 		"sv-FI": "Tillbaka till vårhemlist",
 	},
 	anchorDetailsBox: {
-		"fi-FI": "Hoivakodin yhteystiedot",
-		"sv-FI": "sv_Hoivakodin yhteystiedot",
+		"fi-FI": ">> Hoivakodin yhteystiedot",
+		"sv-FI": ">> sv_Hoivakodin yhteystiedot",
 	},
 	basicInformation: { "fi-FI": "Perustiedot", "sv-FI": "Grundläggande" },
 	owner: { "fi-FI": "Omistaja", "sv-FI": "Ägare" },

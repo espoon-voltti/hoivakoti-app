@@ -40,13 +40,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			/>
 
 			<div className="card-list-item__content">
-				<div>
-					{nursinghome.has_vacancy && (
-						<VacancyStatusBadge
-							vacancyStatus={nursinghome.has_vacancy}
-							className="card-nursinghome-vacancy-status-badge"
-						/>
-					)}
+				<div className="card-list-item__content-upper">
+					
 					<div className="card-list-item__subheader">
 						{nursinghome && nursinghome.owner}
 					</div>
@@ -59,17 +54,23 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						{nursinghome.address}, {nursinghome.postal_code}{" "}
 						{nursinghome.city}
 					</div>
-					{nursinghome && nursinghome.ara && (
-						<div className="card-list-item__tag">ARA</div>
+					{nursinghome.has_vacancy && (
+						<VacancyStatusBadge
+							vacancyStatus={nursinghome.has_vacancy}
+							className="card-nursinghome-vacancy-status-badge"
+						/>
 					)}
 				</div>
 
 				<div>
+					{nursinghome && nursinghome.ara && (
+						<div className="card-list-item__tag">ARA</div>
+					)}
 					<div className="card-list-item__text">
-						{serviceLanguage}: {nursinghome && nursinghome.language}{" "}
+						<span className="nowrap">{serviceLanguage}: {nursinghome && nursinghome.language}{" "}</span>
 						<span className="card-list-item__text--dot"> • </span>{" "}
-						{numApartments}:{" "}
-						{nursinghome && nursinghome.apartment_count}
+						<span className="nowrap">{numApartments}:{" "}
+						{nursinghome && nursinghome.apartment_count}</span>
 					</div>
 					<div className="card-list-item__text card-list-item__text--lah">
 						{nursinghome && nursinghome.lah ? alsoLAHText : ""}
@@ -77,15 +78,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				</div>
 			</div>
 
-			<div className="card-list-item__spacer" />
-
-			<div>
-				<div className="card-list-item__link">
-					<button className="card-list-item__link-button">
-						Hoivakodin tiedot
-					</button>
-				</div>
-			</div>
+			
 		</Link>
 	);
 };

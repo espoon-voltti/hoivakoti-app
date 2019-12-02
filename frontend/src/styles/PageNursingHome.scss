@@ -25,7 +25,6 @@
 .nursingHome-info-list--directions dd {
 	line-height: 24px;
 	margin-bottom: 0;
-	word-break: break-all;
 }
 .nursingHome-info-list--directions dd {
 	margin-bottom: 1em;
@@ -137,10 +136,8 @@ $hero-border: 5px solid white;
 }
 
 .nursinghome-hero-placeholder {
-	height: 100px;
 	background-color: $primary-blue;
-
-	height: 200px;
+	height: 480px;
 }
 
 .nursinghome-back-link {
@@ -151,6 +148,18 @@ $hero-border: 5px solid white;
 		content: "←";
 		margin-right: 8px;
 	}
+}
+
+.nursinghomeDistrict-container {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 15px;
+	align-items: baseline;
+}
+
+.nursinghome-info p.nursinghomeDistrict {
+	margin-bottom: 0;
+	margin-right: 10px;
 }
 
 .nursinghome-anchor-details {
@@ -190,10 +199,10 @@ $hero-border: 5px solid white;
 	vertical-align: middle;
 	display: block;
 	white-space: nowrap;
+	margin-bottom: 10px;
 
 	@media (min-width: 1024px) {
-		margin-left: 16px;
-		display: inline-block;
+		
 	}
 }
 
@@ -203,6 +212,7 @@ $hero-border: 5px solid white;
 	margin-bottom: 32px;
 	font-weight: 300;
 	margin-top: 64px;
+	line-height: 40px;
 }
 
 .nursinghome-info p {
