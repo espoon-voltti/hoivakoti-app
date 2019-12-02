@@ -51,8 +51,6 @@ function CreateFilterItems(
 					let className = "checkbox-item";
 					if (option.withMargin === true) className += " with-margin";
 					if (option.bold === true) className += " with-bold";
-					if (option.alignment === "right")
-						className += " align-right";
 					return (
 						<div className={className} key={index}>
 							<Checkbox
@@ -192,12 +190,17 @@ const FilterItem: FC<Props> = ({
 	const subMenu = (
 		<div>
 			{headerItem}
-			<div className="option-container">
-				<div className="align-left">{leftSideItems}</div>
-				{rightSideOptions.length > 0 ? (
+			{rightSideOptions.length <= 0 ? (
+				<>
+					<div>{leftSideItems}</div>
+					<div>{rightSideItems}</div>
+				</>
+			) : (
+				<div className="option-container">
+					<div className="align-left">{leftSideItems}</div>
 					<div className="align-right">{rightSideItems}</div>
-				) : null}
-			</div>
+				</div>
+			)}
 
 			<div className="save-and-empty-container">
 				<button
