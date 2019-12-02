@@ -46,7 +46,9 @@ async function NursingHomesFromCSV(csv: string): Promise<object[]> {
 				nursing_home[info.sql] = parseFloat(record[info.csv]);
 			else if (info.type === "boolean")
 				nursing_home[info.sql] = record[info.csv]
-					? record[info.csv] === "True"
+					? record[info.csv] === "True" ||
+					  record[info.csv].includes("kyllä") ||
+					  record[info.csv].includes("Kyllä")
 						? true
 						: false
 					: false;
@@ -96,11 +98,11 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 					nursinghome_pics[field_info.sql + "_hash"] = hash;
 					console.log(
 						"File: " +
-						name +
-						" Length: " +
-						file.length +
-						" SQL: " +
-						field_info.sql,
+							name +
+							" Length: " +
+							file.length +
+							" SQL: " +
+							field_info.sql,
 					);
 				}
 			}

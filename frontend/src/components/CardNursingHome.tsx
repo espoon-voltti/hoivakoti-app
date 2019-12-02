@@ -18,6 +18,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const serviceLanguage = useT("serviceLanguage");
 	const numApartments = useT("numApartments");
 	const alsoLAHText = useT("alsoLAHText");
+	console.log(alsoLAHText);
 	const imageDigest =
 		nursinghome.pic_digests &&
 		nursinghome.pic_digests.overview_outside_hash;
@@ -25,7 +26,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 		nursinghome.pic_digests &&
 		nursinghome.pic_digests.overview_outside_hash &&
 		`${config.API_URL}/nursing-homes/${nursinghome.id}` +
-			`/pics/overview_outside/${imageDigest}`;
+		`/pics/overview_outside/${imageDigest}`;
 	return (
 		<Link
 			to={`/hoivakodit/${nursinghome.id}`}
@@ -34,7 +35,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			<div
 				className={`card-list-item__image-container ${
 					imageUrl ? "has-pic" : ""
-				}`}
+					}`}
 				style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : {}}
 			/>
 
@@ -60,7 +61,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					</div>
 					{nursinghome && nursinghome.ara && (
 						<div className="card-list-item__tag">
-							filterAraLabel
+							ARA
 						</div>
 					)}
 				</div>
@@ -73,7 +74,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						{nursinghome && nursinghome.apartment_count}
 					</div>
 					<div className="card-list-item__text card-list-item__text--lah">
-						{nursinghome && nursinghome.lah ? { alsoLAHText } : ""}
+						{nursinghome && nursinghome.lah ? alsoLAHText : ""}
 					</div>
 				</div>
 			</div>
