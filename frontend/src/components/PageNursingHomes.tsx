@@ -46,25 +46,24 @@ const PageNursingHomes: FC = () => {
 	}, []);
 
 	const espooAreas = [
-		"Espoon keskus",
-		"Espoonlahti",
-		"Leppävaara",
-		"Matinkylä",
-		"Tapiola",
+		useT("espoonKeskus"),
+		useT("espoonlahti"),
+		useT("leppävaara"),
+		useT("matinkylä"),
+		useT("tapiola"),
 	];
 	const otherCities = [
-		"Helsinki",
-		"Hyvinkää",
-		"Järvenpää",
-		"Karkkila",
-		"Kerava",
-		"Lohja",
-		"Lohja",
-		"Nurmijärvi",
-		"Siuntio",
-		"Tammisaari",
-		"Vantaa",
-		"Vihti",
+		useT("helsinki"),
+		useT("hyvinkää"),
+		useT("järvenpää"),
+		useT("karkkila"),
+		useT("kerava"),
+		useT("lohja"),
+		useT("nurmijärvi"),
+		useT("siuntio"),
+		useT("tammisaari"),
+		useT("vantaa"),
+		useT("vihti"),
 	];
 
 	useEffect(() => {

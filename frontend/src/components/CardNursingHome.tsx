@@ -41,7 +41,6 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 
 			<div className="card-list-item__content">
 				<div className="card-list-item__content-upper">
-					
 					<div className="card-list-item__subheader">
 						{nursinghome && nursinghome.owner}
 					</div>
@@ -67,18 +66,21 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						<div className="card-list-item__tag">ARA</div>
 					)}
 					<div className="card-list-item__text">
-						<span className="nowrap">{serviceLanguage}: {nursinghome && nursinghome.language}{" "}</span>
+						<span className="nowrap">
+							{serviceLanguage}:{" "}
+							{nursinghome && nursinghome.language}{" "}
+						</span>
 						<span className="card-list-item__text--dot"> • </span>{" "}
-						<span className="nowrap">{numApartments}:{" "}
-						{nursinghome && nursinghome.apartment_count}</span>
+						<span className="nowrap">
+							{numApartments}:{" "}
+							{nursinghome && nursinghome.apartment_count}
+						</span>
 					</div>
 					<div className="card-list-item__text card-list-item__text--lah">
 						{nursinghome && nursinghome.lah ? alsoLAHText : ""}
 					</div>
 				</div>
 			</div>
-
-			
 		</Link>
 	);
 };

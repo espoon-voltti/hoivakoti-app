@@ -26,19 +26,16 @@ export const translations = {
 			"På den här webbplatsen hittar du <0> Enhanced Service Housing </0> Vårdhem för <1> äldre </1> godkända av staden Esbo. För att få ett vårdhem behöver du ett positivt beslut om behovet av förbättrad servicebostad.",
 	},
 	landingServiceVoucher1: {
-		"fi-FI":
-			"Vaihtoehtoisesti asiakas voi ottaa vastaan ",
-		"sv-FI":
-			"Letar du efter ett vårdhem med en ",
+		"fi-FI": "Vaihtoehtoisesti asiakas voi ottaa vastaan ",
+		"sv-FI": "Letar du efter ett vårdhem med en ",
 	},
 	landingServiceVoucher2: {
-		"fi-FI":
-			"Palvelusetelihoivakoteja voi katsoa osoitteessa ",
-		"sv-FI":
-			"Se vårdhem på ",
+		"fi-FI": "Palvelusetelihoivakoteja voi katsoa osoitteessa ",
+		"sv-FI": "Se vårdhem på ",
 	},
 	urlServiceVoucher: {
-		"fi-FI": "https://www.espoo.fi/fi-FI/Seniorit/Seniorien_asuminen/Hoivaasuminen",
+		"fi-FI":
+			"https://www.espoo.fi/fi-FI/Seniorit/Seniorien_asuminen/Hoivaasuminen",
 		"sv-FI": "https://www.esbo.fi/sv-FI/Seniorer/Seniorboende/Vardboende",
 	},
 	linkServiceVoucher: {
@@ -50,8 +47,10 @@ export const translations = {
 		"sv-FI": "https://www.parastapalvelua.fi/sv",
 	},
 	landingOwnMoney: {
-		"fi-FI": "Hoivakotiin on mahdollista muuttaa myös itse maksavana asiakkaana, jolloin asiakas sopii palvelun sisällöstä ja kaikista maksuista suoraan hoivakodin kanssa.",
-		"sv-FI": "Det är också möjligt att konvertera till ett vårdhem som betalande klient, varigenom klienten samtycker till innehållet i tjänsten och alla avgifter direkt med vårdhemmet.",
+		"fi-FI":
+			"Hoivakotiin on mahdollista muuttaa myös itse maksavana asiakkaana, jolloin asiakas sopii palvelun sisällöstä ja kaikista maksuista suoraan hoivakodin kanssa.",
+		"sv-FI":
+			"Det är också möjligt att konvertera till ett vårdhem som betalande klient, varigenom klienten samtycker till innehållet i tjänsten och alla avgifter direkt med vårdhemmet.",
 	},
 	whatisNursinghomeHeadline: {
 		"fi-FI": "Mitä on tehostettu palveluasuminen?",
@@ -98,7 +97,8 @@ export const translations = {
 			"Efter ett positivt servicebeslut kan du börja leta efter ett vårdhem som passar dig",
 	},
 	decisionMoreInfo: {
-		"fi-FI": "Lisätietoa tehostettuun palveluasumiseen hakeutumisesta ja asiakaskriteereistä.",
+		"fi-FI":
+			"Lisätietoa tehostettuun palveluasumiseen hakeutumisesta ja asiakaskriteereistä.",
 		"sv-FI": "Läs mer om ansökan om förbättrad servicehus.",
 	},
 	urlDecisionMoreInfo: {
@@ -141,7 +141,8 @@ export const translations = {
 	},
 	faqItem1Headline: {
 		"fi-FI": "Millaisia asunnot ovat ja voivatko puolisot asua yhdessä?",
-		"sv-FI": "sv_Millaisia asunnot ovat ja voivatko puolisot asua yhdessä??",
+		"sv-FI":
+			"sv_Millaisia asunnot ovat ja voivatko puolisot asua yhdessä??",
 	},
 	faqItem1Text: {
 		"fi-FI":
@@ -405,15 +406,75 @@ export const translations = {
 			"sv_Tällä sivulla voit päivittää hoivakodin tietoja. Valitse hoivakodin vapaiden asuntojen tilanne allaolevalla lomakkeella:",
 	},
 	clearFilters: {
-		"fi-FI":
-			"Poista rajaukset",
-		"sv-FI":
-			"Rensa filters",
+		"fi-FI": "Poista rajaukset",
+		"sv-FI": "Rensa filters",
 	},
 	btnShowImages: {
-		"fi-FI":
-			"Katso kuvat",
-		"sv-FI":
-			"Visa bilder",
+		"fi-FI": "Katso kuvat",
+		"sv-FI": "Visa bilder",
+	},
+	espoonKeskus: {
+		"fi-FI": "Espoon keskus",
+		"sv-FI": "Esbo centrum",
+	},
+	espoonlahti: {
+		"fi-FI": "Espoonlahti",
+		"sv-FI": "Esboviken",
+	},
+	leppävaara: {
+		"fi-FI": "Leppävaara",
+		"sv-FI": "Alberga",
+	},
+	matinkylä: {
+		"fi-FI": "Matinkylä",
+		"sv-FI": "Mattby",
+	},
+	tapiola: {
+		"fi-FI": "Tapiola",
+		"sv-FI": "Hagalund",
+	},
+	helsinki: {
+		"fi-FI": "Helsinki",
+		"sv-FI": "Helsingfors",
+	},
+	hyvinkää: {
+		"fi-FI": "Hyvinkää",
+		"sv-FI": "Hyvinge",
+	},
+	järvenpää: {
+		"fi-FI": "Järvenpää",
+		"sv-FI": "Träskända",
+	},
+	karkkila: {
+		"fi-FI": "Karkkila",
+		"sv-FI": "Högfors",
+	},
+	kerava: {
+		"fi-FI": "Kerava",
+		"sv-FI": "Kervo",
+	},
+	lohja: {
+		"fi-FI": "Lohja",
+		"sv-FI": "Lojo",
+	},
+	nurmijärvi: {
+		"fi-FI": "Nurmijärvi",
+		"sv-FI": "Nurmijärvi",
+	},
+	siuntio: {
+		"fi-FI": "Siuntio",
+		"sv-FI": "Sjundeå",
+	},
+	tammisaari: {
+		"fi-FI": "Tammisaari",
+		"sv-FI": "Ekenäs",
+	},
+	vantaa: {
+		"fi-FI": "Vantaa",
+		"sv-FI": "Vanda",
+	},
+	vihti: {
+		"fi-FI": "Vihti",
+		"sv-FI": "Vichtis",
 	},
 };

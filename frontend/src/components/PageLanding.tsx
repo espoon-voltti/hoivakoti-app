@@ -125,16 +125,16 @@ const PageLanding: FC = () => {
 							rel="noopener noreferrer external"
 						>
 							{useT("linkServiceVoucher")}
-						</a>.
-
-						{" "}{useT("landingServiceVoucher2")}{" "}
+						</a>
+						. {useT("landingServiceVoucher2")}{" "}
 						<a
 							href={useT("urlParastapalvelua")}
 							target="_blank"
 							rel="noopener noreferrer external"
 						>
 							www.parastapalvelua.fi
-						</a>.
+						</a>
+						.
 					</p>
 					<p>{useT("landingOwnMoney")}</p>
 				</section>
@@ -184,9 +184,9 @@ const PageLanding: FC = () => {
 				<section className="content-block">
 					<h2>{useT("selectingHeadline")}</h2>
 					<Trans i18nKey="defaultNamespace:selectingText">
-							<p></p>
-							<p></p>
-						</Trans>
+						<p></p>
+						<p></p>
+					</Trans>
 				</section>
 
 				<section className="content-block">
@@ -198,10 +198,12 @@ const PageLanding: FC = () => {
 					</h3>
 					<dl className="faq-list">
 						<dt>{useT("faqItem1Headline")}</dt>
-						<dd><Trans i18nKey="defaultNamespace:faqItem1Text">
-							<p></p>
-							<p></p>
-						</Trans></dd>
+						<dd>
+							<Trans i18nKey="defaultNamespace:faqItem1Text">
+								<p></p>
+								<p></p>
+							</Trans>
+						</dd>
 						<dt>{useT("faqItem2Headline")}</dt>
 						<dd>{useT("faqItem2Text")}</dd>
 						<dt>{useT("faqItem3Headline")}</dt>
