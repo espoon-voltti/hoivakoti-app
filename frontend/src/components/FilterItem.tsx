@@ -43,10 +43,12 @@ function CreateFilterItems(
 	options: FilterOption[],
 	handleChange: any,
 	prefix: string,
+	indexStart: number,
 ): any {
 	return (
 		<>
-			{options.map((option: FilterOption, index) => {
+			{options.map((option: FilterOption, i) => {
+				const index = indexStart + i;
 				if (option.type === "checkbox") {
 					let className = "checkbox-item";
 					if (option.withMargin === true) className += " with-margin";
@@ -175,16 +177,18 @@ const FilterItem: FC<Props> = ({
 		return false;
 	});
 
-	const headerItem = CreateFilterItems(header, handleChange, prefix);
+	const headerItem = CreateFilterItems(header, handleChange, prefix, 0);
 	const leftSideItems = CreateFilterItems(
 		leftSideOptions,
 		handleChange,
 		prefix,
+		1,
 	);
 	const rightSideItems = CreateFilterItems(
 		rightSideOptions,
 		handleChange,
 		prefix,
+		1 + leftSideOptions.length,
 	);
 
 	const subMenu = (
