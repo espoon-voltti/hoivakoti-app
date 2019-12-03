@@ -69,18 +69,8 @@
 	flex-wrap: wrap;
 	max-height:260px;
 	width: 530px;
-}
-
-.align-left {
-	margin-right: 0px;
-}
-
-.align-right {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.align-right > * {
-	margin-top: 0;
+	@media screen and (max-width: 1024px) {
+		max-height:calc(100vh - 200px);
+		width: auto;
+	}
 }
