@@ -140,13 +140,13 @@
 
 .card-list-item__tag {
 	height: 25px;
-	background-color: $primary-blue;
+	background-color: $border-color;
 	border-radius: $border-radius;
 	display: inline-block;
 	line-height: 25px;
 	padding: 0 5px;
-	margin-top: 5px;
-	color: #fff;
+	margin: 5px 0;
+	color: $text-color;
 }
 
 .card-list-item__spacer {

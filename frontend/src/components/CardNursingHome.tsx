@@ -18,6 +18,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const serviceLanguage = useT("serviceLanguage");
 	const numApartments = useT("numApartments");
 	const alsoLAHText = useT("alsoLAHText");
+	const filterAraLabel = useT("filterAraLabel");
 	console.log(alsoLAHText);
 	const imageDigest =
 		nursinghome.pic_digests &&
@@ -63,7 +64,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 
 				<div>
 					{nursinghome && nursinghome.ara && (
-						<div className="card-list-item__tag">ARA</div>
+						<div className="card-list-item__tag">{filterAraLabel}</div>
 					)}
 					<div className="card-list-item__text">
 						<span className="nowrap">
