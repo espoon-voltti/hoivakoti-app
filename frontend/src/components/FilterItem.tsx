@@ -197,8 +197,8 @@ const FilterItem: FC<Props> = ({
 				</>
 			) : (
 				<div className="option-container">
-					<div className="align-left">{leftSideItems}</div>
-					<div className="align-right">{rightSideItems}</div>
+					{leftSideItems}
+					{rightSideItems}
 				</div>
 			)}
 
