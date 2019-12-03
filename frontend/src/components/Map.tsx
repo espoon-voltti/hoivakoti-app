@@ -109,7 +109,7 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 									? "-selected"
 									: ""
 							}.svg`}
-							alt="Hoivakoti kartalla"
+							alt={nursingHome.name}
 						/>
 					</Marker>
 				))}
@@ -156,7 +156,7 @@ export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
 			coordinates={nursingHome.geolocation.center}
 			style={{ zIndex: 1 }}
 		>
-			<img src="/icons/icon-location-selected.svg" alt="Hoivakoti kartalla" />
+			<img src="/icons/icon-location-selected.svg" alt={nursingHome.name} />
 		</Marker>
 	</MapComponentNonInteractive>
 );
