@@ -35,14 +35,21 @@ const stylesCarousel = {
 	}),
 	footer: (base: any) => ({
 		...base,
-		background: "none !important",
+		background: "#fff !important",
 	}),
 	footerCaption: (base: any) => ({
 		...base,
 		color: "#0f0f0f",
 		fontSize: "16px",
+		background: "#fff",
 		textAlign: "center",
 		width: "100%",
+	}),
+	footerCount: (base: any) => ({
+		...base,
+		color: "#0f0f0f",
+		fontSize: "16px",
+		background: "#fff",
 	}),
 	navigationNext: (base: any) => ({
 		...base,

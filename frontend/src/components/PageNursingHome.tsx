@@ -476,10 +476,9 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					className="nursinghome-details-logo"
 					alt="Omistajan logo"
 				/>
-				<Paragraph
-					text={nursingHome.name}
-					className="nursinghome-details-name"
-				/>
+				<h4 className="nursinghome-details-name">
+					{nursingHome.name}
+				</h4>
 				<a
 					href={`https://www.google.com/maps/search/${
 						nursingHome.name

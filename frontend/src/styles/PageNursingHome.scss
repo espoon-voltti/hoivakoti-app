@@ -267,7 +267,9 @@ $hero-border: 5px solid white;
 
 .nursinghome-details-name {
 	font-size: 19px;
-	font-weight: bold;
+	font-weight: 600;
+	line-height: 24px;
+	margin-bottom: 5px;
 }
 
 @media screen and (max-width: 1024px) {
