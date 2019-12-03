@@ -4,11 +4,13 @@ import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../i18n";
 import i18next from "i18next";
 
+
 const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
 };
 
 const Header: FC = () => {
+	const linkJumpToContent = useT("linkJumpToContent");
 	const currentLanguage = useCurrentLanguage();
 	const location = useLocation();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -19,6 +21,9 @@ const Header: FC = () => {
 
 	return (
 		<header className="header">
+			<a className="jump-to-content" href="#content">
+				{linkJumpToContent}
+			</a>
 			<div className="logo-container">
 				<Link to="/">
 					<img

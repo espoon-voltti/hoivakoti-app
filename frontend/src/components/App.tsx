@@ -29,10 +29,9 @@ const App: React.FC = () => {
 				<Router basename={`/${currentLanguage}`}>
 					<ScrollToTop />
 					<Title />
-
 					<Header />
-
 					<main id="content">
+
 						<Switch>
 							<Route exact path="/" component={PageLanding} />
 							<Route

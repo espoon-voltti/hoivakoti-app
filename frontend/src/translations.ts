@@ -7,6 +7,7 @@ export const translations = {
 	navHome: { "fi-FI": "Etusivu", "sv-FI": "Hemsida" },
 	navNursingHomes: { "fi-FI": "Hoivakodit", "sv-FI": "Vårdhem" },
 	linkBacktoTop: { "fi-FI": "Sivun alkuun ↑", "sv-FI": "Till toppen av sidan ↑" },
+	linkJumpToContent: { "fi-FI": "Hyppää sisältöön", "sv-FI": "Hoppa till innehåll" },
 	jumbotronBtn: { "fi-FI": "Näytä hoivakodit", "sv-FI": "Visa vårdhem" },
 	jumbotronHeadline: {
 		"fi-FI": "Löydä näköisesi hoivakoti",
