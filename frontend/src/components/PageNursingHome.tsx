@@ -298,10 +298,18 @@ const PageNursingHome: FC = () => {
 						<Paragraph
 							text={nursingHome.outdoors_possibilities_info}
 						/>
-						<Paragraph
-							title={linkMoreInfoOutdoor}
-							text={nursingHome.outdoors_possibilities_link}
-						/>
+						{nursingHome.outdoors_possibilities_link && (
+						<>
+							<a
+								href={nursingHome.outdoors_possibilities_link}
+								target="_blank" 
+								rel="noreferrer noopener external"
+							>
+								{linkMoreInfoOutdoor}
+							</a>
+						</>
+						)}
+						
 						<h3 id="visitingInfo">{visitingInfo}</h3>
 						<Paragraph text={nursingHome.tour_info} />
 						<dl className="nursingHome-info-list nursingHome-info-list--contact">
@@ -320,10 +328,19 @@ const PageNursingHome: FC = () => {
 						<Paragraph text={nursingHome.accessibility_info} />
 						<h3>{personnel}</h3>
 						<Paragraph text={nursingHome.staff_info} />
-						<Paragraph
-							title={linkMoreInfoPersonnel}
-							text={nursingHome.staff_satisfaction_info}
-						/>
+
+						{nursingHome.other_services && (
+							<>
+								<a
+									href={nursingHome.staff_satisfaction_info}
+									target="_blank" 
+									rel="noreferrer noopener external"
+								>
+									{linkMoreInfoPersonnel}
+								</a>
+							</>
+						)}
+						
 						{nursingHome.other_services && (
 							<>
 								<h3>{otherServices}</h3>
