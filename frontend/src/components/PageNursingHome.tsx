@@ -83,6 +83,8 @@ const PageNursingHome: FC = () => {
 	const numApartments = useT("numApartments");
 	const serviceLanguage = useT("serviceLanguage");
 
+	const linkBacktoTop = useT("linkBacktoTop");
+
 	const basicInformation = useT("basicInformation");
 	const owner = useT("owner");
 	const yearofConst = useT("yearofConst");
@@ -339,6 +341,7 @@ const PageNursingHome: FC = () => {
 					/>
 				</div>
 			)}
+			<a className="backToTopLink" href="#pageTop">{linkBacktoTop}</a>
 		</div>
 	);
 };
@@ -513,6 +516,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					<dd>{nursingHome.arrival_guide_public_transit}</dd>
 					<dd>{nursingHome.arrival_guide_car}</dd>
 				</dl>
+
 			</div>
 		</>
 	);

@@ -162,6 +162,7 @@ const PageNursingHomes: FC = () => {
 	const loadingText = useT("loadingText");
 	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
+	const linkBacktoTop = useT("linkBacktoTop");
 
 	const optionsAra: FilterOption[] = [
 		{

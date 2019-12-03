@@ -133,6 +133,10 @@ table {
 
 /* Site global styles */
 
+html {
+	scroll-behavior: smooth;
+}
+
 body {
 	font-family: "Open sans", sans-serif;
 	font-size: 16px;

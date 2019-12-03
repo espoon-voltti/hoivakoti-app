@@ -61,7 +61,6 @@ const App: React.FC = () => {
 							/>
 						</Switch>
 					</main>
-
 					<Footer />
 				</Router>
 			</div>

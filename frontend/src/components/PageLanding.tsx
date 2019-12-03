@@ -25,6 +25,7 @@ const PageLanding: FC = () => {
 	const history = useHistory();
 	const locationPickerLabel = useT("locationPickerLabel");
 	const locationPickerPlaceholder = useT("locationPickerPlaceholder");
+	const linkBacktoTop = useT("linkBacktoTop");
 	const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
 
 	const optionsArea: FilterOption[] = [
@@ -224,6 +225,7 @@ const PageLanding: FC = () => {
 						<dd>{useT("faqItem10Text")}</dd>
 					</dl>
 				</section>
+				<a className="backToTopLink" href="#pageTop">{linkBacktoTop}</a>
 			</div>
 		</div>
 	);
