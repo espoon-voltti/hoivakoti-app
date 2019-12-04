@@ -155,8 +155,8 @@ export async function InsertNursingHomeToDB(
 	const geoloc = JSON.parse(
 		await rp(
 			"https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-				geo_query +
-				".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
+			geo_query +
+			".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
 		),
 	);
 

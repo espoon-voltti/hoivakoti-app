@@ -154,7 +154,8 @@ const PageNursingHomes: FC = () => {
 					return false;
 				if (
 					searchFilters.language &&
-					nursinghome.language !== searchFilters.language
+					nursinghome.language &&
+					!(nursinghome.language.includes(searchFilters.language))
 				)
 					return false;
 				if (
