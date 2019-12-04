@@ -206,28 +206,31 @@ const PageNursingHome: FC = () => {
 							{nursingHome.name}
 						</h2>
 
-						
 						<div className="nursinghomeDistrict-container">
 							<Paragraph
 								className="nursinghomeDistrict"
 								text={`${
 									nursingHome.district != null
-										? nursingHome.district + `, `
+										? nursingHome.district + ", "
 										: ""
 								} ${nursingHome.city}`}
 							/>
-							
-							<a className="nursinghome-anchor-details" href="#yhteystiedot">{anchorDetailsBox}</a>
-							
+
+							<a
+								className="nursinghome-anchor-details"
+								href="#yhteystiedot"
+							>
+								{anchorDetailsBox}
+							</a>
 						</div>
 
 						<VacancyStatusBadge
-								vacancyStatus={nursingHome.has_vacancy}
-								className="nursinghome-title-vacancy-status-badge"
+							vacancyStatus={nursingHome.has_vacancy}
+							className="nursinghome-title-vacancy-status-badge"
 						/>
-						
+
 						<Paragraph text={nursingHome.summary} />
-						
+
 						<h3>{basicInformation}</h3>
 						<dl className="nursingHome-info-list">
 							<DefinitionItem
@@ -299,23 +302,23 @@ const PageNursingHome: FC = () => {
 							text={nursingHome.outdoors_possibilities_info}
 						/>
 						{nursingHome.outdoors_possibilities_link && (
-						<>
-							<a
-								href={nursingHome.outdoors_possibilities_link}
-								target="_blank" 
-								rel="noreferrer noopener external"
-							>
-								{linkMoreInfoOutdoor}
-							</a>
-						</>
+							<>
+								<a
+									href={
+										nursingHome.outdoors_possibilities_link
+									}
+									target="_blank"
+									rel="noreferrer noopener external"
+								>
+									{linkMoreInfoOutdoor}
+								</a>
+							</>
 						)}
-						
+
 						<h3 id="visitingInfo">{visitingInfo}</h3>
 						<Paragraph text={nursingHome.tour_info} />
 						<dl className="nursingHome-info-list nursingHome-info-list--contact">
-							<dt>
-								{nursingHome.contact_name}
-							</dt>
+							<dt>{nursingHome.contact_name}</dt>
 							<dd>{nursingHome.contact_title}</dd>
 							<dd>Puh. {nursingHome.contact_phone}</dd>
 							<dd>
@@ -333,14 +336,14 @@ const PageNursingHome: FC = () => {
 							<>
 								<a
 									href={nursingHome.staff_satisfaction_info}
-									target="_blank" 
+									target="_blank"
 									rel="noreferrer noopener external"
 								>
 									{linkMoreInfoPersonnel}
 								</a>
 							</>
 						)}
-						
+
 						{nursingHome.other_services && (
 							<>
 								<h3>{otherServices}</h3>
@@ -358,7 +361,9 @@ const PageNursingHome: FC = () => {
 					/>
 				</div>
 			)}
-			<a className="backToTopLink" href="#pageTop">{linkBacktoTop}</a>
+			<a className="backToTopLink" href="#pageTop">
+				{linkBacktoTop}
+			</a>
 		</div>
 	);
 };
@@ -496,9 +501,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					className="nursinghome-details-logo"
 					alt="Omistajan logo"
 				/>
-				<h4 className="nursinghome-details-name">
-					{nursingHome.name}
-				</h4>
+				<h4 className="nursinghome-details-name">{nursingHome.name}</h4>
 				<a
 					href={`https://www.google.com/maps/search/${
 						nursingHome.name
@@ -525,7 +528,9 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							{webpage}
 						</a>
 					</dd>
-					<dd style={{ marginTop: 8 }}><a href="#visitingInfo">>> {visitingInfo}</a></dd>
+					<dd style={{ marginTop: 8 }}>
+						<a href="#visitingInfo">>> {visitingInfo}</a>
+					</dd>
 				</dl>
 
 				<dl className="nursingHome-info-list nursingHome-info-list--directions">
@@ -533,7 +538,6 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					<dd>{nursingHome.arrival_guide_public_transit}</dd>
 					<dd>{nursingHome.arrival_guide_car}</dd>
 				</dl>
-
 			</div>
 		</>
 	);

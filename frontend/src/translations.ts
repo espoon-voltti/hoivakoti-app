@@ -6,8 +6,14 @@ export const translations = {
 	},
 	navHome: { "fi-FI": "Etusivu", "sv-FI": "Hemsida" },
 	navNursingHomes: { "fi-FI": "Hoivakodit", "sv-FI": "Vårdhem" },
-	linkBacktoTop: { "fi-FI": "Sivun alkuun ↑", "sv-FI": "Till toppen av sidan ↑" },
-	linkJumpToContent: { "fi-FI": "Hyppää sisältöön", "sv-FI": "Hoppa till innehåll" },
+	linkBacktoTop: {
+		"fi-FI": "Sivun alkuun ↑",
+		"sv-FI": "Till toppen av sidan ↑",
+	},
+	linkJumpToContent: {
+		"fi-FI": "Hyppää sisältöön",
+		"sv-FI": "Hoppa till innehåll",
+	},
 	jumbotronBtn: { "fi-FI": "Näytä hoivakodit", "sv-FI": "Visa vårdhem" },
 	jumbotronHeadline: {
 		"fi-FI": "Löydä näköisesi hoivakoti",
@@ -478,5 +484,21 @@ export const translations = {
 	vihti: {
 		"fi-FI": "Vihti",
 		"sv-FI": "Vichtis",
+	},
+	imageCarouselNextTitle: {
+		"fi-FI": "Seuraava (oikea nuoli)",
+		"sv-FI": "Nästa (högerpil)",
+	},
+	imageCarouselPrevTitle: {
+		"fi-FI": "Edellinen (vasen nuoli)",
+		"sv-FI": "Föregående (Vänsterpil)",
+	},
+	imageCarouselAltText: {
+		"fi-FI": "Kuva",
+		"sv-FI": "Bild",
+	},
+	imageCarouselCloseText: {
+		"fi-FI": "Sulje (esc)",
+		"sv-FI": "Stäng (esc)",
 	},
 };
