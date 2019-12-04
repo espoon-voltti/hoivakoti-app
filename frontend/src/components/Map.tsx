@@ -53,6 +53,11 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 		24.6559,
 		60.2055,
 	]);
+	const [updateBounding, setUpdateBounding] = useState(true);
+
+	React.useEffect(() => {
+		setUpdateBounding(true);
+	}, [nursingHomes]);
 
 	const createMarkerClickHandler = (nursingHome: NursingHome) => () => {
 		const [lat, lng] = nursingHome.geolocation.center;
@@ -78,12 +83,15 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 				position: "sticky",
 				top: 0,
 			}}
-			fitBounds={!isMapLoaded ? fitBounds : undefined}
+			// Used to disable heavy'ish map changing when filtered nursinghomes changes
+			fitBounds={updateBounding ? fitBounds : undefined}
+			//fitBounds={shouldUpdateBounding ? fitBounds : fitBounds}
 			fitBoundsOptions={{ padding: 100 }}
 			onClick={() => onSelectNursingHome(null)}
 			onMoveEnd={map => {
 				const { lat, lng } = map.getCenter();
 				if (isMapLoaded) setViewportPos([lat, lng]);
+				setUpdateBounding(false);
 			}}
 			onStyleLoad={() => {
 				setIsMapLoaded(true);
@@ -156,7 +164,10 @@ export const MapSmall: FC<PropsMapSmall> = ({ nursingHome }) => (
 			coordinates={nursingHome.geolocation.center}
 			style={{ zIndex: 1 }}
 		>
-			<img src="/icons/icon-location-selected.svg" alt={nursingHome.name} />
+			<img
+				src="/icons/icon-location-selected.svg"
+				alt={nursingHome.name}
+			/>
 		</Marker>
 	</MapComponentNonInteractive>
 );

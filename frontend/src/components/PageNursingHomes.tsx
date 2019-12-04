@@ -36,6 +36,9 @@ const PageNursingHomes: FC = () => {
 
 	const history = useHistory();
 	const { search } = useLocation();
+	const [filteredNursingHomes, setFilteredNursingHomes] = useState<
+		NursingHome[] | null
+	>(null);
 
 	useEffect(() => {
 		const listener = (): void => {
@@ -136,6 +139,37 @@ const PageNursingHomes: FC = () => {
 			};
 		}),
 	];
+
+
+	useEffect(() => {
+		const filteredNHs: NursingHome[] | null =
+			nursingHomes &&
+			nursingHomes.filter(nursinghome => {
+				if (
+					searchFilters.alue &&
+					searchFilters.alue.length > 0 &&
+					(!searchFilters.alue.includes(nursinghome.district) &&
+						!searchFilters.alue.includes(nursinghome.city))
+				)
+					return false;
+				if (
+					searchFilters.language &&
+					nursinghome.language !== searchFilters.language
+				)
+					return false;
+				if (
+					searchFilters.ara !== undefined &&
+					nursinghome.ara !== searchFilters.ara
+				)
+					return false;
+				if (searchFilters.lah && nursinghome.lah !== searchFilters.lah)
+					return false;
+
+				return true;
+			});
+		setFilteredNursingHomes(filteredNHs);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [search, history, nursingHomes]);
 
 	const filterLabel = useT("filterLabel");
 	const filterAraLabel = useT("filterAraLabel");
@@ -270,7 +304,7 @@ const PageNursingHomes: FC = () => {
 								if (newSearchFilters.alue.includes(district))
 									included++;
 							}
-							if (included == espooAreas.length) {
+							if (included === espooAreas.length) {
 								newSearchFilters.alue.push("Espoo");
 							}
 						}
@@ -378,32 +412,6 @@ const PageNursingHomes: FC = () => {
 			/>
 		</>
 	);
-
-	const filteredNursingHomes: NursingHome[] | null =
-		nursingHomes &&
-		nursingHomes.filter(nursinghome => {
-			if (
-				searchFilters.alue &&
-				searchFilters.alue.length > 0 &&
-				(!searchFilters.alue.includes(nursinghome.district) &&
-					!searchFilters.alue.includes(nursinghome.city))
-			)
-				return false;
-			if (
-				searchFilters.language &&
-				nursinghome.language !== searchFilters.language
-			)
-				return false;
-			if (
-				searchFilters.ara !== undefined &&
-				nursinghome.ara !== searchFilters.ara
-			)
-				return false;
-			if (searchFilters.lah && nursinghome.lah !== searchFilters.lah)
-				return false;
-
-			return true;
-		});
 
 	const cards: JSX.Element[] | null =
 		filteredNursingHomes &&
