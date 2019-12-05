@@ -94,7 +94,7 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 
 					nursinghome_pics[field_info.sql] = file;
 					nursinghome_pics[field_info.sql + "_hash"] = hash;
-					console.log(
+					console.debug(
 						"File: " +
 							name +
 							" Length: " +
@@ -106,8 +106,8 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 			}
 		}
 		//console.log(nursinghome_pics);
-		console.log("Uploaded and read to memory; saving to database.");
-		console.log(Object.keys(nursinghome_pics));
+		console.debug("Uploaded and read to memory; saving to database.");
+		console.debug(Object.keys(nursinghome_pics));
 		await AddPicturesAndDescriptionsForNursingHome(
 			nursing_home_id,
 			nursinghome_pics,
@@ -144,6 +144,7 @@ async function DownloadAndSaveFile(id: string): Promise<any> {
 									.toFile(
 										file_name + "-small",
 										(err: any, info: any) => {
+											if (err) console.error(err);
 											resolve(file_name + "-small");
 										},
 									);
@@ -168,7 +169,7 @@ async function DownloadAndSaveFile(id: string): Promise<any> {
 		}
 		return answer;
 	} catch (e) {
-		//console.debug(e);
+		console.error(e);
 		return e;
 	}
 }
