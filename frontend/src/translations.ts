@@ -453,6 +453,10 @@ export const translations = {
 		"fi-FI": "Järvenpää",
 		"sv-FI": "Träskända",
 	},
+	karjaa: {
+		"fi-FI": "Karjaa",
+		"sv-FI": "Karis",
+	},
 	karkkila: {
 		"fi-FI": "Karkkila",
 		"sv-FI": "Högfors",
@@ -476,6 +480,10 @@ export const translations = {
 	tammisaari: {
 		"fi-FI": "Tammisaari",
 		"sv-FI": "Ekenäs",
+	},
+	tuusula: {
+		"fi-FI": "Tuusula",
+		"sv-FI": "Tusby",
 	},
 	vantaa: {
 		"fi-FI": "Vantaa",

@@ -30,6 +30,16 @@ const uploadPicturesCSV = async (
 	);
 };
 
+const getNursingHomeSecrets = async (password: string): Promise<void> => {
+	return await axios.post(
+		`${config.API_URL}/admin/reveal-secrets`,
+		// eslint-disable-next-line @typescript-eslint/camelcase
+		{
+			adminPassword: password,
+		},
+	);
+};
+
 const PageAdmin: FC = () => {
 	const [nursinghomesContent, setNursinghomesContent] = useState("");
 	const [picturesContent, setPicturesContent] = useState("");
@@ -38,6 +48,7 @@ const PageAdmin: FC = () => {
 	const [uploadingPics, setUploadingPics] = useState(false);
 	const [uploadingInfoResult, setUploadingInfoResult] = useState("");
 	const [uploadingPicsResult, setUploadingPicsResult] = useState("");
+	const [linksToVacancySetting, setLinksToVacancySetting] = useState([]);
 
 	const handleSubmit = (event: any) => {
 		console.log(key);
@@ -90,6 +101,18 @@ const PageAdmin: FC = () => {
 		};
 	};
 
+	const ShowVacancyModificationLinks = (event: any) => {
+		if (key)
+			getNursingHomeSecrets(key).then((response: any) => {
+				console.log(response.data.secrets.basicUpdateKeys);
+				const linksArray = response.data.secrets.basicUpdateKeys.map(
+					(secret: any) =>
+						`${window.location.hostname}/fi-FI/hoivakodit/${secret.id}/paivita/${secret.basic_update_key}`,
+				);
+				setLinksToVacancySetting(linksArray);
+			});
+	};
+
 	return (
 		<div className="page-admin">
 			<form onSubmit={handleSubmit} noValidate>
@@ -125,15 +148,22 @@ const PageAdmin: FC = () => {
 						alt="Waiting for an admin task"
 						className=""
 					/>
-
 				) : (
-						<input type="submit" value="Lähetä" />
-					)}
+					<input type="submit" value="Lähetä" />
+				)}
 				<br />
 				{uploadingInfoResult}
 				<br />
 				{uploadingPicsResult}
 			</form>
+
+			<button onClick={ShowVacancyModificationLinks}>
+				Näytä linkit vapaiden paikkojen muutoksiin
+			</button>
+
+			{linksToVacancySetting.map((link: string) => (
+				<div key={link}>{link}</div>
+			))}
 		</div>
 	);
 };
