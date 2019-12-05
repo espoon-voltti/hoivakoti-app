@@ -6,21 +6,6 @@ import { Trans } from "react-i18next";
 import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
 
-type Area =
-	| "Espoon keskus"
-	| "Espoonlahti"
-	| "Leppävaara"
-	| "Matinkylä"
-	| "Tapiola";
-
-const areas: Area[] = [
-	"Espoon keskus",
-	"Espoonlahti",
-	"Leppävaara",
-	"Matinkylä",
-	"Tapiola",
-];
-
 const PageLanding: FC = () => {
 	const history = useHistory();
 	const locationPickerLabel = useT("locationPickerLabel");
@@ -28,9 +13,42 @@ const PageLanding: FC = () => {
 	const linkBacktoTop = useT("linkBacktoTop");
 	const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
 
+	const espooAreas = [
+		useT("espoonKeskus"),
+		useT("espoonlahti"),
+		useT("leppävaara"),
+		useT("matinkylä"),
+		useT("tapiola"),
+	];
+	const otherCities = [
+		useT("helsinki"),
+		useT("hyvinkää"),
+		useT("järvenpää"),
+		useT("karkkila"),
+		useT("kerava"),
+		useT("lohja"),
+		useT("nurmijärvi"),
+		useT("siuntio"),
+		useT("tammisaari"),
+		useT("vantaa"),
+		useT("vihti"),
+	];
+
+	const espooChecked = selectedAreas
+		? selectedAreas.includes("Espoo")
+		: false;
+	const espooCheckboxItem: FilterOption = {
+		name: "Espoo",
+		label: "Espoo",
+		type: "checkbox",
+		checked: espooChecked,
+		bold: true,
+	};
+
 	const optionsArea: FilterOption[] = [
 		{ text: locationPickerLabel, type: "header" },
-		...areas.map<FilterOption>((value: Area) => {
+		espooCheckboxItem,
+		...espooAreas.map<FilterOption>((value: string) => {
 			const checked = selectedAreas
 				? selectedAreas.includes(value)
 				: false;
@@ -39,6 +57,20 @@ const PageLanding: FC = () => {
 				label: value,
 				type: "checkbox",
 				checked: checked,
+				withMargin: true,
+			};
+		}),
+		...otherCities.map<FilterOption>((value: string) => {
+			const checked = selectedAreas
+				? selectedAreas.includes(value)
+				: false;
+			return {
+				name: value,
+				label: value,
+				type: "checkbox",
+				checked: checked,
+				bold: true,
+				alignment: "right",
 			};
 		}),
 	];
@@ -74,14 +106,72 @@ const PageLanding: FC = () => {
 								let newSelectedAreas = selectedAreas
 									? [...selectedAreas]
 									: [];
-								if (!newValue)
+								if (!newValue) {
+									// Normal flow: Remove district/city to search filters if
+									// present
 									newSelectedAreas = newSelectedAreas.filter(
 										(value: string) => {
 											return value !== name;
 										},
 									);
-								else if (!newSelectedAreas.includes(name))
-									newSelectedAreas.push(name);
+
+									// Weird flow to accommodate the Espoo special selection
+									if (name === "Espoo")
+										newSelectedAreas = newSelectedAreas.filter(
+											(value: string) => {
+												if (espooAreas.includes(value))
+													return false;
+												return true;
+											},
+										);
+									else if (espooAreas.includes(name))
+										newSelectedAreas = newSelectedAreas.filter(
+											(value: string) => {
+												return value !== "Espoo";
+											},
+										);
+									// If the district/city was checked
+								} else {
+									// Normal flow: Add district/city to search filters if
+									// not already added
+									if (!newSelectedAreas.includes(name))
+										newSelectedAreas.push(name);
+
+									// Weird flow to accommodate the Espoo special selection
+									if (name === "Espoo")
+										for (
+											let i = 0;
+											i < espooAreas.length;
+											i++
+										) {
+											const district = espooAreas[i];
+											if (
+												!newSelectedAreas.includes(
+													district,
+												)
+											)
+												newSelectedAreas.push(district);
+										}
+									else if (espooAreas.includes(name)) {
+										let included = 0;
+										for (
+											let i = 0;
+											i < espooAreas.length;
+											i++
+										) {
+											const district = espooAreas[i];
+											if (
+												newSelectedAreas.includes(
+													district,
+												)
+											)
+												included++;
+										}
+										if (included === espooAreas.length) {
+											newSelectedAreas.push("Espoo");
+										}
+									}
+								}
 								setSelectedAreas(newSelectedAreas);
 							}}
 							onReset={(): void => {
@@ -225,7 +315,9 @@ const PageLanding: FC = () => {
 						<dd>{useT("faqItem10Text")}</dd>
 					</dl>
 				</section>
-				<a className="backToTopLink" href="#pageTop">{linkBacktoTop}</a>
+				<a className="backToTopLink" href="#pageTop">
+					{linkBacktoTop}
+				</a>
 			</div>
 		</div>
 	);
