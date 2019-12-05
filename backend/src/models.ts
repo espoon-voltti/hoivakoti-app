@@ -155,8 +155,8 @@ export async function InsertNursingHomeToDB(
 	const geoloc = JSON.parse(
 		await rp(
 			"https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-			geo_query +
-			".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
+				geo_query +
+				".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
 		),
 	);
 
@@ -373,9 +373,18 @@ export async function UpdateNursingHomeVacancyStatus(
 export interface BasicUpdateKeyEntry {
 	id: string;
 	basic_update_key: string;
+	name: string;
 }
 
 export async function GetAllBasicUpdateKeys(): Promise<BasicUpdateKeyEntry[]> {
-	const res = await knex("NursingHomes").select("id", "basic_update_key");
-	return res.map(({ id, basic_update_key }) => ({ id, basic_update_key }));
+	const res = await knex("NursingHomes").select(
+		"id",
+		"basic_update_key",
+		"name",
+	);
+	return res.map(({ id, basic_update_key, name }) => ({
+		id,
+		basic_update_key,
+		name,
+	}));
 }

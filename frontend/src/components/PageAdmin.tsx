@@ -107,7 +107,7 @@ const PageAdmin: FC = () => {
 				console.log(response.data.secrets.basicUpdateKeys);
 				const linksArray = response.data.secrets.basicUpdateKeys.map(
 					(secret: any) =>
-						`${window.location.hostname}/fi-FI/hoivakodit/${secret.id}/paivita/${secret.basic_update_key}`,
+						`${window.location.hostname}/fi-FI/hoivakodit/${secret.id}/paivita/${secret.basic_update_key} - ${secret.name}`,
 				);
 				setLinksToVacancySetting(linksArray);
 			});
@@ -149,8 +149,8 @@ const PageAdmin: FC = () => {
 						className=""
 					/>
 				) : (
-					<input type="submit" value="Lähetä" />
-				)}
+						<input type="submit" value="Lähetä" />
+					)}
 				<br />
 				{uploadingInfoResult}
 				<br />
@@ -162,7 +162,11 @@ const PageAdmin: FC = () => {
 			</button>
 
 			{linksToVacancySetting.map((link: string) => (
-				<div key={link}>{link}</div>
+				<div key={link}>
+					<br />
+					{link}
+					<br />
+				</div>
 			))}
 		</div>
 	);
