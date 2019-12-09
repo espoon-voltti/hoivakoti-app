@@ -151,7 +151,12 @@ export async function InsertNursingHomeToDB(
 	nursingHome: NursingHome,
 ): Promise<string> {
 	// Prolly should not do in models but WIP / MVP
-	const geo_query = [nursingHome.address, nursingHome.city, "Finland"];
+	const geo_query = [
+		nursingHome.address,
+		nursingHome.city,
+		nursingHome.postal_code,
+		"Finland",
+	];
 	const geoloc = JSON.parse(
 		await rp(
 			"https://api.mapbox.com/geocoding/v5/mapbox.places/" +
