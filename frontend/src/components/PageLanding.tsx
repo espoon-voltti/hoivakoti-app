@@ -14,7 +14,7 @@ const PageLanding: FC = () => {
 	const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
 
 	const espooAreas = [
-		useT("espoonKeskus"),
+		useT("espoon keskus"),
 		useT("espoonlahti"),
 		useT("leppävaara"),
 		useT("matinkylä"),

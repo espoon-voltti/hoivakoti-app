@@ -421,7 +421,15 @@ export const translations = {
 		"fi-FI": "Katso kuvat",
 		"sv-FI": "Visa bilder",
 	},
-	espoonKeskus: {
+	espoo: {
+		"fi-FI": "Espoo",
+		"sv-FI": "Esbo",
+	},
+	esbo: {
+		"fi-FI": "Espoo",
+		"sv-FI": "Esbo",
+	},
+	"espoon keskus": {
 		"fi-FI": "Espoon keskus",
 		"sv-FI": "Esbo centrum",
 	},
@@ -454,6 +462,10 @@ export const translations = {
 		"sv-FI": "Träskända",
 	},
 	karjaa: {
+		"fi-FI": "Karjaa",
+		"sv-FI": "Karis",
+	},
+	karis: {
 		"fi-FI": "Karjaa",
 		"sv-FI": "Karis",
 	},
