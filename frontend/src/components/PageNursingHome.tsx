@@ -332,7 +332,7 @@ const PageNursingHome: FC = () => {
 						<h3>{personnel}</h3>
 						<Paragraph text={nursingHome.staff_info} />
 
-						{nursingHome.other_services && (
+						{nursingHome.staff_satisfaction_info && (
 							<>
 								<a
 									href={nursingHome.staff_satisfaction_info}
