@@ -19,6 +19,7 @@ const mapConfig: FactoryParameters = {
 	scrollZoom: false,
 	dragRotate: false,
 	pitchWithRotate: false,
+	maxZoom: 17,
 };
 
 const mapConfigNonInteractive: FactoryParameters = {
