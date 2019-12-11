@@ -27,6 +27,10 @@ router.get("/api", async ctx => {
 	ctx.body = "maybe docs here";
 });
 
+router.get("/api/version", async ctx => {
+	ctx.body = "v2";
+});
+
 router.get("/api/nursing-homes", async ctx => {
 	ctx.body = await ListNursingHomes(ctx);
 });
@@ -102,10 +106,6 @@ router.get("/api/node-env-test", async ctx => {
 
 router.get("/api/all-pics", async ctx => {
 	ctx.body = await GetAllPicsAndDescriptions(ctx);
-});
-
-router.get("/api/version", async ctx => {
-	ctx.body = "v1";
 });
 
 router.post("/api/admin/reveal-secrets", async ctx => {
