@@ -56,7 +56,7 @@ export const nursing_home_columns_info: any = [
 	{ csv: "Asuntojen määrä", sql: "apartment_count", type: "integer" },
 	{ csv: "Palvelukieli", sql: "language", type: "string" },
 	{ csv: "Lyhytaikaisen hoivan asuntoja", sql: "lah", type: "boolean" },
-	{ csv: "Tiivistelmä ", sql: "summary", type: "string" },
+	{ csv: "Tiivistelmä", sql: "summary", type: "string" },
 	{ csv: "Postinumero", sql: "postal_code", type: "string" },
 	{ csv: "Kaupunki", sql: "city", type: "string" },
 	{

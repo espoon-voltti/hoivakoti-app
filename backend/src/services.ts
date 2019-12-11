@@ -15,6 +15,7 @@ import parse from "csv-parse/lib/sync";
 import fs from "fs";
 import { google } from "googleapis";
 import crypto, { BinaryLike } from "crypto";
+import { IncomingForm } from "formidable";
 
 function checksum(str: string | BinaryLike): string {
 	return crypto
@@ -38,9 +39,9 @@ async function NursingHomesFromCSV(csv: string): Promise<string> {
 		ltrim: true,
 	});
 
-	console.log(records.length);
 	records.map(async (record: any) => {
 		const nursing_home: any = {};
+		console.log(record);
 		nursing_home_columns_info.map((info: any) => {
 			if (info.type === "float")
 				nursing_home[info.sql] = parseFloat(record[info.csv]);
