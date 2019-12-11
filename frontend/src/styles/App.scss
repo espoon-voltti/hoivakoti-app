@@ -295,10 +295,13 @@ $header-height: 80px;
 		display: block;
 	}
 
-	#page-nav ul.nav-menu li a:hover,
-	#page-nav ul.nav-menu li a.selected {
+	#page-nav ul.nav-menu li a:hover {
 		background-color: $primary-blue;
 		color: #fff;
+	}
+	#page-nav ul.nav-menu li a.selected {
+		background-color: $border-color;
+		color:$text-color;
 	}
 
 	#page-nav ul.nav-menu {
@@ -338,9 +341,9 @@ $header-height: 80px;
 	}
 
 	#page-nav input:checked ~ .menu-btn {
-		background-color: $primary-blue;
-		color: #fff;
-		border: 1px solid $primary-blue;
+		background-color: $border-color;
+		color: $text-color;
+		border: 1px solid $border-color;
 	}
 
 	[type="checkbox"]:focus ~ .menu-btn {

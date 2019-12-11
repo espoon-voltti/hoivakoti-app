@@ -410,13 +410,13 @@ export const translations = {
 	},
 	pageUpdateIntro: {
 		"fi-FI":
-			"Valitse hoivakodin vapaiden asuntojen tilanne allaolevista vaihtoehdoista:",
+			"Valitse hoivakodin vapaiden asuntojen tilanne:",
 		"sv-FI":
 			"sv_Tällä sivulla voit päivittää hoivakodin tietoja. Valitse hoivakodin vapaiden asuntojen tilanne allaolevalla lomakkeella:",
 	},
 	clearFilters: {
 		"fi-FI": "Poista rajaukset",
-		"sv-FI": "Rensa filters",
+		"sv-FI": "Rensa filter",
 	},
 	btnShowImages: {
 		"fi-FI": "Katso kuvat",
