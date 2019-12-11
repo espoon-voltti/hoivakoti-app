@@ -45,7 +45,7 @@ const Header: FC = () => {
 					id="hamburger"
 				/>
 				<label htmlFor="hamburger" className="menu-btn">
-					&#9776; valikko
+					&#9776; {useT("menu")}
 				</label>
 				<div className="nav-menus">
 					<ul className="nav-menu" role="menu">

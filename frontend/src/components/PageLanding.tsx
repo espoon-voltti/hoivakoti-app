@@ -219,7 +219,7 @@ const PageLanding: FC = () => {
 						>
 							{useT("linkServiceVoucher")}
 						</a>
-						. {useT("landingServiceVoucher2")}{" "}
+						? {useT("landingServiceVoucher2")}{" "}
 						<a
 							href={useT("urlParastapalvelua")}
 							target="_blank"
@@ -284,7 +284,10 @@ const PageLanding: FC = () => {
 
 				<section className="content-block">
 					<h2>{useT("serviceDescriptionHeadline")}</h2>
-					<p>{useT("serviceDescriptionText")}</p>
+					<Trans i18nKey="defaultNamespace:serviceDescriptionText">
+						<p></p>
+						<p></p>
+					</Trans>
 
 					<h3 className="faqHeadline">
 						{useT("faqSectionHeadline")}

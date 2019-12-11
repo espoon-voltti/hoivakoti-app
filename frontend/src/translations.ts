@@ -1,11 +1,12 @@
 export const translations = {
-	appTitle: { "fi-FI": "Espoon hoivakodit", "sv-FI": "Vårdhem i Esbo" },
+	appTitle: { "fi-FI": "Espoon hoivakodit", "sv-FI": "Vårdhemmen i Esbo" },
 	titleTemplate: {
 		"fi-FI": "%s | Espoon hoivakodit",
-		"sv-FI": "%s | Vårdhem i Esbo",
+		"sv-FI": "%s | Vårdhemmen i Esbo",
 	},
-	navHome: { "fi-FI": "Etusivu", "sv-FI": "Hemsida" },
+	navHome: { "fi-FI": "Etusivu", "sv-FI": "Förstasidan" },
 	navNursingHomes: { "fi-FI": "Hoivakodit", "sv-FI": "Vårdhem" },
+	menu: { "fi-FI": "valikko", "sv-FI": "meny" },
 	linkBacktoTop: {
 		"fi-FI": "Sivun alkuun ↑",
 		"sv-FI": "Till toppen av sidan ↑",
@@ -14,14 +15,14 @@ export const translations = {
 		"fi-FI": "Hyppää sisältöön",
 		"sv-FI": "Hoppa till innehåll",
 	},
-	jumbotronBtn: { "fi-FI": "Näytä hoivakodit", "sv-FI": "Visa vårdhem" },
+	jumbotronBtn: { "fi-FI": "Näytä hoivakodit", "sv-FI": "Visa vårdhemmen" },
 	jumbotronHeadline: {
 		"fi-FI": "Löydä näköisesi hoivakoti",
-		"sv-FI": "Hitta ett snyggt vårdhem",
+		"sv-FI": "Hitta ett vårdhem som passar dig",
 	},
 	locationPickerLabel: {
 		"fi-FI": "Miltä alueelta etsit hoivakotia?",
-		"sv-FI": "Vart söker du vårdhem?",
+		"sv-FI": "I vilket område söker du ett vårdhem?",
 	},
 	locationPickerPlaceholder: {
 		"fi-FI": "Kaikki alueet",
@@ -31,7 +32,7 @@ export const translations = {
 		"fi-FI":
 			"Tältä sivustolta löydät Espoon kaupungin hyväksymät <0>tehostetun palveluasumisen</0> hoivakodit <1>ikäihmisille</1>. Saadaksesi hoivakotipaikan tarvitset Seniorineuvonta Nestorin tekemän myönteisen päätöksen tehostetusta palveluasumisesta.",
 		"sv-FI":
-			"På den här webbplatsen hittar du <0> Enhanced Service Housing </0> Vårdhem för <1> äldre </1> godkända av staden Esbo. För att få ett vårdhem behöver du ett positivt beslut om behovet av förbättrad servicebostad.",
+			"På denna webbplats hittar du de av Esbo stad godkända vårdhemmen som erbjuder <0>serviceboende med heldygnsomsorg för äldre</0>. För att få en vårdhemsplats behöver du ett positivt beslut av seniorrådgivningen Nestor om serviceboende med heldygnsomsorg. ",
 	},
 	landingServiceVoucher1: {
 		"fi-FI": "Vaihtoehtoisesti asiakas voi ottaa vastaan ",
@@ -39,7 +40,7 @@ export const translations = {
 	},
 	landingServiceVoucher2: {
 		"fi-FI": "Palvelusetelihoivakoteja voi katsoa osoitteessa ",
-		"sv-FI": "Se vårdhem på ",
+		"sv-FI": "Servicesedelsvårdhem kan ses på adressen ",
 	},
 	urlServiceVoucher: {
 		"fi-FI":
@@ -48,7 +49,7 @@ export const translations = {
 	},
 	linkServiceVoucher: {
 		"fi-FI": "palvelusetelin",
-		"sv-FI": "servicekupong",
+		"sv-FI": "servicesedel",
 	},
 	urlParastapalvelua: {
 		"fi-FI": "https://www.parastapalvelua.fi",
@@ -58,41 +59,41 @@ export const translations = {
 		"fi-FI":
 			"Hoivakotiin on mahdollista muuttaa myös itse maksavana asiakkaana, jolloin asiakas sopii palvelun sisällöstä ja kaikista maksuista suoraan hoivakodin kanssa.",
 		"sv-FI":
-			"Det är också möjligt att konvertera till ett vårdhem som betalande klient, varigenom klienten samtycker till innehållet i tjänsten och alla avgifter direkt med vårdhemmet.",
+			"Klienten kan också betala själv för vårdhemmet. Då avtalar klienten om innehållet i servicen och alla avgifter direkt med vårdhemmet.",
 	},
 	whatisNursinghomeHeadline: {
 		"fi-FI": "Mitä on tehostettu palveluasuminen?",
-		"sv-FI": "Vad är förbättrad servicehus?",
+		"sv-FI": "Vad är serviceboende med heldygnsomsorg?",
 	},
 	whatisNursinghomeText: {
 		"fi-FI":
 			"Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa, eivätkä voi enää asua omassa kodissaan. Tehostetun palveluasumisen hoivakodissa asiakas saa tarpeidensa mukaista hoivaa ja huolenpitoa elämänsä loppuun saakka.  Sosiaali- ja terveydenhuollon ammattilaisia on paikalla hoivakodissa jatkuvasti. Osa hoivakodeista on Espoon kaupungin omia ja osa yksityisten ja kolmannen sektorin toimijoiden omistamia. Asiakas maksaa asumisesta ja palvelusta. Asiakkaan maksut määräytyvät tulojen mukaan ja maksu on sama kaikissa tällä sivustolla esillä olevissa hoivakodeissa.",
 		"sv-FI":
-			"Enhanced Service Housing är designad för äldre som behöver 24-timmars vård och vård och inte längre kan bo i sina egna hem. Det finns en ständig närvaro av personal med professionell vårdutbildning i Enhanced Service Living Nursing Homes. Esbo anordnar förbättrade servicebostäder i flera privata tjänsteleverantörers vårdhem och i sina egna vårdhem. På ett vårdhem får klienten vård och vård som tillgodoser deras behov resten av livet.",
+			"Serviceboende med heldygnsomsorg är avsett för äldre som behöver vård och omsorg dygnet runt och som inte längre kan bo kvar i sitt eget hem. På vårdhemmet som erbjuder serviceboende med heldygnsomsorg får klienten vård och omsorg efter sina behov till slutet av sitt liv.  I vårdhemmet finns det ständigt yrkesutbildade personer inom social- och hälsovården på plats. En del av vårdhemmen drivs av Esbo stad och en del av privata aktörer och aktörer inom den tredje sektorn. Klienten betalar för boende och service. Klientens avgifter bestäms enligt inkomsterna och avgiften är densamma i alla vårdhem som finns på denna webbplats.",
 	},
 	decisionStepsHeadline: {
 		"fi-FI": "Miten saat tehostetun palveluasumisen päätöksen?",
-		"sv-FI": "Hur får du ett beslut om servicehus?",
+		"sv-FI": "Hur får jag ett beslut om serviceboende med heldygnsomsorg?",
 	},
 	decisionStep1Headline: {
 		"fi-FI": "1. Yhteydenotto Nestoriin",
-		"sv-FI": "1. Ta kontakt av Nestor",
+		"sv-FI": "1. Kontakta Nestor",
 	},
 	decisionStep1Text: {
 		"fi-FI":
 			"Espoon Seniorineuvonta Nestori palvelee arkisin klo 9–15 <0>p. 09 816 33 333</0>",
 		"sv-FI":
-			"Nestori är Senior Counselling Unit i staden Espoo, <0>tel. +358 9 816 33 333</0>",
+			"Esbo stads seniorrådgivning Nestor betjänar vardagar kl. 9–15 på <0>tfn 09 816 33 333</0>",
 	},
 	decisionStep2Headline: {
 		"fi-FI": "2. Palvelutarpeen selvittäminen",
-		"sv-FI": "2. Identifiera servicebehov",
+		"sv-FI": "2. Utredning av servicebehovet",
 	},
 	decisionStep2Text: {
 		"fi-FI":
 			"Nestorin sosiaalityöntekijä tulee luoksesi selvittämään palvelutarpeesi",
 		"sv-FI":
-			"En Nestor socialarbetare kommer till dig för att bestämma dina servicebehov",
+			"En socialarbetare vid Nestor kommer hem till dig för att reda ut ditt servicebehov",
 	},
 	decisionStep3Headline: {
 		"fi-FI": "3. Palvelupäätös",
@@ -102,38 +103,38 @@ export const translations = {
 		"fi-FI":
 			"Myönteisen palvelupäätöksen jälkeen voit alkaa etsimään itsellesi sopivaa hoivakotia",
 		"sv-FI":
-			"Efter ett positivt servicebeslut kan du börja leta efter ett vårdhem som passar dig",
+			"Efter ett positivt servicebeslut kan du börja söka ett vårdhem som passar dig",
 	},
 	decisionMoreInfo: {
 		"fi-FI":
 			"Lisätietoa tehostettuun palveluasumiseen hakeutumisesta ja asiakaskriteereistä.",
-		"sv-FI": "Läs mer om ansökan om förbättrad servicehus.",
+		"sv-FI": "Mer information om hur man söker sig till serviceboende med heldygnsomsorg och om klientkriterierna.",
 	},
 	urlDecisionMoreInfo: {
 		"fi-FI":
 			"https://www.espoo.fi/fi-FI/Seniorit/Seniorineuvonta_Nestori/Palvelutarpeen_selvittaminen",
 		"sv-FI":
-			"https://www.esbo.fi/sv-FI/Etjanster/Social_och_halsovard/Blankett_for_personer_fran_andra_kommuner_som_soker_vardplats_pa_institution_i_Esbo/Blankett_for_personer_fran_andra_kommune(10216)",
+			"https://www.esbo.fi/sv-FI/Seniorer/Seniorradgivning_Nestor/Bedomning_av_servicebehovet",
 	},
 	selectingHeadline: {
 		"fi-FI": "Hoivakodin valinta",
-		"sv-FI": "Att välja ett vårdhem",
+		"sv-FI": "Val av vårdhem",
 	},
 	selectingText: {
 		"fi-FI":
 			"<0>Voit valita sellaisen hoivakodin, jossa on vapaita asuntoja. Voit käydä tutustumassa hoivakotiin ennen päätöksen tekemistä. Kerro valinnastasi Seniorineuvonta Nestorin omalle sosiaalityöntekijällesi. Jos sinulle mieluisin hoivakoti on täynnä, valitset asunnon muusta hoivakodista ja voit ilmoittautua Nestoriin haluamasi hoivakodin jonoon. Halutessasi voit vaihtaa hoivakotia kun asunto vapautuu.</0> <1>Osa hoivakodeista on rahoitettu valtion tuella ja niistä käytetään tällä sivustolla nimitystä ARA-kohde. Hoivakotia valitsevalle asiakkaalle ARA-kohde tarkoittaa sitä, että asiakkaan varallisuus ei saa ylittää määrättyjä rajoja. Hoivakodeissa, jotka eivät ole ARA-kohteita, ei ole asiakkaan varallisuutta koskevia rajoituksia.</1>",
 		"sv-FI":
-			"Du kan välja ett vårdhem med gratisplatser. Du kan besöka vårdhemen innan du fattar ett beslut. Berätta för din Nestor socialarbetare om ditt val. Om ditt föredragna alternativ är ett vårdhem utan lediga platser, kan du anmäla dig till denna vårdkö.",
+			"<0>Du kan välja ett vårdhem där det finns lediga bostäder. Du kan besöka vårdhemmet innan du fattar beslut. Berätta om ditt val för din socialarbetare vid Seniorrådgivningen Nestor. Om det vårdhem du föredrar är fullt, väljer du en bostad i ett annat vårdhem och kan anmäla dig hos Nestor till kön till det vårdhem du föredrar. Om du vill kan du byta vårdhem när en bostad blir ledig i det föredragna vårdhemmet.</0><1>En del av vårdhemmen har finansierats med statligt stöd och för dem används på denna webbplats benämningen ARA-objekt. För en klient som väljer vårdhem innebär ARA-objektet att klientens förmögenhet inte får överskrida vissa gränser. I vårdhem som inte är ARA-objekt finns inga begränsningar för klientens förmögenhet.</1>",
 	},
 	serviceDescriptionHeadline: {
 		"fi-FI": "Mitä hoivakodin palveluun sisältyy?",
-		"sv-FI": "Vad inkluderar en vårdhemstjänst?",
+		"sv-FI": "Vad ingår i vårdhemmets service?",
 	},
 	serviceDescriptionText: {
 		"fi-FI":
-			"Tällä sivustolla olevat hoivakodit ovat sitoutuneet noudattamaan Espoon kaupungin palvelukonseptia, joka määrittää palvelun sisällön ja laadun. Asiakas asuu hoivakodissa omassa asunnossaan. Ateriat sisältyvät palveluun. Hoivakodin asiakas elää aktiivista elämää oman jaksamisensa mukaan ja saa henkilökunnalta tarvitsemansa avun. Lisäksi hoivakodit järjestävät asiakkaille monipuolista toimintaa.",
+			"<0>Tällä sivustolla olevat hoivakodit ovat sitoutuneet noudattamaan Espoon kaupungin palvelukonseptia, joka määrittää palvelun sisällön ja laadun.</0><1>Asiakas asuu hoivakodissa omassa asunnossaan. Ateriat sisältyvät palveluun. Hoivakodin asiakas elää aktiivista elämää oman jaksamisensa mukaan ja saa henkilökunnalta tarvitsemansa avun. Lisäksi hoivakodit järjestävät asiakkaille monipuolista toimintaa.</1>",
 		"sv-FI":
-			"Alla vårdhem som visas på denna webbplats har åtagit sig till servicekonceptet City of Espoo, som ställer minimikrav för tjänstens innehåll och kvalitet.",
+			"<0>Vårdhemmen på denna webbplats har förbundit sig att följa Esbo stads servicekoncept som definierar tjänsternas innehåll och kvalitet.</0><1> Klienten bor på vårdhemmet i en egen bostad. Måltiderna ingår i tjänsten. Vårdhemmets klient lever ett aktivt liv så gott det går och får den hjälp som behövs av personalen. Dessutom ordnar vårdhemmen mångsidig verksamhet för klienterna.</1>",
 	},
 	serviceDescriptionLink: {
 		"fi-FI": "Tutustu palvelukonseptiin",
@@ -145,151 +146,151 @@ export const translations = {
 	},
 	faqSectionHeadline: {
 		"fi-FI": "Usein kysyttyjä kysymyksiä hoivakodeista",
-		"sv-FI": "Vanliga frågor om tjänsten",
+		"sv-FI": "Frågor och svar",
 	},
 	faqItem1Headline: {
 		"fi-FI": "Millaisia asunnot ovat ja voivatko puolisot asua yhdessä?",
 		"sv-FI":
-			"sv_Millaisia asunnot ovat ja voivatko puolisot asua yhdessä??",
+			"Hurdana är bostäderna och kan partner bo tillsammans?",
 	},
 	faqItem1Text: {
 		"fi-FI":
 			"<0>Asiakkaalla on yhden hengen asunto.  Asunnossa tai sen välittömässä läheisyydessä on wc ja kylpyhuone. Joissakin hoivakodeissa voi olla yhteisiä wc- ja suihkutiloja.</0><1>Osassa hoivakodeissa on kahden hengen asuntoja. Hoivakotien kahden hengen asunnot on tarkoitettu erityisesti yhdessä asuville puolisoille. Puolisot voivat asua yhdessä myös silloin, jos toinen puolisoista ei ole tehostetun palveluasumisen asiakas. Puolison asumisesta ja siihen liittyvistä maksuista sovitaan suoraan hoivakodin kanssa.</1>",
 		"sv-FI":
-			"sv_Asiakkaalla on yhden hengen asunto. Joissakin hoivakodeissa on kahden hengen asuntoja, joissa asiakas voi asua omasta toiveestaan. Asunnossa tai sen välittömässä läheisyydessä on asiakkaan käytössä oleva wc/kylpyhuone. Joissakin hoivakodeissa voi olla yhteisiä wc- ja suihkutiloja.",
+			"<0>Bostaden är för en person. I bostaden eller i dess omedelbara närhet finns toalett och badrum. En del vårdhem kan ha gemensamma toaletter och duschrum.</0><1>I en del vårdhem finns bostäder för två personer. Bostäderna för två personer är särskilt avsedda för partner som bor tillsammans. Partnerna kan bo tillsammans också om den ena partnern inte är klient i serviceboende med heldygnsomsorg. Om partnerns boende och avgifter avtalas direkt med vårdhemmet.</1>",
 	},
 
 	faqItem2Headline: {
 		"fi-FI": "Onko asunto kalustettu?",
-		"sv-FI": "sv_Kuka kalustaa asunnon?",
+		"sv-FI": "Är bostaden möblerad?",
 	},
 	faqItem2Text: {
 		"fi-FI":
 			"Asunnoissa on sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytystila ja kattovalaisin. Asiakas voi tuoda asuntoon omia kalusteita ja tavaroita.",
 		"sv-FI":
-			"sv_Palveluun kuuluu sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytysmahdollisuus ja yleisvalaisin. Lisäksi asiakas voi kalustaa ja sisustaa asuntonsa omien toiveidensa ja mieltymysten mukaisesti.",
+			"I bostaden finns en ställbar, elektrisk säng, madrass, klädskåp, låsbart förvaringsutrymme och taklampa. Klienten kan ta med sig egna möbler och saker till bostaden.",
 	},
 	faqItem3Headline: {
 		"fi-FI": "Saako tyynyt, peitot, ja liinavaatteet hoivakodista?",
-		"sv-FI": "sv_Kuuluvatko tyynyt, peitot ja liinavaatteet palveluun?",
+		"sv-FI": "Får jag kuddar, täcken och sängkläder av vårdhemmet?",
 	},
 	faqItem3Text: {
 		"fi-FI":
 			"Tyynyjä, peittoja ja liinavaatteita ei yleensä saa hoivakodista, vaan asiakkaan on tuotava ne itse. Tämä selviää kysymällä hoivakodista.",
 		"sv-FI":
-			"sv_Nämä eivät kuulu palveluun. Näiden osalta on hoivakotikohtainen käytäntö; toisissa hoivakodeissa asiakas tuo ne itse ja toisissa ne järjestyvät hoivakodin toimesta.",
+			"Kuddar, täcken och sängkläder fås vanligen inte av vårdhemmet, utan klienten måste själv ta med dem. Detta får du veta genom att fråga vårdhemmet.",
 	},
 	faqItem4Headline: {
 		"fi-FI": "Kuka siivoaa asunnon?",
-		"sv-FI": "sv_Mitä siivousta kuuluu palveluun?",
+		"sv-FI": "Vem städar bostaden?",
 	},
 	faqItem4Text: {
 		"fi-FI":
 			"Asunnon viikoittainen siivous sisältyy palveluun. Lisäksi hoivakodin henkilökunta huolehtii asunnon päivittäisestä siistimisestä. Asiakas voi halutessaan osallistua näihin tehtäviin.",
 		"sv-FI":
-			"sv_Asiakkaalla omat normaalin vesipesun kestävä vaatteet. Jos asiakkaalla on erikoispesuja vaativia vaatteita tai muita tekstiilejä, niin niiden pesuista asiakas vastaa itse.",
+			"Städning av bostaden en gång i veckan ingår i servicen. Dessutom sörjer vårdhemmets personal för den dagliga städningen av bostaden. Klienten kan om hen så önskar delta i dessa uppgifter.",
 	},
 	faqItem5Headline: {
 		"fi-FI": "Kuka ostaa ja pesee asiakkaan vaatteet?",
-		"sv-FI": "sv_Kuka hoitaa asiakkaan vaatteet?",
+		"sv-FI": "Vem köper och tvättar klientens kläder?",
 	},
 	faqItem5Text: {
 		"fi-FI":
 			"Asiakas käyttää omia vaatteitaan.  Hoivakoti huolehtii asiakkaan vaatteiden pesusta. Asiakas vastaa itse erikoispesuja vaativien vaatteiden ja tekstiilien pesettämisestä ja kustannuksista.",
 		"sv-FI":
-			"sv_Asunto siivotaan vähintään kerran viikossa. Lisäksi asunnossa huolehditaan päivittäin huolehditaan vuoteen sijaamisesta, roskien viemisestä, tahrojen poistamisesta ja tarvittaessa vuodevaatteiden vaihtamisesta. Asiakas voi halutessaan osallistua näihin tehtäviin. Ikkunat pestään tarpeen mukaan.",
+			"Klienten använder egna kläder. Vårdhemmet sköter tvätten av klientens kläder. Klienten ansvarar själv för tvätten av och tvättkostnaderna för kläder och textilier som kräver specialtvätt.",
 	},
 	faqItem6Headline: {
 		"fi-FI": "Mistä saa lääkkeet?",
-		"sv-FI": "sv_Miten lääkkeet hoituvat?",
+		"sv-FI": "Varifrån får jag läkemedel?",
 	},
 	faqItem6Text: {
 		"fi-FI":
 			"Asiakas maksaa itse omat lääkkeensä. Asiakkaan lääkkeet toimitetaan apteekista annosjakeluna hoivakotiin. Henkilökunta huolehtii lääkkeiden antamisesta.",
 		"sv-FI":
-			"sv_Lääkkeiden annosjakelu kuuluu palveluun ja asiakas maksaa itse omat lääkkeet.",
+			"Klienten betalar själv sina egna läkemedel. De expedieras från apoteket som dosdispensering till vårdhemmet. Personalen sköter om att klienten tar sina läkemedel.",
 	},
 	faqItem7Headline: {
 		"fi-FI": "Saako asukas hoivakodista tarvitsemansa apuvälineet?",
 		"sv-FI":
-			"sv_Onko hoivakodissa kaikki asiakkaan tarvitsemat apuvälineet?",
+			"Får klienten nödvändiga hjälpmedel av vårdhemmet?",
 	},
 	faqItem7Text: {
 		"fi-FI":
 			"Henkilökohtaiset apuvälineet asiakas voi lainata maksutta HUS Apuvälinekeskuksesta, joka sijaitsee Espoon sairaalassa.  Hoivakoti auttaa asiakasta tarvittaessa apuvälineiden noutamisessa. Mahdolliset apuvälineiden noutokustannukset asiakas maksaa itse. Lisäksi hoivakodissa on muita apuvälineitä. Näitä ovat esimerkiksi nostolaitteet, tukikaiteet, ulkoilupyörätuoli sekä asentohoitoon soveltuvat tyynyt.",
 		"sv-FI":
-			"sv_Hoivakodissa on tarpeellinen määrä yhteiskäyttöisiä apuvälineitä. Näitä ovat esimerkiksi nostolaitteet, tukikaiteet sekä asentohoitoon soveltuvat tyynyt. Lisäksi asiakkaalla voi olla henkilökohtaisia apuvälineita HUS:in Apuvälinekeskuksesta. Asiakas kustantaa henkilökohtaisten apuvälineiden noutamisen ja palveluntuottajalla on avustusvelvollisuus noudon toteuttamisessa.",
+			"Klienten kan avgiftsfritt låna personliga hjälpmedel från HUS hjälpmedelscentral, som är belägen på Esbo sjukhus. Vårdhemmet hjälper klienten vid behov med att hämta hjälpmedlen. Klienten betalar själv eventuella kostnader för hämtning av hjälpmedel. Dessutom finns det hjälpmedel på vårdhemmet. Sådana är till exempel lyftanordningar, stödräcken, rullstol för utomhusbruk samt kuddar som lämpar sig för positionsbehandling.",
 	},
 	faqItem8Headline: {
 		"fi-FI": "Mitä ruokailuja palveluun kuuluu?",
-		"sv-FI": "sv_Mitkä ruokailut kuuluvat palveluun?",
+		"sv-FI": "Vilka måltider ingår i tjänsten?",
 	},
 	faqItem8Text: {
 		"fi-FI":
 			"Asiakas saa hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Asiakas saa yöpalan tarvittaessa.  Erityisruokavaliot ja lääkäriin määräämät täydennysravintovalmisteet kuuluvat palveluun ja niistä asiakas ei maksa erikseen.",
 		"sv-FI":
-			"sv_Asiakas saa hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Lisäksi asiakas saa tarvittaessa yöpalaa. Erityisruokavaliot ja lääkäriin määräämät täydennysravintovalmisteet kuuluvat palveluun.",
+			"På vårdhemmet får klienten frukost, lunch, eftermiddagskaffe/mellanmål, middag och kvällsmål. Lunchen och middagen är varma måltider. Klienten får nattmat vid behov. Specialkost och kompletterande näringspreparat som ordinerats av läkaren ingår i tjänsten och klienten betalar inte separat för dem.",
 	},
 	faqItem9Headline: {
 		"fi-FI": "Voivatko läheiset ja omaiset yöpyä asiakkaan luona?",
-		"sv-FI": "sv_Mitä muuta kuin välttämätöntä hoivaa palveluun kuuluu?",
+		"sv-FI": "Kan närstående och anhöriga övernatta hos klienten?",
 	},
 	faqItem9Text: {
 		"fi-FI":
 			"Läheiset ja omaiset voivat yöpyä tilapäisesti asiakkaan luona.  Yöpymisestä on sovittava hoivakodin kanssa.",
 		"sv-FI":
-			"sv_Asiakas avustetaan päivittäin ylös vuoteesta ja asiakkaalla on mahdollisuus käyttää päivävaatteitaan. Asiakkaalla on mahdollisuus aktiiviseen elämään. Aktiivisuuteen sisältyy muun muassa ulkoilua, liikuntaa, kulttuuria sekä käsillä tekemistä asiakkaan toiveiden ja aikaisempien tottumusten mukaisesti.",
+			"Närstående och anhöriga kan tillfälligt övernatta hos klienten. Man måste komma överens om övernattningen med vårdhemmet.",
 	},
 	faqItem10Headline: {
 		"fi-FI": "Miten saattohoito järjestetään?",
-		"sv-FI": "sv_Miten saattohoito järjestetään?",
+		"sv-FI": "Hur ordnas vården i livets slutskede?",
 	},
 	faqItem10Text: {
 		"fi-FI":
 			"Asiakkaan saattohoito järjestetään pääsääntöisesti hoivakodissa. Asiakas saa tarvitsemansa hoivan ja kivun lievityksen. Hoivakodin henkilökunta kunnioittaa kuolevan vakaumusta ja huolehtii hänen henkisestä hyvinvoinnistaan.",
 		"sv-FI":
-			"sv_Asiakas voi asua hoivakodissa elämänsä loppuun asti. Kivun ja muiden oireiden hoidosta huolehditaan kaikkina vuorokauden aikoina. Hoivakodissa kunnioitetaan kuolevan vakaumusta ja hänen henkisestä hyvinvoinnistaan huolehditaan.",
+			"Klientens vård i livets slutskede ordnas i regel på vårdhemmet. Klienten får behövlig vård och smärtlindring. Vårdhemmets personal respekterar den döende personens övertygelse och sörjer för det psykiska välbefinnandet.",
 	},
-	filterLabel: { "fi-FI": "Rajaa tuloksia:", "sv-FI": "Filter resulter:" },
-	filterAraLabel: { "fi-FI": "ARA-kohde", "sv-FI": "ARA-boende" },
+	filterLabel: { "fi-FI": "Rajaa tuloksia:", "sv-FI": "Avgränsa resultaten:" },
+	filterAraLabel: { "fi-FI": "ARA-kohde", "sv-FI": "ARA-bostäd" },
 	filterAraText: {
 		"fi-FI": "Näytä vain ARA-kohteet",
-		"sv-FI": "Visa bara ARA-boende",
+		"sv-FI": "Visa bara ARA-bostäd",
 	},
-	filterAraLabel2: { "fi-FI": "Ei ARA-kohde", "sv-FI": "Ingen ARA-boende" },
+	filterAraLabel2: { "fi-FI": "Ei ARA-kohde", "sv-FI": "Inte ARA-bostäd" },
 	filterAraText2: {
 		"fi-FI": "Älä näytä ARA-kohteita",
-		"sv-FI": "Döljä ARA-boende",
+		"sv-FI": "Visa inte ARA-boende",
 	},
 	filterAraDesc1: {
 		"fi-FI":
 			"ARA-kohde tarkoittaa hoivakotia, jonka asiakkaan varallisuus ei saa ylittää tiettyjä rajoja.",
 		"sv-FI":
-			"sv_ARA-kohde tarkoittaa hoivakotia, jonka asiakkaan varallisuus ei saa ylittää tiettyjä rajoja.",
+			"Med ARA-bostäd avses ett vårdhem där klientens förmögenhet inte får överskrida vissa gränser.",
 	},
 	filterAraDesc2: {
 		"fi-FI":
 			"Ei ARA-kohde tarkoittaa hoivakotia, jossa ei ole asiakkaan varallisuutta koskevia rajoituksia.",
 		"sv-FI":
-			"sv_Ei ARA-kohde tarkoittaa hoivakotia, jossa ei ole asukkaan varallisuutta koskevia rajoituksia.",
+			"Med Inte ARA-bostäd avses ett vårdhem där det inte finns några begränsningar för klientens förmögenhet.",
 	},
-	serviceLanguage: { "fi-FI": "Palvelukieli", "sv-FI": "Språk" },
+	serviceLanguage: { "fi-FI": "Palvelukieli", "sv-FI": "Servicespråk" },
 	serviceLanguageLabel: {
 		"fi-FI": "Hoivakodin palvelukieli",
-		"sv-FI": "Vårhemets pråk",
+		"sv-FI": "Vårdhemmets servicespråk",
 	},
 	filterFinnish: { "fi-FI": "Suomi", "sv-FI": "Finska" },
 	filterSwedish: { "fi-FI": "Ruotsi", "sv-FI": "Svenska" },
 	filterYes: { "fi-FI": "Kyllä", "sv-FI": "Ja" },
 	filterNo: { "fi-FI": "Ei", "sv-FI": "Nej" },
-	filterLocation: { "fi-FI": "Sijainti", "sv-FI": "Location" },
+	filterLocation: { "fi-FI": "Sijainti", "sv-FI": "Läge" },
 	filterLAH: {
 		"fi-FI": "Lyhytaikainen asuminen",
 		"sv-FI": "Kortvarigt boende",
 	},
 	filterLAHText: {
 		"fi-FI": "Näytä vain lyhytaikaista asumista tarjoavat hoivakodit.",
-		"sv-FI": "Visa bara platser med kortvarigt boende.",
+		"sv-FI": "Visa bara de vårdhem som erbjuder kortvarigt boende",
 	},
 	alsoLAHText: {
 		"fi-FI": "Myös lyhytaikaista asumista",
@@ -303,20 +304,20 @@ export const translations = {
 	filterSelections: { "fi-FI": "valintaa", "sv-FI": "val" },
 	linkBacktoList: {
 		"fi-FI": "Takaisin hoivakotilistaukseen",
-		"sv-FI": "Tillbaka till vårhemlist",
+		"sv-FI": "tillbaka till listan över vårdhem",
 	},
 	anchorDetailsBox: {
 		"fi-FI": ">> Hoivakodin yhteystiedot",
-		"sv-FI": ">> sv_Hoivakodin yhteystiedot",
+		"sv-FI": ">> Kontaktuppgifter",
 	},
-	basicInformation: { "fi-FI": "Perustiedot", "sv-FI": "Grundläggande" },
+	basicInformation: { "fi-FI": "Perustiedot", "sv-FI": "Basuppgifter" },
 	owner: { "fi-FI": "Omistaja", "sv-FI": "Ägare" },
 	yearofConst: { "fi-FI": "Rakennusvuosi", "sv-FI": "Byggnadsår" },
 	apartmentSize: {
 		"fi-FI": "Asuntojen neliömäärä",
-		"sv-FI": "Bostadens storlek",
+		"sv-FI": "Bostädernas yta",
 	},
-	apartmentFurnitureLabel: { "fi-FI": "Peruskalustus", "sv-FI": "Möbler" },
+	apartmentFurnitureLabel: { "fi-FI": "Peruskalustus", "sv-FI": "Basmöblering" },
 	apartmentFurnitureText: {
 		"fi-FI":
 			"Asunnoissa on sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytystila ja kattovalaisin. Asiakas voi tuoda asuntoon omia kalusteita ja tavaroita.",
@@ -325,44 +326,44 @@ export const translations = {
 	rent: { "fi-FI": "Vuokran määrä", "sv-FI": "Hyra" },
 	LAHapartments: {
 		"fi-FI": "Lyhytaikaisen asumisen asuntoja",
-		"sv-FI": "Kortvarigt boende",
+		"sv-FI": "Bostäder för kortvarigt boende",
 	},
 	foodHeader: { "fi-FI": "Ruoka", "sv-FI": "Mat" },
 	cookingMethod: {
 		"fi-FI": "Ruoan valmistuksen tapa",
-		"sv-FI": "Sättet att laga mat",
+		"sv-FI": "Sättet att tillreda mat",
 	},
-	ownKitchen: { "fi-FI": "Oma keittiö", "sv-FI": "Eget kök" },
+	ownKitchen: { "fi-FI": "Oma keittiö", "sv-FI": "Eget tillredningskök" },
 	foodMoreInfo: {
 		"fi-FI": "Lisätietoa ruoasta",
-		"sv-FI": "Mera information om mat",
+		"sv-FI": "Mer information om maten",
 	},
 	linkMenu: { "fi-FI": "Ruokalista", "sv-FI": "Matlist" },
 	activies: { "fi-FI": "Toiminta", "sv-FI": "Aktiviteter" },
 	outdoorActivies: {
 		"fi-FI": "Ulkoilu\u00admahdollisuudet",
-		"sv-FI": "Friluftsliv",
+		"sv-FI": "Friluftsmöjligheter",
 	},
 	visitingInfo: {
 		"fi-FI": "Hoivakotiin tutustuminen",
-		"sv-FI": "Besökinformation",
+		"sv-FI": "Bekanta dig med vårdhemmet",
 	},
 	accessibility: { "fi-FI": "Esteettömyys", "sv-FI": "Tillgänglighet" },
 	personnel: { "fi-FI": "Henkilökunta", "sv-FI": "Personnel" },
 	otherServices: {
 		"fi-FI": "Muut hoivakodin palvelut",
-		"sv-FI": "Andra vårdhemstjänster",
+		"sv-FI": "Vårdhemmets övriga tjänster",
 	},
 	nearbyServices: {
 		"fi-FI": "Lähellä olevat palvelut",
 		"sv-FI": "Närliggande tjänster ",
 	},
-	contactInfo: { "fi-FI": "Yhteystiedot", "sv-FI": "Kontaktinformation" },
-	directions: { "fi-FI": "Kulkuyhteydet", "sv-FI": "Riktingar" },
-	webpage: { "fi-FI": "Hoivakodin verkkosivut", "sv-FI": "Websidan" },
+	contactInfo: { "fi-FI": "Yhteystiedot", "sv-FI": "Kontaktuppgifter" },
+	directions: { "fi-FI": "Kulkuyhteydet", "sv-FI": "Trafikförbindelser" },
+	webpage: { "fi-FI": "Hoivakodin verkkosivut", "sv-FI": "Vårdhemmets webbplats" },
 	linkMoreInfoOutdoor: {
 		"fi-FI": "Lisätietoa ulkoilumahdollisuuksista",
-		"sv-FI": "Läs mera om friluftsliv",
+		"sv-FI": "Läs mera om friluftsmöjligheter",
 	},
 	linkMoreInfoActivies: {
 		"fi-FI": "Lisätietoa toiminnasta",
@@ -375,7 +376,7 @@ export const translations = {
 	monthShort: { "fi-FI": "kk", "sv-FI": "mm" },
 	pageAccessibilityHeader: {
 		"fi-FI": "Saavutettavuusseloste",
-		"sv-FI": "sv_Saavutettavuusseloste",
+		"sv-FI": "Tillgänglighetsutlåtande",
 	},
 	pageAccessibilityBody: {
 		"fi-FI":
@@ -385,15 +386,15 @@ export const translations = {
 	},
 	footerLinkPrivacy: {
 		"fi-FI": "Tietosuojaseloste",
-		"sv-FI": "sv_Tietosuojaseloste",
+		"sv-FI": "Dataskyddsbeskrivning",
 	},
 	footerLinkAccessibility: {
 		"fi-FI": "Saavutettavuusseloste",
-		"sv-FI": "sv_Saavutettavuusseloste",
+		"sv-FI": "Tillgänglighetsutlåtande",
 	},
 	footerLinkFeedback: {
 		"fi-FI": "Anna palautetta sivustosta",
-		"sv-FI": "sv_Anna palautetta sivustosta",
+		"sv-FI": "Ge respons på webbplatsen",
 	},
 	vacancyTrue: {
 		"fi-FI": "Vapaita asuntoja",
@@ -419,7 +420,7 @@ export const translations = {
 	},
 	btnShowImages: {
 		"fi-FI": "Katso kuvat",
-		"sv-FI": "Visa bilder",
+		"sv-FI": "Se bilderna",
 	},
 	espoo: {
 		"fi-FI": "Espoo",
