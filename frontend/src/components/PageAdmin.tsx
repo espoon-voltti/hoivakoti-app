@@ -40,6 +40,16 @@ const getNursingHomeSecrets = async (password: string): Promise<void> => {
 	);
 };
 
+const dropAndRecreateTables = async (password: string): Promise<void> => {
+	return await axios.post(
+		`${config.API_URL}/nursing-homes/drop-table`,
+		// eslint-disable-next-line @typescript-eslint/camelcase
+		{
+			adminPassword: password,
+		},
+	);
+};
+
 const PageAdmin: FC = () => {
 	const [nursinghomesContent, setNursinghomesContent] = useState("");
 	const [picturesContent, setPicturesContent] = useState("");
@@ -113,6 +123,13 @@ const PageAdmin: FC = () => {
 			});
 	};
 
+	const onRecreateButtonClicked = (event: any) => {
+		if (key)
+			dropAndRecreateTables(key).then((response: any) => {
+				console.log("Done");
+			});
+	};
+
 	return (
 		<div className="page-admin">
 			<form onSubmit={handleSubmit} noValidate>
@@ -149,8 +166,8 @@ const PageAdmin: FC = () => {
 						className=""
 					/>
 				) : (
-						<input type="submit" value="Lähetä" />
-					)}
+					<input type="submit" value="Lähetä" />
+				)}
 				<br />
 				{uploadingInfoResult}
 				<br />
@@ -168,6 +185,15 @@ const PageAdmin: FC = () => {
 					<br />
 				</div>
 			))}
+
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+
+			<button onClick={onRecreateButtonClicked}>
+				Uudelleenluo tietokanat
+			</button>
 		</div>
 	);
 };
