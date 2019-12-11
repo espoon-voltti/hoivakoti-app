@@ -117,6 +117,7 @@ const PageNursingHome: FC = () => {
 	// const filterSwedish = useT("filterSwedish");
 	const filterYes = useT("filterYes");
 	const filterNo = useT("filterNo");
+	const filterARABoth = useT("filterARABoth");
 
 	const images =
 		nursingHome &&
@@ -240,7 +241,11 @@ const PageNursingHome: FC = () => {
 							<DefinitionItem
 								term={filterAraLabel}
 								definition={
-									nursingHome.ara ? filterYes : filterNo
+									nursingHome.ara === "Kyllä"
+										? filterYes
+										: nursingHome.ara === "Ei"
+										? filterNo
+										: filterARABoth
 								}
 							/>
 							<DefinitionItem

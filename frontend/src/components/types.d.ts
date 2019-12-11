@@ -18,7 +18,7 @@ export interface NursingHome {
 	district: string;
 	owner: string;
 	address: string;
-	ara?: boolean;
+	ara?: string;
 	www?: string;
 	apartment_count?: number;
 	language?: string;

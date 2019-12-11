@@ -63,8 +63,10 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				</div>
 
 				<div>
-					{nursinghome && nursinghome.ara && (
-						<div className="card-list-item__tag">{filterAraLabel}</div>
+					{nursinghome && nursinghome.ara !== "Ei" && (
+						<div className="card-list-item__tag">
+							{filterAraLabel}
+						</div>
 					)}
 					<div className="card-list-item__text">
 						<span className="nowrap">

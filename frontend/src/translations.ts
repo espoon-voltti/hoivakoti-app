@@ -282,6 +282,7 @@ export const translations = {
 	filterSwedish: { "fi-FI": "Ruotsi", "sv-FI": "Svenska" },
 	filterYes: { "fi-FI": "Kyllä", "sv-FI": "Ja" },
 	filterNo: { "fi-FI": "Ei", "sv-FI": "Nej" },
+	filterARABoth: { "fi-FI": "Osittain", "sv-FI": "Partiellt" },
 	filterLocation: { "fi-FI": "Sijainti", "sv-FI": "Location" },
 	filterLAH: {
 		"fi-FI": "Lyhytaikainen asuminen",
@@ -449,6 +450,10 @@ export const translations = {
 		"fi-FI": "Tapiola",
 		"sv-FI": "Hagalund",
 	},
+	hanko: {
+		"fi-FI": "Hanko",
+		"sv-FI": "Hangö",
+	},
 	helsinki: {
 		"fi-FI": "Helsinki",
 		"sv-FI": "Helsingfors",
@@ -476,6 +481,10 @@ export const translations = {
 	kerava: {
 		"fi-FI": "Kerava",
 		"sv-FI": "Kervo",
+	},
+	kirkkonummi: {
+		"fi-FI": "Kirkkonummi",
+		"sv-FI": "Kyrkslätt",
 	},
 	lohja: {
 		"fi-FI": "Lohja",

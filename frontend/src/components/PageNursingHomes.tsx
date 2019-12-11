@@ -56,12 +56,14 @@ const PageNursingHomes: FC = () => {
 		useT("tapiola"),
 	];
 	const otherCities = [
+		useT("hanko"),
 		useT("helsinki"),
 		useT("hyvinkää"),
 		useT("järvenpää"),
 		useT("karjaa"),
 		useT("karkkila"),
 		useT("kerava"),
+		useT("kirkkonummi"),
 		useT("lohja"),
 		useT("nurmijärvi"),
 		useT("siuntio"),
@@ -71,13 +73,15 @@ const PageNursingHomes: FC = () => {
 		useT("vihti"),
 	];
 
-	const citiesToSwedish = {
+	const citiesToFinnish = {
 		Helsingfors: "Helsinki",
 		Hyvinge: "Hyvinkää",
 		Träskända: "Järvenpää",
 		Karis: "Karjaa",
+		Hangö: "Hanko",
 		Högfors: "Karkkila",
 		Kervo: "Kerava",
+		Kyrkslätt: "Kirkkonummi",
 		Lojo: "Lohja",
 		Nurmijärvi: "Nurmijärvi",
 		Sjundeå: "Siuntio",
@@ -85,7 +89,7 @@ const PageNursingHomes: FC = () => {
 		Tusby: "Tuusula",
 		Vanda: "Vantaa",
 		Vichtis: "Vihti",
-	}
+	};
 
 	useEffect(() => {
 		axios
@@ -169,10 +173,9 @@ const PageNursingHomes: FC = () => {
 					(!searchFilters.alue.includes(nursinghome.district) &&
 						!searchFilters.alue.includes(nursinghome.city)) &&
 						!searchFilters.alue.includes(
-							(citiesToSwedish as any)[nursinghome.city])
+							(citiesToFinnish as any)[nursinghome.city])
 				)
 				{
-					console.log((citiesToSwedish as any)[nursinghome.city]);
 					return false;
 				}
 				if (
@@ -183,7 +186,8 @@ const PageNursingHomes: FC = () => {
 					return false;
 				if (
 					searchFilters.ara !== undefined &&
-					nursinghome.ara !== searchFilters.ara
+					((nursinghome.ara === "Kyllä" && !searchFilters.ara) ||
+						(nursinghome.ara === "Ei" && searchFilters.ara))
 				)
 					return false;
 				if (searchFilters.lah && nursinghome.lah !== searchFilters.lah)

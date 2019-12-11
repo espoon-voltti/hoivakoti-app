@@ -60,7 +60,7 @@ async function CreateNursingHomeTable(): Promise<void> {
 			table.string("name");
 			table.string("owner");
 			table.string("address");
-			table.boolean("ara");
+			table.string("ara");
 			table.string("www");
 			table.integer("apartment_count");
 			table.string("language");
@@ -160,8 +160,8 @@ export async function InsertNursingHomeToDB(
 	const geoloc = JSON.parse(
 		await rp(
 			"https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-				geo_query +
-				".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
+			geo_query +
+			".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
 		),
 	);
 

@@ -48,7 +48,7 @@ router.get("/api/nursing-homes/delete-all", async ctx => {
 	ctx.body = await DeleteNursingHomes(ctx);
 });
 
-router.post("/api/nursing-homes/drop_table", async ctx => {
+router.post("/api/nursing-homes/drop-table", async ctx => {
 	ctx.body = await DropAndRecreateTables(ctx);
 });
 

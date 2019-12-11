@@ -6,7 +6,7 @@ export interface NursingHome {
 	district?: string;
 	owner: string;
 	address: string;
-	ara?: boolean;
+	ara?: string;
 	www?: string;
 	apartment_count?: number;
 	language?: string;
@@ -51,7 +51,7 @@ export const nursing_home_columns_info: any = [
 	{ csv: "Hoivakodin nimi", sql: "name", type: "string" },
 	{ csv: "Omistajan nimi", sql: "owner", type: "string" },
 	{ csv: "Käyntiosoite", sql: "address", type: "string" },
-	{ csv: "ARA-kohde", sql: "ara", type: "boolean" },
+	{ csv: "ARA-kohde", sql: "ara", type: "string" },
 	{ csv: "Verkkosivujen osoite", sql: "www", type: "string" },
 	{ csv: "Asuntojen määrä", sql: "apartment_count", type: "integer" },
 	{ csv: "Palvelukieli", sql: "language", type: "string" },
