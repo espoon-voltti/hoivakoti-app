@@ -195,6 +195,10 @@ $hero-border: 5px solid white;
 	font-weight: 300;
 	color: $headline-color;
 	margin-bottom: 10px;
+	@media (max-width: 640px) {
+		font-size: 36px;
+		line-height: 1.1em;
+	}
 }
 
 .nursinghome-title-vacancy-status-badge {
@@ -215,6 +219,11 @@ $hero-border: 5px solid white;
 	font-weight: 300;
 	margin-top: 64px;
 	line-height: 40px;
+	@media (max-width: 640px) {
+		font-size: 32px;
+		line-height: 1.1em;
+		margin-bottom:25px;
+	}
 }
 
 .nursinghome-info p {

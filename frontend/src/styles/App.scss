@@ -60,7 +60,9 @@ $header-height: 80px;
 	flex-direction: column;
 	height: auto;
 	min-height: $header-height;
-
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
 	@media (min-width: 1024px) {
 		flex-direction: row;
 	}

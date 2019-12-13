@@ -18,7 +18,7 @@ const Footer: FC = () => {
 
 	return (
 		<footer
-			className="header footer"
+			className="footer"
 			style={{ borderTop: "1px solid #e8e8e8" }}
 		>
 			<div className="logo-container">
