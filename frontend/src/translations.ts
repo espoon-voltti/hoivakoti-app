@@ -558,4 +558,24 @@ export const translations = {
 		"fi-FI": "Ei päivitetty",
 		"sv-FI": "Inte uppdaterad",
 	},
+	error404Title: {
+		"fi-FI": "Hups! Etsimääsi sivua ei löytynyt.",
+		"sv-FI": "Sidan du letade efter kan inte hittas",
+	},
+	errorGeneralTitle: {
+		"fi-FI": "Palvelussa on häiriö.",
+		"sv-FI": "Systemfel",
+	},
+	error404Text: {
+		"fi-FI": "Luultavasti etsimäsi sivun osoite on muuttunut tai sivua ei ole enää olemassa.",
+		"sv-FI": "Adressen på sidan du letar efter har antagligen ändrats eller finns inte längre.",
+	},
+	errorGeneralText: {
+		"fi-FI": "Yritä myöhemmin uudelleen.",
+		"sv-FI": "Försök igen senare.",
+	},
+	backToFrontPage: {
+		"fi-FI": "Palaa etusivulle",
+		"sv-FI": "Tillbaka till förstasidan",
+	},
 };
