@@ -406,12 +406,12 @@ export const translations = {
 		"sv-FI": "Ge respons på webbplatsen",
 	},
 	vacancyTrue: {
-		"fi-FI": "Vapaita asuntoja",
-		"sv-FI": "Lediga bostäder",
+		"fi-FI": "Vapaita asuntoja (pitkäaikainen)",
+		"sv-FI": "Lediga bostäder (långsiktigt)",
 	},
 	vacancyFalse: {
-		"fi-FI": "Ei vapaita asuntoja",
-		"sv-FI": "Inga lediga bostäder",
+		"fi-FI": "Ei vapaita asuntoja (pitkäaikainen)",
+		"sv-FI": "Inga lediga bostäder (långsiktigt)",
 	},
 	pageUpdateTitle: {
 		"fi-FI": "Päivitä vapaiden asuntojen tilanne",
@@ -541,5 +541,21 @@ export const translations = {
 	imageCarouselCloseText: {
 		"fi-FI": "Sulje (esc)",
 		"sv-FI": "Stäng (esc)",
+	},
+	nursingHome: {
+		"fi-FI": "Hoivakoti",
+		"sv-FI": "Vårdhem",
+	},
+	status: {
+		"fi-FI": "Tilanne",
+		"sv-FI": "Status",
+	},
+	lastUpdate: {
+		"fi-FI": "Viimeksi päivitetty",
+		"sv-FI": "Senast uppdaterad",
+	},
+	noUpdate: {
+		"fi-FI": "Ei päivitetty",
+		"sv-FI": "Inte uppdaterad",
 	},
 };

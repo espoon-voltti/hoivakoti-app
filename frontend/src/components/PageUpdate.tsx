@@ -84,6 +84,12 @@ const PageUpdate: FC = () => {
 	const labelTrue = useT("vacancyTrue");
 	const labelFalse = useT("vacancyFalse");
 	const loadingText = useT("loadingText");
+	const nursingHomeName = useT("nursingHome");
+	const status = useT("status");
+	const lastUpdate = useT("lastUpdate");
+	const noUpdate = useT("noUpdate");
+	const btnSave = useT("btnSave");
+
 
 	const updatePopupSaved = "Tallennettu!";
 	const updatePopupSaving = "Tallennetaan...";
@@ -107,11 +113,11 @@ const PageUpdate: FC = () => {
 					<>
 						<h1 className="page-update-title">{title}</h1>
 						<p className="page-update-data">
-							<strong>Hoivakodin nimi: </strong>
+							<strong>{nursingHomeName}: </strong>
 							{nursingHome.name}
 						</p>
 						<p className="page-update-data">
-							<strong>Tilanne: </strong>
+							<strong>{status}: </strong>
 							{vacancyStatus
 								? vacancyStatus.has_vacancy
 									? labelTrue
@@ -119,11 +125,11 @@ const PageUpdate: FC = () => {
 								: loadingText}
 						</p>
 						<p className="page-update-data">
-							<strong>Tietoa viimeksi päivitetty: </strong>
+							<strong>{lastUpdate} </strong>
 							{vacancyStatus
 								? formatDate(
 										vacancyStatus.vacancy_last_updated_at,
-								  ) || " (ei päivitetty)"
+								  ) || {noUpdate}
 								: loadingText}
 						</p>
 						<p className="page-update-intro">{intro}</p>
@@ -155,7 +161,7 @@ const PageUpdate: FC = () => {
 								<input
 									type="submit"
 									className="page-update-submit"
-									value="Tallenna"
+									value={btnSave}
 								/>
 								{popupState && (
 									<span className="page-update-popup">
