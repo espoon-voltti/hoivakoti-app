@@ -406,12 +406,12 @@ export const translations = {
 		"sv-FI": "Ge respons på webbplatsen",
 	},
 	vacancyTrue: {
-		"fi-FI": "Vapaita asuntoja (pitkäaikainen)",
-		"sv-FI": "Lediga bostäder (långsiktigt)",
+		"fi-FI": "Vapaita pitkäaikaisasuntoja",
+		"sv-FI": "Lediga långsiktiga bostäder",
 	},
 	vacancyFalse: {
-		"fi-FI": "Ei vapaita asuntoja (pitkäaikainen)",
-		"sv-FI": "Inga lediga bostäder (långsiktigt)",
+		"fi-FI": "Ei vapaita pitkäaikaisasuntoja",
+		"sv-FI": "Inga lediga långsiktiga bostäder",
 	},
 	pageUpdateTitle: {
 		"fi-FI": "Päivitä vapaiden asuntojen tilanne",
