@@ -502,6 +502,10 @@ export const translations = {
 		"fi-FI": "Nurmijärvi",
 		"sv-FI": "Nurmijärvi",
 	},
+	raasepori: {
+		"fi-FI": "Raasepori",
+		"sv-FI": "Raseborg",
+	},
 	siuntio: {
 		"fi-FI": "Siuntio",
 		"sv-FI": "Sjundeå",
