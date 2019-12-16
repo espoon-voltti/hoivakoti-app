@@ -60,7 +60,9 @@ $header-height: 80px;
 	flex-direction: column;
 	height: auto;
 	min-height: $header-height;
-
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
 	@media (min-width: 1024px) {
 		flex-direction: row;
 	}
@@ -373,6 +375,10 @@ $header-height: 80px;
 		margin-left: auto;
 	}
 
+	.header {
+		padding: 0 0px 0 10px;
+	}
+
 	.title {
 		display: none;
 	}
@@ -383,6 +389,10 @@ $header-height: 80px;
 		margin: 0;
 	}
 	.logo {
-		margin-right: 30px;
+		margin-right: 10px;
+		margin-left:0;
 	}
+	.nav-menu--language li.separator {
+	padding: 0 5px;
+}
 }

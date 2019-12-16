@@ -407,20 +407,20 @@ export const translations = {
 	},
 	vacancyTrue: {
 		"fi-FI": "Vapaita asuntoja",
-		"sv-FI": "sv_Vapaita paikkoja",
+		"sv-FI": "Lediga bostäder",
 	},
 	vacancyFalse: {
 		"fi-FI": "Ei vapaita asuntoja",
-		"sv-FI": "sv_Ei vapaita paikkoja",
+		"sv-FI": "Inga lediga bostäder",
 	},
 	pageUpdateTitle: {
 		"fi-FI": "Päivitä vapaiden asuntojen tilanne",
-		"sv-FI": "sv_Päivitä hoivakodin tietoja",
+		"sv-FI": "Uppdatera situationen för lediga bostäder",
 	},
 	pageUpdateIntro: {
 		"fi-FI": "Valitse hoivakodin vapaiden asuntojen tilanne:",
 		"sv-FI":
-			"sv_Tällä sivulla voit päivittää hoivakodin tietoja. Valitse hoivakodin vapaiden asuntojen tilanne allaolevalla lomakkeella:",
+			"Välj situationen för lediga bostäder på vårdhemmet:",
 	},
 	clearFilters: {
 		"fi-FI": "Poista rajaukset",
