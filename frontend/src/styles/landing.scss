@@ -5,13 +5,15 @@ $column-width: 1024px;
 .jumbotron {
 	width: 100%;
 	max-height: calc(100vh - 80px - 200px);
-	min-height: 350px;
+	min-height: 400px;
 	height: 100vh;
 	background: $primary-blue url('/hero-image.jpg') 50% 50% no-repeat;
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
+	
+
 }
 
 .jumbotron__header {
@@ -24,6 +26,9 @@ $column-width: 1024px;
 	display: block;
 	line-height: 52px;
 	text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+	@media screen and (max-height: 800px) {
+		margin-bottom: 40px;
+	}
 }
 
 .location-picker {
@@ -37,6 +42,9 @@ $column-width: 1024px;
 	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
 	padding: 20px 30px;
 	margin: 0 auto 80px auto;
+	@media screen and (max-height: 800px) {
+		margin-bottom: 45px;
+	}
 }
 
 .location-picker-label {
