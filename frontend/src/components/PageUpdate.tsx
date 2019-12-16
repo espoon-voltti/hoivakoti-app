@@ -88,7 +88,7 @@ const PageUpdate: FC = () => {
 	const status = useT("status");
 	const lastUpdate = useT("lastUpdate");
 	const noUpdate = useT("noUpdate");
-	const btnSave = useT("btnSave");
+	const btnSave = useT("btnSave")
 
 
 	const updatePopupSaved = "Tallennettu!";
@@ -125,11 +125,11 @@ const PageUpdate: FC = () => {
 								: loadingText}
 						</p>
 						<p className="page-update-data">
-							<strong>{lastUpdate} </strong>
+							<strong>{lastUpdate}: </strong>
 							{vacancyStatus
 								? formatDate(
 										vacancyStatus.vacancy_last_updated_at,
-								  ) || {noUpdate}
+								  ) || noUpdate
 								: loadingText}
 						</p>
 						<p className="page-update-intro">{intro}</p>
