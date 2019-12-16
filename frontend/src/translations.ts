@@ -262,7 +262,7 @@ export const translations = {
 	filterAraLabel2: { "fi-FI": "Ei ARA-kohde", "sv-FI": "Inte ARA-bostäd" },
 	filterAraText2: {
 		"fi-FI": "Älä näytä ARA-kohteita",
-		"sv-FI": "Visa inte ARA-boende",
+		"sv-FI": "Visa inte ARA-bostäd",
 	},
 	filterAraDesc1: {
 		"fi-FI":
@@ -285,7 +285,7 @@ export const translations = {
 	filterSwedish: { "fi-FI": "Ruotsi", "sv-FI": "Svenska" },
 	filterYes: { "fi-FI": "Kyllä", "sv-FI": "Ja" },
 	filterNo: { "fi-FI": "Ei", "sv-FI": "Nej" },
-	filterARABoth: { "fi-FI": "Osittain", "sv-FI": "Partiellt" },
+	filterARABoth: { "fi-FI": "Osittain ARA-kohde", "sv-FI": "Delvis ARA-bostäd" },
 	filterLocation: { "fi-FI": "Sijainti", "sv-FI": "Läge" },
 	filterLAH: {
 		"fi-FI": "Lyhytaikainen asuminen",
