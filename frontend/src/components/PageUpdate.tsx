@@ -88,11 +88,11 @@ const PageUpdate: FC = () => {
 	const status = useT("status");
 	const lastUpdate = useT("lastUpdate");
 	const noUpdate = useT("noUpdate");
-	const btnSave = useT("btnSave")
+	const btnSave = useT("btnSave");
 
 
-	const updatePopupSaved = "Tallennettu!";
-	const updatePopupSaving = "Tallennetaan...";
+	const updatePopupSaved = useT("saved");
+	const updatePopupSaving = useT("saving");
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,

@@ -578,4 +578,12 @@ export const translations = {
 		"fi-FI": "Palaa etusivulle",
 		"sv-FI": "Tillbaka till förstasidan",
 	},
+	saving: {
+		"fi-FI": "Tallennetaan...",
+		"sv-FI": "Sparar...",
+	},
+	saved: {
+		"fi-FI": "Muutokset tallennettu.",
+		"sv-FI": "Data har sparats.",
+	},
 };
