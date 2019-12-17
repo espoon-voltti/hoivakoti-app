@@ -4,7 +4,6 @@ import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../i18n";
 import i18next from "i18next";
 
-
 const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
 };

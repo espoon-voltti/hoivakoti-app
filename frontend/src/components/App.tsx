@@ -15,6 +15,8 @@ import PageAccessibility from "./PageAccessibility";
 import Title from "./Title";
 import PageUpdate from "./PageUpdate";
 import PageAdmin from "./PageAdmin";
+import ReactGA from "react-ga";
+import { createBrowserHistory } from "history";
 
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
@@ -23,6 +25,21 @@ const App: React.FC = () => {
 		if (currentPath === "/")
 			window.location.pathname = `/${currentLanguage}/`;
 	}, [currentLanguage, currentPath]);
+
+	const _doNotTrack = navigator.doNotTrack
+		? navigator.doNotTrack === "1" || navigator.doNotTrack === "yes"
+		: window.doNotTrack
+		? window.doNotTrack === "1"
+		: false;
+	if (!_doNotTrack) {
+		ReactGA.initialize("UA-154249998-1");
+	}
+
+	const history = createBrowserHistory();
+	history.listen(location => {
+		ReactGA.pageview(location.pathname + location.search);
+	});
+
 	return (
 		<ErrorBoundary>
 			<div id="app">
@@ -31,7 +48,6 @@ const App: React.FC = () => {
 					<Title />
 					<Header />
 					<main id="content">
-
 						<Switch>
 							<Route exact path="/" component={PageLanding} />
 							<Route
