@@ -17,6 +17,7 @@ import PageUpdate from "./PageUpdate";
 import PageAdmin from "./PageAdmin";
 import ReactGA from "react-ga";
 import { createBrowserHistory } from "history";
+import config from "./config";
 
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
@@ -29,10 +30,12 @@ const App: React.FC = () => {
 	const _doNotTrack = navigator.doNotTrack
 		? navigator.doNotTrack === "1" || navigator.doNotTrack === "yes"
 		: window.doNotTrack
-		? window.doNotTrack === "1"
-		: false;
+			? window.doNotTrack === "1"
+			: false;
 	if (!_doNotTrack) {
-		ReactGA.initialize("UA-154249998-1");
+		ReactGA.initialize("UA-154249998-1", {
+			testMode: config.NODE_ENV === "test",
+		});
 	}
 
 	const history = createBrowserHistory();
