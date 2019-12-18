@@ -254,27 +254,27 @@ export const translations = {
 		"fi-FI": "Rajaa tuloksia:",
 		"sv-FI": "Avgränsa resultaten:",
 	},
-	filterAraLabel: { "fi-FI": "ARA-kohde", "sv-FI": "ARA-bostäd" },
+	filterAraLabel: { "fi-FI": "ARA-kohde", "sv-FI": "ARA-objekt" },
 	filterAraText: {
 		"fi-FI": "Näytä vain ARA-kohteet",
-		"sv-FI": "Visa bara ARA-bostäd",
+		"sv-FI": "Visa bara ARA-objekten",
 	},
-	filterAraLabel2: { "fi-FI": "Ei ARA-kohde", "sv-FI": "Inte ARA-bostäd" },
+	filterAraLabel2: { "fi-FI": "Ei ARA-kohde", "sv-FI": "Inte ARA-objekt" },
 	filterAraText2: {
 		"fi-FI": "Älä näytä ARA-kohteita",
-		"sv-FI": "Visa inte ARA-bostäd",
+		"sv-FI": "Visa inte ARA-objekten",
 	},
 	filterAraDesc1: {
 		"fi-FI":
 			"ARA-kohde tarkoittaa hoivakotia, jonka asiakkaan varallisuus ei saa ylittää tiettyjä rajoja.",
 		"sv-FI":
-			"Med ARA-bostäd avses ett vårdhem där klientens förmögenhet inte får överskrida vissa gränser.",
+			"Med ARA-objekt avses ett vårdhem där klientens förmögenhet inte får överskrida vissa gränser.",
 	},
 	filterAraDesc2: {
 		"fi-FI":
 			"Ei ARA-kohde tarkoittaa hoivakotia, jossa ei ole asiakkaan varallisuutta koskevia rajoituksia.",
 		"sv-FI":
-			"Med Inte ARA-bostäd avses ett vårdhem där det inte finns några begränsningar för klientens förmögenhet.",
+			"Med Inte ARA-objekt avses ett vårdhem där det inte finns några begränsningar för klientens förmögenhet.",
 	},
 	serviceLanguage: { "fi-FI": "Palvelukieli", "sv-FI": "Servicespråk" },
 	serviceLanguageLabel: {
@@ -301,7 +301,7 @@ export const translations = {
 	},
 	btnClear: { "fi-FI": "Tyhjennä", "sv-FI": "Rensa" },
 	btnSave: { "fi-FI": "Tallenna", "sv-FI": "Spara" },
-	summaryLabel: { "fi-FI": "hoivakotia", "sv-FI": "vårhem" },
+	summaryLabel: { "fi-FI": "hoivakotia", "sv-FI": "vårdhem" },
 	loadingText: { "fi-FI": "Ladataan...", "sv-FI": "Laddar..." },
 	numApartments: { "fi-FI": "Asuntojen määrä", "sv-FI": "Antal bostäder" },
 	filterSelections: { "fi-FI": "valintaa", "sv-FI": "val" },
