@@ -4,7 +4,12 @@ import "../styles/App.scss";
 import PageNursingHomes from "./PageNursingHomes";
 import PageNursingHome from "./PageNursingHome";
 import PageLanding from "./PageLanding";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	useLocation,
+} from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import ErrorBoundary from "./ErrorBoundary";
@@ -16,7 +21,6 @@ import Title from "./Title";
 import PageUpdate from "./PageUpdate";
 import PageAdmin from "./PageAdmin";
 import ReactGA from "react-ga";
-import { createBrowserHistory } from "history";
 import config from "./config";
 
 const App: React.FC = () => {
@@ -30,18 +34,13 @@ const App: React.FC = () => {
 	const _doNotTrack = navigator.doNotTrack
 		? navigator.doNotTrack === "1" || navigator.doNotTrack === "yes"
 		: window.doNotTrack
-			? window.doNotTrack === "1"
-			: false;
+		? window.doNotTrack === "1"
+		: false;
 	if (!_doNotTrack) {
 		ReactGA.initialize("UA-154249998-1", {
 			testMode: config.NODE_ENV === "test",
 		});
 	}
-
-	const history = createBrowserHistory();
-	history.listen(location => {
-		ReactGA.pageview(location.pathname + location.search);
-	});
 
 	return (
 		<ErrorBoundary>

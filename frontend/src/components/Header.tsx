@@ -3,6 +3,7 @@ import { NavLink, Link, useLocation } from "react-router-dom";
 import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../i18n";
 import i18next from "i18next";
+import ReactGA from "react-ga";
 
 const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
@@ -15,8 +16,9 @@ const Header: FC = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 	useEffect(() => {
+		ReactGA.pageview(location.pathname + location.search);
 		setIsMobileMenuOpen(false);
-	}, [location.pathname]);
+	}, [location.pathname, location.search]);
 
 	return (
 		<header className="header">
