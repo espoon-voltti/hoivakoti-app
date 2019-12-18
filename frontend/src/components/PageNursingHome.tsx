@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React, { useState, useEffect, FC } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import "../styles/PageNursingHome.scss";
 import config from "./config";
 import axios from "axios";
@@ -37,7 +37,13 @@ export interface GetNursingHomeResponse {
 	data: NursingHome;
 }
 
-const PageNursingHome: FC = () => {
+type PageNursingHomeProps = {
+	querystring?: string;
+};
+
+const PageNursingHome: FC<PageNursingHomeProps> = (
+	props: PageNursingHomeProps,
+) => {
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [picCaptions, setPicCaptions] = useState<Record<
 		string,
@@ -47,6 +53,8 @@ const PageNursingHome: FC = () => {
 	const [lightboxState, setLightboxState] = useState<"hidden" | number>(
 		"hidden",
 	);
+
+	const location = useLocation();
 
 	useEffect(() => {
 		axios
@@ -198,7 +206,10 @@ const PageNursingHome: FC = () => {
 				<div className="nursinghome-info-container">
 					<div className="nursinghome-info">
 						<Link
-							to="/hoivakodit"
+							to={
+								("/hoivakodit" +
+									location.state.fromFilterQuery) as string
+							}
 							className="nursinghome-back-link"
 						>
 							{linkBacktoList}

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import "../styles/CardNursingHome.scss";
 import { NursingHome } from "./types";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useT } from "../i18n";
 import config from "./config";
 import VacancyStatusBadge from "./VacancyStatusBadge";
@@ -15,6 +15,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	nursinghome,
 	className,
 }) => {
+	const { search } = useLocation();
 	const serviceLanguage = useT("serviceLanguage");
 	const numApartments = useT("numApartments");
 	const alsoLAHText = useT("alsoLAHText");
@@ -31,7 +32,12 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			`/pics/overview_outside/${imageDigest}`;
 	return (
 		<Link
-			to={`/hoivakodit/${nursinghome.id}`}
+			to={{
+				pathname: `/hoivakodit/${nursinghome.id}`,
+				state: {
+					fromFilterQuery: search,
+				},
+			}}
 			className={`card-list-item ${className || ""}`}
 		>
 			<div
@@ -70,11 +76,13 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						</div>
 					)}
 
-					{nursinghome && nursinghome.ara !== "Ei" && nursinghome.ara !=="Kyllä" && (
-						<div className="card-list-item__tag">
-							{filterARABoth}
-						</div>
-					)}
+					{nursinghome &&
+						nursinghome.ara !== "Ei" &&
+						nursinghome.ara !== "Kyllä" && (
+							<div className="card-list-item__tag">
+								{filterARABoth}
+							</div>
+						)}
 
 					<div className="card-list-item__text">
 						<span className="nowrap">

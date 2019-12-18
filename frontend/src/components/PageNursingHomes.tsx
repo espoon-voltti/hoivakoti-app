@@ -55,6 +55,7 @@ const PageNursingHomes: FC = () => {
 		useT("matinkylä"),
 		useT("tapiola"),
 	];
+	const espoo = useT("espoo");
 	const otherCities = [
 		useT("hanko"),
 		useT("helsinki"),
@@ -72,7 +73,12 @@ const PageNursingHomes: FC = () => {
 		useT("vihti"),
 	];
 
-	const citiesToFinnish = {
+	const citiesAndDistrictsToFinnish = {
+		"Esbo centrum": "Espoon keskus",
+		Esboviken: "Espoonlahti",
+		Alberga: "Leppävaara",
+		Mattby: "Matinkylä",
+		Hagalund: "Tapiola",
 		Helsingfors: "Helsinki",
 		Hyvinge: "Hyvinkää",
 		Träskända: "Järvenpää",
@@ -89,6 +95,14 @@ const PageNursingHomes: FC = () => {
 		Tusby: "Tuusula",
 		Vanda: "Vantaa",
 		Vichtis: "Vihti",
+	};
+
+	const citiesAndDistrictsToSwedish = {
+		"Espoon keskus": "Esbo centrum",
+		Espoonlahti: "Esboviken",
+		Leppävaara: "Alberga",
+		Matinkylä: "Mattby",
+		Tapiola: "Hagalund",
 	};
 
 	useEffect(() => {
@@ -126,7 +140,7 @@ const PageNursingHomes: FC = () => {
 		: false;
 	const espooCheckboxItem: FilterOption = {
 		name: "Espoo",
-		label: "Espoo",
+		label: espoo,
 		type: "checkbox",
 		checked: espooChecked,
 		bold: true,
@@ -172,9 +186,14 @@ const PageNursingHomes: FC = () => {
 					searchFilters.alue.length > 0 &&
 					(!searchFilters.alue.includes(nursinghome.district) &&
 						!searchFilters.alue.includes(nursinghome.city)) &&
-						!searchFilters.alue.includes(
-							(citiesToFinnish as any)[nursinghome.city])
-				)
+					!searchFilters.alue.includes(
+						(citiesAndDistrictsToFinnish as any)[nursinghome.city],
+					) &&
+					!searchFilters.alue.includes(
+						(citiesAndDistrictsToSwedish as any)[
+							nursinghome.district
+						],
+					))
 				{
 					return false;
 				}
@@ -351,7 +370,13 @@ const PageNursingHomes: FC = () => {
 			/>
 			<FilterItem
 				prefix={serviceLanguage}
-				value={searchFilters.language || null}
+				value={
+					searchFilters.language === "Suomi"
+						? filterFinnish
+						: searchFilters.language === "Ruotsi"
+						? filterSwedish
+						: null
+				}
 				values={optionsLanguage}
 				ariaLabel="Valitse hoivakodin kieli"
 				disabled={isFilterDisabled}
