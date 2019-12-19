@@ -208,7 +208,7 @@ const PageNursingHome: FC<PageNursingHomeProps> = (
 						<Link
 							to={
 								("/hoivakodit" +
-									location.state.fromFilterQuery) as string
+									(location.state ? location.state.fromFilterQuery : "")) as string
 							}
 							className="nursinghome-back-link"
 						>
