@@ -355,7 +355,7 @@ export const translations = {
 		"sv-FI": "Bekanta dig med vårdhemmet",
 	},
 	accessibility: { "fi-FI": "Esteettömyys", "sv-FI": "Tillgänglighet" },
-	personnel: { "fi-FI": "Henkilökunta", "sv-FI": "Personnel" },
+	personnel: { "fi-FI": "Henkilökunta", "sv-FI": "Personnal" },
 	otherServices: {
 		"fi-FI": "Muut hoivakodin palvelut",
 		"sv-FI": "Vårdhemmets övriga tjänster",
@@ -407,11 +407,11 @@ export const translations = {
 	},
 	vacancyTrue: {
 		"fi-FI": "Vapaita pitkäaikaisasuntoja",
-		"sv-FI": "Lediga långsiktiga bostäder",
+		"sv-FI": "Lediga långvariga bostäder",
 	},
 	vacancyFalse: {
 		"fi-FI": "Ei vapaita pitkäaikaisasuntoja",
-		"sv-FI": "Inga lediga långsiktiga bostäder",
+		"sv-FI": "Inga lediga långvariga bostäder",
 	},
 	pageUpdateTitle: {
 		"fi-FI": "Päivitä vapaiden asuntojen tilanne",
