@@ -285,7 +285,10 @@ export const translations = {
 	filterSwedish: { "fi-FI": "Ruotsi", "sv-FI": "Svenska" },
 	filterYes: { "fi-FI": "Kyllä", "sv-FI": "Ja" },
 	filterNo: { "fi-FI": "Ei", "sv-FI": "Nej" },
-	filterARABoth: { "fi-FI": "Osittain ARA-kohde", "sv-FI": "Delvis ARA-bostäd" },
+	filterARABoth: {
+		"fi-FI": "Osittain ARA-kohde",
+		"sv-FI": "Delvis ARA-objekt",
+	},
 	filterLocation: { "fi-FI": "Sijainti", "sv-FI": "Läge" },
 	filterLAH: {
 		"fi-FI": "Lyhytaikainen asuminen",
@@ -327,7 +330,8 @@ export const translations = {
 	apartmentFurnitureText: {
 		"fi-FI":
 			"Asunnoissa on sähköisesti säädettävä sänky, patja, vaatekaappi, lukittava säilytystila ja kattovalaisin. Asiakas voi tuoda asuntoon omia kalusteita ja tavaroita.",
-		"sv-FI": "Säng, toalet, bord",
+		"sv-FI":
+			"I bostaden finns en ställbar, elektrisk säng, madrass, klädskåp, låsbart förvaringsutrymme och taklampa. Klienten kan ta med sig egna möbler och saker till bostaden.",
 	},
 	rent: { "fi-FI": "Vuokran määrä", "sv-FI": "Hyra" },
 	LAHapartments: {
@@ -344,7 +348,7 @@ export const translations = {
 		"fi-FI": "Lisätietoa ruoasta",
 		"sv-FI": "Mer information om maten",
 	},
-	linkMenu: { "fi-FI": "Ruokalista", "sv-FI": "Matlist" },
+	linkMenu: { "fi-FI": "Ruokalista", "sv-FI": "Matlista" },
 	activies: { "fi-FI": "Toiminta", "sv-FI": "Aktiviteter" },
 	outdoorActivies: {
 		"fi-FI": "Ulkoilu\u00admahdollisuudet",
@@ -391,7 +395,7 @@ export const translations = {
 		"fi-FI":
 			"\n\t\t<p>\n\t\t\tTämä saavutettavuusseloste koskee hoivakodit.espoo.fi -sivusto ja on laadittu 9.12.2019. Tämän digipalvelun saavutettavuuden on arvioinut palvelun kehitystiimi.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\tDigipalvelun saavutettavuuden tila\n\t\t</strong>\n\t\t\t: Täyttää kriittiset saavutettavuusvaatimukset\n\t\t</p>\n\t\t<p>\n\t\t\tVerkkosivusto ei ole vielä kaikilta osin vaatimusten mukainen.\n\t\t</p>\n\t\t<h3>\n\t\t\tSaavutettavuusvaatimukset jotka eivät täyty\n\t\t</h3>\n\t\t<p>\n\t\t\t2.1.2 Ei näppäimistöansaa – Näppäimistöllä navigoitaessa rajauskomponentti ei toimi kaikkien hyvien käytäntöjen mukaisesti ja fokus ei siirry takaisin lähtöpaikkaan rajausta tallennettaessa.\n\t\t</p>\n\t\t<p>\n\t\t\t3.1.2 Osien kieli – Hoivakotien esittelytekstit ovat pääsääntöisesti vain yhdellä kielellä\n\t\t</p>\n\t\t<h3>\n\t\t\tHuomasitko saavutettavuuspuutteen digipalvelussamme?\n\t\t</h3>\n\t\t<p>\n\t\t\tKerro se meille ja teemme parhaamme puutteen korjaamiseksi.\n\t\t</p>\n\t\t<p>\n\t\t<a href='https://easiointi.espoo.fi/eFeedback/fi/Home' target='_blank' rel='nofollow'>Anna saavutettavuuspalautetta verkkolomakkeella</a> \n\t\t</p>\n\t\t<h3>\n\t\t\tValvontaviranomainen\n\t\t</h3>\n\t\t<p>\n\t\t\tJos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href='https://www.saavutettavuusvaatimukset.fi/oikeutesi/' target='_blank' rel='noopener noreferrer external'>voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon</a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.\n\t\t</p>\n\t\t<h4>Valvontaviranomaisen yhteystiedot\n\t\t</h4>\n\t\t<p>\n\t\t\tEtelä-Suomen aluehallintovirasto<br>Saavutettavuuden valvonnan yksikkö<br><a href='https://www.saavutettavuusvaatimukset.fi' target='_blank' rel='noopener noreferrer external'>www.saavutettavuusvaatimukset.fi</a><br><a href='mailto:saavutettavuus@avi.fi'>saavutettavuus@avi.fi</a><br>puhelinnumero vaihde 0295 016 000<br>  \n\t\t</p>",
 		"sv-FI":
-			"\n\t\t<p>\n\t\t\tsv_Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu tellus ornare, egestas eros sit amet, volutpat eros. Ut vel sodales eros. Proin tristique pellentesque purus sit amet semper. Nullam euismod tristique magna vitae dictum. Quisque aliquam ultricies leo in tempus. Suspendisse convallis neque ut lorem scelerisque, quis accumsan tortor pretium.\n\t\t</p>\n\t\t<p>\n\t\t\tsv_Integer eu efficitur sem. Vivamus aliquet fermentum placerat. Vivamus suscipit imperdiet pharetra. Pellentesque sollicitudin lorem elit, id consequat augue tempus id. Duis tristique sed ante vel ornare. Sed venenatis eros in augue laoreet, quis sodales orci egestas. Aliquam ut posuere odio. Duis id fermentum lacus. Fusce eget molestie libero, ac dictum nulla. Sed eu magna sed enim tempor posuere et non felis. Proin nec arcu sagittis enim tempus ullamcorper. Aliquam erat volutpat. Vivamus hendrerit urna nec dictum condimentum. Nam eros arcu, varius et metus vel, iaculis tincidunt mauris.\n\t\t</p>\n\t\t<p>\n\t\t\tsv_Praesent aliquet diam in elementum cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque at eleifend leo, in sollicitudin arcu. Sed fringilla posuere neque tempus accumsan. Donec sollicitudin, tortor pulvinar pellentesque molestie, erat augue viverra lacus, id commodo est libero ac lorem. Phasellus blandit massa et ante porttitor, ultricies laoreet risus porttitor. Etiam nulla dui, dictum a lacinia non, hendrerit ac nisl.\n\t\t</p>",
+			"\n\t\t<p>\n\t\t\tDetta tillgänglighetsutlåtande gäller webbplatsen hoivakodit.espoo.fi och har upprättats 9.12.2019. Teamet som utvecklat denna digitala tjänst har utvärderat dess tillgänglighet.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\tTillgänglighetsstatus för den digitala tjänsten:\n\t\t</strong>\n\t\t\t: Uppfyller de kritiska tillgänglighetskraven\n\t\t</p>\n\t\t<p>\n\t\t\tWebbplatsen uppfyller ännu inte alla krav.\n\t\t</p>\n\t\t<h3>\n\t\t\tTillgänglighetskrav som inte uppfylls\n\t\t</h3>\n\t\t<p>\n\t\t\t2.1.2 Ingen tangentbordsfälla – Vid navigering med ett tangentbord fungerar inte avgränsningskomponenten enligt all god praxis och fokus överförs inte tillbaka till startplatsen när avgränsningen sparas.\n\t\t</p>\n\t\t<p>\n\t\t\t3.1.2 Språk för del av sida – Presentationerna av vårdhemmen finns i regel endast på ett språk\n\t\t</p>\n\t\t<h3>\n\t\t\tUpptäckte du en tillgänglighetsbrist i vår digitala tjänst?\n\t\t</h3>\n\t\t<p>\n\t\t\tBeskriv den för oss och vi ska göra vårt bästa för att åtgärda den.\n\t\t</p>\n\t\t<p>\n\t\t<a href='https://easiointi.espoo.fi/eFeedback/sv/Home' target='_blank' rel='nofollow'>Ge tillgänglighetsrespons på detta webbformulär</a> \n\t\t</p>\n\t\t<h3>\n\t\t\tTillsynsmyndighet\n\t\t</h3>\n\t\t<p>\n\t\t\tOm du upptäcker problem i tillgängligheten på webbplatsen, ge först respons till oss som ansvarar för webbplatsen. Det kan ta 14 dagar innan du får ett svar. Om du inte är nöjd med det svar du har fått eller inte får något svar alls inom två veckor kan du, <a href='https://www.tillgänglighetskrav.fi/dina-rattigheter/' target='_blank' rel='noopener noreferrer external'>lämna in en anmälan till Regionförvaltningsverket i Södra Finland</a>. På regionförvaltningsverkets webbplats beskrivs det noggrant hur du kan lämna in en anmälan och hur ärendet behandlas.\n\t\t</p>\n\t\t<h4>Tillsynsmyndighetens kontaktuppgifter\n\t\t</h4>\n\t\t<p>\n\t\t\tRegionförvaltningsverket i Södra Finland<br>Enheten för tillgänglighetstillsyn<br><a href='www.tillgänglighetskrav.fi' target='_blank' rel='noopener noreferrer external'>www.tillgänglighetskrav.fi</a><br><a href='mailto:webbtillganglighet@rfv.fi'>webbtillganglighet@rfv.fi</a><br>telefonnummer: växeln 0295 016 000<br>  \n\t\t</p>",
 	},
 	footerLinkPrivacy: {
 		"fi-FI": "Tietosuojaseloste",
@@ -419,8 +423,7 @@ export const translations = {
 	},
 	pageUpdateIntro: {
 		"fi-FI": "Valitse hoivakodin vapaiden asuntojen tilanne:",
-		"sv-FI":
-			"Välj situationen för lediga bostäder på vårdhemmet:",
+		"sv-FI": "Välj situationen för lediga bostäder på vårdhemmet:",
 	},
 	clearFilters: {
 		"fi-FI": "Poista rajaukset",
@@ -567,8 +570,10 @@ export const translations = {
 		"sv-FI": "Systemfel",
 	},
 	error404Text: {
-		"fi-FI": "Luultavasti etsimäsi sivun osoite on muuttunut tai sivua ei ole enää olemassa.",
-		"sv-FI": "Adressen på sidan du letar efter har antagligen ändrats eller finns inte längre.",
+		"fi-FI":
+			"Luultavasti etsimäsi sivun osoite on muuttunut tai sivua ei ole enää olemassa.",
+		"sv-FI":
+			"Adressen på sidan du letar efter har antagligen ändrats eller finns inte längre.",
 	},
 	errorGeneralText: {
 		"fi-FI": "Yritä myöhemmin uudelleen.",
