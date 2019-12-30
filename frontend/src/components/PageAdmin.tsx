@@ -78,7 +78,7 @@ const PageAdmin: FC = () => {
 	useEffect(() => {
 		axios
 			.get(config.API_URL + "/nursing-homes")
-			.then(function (response: { data: any[] }) {
+			.then(function(response: { data: any[] }) {
 				setNursingHomes(response.data);
 			})
 			.catch((error: Error) => {
@@ -200,8 +200,8 @@ const PageAdmin: FC = () => {
 						className=""
 					/>
 				) : (
-						<input type="submit" value="Lähetä" />
-					)}
+					<input type="submit" value="Lähetä" />
+				)}
 				<br />
 				{uploadingInfoResult}
 				<br />
