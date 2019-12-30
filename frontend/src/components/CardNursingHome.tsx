@@ -21,7 +21,6 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const alsoLAHText = useT("alsoLAHText");
 	const filterAraLabel = useT("filterAraLabel");
 	const filterARABoth = useT("filterARABoth");
-	console.log(alsoLAHText);
 	const imageDigest =
 		nursinghome.pic_digests &&
 		nursinghome.pic_digests.overview_outside_hash;
@@ -30,6 +29,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 		nursinghome.pic_digests.overview_outside_hash &&
 		`${config.API_URL}/nursing-homes/${nursinghome.id}` +
 			`/pics/overview_outside/${imageDigest}`;
+	const language = useT(nursinghome.language as any);
 	return (
 		<Link
 			to={{
@@ -86,8 +86,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 
 					<div className="card-list-item__text">
 						<span className="nowrap">
-							{serviceLanguage}:{" "}
-							{nursinghome && nursinghome.language}{" "}
+							{serviceLanguage}: {nursinghome && language}{" "}
 						</span>
 						<span className="card-list-item__text--dot"> • </span>{" "}
 						<span className="nowrap">

@@ -591,4 +591,16 @@ export const translations = {
 		"fi-FI": "Muutokset tallennettu.",
 		"sv-FI": "Data har sparats.",
 	},
+	Suomi: {
+		"fi-FI": "Suomi",
+		"sv-FI": "Finska",
+	},
+	Ruotsi: {
+		"fi-FI": "Ruotsi",
+		"sv-FI": "Svenska",
+	},
+	"Suomi|Ruotsi": {
+		"fi-FI": "Suomi|Ruotsi",
+		"sv-FI": "Svenska/Finska",
+	},
 };

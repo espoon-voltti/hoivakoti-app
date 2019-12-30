@@ -91,6 +91,8 @@ const PageNursingHome: FC<PageNursingHomeProps> = (
 	const numApartments = useT("numApartments");
 	const serviceLanguage = useT("serviceLanguage");
 
+	const language = useT(nursingHome && (nursingHome.language as any));
+
 	const linkBacktoTop = useT("linkBacktoTop");
 
 	const basicInformation = useT("basicInformation");
@@ -208,7 +210,9 @@ const PageNursingHome: FC<PageNursingHomeProps> = (
 						<Link
 							to={
 								("/hoivakodit" +
-									(location.state ? location.state.fromFilterQuery : "")) as string
+									(location.state
+										? location.state.fromFilterQuery
+										: "")) as string
 							}
 							className="nursinghome-back-link"
 						>
@@ -283,7 +287,7 @@ const PageNursingHome: FC<PageNursingHomeProps> = (
 							/>
 							<DefinitionItem
 								term={serviceLanguage}
-								definition={nursingHome.language}
+								definition={language}
 							/>
 							<DefinitionItem
 								term={LAHapartments}
