@@ -76,7 +76,7 @@
 	flex-flow: column wrap;
 
 	&:not(.nursinghome-hero-n0) {
-		height: 480px;
+		height: 400px;
 		@media (min-width: 1024px) {
 			height: 640px;
 			max-height: calc(100vh - 280px);
@@ -280,10 +280,4 @@ $hero-border: 5px solid white;
 	font-weight: 600;
 	line-height: 24px;
 	margin-bottom: 5px;
-}
-
-@media screen and (max-width: 1024px) {
-	.nursinghome-hero {
-		height: 400px;
-	}
 }

@@ -343,9 +343,9 @@ $header-height: 80px;
 	}
 
 	#page-nav input:checked ~ .menu-btn {
-		background-color: $border-color;
+		background-color: #fff;
 		color: $text-color;
-		border: 1px solid $border-color;
+		border: 1px solid $text-color;
 	}
 
 	[type="checkbox"]:focus ~ .menu-btn {
