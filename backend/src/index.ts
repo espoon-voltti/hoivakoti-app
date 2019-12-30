@@ -11,7 +11,12 @@ const app = new Koa();
 app.use(LogRequest);
 app.use(Helmet());
 app.use(cors());
-app.use(BodyParser({ multipart: true }));
+app.use(
+	BodyParser({
+		multipart: true,
+		parsedMethods: ["POST", "PUT", "PATCH", "DELETE"],
+	}),
+);
 app.use(routes);
 
 const { port } = config;

@@ -8,6 +8,7 @@ import {
 	GetNursingHome,
 	AddNursingHomesFromCSV,
 	DeleteNursingHomes,
+	DeleteNursingHome,
 	DropAndRecreateTables,
 	UploadPics,
 	GetAllPicsAndDescriptions,
@@ -62,6 +63,10 @@ router.post("/api/nursing-homes/upload-pics", async ctx => {
 
 router.get("/api/nursing-homes/:id", async ctx => {
 	ctx.body = await GetNursingHome(ctx);
+});
+
+router.del("/api/nursing-homes/:id", async ctx => {
+	ctx.body = await DeleteNursingHome(ctx);
 });
 
 router.get("/api/nursing-homes/:id/pics", async ctx => {

@@ -17,6 +17,7 @@ import {
 	UpdateNursingHomeVacancyStatus as UpdateNursingHomeVacancyStatusDB,
 	GetAllBasicUpdateKeys,
 	BasicUpdateKeyEntry,
+	DeleteNursingHome as DeleteNursingHomeDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -110,6 +111,23 @@ export async function DeleteNursingHomes(ctx: any): Promise<number | null> {
 	if (!isPwValid) return null;
 
 	const result = await DeleteAllNursingHomes();
+	return result;
+}
+
+export async function DeleteNursingHome(ctx: any): Promise<number | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	console.log(adminPw);
+	console.log(requestPw);
+	if (!isPwValid) return null;
+
+	const id = ctx.params.id;
+
+	const result = await DeleteNursingHomeDB(id);
 	return result;
 }
 

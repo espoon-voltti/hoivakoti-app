@@ -160,8 +160,8 @@ export async function InsertNursingHomeToDB(
 	const geoloc = JSON.parse(
 		await rp(
 			"https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-			geo_query +
-			".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
+				geo_query +
+				".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
 		),
 	);
 
@@ -237,18 +237,20 @@ export async function GetAllRatings(): Promise<Knex.Table> {
 }
 
 export async function GetNursingHome(id: string): Promise<any[]> {
-	const result = await knex
-		.select()
-		.table("NursingHomes")
-		.where({ id: id });
+	const result = await knex.table("NursingHomes").where({ id: id });
 
 	return result;
 }
 
 export async function DeleteAllNursingHomes(): Promise<number> {
+	const result = await knex.table("NursingHomes").del();
+	return result;
+}
+
+export async function DeleteNursingHome(id: string): Promise<number> {
 	const result = await knex
-		.select()
 		.table("NursingHomes")
+		.where({ id: id })
 		.del();
 	return result;
 }
