@@ -1,6 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import axios from "axios";
 import config from "./config";
+import { NursingHomeConsumer } from "./nursinghomes-context";
 
 const uploadNursingHomesCSV = async (
 	password: string,
@@ -40,6 +41,19 @@ const getNursingHomeSecrets = async (password: string): Promise<void> => {
 	);
 };
 
+const deleteNursingHome = async (
+	id: string,
+	password: string,
+): Promise<void> => {
+	return await axios.delete(
+		`${config.API_URL}/nursing-homes/${id}`,
+		// eslint-disable-next-line @typescript-eslint/camelcase
+		{
+			data: { adminPassword: password },
+		},
+	);
+};
+
 const dropAndRecreateTables = async (password: string): Promise<void> => {
 	return await axios.post(
 		`${config.API_URL}/nursing-homes/drop-table`,
@@ -59,6 +73,19 @@ const PageAdmin: FC = () => {
 	const [uploadingInfoResult, setUploadingInfoResult] = useState("");
 	const [uploadingPicsResult, setUploadingPicsResult] = useState("");
 	const [linksToVacancySetting, setLinksToVacancySetting] = useState([]);
+	const [nursingHomes, setNursingHomes] = useState<any[] | null>([]);
+
+	useEffect(() => {
+		axios
+			.get(config.API_URL + "/nursing-homes")
+			.then(function (response: { data: any[] }) {
+				setNursingHomes(response.data);
+			})
+			.catch((error: Error) => {
+				console.error(error.message);
+				throw error;
+			});
+	}, []);
 
 	const handleSubmit = (event: any) => {
 		console.log(key);
@@ -130,6 +157,13 @@ const PageAdmin: FC = () => {
 			});
 	};
 
+	const handleDelete = (id: string) => {
+		if (key)
+			deleteNursingHome(id, key).then((response: any) => {
+				window.location.reload();
+			});
+	};
+
 	return (
 		<div className="page-admin">
 			<form onSubmit={handleSubmit} noValidate>
@@ -166,8 +200,8 @@ const PageAdmin: FC = () => {
 						className=""
 					/>
 				) : (
-					<input type="submit" value="Lähetä" />
-				)}
+						<input type="submit" value="Lähetä" />
+					)}
 				<br />
 				{uploadingInfoResult}
 				<br />
@@ -185,6 +219,18 @@ const PageAdmin: FC = () => {
 					<br />
 				</div>
 			))}
+
+			{nursingHomes &&
+				nursingHomes.map((nursingHome: any) => (
+					<div key={nursingHome.id}>
+						<br />
+						{nursingHome.name} - {nursingHome.postal_code}
+						<button onClick={() => handleDelete(nursingHome.id)}>
+							Poista
+						</button>
+						<br />
+					</div>
+				))}
 
 			<br></br>
 			<br></br>
