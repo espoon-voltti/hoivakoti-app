@@ -194,6 +194,7 @@ postal_code_to_district["02710"] = "Leppävaara";
 postal_code_to_district["02650"] = "Leppävaara";
 postal_code_to_district["02600"] = "Leppävaara";
 postal_code_to_district["02610"] = "Leppävaara";
+postal_code_to_district["02810"] = "Leppävaara";
 postal_code_to_district["02200"] = "Matinkylä";
 postal_code_to_district["02210"] = "Matinkylä";
 postal_code_to_district["02230"] = "Matinkylä";
