@@ -31,7 +31,7 @@ const App: React.FC = () => {
 			window.location.hostname.includes("hoivakodit.net") ||
 			window.location.hostname.includes("hoivakoti.net")
 		)
-			window.location.replace("hoivakodit.espoo.fi");
+			window.location = "hoivakodit.espoo.fi";
 		else if (currentPath === "/")
 			window.location.pathname = `/${currentLanguage}/`;
 	}, [currentLanguage, currentPath]);
