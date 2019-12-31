@@ -27,7 +27,12 @@ const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
 	const currentPath = window.location.pathname;
 	useEffect(() => {
-		if (currentPath === "/")
+		if (
+			window.location.hostname.includes("hoivakodit.net") ||
+			window.location.hostname.includes("hoivakoti.net")
+		)
+			window.location.replace("hoivakodit.espoo.fi");
+		else if (currentPath === "/")
 			window.location.pathname = `/${currentLanguage}/`;
 	}, [currentLanguage, currentPath]);
 
