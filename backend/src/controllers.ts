@@ -18,6 +18,7 @@ import {
 	GetAllBasicUpdateKeys,
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
+	DeleteNursingHomePics,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -128,6 +129,7 @@ export async function DeleteNursingHome(ctx: any): Promise<number | null> {
 	const id = ctx.params.id;
 
 	const result = await DeleteNursingHomeDB(id);
+	await DeleteNursingHomePics(id);
 	return result;
 }
 

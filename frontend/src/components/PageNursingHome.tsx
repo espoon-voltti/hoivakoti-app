@@ -346,6 +346,10 @@ const PageNursingHome: FC<PageNursingHomeProps> = (
 									{nursingHome.email}
 								</a>
 							</dd>
+							<dd>
+								<br />
+							</dd>
+							<dd>{nursingHome.contact_phone_info}</dd>
 						</dl>
 						<h3>{accessibility}</h3>
 						<Paragraph text={nursingHome.accessibility_info} />

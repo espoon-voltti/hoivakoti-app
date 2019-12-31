@@ -160,8 +160,8 @@ export async function InsertNursingHomeToDB(
 	const geoloc = JSON.parse(
 		await rp(
 			"https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-				geo_query +
-				".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
+			geo_query +
+			".json?access_token=pk.eyJ1IjoidHphZXJ1LXJlYWt0b3IiLCJhIjoiY2sxZzIxazd0MHg0eDNubzV5Mm41MnJzdCJ9.vPaqUY1S8qHgfzwHUuYUcg",
 		),
 	);
 
@@ -251,6 +251,14 @@ export async function DeleteNursingHome(id: string): Promise<number> {
 	const result = await knex
 		.table("NursingHomes")
 		.where({ id: id })
+		.del();
+	return result;
+}
+
+export async function DeleteNursingHomePics(id: string): Promise<number> {
+	const result = await knex
+		.table("NursingHomePictures")
+		.where({ nursinghome_id: id })
 		.del();
 	return result;
 }
