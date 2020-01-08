@@ -48,8 +48,8 @@ async function NursingHomesFromCSV(csv: string): Promise<string> {
 			else if (info.type === "boolean")
 				nursing_home[info.sql] = record[info.csv]
 					? record[info.csv] === "True" ||
-					  record[info.csv].includes("kyllä") ||
-					  record[info.csv].includes("Kyllä")
+						record[info.csv].includes("kyllä") ||
+						record[info.csv].includes("Kyllä")
 						? true
 						: false
 					: false;
@@ -86,8 +86,9 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 					record[field_info.csv].lastIndexOf("=") + 1,
 				);
 				if (pic_id.length > 0) {
-					const name = await DownloadAndSaveFile(pic_id);
-					console.log(name);
+					const name = "./tmp/" + pic_id + ".jpg-small";
+					if (!fs.existsSync(name)) await DownloadAndSaveFile(pic_id);
+
 					const file = await fs.promises.readFile(name);
 					//nursinghome_pics[field_info.sql] = '\\x' + file;
 
@@ -97,11 +98,11 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 					nursinghome_pics[field_info.sql + "_hash"] = hash;
 					console.debug(
 						"File: " +
-							name +
-							" Length: " +
-							file.length +
-							" SQL: " +
-							field_info.sql,
+						name +
+						" Length: " +
+						file.length +
+						" SQL: " +
+						field_info.sql,
 					);
 				}
 			}
