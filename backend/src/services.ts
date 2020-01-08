@@ -87,12 +87,6 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 						record[field_info.csv].lastIndexOf("=") + 1,
 					);
 					if (pic_id.length <= 0) {
-						add_picture_set = false;
-						continue;
-					}
-
-					if ((await GetPicsByDriveID(pic_id)).length > 0) {
-						add_picture_set = false;
 						continue;
 					}
 
@@ -112,11 +106,10 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 				}
 			}
 			//console.log(nursinghome_pics);
-			if (add_picture_set)
-				await AddPicturesAndDescriptionsForNursingHome(
-					nursing_home_id,
-					nursinghome_pics,
-				);
+			await AddPicturesAndDescriptionsForNursingHome(
+				nursing_home_id,
+				nursinghome_pics,
+			);
 		}
 	}
 	catch {
