@@ -80,7 +80,6 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 			)[0].id;
 
 			const existing_pics = await GetPicturesAndDescriptions(nursing_home_id);
-			console.log(existing_pics);
 			for (const field_info of nursing_home_pictures_columns_info) {
 				if (field_info.sql.includes("_caption"))
 					nursinghome_pics[field_info.sql] = record[field_info.csv];
