@@ -70,6 +70,7 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 		delimiter: ",",
 	});
 	let new_images = 0;
+	let old_images = 0;
 	try {
 		for (const record of records) {
 			const nursinghome_pics: any = {};
@@ -91,7 +92,13 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 					}
 
 					const name = "./tmp/" + pic_id + ".jpg-small";
-					if (!fs.existsSync(name)) await DownloadAndSaveFile(pic_id);
+					if (!fs.existsSync(name)) {
+						await DownloadAndSaveFile(pic_id);
+						new_images++;
+					}
+					else {
+						old_images++;
+					}
 
 					const file = await fs.promises.readFile(name);
 					//nursinghome_pics[field_info.sql] = '\\x' + file;
@@ -101,8 +108,6 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 					nursinghome_pics[field_info.sql] = file;
 					nursinghome_pics[field_info.sql + "_hash"] = hash;
 					nursinghome_pics[field_info.sql + "_drive_id"] = pic_id;
-
-					new_images++;
 				}
 			}
 			//console.log(nursinghome_pics);
@@ -113,10 +118,10 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 		}
 	}
 	catch {
-		return "Errored. Tried to process " + records.length + " nursing homes and uploaded " + new_images + " new images.";
+		return "Error. Tried to process " + records.length + " nursing homes and got " + new_images + " from Google Drive " + " and " + old_images + " from local file cache.";
 	}
 
-	return "Processed " + records.length + " nursing homes and uploaded " + new_images + " new images.";
+	return "Processed " + records.length + " nursing homes and got " + new_images + " from Google Drive " + " and " + old_images + " from local file cache.";
 }
 
 async function DownloadAndSaveFile(id: string): Promise<any> {
