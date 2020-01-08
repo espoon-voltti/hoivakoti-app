@@ -3,6 +3,7 @@ import {
 	InsertNursingHomeToDB,
 	AddPicturesAndDescriptionsForNursingHome,
 	GetNursingHomeIDFromName,
+	GetPicsByDriveID,
 } from "./models";
 import {
 	NursingHome,
@@ -76,7 +77,6 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 		const nursing_home_id = (
 			await GetNursingHomeIDFromName(record["Hoivakodin nimi"])
 		)[0].id;
-		console.log("ID: " + JSON.stringify(nursing_home_id));
 
 		for (const field_info of nursing_home_pictures_columns_info) {
 			if (field_info.sql.includes("_caption"))
@@ -85,31 +85,36 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 				const pic_id = record[field_info.csv].substring(
 					record[field_info.csv].lastIndexOf("=") + 1,
 				);
-				if (pic_id.length > 0) {
-					const name = "./tmp/" + pic_id + ".jpg-small";
-					if (!fs.existsSync(name)) await DownloadAndSaveFile(pic_id);
-
-					const file = await fs.promises.readFile(name);
-					//nursinghome_pics[field_info.sql] = '\\x' + file;
-
-					const hash = checksum(file);
-
-					nursinghome_pics[field_info.sql] = file;
-					nursinghome_pics[field_info.sql + "_hash"] = hash;
-					console.debug(
-						"File: " +
-						name +
-						" Length: " +
-						file.length +
-						" SQL: " +
-						field_info.sql,
-					);
+				if (pic_id.length <= 0) {
+					continue;
 				}
+
+				if ((await GetPicsByDriveID(pic_id)).length > 0)
+					continue;
+
+				const name = "./tmp/" + pic_id + ".jpg-small";
+				if (!fs.existsSync(name)) await DownloadAndSaveFile(pic_id);
+
+				const file = await fs.promises.readFile(name);
+				//nursinghome_pics[field_info.sql] = '\\x' + file;
+
+				const hash = checksum(file);
+
+				nursinghome_pics[field_info.sql] = file;
+				nursinghome_pics[field_info.sql + "_hash"] = hash;
+				nursinghome_pics[field_info.sql + "_drive_id"] = pic_id;
+				console.debug(
+					"File: " +
+					name +
+					" Length: " +
+					file.length +
+					" SQL: " +
+					field_info.sql,
+				);
 			}
 		}
 		//console.log(nursinghome_pics);
 		console.debug("Uploaded and read to memory; saving to database.");
-		console.debug(Object.keys(nursinghome_pics));
 		await AddPicturesAndDescriptionsForNursingHome(
 			nursing_home_id,
 			nursinghome_pics,

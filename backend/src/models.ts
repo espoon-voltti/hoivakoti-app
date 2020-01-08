@@ -45,6 +45,7 @@ async function CreateNursingHomePicturesTable(): Promise<void> {
 			} else {
 				table.binary(row_info.sql);
 				table.string(row_info.sql + "_hash");
+				table.string(row_info.sql + "_drive_id");
 				console.log("Setting binary row: " + row_info.sql);
 			}
 		});
@@ -293,6 +294,23 @@ export async function GetPicData(
 		.select(pic, pic + "_hash")
 		.table("NursingHomePictures")
 		.where({ nursinghome_id: nursinghome_id });
+}
+
+// Returns more than 0 results if drive ID found
+export async function GetPicsByDriveID(drive_id: string): Promise<any[]> {
+	const columns = nursing_home_pictures_columns_info
+		.filter((row_info: any) => {
+			if (!row_info.sql.includes("caption")) return true;
+			return false;
+		})
+		.map((row_info: any) => {
+			if (!row_info.sql.includes("caption")) return row_info.sql;
+		});
+	const query: any = knex.select().table("NursingHomePictures");
+	columns.map((column: any) => {
+		query.orWhere({ [column + "_drive_id"]: drive_id });
+	});
+	return query;
 }
 
 export async function GetPicCaptions(nursinghome_id: string): Promise<any[]> {
