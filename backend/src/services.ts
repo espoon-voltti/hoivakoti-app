@@ -78,6 +78,7 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 				await GetNursingHomeIDFromName(record["Hoivakodin nimi"])
 			)[0].id;
 
+			let add_picture_set = true;
 			for (const field_info of nursing_home_pictures_columns_info) {
 				if (field_info.sql.includes("_caption"))
 					nursinghome_pics[field_info.sql] = record[field_info.csv];
@@ -86,11 +87,14 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 						record[field_info.csv].lastIndexOf("=") + 1,
 					);
 					if (pic_id.length <= 0) {
+						add_picture_set = false;
 						continue;
 					}
 
-					if ((await GetPicsByDriveID(pic_id)).length > 0)
+					if ((await GetPicsByDriveID(pic_id)).length > 0) {
+						add_picture_set = false;
 						continue;
+					}
 
 					const name = "./tmp/" + pic_id + ".jpg-small";
 					if (!fs.existsSync(name)) await DownloadAndSaveFile(pic_id);
@@ -108,10 +112,11 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 				}
 			}
 			//console.log(nursinghome_pics);
-			await AddPicturesAndDescriptionsForNursingHome(
-				nursing_home_id,
-				nursinghome_pics,
-			);
+			if (add_picture_set)
+				await AddPicturesAndDescriptionsForNursingHome(
+					nursing_home_id,
+					nursinghome_pics,
+				);
 		}
 	}
 	catch {
