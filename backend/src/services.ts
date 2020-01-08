@@ -69,59 +69,56 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 		skip_lines_with_empty_values: true,
 		delimiter: ",",
 	});
+	let new_images = 0;
+	try {
+		for (const record of records) {
+			const nursinghome_pics: any = {};
 
-	for (const record of records) {
-		console.log(record);
-		const nursinghome_pics: any = {};
+			const nursing_home_id = (
+				await GetNursingHomeIDFromName(record["Hoivakodin nimi"])
+			)[0].id;
 
-		const nursing_home_id = (
-			await GetNursingHomeIDFromName(record["Hoivakodin nimi"])
-		)[0].id;
+			for (const field_info of nursing_home_pictures_columns_info) {
+				if (field_info.sql.includes("_caption"))
+					nursinghome_pics[field_info.sql] = record[field_info.csv];
+				else {
+					const pic_id = record[field_info.csv].substring(
+						record[field_info.csv].lastIndexOf("=") + 1,
+					);
+					if (pic_id.length <= 0) {
+						continue;
+					}
 
-		for (const field_info of nursing_home_pictures_columns_info) {
-			if (field_info.sql.includes("_caption"))
-				nursinghome_pics[field_info.sql] = record[field_info.csv];
-			else {
-				const pic_id = record[field_info.csv].substring(
-					record[field_info.csv].lastIndexOf("=") + 1,
-				);
-				if (pic_id.length <= 0) {
-					continue;
+					if ((await GetPicsByDriveID(pic_id)).length > 0)
+						continue;
+
+					const name = "./tmp/" + pic_id + ".jpg-small";
+					if (!fs.existsSync(name)) await DownloadAndSaveFile(pic_id);
+
+					const file = await fs.promises.readFile(name);
+					//nursinghome_pics[field_info.sql] = '\\x' + file;
+
+					const hash = checksum(file);
+
+					nursinghome_pics[field_info.sql] = file;
+					nursinghome_pics[field_info.sql + "_hash"] = hash;
+					nursinghome_pics[field_info.sql + "_drive_id"] = pic_id;
+
+					new_images++;
 				}
-
-				if ((await GetPicsByDriveID(pic_id)).length > 0)
-					continue;
-
-				const name = "./tmp/" + pic_id + ".jpg-small";
-				if (!fs.existsSync(name)) await DownloadAndSaveFile(pic_id);
-
-				const file = await fs.promises.readFile(name);
-				//nursinghome_pics[field_info.sql] = '\\x' + file;
-
-				const hash = checksum(file);
-
-				nursinghome_pics[field_info.sql] = file;
-				nursinghome_pics[field_info.sql + "_hash"] = hash;
-				nursinghome_pics[field_info.sql + "_drive_id"] = pic_id;
-				console.debug(
-					"File: " +
-					name +
-					" Length: " +
-					file.length +
-					" SQL: " +
-					field_info.sql,
-				);
 			}
+			//console.log(nursinghome_pics);
+			await AddPicturesAndDescriptionsForNursingHome(
+				nursing_home_id,
+				nursinghome_pics,
+			);
 		}
-		//console.log(nursinghome_pics);
-		console.debug("Uploaded and read to memory; saving to database.");
-		await AddPicturesAndDescriptionsForNursingHome(
-			nursing_home_id,
-			nursinghome_pics,
-		);
+	}
+	catch {
+		return "Errored. Tried to process " + records.length + " nursing homes and uploaded " + new_images + " new images.";
 	}
 
-	return "Uploaded images for " + records.length + " nursing homes.";
+	return "Processed " + records.length + " nursing homes and uploaded " + new_images + " new images.";
 }
 
 async function DownloadAndSaveFile(id: string): Promise<any> {
