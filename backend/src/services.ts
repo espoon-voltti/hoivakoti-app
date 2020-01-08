@@ -3,7 +3,7 @@ import {
 	InsertNursingHomeToDB,
 	AddPicturesAndDescriptionsForNursingHome,
 	GetNursingHomeIDFromName,
-	GetPicsByDriveID,
+	GetPicturesAndDescriptions,
 } from "./models";
 import {
 	NursingHome,
@@ -79,7 +79,8 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 				await GetNursingHomeIDFromName(record["Hoivakodin nimi"])
 			)[0].id;
 
-			let add_picture_set = true;
+			const existing_pics = await GetPicturesAndDescriptions(nursing_home_id);
+			console.log(existing_pics);
 			for (const field_info of nursing_home_pictures_columns_info) {
 				if (field_info.sql.includes("_caption"))
 					nursinghome_pics[field_info.sql] = record[field_info.csv];
@@ -90,7 +91,6 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 					if (pic_id.length <= 0) {
 						continue;
 					}
-
 					const name = "./tmp/" + pic_id + ".jpg-small";
 					if (!fs.existsSync(name)) {
 						await DownloadAndSaveFile(pic_id);
@@ -100,10 +100,19 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 						old_images++;
 					}
 
-					const file = await fs.promises.readFile(name);
-					//nursinghome_pics[field_info.sql] = '\\x' + file;
-
-					const hash = checksum(file);
+					let file: any;
+					let hash: any;
+					// If drive ID is same as for the pic that previously saved,
+					// use the old pic data from DB.
+					if (existing_pics[(field_info.sql + "_drive_id") as any] === pic_id) {
+						file = existing_pics[field_info.sql];
+						hash = existing_pics[(field_info.sql + "_hash") as any];
+					}
+					else {
+						file = await fs.promises.readFile(name);
+						//nursinghome_pics[field_info.sql] = '\\x' + file;
+						hash = checksum(file);
+					}
 
 					nursinghome_pics[field_info.sql] = file;
 					nursinghome_pics[field_info.sql + "_hash"] = hash;
