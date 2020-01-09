@@ -11,7 +11,7 @@ export async function LogRequest(
 		clientIp: ctx.request.ip,
 		httpMethod: ctx.method,
 		path: ctx.path,
-		queryString: ctx.query,
+		queryString: ctx.querystring,
 		statusCode: ctx.response.status,
 		responseTime: Date.now() - timeStart,
 		contentLength: ctx.request.rawBody ? ctx.request.rawBody.length : 0,
