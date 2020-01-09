@@ -45,6 +45,7 @@ export interface NursingHome {
 	geolocation?: {
 		center: [number, number];
 	};
+	has_vacancy?: boolean;
 }
 
 export const nursing_home_columns_info: any = [

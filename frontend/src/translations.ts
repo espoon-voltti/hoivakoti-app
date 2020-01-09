@@ -52,8 +52,8 @@ export const translations = {
 		"sv-FI": "servicesedel",
 	},
 	urlParastapalvelua: {
-		"fi-FI": "https://www.parastapalvelua.fi",
-		"sv-FI": "https://www.parastapalvelua.fi/sv",
+		"fi-FI": "https://parastapalvelua.fi",
+		"sv-FI": "https://parastapalvelua.fi/sv",
 	},
 	landingOwnMoney: {
 		"fi-FI":

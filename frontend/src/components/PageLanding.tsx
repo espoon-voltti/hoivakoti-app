@@ -224,7 +224,7 @@ const PageLanding: FC = () => {
 							target="_blank"
 							rel="noopener noreferrer external"
 						>
-							www.parastapalvelua.fi
+							parastapalvelua.fi
 						</a>
 						.
 					</p>

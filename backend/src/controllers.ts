@@ -39,9 +39,13 @@ export async function AddNursingHome(ctx: any): Promise<string> {
 
 export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 	const nursing_homes = await GetAllNursingHomes();
-	nursing_homes.sort((a: NursingHome, b: NursingHome) =>
-		a.name.localeCompare(b.name),
-	);
+	nursing_homes.sort((a: NursingHome, b: NursingHome) => {
+		if (a.has_vacancy && !b.has_vacancy)
+			return -1;
+		if (!a.has_vacancy && b.has_vacancy)
+			return 1;
+		return a.name.localeCompare(b.name);
+	});
 
 	const pic_digests = await GetAllPicDigests();
 
