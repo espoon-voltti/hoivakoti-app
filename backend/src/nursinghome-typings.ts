@@ -192,6 +192,7 @@ postal_code_to_district["02720"] = "Leppävaara";
 postal_code_to_district["02940"] = "Leppävaara";
 postal_code_to_district["02660"] = "Leppävaara";
 postal_code_to_district["02710"] = "Leppävaara";
+postal_code_to_district["02730"] = "Leppävaara";
 postal_code_to_district["02650"] = "Leppävaara";
 postal_code_to_district["02600"] = "Leppävaara";
 postal_code_to_district["02610"] = "Leppävaara";
