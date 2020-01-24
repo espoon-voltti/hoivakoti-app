@@ -19,7 +19,7 @@ export async function LogRequest(
 		appName: "voltti-hoivakoti",
 		appBuild: "todo",
 		appCommit: "todo",
-		env: process.env.NODE_ENV,
+		env: process.env.NODE_ENV === "production" ? "prod" : process.env.NODE_ENV,
 		userIdHash: "todo",
 		type: "app-requests-received",
 		version: 1,
