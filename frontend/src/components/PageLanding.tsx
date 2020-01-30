@@ -26,6 +26,7 @@ const PageLanding: FC = () => {
 		useT("järvenpää"),
 		useT("karkkila"),
 		useT("kerava"),
+		useT("kirkkonummi"),
 		useT("lohja"),
 		useT("nurmijärvi"),
 		useT("raasepori"),
