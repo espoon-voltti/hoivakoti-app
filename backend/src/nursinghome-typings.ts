@@ -205,3 +205,4 @@ postal_code_to_district["02100"] = "Tapiola";
 postal_code_to_district["02160"] = "Tapiola";
 postal_code_to_district["02140"] = "Tapiola";
 postal_code_to_district["02130"] = "Tapiola";
+postal_code_to_district["02180"] = "Tapiola";
