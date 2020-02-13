@@ -109,6 +109,12 @@ jobs:
       - restore_repo
       - install_package_deps:
           package: frontend
+      - install_package_deps:
+          package: backend
+      - run:
+          working_directory: backend
+          command: yarn start
+          background: true
       - run:
           working_directory: frontend
           command: yarn test
