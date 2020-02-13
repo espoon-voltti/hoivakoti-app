@@ -3,7 +3,7 @@ version: 2.1
 aliases:
   - &workspace_root ~/repo
   - &repo_cache_key v1-repo-{{ .Branch }}-{{ .Revision }}
-  - &build_image circleci/node:12
+  - &build_image circleci/node:12-browsers
 
   - &attach_workspace
     attach_workspace:

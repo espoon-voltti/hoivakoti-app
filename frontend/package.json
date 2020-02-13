@@ -31,7 +31,7 @@
 	"scripts": {
 		"start": "PORT=4000 react-scripts start",
 		"build": "CI=false react-scripts build",
-		"test": "CI=false PORT=4000 react-scripts test",
+		"test": "npx nightwatch --test e2e-tests/test.js --env chrome",
 		"lint": "eslint . --ext .tsx,.ts",
 		"eject": "react-scripts eject"
 	},
@@ -53,13 +53,13 @@
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^2.3.3",
 		"@typescript-eslint/parser": "^2.3.3",
-		"chromedriver": "^77.0.0",
+		"chromedriver": "^80.0.0",
 		"eslint": "^6.5.1",
 		"eslint-config-prettier": "^6.4.0",
 		"eslint-plugin-prettier": "^3.1.1",
 		"eslint-plugin-react": "^7.16.0",
-		"geckodriver": "^1.19.0",
-		"nightwatch": "^1.2.4",
+		"geckodriver": "^1.19.1",
+		"nightwatch": "^1.3.4",
 		"prettier": "^1.18.2"
 	}
 }
