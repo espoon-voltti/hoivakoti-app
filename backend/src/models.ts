@@ -8,7 +8,7 @@ import {
 	postal_code_to_district,
 } from "./nursinghome-typings";
 import config from "./config";
-import { createBasicUpdateKey, hashWithSalt } from "./services";
+import { createBasicUpdateKey, hashWithSalt, NursingHomesFromCSV } from "./services";
 
 const options: Knex.Config = {
 	client: "postgres",
@@ -25,6 +25,7 @@ knex.schema.hasTable("NursingHomes").then(async (exists: boolean) => {
 	if (exists) return;
 
 	await CreateNursingHomeTable();
+	await addDummyNursingHome();
 });
 
 knex.schema.hasTable("NursingHomePictures").then(async (exists: boolean) => {
@@ -420,4 +421,15 @@ export async function GetAllBasicUpdateKeys(): Promise<BasicUpdateKeyEntry[]> {
 		basic_update_key,
 		name,
 	}));
+}
+
+export async function addDummyNursingHome(): Promise<string> {
+	const nursinghome: NursingHome = {
+		name: "Dummy",
+		owner: "Dummy Owner",
+		postal_code: "00010",
+		city: "Espoo",
+		address: "Tie 1"
+	};
+	return await InsertNursingHomeToDB(nursinghome);
 }
