@@ -119,15 +119,24 @@ jobs:
           working_directory: backend
           command: yarn start
           background: true
+      - run:
+          working_directory: frontend
+          command: yarn start
+          background: true
       - wait-for/port:
           timeout: 60
           seconds-between-retries: 6
           host: "0.0.0.0"
           port: 3000
+      - wait-for/port:
+          timeout: 60
+          seconds-between-retries: 6
+          host: "0.0.0.0"
+          port: 4000
       - run:
           working_directory: frontend
           command: curl http://0.0.0.0:3000/api
-      - run: 
+      - run:
           working_directory: frontend
           command: curl http://0.0.0.0:4000
       - run:
