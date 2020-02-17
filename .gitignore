@@ -17,6 +17,10 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+#Test logs
+tests_output/
+/coverage
+
 # nyc test coverage
 .nyc_output
 
@@ -62,9 +66,6 @@ typings/
 
 build/
 dist/
-
-# testing
-/coverage
 
 # misc
 .DS_Store
