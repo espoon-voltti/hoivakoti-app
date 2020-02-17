@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  wait-for: cobli/wait-for@0.0.2
+
 aliases:
   - &workspace_root ~/repo
   - &repo_cache_key v1-repo-{{ .Branch }}-{{ .Revision }}
@@ -116,6 +119,11 @@ jobs:
           working_directory: backend
           command: yarn start
           background: true
+      - wait-for/port:
+          host: "0.0.0.0"
+          port: 3000
+          seconds_between_retries: 6
+          timeout: 60
       - run:
           working_directory: frontend
           command: curl http://0.0.0.0:3000/api
