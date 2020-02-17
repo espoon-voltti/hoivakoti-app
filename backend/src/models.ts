@@ -429,7 +429,8 @@ export async function addDummyNursingHome(): Promise<string> {
 		owner: "Dummy Owner",
 		postal_code: "00010",
 		city: "Espoo",
-		address: "Tie 1"
+		address: "Tie 1",
+		language: "Suomi"
 	};
 	return await InsertNursingHomeToDB(nursinghome);
 }
