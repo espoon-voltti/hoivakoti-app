@@ -20,6 +20,7 @@
 
 	@media print {
 			flex-direction: row;
+			page-break-inside: avoid;
 	}
 }
 
