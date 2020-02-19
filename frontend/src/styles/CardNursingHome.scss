@@ -17,12 +17,24 @@
 	&:hover {
 		text-decoration: none;
 	}
+
+	@media print {
+			flex-direction: row;
+	}
 }
 
 .card-list-item-borders {
 	border: 1px solid $border-color;
 	border-radius: $border-radius;
 	height: 100%;
+
+	@media print {
+		border: 0;
+		border-top: 1px solid $border-color;
+		&.card-list-item-borders-last {
+			border-bottom: 1px solid $border-color;
+		}
+	}
 }
 
 @media (min-width: 1130px) {
@@ -84,6 +96,7 @@
 	flex-direction: column;
 	justify-content: center;
 	background: $border-color url("/icons/icon-house.svg") 50% 50% no-repeat;
+	object-fit: cover;
 
 	&.has-pic {
 		background-size: cover;
@@ -93,6 +106,13 @@
 	@media (min-width: 1130px) {
 		border-bottom-left-radius: $border-radius;
 		border-bottom-right-radius: $border-radius;
+	}
+
+	@media print {
+		max-width: 250px;
+		min-width: 250px;
+		max-height: 167px;
+		margin: 20px 0;
 	}
 }
 
@@ -107,6 +127,11 @@
 	flex-direction: column;
 	padding: 20px;
 	flex-grow: 1;
+
+	@media print {
+		max-width: 400px;
+		min-width: 400px;
+	}
 }
 
 .card-nursinghome-vacancy-status-badge {
@@ -171,4 +196,16 @@
 	font-size: 14px;
 	padding: 0;
 	color: $primary-blue;
+}
+
+.card-list-item__visiting-info {
+	display: none;
+
+	@media print {
+		display: block;
+		padding: 20px;
+		border-left: 1px solid $border-color;;
+		max-width: 350px;
+		min-width: 350px;
+	}
 }

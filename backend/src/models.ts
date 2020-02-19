@@ -432,5 +432,17 @@ export async function addDummyNursingHome(): Promise<string> {
 		address: "Tie 1",
 		language: "Suomi"
 	};
-	return await InsertNursingHomeToDB(nursinghome);
+
+	await InsertNursingHomeToDB(nursinghome)
+
+	const nursinghome2: NursingHome = {
+		name: "Dummy Nursinghome with a very long name",
+		owner: "Dummy Owner 2",
+		postal_code: "00015",
+		city: "Espoo",
+		address: "Tie 1",
+		language: "Suomi"
+	};
+
+	return await InsertNursingHomeToDB(nursinghome2);
 }

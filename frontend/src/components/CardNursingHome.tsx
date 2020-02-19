@@ -21,10 +21,11 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const alsoLAHText = useT("alsoLAHText");
 	const filterAraLabel = useT("filterAraLabel");
 	const filterARABoth = useT("filterARABoth");
+	const visitingInfo = useT("visitingInfo");
 	const imageDigest =
 		nursinghome.pic_digests &&
 		nursinghome.pic_digests.overview_outside_hash;
-	const imageUrl =
+	const imageUrl = 
 		nursinghome.pic_digests &&
 		nursinghome.pic_digests.overview_outside_hash &&
 		`${config.API_URL}/nursing-homes/${nursinghome.id}` +
@@ -40,11 +41,10 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			}}
 			className={`card-list-item ${className || ""}`}
 		>
-			<div
+			<img src={imageUrl ? imageUrl : undefined}
 				className={`card-list-item__image-container ${
 					imageUrl ? "has-pic" : ""
 				}`}
-				style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : {}}
 			/>
 
 			<div className="card-list-item__content">
@@ -99,7 +99,28 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					</div>
 				</div>
 			</div>
+
+			<div className="card-list-item__visiting-info">
+				<h3 id="visitingInfo">{visitingInfo}</h3>
+				<p className="nursinghome-info-paragraph-title">{nursinghome.tour_info}</p>
+				<dl className="nursingHome-info-list nursingHome-info-list--contact">
+					<dt>{nursinghome.contact_name}</dt>
+					<dd>{nursinghome.contact_title}</dd>
+					<dd>Puh. {nursinghome.contact_phone}</dd>
+					<dd>
+						<a href={"mailto:" + nursinghome.email}>
+							{nursinghome.email}
+						</a>
+					</dd>
+					<dd>
+						<br />
+					</dd>
+					<dd>{nursinghome.contact_phone_info}</dd>
+				</dl>
+			</div>
 		</Link>
+		
+		
 	);
 };
 

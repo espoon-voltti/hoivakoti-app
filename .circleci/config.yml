@@ -135,12 +135,6 @@ jobs:
           port: 4000
       - run:
           working_directory: frontend
-          command: curl http://localhost:3000/api
-      - run:
-          working_directory: frontend
-          command: curl http://localhost:4000
-      - run:
-          working_directory: frontend
           command: yarn test
 
   build_and_publish_backend:

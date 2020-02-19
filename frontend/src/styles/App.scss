@@ -52,6 +52,10 @@ $header-height: 80px;
 	align-items: center;
 	justify-content: space-between;
 	box-sizing: content-box;
+
+	@media print {
+		justify-content: center;
+	}
 }
 
 .footer {
@@ -135,6 +139,10 @@ $header-height: 80px;
 	align-items: center;
 	width: 100%;
 	justify-content: space-between;
+
+	@media print {
+		display: none;
+	}
 }
 
 #page-nav label,

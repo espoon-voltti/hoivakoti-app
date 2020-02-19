@@ -44,6 +44,9 @@
 			flex-basis: 100%;
 			padding: 0;
 		}
+		@media print {
+			padding: 0;
+		}
 	}
 }
 
