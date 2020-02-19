@@ -106,12 +106,13 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 			<>
 				{(nursingHomes || []).map((nursingHome, index) => (
 					<Marker
+						className={popup && popup.selectedNursingHome.id === nursingHome.id ? "mapbox-selected-marker" : ""}
 						key={`${index}:${nursingHome.name}`}
 						coordinates={nursingHome.geolocation.center}
 						onClick={createMarkerClickHandler(nursingHome)}
 						style={{ cursor: "pointer" }}
 					>
-						<img
+						<img 
 							src={`/icons/icon-location${
 								popup &&
 								popup.selectedNursingHome.id === nursingHome.id
