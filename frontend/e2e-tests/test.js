@@ -50,7 +50,7 @@ module.exports = {
       .click('.location-picker-select button.button-dropdown')
       .click('.location-picker button.btn.landing-cta')
       .pause(200)
-      .assert.containsText('.results-summary-text', '1 hoivakotia')
+      .assert.containsText('.results-summary-text', '2 hoivakotia') //ensure this matches the dummy data
       .end()
   },
   'Fronpage nursinghome filter selection is working - part 2/2' : function (browser) {
@@ -63,33 +63,33 @@ module.exports = {
       .click('.location-picker-select button.button-dropdown')
       .click('.location-picker button.btn.landing-cta')
       .pause(200)
-      .assert.containsText('.results-summary-text', '0 hoivakotia')
+      .assert.containsText('.results-summary-text', '0 hoivakotia') //ensure this matches the dummy data
       .end()
   },
   'Filtering nursinghomes based on language is working - part 1/2' : function (browser) {
     browser
       .url('http://localhost:4000/hoivakodit')
       .waitForElementVisible('body')
-      .assert.containsText('.results-summary-text', '1 hoivakotia')
+      .assert.containsText('.results-summary-text', '2 hoivakotia') //ensure this matches the dummy data
       .click('.filters .button-dropdown-container:nth-child(3)')
       .pause(200)
       .click('#filter-1')
       .click('.filters .button-dropdown-container:nth-child(4) > div > div:nth-child(2) > div.save-and-empty-container > button.btn')
       .pause(200)
-      .assert.containsText('.results-summary-text', '1 hoivakotia')
+      .assert.containsText('.results-summary-text', '2 hoivakotia') //ensure this matches the dummy data
       .end()
   },
   'Filtering nursinghomes based on language is working - part 2/2' : function (browser) {
     browser
       .url('http://localhost:4000/hoivakodit')
       .waitForElementVisible('body')
-      .assert.containsText('.results-summary-text', '1 hoivakotia')
+      .assert.containsText('.results-summary-text', '2 hoivakotia') //ensure this matches the dummy data
       .click('.filters .button-dropdown-container:nth-child(3)')
       .pause(200)
       .click('#filter-2')
       .click('.filters .button-dropdown-container:nth-child(4) > div > div:nth-child(2) > div.save-and-empty-container > button.btn')
       .pause(200)
-      .assert.containsText('.results-summary-text', '0 hoivakotia')
+      .assert.containsText('.results-summary-text', '0 hoivakotia') //ensure this matches the dummy data
       .end()
   },
 }
