@@ -27,9 +27,11 @@
 }
 
 .card-container {
-	//display: flex;
-	//flex-direction: row;
-	//flex-wrap: wrap;
+	@media screen {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;	
+	}
 
 	& > * {
 		padding: 0 10px 20px 10px;

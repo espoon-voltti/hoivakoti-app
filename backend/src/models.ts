@@ -430,7 +430,8 @@ export async function addDummyNursingHome(): Promise<string> {
 		postal_code: "00010",
 		city: "Espoo",
 		address: "Tie 1",
-		language: "Suomi"
+		language: "Suomi",
+		tour_info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem."
 	};
 
 	await InsertNursingHomeToDB(nursinghome)
@@ -440,9 +441,47 @@ export async function addDummyNursingHome(): Promise<string> {
 		owner: "Dummy Owner 2",
 		postal_code: "00015",
 		city: "Espoo",
-		address: "Tie 1",
-		language: "Suomi"
+		address: "Suotie 1",
+		language: "Ruotsi",
+		tour_info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem."
+
+	};
+	await InsertNursingHomeToDB(nursinghome2)
+
+	const nursinghome3: NursingHome = {
+		name: "Dummy 3",
+		owner: "Dummy Owner 3",
+		postal_code: "00020",
+		city: "Kerava",
+		address: "Ojatie 1",
+		language: "Suomi",
+		tour_info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem."
 	};
 
-	return await InsertNursingHomeToDB(nursinghome2);
+	await InsertNursingHomeToDB(nursinghome3)
+
+	const nursinghome4: NursingHome = {
+		name: "Dummy 4",
+		owner: "Dummy Owner 4",
+		postal_code: "00025",
+		city: "Helsinki",
+		address: "Jokitie 1",
+		language: "Suomi",
+		tour_info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem."
+	};
+
+	await InsertNursingHomeToDB(nursinghome4)
+
+	const nursinghome5: NursingHome = {
+		name: "Dummy 5",
+		owner: "Dummy Owner 5",
+		postal_code: "00030",
+		city: "Vantaa",
+		address: "Tie 1",
+		language: "Suomi",
+		tour_info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem."
+
+	};
+
+	return await InsertNursingHomeToDB(nursinghome5);
 }
