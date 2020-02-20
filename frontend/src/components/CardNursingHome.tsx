@@ -101,7 +101,6 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			</div>
 
 			<div className="card-list-item__visiting-info">
-				<h3 id="visitingInfo">{visitingInfo}</h3>
 				<p className="nursinghome-info-paragraph-title">{nursinghome.tour_info}</p>
 				<dl className="nursingHome-info-list nursingHome-info-list--contact">
 					<dt>{nursinghome.contact_name}</dt>
