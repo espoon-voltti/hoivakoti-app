@@ -469,7 +469,7 @@ const PageNursingHomes: FC = () => {
 	const cards: JSX.Element[] | null =
 		filteredNursingHomes &&
 		filteredNursingHomes.map((nursingHome, index) => (
-			<div key={index}>
+			<div className="card-list-item-container"card-key={index}>
 				<div
 					className={`card-list-item-borders ${
 						index === filteredNursingHomes.length - 1

@@ -50,6 +50,14 @@
 	}
 }
 
+.card-list-item-container {
+	@media print {
+		-webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+	}
+}
+
 .filters {
 	padding: 14px 20px;
 	flex-wrap: wrap;
@@ -64,6 +72,9 @@
 	color: $headline-color;
 	font-weight: bold;
 	margin-left: 10px;
+	@media print {
+		display: none;
+	}
 }
 
 // Spacing between the buttons for different filters comes from here.
@@ -97,6 +108,9 @@
 	white-space: nowrap;
 	user-select: none;
 	vertical-align: 2px;
+	@media print {
+		display: none;
+	}
 }
 .btn--clear-filters:hover {
 	text-decoration: none;

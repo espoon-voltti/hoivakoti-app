@@ -20,9 +20,6 @@
 
 	@media print {
 			flex-direction: row;
-			-webkit-column-break-inside: avoid;
-          	page-break-inside: avoid;
-            break-inside: avoid;
 	}
 }
 
