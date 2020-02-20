@@ -27,9 +27,9 @@
 }
 
 .card-container {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+	//display: flex;
+	//flex-direction: row;
+	//flex-wrap: wrap;
 
 	& > * {
 		padding: 0 10px 20px 10px;
@@ -47,14 +47,6 @@
 		@media print {
 			padding: 0;
 		}
-	}
-}
-
-.card-list-item-container {
-	@media print {
-		-webkit-column-break-inside: avoid;
-        page-break-inside: avoid;
-        break-inside: avoid;
 	}
 }
 

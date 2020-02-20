@@ -34,6 +34,7 @@
 		&.card-list-item-borders-last {
 			border-bottom: 1px solid $border-color;
 		}
+		page-break-inside: avoid;
 	}
 }
 
