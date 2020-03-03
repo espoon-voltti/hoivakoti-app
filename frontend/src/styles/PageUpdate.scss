@@ -5,11 +5,72 @@
 }
 
 .page-update-content {
-	max-width: 480px;
+	max-width: 680px;
 	margin: 0 auto 70px auto;
 	display: flex;
 	flex-direction: column;
 }
+
+.page-update-section {
+	width: 680px;
+	padding: 0 0 60px 0;
+	border-bottom: 1px solid $border-color;
+}
+
+.nursinghome-multi-upload-container {
+	width: 100%;
+	border: 2px dashed $border-color;
+}
+
+.nursinghome-multi-upload-img input {
+	width: 100%;
+	height: 200px;
+	opacity: 0;
+}
+
+.nursinghome-upload-container {
+	margin: 10px 10px 0 0;
+}
+
+.flex-container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.nursinghome-upload-img {
+	width: 300px;
+	height: 200px;
+	padding: 5px;
+	border: 2px dashed $border-color;
+}
+
+.nursinghome-upload-img-inner {
+	width: 100%;
+	height: 100%;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.nursinghome-upload-img input {
+	position: relative;
+	top: -200px;
+	width: 300px;
+	height: 200px;
+	opacity: 0;
+}
+
+.nursinghome-upload-caption {
+	width: 293px;
+	height: 60px;
+	margin: 10px 0 10px 0;
+}
+
+.textarea-hidden {
+	display: none;
+}
+
+
 
 .page-update-title {
 	margin-bottom: 1em;
@@ -19,19 +80,23 @@
 
 .page-update-data {
 	margin-bottom: 0.5em;
+	padding: 0 0 0 30px;
 }
 
 .page-update-intro {
 	margin: 1.5em 0 3em 0;
+	padding: 0 0 0 30px;
 }
 
 .page-update-controls {
 	max-width: 100%;
 	width: 360px;
-	margin: 0 auto;
+	margin: 0;
+	padding: 0 0 0 30px;
 
 	& .radio-container {
 		cursor: pointer;
+		padding-left: 30px;
 	}
 }
 
