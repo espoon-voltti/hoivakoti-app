@@ -418,12 +418,32 @@ export const translations = {
 		"sv-FI": "Inga lediga långvariga bostäder",
 	},
 	pageUpdateTitle: {
-		"fi-FI": "Päivitä vapaiden asuntojen tilanne",
-		"sv-FI": "Uppdatera situationen för lediga bostäder",
+		"fi-FI": "Hoivakodin vapaat asunnot ja kuvat",
+		"sv-FI": "",
+	},
+	freeApartmentsStatus: {
+		"fi-FI": "Vapaiden asuntojen tilanne",
+		"sv-FI": "",
 	},
 	pageUpdateIntro: {
 		"fi-FI": "Valitse hoivakodin vapaiden asuntojen tilanne:",
 		"sv-FI": "Välj situationen för lediga bostäder på vårdhemmet:",
+	},
+	organizationLogo: {
+		"fi-FI": "Organisaation / Hoivakodin omistajan logo",
+		"sv-FI": "",
+	},
+	organizationPhotos: {
+		"fi-FI": "Hoivakodin valokuvat",
+		"sv-FI": "",
+	},
+	organizationPhotosGuide: {
+		"fi-FI": "Laita erilaisia kuvia ulko- ja sisäpuolelta (esimerkiksi sisäänkäynti, piha-alue, oleskelutilat, ruokailutilat, asunto ja kylpyhuone). Ensimmäisessä kuvapaikassa oleva kuva näkyy hoivakotilistauksessa. Kaikki kuvat näkyvät hoivakodin sivulla",
+		"sv-FI": "",
+	},
+	organizationLogoBtn: {
+		"fi-FI": "Lisää tai päivitä logo",
+		"sv-FI": "",
 	},
 	clearFilters: {
 		"fi-FI": "Poista rajaukset",

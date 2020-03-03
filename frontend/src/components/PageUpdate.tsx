@@ -53,17 +53,6 @@ const PageUpdate: FC = () => {
 	);
 	const [formState, setFormState] = useState<boolean>(false);
 	const [picCaptions, setPicCaptions] = useState<Record <string, string> | null>(null);
-	const [picState, setPicState] = useState<any[]>([
-		{name: "overview_outside", value: ""},
-		{name: "apartment", value: ""},
-		{name: "lounge", value: ""},
-		{name: "dining_room", value: ""},
-		{name: "outside", value: ""},
-		{name: "entrance", value: ""},
-		{name: "bathroom", value: ""},
-		{name: "apartment_layout", value: ""},
-		{name: "nursinghome_layout",value: ""}]
-	);
 
 	let ownerLogo = "";
 	const imageState = [
@@ -81,9 +70,6 @@ const PageUpdate: FC = () => {
 	const updateImageState = (id: string, state: string) => {
 		const index = imageState.findIndex( x => x.name === id );
 		imageState[index].value = state;
-		const current = picState;
-		current[index].value = state;
-		setPicState(current);
 	}
 
 	const updateCaptionState = (id: string, state: string) => {
@@ -96,18 +82,6 @@ const PageUpdate: FC = () => {
 		imageState[index].hasImage = state;
 	}
 
-	/*const uploadMultipleFiles = (files: string[]) => {
-		let imageNumber = 0;
-		console.log(files.length);
-		picState.map((image: any, idx: number) => {
-			if(image.value != "" && imageNumber < files.length){
-				updateImageState(image.name, files[imageNumber])
-				imageNumber++;
-			}
-		});
-	}*/
-
-
 	if (!id || !key) throw new Error("Invalid URL!");
 
 	useEffect(() => {
@@ -115,18 +89,6 @@ const PageUpdate: FC = () => {
 			.get(`${config.API_URL}/nursing-homes/${id}`)
 			.then((response: GetNursingHomeResponse) => {
 				setNursingHome(response.data);
-			})
-			.catch(e => {
-				console.error(e);
-				throw e;
-			});
-	}, [id]);
-
-	useEffect(() => {
-		axios
-			.get(`${config.API_URL}/nursing-homes/${id}/pics/captions`)
-			.then((response: { data: Record<string, string> }) => {
-				setPicCaptions(response.data);
 			})
 			.catch(e => {
 				console.error(e);
@@ -153,6 +115,10 @@ const PageUpdate: FC = () => {
 	}, [id, key, popupState, vacancyStatus]);
 
 	const title = useT("pageUpdateTitle");
+	const freeApartmentsStatus = useT("freeApartmentsStatus");
+	const organizationLogo = useT("organizationLogo");
+	const organizationPhotos = useT("organizationPhotos");
+	const organizationPhotosGuide = useT("organizationPhotosGuide");
 	const intro = useT("pageUpdateIntro");
 	const labelTrue = useT("vacancyTrue");
 	const labelFalse = useT("vacancyFalse");
@@ -194,12 +160,14 @@ const PageUpdate: FC = () => {
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
+					<h1 className="page-update-title">{title}</h1>
 					<form
 							className="page-update-controls"
 							onSubmit={handleSubmit}
 						>
 					<div className="page-update-section">
-						<h1 className="page-update-title">{title}</h1>
+						
+						<h3 className="page-update-minor-title">{freeApartmentsStatus}</h3>
 						<p className="page-update-data">
 							<strong>{nursingHomeName}: </strong>
 							{nursingHome.name}
@@ -259,27 +227,28 @@ const PageUpdate: FC = () => {
 							</div>
 						</form>
 					
-					<div className="page-update-section">
-
-							<ImageUpload
-								nursingHome={nursingHome}
-								imageName={"owner_logo" as NursingHomeImageName}
-								textAreaClass="textarea-hidden"
-								onChange={
-									file => { ownerLogo = file; }
-								}
-							/>
+					<div className="page-update-section nursinghome-logo-upload">
+						<h3 className="page-update-minor-title">{organizationLogo}</h3>
+						<ImageUpload
+							nursingHome={nursingHome}
+							imageName={"owner_logo" as NursingHomeImageName}
+							useButton={true}
+							textAreaClass="textarea-hidden"
+							onChange={
+								file => { ownerLogo = file; }
+							}
+						/>
 					</div>
 
 					<div className="page-update-section">
-						
+						<h3 className="page-update-minor-title">{organizationPhotos}</h3>
+						<p>{organizationPhotosGuide}</p>
 						<div className="flex-container">
 							{nursinghomeImageTypes.map((imageType, idx) => (
 								<ImageUpload
 									nursingHome={nursingHome}
 									imageName={imageType as NursingHomeImageName}
-									image={picState[picState.findIndex( x => x.name === imageType )].value}
-									caption={picCaptions ? picCaptions[imageType + "_caption"] : ""} 
+									useButton={false}
 									textAreaClass="nursinghome-upload-caption"
 									onChange={
 										file => { updateImageState(imageType, file); }
@@ -308,8 +277,7 @@ export default PageUpdate;
 interface ImageUploadProps {
 	nursingHome: NursingHome | null;
 	imageName: NursingHomeImageName | null | undefined;
-	image?: string;
-	caption?: string;
+	useButton: boolean;
 	textAreaClass: string;
 	onClick?: () => void;
 	onChange: (file: any) => void;
@@ -320,8 +288,7 @@ interface ImageUploadProps {
 export const ImageUpload: FC<ImageUploadProps> = ({
 	nursingHome,
 	imageName,
-	image,
-	caption,
+	useButton,
 	textAreaClass,
 	onClick,
 	onChange,
@@ -329,31 +296,35 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 	setImageStatus
 }) => {
 
+	const organizationLogoBtn = useT("organizationLogoBtn");
+
 	let hasImage = true;
 	const imageUploadTooltip = "Valiste kuva";
 
 	let imageStateStr = "";
 
-	if (!image){
-		if (!imageName || !nursingHome || !nursingHome.pic_digests) hasImage = false;
-		let digest: string = "";
-		if (hasImage && nursingHome) {
-			digest = (nursingHome.pic_digests as any)[
-				`${imageName}_hash`
-			];
-		}
-		if (!digest) hasImage = false;
-	
-		if(hasImage && nursingHome) {
-			imageStateStr = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`
-		}
-	}else{
-		imageStateStr = image;
+	if (!imageName || !nursingHome || !nursingHome.pic_digests) hasImage = false;
+	let digest: string = "";
+	let caption: string = "";
+	if (hasImage && nursingHome) {
+		digest = (nursingHome.pic_digests as any)[
+			`${imageName}_hash`
+		];
+		caption = (nursingHome.pic_captions as any)[
+			`${imageName}_caption`
+		];
+	}
+	if (!digest) hasImage = false;
+
+	if(hasImage && nursingHome) {
+		imageStateStr = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`
 	}
 
 	if (setImageStatus )setImageStatus(hasImage);
 
 	const [srcUrl, setImage] = useState(imageStateStr);
+
+	if (imageStateStr) hasImage = true;
 	const [captionState, setCaptionState] = useState(caption);
 
 	if (captionState && onCaptionChange) onCaptionChange(captionState);
@@ -366,15 +337,10 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 
 		const reader = new FileReader();
 		reader.onloadend = e => {
+			onChange(reader.result);
 			setImage(reader.result as string);
 		}
 		reader.readAsDataURL(file);
-
-		const readerBinary = new FileReader();
-		readerBinary.onloadend = e => {
-			onChange(readerBinary.result);
-		}
-		readerBinary.readAsDataURL(file);
 	};
 
 	const handleCaptionChange = (
@@ -382,8 +348,8 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		): void => {
 			setCaptionState(event.target.value);
 	};
-
-	if (!hasImage)
+	console.log(hasImage);
+	if (!srcUrl)
 		return (
 			<div className="nursinghome-upload-container">
 				<div className="nursinghome-upload-img nursinghome-upload-placeholder" onClick={onClick}>
@@ -393,7 +359,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 							backgroundImage: `url()`,
 						}}
 					/>
-					<input type="file" title={imageUploadTooltip} onChange={handleImageChange}/>
+					<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
 				</div>
 				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} onChange={handleCaptionChange}></textarea>
 			</div>
@@ -408,63 +374,10 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 							backgroundImage: `url(${srcUrl})`,
 						}}
 					/>
-					<input type="file" title={imageUploadTooltip} onChange={handleImageChange}/>
+					<button type="submit" className="btn">{organizationLogoBtn}</button>
+					<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
 				</div>
 				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} onChange={handleCaptionChange}></textarea>
 			</div>
 		);
-};
-
-
-interface MultiImageUploadProps {
-	onChange: (files: any) => void;
-}
-
-export const MultiImageUpload: FC<MultiImageUploadProps> = ({
-	onChange
-}) => {
-
-	let hasImage = true;
-	const imageUploadTooltip = "Valiste kuvia";
-
-	const readFiles = async (files: any): Promise<string[]> => {
-		let filesStr: string[] = [];
-		for (let i = 0; i < files.length; i++) {
-			let file = new Blob;
-			file = files[0];
-
-			const reader = new FileReader();
-			reader.onloadend = e => {
-				filesStr.push(reader.result as string);
-			}
-			reader.readAsDataURL(file);
-		}
-		return filesStr;
-	};
-
-
-	const handleImageChange = async(
-		event: React.ChangeEvent<HTMLInputElement>,
-		): Promise<void> => {
-		
-		if (event.target.files){
-			const files = await readFiles(event.target.files);
-			console.log(files.length);
-			onChange(files);
-		}
-	};
-
-	return (
-		<div className="nursinghome-multi-upload-container">
-			<div className="nursinghome-multi-upload-img nursinghome-upload-placeholder" >
-				<div
-					className="nursinghome-upload-img-inner"
-					style={{
-						backgroundImage: `url()`,
-					}}
-				/>
-				<input type="file" title={imageUploadTooltip} onChange={handleImageChange} multiple/>
-			</div>
-		</div>
-	);
 };
