@@ -14,7 +14,7 @@ import {
 	GetAllPicDigests,
 	GetDistinctCities,
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
-	UpdateNursingHomeVacancyStatus as UpdateNursingHomeVacancyStatusDB,
+	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
 	GetAllBasicUpdateKeys,
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
@@ -75,6 +75,7 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 export async function GetNursingHome(ctx: any): Promise<any> {
 	const nursing_home_data = (await GetNursingHomeDB(ctx.params.id))[0];
 	const pic_digests = (await GetPicDigests(ctx.params.id))[0];
+	const pic_captions = (await GetPicCaptions(ctx.params.id))[0];
 	const available_pics = Object.keys(pic_digests || {})
 		.filter((item: any) => (pic_digests[item] != null ? true : false))
 		.map((item: any) => item.replace("_hash", ""));
@@ -87,6 +88,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 
 	nursing_home_data["pic_digests"] = pic_digests;
 	nursing_home_data["pics"] = available_pics;
+	nursing_home_data["pic_captions"] = pic_captions;
 	return nursing_home_data;
 }
 
@@ -219,14 +221,17 @@ export async function GetNursingHomeVacancyStatus(
 	return await GetNursingHomeVacancyStatusDB(id, key);
 }
 
-export async function UpdateNursingHomeVacancyStatus(
+export async function UpdateNursingHomeInformation(
 	ctx: Context,
 ): Promise<boolean> {
 	const { id, key } = ctx.params;
-	const value: boolean = ctx.request.body.has_vacancy;
-	if (typeof value !== "boolean")
+	const has_vacancy: boolean = ctx.request.body.has_vacancy;
+	const owner_logo: any = ctx.request.body.owner_logo;
+	const images: any = ctx.request.body.images;
+	if (typeof has_vacancy !== "boolean")
 		throw new Error("Invalid value in field 'has_vacancy'!");
-	return await UpdateNursingHomeVacancyStatusDB(id, key, value);
+
+	return await UpdateNursingHomeInformationDB(id, key, has_vacancy, owner_logo, images);
 }
 
 interface Secrets {

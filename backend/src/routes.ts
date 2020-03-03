@@ -17,7 +17,7 @@ import {
 	GetCaptions,
 	GetCities,
 	GetNursingHomeVacancyStatus,
-	UpdateNursingHomeVacancyStatus,
+	UpdateNursingHomeInformation,
 	AdminRevealSecrets,
 } from "./controllers";
 import config from "./config";
@@ -92,7 +92,7 @@ router.get("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 });
 
 router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
-	const success = await UpdateNursingHomeVacancyStatus(ctx);
+	const success = await UpdateNursingHomeInformation(ctx);
 	if (!success) {
 		ctx.response.status = 403;
 		ctx.body = { error: "Forbidden: invalid ID or key" };

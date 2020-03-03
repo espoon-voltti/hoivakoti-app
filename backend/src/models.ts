@@ -2,6 +2,7 @@
 import Knex, { CreateTableBuilder } from "knex";
 import uuidv4 from "uuid/v4";
 import rp from "request-promise-native";
+import crypto, { BinaryLike } from "crypto";
 import {
 	NursingHome,
 	nursing_home_pictures_columns_info,
@@ -36,6 +37,13 @@ knex.schema.hasTable("NursingHomePictures").then(async (exists: boolean) => {
 
 	await CreateNursingHomePicturesTable();
 });
+
+function checksum(str: string | BinaryLike): string {
+	return crypto
+		.createHash("SHA256")
+		.update(str)
+		.digest("hex");
+}
 
 async function CreateNursingHomePicturesTable(): Promise<void> {
 	await knex.schema.createTable("NursingHomePictures", (table: any) => {
@@ -385,21 +393,171 @@ export async function GetNursingHomeVacancyStatus(
 	return { has_vacancy: status, vacancy_last_updated_at };
 }
 
-export async function UpdateNursingHomeVacancyStatus(
+export async function UpdateNursingHomeInformation(
 	id: string,
 	basicUdpateKey: string,
-	value: boolean,
+	status: boolean,
+	ownerLogo: string,
+	images: any[]
 ): Promise<boolean> {
 	const now = new Date().toISOString();
 
-	const count = await knex("NursingHomes")
+	console.log(images[1]);
+	let count = await knex("NursingHomes")
 		.where({ id, basic_update_key: basicUdpateKey })
 		.update({
-			has_vacancy: value,
+			has_vacancy: status,
 			vacancy_last_updated_at: now,
 		});
 
 	if (count !== 1) return false;
+
+	if (images) { 
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				overview_outside_caption: images[images.findIndex( x => x.name === "overview_outside" )].text,
+				apartment_caption: images[images.findIndex( x => x.name === "apartment" )].text,
+				lounge_caption: images[images.findIndex( x => x.name === "lounge" )].text,
+				dining_room_caption: images[images.findIndex( x => x.name === "dining_room" )].text,
+				outside_caption: images[images.findIndex( x => x.name === "outside" )].text,
+				entrance_caption: images[images.findIndex( x => x.name === "entrance" )].text,
+				bathroom_caption: images[images.findIndex( x => x.name === "bathroom" )].text,
+				apartment_layout_caption: images[images.findIndex( x => x.name === "apartment_layout" )].text,
+				nursinghome_layout_caption: images[images.findIndex( x => x.name === "nursinghome_layout" )].text,
+			});
+	}
+
+
+	if (ownerLogo) { 
+		const imageData = new Buffer(ownerLogo.split(",")[1], 'base64');
+	
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				owner_logo: imageData,
+				owner_logo_hash: checksum(imageData),
+			});
+	}
+
+	let image = images[images.findIndex( x => x.name === "overview_outside" )].value;
+	if (image) { 
+		
+		const imageData = new Buffer(image.split(",")[1], 'base64');
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				overview_outside: imageData,
+				overview_outside_hash: checksum(imageData),
+			});
+	}
+
+    image = images[images.findIndex( x => x.name === "apartment" )].value;
+	if (image) { 
+		
+		const imageData = new Buffer(image.split(",")[1], 'base64');
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				apartment: imageData,
+				apartment_hash: checksum(imageData),
+			});
+	}
+
+	image = images[images.findIndex( x => x.name === "lounge" )].value;
+	if (image) { 
+		
+		const imageData = new Buffer(image.split(",")[1], 'base64');
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				lounge: imageData,
+				lounge_hash: checksum(imageData),
+			});
+	}
+
+	image = images[images.findIndex( x => x.name === "dining_room" )].value;
+	if (image) { 
+		
+		const imageData = new Buffer(image.split(",")[1], 'base64');
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				dining_room: imageData,
+				dining_room_hash: checksum(imageData),
+			});
+	}
+
+	image = images[images.findIndex( x => x.name === "outside" )].value;
+	if (image) { 
+		
+		const imageData = new Buffer(image.split(",")[1], 'base64');
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				outside: imageData,
+				outside_hash: checksum(imageData),
+			});
+	}
+
+	image = images[images.findIndex( x => x.name === "entrance" )].value;
+	if (image) { 
+		
+		const imageData = new Buffer(image.split(",")[1], 'base64');
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				entrance: imageData,
+				entrance_hash: checksum(imageData),
+			});
+	}
+
+	image = images[images.findIndex( x => x.name === "bathroom" )].value;
+	if (image) { 
+		
+		const imageData = new Buffer(image.split(",")[1], 'base64');
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				bathroom: imageData,
+				bathroom_hash: checksum(imageData),
+			});
+	}
+
+
+	image = images[images.findIndex( x => x.name === "apartment_layout" )].value;
+	if (image) { 
+		
+		const imageData = new Buffer(image.split(",")[1], 'base64');
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				apartment_layout: imageData,
+				apartment_layout_hash: checksum(imageData),
+			});
+	}
+
+	image = images[images.findIndex( x => x.name === "nursinghome_layout" )].value;
+	if (image) { 
+		
+		const imageData = new Buffer(image.split(",")[1], 'base64');
+		
+		await knex("NursingHomePictures")
+			.where({ nursinghome_id: id })
+			.update({
+				nursinghome_layout: imageData,
+				nursinghome_layout_hash: checksum(imageData),
+			});
+	}
 
 	return true;
 }
