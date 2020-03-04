@@ -445,6 +445,22 @@ export const translations = {
 		"fi-FI": "Lisää tai päivitä logo",
 		"sv-FI": "",
 	},
+	cancelPageTitle: {
+		"fi-FI": "Peruutit muutokset",
+		"sv-FI": "",
+	},
+	backToEdit: {
+		"fi-FI": "Palaa muokkaamaan",
+		"sv-FI": "",
+	},
+	uploadPlaceholder: {
+		"fi-FI": "Lisää kuvateksti kirjoittamalla tähän.",
+		"sv-FI": "",
+	},
+	cancelPageContent: {
+		"fi-FI": "Voit halutessasi palata edelliselle sivulle muokkaamaan tai sulkea tämän sivun.",
+		"sv-FI": "",
+	},
 	clearFilters: {
 		"fi-FI": "Poista rajaukset",
 		"sv-FI": "Rensa filter",

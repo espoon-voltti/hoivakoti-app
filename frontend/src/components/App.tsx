@@ -19,6 +19,7 @@ import ScrollToTop from "./ScrollToTop";
 import PageAccessibility from "./PageAccessibility";
 import Title from "./Title";
 import PageUpdate from "./PageUpdate";
+import PageCancel from "./PageCancel";
 import PageAdmin from "./PageAdmin";
 import ReactGA from "react-ga";
 import config from "./config";
@@ -71,6 +72,11 @@ const App: React.FC = () => {
 								exact
 								path="/hoivakodit/:id/paivita/:key"
 								component={PageUpdate}
+							/>
+							<Route
+								exact
+								path="/hoivakodit/:id/paivita/:key/peruuta"
+								component={PageCancel}
 							/>
 							<Route
 								exact

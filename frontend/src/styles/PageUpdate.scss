@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .page-update {
-	padding: 20px;
+	padding: 80px 20px 20px 20px;
 }
 
 .page-update-content {
@@ -27,7 +27,7 @@
 
 .nursinghome-upload-container {
 	margin: 10px 0px 45px 0;
-	height: 250px;
+	height: 285px;
 }
 
 .nursinghome-upload-container:nth-of-type(odd) {
@@ -47,12 +47,32 @@
 	border: 2px dashed $border-color;
 }
 
+.nursinghome-upload-img-hover {
+	position: relative;
+	top: -6px;
+	left: -6px;
+	width: 320px;
+	height: 200px;
+	opacity: 0;
+	background-color: rgba(0,0,0,0.75);
+}
+
 .nursinghome-upload-img-inner {
 	width: 100%;
 	height: 100%;
 	background-position: center;
 	background-size: contain;
 	background-repeat: no-repeat;
+
+	&:hover {
+		.nursinghome-upload-img-hover {
+			opacity: .9;
+		}
+	}
+}
+
+.nursinghome-upload-placeholder > .nursinghome-upload-img-inner {
+	background: $border-color url("/icons/icon-house.svg") 50% 50% no-repeat;
 }
 
 .nursinghome-upload-img {
@@ -61,29 +81,43 @@
 	.btn {
 		margin: 30px 0 0 0;
 		width: 250px;
-
 	}
 	
 	.input-hidden{
 		position: relative;
-		opacity: 0;
-		top: -200px;
-		width: 320px;
-		height: 200px;
+		opacity: 1;
+		top: 50px;
+		left: 50px;
+		width: 100px;
+		height: 100px;
+		border: 1px solid $border-color;
+
+		input {
+			opacity: 0;
+			width: 100%;
+			height: 100%;
+		}
 	}
+
 	.input-button{
 		position: relative;
 		opacity: 0;
-		top: -42px;
+		top: 220px;
 		width: 250px;
 		height: 42px;
 	}
 }
 
+.upload-button-hidden {
+	display: none;
+}
+
 .nursinghome-upload-caption {
 	width: 313px;
-	height: 60px;
+	height: 90px;
 	margin: 10px 0 10px 0;
+	font-size: 14px;
+	border: 1px solid $border-color;
 }
 
 .textarea-hidden {
@@ -120,33 +154,41 @@
 	}
 }
 
-.page-update-submit {
-	display: inline-flex;
-	align-items: center;
-	justify-content: stretch;
-	cursor: pointer;
-	text-align: left;
-	font-size: 14px;
-	font-weight: bold;
-	color: $headline-color;
-	background: none;
-	padding: 10px;
+.page-update-cancel {
+	border-width: 1px;
+    cursor: pointer;
+    justify-content: center;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    padding-top: calc(0.375em - 1px);
+    text-align: center;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 7em;
+    height: 3em;
+    color: $headline-color;
 	border: 1px solid $light-gray;
 	border-radius: $border-radius;
-	text-transform: uppercase;
-	white-space: nowrap;
-	user-select: none;
 
-	margin-top: 20px;
-
-	&:disabled {
-		cursor: default;
-		opacity: 0.5;
-	}
 }
 
 .page-update-popup {
 	margin-left: 20px;
 	color: $primary-blue;
 	font-weight: bold;
+}
+
+.nav-save {
+	position: fixed;
+	top: 18px;
+	width: 450px;
+	right: 250px;
+	z-index: 9999;
+
+	*{
+		margin-right: 8px;
+	}
 }

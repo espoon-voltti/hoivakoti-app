@@ -20,8 +20,10 @@ const Header: FC = () => {
 		setIsMobileMenuOpen(false);
 	}, [location.pathname, location.search]);
 
+	const nursinghomeUpdatePage = location.pathname.indexOf("paivita") == -1 ? false : true;
+
 	return (
-		<header className="header">
+		<header className={"header " + (nursinghomeUpdatePage ? "header-fixed" : "")}>
 			<a className="jump-to-content" href="#content">
 				{linkJumpToContent}
 			</a>
@@ -48,7 +50,7 @@ const Header: FC = () => {
 				<label htmlFor="hamburger" className="menu-btn">
 					&#9776; {useT("menu")}
 				</label>
-				<div className="nav-menus">
+				<div className={"nav-menus " + (nursinghomeUpdatePage ? "nav-hidden" : "")}>
 					<ul className="nav-menu" role="menu">
 						<li role="menuitem">
 							<NavLink

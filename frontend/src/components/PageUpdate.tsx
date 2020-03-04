@@ -153,6 +153,11 @@ const PageUpdate: FC = () => {
 		setVacancyStatus(null);
 	};
 
+	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>):void => {
+		e.preventDefault();
+		window.location.href = window.location.pathname + "/peruuta";
+	};
+
 	return (
 		<div className="page-update">
 			<div className="page-update-content">
@@ -165,6 +170,18 @@ const PageUpdate: FC = () => {
 							className="page-update-controls"
 							onSubmit={handleSubmit}
 						>
+					<div className="nav-save">
+						<button className="page-update-cancel" onClick={cancelEdit}>Peruuta</button>
+						<button type="submit" className="btn">{btnSave}</button>
+
+						{popupState && (
+							<span className="page-update-popup">
+								{popupState === "saving"
+									? updatePopupSaving
+									: updatePopupSaved}
+							</span>
+						)}
+					</div>
 					<div className="page-update-section">
 						
 						<h3 className="page-update-minor-title">{freeApartmentsStatus}</h3>
@@ -210,20 +227,7 @@ const PageUpdate: FC = () => {
 							>
 								{labelFalse}
 							</Radio>
-							<div>
-								<input
-									type="submit"
-									className="page-update-submit"
-									value={btnSave}
-								/>
-								{popupState && (
-									<span className="page-update-popup">
-										{popupState === "saving"
-											? updatePopupSaving
-											: updatePopupSaved}
-									</span>
-								)}
-							</div>
+							
 							</div>
 						</form>
 					
@@ -297,6 +301,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 }) => {
 
 	const organizationLogoBtn = useT("organizationLogoBtn");
+	const uploadPlaceholder = useT("uploadPlaceholder");
 
 	let hasImage = true;
 	const imageUploadTooltip = "Valiste kuva";
@@ -348,36 +353,36 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		): void => {
 			setCaptionState(event.target.value);
 	};
-	console.log(hasImage);
+	
 	if (!srcUrl)
 		return (
 			<div className="nursinghome-upload-container">
 				<div className="nursinghome-upload-img nursinghome-upload-placeholder" onClick={onClick}>
 					<div
 						className="nursinghome-upload-img-inner"
-						style={{
-							backgroundImage: `url()`,
-						}}
 					/>
 					<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
 				</div>
-				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} onChange={handleCaptionChange}></textarea>
+				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} placeholder={uploadPlaceholder} onChange={handleCaptionChange}></textarea>
 			</div>
 		);
 	else
 		return (
-			<div className="nursinghome-upload-container">
+			<div className={"nursinghome-upload-container " + (useButton ? "input-button-layout" : "input-hidden-layout")}>
 				<div className="nursinghome-upload-img" onClick={onClick}>
 					<div
 						className="nursinghome-upload-img-inner"
 						style={{
 							backgroundImage: `url(${srcUrl})`,
 						}}
-					/>
-					<button type="submit" className="btn">{organizationLogoBtn}</button>
-					<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
+					>
+						<div className="nursinghome-upload-img-hover">
+							<div className={useButton ? "input-button" : "input-hidden"}><input type="file"  title={imageUploadTooltip} onChange={handleImageChange}/></div>
+						</div>
+					</div>
+					<button type="submit" className={useButton ? "btn" : "upload-button-hidden"}>{organizationLogoBtn}</button>
 				</div>
-				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} onChange={handleCaptionChange}></textarea>
+				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} placeholder={uploadPlaceholder} onChange={handleCaptionChange}></textarea>
 			</div>
 		);
 };
