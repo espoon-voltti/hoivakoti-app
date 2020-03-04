@@ -226,12 +226,11 @@ export async function UpdateNursingHomeInformation(
 ): Promise<boolean> {
 	const { id, key } = ctx.params;
 	const has_vacancy: boolean = ctx.request.body.has_vacancy;
-	const owner_logo: any = ctx.request.body.owner_logo;
 	const images: any = ctx.request.body.images;
 	if (typeof has_vacancy !== "boolean")
 		throw new Error("Invalid value in field 'has_vacancy'!");
 
-	return await UpdateNursingHomeInformationDB(id, key, has_vacancy, owner_logo, images);
+	return await UpdateNursingHomeInformationDB(id, key, has_vacancy, images);
 }
 
 interface Secrets {

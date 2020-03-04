@@ -29,14 +29,13 @@ const requestVacancyStatusUpdate = async (
 	id: string,
 	key: string,
 	status: boolean,
-	owner_logo: any,
 	images:any,
 ): Promise<void> => {
 	await axios.post(
 		`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
 		// eslint-disable-next-line @typescript-eslint/camelcase
-		{ has_vacancy: status, 
-			owner_logo: owner_logo, 
+		{ 
+			has_vacancy: status,
 			images: images
 		}
 	);
@@ -54,22 +53,29 @@ const PageUpdate: FC = () => {
 	const [formState, setFormState] = useState<boolean>(false);
 	const [picCaptions, setPicCaptions] = useState<Record <string, string> | null>(null);
 
-	let ownerLogo = "";
 	const imageState = [
-		{name: "overview_outside", hasImage: false, value: "", text:""},
-		{name: "apartment", hasImage: false, value: "", text:""},
-		{name: "lounge", hasImage: false, value: "", text:""},
-		{name: "dining_room", hasImage: false, value: "", text:""},
-		{name: "outside", hasImage: false, value: "", text:""},
-		{name: "entrance", hasImage: false, value: "", text:""},
-		{name: "bathroom", hasImage: false, value: "", text:""},
-		{name: "apartment_layout", hasImage: false, value: "", text:""},
-		{name: "nursinghome_layout", hasImage: false, value: "", text:""},
+		{name: "overview_outside", hasImage: false, remove: false, value: "", text:""},
+		{name: "apartment", hasImage: false, remove: false, value: "", text:""},
+		{name: "lounge", hasImage: false, remove: false, value: "", text:""},
+		{name: "dining_room", hasImage: false, remove: false, value: "", text:""},
+		{name: "outside", hasImage: false, remove: false, value: "", text:""},
+		{name: "entrance", hasImage: false, remove: false, value: "", text:""},
+		{name: "bathroom", hasImage: false, remove: false, value: "", text:""},
+		{name: "apartment_layout", hasImage: false, remove: false, value: "", text:""},
+		{name: "nursinghome_layout", hasImage: false, remove: false, value: "", text:""},
+		{name: "owner_logo", hasImage: false, remove: false, value: "", text:""},
 	];
+
+	const removeImage = (id: string) => {
+		const index = imageState.findIndex( x => x.name === id );
+		imageState[index].remove = true;
+		imageState[index].value = "";
+	}
 
 	const updateImageState = (id: string, state: string) => {
 		const index = imageState.findIndex( x => x.name === id );
 		imageState[index].value = state;
+		imageState[index].remove = false;
 	}
 
 	const updateCaptionState = (id: string, state: string) => {
@@ -148,7 +154,7 @@ const PageUpdate: FC = () => {
 	): Promise<void> => {
 		e.preventDefault();
 		setPopupState("saving");
-		await requestVacancyStatusUpdate(id, key, formState, ownerLogo, imageState);
+		await requestVacancyStatusUpdate(id, key, formState, imageState);
 		setPopupState("saved");
 		setVacancyStatus(null);
 	};
@@ -238,8 +244,11 @@ const PageUpdate: FC = () => {
 							imageName={"owner_logo" as NursingHomeImageName}
 							useButton={true}
 							textAreaClass="textarea-hidden"
+							onRemove={
+								() => { removeImage("owner_logo")}
+							}
 							onChange={
-								file => { ownerLogo = file; }
+								file => { updateImageState("owner_logo", file); }
 							}
 						/>
 					</div>
@@ -254,6 +263,9 @@ const PageUpdate: FC = () => {
 									imageName={imageType as NursingHomeImageName}
 									useButton={false}
 									textAreaClass="nursinghome-upload-caption"
+									onRemove={
+										() => { removeImage(imageType)}
+									}
 									onChange={
 										file => { updateImageState(imageType, file); }
 									}
@@ -283,7 +295,7 @@ interface ImageUploadProps {
 	imageName: NursingHomeImageName | null | undefined;
 	useButton: boolean;
 	textAreaClass: string;
-	onClick?: () => void;
+	onRemove?: () => void;
 	onChange: (file: any) => void;
 	onCaptionChange?: (text: string) => void;
 	setImageStatus?: (status: boolean) => void;
@@ -294,7 +306,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 	imageName,
 	useButton,
 	textAreaClass,
-	onClick,
+	onRemove,
 	onChange,
 	onCaptionChange,
 	setImageStatus
@@ -325,11 +337,11 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		imageStateStr = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`
 	}
 
-	if (setImageStatus )setImageStatus(hasImage);
+	if (setImageStatus) setImageStatus(hasImage);
+	if (imageStateStr) hasImage = true;
 
 	const [srcUrl, setImage] = useState(imageStateStr);
 
-	if (imageStateStr) hasImage = true;
 	const [captionState, setCaptionState] = useState(caption);
 
 	if (captionState && onCaptionChange) onCaptionChange(captionState);
@@ -353,15 +365,23 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		): void => {
 			setCaptionState(event.target.value);
 	};
+
+	const handleRemove= (
+		event: React.MouseEvent <HTMLDivElement, MouseEvent>,
+		): void => {
+			if(onRemove) onRemove();
+			setImage("");
+	};
 	
 	if (!srcUrl)
 		return (
 			<div className="nursinghome-upload-container">
-				<div className="nursinghome-upload-img nursinghome-upload-placeholder" onClick={onClick}>
+				<div className="nursinghome-upload-img nursinghome-upload-placeholder">
 					<div className="nursinghome-upload-img-inner">
 						<div className="nursinghome-upload-img-inner-text">Tyhjä kuvapaikka</div>
 						<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
 					</div>
+					<button type="submit" className={useButton ? "btn" : "upload-button-hidden"}>{organizationLogoBtn}</button>
 				</div>
 				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} placeholder={uploadPlaceholder} onChange={handleCaptionChange}></textarea>
 			</div>
@@ -369,15 +389,21 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 	else
 		return (
 			<div className={"nursinghome-upload-container " + (useButton ? "input-button-layout" : "input-hidden-layout")}>
-				<div className="nursinghome-upload-img" onClick={onClick}>
+				<div className="nursinghome-upload-img">
 					<div
 						className="nursinghome-upload-img-inner"
 						style={{
 							backgroundImage: `url(${srcUrl})`,
 						}}
 					>
-						<div className={useButton ? "" : "nursinghome-upload-img-hover"}>
-							<div className={useButton ? "input-button" : "input-hidden"}><input type="file"  title={imageUploadTooltip} onChange={handleImageChange}/></div>
+						<div className="nursinghome-upload-img-hover">
+							<div className={useButton ? "input-button" : "input-hidden"}>
+								<div className="nursinghome-upload-img-change-text">Vaihda kuva</div>
+								<input type="file"  title={imageUploadTooltip} onChange={handleImageChange}/>
+							</div>
+							<div className="nursinghome-upload-logo-remove" onClick={handleRemove}>
+								<div className="nursinghome-upload-img-remove-text">Poista</div>
+							</div>
 						</div>
 					</div>
 					<button type="submit" className={useButton ? "btn" : "upload-button-hidden"}>{organizationLogoBtn}</button>

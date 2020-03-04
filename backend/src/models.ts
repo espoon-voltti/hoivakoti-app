@@ -397,19 +397,17 @@ export async function UpdateNursingHomeInformation(
 	id: string,
 	basicUdpateKey: string,
 	status: boolean,
-	ownerLogo: string,
 	images: any[]
 ): Promise<boolean> {
 	const now = new Date().toISOString();
 
-	console.log(images[1]);
 	let count = await knex("NursingHomes")
 		.where({ id, basic_update_key: basicUdpateKey })
 		.update({
 			has_vacancy: status,
 			vacancy_last_updated_at: now,
 		});
-
+	
 	if (count !== 1) return false;
 
 	if (images) { 
@@ -429,133 +427,134 @@ export async function UpdateNursingHomeInformation(
 			});
 	}
 
-
-	if (ownerLogo) { 
-		const imageData = new Buffer(ownerLogo.split(",")[1], 'base64');
-	
+	let image = images[images.findIndex( x => x.name === "owner_logo" )];
+	if (image.value || image.remove) { 
+		
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				owner_logo: imageData,
-				owner_logo_hash: checksum(imageData),
+				owner_logo_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
-	let image = images[images.findIndex( x => x.name === "overview_outside" )].value;
-	if (image) { 
+	image = images[images.findIndex( x => x.name === "overview_outside" )];
+	if (image.value || image.remove) { 
 		
-		const imageData = new Buffer(image.split(",")[1], 'base64');
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				overview_outside: imageData,
-				overview_outside_hash: checksum(imageData),
+				overview_outside_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
-    image = images[images.findIndex( x => x.name === "apartment" )].value;
-	if (image) { 
+    image = images[images.findIndex( x => x.name === "apartment" )];
+	if (image.value || image.remove) { 
 		
-		const imageData = new Buffer(image.split(",")[1], 'base64');
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				apartment: imageData,
-				apartment_hash: checksum(imageData),
+				apartment_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
-	image = images[images.findIndex( x => x.name === "lounge" )].value;
-	if (image) { 
+	image = images[images.findIndex( x => x.name === "lounge" )];
+	if (image.value || image.remove) { 
 		
-		const imageData = new Buffer(image.split(",")[1], 'base64');
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				lounge: imageData,
-				lounge_hash: checksum(imageData),
+				lounge_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
-	image = images[images.findIndex( x => x.name === "dining_room" )].value;
-	if (image) { 
+	image = images[images.findIndex( x => x.name === "dining_room" )];
+	if (image.value || image.remove) { 
 		
-		const imageData = new Buffer(image.split(",")[1], 'base64');
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				dining_room: imageData,
-				dining_room_hash: checksum(imageData),
+				dining_room_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
-	image = images[images.findIndex( x => x.name === "outside" )].value;
-	if (image) { 
+	image = images[images.findIndex( x => x.name === "outside" )];
+	if (image.value || image.remove) { 
 		
-		const imageData = new Buffer(image.split(",")[1], 'base64');
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				outside: imageData,
-				outside_hash: checksum(imageData),
+				outside_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
-	image = images[images.findIndex( x => x.name === "entrance" )].value;
-	if (image) { 
+	image = images[images.findIndex( x => x.name === "entrance" )];
+	if (image.value || image.remove) { 
 		
-		const imageData = new Buffer(image.split(",")[1], 'base64');
-		
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+	
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				entrance: imageData,
-				entrance_hash: checksum(imageData),
+				entrance_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
-	image = images[images.findIndex( x => x.name === "bathroom" )].value;
-	if (image) { 
+	image = images[images.findIndex( x => x.name === "bathroom" )];
+	if (image.value || image.remove) { 
 		
-		const imageData = new Buffer(image.split(",")[1], 'base64');
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				bathroom: imageData,
-				bathroom_hash: checksum(imageData),
+				bathroom_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
 
-	image = images[images.findIndex( x => x.name === "apartment_layout" )].value;
-	if (image) { 
+	image = images[images.findIndex( x => x.name === "apartment_layout" )];
+	if (image.value || image.remove) { 
 		
-		const imageData = new Buffer(image.split(",")[1], 'base64');
-		
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+	
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				apartment_layout: imageData,
-				apartment_layout_hash: checksum(imageData),
+				apartment_layout_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
-	image = images[images.findIndex( x => x.name === "nursinghome_layout" )].value;
-	if (image) { 
+	image = images[images.findIndex( x => x.name === "nursinghome_layout" )];
+	if (image.value || image.remove) { 
 		
-		const imageData = new Buffer(image.split(",")[1], 'base64');
+		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				nursinghome_layout: imageData,
-				nursinghome_layout_hash: checksum(imageData),
+				nursinghome_layout_hash: image.remove ? "" : checksum(imageData),
 			});
 	}
 
