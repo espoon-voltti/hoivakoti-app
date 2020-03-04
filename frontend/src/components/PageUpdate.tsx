@@ -358,10 +358,10 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		return (
 			<div className="nursinghome-upload-container">
 				<div className="nursinghome-upload-img nursinghome-upload-placeholder" onClick={onClick}>
-					<div
-						className="nursinghome-upload-img-inner"
-					/>
-					<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
+					<div className="nursinghome-upload-img-inner">
+						<div className="nursinghome-upload-img-inner-text">Tyhjä kuvapaikka</div>
+						<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
+					</div>
 				</div>
 				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} placeholder={uploadPlaceholder} onChange={handleCaptionChange}></textarea>
 			</div>
@@ -376,7 +376,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 							backgroundImage: `url(${srcUrl})`,
 						}}
 					>
-						<div className="nursinghome-upload-img-hover">
+						<div className={useButton ? "" : "nursinghome-upload-img-hover"}>
 							<div className={useButton ? "input-button" : "input-hidden"}><input type="file"  title={imageUploadTooltip} onChange={handleImageChange}/></div>
 						</div>
 					</div>
