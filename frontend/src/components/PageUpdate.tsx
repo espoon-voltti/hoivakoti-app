@@ -250,6 +250,10 @@ const PageUpdate: FC = () => {
 							onChange={
 								file => { updateImageState("owner_logo", file); }
 							}
+							setImageStatus={
+								status => {
+									setHasImage("owner_logo", status); }
+							}
 						/>
 					</div>
 
@@ -298,7 +302,7 @@ interface ImageUploadProps {
 	onRemove?: () => void;
 	onChange: (file: any) => void;
 	onCaptionChange?: (text: string) => void;
-	setImageStatus?: (status: boolean) => void;
+	setImageStatus: (status: boolean) => void;
 }
 
 export const ImageUpload: FC<ImageUploadProps> = ({
@@ -350,14 +354,17 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		event: React.ChangeEvent<HTMLInputElement>,
 		): void => {
 		let file = new Blob;
-		if (event.target.files) { file = event.target.files[0]; }
+		
+		if (event.target.files && event.target.files.length > 0) { 
+			file = event.target.files[0]; 
 
-		const reader = new FileReader();
-		reader.onloadend = e => {
-			onChange(reader.result);
-			setImage(reader.result as string);
+			const reader = new FileReader();
+			reader.onloadend = e => {
+				onChange(reader.result);
+				setImage(reader.result as string);
+			}
+			reader.readAsDataURL(file);
 		}
-		reader.readAsDataURL(file);
 	};
 
 	const handleCaptionChange = (
@@ -401,7 +408,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 								<div className="nursinghome-upload-img-change-text">Vaihda kuva</div>
 								<input type="file"  title={imageUploadTooltip} onChange={handleImageChange}/>
 							</div>
-							<div className="nursinghome-upload-logo-remove" onClick={handleRemove}>
+							<div className={useButton ? "nursinghome-upload-button-remove" : "nursinghome-upload-hidden-remove"} onClick={handleRemove}>
 								<div className="nursinghome-upload-img-remove-text">Poista</div>
 							</div>
 						</div>

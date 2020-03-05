@@ -10,6 +10,7 @@ import {
 } from "./nursinghome-typings";
 import config from "./config";
 import { createBasicUpdateKey, hashWithSalt, NursingHomesFromCSV } from "./services";
+import sharp from "sharp";
 
 const options: Knex.Config = {
 	client: "postgres",
@@ -43,6 +44,16 @@ function checksum(str: string | BinaryLike): string {
 		.createHash("SHA256")
 		.update(str)
 		.digest("hex");
+}
+
+async function resizeImage (image:  Buffer){
+	return await sharp(image)
+			.resize(900, 900, {
+				fit: sharp.fit.inside,
+				withoutEnlargement: true
+			  })
+			.jpeg({quality: 90})
+			.toBuffer();
 }
 
 async function CreateNursingHomePicturesTable(): Promise<void> {
@@ -411,7 +422,16 @@ export async function UpdateNursingHomeInformation(
 	if (count !== 1) return false;
 
 	if (images) { 
-		
+
+		const nursingHomeExsists = await knex
+			.select()
+			.table("NursingHomePictures")
+			.where({ nursinghome_id: id });
+
+		if(nursingHomeExsists.length < 1) {
+			await knex("NursingHomePictures").insert({nursinghome_id: id});
+		}
+
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
@@ -430,21 +450,25 @@ export async function UpdateNursingHomeInformation(
 	let image = images[images.findIndex( x => x.name === "owner_logo" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
-		
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
+	
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
 				owner_logo: imageData,
 				owner_logo_hash: image.remove ? "" : checksum(imageData),
-			});
+		});
 	}
 
 	image = images[images.findIndex( x => x.name === "overview_outside" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
-		
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
+
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
@@ -456,8 +480,10 @@ export async function UpdateNursingHomeInformation(
     image = images[images.findIndex( x => x.name === "apartment" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
-		
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
+
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
@@ -469,8 +495,10 @@ export async function UpdateNursingHomeInformation(
 	image = images[images.findIndex( x => x.name === "lounge" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
-		
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
+
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
@@ -482,8 +510,10 @@ export async function UpdateNursingHomeInformation(
 	image = images[images.findIndex( x => x.name === "dining_room" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
-		
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
+
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
 			.update({
@@ -495,7 +525,9 @@ export async function UpdateNursingHomeInformation(
 	image = images[images.findIndex( x => x.name === "outside" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -508,7 +540,9 @@ export async function UpdateNursingHomeInformation(
 	image = images[images.findIndex( x => x.name === "entrance" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
 	
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -521,7 +555,9 @@ export async function UpdateNursingHomeInformation(
 	image = images[images.findIndex( x => x.name === "bathroom" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -535,7 +571,9 @@ export async function UpdateNursingHomeInformation(
 	image = images[images.findIndex( x => x.name === "apartment_layout" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
 	
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -548,7 +586,9 @@ export async function UpdateNursingHomeInformation(
 	image = images[images.findIndex( x => x.name === "nursinghome_layout" )];
 	if (image.value || image.remove) { 
 		
-		const imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
+
+		imageData = await resizeImage(imageData);
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
