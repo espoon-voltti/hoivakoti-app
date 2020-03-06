@@ -452,7 +452,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 	
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -467,7 +467,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -482,7 +482,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -497,7 +497,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -512,7 +512,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -527,7 +527,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -542,7 +542,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 	
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -557,7 +557,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -573,7 +573,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 	
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
@@ -588,7 +588,7 @@ export async function UpdateNursingHomeInformation(
 		
 		let imageData = image.remove ? new Buffer("", 'base64') : new Buffer(image.value.split(",")[1], 'base64');
 
-		imageData = await resizeImage(imageData);
+		if (!image.remove) imageData = await resizeImage(imageData);
 		
 		await knex("NursingHomePictures")
 			.where({ nursinghome_id: id })
