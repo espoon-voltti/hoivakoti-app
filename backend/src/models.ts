@@ -458,7 +458,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				owner_logo: imageData,
-				owner_logo_hash: image.remove ? "" : checksum(imageData),
+				owner_logo_hash: image.remove ? null : checksum(imageData),
 		});
 	}
 
@@ -473,7 +473,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				overview_outside: imageData,
-				overview_outside_hash: image.remove ? "" : checksum(imageData),
+				overview_outside_hash: image.remove ? null : checksum(imageData),
 			});
 	}
 
@@ -488,7 +488,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				apartment: imageData,
-				apartment_hash: image.remove ? "" : checksum(imageData),
+				apartment_hash: image.remove ? null : checksum(imageData),
 			});
 	}
 
@@ -503,7 +503,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				lounge: imageData,
-				lounge_hash: image.remove ? "" : checksum(imageData),
+				lounge_hash: image.remove ? null : checksum(imageData),
 			});
 	}
 
@@ -518,7 +518,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				dining_room: imageData,
-				dining_room_hash: image.remove ? "" : checksum(imageData),
+				dining_room_hash: image.remove ? null : checksum(imageData),
 			});
 	}
 
@@ -533,7 +533,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				outside: imageData,
-				outside_hash: image.remove ? "" : checksum(imageData),
+				outside_hash: image.remove ? null : checksum(imageData),
 			});
 	}
 
@@ -548,7 +548,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				entrance: imageData,
-				entrance_hash: image.remove ? "" : checksum(imageData),
+				entrance_hash: image.remove ? null : checksum(imageData),
 			});
 	}
 
@@ -563,7 +563,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				bathroom: imageData,
-				bathroom_hash: image.remove ? "" : checksum(imageData),
+				bathroom_hash: image.remove ? null : checksum(imageData),
 			});
 	}
 
@@ -579,7 +579,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				apartment_layout: imageData,
-				apartment_layout_hash: image.remove ? "" : checksum(imageData),
+				apartment_layout_hash: image.remove ? null : checksum(imageData),
 			});
 	}
 
@@ -594,7 +594,7 @@ export async function UpdateNursingHomeInformation(
 			.where({ nursinghome_id: id })
 			.update({
 				nursinghome_layout: imageData,
-				nursinghome_layout_hash: image.remove ? "" : checksum(imageData),
+				nursinghome_layout_hash: image.remove ? null : checksum(imageData),
 			});
 	}
 
