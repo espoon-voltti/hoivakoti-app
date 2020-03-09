@@ -354,7 +354,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		event: React.ChangeEvent<HTMLInputElement>,
 		): void => {
 		let file = new Blob;
-		
+
 		if (event.target.files && event.target.files.length > 0) { 
 			file = event.target.files[0]; 
 
@@ -370,6 +370,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 	const handleCaptionChange = (
 		event: React.ChangeEvent<HTMLTextAreaElement>,
 		): void => {
+			if (onCaptionChange) onCaptionChange(event.target.value);
 			setCaptionState(event.target.value);
 	};
 
