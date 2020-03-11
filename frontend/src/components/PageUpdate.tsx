@@ -129,6 +129,7 @@ const PageUpdate: FC = () => {
 	const lastUpdate = useT("lastUpdate");
 	const noUpdate = useT("noUpdate");
 	const btnSave = useT("btnSave");
+	const cancel = useT("cancel");
 
 
 	const updatePopupSaved = useT("saved");
@@ -172,7 +173,7 @@ const PageUpdate: FC = () => {
 							onSubmit={handleSubmit}
 						>
 					<div className="nav-save">
-						<button className="page-update-cancel" onClick={cancelEdit}>Peruuta</button>
+					<button className="page-update-cancel" onClick={cancelEdit}>{cancel}</button>
 						<button type="submit" className="btn">{btnSave}</button>
 
 						{popupState && (
@@ -303,7 +304,12 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 
 	const organizationLogoBtn = useT("organizationLogoBtn");
 	const uploadPlaceholder = useT("uploadPlaceholder");
-	const imageUploadTooltip = "Valiste kuva";
+	const imageSizeWarning = useT("warningImageToLarge");
+	const emptyImageSpot = useT("emptyImageSpot");
+	const imageUploadTooltip = useT("imageUploadTooltip");
+	const swapImage = useT("swapImage");
+	const remove = useT("remove");
+	
 
 	let hasImage = true;
 	let imageStateStr = "";
@@ -339,22 +345,30 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		let file = new Blob;
 
 		if (event.target.files && event.target.files.length > 0) { 
+
 			file = event.target.files[0]; 
 
-			const reader = new FileReader();
-			reader.onloadend = e => {
-				onChange(reader.result);
-				setImage(reader.result as string);
+			if(file.size < 4100000) {
+
+				const reader = new FileReader();
+				reader.onloadend = e => {
+					onChange(reader.result);
+					setImage(reader.result as string);
+				}
+				reader.readAsDataURL(file);
+			}else{
+				alert(imageSizeWarning);
 			}
-			reader.readAsDataURL(file);
 		}
 	};
 
 	const handleCaptionChange = (
 		event: React.ChangeEvent<HTMLTextAreaElement>,
 		): void => {
-			if (onCaptionChange) onCaptionChange(event.target.value);
-			setCaptionState(event.target.value);
+			if (onCaptionChange && event.target.value.length < 201){
+				 onCaptionChange(event.target.value);
+				setCaptionState(event.target.value);
+			}
 	};
 
 	const handleRemove= (
@@ -369,7 +383,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 			<div className="nursinghome-upload-container">
 				<div className="nursinghome-upload-img nursinghome-upload-placeholder">
 					<div className="nursinghome-upload-img-inner">
-						<div className="nursinghome-upload-img-inner-text">Tyhjä kuvapaikka</div>
+						<div className="nursinghome-upload-img-inner-text">{emptyImageSpot}</div>
 						<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
 					</div>
 					<button type="submit" className={useButton ? "btn" : "upload-button-hidden"}>{organizationLogoBtn}</button>
@@ -389,11 +403,11 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 					>
 						<div className="nursinghome-upload-img-hover">
 							<div className={useButton ? "input-button" : "input-hidden"}>
-								<div className="nursinghome-upload-img-change-text">Vaihda kuva</div>
+								<div className="nursinghome-upload-img-change-text">{swapImage}</div>
 								<input type="file"  title={imageUploadTooltip} onChange={handleImageChange}/>
 							</div>
 							<div className={useButton ? "nursinghome-upload-button-remove" : "nursinghome-upload-hidden-remove"} onClick={handleRemove}>
-								<div className="nursinghome-upload-img-remove-text">Poista</div>
+								<div className="nursinghome-upload-img-remove-text">{remove}</div>
 							</div>
 						</div>
 					</div>
