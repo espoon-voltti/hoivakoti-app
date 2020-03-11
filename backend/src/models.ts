@@ -39,6 +39,15 @@ knex.schema.hasTable("NursingHomePictures").then(async (exists: boolean) => {
 	await CreateNursingHomePicturesTable();
 });
 
+knex.schema.hasTable("NursingHomeReports").then(async (exists: boolean) => {
+	if (exists) return;
+
+	//if (exists)
+	//	await knex.schema.dropTable("NursingHomePictures");
+
+	await CreateNursingHomeReportsTable();
+});
+
 function checksum(str: string | BinaryLike): string {
 	return crypto
 		.createHash("SHA256")
@@ -70,6 +79,17 @@ async function CreateNursingHomePicturesTable(): Promise<void> {
 			}
 		});
 		table.string("nursinghome_id");
+	});
+}
+
+async function CreateNursingHomeReportsTable(): Promise<void> {
+	await knex.schema.createTable("NursingHomeReports", (table: any) => {
+		
+		table.string("nursinghome_id");
+		table.string("date")
+		table.string("grade")
+		table.binary("report_file");
+		
 	});
 }
 

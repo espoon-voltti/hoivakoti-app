@@ -1,1 +1,0 @@
-ALTER TABLE nursinghome ADD COLUMN review_started_at TIMESTAMP (0) WITH TIME ZONE;
