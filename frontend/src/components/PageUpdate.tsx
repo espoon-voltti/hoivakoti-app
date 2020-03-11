@@ -54,16 +54,16 @@ const PageUpdate: FC = () => {
 	const [picCaptions, setPicCaptions] = useState<Record <string, string> | null>(null);
 
 	const imageState = [
-		{name: "overview_outside", hasImage: false, remove: false, value: "", text:""},
-		{name: "apartment", hasImage: false, remove: false, value: "", text:""},
-		{name: "lounge", hasImage: false, remove: false, value: "", text:""},
-		{name: "dining_room", hasImage: false, remove: false, value: "", text:""},
-		{name: "outside", hasImage: false, remove: false, value: "", text:""},
-		{name: "entrance", hasImage: false, remove: false, value: "", text:""},
-		{name: "bathroom", hasImage: false, remove: false, value: "", text:""},
-		{name: "apartment_layout", hasImage: false, remove: false, value: "", text:""},
-		{name: "nursinghome_layout", hasImage: false, remove: false, value: "", text:""},
-		{name: "owner_logo", hasImage: false, remove: false, value: "", text:""},
+		{name: "overview_outside", remove: false, value: "", text:""},
+		{name: "apartment", remove: false, value: "", text:""},
+		{name: "lounge", remove: false, value: "", text:""},
+		{name: "dining_room", remove: false, value: "", text:""},
+		{name: "outside", remove: false, value: "", text:""},
+		{name: "entrance", remove: false, value: "", text:""},
+		{name: "bathroom", remove: false, value: "", text:""},
+		{name: "apartment_layout", remove: false, value: "", text:""},
+		{name: "nursinghome_layout", remove: false, value: "", text:""},
+		{name: "owner_logo", remove: false, value: "", text:""},
 	];
 
 	const removeImage = (id: string) => {
@@ -81,11 +81,6 @@ const PageUpdate: FC = () => {
 	const updateCaptionState = (id: string, state: string) => {
 		const index = imageState.findIndex( x => x.name === id );
 		imageState[index].text = state;
-	}
-
-	const setHasImage = (id: string, state: boolean) => {
-		const index = imageState.findIndex( x => x.name === id );
-		imageState[index].hasImage = state;
 	}
 
 	if (!id || !key) throw new Error("Invalid URL!");
@@ -250,10 +245,6 @@ const PageUpdate: FC = () => {
 							onChange={
 								file => { updateImageState("owner_logo", file); }
 							}
-							setImageStatus={
-								status => {
-									setHasImage("owner_logo", status); }
-							}
 						/>
 					</div>
 
@@ -277,10 +268,6 @@ const PageUpdate: FC = () => {
 										text => { 
 											updateCaptionState(imageType, text); }
 									}
-									setImageStatus={
-										status => {
-											setHasImage(imageType, status); }
-									}
 								/>
 							))}
 						</div>
@@ -302,7 +289,6 @@ interface ImageUploadProps {
 	onRemove?: () => void;
 	onChange: (file: any) => void;
 	onCaptionChange?: (text: string) => void;
-	setImageStatus: (status: boolean) => void;
 }
 
 export const ImageUpload: FC<ImageUploadProps> = ({
@@ -312,16 +298,14 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 	textAreaClass,
 	onRemove,
 	onChange,
-	onCaptionChange,
-	setImageStatus
+	onCaptionChange
 }) => {
 
 	const organizationLogoBtn = useT("organizationLogoBtn");
 	const uploadPlaceholder = useT("uploadPlaceholder");
-
-	let hasImage = true;
 	const imageUploadTooltip = "Valiste kuva";
 
+	let hasImage = true;
 	let imageStateStr = "";
 
 	if (!imageName || !nursingHome || !nursingHome.pic_digests) hasImage = false;
@@ -341,7 +325,6 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		imageStateStr = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`
 	}
 
-	if (setImageStatus) setImageStatus(hasImage);
 	if (imageStateStr) hasImage = true;
 
 	const [srcUrl, setImage] = useState(imageStateStr);
