@@ -281,3 +281,23 @@ $hero-border: 5px solid white;
 	line-height: 24px;
 	margin-bottom: 5px;
 }
+
+.report_info_container {
+	margin-top: 40px;
+	text-align: center;
+}
+
+.report_info_container .report_info_item {
+	margin-bottom: 35px;
+}
+
+.report_info_header {
+	font-size: 16px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.report_info_minor_header {
+	font-size: 16px;
+	font-weight: 600;
+}

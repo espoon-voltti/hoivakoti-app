@@ -82,5 +82,9 @@ export interface NursingHome {
 		overview_outside_hash: string | null;
 		owner_logo_hash: string | null;
 	};
+	report_status: {
+		status: string;
+		date: string;
+	}
 	has_vacancy: boolean | null;
 }

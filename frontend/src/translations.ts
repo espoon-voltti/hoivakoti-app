@@ -469,6 +469,10 @@ export const translations = {
 		"fi-FI": "Katso kuvat",
 		"sv-FI": "Se bilderna",
 	},
+	pageUploadReportTitle: {
+		"fi-FI": "Lisää uusi käynti",
+		"sv-FI": "",
+	},
 	espoo: {
 		"fi-FI": "Espoo",
 		"sv-FI": "Esbo",
@@ -634,6 +638,30 @@ export const translations = {
 	Ruotsi: {
 		"fi-FI": "Ruotsi",
 		"sv-FI": "Svenska",
+	},
+	status_ok: {
+		"fi-FI": "Kaikki kunnossa",
+		"sv-FI": "",
+	},
+	status_small: {
+		"fi-FI": "Pientä parannettavaa",
+		"sv-FI": "",
+	},
+	status_significant: {
+		"fi-FI": "Merkittävästi parannettavaa",
+		"sv-FI": "",
+	},
+	status_survaillance: {
+		"fi-FI": "Tehostetussa valvonnassa",
+		"sv-FI": "",
+	},
+	status_waiting: {
+		"fi-FI": "odottaa käyntiä",
+		"sv-FI": "",
+	},
+	status_no_info: {
+		"fi-FI": "Sijaintikunta valvoo. Tietoja ei saatavilla.",
+		"sv-FI": "",
 	},
 	"Suomi|Ruotsi": {
 		"fi-FI": "Suomi|Ruotsi",

@@ -9,9 +9,9 @@ import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome } from "./types";
 import { stringify } from "querystring";
 
-interface VacancyStatus {
-	has_vacancy: boolean;
-	vacancy_last_updated_at: string | null;
+interface NursingHomeStatus {
+	status: string;
+	date: string;
 }
 
 const formatDate = (dateString: string | null): string => {
@@ -25,84 +25,51 @@ const formatDate = (dateString: string | null): string => {
 	return `${YYYY}-${MM}-${DD} (${hh}:${mm} UTC)`;
 };
 
+const requestReportStatusUpdate = async (
+	id: string,
+	key:string,
+	reportStatus: string,
+	reportDate: string,
+	reportFile: string,
+): Promise<void> => {
+	await axios.post(
+		`${config.API_URL}/nursing-homes/${id}/report-status/${key}`,
+		{ 
+			status: reportStatus,
+			date: reportDate,
+			file: reportFile
+		}
+	);
+};
+
 const PageUploadReport: FC = () => {
 	const { id, key } = useParams();
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
-	const [vacancyStatus, setVacancyStatus] = useState<VacancyStatus | null>(
+	const [nursingHomeStatus, setNursingHomeStatus] = useState<NursingHomeStatus | null>(
 		null,
 	);
 	const [popupState, setPopupState] = useState<null | "saving" | "saved">(
 		null,
 	);
-	const [formState, setFormState] = useState<boolean>(false);
-	const [picCaptions, setPicCaptions] = useState<Record <string, string> | null>(null);
 
-	const imageState = [
-		{name: "overview_outside", hasImage: false, remove: false, value: "", text:""},
-		{name: "apartment", hasImage: false, remove: false, value: "", text:""},
-		{name: "lounge", hasImage: false, remove: false, value: "", text:""},
-		{name: "dining_room", hasImage: false, remove: false, value: "", text:""},
-		{name: "outside", hasImage: false, remove: false, value: "", text:""},
-		{name: "entrance", hasImage: false, remove: false, value: "", text:""},
-		{name: "bathroom", hasImage: false, remove: false, value: "", text:""},
-		{name: "apartment_layout", hasImage: false, remove: false, value: "", text:""},
-		{name: "nursinghome_layout", hasImage: false, remove: false, value: "", text:""},
-		{name: "owner_logo", hasImage: false, remove: false, value: "", text:""},
-	];
+	const [nursingHomeState, setNursingHomeState] = useState<string>("waiting");
+	const [reportDate, setReportDate] = useState<string>("");
+	const [reportFile, setReportFile] = useState<string>("");
 
-	const removeImage = (id: string) => {
-		const index = imageState.findIndex( x => x.name === id );
-		imageState[index].remove = true;
-		imageState[index].value = "";
-	}
-
-	const updateImageState = (id: string, state: string) => {
-		const index = imageState.findIndex( x => x.name === id );
-		imageState[index].value = state;
-		imageState[index].remove = false;
-	}
-
-	const updateCaptionState = (id: string, state: string) => {
-		const index = imageState.findIndex( x => x.name === id );
-		imageState[index].text = state;
-	}
-
-	const setHasImage = (id: string, state: boolean) => {
-		const index = imageState.findIndex( x => x.name === id );
-		imageState[index].hasImage = state;
-	}
-
-	if (!id) throw new Error("Invalid URL!");
+	if (!id || !key) throw new Error("Invalid URL!");
 
 	useEffect(() => {
 		axios
 			.get(`${config.API_URL}/nursing-homes/${id}`)
 			.then((response: GetNursingHomeResponse) => {
 				setNursingHome(response.data);
+				setNursingHomeStatus(response.data.report_status);
 			})
 			.catch(e => {
 				console.error(e);
 				throw e;
 			});
 	}, [id]);
-
-	useEffect(() => {
-		if (!vacancyStatus) {
-			axios
-				.get(
-					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
-				)
-				.then((response: { data: VacancyStatus }) => {
-					setVacancyStatus(response.data);
-					setFormState(response.data.has_vacancy);
-					if (popupState) setTimeout(() => setPopupState(null), 3000);
-				})
-				.catch(e => {
-					console.error(e);
-					throw e;
-				});
-		}
-	}, [id, key, popupState, vacancyStatus]);
 
 	const title = useT("pageUploadReportTitle");
 	const labelTrue = useT("vacancyTrue");
@@ -117,30 +84,37 @@ const PageUploadReport: FC = () => {
 
 	const updatePopupSaved = useT("saved");
 	const updatePopupSaving = useT("saving");
-	
-	const nursinghomeImageTypes = [	"overview_outside",
-									"apartment",
-									"lounge",
-									"dining_room",
-									"outside",
-									"entrance",
-									"bathroom",
-									"apartment_layout",
-									"nursinghome_layout"];
+
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
 		setPopupState("saving");
-		//await requestVacancyStatusUpdate(id, key, formState, imageState);
+		await requestReportStatusUpdate(id, key, nursingHomeState, reportDate, reportFile);
 		setPopupState("saved");
-		setVacancyStatus(null);
+		setNursingHomeStatus(null);
 	};
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>):void => {
 		e.preventDefault();
 		window.location.href = window.location.pathname + "/peruuta";
+	};
+
+	const handleFileChange = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		): void => {
+		let file = new Blob;
+		
+		if (event.target.files && event.target.files.length > 0) { 
+			file = event.target.files[0]; 
+
+			const reader = new FileReader();
+			reader.onloadend = e => {
+				setReportFile(reader.result as string);
+			}
+			reader.readAsDataURL(file);
+		}
 	};
 
 	return (
@@ -176,98 +150,95 @@ const PageUploadReport: FC = () => {
 						</p>
 						<p className="page-update-data">
 							<strong>{status}: </strong>
-							{vacancyStatus
-								? vacancyStatus.has_vacancy
-									? labelTrue
-									: labelFalse
-								: loadingText}
+							{nursingHomeStatus
+								? nursingHomeStatus.status
+									: labelFalse}
 						</p>
 						<p className="page-update-data">
 							<strong>{lastUpdate}: </strong>
-							{vacancyStatus
+							{nursingHomeStatus
 								? formatDate(
-										vacancyStatus.vacancy_last_updated_at,
+									nursingHomeStatus.date,
 								  ) || noUpdate
 								: loadingText}
 						</p>
-							
-							<Radio
-								id="nursinghome-status-ok"
-								name="update-vacancy-true"
-								isSelected={formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(true);
-								}}
-							>
-								{"Kaikki kunnossa"}
-							</Radio>
-							<Radio
-								id="nursinghome-status-small"
-								name="nursinghome-status-small"
-								isSelected={formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(true);
-								}}
-							>
-								{"Pientä parannettavaa"}
-							</Radio>
-							<Radio
-								id="nursinghome-status-true-significant"
-								name="nursinghome-status-significant"
-								isSelected={formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(true);
-								}}
-							>
-								{"Merkittävästi parannettavaa"}
-							</Radio>
-							<Radio
-								id="nursinghome-status-surveillance"
-								name="nursinghome-status-surveillance"
-								isSelected={formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(true);
-								}}
-							>
-								{"Tehostetussa valvonnassa"}
-							</Radio>
-							<Radio
-								id="nursinghome-status-waiting"
-								name="nursinghome-status-waiting"
-								isSelected={formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(true);
-								}}
-							>
-								{"Odottaa käyntiä"}
-							</Radio>
-							<Radio
-								id="nursinghome-status-no-info"
-								name="nursinghome-status-no-info"
-								isSelected={formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(true);
-								}}
-							>
-								{"Sijaintikunta valvoo. Tietoja ei saatavilla."}
-							</Radio>
-							
-							
+							</div>
+							<div className="page-update-section">
+								<h3 className="page-report-minor-title">{"Käyntipäivämäärä*:"}</h3>
+								
+								<input className="page-report-datepicker" type="date" value={reportDate} onChange={(event: React.ChangeEvent<HTMLInputElement>,): void => {setReportDate(event.target.value)}}></input>
+								
+								<h3 className="page-report-minor-title">{"Hoivakodin tilanne*:"}</h3>
+								
+								<Radio
+									id="nursinghome-status-ok"
+									name="update-vacancy-true"
+									isSelected={nursingHomeState == "ok"}
+									onChange={isChecked => {
+										if (isChecked) setNursingHomeState("ok");
+									}}
+								>
+									{"Kaikki kunnossa"}
+								</Radio>
+								<Radio
+									id="nursinghome-status-small"
+									name="nursinghome-status-small"
+									isSelected={nursingHomeState == "small"}
+									onChange={isChecked => {
+										if (isChecked) setNursingHomeState("small");
+									}}
+								>
+									{"Pientä parannettavaa"}
+								</Radio>
+								<Radio
+									id="nursinghome-status-true-significant"
+									name="nursinghome-status-significant"
+									isSelected={nursingHomeState == "significant"}
+									onChange={isChecked => {
+										if (isChecked) setNursingHomeState("significant");
+									}}
+								>
+									{"Merkittävästi parannettavaa"}
+								</Radio>
+								<Radio
+									id="nursinghome-status-surveillance"
+									name="nursinghome-status-surveillance"
+									isSelected={nursingHomeState == "surveillance"}
+									onChange={isChecked => {
+										if (isChecked) setNursingHomeState("surveillance");
+									}}
+								>
+									{"Tehostetussa valvonnassa"}
+								</Radio>
+								<Radio
+									id="nursinghome-status-waiting"
+									name="nursinghome-status-waiting"
+									isSelected={nursingHomeState == "waiting"}
+									onChange={isChecked => {
+										if (isChecked) setNursingHomeState("waiting");
+									}}
+								>
+									{"Odottaa käyntiä"}
+								</Radio>
+								<Radio
+									id="nursinghome-status-no-info"
+									name="nursinghome-status-no-info"
+									isSelected={nursingHomeState == "no-info"}
+									onChange={isChecked => {
+										if (isChecked) setNursingHomeState("no-info");
+									}}
+								>
+									{"Sijaintikunta valvoo. Tietoja ei saatavilla."}
+								</Radio>
+							</div>
+							<div className="page-update-section">
+							<h3 className="page-report-minor-title">{"Lisää käyntiraportti (.pdf)*"}</h3>
+								
+								<input type="file"  onChange={handleFileChange} title={"Lataa raportti"}/>
 							</div>
 						</form>
-					
-					<div className="page-update-section nursinghome-logo-upload">
-						<h3 className="page-update-minor-title">{}</h3>
+				
 						
-					</div>
-
-					<div className="page-update-section">
-						<h3 className="page-update-minor-title">{}</h3>
-						<p>{}</p>
-						<div className="flex-container">
-							
-						</div>
-					</div>
 					</>
 				)}
 			</div>

@@ -20,7 +20,7 @@ const Header: FC = () => {
 		setIsMobileMenuOpen(false);
 	}, [location.pathname, location.search]);
 
-	const nursinghomeUpdatePage = location.pathname.indexOf("paivita") == -1 ? false : true;
+	const nursinghomeUpdatePage = location.pathname.indexOf("paivita") == -1 && location.pathname.indexOf("valvonta") == -1 ? false : true;
 
 	return (
 		<header className={"header " + (nursinghomeUpdatePage ? "header-fixed" : "")}>

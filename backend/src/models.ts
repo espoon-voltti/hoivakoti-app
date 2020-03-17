@@ -87,7 +87,7 @@ async function CreateNursingHomeReportsTable(): Promise<void> {
 		
 		table.string("nursinghome_id");
 		table.string("date")
-		table.string("grade")
+		table.string("status")
 		table.binary("report_file");
 		
 	});
@@ -402,8 +402,66 @@ export async function GetAllPicDigests(): Promise<any[]> {
 	return await knex.select(columns).table("NursingHomePictures");
 }
 
+export async function GetPdfData(
+	nursinghome_id: string,
+): Promise<any[]> {
+	return await knex
+		.select("report_file")
+		.table("NursingHomeReports")
+		.where({ nursinghome_id: nursinghome_id });
+}
+
+export async function GetNursingHomeStatus(
+	nursinghome_id: string,
+): Promise<any[]> {
+	return await knex
+		.select("status", "date")
+		.table("NursingHomeReports")
+		.where({ nursinghome_id: nursinghome_id });
+}
+
+
 export async function GetDistinctCities(): Promise<any[]> {
 	return await knex("NursingHomes").distinct("city");
+}
+
+export async function UploadNursingHomeReport(
+	id: string,
+	basicUdpateKey: string,
+	status: string,
+	date: string,
+	file: any,
+): Promise<boolean> {
+
+	const nursingHomeValid = await knex
+			.select()
+			.table("NursingHomes")
+			.where({ id, basic_update_key: basicUdpateKey });
+
+	if(nursingHomeValid.length === 0) return false;
+
+	const nursingHomeExsists = await knex
+			.select()
+			.table("NursingHomeReports")
+			.where({ nursinghome_id: id });
+
+	if(nursingHomeExsists.length < 1) {
+		await knex("NursingHomeReports").insert({nursinghome_id: id});
+	}
+
+	let fileData = new Buffer(file.split(",")[1], 'base64');
+
+	let count = await knex("NursingHomeReports")
+		.where({ nursinghome_id: id})
+		.update({
+			status: status,
+			date: date,
+			report_file: fileData
+		});
+
+	if (count == 0) return false;
+
+	return true;
 }
 
 export async function GetNursingHomeVacancyStatus(

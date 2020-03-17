@@ -9,12 +9,15 @@ import {
 	GetAllPicturesAndDescriptions,
 	GetPicturesAndDescriptions,
 	GetPicData,
+	GetPdfData,
+	GetNursingHomeStatus,
 	GetPicCaptions,
 	GetPicDigests,
 	GetAllPicDigests,
 	GetDistinctCities,
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
+	UploadNursingHomeReport as UploadNursingHomeReportDB,
 	GetAllBasicUpdateKeys,
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
@@ -76,6 +79,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	const nursing_home_data = (await GetNursingHomeDB(ctx.params.id))[0];
 	const pic_digests = (await GetPicDigests(ctx.params.id))[0];
 	const pic_captions = (await GetPicCaptions(ctx.params.id))[0];
+	const nursing_home_status = (await GetNursingHomeStatus(ctx.params.id))[0];
 	const available_pics = Object.keys(pic_digests || {})
 		.filter((item: any) => (pic_digests[item] != null ? true : false))
 		.map((item: any) => item.replace("_hash", ""));
@@ -89,6 +93,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	nursing_home_data["pic_digests"] = pic_digests;
 	nursing_home_data["pics"] = available_pics;
 	nursing_home_data["pic_captions"] = pic_captions;
+	nursing_home_data["report_status"] = nursing_home_status;
 	return nursing_home_data;
 }
 
@@ -206,6 +211,26 @@ export async function GetCaptions(ctx: any): Promise<any> {
 	return captions;
 }
 
+export async function GetPdf(ctx: any): Promise<any> {
+	const document = (await GetPdfData(ctx.params.id))[0];
+	if (document) {
+		ctx.response.set("Content-Type", "application/pdf");
+		ctx.response.set("Content-Length", document.length);
+		
+		if (ctx.params.digest)
+			ctx.response.set(
+				"Cache-Control",
+				"public,max-age=31536000,immutable",
+			);
+
+		return document.report_file;
+	} else {
+		// eslint-disable-next-line require-atomic-updates
+		ctx.response.status = 404;
+		return "No document found";
+	}
+}
+
 export async function GetCities(ctx: any): Promise<any> {
 	const cities = await GetDistinctCities();
 	return cities.map((item: any) => item.city);
@@ -231,6 +256,17 @@ export async function UpdateNursingHomeInformation(
 		throw new Error("Invalid value in field 'has_vacancy'!");
 
 	return await UpdateNursingHomeInformationDB(id, key, has_vacancy, images);
+}
+
+export async function UploadNursingHomeReport(
+	ctx: Context,
+): Promise<boolean> {
+	const { id, key } = ctx.params;
+	const status: string = ctx.request.body.status;
+	const date: string = ctx.request.body.date;
+	const file: any = ctx.request.body.file;
+
+	return await UploadNursingHomeReportDB(id, key, status, date, file);
 }
 
 interface Secrets {

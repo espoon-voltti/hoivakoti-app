@@ -383,6 +383,7 @@ const PageNursingHome: FC<PageNursingHomeProps> = (
 						id="yhteystiedot"
 						className="nursinghome-details-box"
 					/>
+
 				</div>
 			)}
 			<a className="backToTopLink" href="#pageTop">
@@ -515,6 +516,32 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const directions = useT("directions");
 	const webpage = useT("webpage");
 	const visitingInfo = useT("visitingInfo");
+
+	const reportStatusOk = useT("status_ok");
+	const reportStatusSmall = useT("status_small");
+	const reportStatusSignificant = useT("status_significant");
+	const reportStatusSurvaillance = useT("status_survaillance");
+	const reportStatusNoInfo = useT("status_no_info");
+
+	let reportStatus = useT("status_waiting");
+
+	switch (nursingHome.report_status.status) {
+		case "ok":
+			reportStatus = reportStatusOk;
+		break;
+		case "small":
+			reportStatus = reportStatusSmall;
+		break;
+		case "significant":
+			reportStatus = reportStatusSignificant;
+		break;
+		case "survaillance":
+			reportStatus = reportStatusSurvaillance;
+		break;
+		case "no-info":
+			reportStatus = reportStatusNoInfo;
+		break;
+	}
 	return (
 		<>
 			{id && <div id={id} />}
@@ -562,6 +589,15 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					<dd>{nursingHome.arrival_guide_public_transit}</dd>
 					<dd>{nursingHome.arrival_guide_car}</dd>
 				</dl>
+				
+				<div className="report_info_container">
+					<p className="report_info_header">{"Espoon kaupungin valvontakäynnin tulos"}</p>
+					<p className="report_info_item">{'"' + reportStatus + '"'}</p>
+					<p className="report_info_minor_header">{"Viimeisin tarkastuskäynti"}</p>
+					<p className="report_info_item">{nursingHome.report_status.date}</p>
+
+					<a href={`/api/nursing-homes/${nursingHome.id}/raportti.pdf`} target="_blank" className="btn-secondary-link">Avaa Raportti</a>
+				</div>
 			</div>
 		</>
 	);
