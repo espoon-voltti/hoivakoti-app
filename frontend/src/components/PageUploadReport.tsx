@@ -14,15 +14,13 @@ interface NursingHomeStatus {
 	date: string;
 }
 
-const formatDate = (dateString: string | null): string => {
-	if (!dateString) return "";
-	const date = new Date(dateString);
+const formatDate = (dateStr: string | null): string => {
+	if (!dateStr) return "";
+	const date = new Date(dateStr);
 	const YYYY = String(date.getUTCFullYear());
-	const MM = String(date.getUTCMonth() + 1).padStart(2, "0");
-	const DD = String(date.getUTCDate()).padStart(2, "0");
-	const hh = String(date.getUTCHours()).padStart(2, "0");
-	const mm = String(date.getUTCMinutes()).padStart(2, "0");
-	return `${YYYY}-${MM}-${DD} (${hh}:${mm} UTC)`;
+	const MM = String(date.getUTCMonth() + 1);
+	const DD = String(date.getUTCDate());
+	return `${DD}.${MM}.${YYYY}`;
 };
 
 const requestReportStatusUpdate = async (
@@ -91,15 +89,18 @@ const PageUploadReport: FC = () => {
 	): Promise<void> => {
 		e.preventDefault();
 		setPopupState("saving");
-		await requestReportStatusUpdate(id, key, nursingHomeState, reportDate, reportFile);
+		const dateObj = new Date(reportDate);
+		await requestReportStatusUpdate(id, key, nursingHomeState, dateObj.toISOString(), reportFile);
+		setNursingHomeStatus({status: nursingHomeState, date: reportDate});
 		setPopupState("saved");
-		setNursingHomeStatus(null);
 	};
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>):void => {
 		e.preventDefault();
 		window.location.href = window.location.pathname + "/peruuta";
 	};
+
+	const [reportFileName, setReportFileName] = useState<string>(useT("selectFile"));
 
 	const handleFileChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
@@ -108,6 +109,7 @@ const PageUploadReport: FC = () => {
 		
 		if (event.target.files && event.target.files.length > 0) { 
 			file = event.target.files[0]; 
+			setReportFileName(event.target.files[0].name);
 
 			const reader = new FileReader();
 			reader.onloadend = e => {
@@ -116,6 +118,38 @@ const PageUploadReport: FC = () => {
 			reader.readAsDataURL(file);
 		}
 	};
+
+	const reportStatusOk = useT("status_ok");
+	const reportStatusSmall = useT("status_small");
+	const reportStatusSignificant = useT("status_significant");
+	const reportStatusSurvaillance = useT("status_survaillance");
+	const reportStatusNoInfo = useT("status_no_info");
+
+	let reportStatus = useT("status_waiting");
+
+	const getStatusTranslation = (statusStr: string): string => {
+		if(nursingHome && nursingHome.report_status){
+
+			switch (statusStr) {
+				case "ok":
+					reportStatus = reportStatusOk;
+				break;
+				case "small":
+					reportStatus = reportStatusSmall;
+				break;
+				case "significant":
+					reportStatus = reportStatusSignificant;
+				break;
+				case "survaillance":
+					reportStatus = reportStatusSurvaillance;
+				break;
+				case "no-info":
+					reportStatus = reportStatusNoInfo;
+				break;
+			}
+		}
+		return reportStatus;
+	}
 
 	return (
 		<div className="page-update">
@@ -151,15 +185,14 @@ const PageUploadReport: FC = () => {
 						<p className="page-update-data">
 							<strong>{status}: </strong>
 							{nursingHomeStatus
-								? nursingHomeStatus.status
-									: labelFalse}
+								? getStatusTranslation(nursingHomeStatus.status)
+									: ""}
 						</p>
 						<p className="page-update-data">
 							<strong>{lastUpdate}: </strong>
 							{nursingHomeStatus
-								? formatDate(
-									nursingHomeStatus.date,
-								  ) || noUpdate
+								? formatDate(nursingHomeStatus.date)
+								  || noUpdate
 								: loadingText}
 						</p>
 							</div>
@@ -234,7 +267,12 @@ const PageUploadReport: FC = () => {
 							<div className="page-update-section">
 							<h3 className="page-report-minor-title">{"Lisää käyntiraportti (.pdf)*"}</h3>
 								
-								<input type="file"  onChange={handleFileChange} title={"Lataa raportti"}/>
+								<div className="page-report-file">{reportFileName}</div>
+								<div className="page-report-file-drop">
+									<h1>Lataa liite</h1>
+									<p>Selaa tiedostoja painamalla</p>
+								</div>
+								<input type="file" className="page-report-input-hidden" onChange={handleFileChange} title={"Lataa raportti"}/>
 							</div>
 						</form>
 				

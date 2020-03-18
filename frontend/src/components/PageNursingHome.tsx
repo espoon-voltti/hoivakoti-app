@@ -524,23 +524,39 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reportStatusNoInfo = useT("status_no_info");
 
 	let reportStatus = useT("status_waiting");
+	let reportDate = "-";
+	let hasReport = false;
 
-	switch (nursingHome.report_status.status) {
-		case "ok":
-			reportStatus = reportStatusOk;
-		break;
-		case "small":
-			reportStatus = reportStatusSmall;
-		break;
-		case "significant":
-			reportStatus = reportStatusSignificant;
-		break;
-		case "survaillance":
-			reportStatus = reportStatusSurvaillance;
-		break;
-		case "no-info":
-			reportStatus = reportStatusNoInfo;
-		break;
+	const formatDate = (dateStr: string | null): string => {
+		if (!dateStr) return "";
+		const date = new Date(dateStr);
+		const YYYY = String(date.getUTCFullYear());
+		const MM = String(date.getUTCMonth() + 1);
+		const DD = String(date.getUTCDate());
+		return `${DD}.${MM}.${YYYY}`;
+	};
+
+	if(nursingHome.report_status){
+		hasReport = true;
+		reportDate = nursingHome.report_status.date;
+
+		switch (nursingHome.report_status.status) {
+			case "ok":
+				reportStatus = reportStatusOk;
+			break;
+			case "small":
+				reportStatus = reportStatusSmall;
+			break;
+			case "significant":
+				reportStatus = reportStatusSignificant;
+			break;
+			case "survaillance":
+				reportStatus = reportStatusSurvaillance;
+			break;
+			case "no-info":
+				reportStatus = reportStatusNoInfo;
+			break;
+		}
 	}
 	return (
 		<>
@@ -594,9 +610,9 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					<p className="report_info_header">{"Espoon kaupungin valvontakäynnin tulos"}</p>
 					<p className="report_info_item">{'"' + reportStatus + '"'}</p>
 					<p className="report_info_minor_header">{"Viimeisin tarkastuskäynti"}</p>
-					<p className="report_info_item">{nursingHome.report_status.date}</p>
+					<p className="report_info_item">{formatDate(reportDate)}</p>
 
-					<a href={`/api/nursing-homes/${nursingHome.id}/raportti.pdf`} target="_blank" className="btn-secondary-link">Avaa Raportti</a>
+					{hasReport ? <a href={`localhost:3000/api/nursing-homes/${nursingHome.id}/raportti.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">Avaa Raportti</a> : ""}
 				</div>
 			</div>
 		</>

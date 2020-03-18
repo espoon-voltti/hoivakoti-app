@@ -473,6 +473,10 @@ export const translations = {
 		"fi-FI": "Lisää uusi käynti",
 		"sv-FI": "",
 	},
+	selectFile: {
+		"fi-FI": "Valitse tiedosto",
+		"sv-FI": "",
+	},
 	espoo: {
 		"fi-FI": "Espoo",
 		"sv-FI": "Esbo",
@@ -656,7 +660,7 @@ export const translations = {
 		"sv-FI": "",
 	},
 	status_waiting: {
-		"fi-FI": "odottaa käyntiä",
+		"fi-FI": "Odottaa käyntiä",
 		"sv-FI": "",
 	},
 	status_no_info: {
