@@ -529,6 +529,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 
 	const formatDate = (dateStr: string | null): string => {
 		if (!dateStr) return "";
+		console.log(dateStr);
 		const date = new Date(dateStr);
 		const YYYY = String(date.getUTCFullYear());
 		const MM = String(date.getUTCMonth() + 1);
@@ -562,57 +563,60 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		<>
 			{id && <div id={id} />}
 			<div className={className}>
-				<Image
-					nursingHome={nursingHome}
-					imageName="owner_logo"
-					className="nursinghome-details-logo"
-					alt="Omistajan logo"
-				/>
-				<h4 className="nursinghome-details-name">{nursingHome.name}</h4>
-				<a
-					href={`https://www.google.com/maps/search/${
-						nursingHome.name
-					}/@${nursingHome.geolocation.center.join(",")}z`}
-					target="_blank"
-					rel="noreferrer noopener external"
-					className="mapLink"
-				>
-					<MapSmall nursingHome={nursingHome} />
-				</a>
+				<div className="nursinghome-details-box-section">
+					<Image
+						nursingHome={nursingHome}
+						imageName="owner_logo"
+						className="nursinghome-details-logo"
+						alt="Omistajan logo"
+					/>
+					<h4 className="nursinghome-details-name">{nursingHome.name}</h4>
+					<a
+						href={`https://www.google.com/maps/search/${
+							nursingHome.name
+						}/@${nursingHome.geolocation.center.join(",")}z`}
+						target="_blank"
+						rel="noreferrer noopener external"
+						className="mapLink"
+					>
+						<MapSmall nursingHome={nursingHome} />
+					</a>
 
-				<dl className="nursingHome-info-list nursingHome-info-list--contact">
-					<dt>{contactInfo}</dt>
-					<dd>
-						{nursingHome.address}, {nursingHome.postal_code}{" "}
-						{nursingHome.city}
-					</dd>
-					<dd>
-						<a
-							href={nursingHome.www}
-							target="_blank"
-							rel="noopener noreferrer external"
-						>
-							{webpage}
-						</a>
-					</dd>
-					<dd style={{ marginTop: 8 }}>
-						<a href="#visitingInfo">>> {visitingInfo}</a>
-					</dd>
-				</dl>
+					<dl className="nursingHome-info-list nursingHome-info-list--contact">
+						<dt>{contactInfo}</dt>
+						<dd>
+							{nursingHome.address}, {nursingHome.postal_code}{" "}
+							{nursingHome.city}
+						</dd>
+						<dd>
+							<a
+								href={nursingHome.www}
+								target="_blank"
+								rel="noopener noreferrer external"
+							>
+								{webpage}
+							</a>
+						</dd>
+						<dd style={{ marginTop: 8 }}>
+							<a href="#visitingInfo">>> {visitingInfo}</a>
+						</dd>
+					</dl>
 
-				<dl className="nursingHome-info-list nursingHome-info-list--directions">
-					<dt>{directions}</dt>
-					<dd>{nursingHome.arrival_guide_public_transit}</dd>
-					<dd>{nursingHome.arrival_guide_car}</dd>
-				</dl>
-				
-				<div className="report_info_container">
-					<p className="report_info_header">{"Espoon kaupungin valvontakäynnin tulos"}</p>
-					<p className="report_info_item">{'"' + reportStatus + '"'}</p>
-					<p className="report_info_minor_header">{"Viimeisin tarkastuskäynti"}</p>
-					<p className="report_info_item">{formatDate(reportDate)}</p>
+					<dl className="nursingHome-info-list nursingHome-info-list--directions">
+						<dt>{directions}</dt>
+						<dd>{nursingHome.arrival_guide_public_transit}</dd>
+						<dd>{nursingHome.arrival_guide_car}</dd>
+					</dl>
+				</div>
+				<div className="nursinghome-details-box-section">
+					<div className="report_info_container">
+						<p className="report_info_header">{"Espoon kaupungin valvontakäynnin tulos"}</p>
+						<p className="report_info_item">{'"' + reportStatus + '"'}</p>
+						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{"Viimeisin tarkastuskäynti"}</p>
+						<p className={"report_info_item" + (nursingHome.report_status ? "" : " report_hidden")}>{formatDate(reportDate)}</p>
 
-					{hasReport ? <a href={`localhost:3000/api/nursing-homes/${nursingHome.id}/raportti.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">Avaa Raportti</a> : ""}
+						{hasReport ? <a href={`localhost:3000/api/nursing-homes/${nursingHome.id}/raportti.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">Avaa Raportti</a> : ""}
+					</div>
 				</div>
 			</div>
 		</>
