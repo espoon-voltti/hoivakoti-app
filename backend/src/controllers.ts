@@ -14,6 +14,7 @@ import {
 	GetPicCaptions,
 	GetPicDigests,
 	GetAllPicDigests,
+	GetAllNursingHomeStatus,
 	GetDistinctCities,
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
@@ -51,6 +52,7 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 	});
 
 	const pic_digests = await GetAllPicDigests();
+	const report_status = await GetAllNursingHomeStatus();
 
 	nursing_homes.map((nursinghome: any) => {
 		nursinghome.pic_digests = {};
@@ -65,6 +67,13 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 					)
 					.map((item: any) => item.replace("_hash", ""));
 				nursinghome.pics = available_pics;
+			}
+		});
+
+		nursinghome.report_status = {};
+		report_status.map((status: any) => {
+			if (status.nursinghome_id === nursinghome.id) {
+				nursinghome.report_status = status;
 			}
 		});
 

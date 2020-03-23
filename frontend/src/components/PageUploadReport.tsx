@@ -46,11 +46,11 @@ const PageUploadReport: FC = () => {
 	const [nursingHomeStatus, setNursingHomeStatus] = useState<NursingHomeStatus | null>(
 		null,
 	);
-	const [popupState, setPopupState] = useState<null | "saving" | "saved">(
+	const [popupState, setPopupState] = useState<null | "saving" | "saved" | "failed">(
 		null,
 	);
 
-	const [nursingHomeState, setNursingHomeState] = useState<string>("waiting");
+	const [nursingHomeState, setNursingHomeState] = useState<string>("");
 	const [reportDate, setReportDate] = useState<string>("");
 	const [reportFile, setReportFile] = useState<string>("");
 
@@ -81,6 +81,7 @@ const PageUploadReport: FC = () => {
 
 
 	const updatePopupSaved = useT("saved");
+	const updatePopupFailed= useT("reportFailed");
 	const updatePopupSaving = useT("saving");
 
 
@@ -88,11 +89,15 @@ const PageUploadReport: FC = () => {
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
-		setPopupState("saving");
-		const dateObj = new Date(reportDate);
-		await requestReportStatusUpdate(id, key, nursingHomeState, dateObj.toISOString(), reportFile);
-		setNursingHomeStatus({status: nursingHomeState, date: reportDate});
-		setPopupState("saved");
+		if(nursingHomeState && reportDate && reportFile){
+			setPopupState("saving");
+			const dateObj = new Date(reportDate);
+			await requestReportStatusUpdate(id, key, nursingHomeState, dateObj.toISOString(), reportFile);
+			setNursingHomeStatus({status: nursingHomeState, date: reportDate});
+			setPopupState("saved");
+		}else{
+			setPopupState("failed");
+		}
 	};
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>):void => {
@@ -168,9 +173,11 @@ const PageUploadReport: FC = () => {
 						<button type="submit" className="btn">{btnSave}</button>
 
 						{popupState && (
-							<span className="page-update-popup">
+							<span className={popupState === "failed" ? "page-update-popup-failed" : "page-update-popup"}>
 								{popupState === "saving"
 									? updatePopupSaving
+									: popupState === "failed"
+									? updatePopupFailed
 									: updatePopupSaved}
 							</span>
 						)}

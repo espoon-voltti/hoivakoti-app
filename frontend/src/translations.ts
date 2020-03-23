@@ -477,6 +477,10 @@ export const translations = {
 		"fi-FI": "Valitse tiedosto",
 		"sv-FI": "",
 	},
+	reportFailed: {
+		"fi-FI": "Täytä kaikki kentät ja yritä uudelleen",
+		"sv-FI": "",
+	},
 	espoo: {
 		"fi-FI": "Espoo",
 		"sv-FI": "Esbo",

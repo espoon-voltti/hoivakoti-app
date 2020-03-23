@@ -20,6 +20,7 @@ import PageAccessibility from "./PageAccessibility";
 import Title from "./Title";
 import PageUpdate from "./PageUpdate";
 import PageUploadReport from "./PageUploadReport";
+import PageReportsAdmin from "./PageReportsAdmin";
 import PageCancel from "./PageCancel";
 import PageAdmin from "./PageAdmin";
 import ReactGA from "react-ga";
@@ -83,6 +84,11 @@ const App: React.FC = () => {
 								exact
 								path="/hoivakodit/:id/paivita/:key/peruuta"
 								component={PageCancel}
+							/>
+							<Route
+								exact
+								path="/valvonta"
+								component={PageReportsAdmin}
 							/>
 							<Route
 								exact

@@ -35,3 +35,11 @@
 	margin-bottom: -275px;
 	cursor: pointer;
 }
+
+.page-update-popup-failed {
+	position: fixed;
+    margin-left: 20px;
+    margin-top: 12px;
+	color: $error-color;
+	font-weight: bold;
+}

@@ -420,6 +420,12 @@ export async function GetNursingHomeStatus(
 		.where({ nursinghome_id: nursinghome_id });
 }
 
+export async function GetAllNursingHomeStatus(): Promise<any[]> {
+	return await knex
+		.select("status", "date", "nursinghome_id")
+		.table("NursingHomeReports");
+}
+
 
 export async function GetDistinctCities(): Promise<any[]> {
 	return await knex("NursingHomes").distinct("city");

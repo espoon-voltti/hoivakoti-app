@@ -21,6 +21,7 @@ const Header: FC = () => {
 	}, [location.pathname, location.search]);
 
 	const nursinghomeUpdatePage = location.pathname.indexOf("paivita") == -1 && location.pathname.indexOf("valvonta") == -1 ? false : true;
+	const nursinghomeReportPage = location.pathname.indexOf("valvonta") == -1 ? false : true;
 
 	return (
 		<header className={"header " + (nursinghomeUpdatePage ? "header-fixed" : "")}>
@@ -37,6 +38,7 @@ const Header: FC = () => {
 					<h1 className="title">{useT("appTitle")}</h1>
 				</Link>
 			</div>
+			<div className={nursinghomeReportPage ? "minor-header" : "hidden"}>Valvontatiimin työkalu</div>
 
 			<nav id="page-nav">
 				<input
@@ -50,7 +52,7 @@ const Header: FC = () => {
 				<label htmlFor="hamburger" className="menu-btn">
 					&#9776; {useT("menu")}
 				</label>
-				<div className={"nav-menus " + (nursinghomeUpdatePage ? "nav-hidden" : "")}>
+				<div className={nursinghomeUpdatePage ? "nav-menus nav-hidden" : "nav-menus"}>
 					<ul className="nav-menu" role="menu">
 						<li role="menuitem">
 							<NavLink
@@ -73,7 +75,7 @@ const Header: FC = () => {
 						</li>
 					</ul>
 				</div>
-				<ul className="nav-menu--language" role="menu">
+				<ul className={"nav-menu--language" + (nursinghomeReportPage ? " nav-hidden" : "")} role="menu">
 					<li role="menuitem">
 						<NavLink
 							to="#"
