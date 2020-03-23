@@ -418,12 +418,48 @@ export const translations = {
 		"sv-FI": "Inga lediga långvariga bostäder",
 	},
 	pageUpdateTitle: {
-		"fi-FI": "Päivitä vapaiden asuntojen tilanne",
-		"sv-FI": "Uppdatera situationen för lediga bostäder",
+		"fi-FI": "Hoivakodin vapaat asunnot ja kuvat",
+		"sv-FI": "",
+	},
+	freeApartmentsStatus: {
+		"fi-FI": "Vapaiden asuntojen tilanne",
+		"sv-FI": "",
 	},
 	pageUpdateIntro: {
 		"fi-FI": "Valitse hoivakodin vapaiden asuntojen tilanne:",
 		"sv-FI": "Välj situationen för lediga bostäder på vårdhemmet:",
+	},
+	organizationLogo: {
+		"fi-FI": "Organisaation / Hoivakodin omistajan logo",
+		"sv-FI": "",
+	},
+	organizationPhotos: {
+		"fi-FI": "Hoivakodin valokuvat",
+		"sv-FI": "",
+	},
+	organizationPhotosGuide: {
+		"fi-FI": "Laita erilaisia kuvia ulko- ja sisäpuolelta (esimerkiksi sisäänkäynti, piha-alue, oleskelutilat, ruokailutilat, asunto ja kylpyhuone). Ensimmäisessä kuvapaikassa oleva kuva näkyy hoivakotilistauksessa. Kaikki kuvat näkyvät hoivakodin sivulla",
+		"sv-FI": "",
+	},
+	organizationLogoBtn: {
+		"fi-FI": "Lisää tai päivitä logo",
+		"sv-FI": "",
+	},
+	cancelPageTitle: {
+		"fi-FI": "Peruutit muutokset",
+		"sv-FI": "",
+	},
+	backToEdit: {
+		"fi-FI": "Palaa muokkaamaan",
+		"sv-FI": "",
+	},
+	uploadPlaceholder: {
+		"fi-FI": "Lisää kuvateksti kirjoittamalla tähän.",
+		"sv-FI": "",
+	},
+	cancelPageContent: {
+		"fi-FI": "Voit halutessasi palata edelliselle sivulle muokkaamaan tai sulkea tämän sivun.",
+		"sv-FI": "",
 	},
 	clearFilters: {
 		"fi-FI": "Poista rajaukset",
@@ -432,6 +468,18 @@ export const translations = {
 	btnShowImages: {
 		"fi-FI": "Katso kuvat",
 		"sv-FI": "Se bilderna",
+	},
+	pageUploadReportTitle: {
+		"fi-FI": "Lisää uusi käynti",
+		"sv-FI": "",
+	},
+	selectFile: {
+		"fi-FI": "Valitse tiedosto",
+		"sv-FI": "",
+	},
+	reportFailed: {
+		"fi-FI": "Täytä kaikki kentät ja yritä uudelleen",
+		"sv-FI": "",
 	},
 	espoo: {
 		"fi-FI": "Espoo",
@@ -598,6 +646,30 @@ export const translations = {
 	Ruotsi: {
 		"fi-FI": "Ruotsi",
 		"sv-FI": "Svenska",
+	},
+	status_ok: {
+		"fi-FI": "Kaikki kunnossa",
+		"sv-FI": "",
+	},
+	status_small: {
+		"fi-FI": "Pientä parannettavaa",
+		"sv-FI": "",
+	},
+	status_significant: {
+		"fi-FI": "Merkittävästi parannettavaa",
+		"sv-FI": "",
+	},
+	status_survaillance: {
+		"fi-FI": "Tehostetussa valvonnassa",
+		"sv-FI": "",
+	},
+	status_waiting: {
+		"fi-FI": "Odottaa käyntiä",
+		"sv-FI": "",
+	},
+	status_no_info: {
+		"fi-FI": "Sijaintikunta valvoo. Tietoja ei saatavilla.",
+		"sv-FI": "",
 	},
 	"Suomi|Ruotsi": {
 		"fi-FI": "Suomi|Ruotsi",

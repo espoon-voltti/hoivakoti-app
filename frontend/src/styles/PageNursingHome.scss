@@ -235,9 +235,6 @@ $hero-border: 5px solid white;
 .nursinghome-details-box {
 	flex-basis: 360px;
 	flex-shrink: 0;
-	border: 1px solid $light-gray;
-	border-radius: $border-radius;
-	padding: 24px;
 	margin-top: 32px;
 
 	@media (min-width: 800px) {
@@ -249,6 +246,13 @@ $hero-border: 5px solid white;
 		overflow-y: auto;
 	}
 }
+
+.nursinghome-details-box-section {
+	padding: 24px;
+	margin-bottom: 20px;
+	border: 1px solid $light-gray;
+	border-radius: $border-radius;
+}	
 
 .nursinghome-details-box h3 {
 	color: inherit;
@@ -280,4 +284,28 @@ $hero-border: 5px solid white;
 	font-weight: 600;
 	line-height: 24px;
 	margin-bottom: 5px;
+}
+
+.report_info_container {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.report_info_container .report_info_item {
+	margin-bottom: 25px;
+}
+
+.report_info_container .report_hidden {
+	display: none;
+}
+
+.report_info_header {
+	font-size: 16px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.report_info_minor_header {
+	font-size: 16px;
+	font-weight: 600;
 }

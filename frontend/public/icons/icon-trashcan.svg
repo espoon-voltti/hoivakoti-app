@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 27 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="Artboard1" transform="matrix(0.738462,0,0,0.466073,0,0)">
+        <rect x="0" y="0" width="36" height="61" style="fill:none;"/>
+        <g transform="matrix(1.35417,0,0,2.14559,0.217834,0.310028)">
+            <g id="Valmiit">
+                <g id="updated-Hoivakotien-hallintatyökalu-vers2">
+                    <g id="main-content">
+                        <g id="Valokuvien-lisäys">
+                            <g id="valokuvat-lisää">
+                                <g id="Kuva-1">
+                                    <g id="Valokuva">
+                                        <g id="IKONIT">
+                                            <g id="Poista-kuva">
+                                                <g id="trash">
+                                                    <path id="Shape" d="M19.25,3.5L17.413,1.05C16.915,0.388 16.138,0 15.313,0L10.938,0C10.112,0 9.335,0.388 8.838,1.05L7,3.5L1.313,3.5C0.585,3.5 0,4.085 0,4.813L0,4.922C0,5.102 0.148,5.25 0.328,5.25L1.471,5.25L3.287,25.61C3.407,26.961 4.539,28 5.901,28L20.349,28C21.711,28 22.843,26.961 22.963,25.61L24.779,5.25L25.922,5.25C26.102,5.25 26.25,5.102 26.25,4.922L26.25,4.813C26.25,4.085 25.665,3.5 24.938,3.5L19.25,3.5ZM10.938,1.75L15.313,1.75C15.586,1.75 15.848,1.881 16.012,2.1L17.063,3.5L9.188,3.5L10.238,2.1C10.402,1.881 10.664,1.75 10.938,1.75ZM21.219,25.452C21.18,25.905 20.803,26.25 20.349,26.25L5.901,26.25C5.447,26.25 5.07,25.905 5.031,25.452L3.227,5.25L23.023,5.25L21.219,25.452Z" style="fill:white;fill-rule:nonzero;"/>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -244,6 +244,17 @@ strong {
 	color: #fff;
 }
 
+.btn-secondary-link {
+	display: block;
+	width: 90%;
+	margin: auto;
+	padding: 12px !important;
+	background: none !important;
+	border-color: $link-color;
+	border: solid 1px;
+	text-transform: uppercase;
+}
+
 .btn:hover {
 	background-color: $primary-blue;
 }
@@ -263,4 +274,8 @@ strong {
 
 .content-block {
 	margin-bottom: 50px;
+}
+
+.hidden {
+	display: none;
 }

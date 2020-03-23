@@ -14,10 +14,12 @@ import {
 	GetAllPicsAndDescriptions,
 	GetPicsAndDescriptions,
 	GetPic,
+	GetPdf,
 	GetCaptions,
 	GetCities,
 	GetNursingHomeVacancyStatus,
-	UpdateNursingHomeVacancyStatus,
+	UpdateNursingHomeInformation,
+	UploadNursingHomeReport,
 	AdminRevealSecrets,
 } from "./controllers";
 import config from "./config";
@@ -92,7 +94,21 @@ router.get("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 });
 
 router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
-	const success = await UpdateNursingHomeVacancyStatus(ctx);
+	const success = await UpdateNursingHomeInformation(ctx);
+	if (!success) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or key" };
+	} else {
+		ctx.body = { success };
+	}
+});
+
+router.get("/api/nursing-homes/:id/raportti.pdf", async ctx => {
+	ctx.body = await GetPdf(ctx);
+});
+
+router.post("/api/nursing-homes/:id/report-status/:key", async ctx => {
+	const success = await UploadNursingHomeReport(ctx);
 	if (!success) {
 		ctx.response.status = 403;
 		ctx.body = { error: "Forbidden: invalid ID or key" };

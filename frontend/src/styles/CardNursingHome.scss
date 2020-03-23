@@ -3,7 +3,6 @@
 .card-list-item {
 	width: 100%;
 	height: 100%;
-	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
 	text-align: left;
@@ -21,6 +20,10 @@
 	@media print {
 			flex-direction: row;
 	}
+}
+
+.card-list-item-container {
+	display: flex;
 }
 
 .card-list-item-borders {
@@ -209,4 +212,35 @@
 		max-width: 350px;
 		min-width: 350px;
 	}
+}
+
+.card-nursing-home-status{
+	margin-top: 10px;
+	font-style: italic;
+	font-size: 16px;
+
+	span {
+		font-weight: 600;
+	}
+}
+
+.card-nursing-home-public-status{
+	width: 33%;
+	text-align: center;
+	padding: 35px 25px 35px 25px;
+	margin-top: 25px;
+
+	p {
+		font-size: 14px;
+		margin: 0;
+	}
+
+	.card-nursing-home-public-status-header {
+		font-size: 16px;
+		font-weight: 600;
+	}
+}
+
+.card-list-item-report-btn {
+	height: 30px;
 }

@@ -58,6 +58,17 @@ $header-height: 80px;
 	}
 }
 
+.header-fixed{
+	position: fixed;
+	width: 100%;
+	padding: 0;
+	background-color: #fff;
+	z-index: 999;
+	-webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 1px 20px 0px rgba(0,0,0,0.15);
+}
+
 .footer {
 	padding: 20px;
 	box-sizing: border-box;
@@ -126,6 +137,14 @@ $header-height: 80px;
 	margin: 0 40px 6px 10px;
 }
 
+.minor-header {
+	margin-top: 5px;
+	margin-left: 15px;
+	width: 250px;
+	font-size: 16px;
+	font-weight: 600;
+}
+
 .title {
 	font-family: Montserrat, sans-serif;
 	text-decoration: none;
@@ -156,6 +175,10 @@ $header-height: 80px;
 	align-items: center;
 	width: 100%;
 	justify-content: center;
+}
+
+.nav-hidden {
+	visibility: hidden;
 }
 
 .nav-menu {

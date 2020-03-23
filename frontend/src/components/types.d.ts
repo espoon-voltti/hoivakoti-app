@@ -70,5 +70,21 @@ export interface NursingHome {
 		owner_logo_hash: string | null;
 	};
 	pics: NursingHomeImageName[];
+	pic_captions: {
+		apartment_hash: string | null;
+		apartment_layout_hash: string | null;
+		bathroom_hash: string | null;
+		dining_room_hash: string | null;
+		entrance_hash: string | null;
+		lounge_hash: string | null;
+		nursinghome_layout_hash: string | null;
+		outside_hash: string | null;
+		overview_outside_hash: string | null;
+		owner_logo_hash: string | null;
+	};
+	report_status: {
+		status: string;
+		date: string;
+	}
 	has_vacancy: boolean | null;
 }

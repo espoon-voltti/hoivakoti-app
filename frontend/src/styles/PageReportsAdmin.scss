@@ -1,0 +1,32 @@
+@import "./variables.scss";
+
+.filters-admin {
+    margin-top: 80px;
+}
+
+.card-list-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.card-list-searchfield-container {
+    width: 80%;
+    margin: 40px 0 40px 0;
+}
+
+.card-list-searchfield {
+    width: 100%;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 25px;
+    border: none;
+    border-bottom: solid 1px $border-color;
+}
+
+.card-list-searchfield-btn {
+   float: right;
+   position: relative;
+   top: -25px;
+   width: 50px;
+   height: 25px;
+}

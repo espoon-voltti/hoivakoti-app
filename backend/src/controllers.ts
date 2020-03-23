@@ -9,12 +9,16 @@ import {
 	GetAllPicturesAndDescriptions,
 	GetPicturesAndDescriptions,
 	GetPicData,
+	GetPdfData,
+	GetNursingHomeStatus,
 	GetPicCaptions,
 	GetPicDigests,
 	GetAllPicDigests,
+	GetAllNursingHomeStatus,
 	GetDistinctCities,
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
-	UpdateNursingHomeVacancyStatus as UpdateNursingHomeVacancyStatusDB,
+	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
+	UploadNursingHomeReport as UploadNursingHomeReportDB,
 	GetAllBasicUpdateKeys,
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
@@ -48,6 +52,7 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 	});
 
 	const pic_digests = await GetAllPicDigests();
+	const report_status = await GetAllNursingHomeStatus();
 
 	nursing_homes.map((nursinghome: any) => {
 		nursinghome.pic_digests = {};
@@ -65,6 +70,13 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 			}
 		});
 
+		nursinghome.report_status = {};
+		report_status.map((status: any) => {
+			if (status.nursinghome_id === nursinghome.id) {
+				nursinghome.report_status = status;
+			}
+		});
+
 		delete nursinghome.vacancy_last_updated_at;
 		delete nursinghome.basic_update_key;
 	});
@@ -75,6 +87,8 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 export async function GetNursingHome(ctx: any): Promise<any> {
 	const nursing_home_data = (await GetNursingHomeDB(ctx.params.id))[0];
 	const pic_digests = (await GetPicDigests(ctx.params.id))[0];
+	const pic_captions = (await GetPicCaptions(ctx.params.id))[0];
+	const nursing_home_status = (await GetNursingHomeStatus(ctx.params.id))[0];
 	const available_pics = Object.keys(pic_digests || {})
 		.filter((item: any) => (pic_digests[item] != null ? true : false))
 		.map((item: any) => item.replace("_hash", ""));
@@ -87,6 +101,8 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 
 	nursing_home_data["pic_digests"] = pic_digests;
 	nursing_home_data["pics"] = available_pics;
+	nursing_home_data["pic_captions"] = pic_captions;
+	nursing_home_data["report_status"] = nursing_home_status;
 	return nursing_home_data;
 }
 
@@ -204,6 +220,26 @@ export async function GetCaptions(ctx: any): Promise<any> {
 	return captions;
 }
 
+export async function GetPdf(ctx: any): Promise<any> {
+	const document = (await GetPdfData(ctx.params.id))[0];
+	if (document) {
+		ctx.response.set("Content-Type", "application/pdf");
+		ctx.response.set("Content-Length", document.length);
+		
+		if (ctx.params.digest)
+			ctx.response.set(
+				"Cache-Control",
+				"public,max-age=31536000,immutable",
+			);
+
+		return document.report_file;
+	} else {
+		// eslint-disable-next-line require-atomic-updates
+		ctx.response.status = 404;
+		return "No document found";
+	}
+}
+
 export async function GetCities(ctx: any): Promise<any> {
 	const cities = await GetDistinctCities();
 	return cities.map((item: any) => item.city);
@@ -219,14 +255,27 @@ export async function GetNursingHomeVacancyStatus(
 	return await GetNursingHomeVacancyStatusDB(id, key);
 }
 
-export async function UpdateNursingHomeVacancyStatus(
+export async function UpdateNursingHomeInformation(
 	ctx: Context,
 ): Promise<boolean> {
 	const { id, key } = ctx.params;
-	const value: boolean = ctx.request.body.has_vacancy;
-	if (typeof value !== "boolean")
+	const has_vacancy: boolean = ctx.request.body.has_vacancy;
+	const images: any = ctx.request.body.images;
+	if (typeof has_vacancy !== "boolean")
 		throw new Error("Invalid value in field 'has_vacancy'!");
-	return await UpdateNursingHomeVacancyStatusDB(id, key, value);
+
+	return await UpdateNursingHomeInformationDB(id, key, has_vacancy, images);
+}
+
+export async function UploadNursingHomeReport(
+	ctx: Context,
+): Promise<boolean> {
+	const { id, key } = ctx.params;
+	const status: string = ctx.request.body.status;
+	const date: string = ctx.request.body.date;
+	const file: any = ctx.request.body.file;
+
+	return await UploadNursingHomeReportDB(id, key, status, date, file);
 }
 
 interface Secrets {

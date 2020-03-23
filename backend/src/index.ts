@@ -15,6 +15,7 @@ app.use(
 	BodyParser({
 		multipart: true,
 		parsedMethods: ["POST", "PUT", "PATCH", "DELETE"],
+		jsonLimit: "5mb"
 	}),
 );
 app.use(routes);
