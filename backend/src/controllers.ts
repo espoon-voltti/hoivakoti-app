@@ -20,6 +20,7 @@ import {
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
 	UploadNursingHomeReport as UploadNursingHomeReportDB,
 	GetAllBasicUpdateKeys,
+	GetAdminCookieHash,
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
 	DeleteNursingHomePics,
@@ -296,4 +297,18 @@ export async function AdminRevealSecrets(
 	return {
 		basicUpdateKeys,
 	};
+}
+
+export async function AdminLogin(
+	ctx: Context,
+): Promise<string | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+	const hash = await GetAdminCookieHash();
+	return hash;
 }

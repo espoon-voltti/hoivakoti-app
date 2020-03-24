@@ -10,6 +10,7 @@ import axios from "axios";
 import Map from "./Map";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
+import Cookies from "universal-cookie";
 
 type Language = string;
 
@@ -24,6 +25,11 @@ interface SearchFilters {
 }
 
 const PageReportsAdmin: FC = () => {
+
+    const cookies = new Cookies();
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    let password = "";
+
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
 	);
@@ -507,33 +513,53 @@ const PageReportsAdmin: FC = () => {
 					<CardNursingHome nursinghome={nursingHome} type={"admin"} />
 				</div>
 			</div>
-		));
+        ));
+        
+    const handleLogin = (
+		event: React.MouseEvent<HTMLButtonElement>,
+		): void => {
+            const login = axios.post(
+                `${config.API_URL}/nursing-homes/admin/login`,
+                { 
+                    password: password,
+                }
+            );
+	};
 
-	return (
-		<div>
-			<div className="filters filters-admin">
-				<div className="filters-text">{filterLabel}</div>
-				{filterElements}
-			</div>
-			<div className="card-list-container">
-				<div className="card-list">
-                    <div className="card-list-searchfield-container">
-                        <input className="card-list-searchfield" value={searchField} type="text" placeholder="Etsi hoivakotia nimellä..." onChange={e => {
-                                setSearchField(e.target.value);
-                                const newSearchFilters = {
-                                    ...searchFilters,
-                                    name: (e.target.value != "" ? e.target.value : undefined),
-                                };
-                                const stringfield = queryString.stringify(newSearchFilters);
-                                history.push("/valvonta?" + stringfield);
-                            }}>
-                        </input><button className="card-list-searchfield-btn" onClick={clearSearchfield}></button>
+    if (loggedIn){
+        return (
+            <div>
+                <div className="filters filters-admin">
+                    <div className="filters-text">{filterLabel}</div>
+                    {filterElements}
+                </div>
+                <div className="card-list-container">
+                    <div className="card-list">
+                        <div className="card-list-searchfield-container">
+                            <input className="card-list-searchfield" value={searchField} type="text" placeholder="Etsi hoivakotia nimellä..." onChange={e => {
+                                    setSearchField(e.target.value);
+                                    const newSearchFilters = {
+                                        ...searchFilters,
+                                        name: (e.target.value != "" ? e.target.value : undefined),
+                                    };
+                                    const stringfield = queryString.stringify(newSearchFilters);
+                                    history.push("/valvonta?" + stringfield);
+                                }}>
+                            </input><button className="card-list-searchfield-btn" onClick={clearSearchfield}></button>
+                        </div>
+                        <div className="card-container">{cards}</div>
                     </div>
-					<div className="card-container">{cards}</div>
-				</div>
-			</div>
-		</div>
-	);
+                </div>
+            </div>
+        );
+    }else{
+        return (
+            <div className="login-container">
+                <input type="password" value={password}></input>
+                <button className="btn" onClick={handleLogin}>Kirjaudu sisään</button>
+            </div>
+        );
+    }
 };
 
 export default PageReportsAdmin;
