@@ -129,7 +129,7 @@ const PageReportsAdmin: FC = () => {
 				console.error(error.message);
 				setLoggedIn(false);
 			});
-			
+
 		axios
 			.get(config.API_URL + "/nursing-homes")
 			.then(function(response: { data: NursingHome[] }) {
@@ -221,8 +221,8 @@ const PageReportsAdmin: FC = () => {
 					))
 				{
 					return false;
-                }
-                console.log(searchFilters.name);
+				}
+				
                 if (
                         searchFilters.name &&
                         searchFilters.name.length > 0 &&
@@ -526,7 +526,6 @@ const PageReportsAdmin: FC = () => {
                     adminPassword: password,
                 }
 			).then(function(response: { data: string }) {
-				console.log(response.data);
 				setLoggedIn(true);
 			}).catch((error: Error) => {
 				console.error(error.message);

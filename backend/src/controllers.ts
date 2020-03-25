@@ -315,7 +315,7 @@ export async function AdminLogin(
 	}
 
 	const hash = await GetAdminCookieHash();
-	ctx.cookies.set('hoivakoti_session', hash, { secure: true , maxAge: 36000});
+	ctx.cookies.set('hoivakoti_session', hash, { domain: ctx.headers.origin, httpOnly: false , maxAge: 36000});
 	ctx.response.set('Access-Control-Allow-Credentials', 'true');
 	ctx.response.set('Access-Control-Allow-Origin', ctx.headers.origin);
 	ctx.response.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
