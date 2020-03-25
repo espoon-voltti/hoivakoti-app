@@ -21,6 +21,8 @@ import {
 	UpdateNursingHomeInformation,
 	UploadNursingHomeReport,
 	AdminRevealSecrets,
+	AdminLogin,
+	CheckLogin
 } from "./controllers";
 import config from "./config";
 
@@ -132,6 +134,15 @@ router.get("/api/all-pics", async ctx => {
 router.post("/api/admin/reveal-secrets", async ctx => {
 	const secrets = await AdminRevealSecrets(ctx);
 	ctx.body = { secrets };
+});
+
+router.get("/api/admin/login", async ctx => {
+	ctx.body = await CheckLogin(ctx);
+});
+
+router.post("/api/admin/login", async ctx => {
+	const secrets = await AdminLogin(ctx);
+	ctx.body = secrets;
 });
 
 const routes = router.routes();
