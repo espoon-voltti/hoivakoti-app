@@ -26,9 +26,9 @@ interface SearchFilters {
 
 const PageReportsAdmin: FC = () => {
 
-    const cookies = new Cookies();
+    const adminCookies = new Cookies();
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
-    let password = "";
+    const [password, setPassword] = useState<string>("");
 
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
@@ -61,14 +61,6 @@ const PageReportsAdmin: FC = () => {
 	const [filteredNursingHomes, setFilteredNursingHomes] = useState<
 		NursingHome[] | null
 	>(null);
-
-	useEffect(() => {
-		const listener = (): void => {
-			setIsMapVisible(calculateMapVisible(window.innerWidth));
-		};
-		window.addEventListener("resize", listener);
-		return () => window.removeEventListener("resize", listener);
-	}, []);
 
 	const espooAreas = [
 		useT("espoon keskus"),
@@ -128,6 +120,16 @@ const PageReportsAdmin: FC = () => {
 	};
 
 	useEffect(() => {
+		axios
+			.get(config.API_URL + "/admin/login", {headers:{Cookie: `sessionCookie = ${adminCookies.get("hoivakoti_session")}`}})
+			.then(function() {
+				setLoggedIn(true);
+			})
+			.catch((error: Error) => {
+				console.error(error.message);
+				setLoggedIn(false);
+			});
+			
 		axios
 			.get(config.API_URL + "/nursing-homes")
 			.then(function(response: { data: NursingHome[] }) {
@@ -515,15 +517,20 @@ const PageReportsAdmin: FC = () => {
 			</div>
         ));
         
-    const handleLogin = (
+    const handleLogin = async (
 		event: React.MouseEvent<HTMLButtonElement>,
-		): void => {
-            const login = axios.post(
-                `${config.API_URL}/nursing-homes/admin/login`,
+		): Promise<void> => {
+            const login = await axios.post(
+                `${config.API_URL}/admin/login`,
                 { 
-                    password: password,
+                    adminPassword: password,
                 }
-            );
+			).then(function(response: { data: string }) {
+				console.log(response.data);
+				setLoggedIn(true);
+			}).catch((error: Error) => {
+				console.error(error.message);
+			});
 	};
 
     if (loggedIn){
@@ -555,7 +562,7 @@ const PageReportsAdmin: FC = () => {
     }else{
         return (
             <div className="login-container">
-                <input type="password" value={password}></input>
+                <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
                 <button className="btn" onClick={handleLogin}>Kirjaudu sisään</button>
             </div>
         );

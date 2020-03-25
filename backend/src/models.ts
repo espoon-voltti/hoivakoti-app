@@ -723,6 +723,15 @@ export async function GetAdminCookieHash(): Promise<string> {
 	return hash;
 }
 
+export async function GetHasLogin(cookie: string): Promise<boolean> {
+	const sessions = await knex("AdminSessions").select("date").where({hash: cookie});
+	if(sessions.length == 1){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 
 
 

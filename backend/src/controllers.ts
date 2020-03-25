@@ -21,6 +21,7 @@ import {
 	UploadNursingHomeReport as UploadNursingHomeReportDB,
 	GetAllBasicUpdateKeys,
 	GetAdminCookieHash,
+	GetHasLogin,
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
 	DeleteNursingHomePics,
@@ -308,7 +309,30 @@ export async function AdminLogin(
 		typeof adminPw === "string" &&
 		adminPw.length > 0 &&
 		requestPw === adminPw;
-	if (!isPwValid) return null;
+	if (!isPwValid) {
+		ctx.response.status = 401;
+		return null;
+	}
+
 	const hash = await GetAdminCookieHash();
+	ctx.cookies.set('hoivakoti_session', hash, { secure: true , maxAge: 36000});
+	ctx.response.set('Access-Control-Allow-Credentials', 'true');
+	ctx.response.set('Access-Control-Allow-Origin', ctx.headers.origin);
+	ctx.response.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+	ctx.response.set('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
 	return hash;
+}
+
+export async function CheckLogin(
+	ctx: Context,
+): Promise<string | null> {
+	console.log(ctx.request.header);
+	const loggedIn = await GetHasLogin(ctx.cookies.get("sessionCookie") as string);
+	if(loggedIn){
+		return "OK";
+	}else{
+		ctx.response.status = 401;
+		return "";
+	}
+	
 }
