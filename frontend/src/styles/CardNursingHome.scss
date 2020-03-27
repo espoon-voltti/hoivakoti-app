@@ -244,3 +244,30 @@
 .card-list-item-report-btn {
 	height: 30px;
 }
+
+.card-list-item-alert-tag {
+	position: relative;
+	left:-320px;
+	width: 240px;
+	height: 40px;
+	margin-right: -240px;
+	background-color: rgba(255, 255, 255, 1.0);
+	opacity: 0.8;
+
+	div {
+		display: inline-block;
+	}
+}
+
+.card-list-item-alert-tag-mark {
+	width: 20px;
+	height: 40px;
+	background-color: rgb(230, 30, 75);
+}
+
+.card-list-item-alert-tag-label {
+	position: relative;
+	top: -16px;
+	left: 15px;
+	font-weight: 600;
+}

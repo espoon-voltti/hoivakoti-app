@@ -6,7 +6,9 @@
 
 .page-report-datepicker {
 	margin: 0 0 50px 30px;
-    font-size: 16px;
+	font-size: 16px;
+	border: none;
+	border-bottom: solid 1px $border-color;
 }
 
 .page-report-file {
@@ -42,4 +44,15 @@
     margin-top: 12px;
 	color: $error-color;
 	font-weight: bold;
+}
+
+.page-update-data-nursing-home-name{
+	font-size: 30px;
+	font-weight: 400;
+}
+
+.page-update-data-nursing-home-owner {
+	font-size: 16px;
+	text-transform: uppercase;
+	margin-bottom: 30px;
 }

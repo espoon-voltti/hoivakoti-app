@@ -77,7 +77,7 @@ const App: React.FC = () => {
 							/>
 							<Route
 								exact
-								path="/hoivakodit/:id/valvonta/:key"
+								path="/hoivakodit/:id/valvonta"
 								component={PageUploadReport}
 							/>
 							<Route

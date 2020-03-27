@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useT } from "../i18n";
 import config from "./config";
 import VacancyStatusBadge from "./VacancyStatusBadge";
+import PageAdmin from "./PageAdmin";
 
 type NursingHomeSmallProps = {
 	nursinghome: NursingHome;
@@ -54,7 +55,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				case "significant":
 					reportStatus = reportStatusSignificant;
 				break;
-				case "survaillance":
+				case "surveillance":
 					reportStatus = reportStatusSurvaillance;
 				break;
 				case "no-info":
@@ -95,6 +96,10 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						imageUrl ? "has-pic" : ""
 					}`}
 				/>
+				<div className={(type == "admin" && nursinghome.report_status.status == "surveillance")? "card-list-item-alert-tag" : "hidden"}>
+					<div className="card-list-item-alert-tag-mark"></div>
+					<div className="card-list-item-alert-tag-label">Tehostetussa seurannassa</div>
+				</div>
 				
 				<div className="card-list-item__content">
 					<div className="card-list-item__content-upper">

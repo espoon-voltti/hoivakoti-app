@@ -109,11 +109,11 @@ router.get("/api/nursing-homes/:id/raportti.pdf", async ctx => {
 	ctx.body = await GetPdf(ctx);
 });
 
-router.post("/api/nursing-homes/:id/report-status/:key", async ctx => {
+router.post("/api/nursing-homes/:id/report-status", async ctx => {
 	const success = await UploadNursingHomeReport(ctx);
 	if (!success) {
 		ctx.response.status = 403;
-		ctx.body = { error: "Forbidden: invalid ID or key" };
+		ctx.body = { error: "Forbidden: invalid ID or session key" };
 	} else {
 		ctx.body = { success };
 	}

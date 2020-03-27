@@ -279,3 +279,14 @@ strong {
 .hidden {
 	display: none;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+	color: rgba(0, 0, 0, 0);
+	opacity: 0.6;
+	background: url('/icons/icon-calendar-alt.svg') no-repeat;
+	background-size: contain;
+	width: 16px;
+	height: 16px;
+	margin-bottom: 5px;
+	border-width: thin;
+}
