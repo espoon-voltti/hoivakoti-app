@@ -26,7 +26,7 @@ interface SearchFilters {
 
 const PageReportsAdmin: FC = () => {
 
-    const adminCookies = new Cookies();
+    const sessionCookies = new Cookies();
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
     const [password, setPassword] = useState<string>("");
 
@@ -121,7 +121,7 @@ const PageReportsAdmin: FC = () => {
 
 	useEffect(() => {
 		axios
-			.get(config.API_URL + "/admin/login", {headers:{Cookie: `sessionCookie = ${adminCookies.get("hoivakoti_session")}`}})
+			.get(config.API_URL + "/admin/login", {headers:{Authentication: `${sessionCookies.get("hoivakoti_session")}`}})
 			.then(function() {
 				setLoggedIn(true);
 			})
@@ -526,6 +526,8 @@ const PageReportsAdmin: FC = () => {
                     adminPassword: password,
                 }
 			).then(function(response: { data: string }) {
+				console.log(response.data);
+				sessionCookies.set('hoivakoti_session', response.data, {maxAge: 36000});
 				setLoggedIn(true);
 			}).catch((error: Error) => {
 				console.error(error.message);
@@ -561,8 +563,14 @@ const PageReportsAdmin: FC = () => {
     }else{
         return (
             <div className="login-container">
-                <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
-                <button className="btn" onClick={handleLogin}>Kirjaudu sisään</button>
+				<h2>Kirjaudu valvontatiimin työkaluun</h2>
+				<div>
+					<span>Salasana</span>
+					<input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
+				</div>
+				<div>
+					<button className="btn" onClick={handleLogin}>Kirjaudu sisään</button>
+				</div>
             </div>
         );
     }

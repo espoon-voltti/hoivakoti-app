@@ -251,6 +251,8 @@
 }
 
 .page-update-popup {
+	position: fixed;
+	margin-top: 12px;
 	margin-left: 20px;
 	color: $primary-blue;
 	font-weight: bold;

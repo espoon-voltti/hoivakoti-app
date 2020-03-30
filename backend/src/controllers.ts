@@ -272,12 +272,17 @@ export async function UpdateNursingHomeInformation(
 export async function UploadNursingHomeReport(
 	ctx: Context,
 ): Promise<boolean> {
-	const { id, key } = ctx.params;
-	const status: string = ctx.request.body.status;
-	const date: string = ctx.request.body.date;
-	const file: any = ctx.request.body.file;
+	const loggedIn = await GetHasLogin(ctx.get('authentication') as string);
 
-	return await UploadNursingHomeReportDB(id, key, status, date, file);
+	if (loggedIn) {
+		const { id } = ctx.params;
+		const status: string = ctx.request.body.status;
+		const date: string = ctx.request.body.date;
+		const file: any = ctx.request.body.file;
+
+		return await UploadNursingHomeReportDB(id, status, date, file);
+	}
+	return false;
 }
 
 interface Secrets {
@@ -311,23 +316,18 @@ export async function AdminLogin(
 		requestPw === adminPw;
 	if (!isPwValid) {
 		ctx.response.status = 401;
-		return null;
+		return "";
 	}
 
 	const hash = await GetAdminCookieHash();
-	ctx.cookies.set('hoivakoti_session', hash, { domain: ctx.headers.origin, httpOnly: false , maxAge: 36000});
-	ctx.response.set('Access-Control-Allow-Credentials', 'true');
-	ctx.response.set('Access-Control-Allow-Origin', ctx.headers.origin);
-	ctx.response.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
-	ctx.response.set('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+	console.log(hash);
 	return hash;
 }
 
 export async function CheckLogin(
 	ctx: Context,
 ): Promise<string | null> {
-	console.log(ctx.request.header);
-	const loggedIn = await GetHasLogin(ctx.cookies.get("sessionCookie") as string);
+	const loggedIn = await GetHasLogin(ctx.get('authentication') as string);
 	if(loggedIn){
 		return "OK";
 	}else{

@@ -443,9 +443,8 @@ export async function GetDistinctCities(): Promise<any[]> {
 	return await knex("NursingHomes").distinct("city");
 }
 
-export async function UploadNursingHomeReport(
+export async function UploadNursingHomeReport(  //USE ONLY WHEN AUTHENTICATED
 	id: string,
-	basicUdpateKey: string,
 	status: string,
 	date: string,
 	file: any,
@@ -454,7 +453,7 @@ export async function UploadNursingHomeReport(
 	const nursingHomeValid = await knex
 			.select()
 			.table("NursingHomes")
-			.where({ id, basic_update_key: basicUdpateKey });
+			.where({ id });
 
 	if(nursingHomeValid.length === 0) return false;
 
