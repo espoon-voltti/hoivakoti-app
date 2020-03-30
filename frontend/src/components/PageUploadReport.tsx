@@ -142,7 +142,7 @@ const PageUploadReport: FC = () => {
 	const reportStatusOk = useT("status_ok");
 	const reportStatusSmall = useT("status_small");
 	const reportStatusSignificant = useT("status_significant");
-	const reportStatusSurvaillance = useT("status_survaillance");
+	const reportStatusSurveillance = useT("status_surveillance");
 	const reportStatusNoInfo = useT("status_no_info");
 
 	let reportStatus = useT("status_waiting");
@@ -160,8 +160,8 @@ const PageUploadReport: FC = () => {
 				case "significant":
 					reportStatus = reportStatusSignificant;
 				break;
-				case "survaillance":
-					reportStatus = reportStatusSurvaillance;
+				case "surveillance":
+					reportStatus = reportStatusSurveillance;
 				break;
 				case "no-info":
 					reportStatus = reportStatusNoInfo;

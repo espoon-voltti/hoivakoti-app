@@ -38,7 +38,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const reportStatusOk = useT("status_ok");
 	const reportStatusSmall = useT("status_small");
 	const reportStatusSignificant = useT("status_significant");
-	const reportStatusSurvaillance = useT("status_survaillance");
+	const reportStatusSurveillance = useT("status_surveillance");
 	const reportStatusNoInfo = useT("status_no_info");
 	let reportStatus = useT("status_waiting");
 
@@ -56,7 +56,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					reportStatus = reportStatusSignificant;
 				break;
 				case "surveillance":
-					reportStatus = reportStatusSurvaillance;
+					reportStatus = reportStatusSurveillance;
 				break;
 				case "no-info":
 					reportStatus = reportStatusNoInfo;
