@@ -659,7 +659,7 @@ export const translations = {
 		"fi-FI": "Merkittävästi parannettavaa",
 		"sv-FI": "",
 	},
-	status_survaillance: {
+	status_surveillance: {
 		"fi-FI": "Tehostetussa valvonnassa",
 		"sv-FI": "",
 	},

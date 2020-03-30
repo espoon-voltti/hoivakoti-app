@@ -520,7 +520,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reportStatusOk = useT("status_ok");
 	const reportStatusSmall = useT("status_small");
 	const reportStatusSignificant = useT("status_significant");
-	const reportStatusSurvaillance = useT("status_survaillance");
+	const reportStatusSurveillance = useT("status_surveillance");
 	const reportStatusNoInfo = useT("status_no_info");
 
 	let reportStatus = useT("status_waiting");
@@ -551,8 +551,8 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 			case "significant":
 				reportStatus = reportStatusSignificant;
 			break;
-			case "survaillance":
-				reportStatus = reportStatusSurvaillance;
+			case "surveillance":
+				reportStatus = reportStatusSurveillance;
 			break;
 			case "no-info":
 				reportStatus = reportStatusNoInfo;
@@ -612,7 +612,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					<div className="report_info_container">
 						<p className="report_info_header">{"Espoon kaupungin valvontakäynnin tulos"}</p>
 						<p className="report_info_item">{'"' + reportStatus + '"'}</p>
-						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{"Viimeisin tarkastuskäynti"}</p>
+						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{"Viimeisin valvontakäynti"}</p>
 						<p className={"report_info_item" + (nursingHome.report_status ? "" : " report_hidden")}>{formatDate(reportDate)}</p>
 
 						{hasReport ? <a href={`/api/nursing-homes/${nursingHome.id}/raportti.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">Avaa Raportti</a> : ""}

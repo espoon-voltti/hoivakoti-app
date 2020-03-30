@@ -20,7 +20,7 @@ import {
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
 	UploadNursingHomeReport as UploadNursingHomeReportDB,
 	GetAllBasicUpdateKeys,
-	GetAdminCookieHash,
+	GetLoginCookieHash,
 	GetHasLogin,
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
@@ -308,7 +308,7 @@ export async function AdminRevealSecrets(
 export async function AdminLogin(
 	ctx: Context,
 ): Promise<string | null> {
-	const adminPw = process.env.ADMIN_PASSWORD;
+	const adminPw = process.env.VALVONTA_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
 		typeof adminPw === "string" &&
@@ -319,7 +319,7 @@ export async function AdminLogin(
 		return "";
 	}
 
-	const hash = await GetAdminCookieHash();
+	const hash = await GetLoginCookieHash();
 	console.log(hash);
 	return hash;
 }

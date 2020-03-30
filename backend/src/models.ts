@@ -715,8 +715,8 @@ export async function GetAllBasicUpdateKeys(): Promise<BasicUpdateKeyEntry[]> {
 	}));
 }
 
-export async function GetAdminCookieHash(): Promise<string> {
-	const hash = hashWithSalt(uuidv4(), process.env.ADMIN_PASSWORD as string);
+export async function GetLoginCookieHash(): Promise<string> {
+	const hash = hashWithSalt(uuidv4(), process.env.VALVONTA_PASSWORD as string);
 	const timestamp = Date.now();
 	await knex("AdminSessions").insert({hash: hash, date: timestamp});
 	return hash;
