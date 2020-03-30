@@ -612,7 +612,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					<div className="report_info_container">
 						<p className="report_info_header">{"Espoon kaupungin valvontakäynnin tulos"}</p>
 						<p className="report_info_item">{'"' + reportStatus + '"'}</p>
-						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{"Viimeisin tarkastuskäynti"}</p>
+						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{"Viimeisin valvontakäynti"}</p>
 						<p className={"report_info_item" + (nursingHome.report_status ? "" : " report_hidden")}>{formatDate(reportDate)}</p>
 
 						{hasReport ? <a href={`/api/nursing-homes/${nursingHome.id}/raportti.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">Avaa Raportti</a> : ""}

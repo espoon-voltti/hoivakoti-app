@@ -98,7 +98,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				/>
 				<div className={(type == "admin" && nursinghome.report_status.status == "surveillance")? "card-list-item-alert-tag" : "hidden"}>
 					<div className="card-list-item-alert-tag-mark"></div>
-					<div className="card-list-item-alert-tag-label">Tehostetussa seurannassa</div>
+					<div className="card-list-item-alert-tag-label">Tehostetussa valvonnassa</div>
 				</div>
 				
 				<div className="card-list-item__content">
@@ -185,7 +185,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			</div>
 			<div className={type == "admin" ? "hidden": ""}>
 					<div className="card-nursing-home-public-status">
-						<p className="card-nursing-home-public-status-header">{`"${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}"`}</p>
+						<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
+						<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`"${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}"`}</p>
 						<p>Valvontakäynnin tulos</p>
 					</div>	
 				</div>

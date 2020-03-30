@@ -227,7 +227,7 @@
 .card-nursing-home-public-status{
 	width: 33%;
 	text-align: center;
-	padding: 35px 25px 35px 25px;
+	padding: 25px 25px 25px 25px;
 	margin-top: 25px;
 
 	p {
@@ -270,4 +270,18 @@
 	top: -16px;
 	left: 15px;
 	font-weight: 600;
+}
+
+.card-nursing-home-alert {
+	color: rgb(230, 30, 75);
+}
+
+.card-nursing-home-alert-sign {
+	width: 25px;
+	height: 25px;
+	margin: auto;
+	margin-bottom: 5px;
+	background-image: url('/icons/icon-exclamation-circle.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
 }
