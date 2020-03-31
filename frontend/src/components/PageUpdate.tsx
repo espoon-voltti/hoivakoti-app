@@ -355,7 +355,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		if (event.target.files && event.target.files.length > 0) { 
 			file = event.target.files[0]; 
 
-			if(file.size > 4200000){
+			if(file.size < 4200000){
 				const reader = new FileReader();
 				reader.onloadend = e => {
 					onChange(reader.result);
