@@ -35,10 +35,19 @@ const requestVacancyStatusUpdate = async (
 		`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
 		// eslint-disable-next-line @typescript-eslint/camelcase
 		{ 
-			has_vacancy: status,
-			images: images
+			has_vacancy: status
 		}
 	);
+
+	images.map((image :any) => (
+		axios.post(
+			`${config.API_URL}/nursing-homes/${id}/update-image/${key}`,
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			{ 
+				image: image
+			}
+		)
+	));
 };
 
 const PageUpdate: FC = () => {
@@ -357,13 +366,17 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		
 		if (event.target.files && event.target.files.length > 0) { 
 			file = event.target.files[0]; 
+			if(file.size > 4200000){
+				alert("")
+			}else{
 
-			const reader = new FileReader();
-			reader.onloadend = e => {
-				onChange(reader.result);
-				setImage(reader.result as string);
+				const reader = new FileReader();
+				reader.onloadend = e => {
+					onChange(reader.result);
+					setImage(reader.result as string);
+				}
+				reader.readAsDataURL(file);
 			}
-			reader.readAsDataURL(file);
 		}
 	};
 

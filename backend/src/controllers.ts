@@ -19,6 +19,7 @@ import {
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
 	UploadNursingHomeReport as UploadNursingHomeReportDB,
+	UpdateNursingHomeImage as UpdateNursingHomeImageDB,
 	GetAllBasicUpdateKeys,
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
@@ -260,11 +261,19 @@ export async function UpdateNursingHomeInformation(
 ): Promise<boolean> {
 	const { id, key } = ctx.params;
 	const has_vacancy: boolean = ctx.request.body.has_vacancy;
-	const images: any = ctx.request.body.images;
 	if (typeof has_vacancy !== "boolean")
 		throw new Error("Invalid value in field 'has_vacancy'!");
 
-	return await UpdateNursingHomeInformationDB(id, key, has_vacancy, images);
+	return await UpdateNursingHomeInformationDB(id, key, has_vacancy);
+}
+
+export async function UpdateNursingHomeImage(
+	ctx: Context,
+): Promise<boolean> {
+	const { id, key } = ctx.params;
+	const image: any = ctx.request.body.image;
+
+	return await UpdateNursingHomeImageDB(id, key, image);
 }
 
 export async function UploadNursingHomeReport(
