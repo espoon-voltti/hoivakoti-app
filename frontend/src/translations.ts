@@ -419,11 +419,11 @@ export const translations = {
 	},
 	pageUpdateTitle: {
 		"fi-FI": "Hoivakodin vapaat asunnot ja kuvat",
-		"sv-FI": "",
+		"sv-FI": "Bilder och lediga bostäder",
 	},
 	freeApartmentsStatus: {
 		"fi-FI": "Vapaiden asuntojen tilanne",
-		"sv-FI": "",
+		"sv-FI": "Lediga bostäder",
 	},
 	pageUpdateIntro: {
 		"fi-FI": "Valitse hoivakodin vapaiden asuntojen tilanne:",
@@ -431,35 +431,51 @@ export const translations = {
 	},
 	organizationLogo: {
 		"fi-FI": "Organisaation / Hoivakodin omistajan logo",
-		"sv-FI": "",
+		"sv-FI": "Logotyp för organisationen/vårdhemmets ägare",
 	},
 	organizationPhotos: {
 		"fi-FI": "Hoivakodin valokuvat",
-		"sv-FI": "",
+		"sv-FI": "Fotografier från vårdhemmet",
 	},
 	organizationPhotosGuide: {
-		"fi-FI": "Laita erilaisia kuvia ulko- ja sisäpuolelta (esimerkiksi sisäänkäynti, piha-alue, oleskelutilat, ruokailutilat, asunto ja kylpyhuone). Ensimmäisessä kuvapaikassa oleva kuva näkyy hoivakotilistauksessa. Kaikki kuvat näkyvät hoivakodin sivulla",
-		"sv-FI": "",
+		"fi-FI": "Laita erilaisia kuvia ulko- ja sisäpuolelta (esimerkiksi sisäänkäynti, piha-alue, oleskelutilat, ruokailutilat, asunto ja kylpyhuone). Ensimmäisessä kuvapaikassa oleva kuva näkyy hoivakotilistauksessa. Kaikki kuvat näkyvät hoivakodin sivulla. Kuvien maksimikoko on 4Mt ja kuvatekstien pituus korkeintaan 200 merkkiä.",
+		"sv-FI": "Lägg ut olika bilder som är tagna utomhus och inomhus (t.ex. ingång, gårdsplan, vistelserum, matsal, bostad och badrum). Om du lägger ut bilder på människor, kom ihåg att be om tillstånd. Bilden på den första bildplatsen syns i listan över vårdhem. Alla bilder syns på vårdhemmets sida. ",
+	},
+	emptyImageSpot:{
+		"fi-FI": "Tyhjä kuvapaikka",
+		"sv-FI": "Tom bildplats",
+	},
+	swapImage:{
+		"fi-FI": "Vaihda kuva",
+		"sv-FI": "Byt bild",
+	},
+	imageUploadTooltip:{
+		"fi-FI": "Valitse kuva",
+		"sv-FI": "Välj bilden",
+	},
+	warningImageToLarge: {
+		"fi-FI": "Kuvien tulee olla kooltaan alle 4Mt",
+		"sv-FI": "Bilderna kan inte vara större än 4Mb",
 	},
 	organizationLogoBtn: {
 		"fi-FI": "Lisää tai päivitä logo",
-		"sv-FI": "",
+		"sv-FI": "Lägg till eller uppdatera logotypen",
 	},
 	cancelPageTitle: {
 		"fi-FI": "Peruutit muutokset",
-		"sv-FI": "",
+		"sv-FI": "Du ångrade ändringarna",
 	},
 	backToEdit: {
 		"fi-FI": "Palaa muokkaamaan",
-		"sv-FI": "",
+		"sv-FI": "Redigera",
 	},
 	uploadPlaceholder: {
 		"fi-FI": "Lisää kuvateksti kirjoittamalla tähän.",
-		"sv-FI": "",
+		"sv-FI": "Lägg till en bildtext genom att skriva här.",
 	},
 	cancelPageContent: {
 		"fi-FI": "Voit halutessasi palata edelliselle sivulle muokkaamaan tai sulkea tämän sivun.",
-		"sv-FI": "",
+		"sv-FI": "Om du vill kan du gå tillbaka till föregående sida för att redigera eller stänga sidan.",
 	},
 	clearFilters: {
 		"fi-FI": "Poista rajaukset",
@@ -634,6 +650,14 @@ export const translations = {
 	saving: {
 		"fi-FI": "Tallennetaan...",
 		"sv-FI": "Sparar...",
+	},
+	cancel: {
+		"fi-FI": "Peruuta",
+		"sv-FI": "Ångra",
+	},
+	remove: {
+		"fi-FI": "Poista",
+		"sv-FI": "Ta bort",
 	},
 	saved: {
 		"fi-FI": "Muutokset tallennettu.",
