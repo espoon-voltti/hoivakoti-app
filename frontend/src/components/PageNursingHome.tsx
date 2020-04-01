@@ -527,7 +527,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	let reportDate = "-";
 	let hasReport = false;
 
-	const formatDate = (dateStr: string | null): string => {
+	const formatDate = (dateStr: string | null, ): string => {
 		if (!dateStr) return "";
 		console.log(dateStr);
 		const date = new Date(dateStr);
@@ -615,7 +615,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{"Viimeisin valvontakäynti"}</p>
 						<p className={"report_info_item" + (nursingHome.report_status ? "" : " report_hidden")}>{formatDate(reportDate)}</p>
 
-						{hasReport ? <a href={`/api/nursing-homes/${nursingHome.id}/raportti.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">Avaa Raportti</a> : ""}
+						{hasReport ? <a href={`/api/nursing-homes/${nursingHome.id}/raportti/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(reportDate)}.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">Avaa Raportti</a> : ""}
 					</div>
 				</div>
 			</div>

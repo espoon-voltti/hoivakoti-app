@@ -106,6 +106,10 @@ router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 	}
 });
 
+router.get("/api/nursing-homes/:id/raportti/:key", async ctx => {
+  ctx.body = await GetPdf(ctx);
+});
+
 router.post("/api/nursing-homes/:id/update-image/:key", async ctx => {
 	const success = await UpdateNursingHomeImage(ctx);
 	if (!success) {
@@ -114,10 +118,6 @@ router.post("/api/nursing-homes/:id/update-image/:key", async ctx => {
 	} else {
 		ctx.body = { success };
 	}
-});
-
-router.get("/api/nursing-homes/:id/raportti.pdf", async ctx => {
-	ctx.body = await GetPdf(ctx);
 });
 
 router.post("/api/nursing-homes/:id/report-status", async ctx => {
