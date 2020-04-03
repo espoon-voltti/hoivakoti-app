@@ -466,7 +466,7 @@ export async function UploadNursingHomeReport(  //USE ONLY WHEN AUTHENTICATED
 		await knex("NursingHomeReports").insert({nursinghome_id: id});
 	}
 
-	let fileData = new Buffer(file.split(",")[1], 'base64');
+	let fileData = file != "" ? Buffer.from(file.split(",")[1], 'base64') : null;
 
 	let count = await knex("NursingHomeReports")
 		.where({ nursinghome_id: id})
