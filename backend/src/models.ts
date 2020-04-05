@@ -48,6 +48,18 @@ knex.schema.hasTable("NursingHomeReports").then(async (exists: boolean) => {
 	await CreateNursingHomeReportsTable();
 });
 
+knex.schema.hasTable("NursingHomeSurveyQuestions").then(async (exists: boolean) => {
+	if (exists) return;
+
+	await CreateNursingHomeSurveyQuestionsTable();
+});
+
+knex.schema.hasTable("NursingHomeSurveyAnswers").then(async (exists: boolean) => {
+	if (exists) return;
+
+	await CreateNursingHomeSurveyAnswersTable();
+});
+
 function checksum(str: string | BinaryLike): string {
 	return crypto
 		.createHash("SHA256")
@@ -90,6 +102,44 @@ async function CreateNursingHomeReportsTable(): Promise<void> {
 		table.string("status")
 		table.binary("report_file");
 		
+	});
+}
+
+async function CreateAdminSessionsTable(): Promise<void> {
+	await knex.schema.createTable("AdminSessions", (table: any) => {
+		
+		table.string("hash");
+		table.string("date");
+
+	});
+}
+
+async function CreateNursingHomeSurveyQuestionsTable(): Promise<void> {
+	await knex.schema.createTable("NursingHomeSurveyQuestions", (table: any) => {
+		
+		table.increments("id");
+		table.string("survey_id");
+		table.integer("order");
+		table.boolean("active");
+		table.string("question_type");
+		table.string("question");
+		table.string("question_description");
+		table.integer("answers");
+		table.float("average");
+
+	});
+}
+
+async function CreateNursingHomeSurveyAnswersTable(): Promise<void> {
+	await knex.schema.createTable("NursingHomeSurveyAnswers", (table: any) => {
+		
+		table.increments("id");
+		table.string("survey_id");
+		table.integer("question_id");
+		table.string("nursinghome_id");
+		table.string("answer");
+		table.string("date");
+
 	});
 }
 
@@ -160,34 +210,6 @@ export async function DropAndRecreateNursingHomePicturesTable(): Promise<void> {
 	return result;
 }
 
-// async function SetUpRatingsTable(id_for_testing: string) {
-// 	knex.schema.hasTable("Ratings").then(async (exists: boolean) => {
-// 		if (exists) await knex.schema.dropTable("Ratings");
-
-// 		//var count = await knex('pg_class').select("reltuples").where({relname: "NursingHomes"});
-// 		//console.log(count);
-
-// 		knex.schema
-// 			.createTable("Ratings", (table: any) => {
-// 				table.uuid("id");
-// 				table.uuid("nurseryhome");
-// 				table.integer("time");
-// 				table.string("ip");
-// 				table.integer("rating");
-// 			})
-// 			.then(async () => {
-// 				console.debug("Created Ratings table.");
-
-// 				//await InsertNursingHomeRatingToDB(id_for_testing, 2)
-// 			});
-
-// 		/*.catch((err: any) => { console.log(err); throw err })
-// 			.finally(() => {
-// 				knex.destroy();
-// 		});*/
-// 	});
-// }
-
 export async function InsertNursingHomeToDB(
 	nursingHome: NursingHome,
 ): Promise<string> {
@@ -242,20 +264,29 @@ export async function InsertNursingHomeToDB(
 	}
 }
 
-export async function InsertNursingHomeRatingToDB(
-	nursery_id: string,
-	rating: number,
-): Promise<string> {
-	const uuid = uuidv4();
-	const seconds = Math.round(new Date().getTime() / 1000);
-	await knex("Ratings").insert({
-		id: uuid,
-		nurseryhome: nursery_id,
-		time: seconds,
-		rating: rating,
+export async function AddNursingHomeSurveyQuestion(
+	surveyId: string,
+	order: number,
+	questionType: string,
+	question: string,
+	questionDescription: string,
+	active: boolean
+): Promise<void> {
+	await knex("NursingHomeSurveyQuestions").insert({
+		survey_id: surveyId,
+		order: order,
+		question_type: questionType,
+		question: question,
+		question_description: questionDescription,
+		active: active
 	});
+}
 
-	return uuid;
+export async function GetSurvey(surveyId: string): Promise<any[]> {
+	const result = await knex.table("NursingHomeSurveyQuestions")
+		.select()
+		.where({ survey_id: surveyId });
+	return result;
 }
 
 export async function GetNursingHomeIDFromName(name: string): Promise<any[]> {

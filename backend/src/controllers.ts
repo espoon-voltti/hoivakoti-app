@@ -23,6 +23,8 @@ import {
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
 	DeleteNursingHomePics,
+	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
+	GetSurvey as GetSurveyDB
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -296,4 +298,64 @@ export async function AdminRevealSecrets(
 	return {
 		basicUpdateKeys,
 	};
+}
+
+export async function AdminLogin(
+	ctx: Context,
+): Promise<string | null> {
+	const adminPw = process.env.VALVONTA_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) {
+		ctx.response.status = 401;
+		return "";
+	}
+
+	const hash = await GetLoginCookieHash();
+	console.log(hash);
+	return hash;
+}
+
+export async function CheckLogin(
+	ctx: Context,
+): Promise<string | null> {
+	const loggedIn = await GetHasLogin(ctx.get('authentication') as string);
+	if(loggedIn){
+		return "OK";
+	}else{
+		ctx.response.status = 401;
+		return "";
+	}
+	
+}
+
+export async function AddNursingHomeSurveyQuestion(
+	ctx: Context
+):Promise<string | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const res = await AddNursingHomeSurveyQuestionDB( 
+		ctx.request.body.surveyId, 
+		ctx.request.body.order, 
+		ctx.request.body.questionType, 
+		ctx.request.body.question, 
+		ctx.request.body.questionDescription, 
+		ctx.request.body.active);
+	return "inserted"
+}
+
+export async function GetSurvey(
+	ctx: Context
+):Promise<any> {
+	const survey = await GetSurveyDB(ctx.request.body.surveyId);
+	return survey;
 }
