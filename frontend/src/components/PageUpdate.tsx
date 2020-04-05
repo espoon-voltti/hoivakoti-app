@@ -39,15 +39,15 @@ const requestVacancyStatusUpdate = async (
 		}
 	);
 
-	images.map((image :any) => (
-		axios.post(
+	for (const image of images) {
+		await axios.post(
 			`${config.API_URL}/nursing-homes/${id}/update-image/${key}`,
 			// eslint-disable-next-line @typescript-eslint/camelcase
 			{ 
 				image: image
 			}
 		)
-	));
+	}
 };
 
 const PageUpdate: FC = () => {
