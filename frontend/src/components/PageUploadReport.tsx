@@ -7,7 +7,7 @@ import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome } from "./types";
-import { stringify } from "querystring";
+import Cookies from "universal-cookie";
 
 interface NursingHomeStatus {
 	status: string;
@@ -31,21 +31,22 @@ const requestReportStatusUpdate = async (
 	reportFile: string,
 ): Promise<void> => {
 	await axios.post(
-		`${config.API_URL}/nursing-homes/${id}/report-status/${key}`,
+		`${config.API_URL}/nursing-homes/${id}/report-status/`,
 		{ 
 			status: reportStatus,
 			date: reportDate,
 			file: reportFile
-		}
+		},
+		{headers:{Authentication: key}}
 	);
 };
 
 const PageUploadReport: FC = () => {
-	const { id, key } = useParams();
+	const sessionCookies = new Cookies();
+
+	const { id } = useParams();
+	const key = sessionCookies.get("hoivakoti_session");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
-	const [nursingHomeStatus, setNursingHomeStatus] = useState<NursingHomeStatus | null>(
-		null,
-	);
 	const [popupState, setPopupState] = useState<null | "saving" | "saved" | "failed">(
 		null,
 	);
@@ -54,14 +55,23 @@ const PageUploadReport: FC = () => {
 	const [reportDate, setReportDate] = useState<string>("");
 	const [reportFile, setReportFile] = useState<string>("");
 
-	if (!id || !key) throw new Error("Invalid URL!");
+	if (!id) throw new Error("Invalid URL!");
 
 	useEffect(() => {
+		axios
+			.get(config.API_URL + "/admin/login", {headers:{Authentication: key}})
+			.then(function() {
+				
+			})
+			.catch((error: Error) => {
+				console.error(error.message);
+				window.location.href = "/valvonta";
+			});
+
 		axios
 			.get(`${config.API_URL}/nursing-homes/${id}`)
 			.then((response: GetNursingHomeResponse) => {
 				setNursingHome(response.data);
-				setNursingHomeStatus(response.data.report_status);
 			})
 			.catch(e => {
 				console.error(e);
@@ -70,13 +80,9 @@ const PageUploadReport: FC = () => {
 	}, [id]);
 
 	const title = useT("pageUploadReportTitle");
-	const labelTrue = useT("vacancyTrue");
-	const labelFalse = useT("vacancyFalse");
 	const loadingText = useT("loadingText");
-	const nursingHomeName = useT("nursingHome");
 	const status = useT("status");
 	const lastUpdate = useT("lastUpdate");
-	const noUpdate = useT("noUpdate");
 	const btnSave = useT("btnSave");
 
 
@@ -89,12 +95,43 @@ const PageUploadReport: FC = () => {
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
-		if(nursingHomeState && reportDate && reportFile){
-			setPopupState("saving");
-			const dateObj = new Date(reportDate);
-			await requestReportStatusUpdate(id, key, nursingHomeState, dateObj.toISOString(), reportFile);
-			setNursingHomeStatus({status: nursingHomeState, date: reportDate});
-			setPopupState("saved");
+		if(nursingHomeState){
+			if(reportDate && reportFile){
+
+				setPopupState("saving");
+				const dateObj = new Date(reportDate);
+				console.log(nursingHomeState);
+				await requestReportStatusUpdate(id, key, nursingHomeState, dateObj.toISOString(), reportFile);
+				axios
+					.get(`${config.API_URL}/nursing-homes/${id}`)
+					.then((response: GetNursingHomeResponse) => {
+						setNursingHome(response.data);
+					})
+					.catch(e => {
+						console.error(e);
+						throw e;
+				});
+				setPopupState("saved");
+
+			}else if(nursingHomeState == "waiting" || nursingHomeState == "no-info"){
+
+				setPopupState("saving");
+				console.log(nursingHomeState);
+				await requestReportStatusUpdate(id, key, nursingHomeState, "", "");
+				axios
+					.get(`${config.API_URL}/nursing-homes/${id}`)
+					.then((response: GetNursingHomeResponse) => {
+						setNursingHome(response.data);
+					})
+					.catch(e => {
+						console.error(e);
+						throw e;
+				});
+				setPopupState("saved");
+
+			}else{
+				setPopupState("failed");
+			}
 		}else{
 			setPopupState("failed");
 		}
@@ -102,7 +139,7 @@ const PageUploadReport: FC = () => {
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>):void => {
 		e.preventDefault();
-		window.location.href = window.location.pathname + "/peruuta";
+		window.location.href = "/valvonta";
 	};
 
 	const [reportFileName, setReportFileName] = useState<string>(useT("selectFile"));
@@ -127,7 +164,7 @@ const PageUploadReport: FC = () => {
 	const reportStatusOk = useT("status_ok");
 	const reportStatusSmall = useT("status_small");
 	const reportStatusSignificant = useT("status_significant");
-	const reportStatusSurvaillance = useT("status_survaillance");
+	const reportStatusSurveillance = useT("status_surveillance");
 	const reportStatusNoInfo = useT("status_no_info");
 
 	let reportStatus = useT("status_waiting");
@@ -145,8 +182,8 @@ const PageUploadReport: FC = () => {
 				case "significant":
 					reportStatus = reportStatusSignificant;
 				break;
-				case "survaillance":
-					reportStatus = reportStatusSurvaillance;
+				case "surveillance":
+					reportStatus = reportStatusSurveillance;
 				break;
 				case "no-info":
 					reportStatus = reportStatusNoInfo;
@@ -160,7 +197,7 @@ const PageUploadReport: FC = () => {
 		<div className="page-update">
 			<div className="page-update-content">
 				{!nursingHome ? (
-					<h1 className="page-update-title">{loadingText}</h1>
+					<h1>{loadingText}</h1>
 				) : (
 					<>
 					<h1 className="page-update-title">{title}</h1>
@@ -169,7 +206,7 @@ const PageUploadReport: FC = () => {
 							onSubmit={handleSubmit}
 						>
 					<div className="nav-save">
-						<button className="page-update-cancel" onClick={cancelEdit}>Peruuta</button>
+						<button className="page-update-cancel" onClick={cancelEdit}>Takaisin listaukseen</button>
 						<button type="submit" className="btn">{btnSave}</button>
 
 						{popupState && (
@@ -184,23 +221,23 @@ const PageUploadReport: FC = () => {
 					</div>
 					<div className="page-update-section">
 						
-						<h3 className="page-update-minor-title">{}</h3>
+						<h3 className="page-update-data page-update-data-nursing-home-name">{nursingHome.name}</h3>
+						<h4 className="page-update-data page-update-data-nursing-home-owner">{nursingHome.owner}</h4>
 						<p className="page-update-data">
-							<strong>{nursingHomeName}: </strong>
-							{nursingHome.name}
+							<strong>Osoite: </strong>
+							{nursingHome.address}
 						</p>
 						<p className="page-update-data">
 							<strong>{status}: </strong>
-							{nursingHomeStatus
-								? getStatusTranslation(nursingHomeStatus.status)
-									: ""}
+							{nursingHome.report_status
+								? getStatusTranslation(nursingHome.report_status.status)
+									: getStatusTranslation("waiting")}
 						</p>
 						<p className="page-update-data">
 							<strong>{lastUpdate}: </strong>
-							{nursingHomeStatus
-								? formatDate(nursingHomeStatus.date)
-								  || noUpdate
-								: loadingText}
+							{nursingHome.report_status
+								? formatDate(nursingHome.report_status.date)
+								: "-"}
 						</p>
 							</div>
 							<div className="page-update-section">

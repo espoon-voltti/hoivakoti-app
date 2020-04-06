@@ -20,6 +20,8 @@ import {
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
 	UploadNursingHomeReport as UploadNursingHomeReportDB,
 	GetAllBasicUpdateKeys,
+	GetLoginCookieHash,
+	GetHasLogin,
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
 	DeleteNursingHomePics,
@@ -272,12 +274,17 @@ export async function UpdateNursingHomeInformation(
 export async function UploadNursingHomeReport(
 	ctx: Context,
 ): Promise<boolean> {
-	const { id, key } = ctx.params;
-	const status: string = ctx.request.body.status;
-	const date: string = ctx.request.body.date;
-	const file: any = ctx.request.body.file;
+	const loggedIn = await GetHasLogin(ctx.get('authentication') as string);
 
-	return await UploadNursingHomeReportDB(id, key, status, date, file);
+	if (loggedIn) {
+		const { id } = ctx.params;
+		const status: string = ctx.request.body.status;
+		const date: string = ctx.request.body.date;
+		const file: any = ctx.request.body.file;
+
+		return await UploadNursingHomeReportDB(id, status, date, file);
+	}
+	return false;
 }
 
 interface Secrets {
@@ -354,8 +361,8 @@ export async function AddNursingHomeSurveyQuestion(
 }
 
 export async function GetSurvey(
-	ctx: Context
+	surveyId: string
 ):Promise<any> {
-	const survey = await GetSurveyDB(ctx.request.body.surveyId);
+	const survey = await GetSurveyDB(surveyId);
 	return survey;
 }

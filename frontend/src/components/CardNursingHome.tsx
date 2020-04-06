@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useT } from "../i18n";
 import config from "./config";
 import VacancyStatusBadge from "./VacancyStatusBadge";
+import PageAdmin from "./PageAdmin";
 
 type NursingHomeSmallProps = {
 	nursinghome: NursingHome;
@@ -37,7 +38,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const reportStatusOk = useT("status_ok");
 	const reportStatusSmall = useT("status_small");
 	const reportStatusSignificant = useT("status_significant");
-	const reportStatusSurvaillance = useT("status_survaillance");
+	const reportStatusSurveillance = useT("status_surveillance");
 	const reportStatusNoInfo = useT("status_no_info");
 	let reportStatus = useT("status_waiting");
 
@@ -54,8 +55,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				case "significant":
 					reportStatus = reportStatusSignificant;
 				break;
-				case "survaillance":
-					reportStatus = reportStatusSurvaillance;
+				case "surveillance":
+					reportStatus = reportStatusSurveillance;
 				break;
 				case "no-info":
 					reportStatus = reportStatusNoInfo;
@@ -95,6 +96,10 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						imageUrl ? "has-pic" : ""
 					}`}
 				/>
+				<div className={(type == "admin" && nursinghome.report_status.status == "surveillance")? "card-list-item-alert-tag" : "hidden"}>
+					<div className="card-list-item-alert-tag-mark"></div>
+					<div className="card-list-item-alert-tag-label">Tehostetussa valvonnassa</div>
+				</div>
 				
 				<div className="card-list-item__content">
 					<div className="card-list-item__content-upper">
@@ -180,7 +185,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			</div>
 			<div className={type == "admin" ? "hidden": ""}>
 					<div className="card-nursing-home-public-status">
-						<p className="card-nursing-home-public-status-header">{`"${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}"`}</p>
+						<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
+						<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`"${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}"`}</p>
 						<p>Valvontakäynnin tulos</p>
 					</div>	
 				</div>

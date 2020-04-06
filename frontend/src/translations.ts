@@ -304,6 +304,7 @@ export const translations = {
 	},
 	btnClear: { "fi-FI": "Tyhjennä", "sv-FI": "Rensa" },
 	btnSave: { "fi-FI": "Tallenna", "sv-FI": "Spara" },
+	btnSend: { "fi-FI": "Lähetä", "sv-FI": "Skicka" },
 	summaryLabel: { "fi-FI": "hoivakotia", "sv-FI": "vårdhem" },
 	loadingText: { "fi-FI": "Ladataan...", "sv-FI": "Laddar..." },
 	numApartments: { "fi-FI": "Asuntojen määrä", "sv-FI": "Antal bostäder" },
@@ -479,6 +480,26 @@ export const translations = {
 	},
 	reportFailed: {
 		"fi-FI": "Täytä kaikki kentät ja yritä uudelleen",
+		"sv-FI": "",
+	},
+	surveyOption1: {
+		"fi-FI": "Heikko",
+		"sv-FI": "",
+	},
+	surveyOption2: {
+		"fi-FI": "Kohtuullinen",
+		"sv-FI": "",
+	},
+	surveyOption3: {
+		"fi-FI": "Neutraali",
+		"sv-FI": "",
+	},
+	surveyOption4: {
+		"fi-FI": "Hyvä",
+		"sv-FI": "",
+	},
+	surveyOption5: {
+		"fi-FI": "Erinomainen",
 		"sv-FI": "",
 	},
 	espoo: {
@@ -659,7 +680,7 @@ export const translations = {
 		"fi-FI": "Merkittävästi parannettavaa",
 		"sv-FI": "",
 	},
-	status_survaillance: {
+	status_surveillance: {
 		"fi-FI": "Tehostetussa valvonnassa",
 		"sv-FI": "",
 	},

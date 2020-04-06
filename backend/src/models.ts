@@ -42,9 +42,6 @@ knex.schema.hasTable("NursingHomePictures").then(async (exists: boolean) => {
 knex.schema.hasTable("NursingHomeReports").then(async (exists: boolean) => {
 	if (exists) return;
 
-	//if (exists)
-	//	await knex.schema.dropTable("NursingHomePictures");
-
 	await CreateNursingHomeReportsTable();
 });
 
@@ -58,6 +55,13 @@ knex.schema.hasTable("NursingHomeSurveyAnswers").then(async (exists: boolean) =>
 	if (exists) return;
 
 	await CreateNursingHomeSurveyAnswersTable();
+
+});
+
+knex.schema.hasTable("AdminSessions").then(async (exists: boolean) => {
+	if (exists) return;
+
+	await CreateAdminSessionsTable();
 });
 
 function checksum(str: string | BinaryLike): string {
@@ -462,9 +466,8 @@ export async function GetDistinctCities(): Promise<any[]> {
 	return await knex("NursingHomes").distinct("city");
 }
 
-export async function UploadNursingHomeReport(
+export async function UploadNursingHomeReport(  //USE ONLY WHEN AUTHENTICATED
 	id: string,
-	basicUdpateKey: string,
 	status: string,
 	date: string,
 	file: any,
@@ -473,7 +476,7 @@ export async function UploadNursingHomeReport(
 	const nursingHomeValid = await knex
 			.select()
 			.table("NursingHomes")
-			.where({ id, basic_update_key: basicUdpateKey });
+			.where({ id });
 
 	if(nursingHomeValid.length === 0) return false;
 
@@ -486,7 +489,7 @@ export async function UploadNursingHomeReport(
 		await knex("NursingHomeReports").insert({nursinghome_id: id});
 	}
 
-	let fileData = new Buffer(file.split(",")[1], 'base64');
+	let fileData = file != "" ? Buffer.from(file.split(",")[1], 'base64') : null;
 
 	let count = await knex("NursingHomeReports")
 		.where({ nursinghome_id: id})
@@ -734,6 +737,34 @@ export async function GetAllBasicUpdateKeys(): Promise<BasicUpdateKeyEntry[]> {
 		name,
 	}));
 }
+
+export async function GetLoginCookieHash(): Promise<string> {
+	const hash = hashWithSalt(uuidv4(), process.env.VALVONTA_PASSWORD as string);
+	const timestamp = Date.now();
+	await knex("AdminSessions").insert({hash: hash, date: timestamp});
+	return hash;
+}
+
+export async function GetHasLogin(cookie: string): Promise<boolean> {
+	const sessions = await knex("AdminSessions").select("date").where({hash: cookie});
+	if(sessions.length == 1){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+//DUMMY DATA FOR TESTING
+
 
 export async function addDummyNursingHome(): Promise<string> {
 	const nursinghome: NursingHome = {

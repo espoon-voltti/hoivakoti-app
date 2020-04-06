@@ -10,6 +10,7 @@ import axios from "axios";
 import Map from "./Map";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
+import Cookies from "universal-cookie";
 
 type Language = string;
 
@@ -24,6 +25,11 @@ interface SearchFilters {
 }
 
 const PageReportsAdmin: FC = () => {
+
+    const sessionCookies = new Cookies();
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const [password, setPassword] = useState<string>("");
+
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
 	);
@@ -55,14 +61,6 @@ const PageReportsAdmin: FC = () => {
 	const [filteredNursingHomes, setFilteredNursingHomes] = useState<
 		NursingHome[] | null
 	>(null);
-
-	useEffect(() => {
-		const listener = (): void => {
-			setIsMapVisible(calculateMapVisible(window.innerWidth));
-		};
-		window.addEventListener("resize", listener);
-		return () => window.removeEventListener("resize", listener);
-	}, []);
 
 	const espooAreas = [
 		useT("espoon keskus"),
@@ -122,6 +120,16 @@ const PageReportsAdmin: FC = () => {
 	};
 
 	useEffect(() => {
+		axios
+			.get(config.API_URL + "/admin/login", {headers:{Authentication: `${sessionCookies.get("hoivakoti_session")}`}})
+			.then(function() {
+				setLoggedIn(true);
+			})
+			.catch((error: Error) => {
+				console.error(error.message);
+				setLoggedIn(false);
+			});
+
 		axios
 			.get(config.API_URL + "/nursing-homes")
 			.then(function(response: { data: NursingHome[] }) {
@@ -213,8 +221,8 @@ const PageReportsAdmin: FC = () => {
 					))
 				{
 					return false;
-                }
-                console.log(searchFilters.name);
+				}
+				
                 if (
                         searchFilters.name &&
                         searchFilters.name.length > 0 &&
@@ -507,33 +515,65 @@ const PageReportsAdmin: FC = () => {
 					<CardNursingHome nursinghome={nursingHome} type={"admin"} />
 				</div>
 			</div>
-		));
+        ));
+        
+    const handleLogin = async (
+		event: React.MouseEvent<HTMLButtonElement>,
+		): Promise<void> => {
+            const login = await axios.post(
+                `${config.API_URL}/admin/login`,
+                { 
+                    adminPassword: password,
+                }
+			).then(function(response: { data: string }) {
+				console.log(response.data);
+				sessionCookies.set('hoivakoti_session', response.data, {maxAge: 36000});
+				setLoggedIn(true);
+			}).catch((error: Error) => {
+				console.error(error.message);
+			});
+	};
 
-	return (
-		<div>
-			<div className="filters filters-admin">
-				<div className="filters-text">{filterLabel}</div>
-				{filterElements}
-			</div>
-			<div className="card-list-container">
-				<div className="card-list">
-                    <div className="card-list-searchfield-container">
-                        <input className="card-list-searchfield" value={searchField} type="text" placeholder="Etsi hoivakotia nimellä..." onChange={e => {
-                                setSearchField(e.target.value);
-                                const newSearchFilters = {
-                                    ...searchFilters,
-                                    name: (e.target.value != "" ? e.target.value : undefined),
-                                };
-                                const stringfield = queryString.stringify(newSearchFilters);
-                                history.push("/valvonta?" + stringfield);
-                            }}>
-                        </input><button className="card-list-searchfield-btn" onClick={clearSearchfield}></button>
+    if (loggedIn){
+        return (
+            <div>
+                <div className="filters filters-admin">
+                    <div className="filters-text">{filterLabel}</div>
+                    {filterElements}
+                </div>
+                <div className="card-list-container">
+                    <div className="card-list">
+                        <div className="card-list-searchfield-container">
+                            <input className="card-list-searchfield" value={searchField} type="text" placeholder="Etsi hoivakotia nimellä..." onChange={e => {
+                                    setSearchField(e.target.value);
+                                    const newSearchFilters = {
+                                        ...searchFilters,
+                                        name: (e.target.value != "" ? e.target.value : undefined),
+                                    };
+                                    const stringfield = queryString.stringify(newSearchFilters);
+                                    history.push("/valvonta?" + stringfield);
+                                }}>
+                            </input><button className="card-list-searchfield-btn" onClick={clearSearchfield}></button>
+                        </div>
+                        <div className="card-container">{cards}</div>
                     </div>
-					<div className="card-container">{cards}</div>
+                </div>
+            </div>
+        );
+    }else{
+        return (
+            <div className="login-container">
+				<h2>Kirjaudu valvontatiimin työkaluun</h2>
+				<div>
+					<span>Salasana</span>
+					<input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
 				</div>
-			</div>
-		</div>
-	);
+				<div>
+					<button className="btn" onClick={handleLogin}>Kirjaudu sisään</button>
+				</div>
+            </div>
+        );
+    }
 };
 
 export default PageReportsAdmin;

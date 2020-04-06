@@ -1,2 +1,75 @@
 @import "variables.scss";
 
+
+.page-survey-container {
+	width: 100vw;
+}
+
+.page-survey-section {
+	width: 100%;
+	border-bottom: 1px solid $border-color;
+	padding: 40px 0 100px 0;
+}
+
+.survey-card-question {
+	width: 800px;
+	margin: auto;
+}
+
+.survey-card--header-container {
+	border-bottom: 1px solid $border-color;
+	text-align: center;
+	padding: 0 0 20px 0;
+}
+
+.survey-card--header {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.survey-card--desc {
+	font-size: 16px;
+	margin-bottom: 0;
+}
+
+.survey-card--inputs {
+
+	.radio-container {
+		display: inline-flex;
+		padding: 25px 0 0 0;
+
+		.radio-label {
+			display: block;
+			width: 165px;
+			padding: 0;
+			text-align: center;
+
+			span {
+				margin: auto;
+				display: block;
+			}
+
+			.radio-label-children {
+				margin-top: 15px;
+			}
+		}
+	}
+}
+
+.survey-send-btn-container {
+	margin: auto;
+	width: 700px;
+	text-align: right;
+	padding: 30px 5px 50px 0;
+
+	.btn {
+		width: 180px;
+		height: 60px;
+	}
+}
+
+.page-survey-done {
+	margin-top: 25vh;
+	margin-left: 15vw;
+}

@@ -22,7 +22,9 @@ import {
 	UploadNursingHomeReport,
 	AdminRevealSecrets,
 	AddNursingHomeSurveyQuestion,
-	GetSurvey
+	GetSurvey,
+	AdminLogin,
+	CheckLogin
 } from "./controllers";
 import config from "./config";
 
@@ -105,15 +107,15 @@ router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 	}
 });
 
-router.get("/api/nursing-homes/:id/raportti.pdf", async ctx => {
+router.get("/api/nursing-homes/:id/raportti/:key", async ctx => {
 	ctx.body = await GetPdf(ctx);
 });
 
-router.post("/api/nursing-homes/:id/report-status/:key", async ctx => {
+router.post("/api/nursing-homes/:id/report-status", async ctx => {
 	const success = await UploadNursingHomeReport(ctx);
 	if (!success) {
 		ctx.response.status = 403;
-		ctx.body = { error: "Forbidden: invalid ID or key" };
+		ctx.body = { error: "Forbidden: invalid ID or session key" };
 	} else {
 		ctx.body = { success };
 	}
@@ -151,8 +153,13 @@ router.post("/api/survey/add-question", async ctx => {
 });
 
 router.get("/api/survey/:key", async ctx => {
-	const survey = await GetSurvey(ctx);
+	const survey = await GetSurvey(ctx.params.key);
 	ctx.body = survey;
+});
+
+router.post("/api/survey/:id/answers/:key", async ctx => {
+	const res = ""; await AddNursingHomeSurveyQuestion(ctx);
+	ctx.body = res;
 });
 
 const routes = router.routes();

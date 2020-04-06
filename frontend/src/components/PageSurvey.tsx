@@ -9,47 +9,45 @@ import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome, NursingHomeImageName } from "./types";
 import { stringify } from "querystring";
 
-const formatDate = (dateString: string | null): string => {
-	if (!dateString) return "";
-	const date = new Date(dateString);
-	const YYYY = String(date.getUTCFullYear());
-	const MM = String(date.getUTCMonth() + 1).padStart(2, "0");
-	const DD = String(date.getUTCDate()).padStart(2, "0");
-	const hh = String(date.getUTCHours()).padStart(2, "0");
-	const mm = String(date.getUTCMinutes()).padStart(2, "0");
-	return `${YYYY}-${MM}-${DD} (${hh}:${mm} UTC)`;
-};
 
-const requestVacancyStatusUpdate = async (
-	id: string,
-	key: string,
-): Promise<void> => {
-	await axios.post(
-		`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
-		// eslint-disable-next-line @typescript-eslint/camelcase
-		{ 
-		}
-	);
-};
+let surveyState: any[] = [];
 
 const PageSurvey: FC = () => {
 	const { id, key } = useParams();
-	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
-
+	const [survey, setSurvey] = useState<any[] | null>(null);
+	const [surveyDone, setSurveyDone] = useState<boolean>(false);
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
 	useEffect(() => {
 		axios
-			.get(`${config.API_URL}/nursing-homes/${id}`)
-			.then((response: GetNursingHomeResponse) => {
-				setNursingHome(response.data);
+			.get(`${config.API_URL}/survey/testi1`)
+			.then((response: { data: any[] }) => {
+				surveyState = response.data;
+				setSurvey(response.data);
 			})
 			.catch(e => {
 				console.error(e);
 				throw e;
 			});
-	}, [id]);
+	}, []);
+
+	const sendSurvey = async (
+		id: string,
+		key: string,
+		survey: any
+	): Promise<void> => {
+		await axios.post(
+			`${config.API_URL}/survey/${id}/answers/${key}`,
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			{ 
+				survey: survey
+			}
+		)
+		.then((responce) => {
+			setSurveyDone(true);
+		});
+	};
 
 	const title = useT("pageUpdateTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
@@ -64,18 +62,23 @@ const PageSurvey: FC = () => {
 	const status = useT("status");
 	const lastUpdate = useT("lastUpdate");
 	const noUpdate = useT("noUpdate");
-	const btnSave = useT("btnSave");
+	const btnSend = useT("btnSend");
 
 
 	const updatePopupSaved = useT("saved");
 	const updatePopupSaving = useT("saving");
+
+	const updateAnswer = (id: number, state: any) => {
+		const index = surveyState.findIndex( x => x.id === id );
+		surveyState[index].value = state;
+	}
 	
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
-		await requestVacancyStatusUpdate(id, key);
+		await sendSurvey(id, key, surveyState);
 	};
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>):void => {
@@ -83,57 +86,49 @@ const PageSurvey: FC = () => {
 		window.location.href = window.location.pathname + "/peruuta";
 	};
 
+	const questions: JSX.Element[] | null =
+		survey &&
+		survey.map((question: any, index: number) => (
+			<div card-key={index}>
+				<div className={`page-survey-section`}>
+					<Question 
+						question={question}
+						onChange={
+							value => { updateAnswer(question.id, value); }
+						}
+						/>
+				</div>
+			</div>
+		));
+		
+	if(surveyDone) {
+		return (
+			<div className="page-survey-done">
+				<h1>Kiitos palautteestasi</h1>
+			</div>
+		);
+	}
+
 	return (
-		<div className="page-update">
-			<div className="page-update-content">
-				{!nursingHome ? (
+		<div className="">
+			<div className="">
+				{!survey ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
-					<h1 className="page-update-title">{title}</h1>
 					<form
 							className="page-update-controls"
 							onSubmit={handleSubmit}
 						>
-					<div className="nav-save">
-						<button className="page-update-cancel" onClick={cancelEdit}>Peruuta</button>
-						<button type="submit" className="btn">{btnSave}</button>
 
-						)}
-					</div>
-					<div className="page-update-section">
-						
-						<h3 className="page-update-minor-title">{freeApartmentsStatus}</h3>
-						<p className="page-update-data">
-							<strong>{nursingHomeName}: </strong>
-							{nursingHome.name}
-						</p>
+						<div className="page-survey-container">
+							{questions}
 
-						<p className="page-update-intro">{intro}</p>
-							
-							<Radio
-								id="update-vacancy-true"
-								name="update-vacancy-true"
-								isSelected={formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(true);
-								}}
-							>
-								{labelTrue}
-							</Radio>
-							<Radio
-								id="update-vacancy-false"
-								name="update-vacancy-false"
-								isSelected={!formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(false);
-								}}
-							>
-								{labelFalse}
-							</Radio>
-							
+							<div className="survey-send-btn-container">
+								<button type="submit" className="btn">{btnSend}</button>
 							</div>
-						</form>
+						</div>
+					</form>
 					
 					</>
 				)}
@@ -144,128 +139,103 @@ const PageSurvey: FC = () => {
 
 export default PageSurvey;
 
-interface ImageUploadProps {
-	nursingHome: NursingHome | null;
-	imageName: NursingHomeImageName | null | undefined;
-	useButton: boolean;
-	textAreaClass: string;
-	onRemove?: () => void;
-	onChange: (file: any) => void;
-	onCaptionChange?: (text: string) => void;
-	setImageStatus: (status: boolean) => void;
+interface QuestionProps {
+	question: any | null;
+	onChange: (value: any) => void;
 }
 
-export const ImageUpload: FC<ImageUploadProps> = ({
-	nursingHome,
-	imageName,
-	useButton,
-	textAreaClass,
-	onRemove,
-	onChange,
-	onCaptionChange,
-	setImageStatus
+export const Question: FC<QuestionProps> = ({
+	question,
+	onChange
 }) => {
 
-	const organizationLogoBtn = useT("organizationLogoBtn");
-	const uploadPlaceholder = useT("uploadPlaceholder");
+	const optionText1 = useT("surveyOption1");
+	const optionText2 = useT("surveyOption2");
+	const optionText3 = useT("surveyOption3");
+	const optionText4 = useT("surveyOption4");
+	const optionText5 = useT("surveyOption5");
 
-	let hasImage = true;
-	const imageUploadTooltip = "Valiste kuva";
+	const [questionState, setQuestionState] = useState<number | null>(null);
 
-	let imageStateStr = "";
-
-	if (!imageName || !nursingHome || !nursingHome.pic_digests) hasImage = false;
-	let digest: string = "";
-	let caption: string = "";
-	if (hasImage && nursingHome) {
-		digest = (nursingHome.pic_digests as any)[
-			`${imageName}_hash`
-		];
-		caption = (nursingHome.pic_captions as any)[
-			`${imageName}_caption`
-		];
-	}
-	if (!digest) hasImage = false;
-
-	if(hasImage && nursingHome) {
-		imageStateStr = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`
-	}
-
-	if (setImageStatus) setImageStatus(hasImage);
-	if (imageStateStr) hasImage = true;
-
-	const [srcUrl, setImage] = useState(imageStateStr);
-
-	const [captionState, setCaptionState] = useState(caption);
-
-	if (captionState && onCaptionChange) onCaptionChange(captionState);
-
-	const handleImageChange = (
-		event: React.ChangeEvent<HTMLInputElement>,
-		): void => {
-		let file = new Blob;
-		
-		if (event.target.files && event.target.files.length > 0) { 
-			file = event.target.files[0]; 
-
-			const reader = new FileReader();
-			reader.onloadend = e => {
-				onChange(reader.result);
-				setImage(reader.result as string);
-			}
-			reader.readAsDataURL(file);
-		}
-	};
-
-	const handleCaptionChange = (
-		event: React.ChangeEvent<HTMLTextAreaElement>,
-		): void => {
-			setCaptionState(event.target.value);
-	};
-
-	const handleRemove= (
-		event: React.MouseEvent <HTMLDivElement, MouseEvent>,
-		): void => {
-			if(onRemove) onRemove();
-			setImage("");
-	};
-	
-	if (!srcUrl)
 		return (
-			<div className="nursinghome-upload-container">
-				<div className="nursinghome-upload-img nursinghome-upload-placeholder">
-					<div className="nursinghome-upload-img-inner">
-						<div className="nursinghome-upload-img-inner-text">Tyhjä kuvapaikka</div>
-						<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
-					</div>
-					<button type="submit" className={useButton ? "btn" : "upload-button-hidden"}>{organizationLogoBtn}</button>
+			<div className={"survey-card-question"}>
+				<div className="survey-card--header-container">
+					<h3 className="survey-card--header">{question.question}</h3>
+					<h4 className="survey-card--desc">{question.question_description}</h4>
 				</div>
-				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} placeholder={uploadPlaceholder} onChange={handleCaptionChange}></textarea>
-			</div>
-		);
-	else
-		return (
-			<div className={"nursinghome-upload-container " + (useButton ? "input-button-layout" : "input-hidden-layout")}>
-				<div className="nursinghome-upload-img">
-					<div
-						className="nursinghome-upload-img-inner"
-						style={{
-							backgroundImage: `url(${srcUrl})`,
-						}}
-					>
-						<div className="nursinghome-upload-img-hover">
-							<div className={useButton ? "input-button" : "input-hidden"}>
-								<div className="nursinghome-upload-img-change-text">Vaihda kuva</div>
-								<input type="file"  title={imageUploadTooltip} onChange={handleImageChange}/>
-							</div>
-							<div className={useButton ? "nursinghome-upload-button-remove" : "nursinghome-upload-hidden-remove"} onClick={handleRemove}>
-								<div className="nursinghome-upload-img-remove-text">Poista</div>
-							</div>
-						</div>
-					</div>
-					<button type="submit" className={useButton ? "btn" : "upload-button-hidden"}>{organizationLogoBtn}</button>
+				<div className="survey-card--inputs">
+				<Radio
+					id="option-1"
+					name="option-1"
+					isSelected={questionState == 1}
+					onChange={isChecked => {
+						if (isChecked) {
+							onChange(1);
+							setQuestionState(1);
+						}
+					}}
+				>
+					{optionText1}
+				</Radio>
+				
+				<Radio
+					id="option-2"
+					name="option-2"
+					isSelected={questionState == 2}
+					onChange={isChecked => {
+						if (isChecked) {
+							onChange(2);
+							setQuestionState(2);
+						}
+					}}
+				>
+					{optionText2}
+				</Radio>
+
+				<Radio
+					id="option-3"
+					name="option-3"
+					isSelected={questionState == 3}
+					onChange={isChecked => {
+						if (isChecked) {
+							onChange(3);
+							setQuestionState(3);
+						}
+					}}
+				>
+					{optionText3}
+				</Radio>
+
+				<Radio
+					id="option-4"
+					name="option-4"
+					isSelected={questionState == 4}
+					onChange={isChecked => {
+						if (isChecked) {
+							onChange(4);
+							setQuestionState(4);
+						}
+					}}
+				>
+					{optionText4}
+				</Radio>
+
+				<Radio
+					id="option-5"
+					name="option-5"
+					isSelected={questionState == 5}
+					onChange={isChecked => {
+						if (isChecked) {
+							onChange(5);
+							setQuestionState(5);
+						}
+					}}
+				>
+					{optionText5}
+				</Radio>
+						
+								
 				</div>
-				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} placeholder={uploadPlaceholder} onChange={handleCaptionChange}></textarea>
 			</div>
 		);
 };
