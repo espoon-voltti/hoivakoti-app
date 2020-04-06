@@ -22,6 +22,8 @@ import {
 	UpdateNursingHomeImage,
 	UploadNursingHomeReport,
 	AdminRevealSecrets,
+	AddNursingHomeSurveyQuestion,
+	GetSurvey,
 	AdminLogin,
 	CheckLogin
 } from "./controllers";
@@ -154,6 +156,21 @@ router.get("/api/admin/login", async ctx => {
 router.post("/api/admin/login", async ctx => {
 	const secrets = await AdminLogin(ctx);
 	ctx.body = secrets;
+});
+
+router.post("/api/survey/add-question", async ctx => {
+	const res = await AddNursingHomeSurveyQuestion(ctx);
+	ctx.body = res;
+});
+
+router.get("/api/survey/:key", async ctx => {
+	const survey = await GetSurvey(ctx.params.key);
+	ctx.body = survey;
+});
+
+router.post("/api/survey/:id/answers/:key", async ctx => {
+	const res = ""; await AddNursingHomeSurveyQuestion(ctx);
+	ctx.body = res;
 });
 
 const routes = router.routes();

@@ -26,6 +26,8 @@ import {
 	BasicUpdateKeyEntry,
 	DeleteNursingHome as DeleteNursingHomeDB,
 	DeleteNursingHomePics,
+	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
+	GetSurvey as GetSurveyDB
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -344,4 +346,32 @@ export async function CheckLogin(
 		return "";
 	}
 	
+}
+
+export async function AddNursingHomeSurveyQuestion(
+	ctx: Context
+):Promise<string | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const res = await AddNursingHomeSurveyQuestionDB( 
+		ctx.request.body.surveyId, 
+		ctx.request.body.order, 
+		ctx.request.body.questionType, 
+		ctx.request.body.question, 
+		ctx.request.body.questionDescription, 
+		ctx.request.body.active);
+	return "inserted"
+}
+
+export async function GetSurvey(
+	surveyId: string
+):Promise<any> {
+	const survey = await GetSurveyDB(surveyId);
+	return survey;
 }

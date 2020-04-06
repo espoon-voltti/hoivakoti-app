@@ -95,21 +95,43 @@ const PageUploadReport: FC = () => {
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
-		if(nursingHomeState && reportDate && reportFile){
-			setPopupState("saving");
-			const dateObj = new Date(reportDate);
-			console.log(nursingHomeState);
-			await requestReportStatusUpdate(id, key, nursingHomeState, dateObj.toISOString(), reportFile);
-			axios
-				.get(`${config.API_URL}/nursing-homes/${id}`)
-				.then((response: GetNursingHomeResponse) => {
-					setNursingHome(response.data);
-				})
-				.catch(e => {
-					console.error(e);
-					throw e;
-			});
-			setPopupState("saved");
+		if(nursingHomeState){
+			if(reportDate && reportFile){
+
+				setPopupState("saving");
+				const dateObj = new Date(reportDate);
+				console.log(nursingHomeState);
+				await requestReportStatusUpdate(id, key, nursingHomeState, dateObj.toISOString(), reportFile);
+				axios
+					.get(`${config.API_URL}/nursing-homes/${id}`)
+					.then((response: GetNursingHomeResponse) => {
+						setNursingHome(response.data);
+					})
+					.catch(e => {
+						console.error(e);
+						throw e;
+				});
+				setPopupState("saved");
+
+			}else if(nursingHomeState == "waiting" || nursingHomeState == "no-info"){
+
+				setPopupState("saving");
+				console.log(nursingHomeState);
+				await requestReportStatusUpdate(id, key, nursingHomeState, "", "");
+				axios
+					.get(`${config.API_URL}/nursing-homes/${id}`)
+					.then((response: GetNursingHomeResponse) => {
+						setNursingHome(response.data);
+					})
+					.catch(e => {
+						console.error(e);
+						throw e;
+				});
+				setPopupState("saved");
+
+			}else{
+				setPopupState("failed");
+			}
 		}else{
 			setPopupState("failed");
 		}
