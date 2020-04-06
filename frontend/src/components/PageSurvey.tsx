@@ -21,7 +21,7 @@ const PageSurvey: FC = () => {
 
 	useEffect(() => {
 		axios
-			.get(`${config.API_URL}/survey/testi1`)
+			.get(`${config.API_URL}/survey/omaiskysely`)
 			.then((response: { data: any[] }) => {
 				surveyState = response.data;
 				setSurvey(response.data);
