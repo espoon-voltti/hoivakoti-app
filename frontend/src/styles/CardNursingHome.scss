@@ -229,6 +229,8 @@
 	text-align: center;
 	padding: 25px 25px 25px 25px;
 	margin-top: 25px;
+	display: inline-block;
+	border-left: solid 1px $border-color;
 
 	p {
 		font-size: 14px;
@@ -239,6 +241,10 @@
 		font-size: 16px;
 		font-weight: 600;
 	}
+}
+
+.no-left-border {
+	border-left: none;
 }
 
 .card-list-item-report-btn {

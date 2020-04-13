@@ -38,7 +38,7 @@ const PageSurvey: FC = () => {
 		survey: any
 	): Promise<void> => {
 		await axios.post(
-			`${config.API_URL}/survey/${id}/answers/${key}`,
+			`${config.API_URL}/survey/${id}/responses/${key}`,
 			// eslint-disable-next-line @typescript-eslint/camelcase
 			{ 
 				survey: survey
@@ -165,8 +165,8 @@ export const Question: FC<QuestionProps> = ({
 				</div>
 				<div className="survey-card--inputs">
 				<Radio
-					id="option-1"
-					name="option-1"
+					id={`option-1-${question.id}`}
+					name={`option-1-${question.id}`}
 					isSelected={questionState == 1}
 					onChange={isChecked => {
 						if (isChecked) {
@@ -179,8 +179,8 @@ export const Question: FC<QuestionProps> = ({
 				</Radio>
 				
 				<Radio
-					id="option-2"
-					name="option-2"
+					id={`option-2-${question.id}`}
+					name={`option-2-${question.id}`}
 					isSelected={questionState == 2}
 					onChange={isChecked => {
 						if (isChecked) {
@@ -193,8 +193,8 @@ export const Question: FC<QuestionProps> = ({
 				</Radio>
 
 				<Radio
-					id="option-3"
-					name="option-3"
+					id={`option-3-${question.id}`}
+					name={`option-3-${question.id}`}
 					isSelected={questionState == 3}
 					onChange={isChecked => {
 						if (isChecked) {
@@ -207,8 +207,8 @@ export const Question: FC<QuestionProps> = ({
 				</Radio>
 
 				<Radio
-					id="option-4"
-					name="option-4"
+					id={`option-4-${question.id}`}
+					name={`option-4-${question.id}`}
 					isSelected={questionState == 4}
 					onChange={isChecked => {
 						if (isChecked) {
@@ -221,8 +221,8 @@ export const Question: FC<QuestionProps> = ({
 				</Radio>
 
 				<Radio
-					id="option-5"
-					name="option-5"
+					id={`option-5-${question.id}`}
+					name={`option-5-${question.id}`}
 					isSelected={questionState == 5}
 					onChange={isChecked => {
 						if (isChecked) {

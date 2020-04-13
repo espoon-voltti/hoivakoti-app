@@ -158,7 +158,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 							{nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}
 						</div>	
 						<div className="card-nursing-home-status">
-							<span>Viimeisein käynti:{" "}</span>
+							<span>Viimeisin käynti:{" "}</span>
 							{nursinghome.report_status ? formatDate(nursinghome.report_status.date) : "-"}
 						</div>	
 					</div>
@@ -184,6 +184,10 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				<button className={type== "admin" ? "btn":"hidden"} onClick={(e) => {openBtnLink(e, `/hoivakodit/${nursinghome.id}/valvonta/`)}}>Lisää uusi käynti</button>
 			</div>
 			<div className={type == "admin" ? "hidden": ""}>
+					<div className="card-nursing-home-public-status no-left-border">
+						<p className={"card-nursing-home-public-status-header"}>{nursinghome.rating ? nursinghome.rating.toPrecision(2) : "-"}</p>
+						<p>omaisten arvio</p>
+					</div>	
 					<div className="card-nursing-home-public-status">
 						<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
 						<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`"${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}"`}</p>
