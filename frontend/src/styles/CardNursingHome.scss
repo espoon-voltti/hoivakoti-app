@@ -227,9 +227,11 @@
 .card-nursing-home-public-status{
 	width: 33%;
 	text-align: center;
-	padding: 25px 25px 25px 25px;
+	height: 105px;
+	padding: 10px 25px 15px 25px;
 	margin-top: 25px;
 	display: inline-block;
+	vertical-align: top;
 	border-left: solid 1px $border-color;
 
 	p {

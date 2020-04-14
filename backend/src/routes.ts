@@ -10,6 +10,7 @@ import {
 	DeleteNursingHomes,
 	DeleteNursingHome,
 	DropAndRecreateTables,
+	DropAndRecreateSurveyAnswerTables,
 	UploadPics,
 	GetAllPicsAndDescriptions,
 	GetPicsAndDescriptions,
@@ -23,6 +24,7 @@ import {
 	AdminRevealSecrets,
 	AddNursingHomeSurveyQuestion,
 	SubmitSurveyResponse,
+	GetSurveyWithNursingHomeResults,
 	GetSurvey,
 	AdminLogin,
 	CheckLogin
@@ -62,6 +64,10 @@ router.get("/api/nursing-homes/delete-all", async ctx => {
 
 router.post("/api/nursing-homes/drop-table", async ctx => {
 	ctx.body = await DropAndRecreateTables(ctx);
+});
+
+router.post("/api/nursing-homes/drop-survey-answers", async ctx => {
+	ctx.body = await DropAndRecreateSurveyAnswerTables(ctx);
 });
 
 router.post("/api/nursing-homes/upload-pics", async ctx => {
@@ -165,6 +171,11 @@ router.post("/api/survey/:id/responses/:key", async ctx => {
 
 router.post("/api/survey/:id/answers/:key", async ctx => {
 	const res = ""; await AddNursingHomeSurveyQuestion(ctx);
+	ctx.body = res;
+});
+
+router.get("/api/survey/:id/results/:survey", async ctx => {
+	const res = await GetSurveyWithNursingHomeResults(ctx.params.survey, ctx.params.id);
 	ctx.body = res;
 });
 

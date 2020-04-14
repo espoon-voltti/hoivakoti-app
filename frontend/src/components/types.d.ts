@@ -88,4 +88,5 @@ export interface NursingHome {
 	}
 	has_vacancy: boolean | null;
 	rating: number | null;
+	rating_answers: number;
 }

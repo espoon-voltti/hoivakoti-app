@@ -6,6 +6,9 @@ import {
 	DeleteAllNursingHomes,
 	DropAndRecreateNursingHomeTable,
 	DropAndRecreateNursingHomePicturesTable,
+	DropAndRecreateNursingHomeSurveyAnswersTable,
+	DropAndRecreateNursingHomeSurveyScoresTable,
+	DropAndRecreateNursingHomeSurveyTotalScoresTable,
 	GetAllPicturesAndDescriptions,
 	GetPicturesAndDescriptions,
 	GetPicData,
@@ -17,6 +20,7 @@ import {
 	GetAllPicDigests,
 	GetAllNursingHomeStatus,
 	GetAllNursingHomeRatings,
+	GetNursingHomeSurveyResults,
 	GetDistinctCities,
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
@@ -86,9 +90,11 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 		});
 
 		nursinghome.rating = null;
+		nursinghome.rating_answers = 0;
 		ratings.map((rating: any) => {
 			if (rating.nursinghome_id === nursinghome.id) {
 				nursinghome.rating = rating.average;
+				nursinghome.rating_answers = rating.answers;
 			}
 		});
 
@@ -181,6 +187,21 @@ export async function DropAndRecreateTables(ctx: any): Promise<void | null> {
 
 	const result1 = await DropAndRecreateNursingHomeTable();
 	const result2 = await DropAndRecreateNursingHomePicturesTable();
+	return result1;
+}
+
+export async function DropAndRecreateSurveyAnswerTables(ctx: any): Promise<void | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const result1 = await DropAndRecreateNursingHomeSurveyAnswersTable();
+	const result2 = await DropAndRecreateNursingHomeSurveyScoresTable();
+	const result3= await DropAndRecreateNursingHomeSurveyTotalScoresTable();
 	return result1;
 }
 
@@ -389,5 +410,27 @@ export async function GetSurvey(
 	surveyId: string
 ):Promise<any> {
 	const survey = await GetSurveyDB(surveyId);
+	return survey;
+}
+
+export async function GetSurveyWithNursingHomeResults(
+	surveyId: string,
+	nursingHomeId: string
+):Promise<any> {
+	const survey = await GetSurveyDB(surveyId);
+	const results = await GetNursingHomeSurveyResults(nursingHomeId)
+
+
+	survey.map((question: any)=>{
+		question.average = 0;
+		question.answers = 0;
+		results.map((result: any) => {
+			if (result.question_id === question.id) {
+				question.average = result.average;
+				question.answers = result.answers;
+			}
+		});
+	});
+
 	return survey;
 }

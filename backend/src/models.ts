@@ -174,6 +174,7 @@ async function CreateNursingHomeSurveyTotalScoresTable(): Promise<void> {
 	await knex.schema.createTable("NursingHomeSurveyTotalScores", (table: any) => {
 		table.string("nursinghome_id");	
 		table.float("average");
+		table.integer("answers");
 	});
 }
 
@@ -241,6 +242,27 @@ export async function DropAndRecreateNursingHomePicturesTable(): Promise<void> {
 	const exists = await knex.schema.hasTable("NursingHomePictures");
 	if (exists) await knex.schema.dropTable("NursingHomePictures");
 	const result = await CreateNursingHomePicturesTable();
+	return result;
+}
+
+export async function DropAndRecreateNursingHomeSurveyAnswersTable(): Promise<void> {
+	const exists = await knex.schema.hasTable("NursingHomeSurveyAnswers");
+	if (exists) await knex.schema.dropTable("NursingHomeSurveyAnswers");
+	const result = await CreateNursingHomeSurveyAnswersTable();
+	return result;
+}
+
+export async function DropAndRecreateNursingHomeSurveyScoresTable(): Promise<void> {
+	const exists = await knex.schema.hasTable("NursingHomeSurveyScores");
+	if (exists) await knex.schema.dropTable("NursingHomeSurveyScores");
+	const result = await CreateNursingHomeSurveyScoresTable();
+	return result;
+}
+
+export async function DropAndRecreateNursingHomeSurveyTotalScoresTable(): Promise<void> {
+	const exists = await knex.schema.hasTable("NursingHomeSurveyTotalScores");
+	if (exists) await knex.schema.dropTable("NursingHomeSurveyTotalScores");
+	const result = await CreateNursingHomeSurveyTotalScoresTable();
 	return result;
 }
 
@@ -323,6 +345,15 @@ export async function GetSurvey(surveyId: string): Promise<any[]> {
 	return result;
 }
 
+export async function GetNursingHomeSurveyResults(nursingHomeId:string ): Promise<any[]> {
+	const results = await knex.table("NursingHomeSurveyScores")
+		.select()
+		.where({ nursinghome_id: nursingHomeId });
+
+	
+	return results;
+}
+
 export async function SubmitSurveyResponse(
 	survey: any,
 	nursinghomeId: string,
@@ -388,7 +419,8 @@ export async function SubmitSurveyResponse(
 			.table("NursingHomeSurveyTotalScores")
 			.insert({
 				nursinghome_id: nursinghomeId,
-				average: (total_score / num_questions)
+				average: (total_score / num_questions),
+				answers: 1
 			});
 	}else{
 		await knex
@@ -397,7 +429,8 @@ export async function SubmitSurveyResponse(
 				nursinghome_id: nursinghomeId
 			})
 			.update({
-				average: (total_score / num_questions)
+				average: (total_score / num_questions),
+				answers: currentTotal[0].answers
 			});
 	}
 	
