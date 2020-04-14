@@ -610,7 +610,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p className="report_info_item">{nursingHome.rating ? nursingHome.rating.toPrecision(2) : "-"}</p>
+						<p className="report_info_item">{nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"}</p>
 						<p className="report_info_minor_header">Omaisten antama yleisarvosana</p>
 						<p className="report_info_header">{"Espoon kaupungin valvontakäynnin tulos"}</p>
 						<p className="report_info_item">{'"' + reportStatus + '"'}</p>

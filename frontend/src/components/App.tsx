@@ -23,6 +23,7 @@ import PageUploadReport from "./PageUploadReport";
 import PageReportsAdmin from "./PageReportsAdmin";
 import PageCancel from "./PageCancel";
 import PageSurvey from "./PageSurvey";
+import PageSurveyResults from "./PageSurveyResults";
 import PageAdmin from "./PageAdmin";
 import ReactGA from "react-ga";
 import config from "./config";
@@ -90,6 +91,11 @@ const App: React.FC = () => {
 								exact
 								path="/hoivakodit/:id/palaute/:key"
 								component={PageSurvey}
+							/>
+							<Route
+								exact
+								path="/hoivakodit/:id/palaute/"
+								component={PageSurveyResults}
 							/>
 							<Route
 								exact

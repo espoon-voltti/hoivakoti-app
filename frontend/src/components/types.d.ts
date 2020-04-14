@@ -87,6 +87,9 @@ export interface NursingHome {
 		date: string;
 	}
 	has_vacancy: boolean | null;
-	rating: number | null;
-	rating_answers: number;
+	rating: {
+		average: number | null;
+		answers: number | null;
+	}
+	
 }
