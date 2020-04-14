@@ -706,8 +706,8 @@ export async function UpdateNursingHomeImage(
 			await knex("NursingHomePictures")
 				.where({ nursinghome_id: id })
 				.update({
-					[image.name]: imageData,
-					[image.name + "_hash"]: image.remove ? "" : checksum(imageData)
+					[image.name]: image.remove ? null : imageData,
+					[image.name + "_hash"]: image.remove ? null : checksum(imageData)
 			});
 		}
 		
