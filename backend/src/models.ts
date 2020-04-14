@@ -430,7 +430,7 @@ export async function SubmitSurveyResponse(
 			})
 			.update({
 				average: (total_score / num_questions),
-				answers: currentTotal[0].answers
+				answers: currentTotal[0].answers + 1
 			});
 	}
 	

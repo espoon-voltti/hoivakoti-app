@@ -89,12 +89,13 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 			}
 		});
 
-		nursinghome.rating = null;
+		nursinghome.rating = {};
+		nursinghome.rating.average = null;
 		nursinghome.rating_answers = 0;
 		ratings.map((rating: any) => {
 			if (rating.nursinghome_id === nursinghome.id) {
-				nursinghome.rating = rating.average;
-				nursinghome.rating_answers = rating.answers;
+				nursinghome.rating.average = rating.average;
+				nursinghome.rating.answers = rating.answers;
 			}
 		});
 
@@ -125,7 +126,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	nursing_home_data["pics"] = available_pics;
 	nursing_home_data["pic_captions"] = pic_captions;
 	nursing_home_data["report_status"] = nursing_home_status;
-	nursing_home_data["rating"] = rating.average;
+	nursing_home_data["rating"] = rating;
 	return nursing_home_data;
 }
 
