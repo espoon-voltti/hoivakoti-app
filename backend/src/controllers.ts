@@ -6,15 +6,21 @@ import {
 	DeleteAllNursingHomes,
 	DropAndRecreateNursingHomeTable,
 	DropAndRecreateNursingHomePicturesTable,
+	DropAndRecreateNursingHomeSurveyAnswersTable,
+	DropAndRecreateNursingHomeSurveyScoresTable,
+	DropAndRecreateNursingHomeSurveyTotalScoresTable,
 	GetAllPicturesAndDescriptions,
 	GetPicturesAndDescriptions,
 	GetPicData,
 	GetPdfData,
 	GetNursingHomeStatus,
+	GetNursingHomeRating,
 	GetPicCaptions,
 	GetPicDigests,
 	GetAllPicDigests,
 	GetAllNursingHomeStatus,
+	GetAllNursingHomeRatings,
+	GetNursingHomeSurveyResults,
 	GetDistinctCities,
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
@@ -27,6 +33,7 @@ import {
 	DeleteNursingHome as DeleteNursingHomeDB,
 	DeleteNursingHomePics,
 	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
+	SubmitSurveyResponse as SubmitSurveyResponseDB,
 	GetSurvey as GetSurveyDB
 } from "./models";
 
@@ -58,6 +65,7 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 
 	const pic_digests = await GetAllPicDigests();
 	const report_status = await GetAllNursingHomeStatus();
+	const ratings = await GetAllNursingHomeRatings();
 
 	nursing_homes.map((nursinghome: any) => {
 		nursinghome.pic_digests = {};
@@ -82,6 +90,15 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 			}
 		});
 
+		nursinghome.rating = null;
+		nursinghome.rating_answers = 0;
+		ratings.map((rating: any) => {
+			if (rating.nursinghome_id === nursinghome.id) {
+				nursinghome.rating = rating.average;
+				nursinghome.rating_answers = rating.answers;
+			}
+		});
+
 		delete nursinghome.vacancy_last_updated_at;
 		delete nursinghome.basic_update_key;
 	});
@@ -94,6 +111,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	const pic_digests = (await GetPicDigests(ctx.params.id))[0];
 	const pic_captions = (await GetPicCaptions(ctx.params.id))[0];
 	const nursing_home_status = (await GetNursingHomeStatus(ctx.params.id))[0];
+	const rating = (await GetNursingHomeRating(ctx.params.id))[0];
 	const available_pics = Object.keys(pic_digests || {})
 		.filter((item: any) => (pic_digests[item] != null ? true : false))
 		.map((item: any) => item.replace("_hash", ""));
@@ -108,6 +126,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	nursing_home_data["pics"] = available_pics;
 	nursing_home_data["pic_captions"] = pic_captions;
 	nursing_home_data["report_status"] = nursing_home_status;
+	nursing_home_data["rating"] = rating.average;
 	return nursing_home_data;
 }
 
@@ -169,6 +188,21 @@ export async function DropAndRecreateTables(ctx: any): Promise<void | null> {
 
 	const result1 = await DropAndRecreateNursingHomeTable();
 	const result2 = await DropAndRecreateNursingHomePicturesTable();
+	return result1;
+}
+
+export async function DropAndRecreateSurveyAnswerTables(ctx: any): Promise<void | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const result1 = await DropAndRecreateNursingHomeSurveyAnswersTable();
+	const result2 = await DropAndRecreateNursingHomeSurveyScoresTable();
+	const result3= await DropAndRecreateNursingHomeSurveyTotalScoresTable();
 	return result1;
 }
 
@@ -369,9 +403,43 @@ export async function AddNursingHomeSurveyQuestion(
 	return "inserted"
 }
 
+export async function SubmitSurveyResponse(
+	ctx: Context
+):Promise<string | null> {
+	const { id, key } = ctx.params;
+	const res = await SubmitSurveyResponseDB( 
+		ctx.request.body.survey, 
+		id, 
+		key
+	);
+	return ""
+}
+
 export async function GetSurvey(
 	surveyId: string
 ):Promise<any> {
 	const survey = await GetSurveyDB(surveyId);
+	return survey;
+}
+
+export async function GetSurveyWithNursingHomeResults(
+	surveyId: string,
+	nursingHomeId: string
+):Promise<any> {
+	const survey = await GetSurveyDB(surveyId);
+	const results = await GetNursingHomeSurveyResults(nursingHomeId)
+
+
+	survey.map((question: any)=>{
+		question.average = 0;
+		question.answers = 0;
+		results.map((result: any) => {
+			if (result.question_id === question.id) {
+				question.average = result.average;
+				question.answers = result.answers;
+			}
+		});
+	});
+
 	return survey;
 }
