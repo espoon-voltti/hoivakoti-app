@@ -5,19 +5,24 @@
 	margin: auto;
 }
 
+.page-survey-results-container {
+	margin: 0 0 30px 0;
+}
+
 .page-survey-results-title {
+	margin-top: 50px;
 	font-weight: 600;
 	color: $text-color;
 }
 
 .page-survey-results-result{
-	height: 80px;
+	height: 60px;
 	font-size: 18px;
 }
 
 .page-survey-results-minor-title {
 	font-size: 18px;
-	margin: 40px 0 40px 0;
+	margin: 10px 0 35px 0;
 }
 
 .page-survey-results-bold {
@@ -42,9 +47,9 @@
 .page-survey-results-result-image{
 	display: inline-block;
 	position: relative;
-	top: 13px;
-	width: 45px;
-	height: 45px;
+	top: 8px;
+	width: 35px;
+	height: 35px;
 	margin-left: 5px;
 	background-position: bottom;
    	background-size: contain;
