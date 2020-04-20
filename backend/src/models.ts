@@ -385,9 +385,10 @@ export async function SubmitSurveyResponse(
 				average: question.value
 			});
 
-			newSum = 
 			newAvg = question.value; 
+			
 		}else{
+
 			newSum = currentScores[0].answers + 1;
 			newAvg = (currentScores[0].average * currentScores[0].answers + question.value) / newSum;
 
