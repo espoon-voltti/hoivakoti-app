@@ -33,6 +33,32 @@
 	margin-bottom: 0;
 }
 
+.survey-card-line {
+	border-bottom: solid 1px $border-color;
+	width: 105px;
+	position: relative;
+}
+
+.line-1 {
+	left: 105px;
+	top: 43px;
+}
+
+.line-2 {
+	left: 265px;
+	top: 42px;
+}
+
+.line-3 {
+	left: 425px;
+	top: 41px;
+}
+
+.line-4 {
+	left: 585px;
+	top: 40px;
+}
+
 .survey-card--inputs {
 
 	.radio-container {

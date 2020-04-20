@@ -1,6 +1,82 @@
 @import "variables.scss";
 
+.page-survey-results{
+	width: 800px;
+	margin: auto;
+}
+
+.page-survey-results-container {
+	margin: 0 0 30px 0;
+}
+
 .page-survey-results-title {
+	margin-top: 50px;
 	font-weight: 600;
 	color: $text-color;
+}
+
+.page-survey-results-result{
+	height: 60px;
+	font-size: 18px;
+}
+
+.page-survey-results-minor-title {
+	font-size: 18px;
+	margin: 10px 0 35px 0;
+}
+
+.page-survey-results-bold {
+	font-weight: 600;
+}
+
+.page-survey-results-result-question{
+	display: inline-block;
+	width: 150px;
+}
+
+.page-survey-results-result-score{
+	display: inline-block;
+}
+
+.page-survey-results-result-value{
+	display: inline-block;
+	width: 75px;
+	text-align: center;
+}
+
+.page-survey-results-result-image{
+	display: inline-block;
+	position: relative;
+	top: 8px;
+	width: 35px;
+	height: 35px;
+	margin-left: 5px;
+	background-position: bottom;
+   	background-size: contain;
+	background-repeat: no-repeat;
+	z-index: 10;
+}
+
+.progress-background {
+	width: 300px;
+	position: relative;
+	top: -22px;
+	height: 28px;
+	border: solid 1px $input-border;
+}
+
+.star-full {
+	background-image: url('/icons/star-full.svg');
+}
+
+.star-half {
+	background-image: url('/icons/star-half.svg');
+}
+
+.star-none {
+	background-image: url('/icons/star-none.svg');
+}
+
+.page-survey-results-footer{
+	margin-top: 200px;
 }

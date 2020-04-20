@@ -499,15 +499,15 @@ export const translations = {
 		"sv-FI": "",
 	},
 	surveyOption1: {
-		"fi-FI": "Heikko",
+		"fi-FI": "Erittäin huono",
 		"sv-FI": "",
 	},
 	surveyOption2: {
-		"fi-FI": "Kohtuullinen",
+		"fi-FI": "Huono",
 		"sv-FI": "",
 	},
 	surveyOption3: {
-		"fi-FI": "Neutraali",
+		"fi-FI": "Tyydyttävä",
 		"sv-FI": "",
 	},
 	surveyOption4: {
