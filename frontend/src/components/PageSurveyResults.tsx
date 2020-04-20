@@ -65,13 +65,11 @@ const PageSurveyResults: FC = () => {
 				<div className={`page-survey-results-result`}>
 					<div className="page-survey-results-result-question">{question.question}</div>
 					<div className="page-survey-results-result-score">
-						<div className="page-survey-results-result-value">{question.average}</div>
 						<div className={`page-survey-results-result-image${question.average > 0.5 ? " star-full" : " star-none"}`}></div>
 						<div className={`page-survey-results-result-image${question.average > 1.75 ? " star-full" : (question.average > 1.25 ? " star-half" : " star-none")}`}></div>
 						<div className={`page-survey-results-result-image${question.average > 2.75 ? " star-full" : (question.average > 2.25 ? " star-half" : " star-none")}`}></div>
 						<div className={`page-survey-results-result-image${question.average > 3.75 ? " star-full" : (question.average > 3.25 ? " star-half" : " star-none")}`}></div>
 						<div className={`page-survey-results-result-image${question.average > 4.75 ? " star-full" : (question.average > 4.25 ? " star-half" : " star-none")}`}></div>
-						<div className="progress-background"></div>
 					</div>
 				</div>
 			</div>
@@ -93,7 +91,7 @@ const PageSurveyResults: FC = () => {
 					<div className="page-survey-results-container">
 						{questions}
 					</div>
-					<p className="page-survey-results-minor-title"><span className="page-survey-results-bold">Arvostelujen keskiarvo:</span> {nursingHome.rating.average}</p>
+					<p className="page-survey-results-minor-title"><span className="page-survey-results-bold">Arvostelujen keskiarvo:</span> {nursingHome.rating.average} / 5</p>
 					</>
 				)}
 			</div>
