@@ -407,8 +407,10 @@ export async function SubmitSurveyResponse(
 			}
 		}
 
-		if (newAvg > 1 && newAvg < 5) total_score += newAvg;
-		num_questions += 1;
+		if (newAvg > 1 && newAvg < 5){ 
+			total_score += newAvg;
+			num_questions += 1;
+		}
 	}
 
 	const currentTotal = await knex
