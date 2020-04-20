@@ -527,7 +527,7 @@ const PageReportsAdmin: FC = () => {
                 }
 			).then(function(response: { data: string }) {
 				console.log(response.data);
-				sessionCookies.set('hoivakoti_session', response.data, {maxAge: 36000});
+				sessionCookies.set('hoivakoti_session', response.data, {path:"/", maxAge: 36000});
 				setLoggedIn(true);
 			}).catch((error: Error) => {
 				console.error(error.message);

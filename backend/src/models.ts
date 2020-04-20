@@ -392,20 +392,25 @@ export async function SubmitSurveyResponse(
 			newSum = currentScores[0].answers + 1;
 			newAvg = (currentScores[0].average * currentScores[0].answers + question.value) / newSum;
 
-			await knex
-			.table("NursingHomeSurveyScores")
-			.where({
-				question_id: question.id, 
-				nursinghome_id: nursinghomeId
-			})
-			.update({
-				answers: newSum,
-				average: newAvg
-			});
+			if (newAvg > 1 && newAvg < 5){
+
+				await knex
+				.table("NursingHomeSurveyScores")
+				.where({
+					question_id: question.id, 
+					nursinghome_id: nursinghomeId
+				})
+				.update({
+					answers: newSum,
+					average: newAvg
+				});
+			}
 		}
 
-		total_score += newAvg;
-		num_questions += 1;
+		if (newAvg > 1 && newAvg < 5){ 
+			total_score += newAvg;
+			num_questions += 1;
+		}
 	}
 
 	const currentTotal = await knex
