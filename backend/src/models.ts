@@ -603,7 +603,7 @@ export async function GetNursingHomeRating(
 	nursinghome_id: string,
 ): Promise<any[]> {
 	return await knex
-		.select("average")
+		.select("average", "answers")
 		.table("NursingHomeSurveyTotalScores")
 		.where({ nursinghome_id: nursinghome_id });
 }
