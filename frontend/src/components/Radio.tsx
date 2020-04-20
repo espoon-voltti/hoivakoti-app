@@ -6,6 +6,7 @@ interface Props {
 	id: string;
 	isSelected: boolean;
 	onChange: (checked: boolean) => void;
+	tag?: string;
 }
 
 const Radio: React.FunctionComponent<Props> = ({
@@ -14,6 +15,7 @@ const Radio: React.FunctionComponent<Props> = ({
 	onChange,
 	children,
 	isSelected,
+	tag
 }) => {
 	return (
 		<div className="radio-container">
@@ -27,12 +29,14 @@ const Radio: React.FunctionComponent<Props> = ({
 				id={id}
 				className="radio-button"
 			/>
-			<label htmlFor={id} className="radio-label">
+			<label htmlFor={id} className={`radio-label ${tag ? " radio-label-taged" : ""}`}>
 				<span
 					className={`radio-box ${
 						isSelected ? "radio-box-selected" : ""
+					}${
+						tag ? " radio-box-taged" : ""
 					}`}
-				></span>
+				>{tag}</span>
 				<span className="radio-label-children">{children}</span>
 			</label>
 		</div>

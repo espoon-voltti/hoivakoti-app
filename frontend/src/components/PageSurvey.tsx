@@ -163,6 +163,10 @@ export const Question: FC<QuestionProps> = ({
 					<h3 className="survey-card--header">{question.question}</h3>
 					<h4 className="survey-card--desc">{question.question_description}</h4>
 				</div>
+				<div className="survey-card-line line-1"></div>
+				<div className="survey-card-line line-2"></div>
+				<div className="survey-card-line line-3"></div>
+				<div className="survey-card-line line-4"></div>
 				<div className="survey-card--inputs">
 				<Radio
 					id={`option-1-${question.id}`}
@@ -174,6 +178,7 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(1);
 						}
 					}}
+					tag={"1"}
 				>
 					{optionText1}
 				</Radio>
@@ -188,6 +193,7 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(2);
 						}
 					}}
+					tag={"2"}
 				>
 					{optionText2}
 				</Radio>
@@ -202,6 +208,7 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(3);
 						}
 					}}
+					tag={"3"}
 				>
 					{optionText3}
 				</Radio>
@@ -216,6 +223,7 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(4);
 						}
 					}}
+					tag={"4"}
 				>
 					{optionText4}
 				</Radio>
@@ -230,6 +238,7 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(5);
 						}
 					}}
+					tag={"5"}
 				>
 					{optionText5}
 				</Radio>
