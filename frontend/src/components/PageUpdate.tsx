@@ -20,9 +20,9 @@ const formatDate = (dateString: string | null): string => {
 	const YYYY = String(date.getUTCFullYear());
 	const MM = String(date.getUTCMonth() + 1).padStart(2, "0");
 	const DD = String(date.getUTCDate()).padStart(2, "0");
-	const hh = String(date.getUTCHours()).padStart(2, "0");
-	const mm = String(date.getUTCMinutes()).padStart(2, "0");
-	return `${YYYY}-${MM}-${DD} (${hh}:${mm} UTC)`;
+	const hh = String(date.getHours()).padStart(2, "0");
+	const mm = String(date.getMinutes()).padStart(2, "0");
+	return `${YYYY}-${MM}-${DD} (${hh}:${mm})`;
 };
 
 const requestVacancyStatusUpdate = async (
@@ -35,10 +35,19 @@ const requestVacancyStatusUpdate = async (
 		`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
 		// eslint-disable-next-line @typescript-eslint/camelcase
 		{ 
-			has_vacancy: status,
-			images: images
+			has_vacancy: status
 		}
 	);
+
+	for (const image of images) {
+		await axios.post(
+			`${config.API_URL}/nursing-homes/${id}/update-image/${key}`,
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			{ 
+				image: image
+			}
+		)
+	}
 };
 
 const PageUpdate: FC = () => {
@@ -54,16 +63,16 @@ const PageUpdate: FC = () => {
 	const [picCaptions, setPicCaptions] = useState<Record <string, string> | null>(null);
 
 	const imageState = [
-		{name: "overview_outside", hasImage: false, remove: false, value: "", text:""},
-		{name: "apartment", hasImage: false, remove: false, value: "", text:""},
-		{name: "lounge", hasImage: false, remove: false, value: "", text:""},
-		{name: "dining_room", hasImage: false, remove: false, value: "", text:""},
-		{name: "outside", hasImage: false, remove: false, value: "", text:""},
-		{name: "entrance", hasImage: false, remove: false, value: "", text:""},
-		{name: "bathroom", hasImage: false, remove: false, value: "", text:""},
-		{name: "apartment_layout", hasImage: false, remove: false, value: "", text:""},
-		{name: "nursinghome_layout", hasImage: false, remove: false, value: "", text:""},
-		{name: "owner_logo", hasImage: false, remove: false, value: "", text:""},
+		{name: "overview_outside", remove: false, value: "", text:""},
+		{name: "apartment", remove: false, value: "", text:""},
+		{name: "lounge", remove: false, value: "", text:""},
+		{name: "dining_room", remove: false, value: "", text:""},
+		{name: "outside", remove: false, value: "", text:""},
+		{name: "entrance", remove: false, value: "", text:""},
+		{name: "bathroom", remove: false, value: "", text:""},
+		{name: "apartment_layout", remove: false, value: "", text:""},
+		{name: "nursinghome_layout", remove: false, value: "", text:""},
+		{name: "owner_logo", remove: false, value: "", text:""},
 	];
 
 	const removeImage = (id: string) => {
@@ -81,11 +90,6 @@ const PageUpdate: FC = () => {
 	const updateCaptionState = (id: string, state: string) => {
 		const index = imageState.findIndex( x => x.name === id );
 		imageState[index].text = state;
-	}
-
-	const setHasImage = (id: string, state: boolean) => {
-		const index = imageState.findIndex( x => x.name === id );
-		imageState[index].hasImage = state;
 	}
 
 	if (!id || !key) throw new Error("Invalid URL!");
@@ -134,6 +138,7 @@ const PageUpdate: FC = () => {
 	const lastUpdate = useT("lastUpdate");
 	const noUpdate = useT("noUpdate");
 	const btnSave = useT("btnSave");
+	const cancel = useT("cancel");
 
 
 	const updatePopupSaved = useT("saved");
@@ -177,7 +182,7 @@ const PageUpdate: FC = () => {
 							onSubmit={handleSubmit}
 						>
 					<div className="nav-save">
-						<button className="page-update-cancel" onClick={cancelEdit}>Peruuta</button>
+					<button className="page-update-cancel" onClick={cancelEdit}>{cancel}</button>
 						<button type="submit" className="btn">{btnSave}</button>
 
 						{popupState && (
@@ -250,10 +255,6 @@ const PageUpdate: FC = () => {
 							onChange={
 								file => { updateImageState("owner_logo", file); }
 							}
-							setImageStatus={
-								status => {
-									setHasImage("owner_logo", status); }
-							}
 						/>
 					</div>
 
@@ -277,10 +278,6 @@ const PageUpdate: FC = () => {
 										text => { 
 											updateCaptionState(imageType, text); }
 									}
-									setImageStatus={
-										status => {
-											setHasImage(imageType, status); }
-									}
 								/>
 							))}
 						</div>
@@ -302,7 +299,6 @@ interface ImageUploadProps {
 	onRemove?: () => void;
 	onChange: (file: any) => void;
 	onCaptionChange?: (text: string) => void;
-	setImageStatus: (status: boolean) => void;
 }
 
 export const ImageUpload: FC<ImageUploadProps> = ({
@@ -312,16 +308,18 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 	textAreaClass,
 	onRemove,
 	onChange,
-	onCaptionChange,
-	setImageStatus
+	onCaptionChange
 }) => {
 
 	const organizationLogoBtn = useT("organizationLogoBtn");
 	const uploadPlaceholder = useT("uploadPlaceholder");
+	const imageSizeWarning = useT("warningImageToLarge");
+	const emptyImageSpot = useT("emptyImageSpot");
+	const imageUploadTooltip = useT("imageUploadTooltip");
+	const swapImage = useT("swapImage");
+	const remove = useT("remove");
 
 	let hasImage = true;
-	const imageUploadTooltip = "Valiste kuva";
-
 	let imageStateStr = "";
 
 	if (!imageName || !nursingHome || !nursingHome.pic_digests) hasImage = false;
@@ -341,7 +339,6 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		imageStateStr = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`
 	}
 
-	if (setImageStatus) setImageStatus(hasImage);
 	if (imageStateStr) hasImage = true;
 
 	const [srcUrl, setImage] = useState(imageStateStr);
@@ -354,23 +351,30 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 		event: React.ChangeEvent<HTMLInputElement>,
 		): void => {
 		let file = new Blob;
-		
+
 		if (event.target.files && event.target.files.length > 0) { 
 			file = event.target.files[0]; 
 
-			const reader = new FileReader();
-			reader.onloadend = e => {
-				onChange(reader.result);
-				setImage(reader.result as string);
+			if(file.size < 4200000){
+				const reader = new FileReader();
+				reader.onloadend = e => {
+					onChange(reader.result);
+					setImage(reader.result as string);
+				}
+				reader.readAsDataURL(file);
+			}else{
+				alert(imageSizeWarning);
 			}
-			reader.readAsDataURL(file);
 		}
 	};
 
 	const handleCaptionChange = (
 		event: React.ChangeEvent<HTMLTextAreaElement>,
 		): void => {
-			setCaptionState(event.target.value);
+			if (onCaptionChange && event.target.value.length < 201){
+				onCaptionChange(event.target.value);
+				setCaptionState(event.target.value);
+			}
 	};
 
 	const handleRemove= (
@@ -385,7 +389,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 			<div className="nursinghome-upload-container">
 				<div className="nursinghome-upload-img nursinghome-upload-placeholder">
 					<div className="nursinghome-upload-img-inner">
-						<div className="nursinghome-upload-img-inner-text">Tyhjä kuvapaikka</div>
+						<div className="nursinghome-upload-img-inner-text">{emptyImageSpot}</div>
 						<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
 					</div>
 					<button type="submit" className={useButton ? "btn" : "upload-button-hidden"}>{organizationLogoBtn}</button>
@@ -405,11 +409,11 @@ export const ImageUpload: FC<ImageUploadProps> = ({
 					>
 						<div className="nursinghome-upload-img-hover">
 							<div className={useButton ? "input-button" : "input-hidden"}>
-								<div className="nursinghome-upload-img-change-text">Vaihda kuva</div>
+								<div className="nursinghome-upload-img-change-text">{swapImage}</div>
 								<input type="file"  title={imageUploadTooltip} onChange={handleImageChange}/>
 							</div>
 							<div className={useButton ? "nursinghome-upload-button-remove" : "nursinghome-upload-hidden-remove"} onClick={handleRemove}>
-								<div className="nursinghome-upload-img-remove-text">Poista</div>
+								<div className="nursinghome-upload-img-remove-text">{remove}</div>
 							</div>
 						</div>
 					</div>

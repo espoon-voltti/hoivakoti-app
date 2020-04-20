@@ -20,6 +20,7 @@ import {
 	GetCities,
 	GetNursingHomeVacancyStatus,
 	UpdateNursingHomeInformation,
+	UpdateNursingHomeImage,
 	UploadNursingHomeReport,
 	AdminRevealSecrets,
 	AddNursingHomeSurveyQuestion,
@@ -115,7 +116,17 @@ router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 });
 
 router.get("/api/nursing-homes/:id/raportti/:key", async ctx => {
-	ctx.body = await GetPdf(ctx);
+  ctx.body = await GetPdf(ctx);
+});
+
+router.post("/api/nursing-homes/:id/update-image/:key", async ctx => {
+	const success = await UpdateNursingHomeImage(ctx);
+	if (!success) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or key" };
+	} else {
+		ctx.body = { success };
+	}
 });
 
 router.post("/api/nursing-homes/:id/report-status", async ctx => {

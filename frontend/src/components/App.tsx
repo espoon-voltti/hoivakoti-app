@@ -94,7 +94,7 @@ const App: React.FC = () => {
 							/>
 							<Route
 								exact
-								path="/hoivakodit/:id/palaute/"
+								path="/hoivakodit/:id/palaute"
 								component={PageSurveyResults}
 							/>
 							<Route
