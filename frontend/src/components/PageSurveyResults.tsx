@@ -63,14 +63,23 @@ const PageSurveyResults: FC = () => {
 		survey.map((question: any, index: number) => (
 			<div card-key={index}>
 				<div className={`page-survey-results-result`}>
-					<p>{question.question}</p>
-					<p>{question.average}</p>
+					<div className="page-survey-results-result-question">{question.question}</div>
+					<div className="page-survey-results-result-score">
+						<div className="page-survey-results-result-value">{question.average}</div>
+						<div className={`page-survey-results-result-image${question.average > 0.5 ? " star-full" : " star-none"}`}></div>
+						<div className={`page-survey-results-result-image${question.average > 1.75 ? " star-full" : (question.average > 1.25 ? " star-half" : " star-none")}`}></div>
+						<div className={`page-survey-results-result-image${question.average > 2.75 ? " star-full" : (question.average > 2.25 ? " star-half" : " star-none")}`}></div>
+						<div className={`page-survey-results-result-image${question.average > 3.75 ? " star-full" : (question.average > 3.25 ? " star-half" : " star-none")}`}></div>
+						<div className={`page-survey-results-result-image${question.average > 4.75 ? " star-full" : (question.average > 4.25 ? " star-half" : " star-none")}`}></div>
+						<div className="progress-background"></div>
+					</div>
 				</div>
 			</div>
 		));
 
 	return (
-		<div className="">
+		<div className="page-survey-results">
+			<a className="nursinghome-back-link" href="./">Palaa perustietoihin</a>
 			<div className="">
 				{!survey || !nursingHome ? (
 					<h1 className="page-update-title">{loadingText}</h1>
@@ -80,12 +89,22 @@ const PageSurveyResults: FC = () => {
 					<p>{nursingHome.name} - {nursingHome.address}, {nursingHome.city}</p>
 
 					<h3 className="page-survey-results-title">Omaisten antamat arvostelut</h3>
+					<p className="page-survey-results-bold page-survey-results-minor-title">{nursingHome.rating.answers} arvostelua</p>
 					<div className="page-survey-results-container">
 						{questions}
 					</div>
-					
+					<p className="page-survey-results-minor-title"><span className="page-survey-results-bold">Arvostelujen keskiarvo:</span> {nursingHome.rating.average}</p>
 					</>
 				)}
+			</div>
+			<div className="page-survey-results-footer">
+				<p className="page-survey-results-bold">Miten tyytyväisyystietoja kerätään?</p>
+				<p>Asiakkaat ja omaiset voivat arvioida hoivakodin palvelua. 
+					Arvioinnit tehdään anonyymisti. 
+					Espoon kaupunki kerää asiakaspalautteen hoivakodeissa sähköisenä kyselynä. 
+					Asiakas ja omainen voivat antaa palautteen itsenäisesti hoivakotiportaalissa. 
+					Palautteen antamiseen tarvitaan Nestorin antama salasana.</p>
+				<p>Espoon kaupungilla on myös muita palautekanavia</p>
 			</div>
 		</div>
 	);

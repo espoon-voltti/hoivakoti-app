@@ -92,7 +92,7 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 
 		nursinghome.rating = {};
 		nursinghome.rating.average = null;
-		nursinghome.rating_answers = 0;
+		nursinghome.rating.answers = 0;
 		ratings.map((rating: any) => {
 			if (rating.nursinghome_id === nursinghome.id) {
 				nursinghome.rating.average = rating.average;
