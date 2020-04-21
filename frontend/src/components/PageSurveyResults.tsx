@@ -91,7 +91,7 @@ const PageSurveyResults: FC = () => {
 					<div className="page-survey-results-container">
 						{questions}
 					</div>
-					<p className="page-survey-results-minor-title"><span className="page-survey-results-bold">Arvostelujen keskiarvo:</span> {nursingHome.rating.average} / 5</p>
+					<p className="page-survey-results-minor-title"><span className="page-survey-results-bold">Arvostelujen keskiarvo:</span> {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>
 					</>
 				)}
 			</div>
