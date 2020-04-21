@@ -422,25 +422,27 @@ export async function SubmitSurveyResponse(
 		.where({
 			nursinghome_id: nursinghomeId
 		});
-	
-	if(currentTotal.length === 0){
-		await knex
-			.table("NursingHomeSurveyTotalScores")
-			.insert({
-				nursinghome_id: nursinghomeId,
-				average: (total_score / num_questions),
-				answers: 1
-			});
-	}else{
-		await knex
-			.table("NursingHomeSurveyTotalScores")
-			.where({
-				nursinghome_id: nursinghomeId
-			})
-			.update({
-				average: (total_score / num_questions),
-				answers: currentTotal[0].answers + 1
-			});
+
+	if(num_questions > 0){
+		if(currentTotal.length === 0){
+			await knex
+				.table("NursingHomeSurveyTotalScores")
+				.insert({
+					nursinghome_id: nursinghomeId,
+					average: (total_score / num_questions),
+					answers: 1
+				});
+		}else{
+			await knex
+				.table("NursingHomeSurveyTotalScores")
+				.where({
+					nursinghome_id: nursinghomeId
+				})
+				.update({
+					average: (total_score / num_questions),
+					answers: currentTotal[0].answers + 1
+				});
+		}
 	}
 	
 
