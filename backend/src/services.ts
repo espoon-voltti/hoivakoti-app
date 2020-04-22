@@ -207,4 +207,8 @@ export function hashWithSalt(data: string, salt: string): string {
 	return hasher.digest("hex");
 }
 
+export function validNumericSurveyScore(data: number): boolean {
+	return (!isNaN(data) && data > 1 && data < 5);
+}
+
 export { NursingHomesFromCSV };
