@@ -363,6 +363,8 @@ export async function SubmitSurveyResponse(
 	let total_score = 0;
 	let num_questions = 0;
 
+	console.log(survey);
+
 	for (const question of survey) {
 		const currentScores = await knex
 			.table("NursingHomeSurveyScores")
