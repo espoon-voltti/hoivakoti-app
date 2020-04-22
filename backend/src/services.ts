@@ -208,7 +208,7 @@ export function hashWithSalt(data: string, salt: string): string {
 }
 
 export function validNumericSurveyScore(data: number): boolean {
-	return (!isNaN(data) && data > 1 && data < 5);
+	return (!isNaN(data) && data >= 1 && data <= 5);
 }
 
 export { NursingHomesFromCSV };
