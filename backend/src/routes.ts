@@ -29,7 +29,8 @@ import {
 	AddNursingHomeSurveyKeys,
 	GetSurvey,
 	AdminLogin,
-	CheckLogin
+	CheckLogin,
+	CheckSurveyKey
 } from "./controllers";
 import config from "./config";
 
@@ -176,12 +177,17 @@ router.post("/api/survey/add-question", async ctx => {
 	ctx.body = res;
 });
 
+router.post("/api/survey/check-key", async ctx => {
+	const res = await CheckSurveyKey(ctx);
+	ctx.body = res;
+});
+
 router.get("/api/survey/:key", async ctx => {
 	const survey = await GetSurvey(ctx.params.key);
 	ctx.body = survey;
 });
 
-router.post("/api/survey/:id/responses/:key", async ctx => {
+router.post("/api/survey/:id/responses", async ctx => {
 	const res = ""; await SubmitSurveyResponse(ctx);
 	ctx.body = res;
 });

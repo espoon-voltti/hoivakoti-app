@@ -29,6 +29,7 @@ import {
 	GetAllBasicUpdateKeys,
 	GetLoginCookieHash,
 	GetHasLogin,
+	GetValidSurveyKey,
 	BasicUpdateKeyEntry,
 	AddNursingHomeSurveyKeys as AddNursingHomeSurveyKeysDB,
 	DeleteNursingHome as DeleteNursingHomeDB,
@@ -384,6 +385,19 @@ export async function CheckLogin(
 	
 }
 
+export async function CheckSurveyKey(
+	ctx: Context,
+): Promise<string | null> {
+	const valid = await GetValidSurveyKey(ctx.request.body.surveyKey);
+	if(valid){
+		return "OK";
+	}else{
+		ctx.response.status = 401;
+		return "";
+	}
+	
+}
+
 export async function AddNursingHomeSurveyQuestion(
 	ctx: Context
 ):Promise<string | null> {
@@ -426,11 +440,11 @@ export async function AddNursingHomeSurveyKeys(
 export async function SubmitSurveyResponse(
 	ctx: Context
 ):Promise<string | null> {
-	const { id, key } = ctx.params;
+	const { id } = ctx.params;
 	const res = await SubmitSurveyResponseDB( 
 		ctx.request.body.survey, 
 		id, 
-		key
+		ctx.request.body.surveyKey
 	);
 	return ""
 }
