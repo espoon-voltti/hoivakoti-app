@@ -26,9 +26,11 @@ import {
 	AddNursingHomeSurveyQuestion,
 	SubmitSurveyResponse,
 	GetSurveyWithNursingHomeResults,
+	AddNursingHomeSurveyKeys,
 	GetSurvey,
 	AdminLogin,
-	CheckLogin
+	CheckLogin,
+	CheckSurveyKey
 } from "./controllers";
 import config from "./config";
 
@@ -165,8 +167,18 @@ router.post("/api/admin/login", async ctx => {
 	ctx.body = secrets;
 });
 
+router.post("/api/admin/add-keys", async ctx => {
+	const keys = await AddNursingHomeSurveyKeys(ctx);
+	ctx.body = keys;
+});
+
 router.post("/api/survey/add-question", async ctx => {
 	const res = await AddNursingHomeSurveyQuestion(ctx);
+	ctx.body = res;
+});
+
+router.post("/api/survey/check-key", async ctx => {
+	const res = await CheckSurveyKey(ctx);
 	ctx.body = res;
 });
 
@@ -175,7 +187,7 @@ router.get("/api/survey/:key", async ctx => {
 	ctx.body = survey;
 });
 
-router.post("/api/survey/:id/responses/:key", async ctx => {
+router.post("/api/survey/:id/responses", async ctx => {
 	const res = ""; await SubmitSurveyResponse(ctx);
 	ctx.body = res;
 });

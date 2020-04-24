@@ -29,7 +29,9 @@ import {
 	GetAllBasicUpdateKeys,
 	GetLoginCookieHash,
 	GetHasLogin,
+	GetValidSurveyKey,
 	BasicUpdateKeyEntry,
+	AddNursingHomeSurveyKeys as AddNursingHomeSurveyKeysDB,
 	DeleteNursingHome as DeleteNursingHomeDB,
 	DeleteNursingHomePics,
 	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
@@ -383,6 +385,19 @@ export async function CheckLogin(
 	
 }
 
+export async function CheckSurveyKey(
+	ctx: Context,
+): Promise<string | null> {
+	const valid = await GetValidSurveyKey(ctx.request.body.surveyKey);
+	if(valid){
+		return "OK";
+	}else{
+		ctx.response.status = 401;
+		return "";
+	}
+	
+}
+
 export async function AddNursingHomeSurveyQuestion(
 	ctx: Context
 ):Promise<string | null> {
@@ -404,14 +419,32 @@ export async function AddNursingHomeSurveyQuestion(
 	return "inserted"
 }
 
+
+export async function AddNursingHomeSurveyKeys(
+	ctx: Context
+):Promise<any[] | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const res = await AddNursingHomeSurveyKeysDB( 
+		ctx.request.body.amount
+	);
+	return res;
+}
+
 export async function SubmitSurveyResponse(
 	ctx: Context
 ):Promise<string | null> {
-	const { id, key } = ctx.params;
+	const { id } = ctx.params;
 	const res = await SubmitSurveyResponseDB( 
 		ctx.request.body.survey, 
 		id, 
-		key
+		ctx.request.body.surveyKey
 	);
 	return ""
 }

@@ -13,13 +13,16 @@ import { stringify } from "querystring";
 let surveyState: any[] = [];
 
 const PageSurvey: FC = () => {
-	const { id, key } = useParams();
+	const [loggedIn, setLoggedIn] = useState<boolean>(false);
+	const [password, setPassword] = useState<string>("");
+	const { id } = useParams();
 	const [survey, setSurvey] = useState<any[] | null>(null);
 	const [surveyDone, setSurveyDone] = useState<boolean>(false);
 
-	if (!id || !key) throw new Error("Invalid URL!");
+	if (!id) throw new Error("Invalid URL!");
 
 	useEffect(() => {
+
 		axios
 			.get(`${config.API_URL}/survey/omaiskysely`)
 			.then((response: { data: any[] }) => {
@@ -38,10 +41,11 @@ const PageSurvey: FC = () => {
 		survey: any
 	): Promise<void> => {
 		await axios.post(
-			`${config.API_URL}/survey/${id}/responses/${key}`,
+			`${config.API_URL}/survey/${id}/responses`,
 			// eslint-disable-next-line @typescript-eslint/camelcase
 			{ 
-				survey: survey
+				survey: survey,
+				surveyKey: key
 			}
 		)
 		.then((responce) => {
@@ -78,12 +82,22 @@ const PageSurvey: FC = () => {
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
-		await sendSurvey(id, key, surveyState);
+		await sendSurvey(id, password, surveyState);
 	};
 
-	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>):void => {
-		e.preventDefault();
-		window.location.href = window.location.pathname + "/peruuta";
+	const handleLogin = async (
+		event: React.MouseEvent<HTMLButtonElement>,
+		): Promise<void> => {
+            const login = await axios.post(
+                `${config.API_URL}/survey/check-key`,
+                { 
+                    surveyKey: password,
+                }
+			).then(function(response: { data: string }) {
+				setLoggedIn(true);
+			}).catch((error: Error) => {
+				console.error(error.message);
+			});
 	};
 
 	const questions: JSX.Element[] | null =
@@ -105,6 +119,22 @@ const PageSurvey: FC = () => {
 		return (
 			<div className="page-survey-done">
 				<h1>Kiitos palautteestasi</h1>
+				<a href="/">Palaa palvelun etusivulle</a>
+			</div>
+		);
+	}
+
+	if(!loggedIn) {
+		return (
+			<div className="login-container">
+					<h2>Olet antamassa palautetta...</h2>
+					<div>
+						<span>Tunnus</span>
+						<input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
+					</div>
+					<div>
+						<button className="btn" onClick={handleLogin}>Aloita</button>
+					</div>
 			</div>
 		);
 	}

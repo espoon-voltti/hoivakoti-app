@@ -563,6 +563,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		<>
 			{id && <div id={id} />}
 			<div className={className}>
+				<a className="nursinghome-details-box-survey-link" href={`${nursingHome.id}/anna-palautetta`}><button className="btn report_info_btn">Anna palautetta hoivakodista</button></a>
 				<div className="nursinghome-details-box-section">
 					<Image
 						nursingHome={nursingHome}
