@@ -26,6 +26,7 @@ import {
 	AddNursingHomeSurveyQuestion,
 	SubmitSurveyResponse,
 	GetSurveyWithNursingHomeResults,
+	AddNursingHomeSurveyKeys,
 	GetSurvey,
 	AdminLogin,
 	CheckLogin
@@ -163,6 +164,11 @@ router.get("/api/admin/login", async ctx => {
 router.post("/api/admin/login", async ctx => {
 	const secrets = await AdminLogin(ctx);
 	ctx.body = secrets;
+});
+
+router.post("/api/admin/add-keys", async ctx => {
+	const keys = await AddNursingHomeSurveyKeys(ctx);
+	ctx.body = keys;
 });
 
 router.post("/api/survey/add-question", async ctx => {

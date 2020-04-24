@@ -41,6 +41,17 @@ const getNursingHomeSecrets = async (password: string): Promise<void> => {
 	);
 };
 
+const addSurveyKeys = async (password: string, amount: number): Promise<void> => {
+	return await axios.post(
+		`${config.API_URL}/admin/add-keys`,
+		// eslint-disable-next-line @typescript-eslint/camelcase
+		{
+			adminPassword: password,
+			amount: amount
+		},
+	);
+};
+
 const deleteNursingHome = async (
 	id: string,
 	password: string,
@@ -70,10 +81,14 @@ const PageAdmin: FC = () => {
 	const [key, setKey] = useState("");
 	const [uploadingInfo, setUploadingInfo] = useState(false);
 	const [uploadingPics, setUploadingPics] = useState(false);
+	const [amountSurveyKeys, setAmountSurveyKeys] = useState(0);
 	const [uploadingInfoResult, setUploadingInfoResult] = useState("");
 	const [uploadingPicsResult, setUploadingPicsResult] = useState("");
 	const [linksToVacancySetting, setLinksToVacancySetting] = useState([]);
+	const [createdKeys, showCreatedKeys] = useState([]);
+	
 	const [nursingHomes, setNursingHomes] = useState<any[] | null>([]);
+
 
 	useEffect(() => {
 		axios
@@ -150,6 +165,17 @@ const PageAdmin: FC = () => {
 			});
 	};
 
+	const CreateSurveyKeys = (event: any) => {
+		if (key && amountSurveyKeys)
+			addSurveyKeys(key, amountSurveyKeys).then((response: any) => {
+				const keyString = response.data.map(
+					(key: any) =>
+						`${key.key}`,
+				);
+				showCreatedKeys(keyString);
+			});
+	}
+
 	const onRecreateButtonClicked = (event: any) => {
 		if (key)
 			dropAndRecreateTables(key).then((response: any) => {
@@ -207,7 +233,28 @@ const PageAdmin: FC = () => {
 				<br />
 				{uploadingPicsResult}
 			</form>
+			
+			Omaiskyselyn avainten luonti (kpl):
 
+			<input
+					id="create-keys-amount"
+					type="number"
+					onChange={(event: any) => setAmountSurveyKeys(event.target.value)}
+				/>
+			
+			<button onClick={CreateSurveyKeys}>
+				Luo avaimet
+			</button>
+			<br />
+
+			{createdKeys.map((row: string) => (
+				<div key={row}>
+					{row}
+					<br />
+				</div>
+			))}
+
+			<br />
 			<button onClick={ShowVacancyModificationLinks}>
 				Näytä linkit vapaiden paikkojen muutoksiin
 			</button>

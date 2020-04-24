@@ -9,7 +9,7 @@ import {
 	postal_code_to_district,
 } from "./nursinghome-typings";
 import config from "./config";
-import { createBasicUpdateKey, hashWithSalt, NursingHomesFromCSV, validNumericSurveyScore } from "./services";
+import { createBasicUpdateKey, hashWithSalt, NursingHomesFromCSV, validNumericSurveyScore, createSurveyKey } from "./services";
 import sharp from "sharp";
 
 const options: Knex.Config = {
@@ -69,6 +69,13 @@ knex.schema.hasTable("NursingHomeSurveyTotalScores").then(async (exists: boolean
 	if (exists) return;
 
 	await CreateNursingHomeSurveyTotalScoresTable();
+
+});
+
+knex.schema.hasTable("NursingHomeSurveyKeys").then(async (exists: boolean) => {
+	if (exists) return;
+
+	await CreateNursingHomeSurveyKeysTable();
 
 });
 
@@ -175,6 +182,13 @@ async function CreateNursingHomeSurveyTotalScoresTable(): Promise<void> {
 		table.string("nursinghome_id");	
 		table.float("average");
 		table.integer("answers");
+	});
+}
+
+async function CreateNursingHomeSurveyKeysTable(): Promise<void> {
+	await knex.schema.createTable("NursingHomeSurveyKeys", (table: any) => {
+		table.string("key");	
+		table.string("status");
 	});
 }
 
@@ -336,6 +350,19 @@ export async function AddNursingHomeSurveyQuestion(
 		question_description: questionDescription,
 		active: active
 	});
+}
+
+export async function AddNursingHomeSurveyKeys(
+	amount: number,
+): Promise<any[]> {
+	let keys: any[] = [];
+	for(let i = 0; i < amount; i++){
+		const key = createSurveyKey(8);
+		keys.push({key: key})
+	}
+	await knex("NursingHomeSurveyKeys").insert(keys);
+
+	return keys;
 }
 
 export async function GetSurvey(surveyId: string): Promise<any[]> {
@@ -787,6 +814,15 @@ export async function GetLoginCookieHash(): Promise<string> {
 export async function GetHasLogin(cookie: string): Promise<boolean> {
 	const sessions = await knex("AdminSessions").select("date").where({hash: cookie});
 	if(sessions.length == 1){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+export async function GetValidSurveyKey(key: string): Promise<boolean> {
+	const keys = await knex("NursingHomeSurveyKeys").select().where({key: key});
+	if(keys.length == 1){
 		return true;
 	}else{
 		return false;

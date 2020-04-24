@@ -30,6 +30,7 @@ import {
 	GetLoginCookieHash,
 	GetHasLogin,
 	BasicUpdateKeyEntry,
+	AddNursingHomeSurveyKeys as AddNursingHomeSurveyKeysDB,
 	DeleteNursingHome as DeleteNursingHomeDB,
 	DeleteNursingHomePics,
 	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
@@ -402,6 +403,24 @@ export async function AddNursingHomeSurveyQuestion(
 		ctx.request.body.questionDescription, 
 		ctx.request.body.active);
 	return "inserted"
+}
+
+
+export async function AddNursingHomeSurveyKeys(
+	ctx: Context
+):Promise<any[] | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const res = await AddNursingHomeSurveyKeysDB( 
+		ctx.request.body.amount
+	);
+	return res;
 }
 
 export async function SubmitSurveyResponse(
