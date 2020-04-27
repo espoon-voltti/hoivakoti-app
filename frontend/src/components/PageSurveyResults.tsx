@@ -58,6 +58,26 @@ const PageSurveyResults: FC = () => {
 	const lastUpdate = useT("lastUpdate");
 	const noUpdate = useT("noUpdate");
 
+	const ratingToString = (rating: number | null): string => {
+		let str = "-";
+
+		if (rating){
+			if (rating > 4.5){
+				str = "Erinomainen";
+			} else if (rating > 3.5){
+				str = "Hyvä";
+			} else if (rating > 2.5){
+				str = "Tyydyttävä";
+			} else if (rating > 1.5){
+				str = "Huono";
+			} else if (rating > 0.5){
+				str = "Erittäin huono";
+			}
+		}
+
+		return str;
+	};
+
 	const questions: JSX.Element[] | null =
 		survey &&
 		survey.map((question: any, index: number) => (
@@ -83,26 +103,26 @@ const PageSurveyResults: FC = () => {
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
-					<h2>Arvostelut</h2>
+					<h2>Arviot hoivakodista</h2>
 					<p>{nursingHome.name} - {nursingHome.address}, {nursingHome.city}</p>
 
-					<h3 className="page-survey-results-title">Omaisten antamat arvostelut</h3>
-					<p className="page-survey-results-bold page-survey-results-minor-title">{nursingHome.rating.answers} arvostelua</p>
+					<h3 className="page-survey-results-title">Omaisten antamat arviot</h3>
+					<p className="page-survey-results-bold page-survey-results-minor-title">{nursingHome.rating.answers} arviota</p>
 					<div className="page-survey-results-container">
 						{questions}
 					</div>
-					<p className="page-survey-results-minor-title"><span className="page-survey-results-bold">Arvostelujen keskiarvo:</span> {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>
+					<p className="page-survey-results-minor-title"><span className="page-survey-results-bold">Arvioiden keskiarvo:</span> {ratingToString(nursingHome.rating.average)}, {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>
 					</>
 				)}
 			</div>
 			<div className="page-survey-results-footer">
 				<p className="page-survey-results-bold">Miten tyytyväisyystietoja kerätään?</p>
-				<p>Asiakkaat ja omaiset voivat arvioida hoivakodin palvelua. 
-					Arvioinnit tehdään anonyymisti. 
-					Espoon kaupunki kerää asiakaspalautteen hoivakodeissa sähköisenä kyselynä. 
-					Asiakas ja omainen voivat antaa palautteen itsenäisesti hoivakotiportaalissa. 
-					Palautteen antamiseen tarvitaan Nestorin antama salasana.</p>
-				<p>Espoon kaupungilla on myös muita palautekanavia</p>
+				<p>Omaisen voi tehdä arvioinnin Espoon kaupungin antamalla koodilla. 
+					Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja.
+					Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo.</p>
+				<p>1=erittäin huono, 2=huono, 3=tyydyttävä, 4=hyvä, 5=erinomainen</p>
+				<p>Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot lisätään tähän portaaliin myöhemmin.</p>
+				<p>Asiakas ja/tai läheinen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) <a href="https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut">Espoon kaupungin palautepalvelun kautta.</a></p>
 			</div>
 		</div>
 	);

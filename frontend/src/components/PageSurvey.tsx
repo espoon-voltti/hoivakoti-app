@@ -131,7 +131,7 @@ const PageSurvey: FC = () => {
 	if(surveyDone) {
 		return (
 			<div className="page-survey-done">
-				<h1>Kiitos palautteestasi</h1>
+				<h1>Kiitos arviostasi</h1>
 				<a href="/">Palaa palvelun etusivulle</a>
 			</div>
 		);
@@ -150,7 +150,7 @@ const PageSurvey: FC = () => {
 								onSubmit={handleSubmit}
 							>
 							<div className="page-survey-container">
-								<h4 className="page-survey-minor-header">Olet antamassa palautetta hoivakodista: <span>{nursingHome.name}</span></h4>
+								<h4 className="page-survey-minor-header">Olet antamassa arviota hoivakodista: <span>{nursingHome.name}</span></h4>
 								{questions}
 	
 								<div className="survey-send-btn-container">
@@ -169,10 +169,10 @@ const PageSurvey: FC = () => {
 	if(nursingHome){
 		return (
 			<div className="login-container">
-					<h4>Olet antamassa palautetta hoivakodista</h4>
+					<h4>Olet antamassa arviota hoivakodista</h4>
 					<h2 className="header-inline">{nursingHome.name}</h2><h3 className="header-inline">{nursingHome.owner}</h3>
-					<h4>Antamalla palautetta voit auttaa uusia asiakkaita löytämään heille sopivan hoivakodin sekä hoivakotia kehittämään palvelujaan.</h4>
-					<h4>Vastaaminen kestää noin 5 minuuttia.</h4>
+					<h4>Antamalla arvion voit auttaa uusia asiakkaita löytämään heille sopivan hoivakodin sekä hoivakotia kehittämään palvelujaan.</h4>
+					<h4>Vastaaminen kestää noin 2 minuuttia.</h4>
 					<h4>Kirjoita saamasi tunnus. Tunnus on tarkoitettu vain sinun käyttöösi.</h4>
 					<div>
 						<span>Tunnus</span>

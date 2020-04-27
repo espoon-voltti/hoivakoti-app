@@ -75,6 +75,26 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 		return `${DD}.${MM}.${YYYY}`;
 	};
 
+	const ratingToString = (rating: number | null): string => {
+		let str = "";
+
+		if (rating){
+			if (rating > 4.5){
+				str = "Erinomainen";
+			} else if (rating > 3.5){
+				str = "Hyvä";
+			} else if (rating > 2.5){
+				str = "Tyydyttävä";
+			} else if (rating > 1.5){
+				str = "Huono";
+			} else if (rating > 0.5){
+				str = "Erittäin huono";
+			}
+		}
+
+		return str;
+	};
+
 	const openBtnLink = (e: React.FormEvent<HTMLButtonElement>, link: string):void => {
 		e.preventDefault();
 		window.location.href = link;
@@ -186,6 +206,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			<div className={type == "admin" ? "hidden": ""}>
 					<div className="card-nursing-home-public-status no-left-border">
 						<h3 className={"card-list-item__header"}>{nursinghome.rating.average ? nursinghome.rating.average.toPrecision(2) + " / 5" : "-"}</h3>
+						<p>{ratingToString(nursinghome.rating.average)}</p>
 						<p className="card-nursing-home-public-status-header">omaisten arvio</p>
 						<p>({nursinghome.rating.answers} arvostelua)</p>
 					</div>	
