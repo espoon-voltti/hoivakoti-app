@@ -9,6 +9,7 @@ import {
 	DropAndRecreateNursingHomeSurveyAnswersTable,
 	DropAndRecreateNursingHomeSurveyScoresTable,
 	DropAndRecreateNursingHomeSurveyTotalScoresTable,
+	DropAndRecreateNursingHomeSurveyQuestionsTable,
 	GetAllPicturesAndDescriptions,
 	GetPicturesAndDescriptions,
 	GetPicData,
@@ -208,6 +209,23 @@ export async function DropAndRecreateSurveyAnswerTables(ctx: any): Promise<void 
 	const result3= await DropAndRecreateNursingHomeSurveyTotalScoresTable();
 	return result1;
 }
+
+export async function DropAndRecreateSurveyTables(ctx: any): Promise<void | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const result1 = await DropAndRecreateNursingHomeSurveyAnswersTable();
+	const result2 = await DropAndRecreateNursingHomeSurveyScoresTable();
+	const result3 = await DropAndRecreateNursingHomeSurveyTotalScoresTable();
+	const result4 = await DropAndRecreateNursingHomeSurveyQuestionsTable();
+	return result1;
+}
+
 
 export async function UploadPics(ctx: any): Promise<string | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;

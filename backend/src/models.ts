@@ -280,6 +280,13 @@ export async function DropAndRecreateNursingHomeSurveyTotalScoresTable(): Promis
 	return result;
 }
 
+export async function DropAndRecreateNursingHomeSurveyQuestionsTable(): Promise<void> {
+	const exists = await knex.schema.hasTable("NursingHomeSurveyQuestions");
+	if (exists) await knex.schema.dropTable("NursingHomeSurveyQuestions");
+	const result = await CreateNursingHomeSurveyQuestionsTable();
+	return result;
+}
+
 export async function InsertNursingHomeToDB(
 	nursingHome: NursingHome,
 ): Promise<string> {

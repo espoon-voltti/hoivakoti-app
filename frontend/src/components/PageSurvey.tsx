@@ -15,11 +15,24 @@ let surveyState: any[] = [];
 const PageSurvey: FC = () => {
 	const [loggedIn, setLoggedIn] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
+	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const { id } = useParams();
 	const [survey, setSurvey] = useState<any[] | null>(null);
 	const [surveyDone, setSurveyDone] = useState<boolean>(false);
 
 	if (!id) throw new Error("Invalid URL!");
+
+	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/nursing-homes/${id}`)
+			.then((response: GetNursingHomeResponse) => {
+				setNursingHome(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+	}, [id]);
 
 	useEffect(() => {
 
@@ -124,10 +137,43 @@ const PageSurvey: FC = () => {
 		);
 	}
 
-	if(!loggedIn) {
+	if(loggedIn && nursingHome) {
+		return (
+			<div className="">
+				<div className="">
+					{!survey ? (
+						<h1 className="page-update-title">{loadingText}</h1>
+					) : (
+						<>
+						<form
+								className="page-update-controls"
+								onSubmit={handleSubmit}
+							>
+							<div className="page-survey-container">
+								<h4 className="page-survey-minor-header">Olet antamassa palautetta hoivakodista: <span>{nursingHome.name}</span></h4>
+								{questions}
+	
+								<div className="survey-send-btn-container">
+									<button type="submit" className="btn">{btnSend}</button>
+								</div>
+							</div>
+						</form>
+						
+						</>
+					)}
+				</div>
+			</div>
+		);
+	}
+
+	if(nursingHome){
 		return (
 			<div className="login-container">
-					<h2>Olet antamassa palautetta...</h2>
+					<h4>Olet antamassa palautetta hoivakodista</h4>
+					<h2 className="header-inline">{nursingHome.name}</h2><h3 className="header-inline">{nursingHome.owner}</h3>
+					<h4>Antamalla palautetta voit auttaa uusia asiakkaita löytämään heille sopivan hoivakodin sekä hoivakotia kehittämään palvelujaan.</h4>
+					<h4>Vastaaminen kestää noin 5 minuuttia.</h4>
+					<h4>Kirjoita saamasi tunnus. Tunnus on tarkoitettu vain sinun käyttöösi.</h4>
 					<div>
 						<span>Tunnus</span>
 						<input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
@@ -139,32 +185,13 @@ const PageSurvey: FC = () => {
 		);
 	}
 
-	return (
-		<div className="">
-			<div className="">
-				{!survey ? (
-					<h1 className="page-update-title">{loadingText}</h1>
-				) : (
-					<>
-					<form
-							className="page-update-controls"
-							onSubmit={handleSubmit}
-						>
-
-						<div className="page-survey-container">
-							{questions}
-
-							<div className="survey-send-btn-container">
-								<button type="submit" className="btn">{btnSend}</button>
-							</div>
-						</div>
-					</form>
-					
-					</>
-				)}
-			</div>
+	return(
+		<div className="login-container">
+			<h2>Ladataan...</h2>
 		</div>
 	);
+
+	
 };
 
 export default PageSurvey;
