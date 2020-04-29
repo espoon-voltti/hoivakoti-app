@@ -14,6 +14,7 @@ let surveyState: any[] = [];
 
 const PageSurvey: FC = () => {
 	const [loggedIn, setLoggedIn] = useState<boolean>(false);
+	const [logInFailed, setLogInFailed] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const { id } = useParams();
@@ -109,6 +110,7 @@ const PageSurvey: FC = () => {
 			).then(function(response: { data: string }) {
 				setLoggedIn(true);
 			}).catch((error: Error) => {
+				setLogInFailed(true);
 				console.error(error.message);
 			});
 	};
@@ -177,6 +179,7 @@ const PageSurvey: FC = () => {
 					<div>
 						<span>Tunnus</span>
 						<input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
+						<p className={logInFailed ? "survey-login-error" : "hidden"}>Virheellinen tunnus</p>
 					</div>
 					<div>
 						<button className="btn" onClick={handleLogin}>Aloita</button>
