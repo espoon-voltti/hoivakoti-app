@@ -215,6 +215,11 @@ export const Question: FC<QuestionProps> = ({
 	const [questionState, setQuestionState] = useState<number | null>(null);
 
 		return (
+			<div className="survey-card-container">
+			<div className="survey-card-inner">
+				<div className="survey-icon">{question.question_icon ? (<img src={`/icons/${question.question_icon}`}></img>) : (<></>) }</div>
+			</div>
+			<div className="survey-card-inner">
 			<div className={"survey-card-question"}>
 				<div className="survey-card--header-container">
 					<h3 className="survey-card--header">{question.question}</h3>
@@ -302,6 +307,8 @@ export const Question: FC<QuestionProps> = ({
 						
 								
 				</div>
+				</div>
+			</div>
 			</div>
 		);
 };

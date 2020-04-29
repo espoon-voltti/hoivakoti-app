@@ -117,12 +117,12 @@ const PageSurveyResults: FC = () => {
 			</div>
 			<div className="page-survey-results-footer">
 				<p className="page-survey-results-bold">Miten tyytyväisyystietoja kerätään?</p>
-				<p>Omaisen voi tehdä arvioinnin Espoon kaupungin antamalla koodilla. 
+				<p>Omainen voi tehdä arvioinnin Espoon kaupungin antamalla koodilla. 
 					Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja.
 					Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo.</p>
 				<p>1=erittäin huono, 2=huono, 3=tyydyttävä, 4=hyvä, 5=erinomainen</p>
 				<p>Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot lisätään tähän portaaliin myöhemmin.</p>
-				<p>Asiakas ja/tai läheinen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) <a href="https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut">Espoon kaupungin palautepalvelun kautta.</a></p>
+				<p>Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) <a href="https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut" target="_blank">Espoon kaupungin palautepalvelun kautta.</a></p>
 			</div>
 		</div>
 	);

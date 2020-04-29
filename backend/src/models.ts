@@ -149,6 +149,7 @@ async function CreateNursingHomeSurveyQuestionsTable(): Promise<void> {
 		table.string("question_type");
 		table.string("question");
 		table.string("question_description");
+		table.string("question_icon");
 
 	});
 }
@@ -157,11 +158,10 @@ async function CreateNursingHomeSurveyAnswersTable(): Promise<void> {
 	await knex.schema.createTable("NursingHomeSurveyAnswers", (table: any) => {
 		
 		table.increments("id");
-		table.string("survey_id");
 		table.integer("question_id");
 		table.string("nursinghome_id");
 		table.string("answer");
-		table.string("date");
+		table.string("key");
 
 	});
 }
@@ -347,6 +347,7 @@ export async function AddNursingHomeSurveyQuestion(
 	questionType: string,
 	question: string,
 	questionDescription: string,
+	questionIcon: string,
 	active: boolean
 ): Promise<void> {
 	await knex("NursingHomeSurveyQuestions").insert({
@@ -355,6 +356,30 @@ export async function AddNursingHomeSurveyQuestion(
 		question_type: questionType,
 		question: question,
 		question_description: questionDescription,
+		question_icon: questionIcon,
+		active: active
+	});
+}
+
+export async function UpdateNursingHomeSurveyQuestion(
+	id: number,
+	surveyId: string,
+	order: number,
+	questionType: string,
+	question: string,
+	questionDescription: string,
+	questionIcon: string,
+	active: boolean
+): Promise<void> {
+	await knex("NursingHomeSurveyQuestions")
+	.where({id: id})
+	.update({
+		survey_id: surveyId,
+		order: order,
+		question_type: questionType,
+		question: question,
+		question_description: questionDescription,
+		question_icon: questionIcon,
 		active: active
 	});
 }
@@ -375,7 +400,8 @@ export async function AddNursingHomeSurveyKeys(
 export async function GetSurvey(surveyId: string): Promise<any[]> {
 	const result = await knex.table("NursingHomeSurveyQuestions")
 		.select()
-		.where({ survey_id: surveyId });
+		.where({ survey_id: surveyId })
+		.orderBy("order");
 	return result;
 }
 
@@ -394,8 +420,9 @@ export async function SubmitSurveyResponse(
 	key: string
 ): Promise<void> {
 
-	let total_score = 0;
-	let num_questions = 0;
+	let totalScore = 0;
+	let numQuestions = 0;
+	let updateTotal = 1; //use number instead of boolean for multiplication
 
 	console.log(JSON.stringify(survey));
 
@@ -414,41 +441,94 @@ export async function SubmitSurveyResponse(
 
 			if(currentScores.length === 0 && validNumericSurveyScore(question.value)){
 				await knex
-				.table("NursingHomeSurveyScores")
-				.insert({
-					question_id: question.id, 
-					nursinghome_id: nursinghomeId,
-					answers: 1,
-					average: question.value
-				});
+					.table("NursingHomeSurveyScores")
+					.insert({
+						question_id: question.id, 
+						nursinghome_id: nursinghomeId,
+						answers: 1,
+						average: question.value
+					});
 
-				total_score += question.value;
-				num_questions += 1;
+				totalScore += question.value;
+				numQuestions += 1;
 				
 			}else{
 
 				if (validNumericSurveyScore(question.value)){
 
-					const newSum = currentScores[0].answers + 1;
-					const newAvg = (currentScores[0].average * currentScores[0].answers + question.value) / newSum;
+					const existingAnswer = await knex
+						.table("NursingHomeSurveyAnswers")
+						.select()
+						.where({
+							question_id: question.id, 
+							nursinghome_id: nursinghomeId,
+							key: key
+						});
 
-					await knex
-					.table("NursingHomeSurveyScores")
-					.where({
-						question_id: question.id, 
-						nursinghome_id: nursinghomeId
-					})
-					.update({
-						answers: newSum,
-						average: newAvg
-					});
+					if(existingAnswer.length === 0){
 
-					total_score += newAvg;
-					num_questions += 1;
+						const newSum = currentScores[0].answers + 1;
+						const newAvg = (currentScores[0].average * currentScores[0].answers + question.value) / newSum;
+
+						await knex
+							.table("NursingHomeSurveyScores")
+							.where({
+								question_id: question.id, 
+								nursinghome_id: nursinghomeId
+							})
+							.update({
+								answers: newSum,
+								average: newAvg
+							});
+
+						await knex
+							.table("NursingHomeSurveyAnswers")
+							.insert({
+								question_id: question.id, 
+								nursinghome_id: nursinghomeId,
+								answer: question.value,
+								key: key
+							});
+
+
+						totalScore += newAvg;
+						numQuestions += 1;
+
+					}else{
+
+						let newAvg = (currentScores[0].average * currentScores[0].answers - existingAnswer[0].answer) / (currentScores[0].answers - 1); //remove old answer from average
+						newAvg = (newAvg * (currentScores[0].answers - 1) + question.value) / currentScores[0].answers;
+
+						await knex
+							.table("NursingHomeSurveyScores")
+							.where({
+								question_id: question.id, 
+								nursinghome_id: nursinghomeId
+							})
+							.update({
+								average: newAvg
+							});
+
+						await knex
+							.table("NursingHomeSurveyAnswers")
+							.where(
+								{
+									question_id: question.id, 
+									nursinghome_id: nursinghomeId,
+									key: key
+								}
+							)
+							.update({
+								answer: question.value
+							});
+						
+						updateTotal = 0;
+
+					}
 
 				}else if (currentScores.length > 0){
-					total_score += currentScores[0].average;
-					num_questions += 1;
+					totalScore += currentScores[0].average;
+					numQuestions += 1;
 				}
 			}
 
@@ -461,13 +541,13 @@ export async function SubmitSurveyResponse(
 				nursinghome_id: nursinghomeId
 			});
 
-		if(num_questions > 0){
+		if(numQuestions > 0){
 			if(currentTotal.length === 0){
 				await knex
 					.table("NursingHomeSurveyTotalScores")
 					.insert({
 						nursinghome_id: nursinghomeId,
-						average: (total_score / num_questions),
+						average: (totalScore / numQuestions),
 						answers: 1
 					});
 			}else{
@@ -477,8 +557,8 @@ export async function SubmitSurveyResponse(
 						nursinghome_id: nursinghomeId
 					})
 					.update({
-						average: (total_score / num_questions),
-						answers: currentTotal[0].answers + 1
+						average: (totalScore / numQuestions),
+						answers: currentTotal[0].answers + (1 * updateTotal)
 					});
 			}
 		}

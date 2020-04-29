@@ -631,7 +631,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p className="report_info_minor_header">Omaisten yleisarvio</p>
+						<p className="report_info_minor_header">Omaisten arvio</p>
 						<p className="report_info_minor_header">{nursingHome.rating && nursingHome.rating.average ? `${ratingToString(nursingHome.rating.average)}, ${nursingHome.rating.average.toPrecision(2)} / 5` : "-"}</p>
 						<a className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"} href={`${nursingHome.id}/palaute`}><button className="btn report_info_btn">Lue lisää</button></a>
 					</div>
