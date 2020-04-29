@@ -14,6 +14,7 @@ let surveyState: any[] = [];
 
 const PageSurvey: FC = () => {
 	const [loggedIn, setLoggedIn] = useState<boolean>(false);
+	const [logInFailed, setLogInFailed] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const { id } = useParams();
@@ -109,6 +110,7 @@ const PageSurvey: FC = () => {
 			).then(function(response: { data: string }) {
 				setLoggedIn(true);
 			}).catch((error: Error) => {
+				setLogInFailed(true);
 				console.error(error.message);
 			});
 	};
@@ -146,17 +148,15 @@ const PageSurvey: FC = () => {
 					) : (
 						<>
 						<form
-								className="page-update-controls"
+								className="page-survey-container"
 								onSubmit={handleSubmit}
 							>
-							<div className="page-survey-container">
 								<h4 className="page-survey-minor-header">Olet antamassa arviota hoivakodista: <span>{nursingHome.name}</span></h4>
 								{questions}
 	
 								<div className="survey-send-btn-container">
 									<button type="submit" className="btn">{btnSend}</button>
 								</div>
-							</div>
 						</form>
 						
 						</>
@@ -177,6 +177,7 @@ const PageSurvey: FC = () => {
 					<div>
 						<span>Tunnus</span>
 						<input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
+						<p className={logInFailed ? "survey-login-error" : "hidden"}>Virheellinen tunnus</p>
 					</div>
 					<div>
 						<button className="btn" onClick={handleLogin}>Aloita</button>
@@ -215,6 +216,11 @@ export const Question: FC<QuestionProps> = ({
 	const [questionState, setQuestionState] = useState<number | null>(null);
 
 		return (
+			<div className="survey-card-container">
+			<div className="survey-card-inner">
+				<div className="survey-icon">{question.question_icon ? (<img src={`/icons/${question.question_icon}`}></img>) : (<></>) }</div>
+			</div>
+			<div className="survey-card-inner">
 			<div className={"survey-card-question"}>
 				<div className="survey-card--header-container">
 					<h3 className="survey-card--header">{question.question}</h3>
@@ -302,6 +308,8 @@ export const Question: FC<QuestionProps> = ({
 						
 								
 				</div>
+				</div>
+			</div>
 			</div>
 		);
 };
