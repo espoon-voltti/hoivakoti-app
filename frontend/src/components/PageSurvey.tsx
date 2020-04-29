@@ -148,17 +148,15 @@ const PageSurvey: FC = () => {
 					) : (
 						<>
 						<form
-								className="page-update-controls"
+								className="page-survey-container"
 								onSubmit={handleSubmit}
 							>
-							<div className="page-survey-container">
 								<h4 className="page-survey-minor-header">Olet antamassa arviota hoivakodista: <span>{nursingHome.name}</span></h4>
 								{questions}
 	
 								<div className="survey-send-btn-container">
 									<button type="submit" className="btn">{btnSend}</button>
 								</div>
-							</div>
 						</form>
 						
 						</>
