@@ -540,6 +540,26 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		return `${DD}.${MM}.${YYYY}`;
 	};
 
+	const ratingToString = (rating: number | null): string => {
+		let str = "";
+
+		if (rating){
+			if (rating > 4.5){
+				str = "Erinomainen";
+			} else if (rating > 3.5){
+				str = "Hyvä";
+			} else if (rating > 2.5){
+				str = "Tyydyttävä";
+			} else if (rating > 1.5){
+				str = "Huono";
+			} else if (rating > 0.5){
+				str = "Erittäin huono";
+			}
+		}
+
+		return str;
+	};
+
 	if(nursingHome.report_status){
 		hasReport = true;
 		reportDate = nursingHome.report_status.date;
@@ -566,6 +586,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		<>
 			{id && <div id={id} />}
 			<div className={className}>
+				<a className="nursinghome-details-box-survey-link" href={`${nursingHome.id}/anna-palautetta`}><button className="btn report_info_btn">Anna arvio hoivakodista</button></a>
 				<div className="nursinghome-details-box-section">
 					<Image
 						nursingHome={nursingHome}
@@ -615,6 +636,13 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					<div className="report_info_container">
 						<p className="report_info_item">{nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"}</p>
 						<p className="report_info_minor_header">Omaisten antama yleisarvosana</p>
+						<p className="report_info_minor_header">Omaisten arvio</p>
+						<p className="report_info_minor_header">{nursingHome.rating && nursingHome.rating.average ? `${ratingToString(nursingHome.rating.average)}, ${nursingHome.rating.average.toPrecision(2)} / 5` : "-"}</p>
+						<a className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"} href={`${nursingHome.id}/palaute`}><button className="btn report_info_btn">Lue lisää</button></a>
+					</div>
+				</div>
+				<div className="nursinghome-details-box-section">
+					<div className="report_info_container">
 						<p className="report_info_header">{reportScore}</p>
 						<p className="report_info_item">{reportStatus}</p>
 						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{latestVisit}</p>

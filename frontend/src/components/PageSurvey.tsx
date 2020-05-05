@@ -13,13 +13,30 @@ import { stringify } from "querystring";
 let surveyState: any[] = [];
 
 const PageSurvey: FC = () => {
-	const { id, key } = useParams();
+	const [loggedIn, setLoggedIn] = useState<boolean>(false);
+	const [logInFailed, setLogInFailed] = useState<boolean>(false);
+	const [password, setPassword] = useState<string>("");
+	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
+	const { id } = useParams();
 	const [survey, setSurvey] = useState<any[] | null>(null);
 	const [surveyDone, setSurveyDone] = useState<boolean>(false);
 
-	if (!id || !key) throw new Error("Invalid URL!");
+	if (!id) throw new Error("Invalid URL!");
 
 	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/nursing-homes/${id}`)
+			.then((response: GetNursingHomeResponse) => {
+				setNursingHome(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+	}, [id]);
+
+	useEffect(() => {
+
 		axios
 			.get(`${config.API_URL}/survey/omaiskysely`)
 			.then((response: { data: any[] }) => {
@@ -38,10 +55,11 @@ const PageSurvey: FC = () => {
 		survey: any
 	): Promise<void> => {
 		await axios.post(
-			`${config.API_URL}/survey/${id}/responses/${key}`,
+			`${config.API_URL}/survey/${id}/responses`,
 			// eslint-disable-next-line @typescript-eslint/camelcase
 			{ 
-				survey: survey
+				survey: survey,
+				surveyKey: key
 			}
 		)
 		.then((responce) => {
@@ -78,12 +96,23 @@ const PageSurvey: FC = () => {
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
-		await sendSurvey(id, key, surveyState);
+		await sendSurvey(id, password, surveyState);
 	};
 
-	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>):void => {
-		e.preventDefault();
-		window.location.href = window.location.pathname + "/peruuta";
+	const handleLogin = async (
+		event: React.MouseEvent<HTMLButtonElement>,
+		): Promise<void> => {
+            const login = await axios.post(
+                `${config.API_URL}/survey/check-key`,
+                { 
+                    surveyKey: password,
+                }
+			).then(function(response: { data: string }) {
+				setLoggedIn(true);
+			}).catch((error: Error) => {
+				setLogInFailed(true);
+				console.error(error.message);
+			});
 	};
 
 	const questions: JSX.Element[] | null =
@@ -104,37 +133,66 @@ const PageSurvey: FC = () => {
 	if(surveyDone) {
 		return (
 			<div className="page-survey-done">
-				<h1>Kiitos palautteestasi</h1>
+				<h1>Kiitos arviostasi</h1>
+				<a href="/">Palaa palvelun etusivulle</a>
 			</div>
 		);
 	}
 
-	return (
-		<div className="">
+	if(loggedIn && nursingHome) {
+		return (
 			<div className="">
-				{!survey ? (
-					<h1 className="page-update-title">{loadingText}</h1>
-				) : (
-					<>
-					<form
-							className="page-update-controls"
-							onSubmit={handleSubmit}
-						>
-
-						<div className="page-survey-container">
-							{questions}
-
-							<div className="survey-send-btn-container">
-								<button type="submit" className="btn">{btnSend}</button>
-							</div>
-						</div>
-					</form>
-					
-					</>
-				)}
+				<div className="">
+					{!survey ? (
+						<h1 className="page-update-title">{loadingText}</h1>
+					) : (
+						<>
+						<form
+								className="page-survey-container"
+								onSubmit={handleSubmit}
+							>
+								<h4 className="page-survey-minor-header">Olet antamassa arviota hoivakodista: <span>{nursingHome.name}</span></h4>
+								{questions}
+	
+								<div className="survey-send-btn-container">
+									<button type="submit" className="btn">{btnSend}</button>
+								</div>
+						</form>
+						
+						</>
+					)}
+				</div>
 			</div>
+		);
+	}
+
+	if(nursingHome){
+		return (
+			<div className="login-container">
+					<h4>Olet antamassa arviota hoivakodista</h4>
+					<h2 className="header-inline">{nursingHome.name}</h2><h3 className="header-inline">{nursingHome.owner}</h3>
+					<h4>Antamalla arvion voit auttaa uusia asiakkaita löytämään heille sopivan hoivakodin sekä hoivakotia kehittämään palvelujaan.</h4>
+					<h4>Vastaaminen kestää noin 2 minuuttia.</h4>
+					<h4>Kirjoita saamasi tunnus. Tunnus on tarkoitettu vain sinun käyttöösi.</h4>
+					<div>
+						<span>Tunnus</span>
+						<input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
+						<p className={logInFailed ? "survey-login-error" : "hidden"}>Virheellinen tunnus</p>
+					</div>
+					<div>
+						<button className="btn" onClick={handleLogin}>Aloita</button>
+					</div>
+			</div>
+		);
+	}
+
+	return(
+		<div className="login-container">
+			<h2>Ladataan...</h2>
 		</div>
 	);
+
+	
 };
 
 export default PageSurvey;
@@ -158,11 +216,20 @@ export const Question: FC<QuestionProps> = ({
 	const [questionState, setQuestionState] = useState<number | null>(null);
 
 		return (
+			<div className="survey-card-container">
+			<div className="survey-card-inner">
+				<div className="survey-icon">{question.question_icon ? (<img src={`/icons/${question.question_icon}`}></img>) : (<></>) }</div>
+			</div>
+			<div className="survey-card-inner">
 			<div className={"survey-card-question"}>
 				<div className="survey-card--header-container">
 					<h3 className="survey-card--header">{question.question}</h3>
 					<h4 className="survey-card--desc">{question.question_description}</h4>
 				</div>
+				<div className="survey-card-line line-1"></div>
+				<div className="survey-card-line line-2"></div>
+				<div className="survey-card-line line-3"></div>
+				<div className="survey-card-line line-4"></div>
 				<div className="survey-card--inputs">
 				<Radio
 					id={`option-1-${question.id}`}
@@ -174,6 +241,7 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(1);
 						}
 					}}
+					tag={"1"}
 				>
 					{optionText1}
 				</Radio>
@@ -188,6 +256,7 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(2);
 						}
 					}}
+					tag={"2"}
 				>
 					{optionText2}
 				</Radio>
@@ -202,6 +271,7 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(3);
 						}
 					}}
+					tag={"3"}
 				>
 					{optionText3}
 				</Radio>
@@ -216,6 +286,7 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(4);
 						}
 					}}
+					tag={"4"}
 				>
 					{optionText4}
 				</Radio>
@@ -230,12 +301,15 @@ export const Question: FC<QuestionProps> = ({
 							setQuestionState(5);
 						}
 					}}
+					tag={"5"}
 				>
 					{optionText5}
 				</Radio>
 						
 								
 				</div>
+				</div>
+			</div>
 			</div>
 		);
 };

@@ -201,10 +201,26 @@ export function createBasicUpdateKey(length: number): string {
 	return result;
 }
 
+export function createSurveyKey(length: number): string {
+	let result = "";
+	const characters = "abcdefghjkmnprstuvxyz23456789";
+	const charactersLength = characters.length;
+	for (let i = 0; i < length; i++) {
+		result += characters.charAt(
+			Math.floor(Math.random() * charactersLength),
+		);
+	}
+	return result;
+}
+
 export function hashWithSalt(data: string, salt: string): string {
 	const hasher = crypto.createHash("sha256");
 	hasher.update(data + salt);
 	return hasher.digest("hex");
+}
+
+export function validNumericSurveyScore(data: number): boolean {
+	return (!isNaN(data) && data >= 1 && data <= 5);
 }
 
 export { NursingHomesFromCSV };

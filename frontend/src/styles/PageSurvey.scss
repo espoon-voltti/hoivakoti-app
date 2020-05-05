@@ -2,7 +2,7 @@
 
 
 .page-survey-container {
-	width: 100vw;
+	width: 100%;
 }
 
 .page-survey-section {
@@ -11,9 +11,33 @@
 	padding: 40px 0 100px 0;
 }
 
+.survey-card-container {
+	width: 1100px;
+	margin: auto;
+}
+
+.survey-card-inner {
+	display: inline-block;
+
+	div {
+		vertical-align: bottom;
+	}
+
+	.survey-icon {
+		margin-right: 80px;
+		padding-top: 20px;
+
+		img {
+			width: 150px;
+			height:150px;
+			opacity: 0.25;
+			
+		}
+	}
+}
+
 .survey-card-question {
 	width: 800px;
-	margin: auto;
 }
 
 .survey-card--header-container {
@@ -31,6 +55,32 @@
 .survey-card--desc {
 	font-size: 16px;
 	margin-bottom: 0;
+}
+
+.survey-card-line {
+	border-bottom: solid 1px $border-color;
+	width: 105px;
+	position: relative;
+}
+
+.line-1 {
+	left: 105px;
+	top: 43px;
+}
+
+.line-2 {
+	left: 265px;
+	top: 42px;
+}
+
+.line-3 {
+	left: 425px;
+	top: 41px;
+}
+
+.line-4 {
+	left: 585px;
+	top: 40px;
 }
 
 .survey-card--inputs {
@@ -72,4 +122,23 @@
 .page-survey-done {
 	margin-top: 25vh;
 	margin-left: 15vw;
+}
+
+.header-inline {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.page-survey-minor-header {
+	margin: 30px 0 20px 150px;
+	font-size: 16px;
+
+	span{
+		font-weight: 600;
+	}
+}
+
+.survey-login-error {
+	margin-top: 5px;
+	color: #e00;
 }

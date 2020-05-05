@@ -58,34 +58,71 @@ const PageSurveyResults: FC = () => {
 	const lastUpdate = useT("lastUpdate");
 	const noUpdate = useT("noUpdate");
 
+	const ratingToString = (rating: number | null): string => {
+		let str = "-";
+
+		if (rating){
+			if (rating > 4.5){
+				str = "Erinomainen";
+			} else if (rating > 3.5){
+				str = "Hyvä";
+			} else if (rating > 2.5){
+				str = "Tyydyttävä";
+			} else if (rating > 1.5){
+				str = "Huono";
+			} else if (rating > 0.5){
+				str = "Erittäin huono";
+			}
+		}
+
+		return str;
+	};
+
 	const questions: JSX.Element[] | null =
 		survey &&
 		survey.map((question: any, index: number) => (
 			<div card-key={index}>
 				<div className={`page-survey-results-result`}>
-					<p>{question.question}</p>
-					<p>{question.average}</p>
+					<div className="page-survey-results-result-question">{question.question}</div>
+					<div className="page-survey-results-result-score">
+						<div className={`page-survey-results-result-image${question.average > 0.5 ? " star-full" : " star-none"}`}></div>
+						<div className={`page-survey-results-result-image${question.average > 1.75 ? " star-full" : (question.average > 1.25 ? " star-half" : " star-none")}`}></div>
+						<div className={`page-survey-results-result-image${question.average > 2.75 ? " star-full" : (question.average > 2.25 ? " star-half" : " star-none")}`}></div>
+						<div className={`page-survey-results-result-image${question.average > 3.75 ? " star-full" : (question.average > 3.25 ? " star-half" : " star-none")}`}></div>
+						<div className={`page-survey-results-result-image${question.average > 4.75 ? " star-full" : (question.average > 4.25 ? " star-half" : " star-none")}`}></div>
+					</div>
 				</div>
 			</div>
 		));
 
 	return (
-		<div className="">
+		<div className="page-survey-results">
+			<a className="nursinghome-back-link" href="./">Palaa perustietoihin</a>
 			<div className="">
 				{!survey || !nursingHome ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
-					<h2>Arvostelut</h2>
+					<h2>Arviot hoivakodista</h2>
 					<p>{nursingHome.name} - {nursingHome.address}, {nursingHome.city}</p>
 
-					<h3 className="page-survey-results-title">Omaisten antamat arvostelut</h3>
+					<h3 className="page-survey-results-title">Omaisten antamat arviot</h3>
+					<p className="page-survey-results-bold page-survey-results-minor-title">{nursingHome.rating.answers} arviota</p>
 					<div className="page-survey-results-container">
 						{questions}
 					</div>
-					
+					<p className="page-survey-results-minor-title"><span className="page-survey-results-bold">Arvioiden keskiarvo:</span> {ratingToString(nursingHome.rating.average)}, {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>
 					</>
 				)}
+			</div>
+			<div className="page-survey-results-footer">
+				<p className="page-survey-results-bold">Miten tyytyväisyystietoja kerätään?</p>
+				<p>Omainen voi tehdä arvioinnin Espoon kaupungin antamalla koodilla. 
+					Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja.
+					Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo.</p>
+				<p>1=erittäin huono, 2=huono, 3=tyydyttävä, 4=hyvä, 5=erinomainen</p>
+				<p>Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot lisätään tähän portaaliin myöhemmin.</p>
+				<p>Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) <a href="https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut" target="_blank">Espoon kaupungin palautepalvelun kautta.</a></p>
 			</div>
 		</div>
 	);

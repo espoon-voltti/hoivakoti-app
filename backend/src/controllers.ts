@@ -9,6 +9,7 @@ import {
 	DropAndRecreateNursingHomeSurveyAnswersTable,
 	DropAndRecreateNursingHomeSurveyScoresTable,
 	DropAndRecreateNursingHomeSurveyTotalScoresTable,
+	DropAndRecreateNursingHomeSurveyQuestionsTable,
 	GetAllPicturesAndDescriptions,
 	GetPicturesAndDescriptions,
 	GetPicData,
@@ -29,10 +30,13 @@ import {
 	GetAllBasicUpdateKeys,
 	GetLoginCookieHash,
 	GetHasLogin,
+	GetValidSurveyKey,
 	BasicUpdateKeyEntry,
+	AddNursingHomeSurveyKeys as AddNursingHomeSurveyKeysDB,
 	DeleteNursingHome as DeleteNursingHomeDB,
 	DeleteNursingHomePics,
 	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
+	UpdateNursingHomeSurveyQuestion as UpdateNursingHomeSurveyQuestionDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
 	GetSurvey as GetSurveyDB
 } from "./models";
@@ -92,7 +96,7 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 
 		nursinghome.rating = {};
 		nursinghome.rating.average = null;
-		nursinghome.rating_answers = 0;
+		nursinghome.rating.answers = 0;
 		ratings.map((rating: any) => {
 			if (rating.nursinghome_id === nursinghome.id) {
 				nursinghome.rating.average = rating.average;
@@ -206,6 +210,23 @@ export async function DropAndRecreateSurveyAnswerTables(ctx: any): Promise<void 
 	const result3= await DropAndRecreateNursingHomeSurveyTotalScoresTable();
 	return result1;
 }
+
+export async function DropAndRecreateSurveyTables(ctx: any): Promise<void | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const result1 = await DropAndRecreateNursingHomeSurveyAnswersTable();
+	const result2 = await DropAndRecreateNursingHomeSurveyScoresTable();
+	const result3 = await DropAndRecreateNursingHomeSurveyTotalScoresTable();
+	const result4 = await DropAndRecreateNursingHomeSurveyQuestionsTable();
+	return result1;
+}
+
 
 export async function UploadPics(ctx: any): Promise<string | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
@@ -383,6 +404,19 @@ export async function CheckLogin(
 	
 }
 
+export async function CheckSurveyKey(
+	ctx: Context,
+): Promise<string | null> {
+	const valid = await GetValidSurveyKey(ctx.request.body.surveyKey);
+	if(valid){
+		return "OK";
+	}else{
+		ctx.response.status = 401;
+		return "";
+	}
+	
+}
+
 export async function AddNursingHomeSurveyQuestion(
 	ctx: Context
 ):Promise<string | null> {
@@ -400,18 +434,61 @@ export async function AddNursingHomeSurveyQuestion(
 		ctx.request.body.questionType, 
 		ctx.request.body.question, 
 		ctx.request.body.questionDescription, 
+		ctx.request.body.questionIcon,
 		ctx.request.body.active);
 	return "inserted"
+}
+
+export async function UpdateNursingHomeSurveyQuestion(
+	ctx: Context
+):Promise<string | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const res = await UpdateNursingHomeSurveyQuestionDB( 
+		ctx.request.body.id,
+		ctx.request.body.surveyId, 
+		ctx.request.body.order, 
+		ctx.request.body.questionType, 
+		ctx.request.body.question, 
+		ctx.request.body.questionDescription, 
+		ctx.request.body.questionIcon,
+		ctx.request.body.active);
+	return "updated"
+}
+
+
+
+export async function AddNursingHomeSurveyKeys(
+	ctx: Context
+):Promise<any[] | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	const res = await AddNursingHomeSurveyKeysDB( 
+		ctx.request.body.amount
+	);
+	return res;
 }
 
 export async function SubmitSurveyResponse(
 	ctx: Context
 ):Promise<string | null> {
-	const { id, key } = ctx.params;
+	const { id } = ctx.params;
 	const res = await SubmitSurveyResponseDB( 
 		ctx.request.body.survey, 
 		id, 
-		key
+		ctx.request.body.surveyKey
 	);
 	return ""
 }
