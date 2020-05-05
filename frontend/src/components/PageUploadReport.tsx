@@ -161,10 +161,10 @@ const PageUploadReport: FC = () => {
 		}
 	};
 
-	const reportStatusOk = useT("status_ok");
-	const reportStatusSmall = useT("status_small");
-	const reportStatusSignificant = useT("status_significant");
-	const reportStatusSurveillance = useT("status_surveillance");
+	const reportStatusOk = useT("status_ok_long");
+	const reportStatusSmall = useT("status_small_issues_long");
+	const reportStatusSignificant = useT("status_significant_issues_long");
+	const reportStatusSurveillance = useT("status_surveillance_long");
 	const reportStatusNoInfo = useT("status_no_info");
 
 	let reportStatus = useT("status_waiting");
