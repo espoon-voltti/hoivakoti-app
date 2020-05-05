@@ -36,11 +36,12 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const language = useT(nursinghome.language as any);
 
 	const reportStatusOk = useT("status_ok");
-	const reportStatusSmall = useT("status_small");
-	const reportStatusSignificant = useT("status_significant");
+	const reportStatusSmall = useT("status_small_issues");
+	const reportStatusSignificant = useT("status_significant_issues");
 	const reportStatusSurveillance = useT("status_surveillance");
 	const reportStatusNoInfo = useT("status_no_info");
 	let reportStatus = useT("status_waiting");
+	const reportScore = useT("reportScore");
 
 	const getStatusTranslation = (statusStr: string): string => {
 		if(nursinghome && nursinghome.report_status){
@@ -191,8 +192,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					</div>	
 					<div className="card-nursing-home-public-status">
 						<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
-						<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`"${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}"`}</p>
-						<p>Valvontakäynnin tulos</p>
+						<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}`}</p>
+							<p className={!nursinghome.report_status.status || ["wating", "no-info"].includes(nursinghome.report_status.status) ? "hidden" : ""}>{reportScore}</p>
 					</div>	
 				</div>
 		</Link>

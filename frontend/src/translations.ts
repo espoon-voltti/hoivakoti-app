@@ -693,28 +693,60 @@ export const translations = {
 		"sv-FI": "Svenska",
 	},
 	status_ok: {
-		"fi-FI": "Kaikki kunnossa",
-		"sv-FI": "",
+		"fi-FI": "Erinomainen",
+		"sv-FI": "Utmärkt",
 	},
-	status_small: {
-		"fi-FI": "Pientä parannettavaa",
-		"sv-FI": "",
+	status_small_issues: {
+		"fi-FI": "Hyvä",
+		"sv-FI": "God",
 	},
-	status_significant: {
-		"fi-FI": "Merkittävästi parannettavaa",
-		"sv-FI": "",
+	status_significant_issues: {
+		"fi-FI": "Tyydyttävä",
+		"sv-FI": "Nöjaktig",
 	},
 	status_surveillance: {
 		"fi-FI": "Tehostetussa valvonnassa",
-		"sv-FI": "",
+		"sv-FI": "Under effektiviserad tillsyn",
 	},
 	status_waiting: {
-		"fi-FI": "Odottaa käyntiä",
-		"sv-FI": "",
+		"fi-FI": "Odottaa valvontakäyntiä",
+		"sv-FI": "Väntar på tillsynsbesök",
 	},
 	status_no_info: {
 		"fi-FI": "Sijaintikunta valvoo. Tietoja ei saatavilla.",
-		"sv-FI": "",
+		"sv-FI": "Kommunen där vårdhemmet är beläget sköter tillsynen. Uppgifter saknas.",
+	},
+	status_ok_long: {
+		"fi-FI": "Erinomainen: toiminta on lain vaatimusten ja sopimuksen mukaista",
+		"sv-FI": "Utmärkt: verksamheten är förenlig med lagens krav och avtalet",
+	},
+	status_small_issues_long: {
+		"fi-FI": "Hyvä: toiminnassa on pientä parannettavaa, joka ei kuitenkaan heikennä asiakkaiden hoivan tai turvallisuuden toteutumista",
+		"sv-FI": "God: det finns små brister i verksamheten som bör avhjälpas, men de försvagar dock inte klienternas omsorg eller säkerhet",
+	},
+	status_significant_issues_long: {
+		"fi-FI": "Tyydyttävä: Toiminnassa puutteita, jotka palveluntuottajan tulee korjata annetussa määräajassa laadukkaan hoivan toteuttamiseksi.",
+		"sv-FI": "Nöjaktig: det finns brister i verksamheten som tjänsteproducenten ska avhjälpa inom utsatt tid för att vården ska vara av hög kvalitet.",
+	},
+	status_surveillance_long: {
+		"fi-FI": "Tehostetussa valvonnassa: palveluntuottajan toiminnassa on ilmennyt useita laatupoikkeamia, joiden korjaamista kaupunki valvoo.",
+		"sv-FI": "Under effektiviserad tillsyn: i tjänsteproducentens verksamhet har det framkommit flera kvalitetsavvikelser. Staden övervakar att dessa avhjälps.",
+	},
+	reportScore: {
+		"fi-FI": "Valvontakäynnin tulos",
+		"sv-FI": "Slutrapport över tillsynsbesöket",
+	},
+	reportScoreLong: {
+		"fi-FI": "Espoon kaupungin valvontakäynnin tulos",
+		"sv-FI": "Slutrapport över tillsynsbesöket",
+	},
+	latestVisit: {
+		"fi-FI": "Viimeisin valvontakäynti",
+		"sv-FI": "Senaste tillsynsbesök",
+	},
+	openReport: {
+		"fi-FI": "Avaa raportti",
+		"sv-FI": "Öppna rapporten",
 	},
 	"Suomi|Ruotsi": {
 		"fi-FI": "Suomi|Ruotsi",

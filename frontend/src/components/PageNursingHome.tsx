@@ -516,11 +516,14 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const directions = useT("directions");
 	const webpage = useT("webpage");
 	const visitingInfo = useT("visitingInfo");
+	const openReport = useT("openReport");
+	const latestVisit = useT("latestVisit");
+	const reportScore = useT("reportScoreLong");
 
-	const reportStatusOk = useT("status_ok");
-	const reportStatusSmall = useT("status_small");
-	const reportStatusSignificant = useT("status_significant");
-	const reportStatusSurveillance = useT("status_surveillance");
+	const reportStatusOk = useT("status_ok_long");
+	const reportStatusSmall = useT("status_small_issues_long");
+	const reportStatusSignificant = useT("status_significant_issues_long");
+	const reportStatusSurveillance = useT("status_surveillance_long");
 	const reportStatusNoInfo = useT("status_no_info");
 
 	let reportStatus = useT("status_waiting");
@@ -612,12 +615,12 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					<div className="report_info_container">
 						<p className="report_info_item">{nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"}</p>
 						<p className="report_info_minor_header">Omaisten antama yleisarvosana</p>
-						<p className="report_info_header">{"Espoon kaupungin valvontakäynnin tulos"}</p>
-						<p className="report_info_item">{'"' + reportStatus + '"'}</p>
-						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{"Viimeisin valvontakäynti"}</p>
+						<p className="report_info_header">{reportScore}</p>
+						<p className="report_info_item">{reportStatus}</p>
+						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{latestVisit}</p>
 						<p className={"report_info_item" + (nursingHome.report_status ? "" : " report_hidden")}>{formatDate(reportDate)}</p>
 
-						{hasReport ? <a href={`/api/nursing-homes/${nursingHome.id}/raportti/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(reportDate)}.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">Avaa Raportti</a> : ""}
+						{hasReport ? <a href={`/api/nursing-homes/${nursingHome.id}/raportti/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(reportDate)}.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">{openReport}</a> : ""}
 					</div>
 				</div>
 			</div>
