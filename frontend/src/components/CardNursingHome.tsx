@@ -207,9 +207,9 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			<div className={type == "admin" ? "hidden": "card-nursing-home-boxes"}>
 					<div className="card-nursing-home-public-status no-left-border">
 						<div>
-							<h3 className={"card-list-item__header"}>{nursinghome.rating.average ? nursinghome.rating.average.toPrecision(2) + " / 5" : "-"}</h3>
+							<h3 className={"card-list-item__header"}>{nursinghome.rating.average ? nursinghome.rating.average.toPrecision(2) + " / 5" : "Ei annettuja arvioita"}</h3>
 							<p>{ratingToString(nursinghome.rating.average)}</p>
-							<p className="card-nursing-home-public-status-header">omaisten arvio</p>
+							<p className={nursinghome.rating.average ? "card-nursing-home-public-status-header" : "hidden"}>omaisten arvio</p>
 							<p>({nursinghome.rating.answers} arviota)</p>
 						</div>
 					</div>	
