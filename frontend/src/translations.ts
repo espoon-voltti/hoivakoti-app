@@ -713,7 +713,7 @@ export const translations = {
 		"sv-FI": "Väntar på tillsynsbesök",
 	},
 	status_no_info: {
-		"fi-FI": "Sijaintikunta valvoo. Tietoja ei saatavilla.",
+		"fi-FI": "Sijaintikunta valvoo. Valvontakäynnin tietoja ei saatavilla.",
 		"sv-FI": "Kommunen där vårdhemmet är beläget sköter tillsynen. Uppgifter saknas.",
 	},
 	status_ok_long: {

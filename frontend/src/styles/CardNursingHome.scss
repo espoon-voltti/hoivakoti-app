@@ -223,14 +223,19 @@
 	}
 }
 
+.card-nursing-home-boxes {
+	display: flex;
+}
+
 .card-nursing-home-public-status{
 	width: 33%;
 	text-align: center;
 	height: 105px;
-	padding: 0 25px 15px 25px;
+	padding: 5px 25px 5px 25px;
 	margin-top: 25px;
-	display: inline-block;
-	vertical-align: top;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-left: solid 1px $border-color;
 
 	p {

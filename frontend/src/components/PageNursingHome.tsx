@@ -518,7 +518,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const visitingInfo = useT("visitingInfo");
 	const openReport = useT("openReport");
 	const latestVisit = useT("latestVisit");
-	const reportScore = useT("reportScoreLong");
+	const reportScoreHeader = useT("reportScoreLong");
 
 	const reportStatusOk = useT("status_ok_long");
 	const reportStatusSmall = useT("status_small_issues_long");
@@ -561,21 +561,24 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	};
 
 	if(nursingHome.report_status){
-		hasReport = true;
 		reportDate = nursingHome.report_status.date;
 
 		switch (nursingHome.report_status.status) {
 			case "ok":
 				reportStatus = reportStatusOk;
+				hasReport = true;
 			break;
 			case "small":
 				reportStatus = reportStatusSmall;
+				hasReport = true;
 			break;
 			case "significant":
 				reportStatus = reportStatusSignificant;
+				hasReport = true;
 			break;
 			case "surveillance":
 				reportStatus = reportStatusSurveillance;
+				hasReport = true;
 			break;
 			case "no-info":
 				reportStatus = reportStatusNoInfo;
@@ -634,8 +637,6 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p className="report_info_item">{nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"}</p>
-						<p className="report_info_minor_header">Omaisten antama yleisarvosana</p>
 						<p className="report_info_minor_header">Omaisten arvio</p>
 						<p className="report_info_minor_header">{nursingHome.rating && nursingHome.rating.average ? `${ratingToString(nursingHome.rating.average)}, ${nursingHome.rating.average.toPrecision(2)} / 5` : "-"}</p>
 						<a className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"} href={`${nursingHome.id}/palaute`}><button className="btn report_info_btn">Lue lisää</button></a>
@@ -643,7 +644,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p className="report_info_header">{reportScore}</p>
+						<p className={hasReport ? "report_info_header" : "hidden"}>{reportScoreHeader}</p>
 						<p className="report_info_item">{reportStatus}</p>
 						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{latestVisit}</p>
 						<p className={"report_info_item" + (nursingHome.report_status ? "" : " report_hidden")}>{formatDate(reportDate)}</p>

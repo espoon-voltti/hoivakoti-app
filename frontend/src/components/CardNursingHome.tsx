@@ -204,17 +204,21 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				</div>
 				<button className={type== "admin" ? "btn":"hidden"} onClick={(e) => {openBtnLink(e, `/hoivakodit/${nursinghome.id}/valvonta/`)}}>Lisää uusi käynti</button>
 			</div>
-			<div className={type == "admin" ? "hidden": ""}>
+			<div className={type == "admin" ? "hidden": "card-nursing-home-boxes"}>
 					<div className="card-nursing-home-public-status no-left-border">
-						<h3 className={"card-list-item__header"}>{nursinghome.rating.average ? nursinghome.rating.average.toPrecision(2) + " / 5" : "-"}</h3>
-						<p>{ratingToString(nursinghome.rating.average)}</p>
-						<p className="card-nursing-home-public-status-header">omaisten arvio</p>
-						<p>({nursinghome.rating.answers} arviota)</p>
+						<div>
+							<h3 className={"card-list-item__header"}>{nursinghome.rating.average ? nursinghome.rating.average.toPrecision(2) + " / 5" : "-"}</h3>
+							<p>{ratingToString(nursinghome.rating.average)}</p>
+							<p className="card-nursing-home-public-status-header">omaisten arvio</p>
+							<p>({nursinghome.rating.answers} arviota)</p>
+						</div>
 					</div>	
 					<div className="card-nursing-home-public-status">
-						<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
-						<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}`}</p>
+						<div>
+							<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
+							<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}`}</p>
 							<p className={!nursinghome.report_status.status || ["wating", "no-info"].includes(nursinghome.report_status.status) ? "hidden" : ""}>{reportScore}</p>
+						</div>
 					</div>	
 				</div>
 		</Link>
