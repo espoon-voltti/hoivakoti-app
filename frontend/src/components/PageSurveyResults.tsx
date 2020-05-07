@@ -107,21 +107,21 @@ const PageSurveyResults: FC = () => {
 					<p>{nursingHome.name} - {nursingHome.address}, {nursingHome.city}</p>
 
 					<h3 className="page-survey-results-title">Omaisten antamat arviot</h3>
-					<p className="page-survey-results-bold page-survey-results-minor-title">{nursingHome.rating.answers} arviota</p>
+					<p className="page-survey-results-minor-title">{nursingHome.rating.answers} arviota</p>
 					<div className="page-survey-results-container">
 						{questions}
 					</div>
-					<p className="page-survey-results-minor-title"><span className="page-survey-results-bold">Arvioiden keskiarvo:</span> {ratingToString(nursingHome.rating.average)}, {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>
+					<p className="page-survey-results-minor-title">Arvioiden keskiarvo:<span className="page-survey-results-bold"> {ratingToString(nursingHome.rating.average)}</span> {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>
 					</>
 				)}
 			</div>
 			<div className="page-survey-results-footer">
-				<p className="page-survey-results-bold">Miten tyytyväisyystietoja kerätään?</p>
+				<p className="page-survey-results-bold">Miten arviointeja kerätään?</p>
 				<p>Omainen voi tehdä arvioinnin Espoon kaupungin antamalla koodilla. 
 					Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja.
 					Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo.</p>
 				<p>1=erittäin huono, 2=huono, 3=tyydyttävä, 4=hyvä, 5=erinomainen</p>
-				<p>Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot lisätään tähän portaaliin myöhemmin.</p>
+				<p>Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot on tarkoitus lisätä tähän portaaliin myöhemmin.</p>
 				<p>Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) <a href="https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut" target="_blank">Espoon kaupungin palautepalvelun kautta.</a></p>
 			</div>
 		</div>

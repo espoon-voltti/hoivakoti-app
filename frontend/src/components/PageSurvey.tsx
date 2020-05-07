@@ -171,7 +171,7 @@ const PageSurvey: FC = () => {
 			<div className="login-container">
 					<h4>Olet antamassa arviota hoivakodista</h4>
 					<h2 className="header-inline">{nursingHome.name}</h2><h3 className="header-inline">{nursingHome.owner}</h3>
-					<h4>Antamalla arvion voit auttaa uusia asiakkaita löytämään heille sopivan hoivakodin sekä hoivakotia kehittämään palvelujaan.</h4>
+					<h4>Antamalla arvion autat hoivakotia kehittämään palvelujaan.</h4>
 					<h4>Vastaaminen kestää noin 2 minuuttia.</h4>
 					<h4>Kirjoita saamasi tunnus. Tunnus on tarkoitettu vain sinun käyttöösi.</h4>
 					<div>

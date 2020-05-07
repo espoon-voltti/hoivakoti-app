@@ -637,16 +637,17 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p className={nursingHome.rating && nursingHome.rating.average ? "report_info_minor_header" : "hidden"}>Omaisten arvio</p>
-						<p className="report_info_minor_header">{nursingHome.rating && nursingHome.rating.average ? `${ratingToString(nursingHome.rating.average)}, ${nursingHome.rating.average.toPrecision(2)} / 5` : "Ei annettuja arvioita"}</p>
+						<p className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"}>Omaisten arvio</p>
+						<p className="report_info_minor_header">{nursingHome.rating && nursingHome.rating.average ? ratingToString(nursingHome.rating.average) : "Ei annettuja arvioita"}</p>
+						<p>{nursingHome.rating && nursingHome.rating.average ? `${nursingHome.rating.average.toPrecision(2)} / 5` : ""}</p>
 						<a className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"} href={`${nursingHome.id}/palaute`}><button className="btn report_info_btn">Lue lisää</button></a>
 					</div>
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p className={hasReport ? "report_info_header" : "hidden"}>{reportScoreHeader}</p>
-						<p className="report_info_item">{reportStatus}</p>
-						<p className={"report_info_minor_header" + (nursingHome.report_status ? "" : " report_hidden")}>{latestVisit}</p>
+						<p className={hasReport ? "" : "hidden"}>{reportScoreHeader}</p>
+						<p className="report_info_minor_header">{reportStatus}</p>
+						<p className={(nursingHome.report_status ? "" : " report_hidden")}>{latestVisit}</p>
 						<p className={"report_info_item" + (nursingHome.report_status ? "" : " report_hidden")}>{formatDate(reportDate)}</p>
 
 						{hasReport ? <a href={`/api/nursing-homes/${nursingHome.id}/raportti/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(reportDate)}.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">{openReport}</a> : ""}

@@ -733,11 +733,11 @@ export const translations = {
 		"sv-FI": "Under effektiviserad tillsyn: i tjänsteproducentens verksamhet har det framkommit flera kvalitetsavvikelser. Staden övervakar att dessa avhjälps.",
 	},
 	reportScore: {
-		"fi-FI": "Valvontakäynnin tulos",
+		"fi-FI": "Valvontakäynnin loppuarvio",
 		"sv-FI": "Slutrapport över tillsynsbesöket",
 	},
 	reportScoreLong: {
-		"fi-FI": "Espoon kaupungin valvontakäynnin tulos",
+		"fi-FI": "Espoon kaupungin valvontakäynnin loppuarvio",
 		"sv-FI": "Slutrapport över tillsynsbesöket",
 	},
 	latestVisit: {

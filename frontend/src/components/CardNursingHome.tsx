@@ -77,7 +77,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	};
 
 	const ratingToString = (rating: number | null): string => {
-		let str = "";
+		let str = "Ei annettuja arvioita";
 
 		if (rating){
 			if (rating > 4.5){
@@ -207,9 +207,9 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			<div className={type == "admin" ? "hidden": "card-nursing-home-boxes"}>
 					<div className="card-nursing-home-public-status no-left-border">
 						<div>
-							<h3 className={"card-list-item__header"}>{nursinghome.rating.average ? nursinghome.rating.average.toPrecision(2) + " / 5" : "Ei annettuja arvioita"}</h3>
-							<p>{ratingToString(nursinghome.rating.average)}</p>
-							<p className={nursinghome.rating.average ? "card-nursing-home-public-status-header" : "hidden"}>omaisten arvio</p>
+							<p className={nursinghome.rating.average ? "" : "hidden"}>Omaisten arvio</p>
+							<p className="card-nursing-home-public-status-header">{ratingToString(nursinghome.rating.average)}</p>
+							<p>{nursinghome.rating.average ? nursinghome.rating.average.toPrecision(2) + " / 5" : ""}</p>
 							<p>({nursinghome.rating.answers} arviota)</p>
 						</div>
 					</div>	
