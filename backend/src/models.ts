@@ -430,6 +430,91 @@ export async function SubmitSurveyResponse(
 
 	if (validKey) {
 
+
+		//remove possible old answers with same key code
+		let oldAnswersNursingHomeId = ""; 
+		let oldAnswersAverage = 0;
+		
+		const existingAnswer = await knex
+			.table("NursingHomeSurveyAnswers")
+			.select()
+			.where({
+				key: key
+			});
+		
+		if(existingAnswer.length != 0){
+
+			oldAnswersNursingHomeId = existingAnswer[0].nursinghome_id;
+
+			for (const answer of existingAnswer) {
+
+				const currentScores = await knex
+					.table("NursingHomeSurveyScores")
+					.select()
+					.where({
+						question_id: answer.question_id, 
+						nursinghome_id: oldAnswersNursingHomeId
+					});
+
+				let newAvg = currentScores[0].average * currentScores[0].answers - answer.answer; //remove old answer from average
+				if (newAvg > 0) newAvg = newAvg / currentScores[0].answers - 1;
+				
+				await knex
+					.table("NursingHomeSurveyScores")
+					.where({
+						question_id: answer.question_id, 
+						nursinghome_id: oldAnswersNursingHomeId
+					})
+					.update({
+						answers: currentScores[0].answers - 1,
+						average: newAvg
+					});
+			}
+
+			const cleanScores = await knex
+				.table("NursingHomeSurveyScores")
+				.select()
+				.where({
+					nursinghome_id: oldAnswersNursingHomeId
+				});
+
+			let sumAvg = 0;
+			let numQuestions = 0;
+
+			for (const question of cleanScores) {
+				const questions = await knex
+					.table("NursingHomeSurveyQuestions")
+					.select()
+					.where({
+						id: question.question_id
+					});
+				
+				if(questions[0].survey_id == survey[0].surveyId) {
+					sumAvg += question.average;
+					numQuestions += 1;
+				}
+			}
+
+			await knex
+				.table("NursingHomeSurveyTotalScores")
+				.where({
+					nursinghome_id: oldAnswersNursingHomeId
+				})
+				.update({
+					average: (sumAvg / numQuestions),
+					answers: numQuestions
+				});
+		}
+
+		await knex
+			.table("NursingHomeSurveyAnswers")
+			.where({
+				key: key
+			})
+			.del();
+
+
+		//store new values
 		for (const question of survey) {
 			const currentScores = await knex
 				.table("NursingHomeSurveyScores")
@@ -437,6 +522,15 @@ export async function SubmitSurveyResponse(
 				.where({
 					question_id: question.id, 
 					nursinghome_id: nursinghomeId
+				});
+
+			await knex
+				.table("NursingHomeSurveyAnswers")
+				.insert({
+					question_id: question.id, 
+					nursinghome_id: nursinghomeId,
+					answer: question.value,
+					key: key
 				});
 
 			if(currentScores.length === 0 && validNumericSurveyScore(question.value)){
@@ -455,17 +549,6 @@ export async function SubmitSurveyResponse(
 			}else{
 
 				if (validNumericSurveyScore(question.value)){
-
-					const existingAnswer = await knex
-						.table("NursingHomeSurveyAnswers")
-						.select()
-						.where({
-							question_id: question.id, 
-							nursinghome_id: nursinghomeId,
-							key: key
-						});
-
-					if(existingAnswer.length === 0){
 
 						const newSum = currentScores[0].answers + 1;
 						const newAvg = (currentScores[0].average * currentScores[0].answers + question.value) / newSum;
@@ -493,38 +576,6 @@ export async function SubmitSurveyResponse(
 
 						totalScore += newAvg;
 						numQuestions += 1;
-
-					}else{
-
-						let newAvg = (currentScores[0].average * currentScores[0].answers - existingAnswer[0].answer) / (currentScores[0].answers - 1); //remove old answer from average
-						newAvg = (newAvg * (currentScores[0].answers - 1) + question.value) / currentScores[0].answers;
-
-						await knex
-							.table("NursingHomeSurveyScores")
-							.where({
-								question_id: question.id, 
-								nursinghome_id: nursinghomeId
-							})
-							.update({
-								average: newAvg
-							});
-
-						await knex
-							.table("NursingHomeSurveyAnswers")
-							.where(
-								{
-									question_id: question.id, 
-									nursinghome_id: nursinghomeId,
-									key: key
-								}
-							)
-							.update({
-								answer: question.value
-							});
-						
-						updateTotal = 0;
-
-					}
 
 				}else if (currentScores.length > 0){
 					totalScore += currentScores[0].average;
