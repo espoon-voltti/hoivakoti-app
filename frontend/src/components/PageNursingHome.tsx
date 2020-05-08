@@ -589,7 +589,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		<>
 			{id && <div id={id} />}
 			<div className={className}>
-				<a className="nursinghome-details-box-survey-link" href={`${nursingHome.id}/anna-palautetta`}><button className="btn report_info_btn">Anna arvio hoivakodista</button></a>
+				<a className="nursinghome-details-box-survey-link" href={`/hoivakodit/${nursingHome.id}/anna-palautetta`}><button className="btn report_info_btn">Anna arvio hoivakodista</button></a>
 				<div className="nursinghome-details-box-section">
 					<Image
 						nursingHome={nursingHome}
@@ -640,7 +640,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<p className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"}>Omaisten arvio</p>
 						<p className="report_info_minor_header">{nursingHome.rating && nursingHome.rating.average ? ratingToString(nursingHome.rating.average) : "Ei annettuja arvioita"}</p>
 						<p>{nursingHome.rating && nursingHome.rating.average ? `${nursingHome.rating.average.toPrecision(2)} / 5` : ""}</p>
-						<a className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"} href={`${nursingHome.id}/palaute`}><button className="btn report_info_btn">Lue lisää</button></a>
+						<a className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"} href={`/hoivakodit/${nursingHome.id}/arviot`}><button className="btn report_info_btn">Lue lisää</button></a>
 					</div>
 				</div>
 				<div className="nursinghome-details-box-section">
