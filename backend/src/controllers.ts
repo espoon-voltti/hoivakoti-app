@@ -428,14 +428,16 @@ export async function AddNursingHomeSurveyQuestion(
 		requestPw === adminPw;
 	if (!isPwValid) return null;
 
-	const res = await AddNursingHomeSurveyQuestionDB( 
-		ctx.request.body.surveyId, 
-		ctx.request.body.order, 
-		ctx.request.body.questionType, 
-		ctx.request.body.question, 
-		ctx.request.body.questionDescription, 
-		ctx.request.body.questionIcon,
-		ctx.request.body.active);
+	for(const question of ctx.request.body.questions){
+		const res = await AddNursingHomeSurveyQuestionDB( 
+			question.surveyId, 
+			question.order, 
+			question.questionType, 
+			question.question, 
+			question.questionDescription, 
+			question.questionIcon,
+			question.active);
+	}
 	return "inserted"
 }
 

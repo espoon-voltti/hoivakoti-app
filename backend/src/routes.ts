@@ -178,7 +178,7 @@ router.post("/api/admin/add-keys", async ctx => {
 	ctx.body = keys;
 });
 
-router.post("/api/survey/add-question", async ctx => {
+router.post("/api/survey/add-questions", async ctx => {
 	const res = await AddNursingHomeSurveyQuestion(ctx);
 	ctx.body = res;
 });
