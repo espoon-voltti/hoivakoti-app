@@ -1,13 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import { useT } from "../i18n";
+import i18n from "../i18n";
 import "../styles/PageSurveyResults.scss";
-import Radio from "./Radio";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
-import { NursingHome, NursingHomeImageName } from "./types";
-import { stringify } from "querystring";
+import { NursingHome } from "./types";
 
 
 let surveyState: any[] = [];
@@ -44,34 +43,40 @@ const PageSurveyResults: FC = () => {
 			});
 	}, [id]);
 
-	const title = useT("pageUpdateTitle");
-	const freeApartmentsStatus = useT("freeApartmentsStatus");
-	const organizationLogo = useT("organizationLogo");
-	const organizationPhotos = useT("organizationPhotos");
-	const organizationPhotosGuide = useT("organizationPhotosGuide");
-	const intro = useT("pageUpdateIntro");
-	const labelTrue = useT("vacancyTrue");
-	const labelFalse = useT("vacancyFalse");
 	const loadingText = useT("loadingText");
-	const nursingHomeName = useT("nursingHome");
-	const status = useT("status");
-	const lastUpdate = useT("lastUpdate");
-	const noUpdate = useT("noUpdate");
+	const nursingHomeReviews = useT("nursingHomeReviews");
+	const linkBackToBasicInfo = useT("linkBackToBasicInfo");
+	const clientReviewsBy = useT("clientReviewsBy");
+	const nReviews = useT("nReviews");
+	const averageReviewScore = useT("averageReviewScore");
+	const reviewFooterHeader = useT("reviewFooterHeader");
+	const reviewFooterPart1 = useT("reviewFooterPart1");
+	const reviewFooterPart2 = useT("reviewFooterPart2");
+	const reviewFooterPart3 = useT("reviewFooterPart3");
+	const reviewFooterPart4 = useT("reviewFooterPart4");
+	const reviewFooterLink = useT("reviewFooterLink");
+	const urlReviewFooterLink = useT("urlReviewFooterLink");
+
+	const optionText1 = useT("surveyOption1");
+	const optionText2 = useT("surveyOption2");
+	const optionText3 = useT("surveyOption3");
+	const optionText4 = useT("surveyOption4");
+	const optionText5 = useT("surveyOption5");
 
 	const ratingToString = (rating: number | null): string => {
 		let str = "-";
 
 		if (rating){
 			if (rating > 4.5){
-				str = "Erinomainen";
+				str = optionText5;
 			} else if (rating > 3.5){
-				str = "Hyvä";
+				str = optionText4;
 			} else if (rating > 2.5){
-				str = "Tyydyttävä";
+				str = optionText3;
 			} else if (rating > 1.5){
-				str = "Huono";
+				str = optionText2;
 			} else if (rating > 0.5){
-				str = "Erittäin huono";
+				str = optionText1;
 			}
 		}
 
@@ -83,7 +88,7 @@ const PageSurveyResults: FC = () => {
 		survey.map((question: any, index: number) => (
 			<div card-key={index}>
 				<div className={`page-survey-results-result`}>
-					<div className="page-survey-results-result-question">{question.question}</div>
+					<div className="page-survey-results-result-question">{i18n.language == "sv-FI" ? question.question_sv : question.question_fi }</div>
 					<div className="page-survey-results-result-score">
 						<div className={`page-survey-results-result-image${question.average > 0.5 ? " star-full" : " star-none"}`}></div>
 						<div className={`page-survey-results-result-image${question.average > 1.75 ? " star-full" : (question.average > 1.25 ? " star-half" : " star-none")}`}></div>
@@ -97,32 +102,30 @@ const PageSurveyResults: FC = () => {
 
 	return (
 		<div className="page-survey-results">
-			<a className="nursinghome-back-link" href="./">Palaa perustietoihin</a>
-			<div className="">
+			<div>
 				{!survey || !nursingHome ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
-					<h2>Arviot hoivakodista</h2>
+					<Link to={`/hoivakodit/${nursingHome.id}`} className="nursinghome-back-link">{linkBackToBasicInfo}</Link>
+					<h2>{nursingHomeReviews}</h2>
 					<p>{nursingHome.name} - {nursingHome.address}, {nursingHome.city}</p>
 
-					<h3 className="page-survey-results-title">Omaisten antamat arviot</h3>
-					<p className="page-survey-results-minor-title">{nursingHome.rating.answers} arviota</p>
+					<h3 className="page-survey-results-title">{clientReviewsBy}</h3>
+					<p className="page-survey-results-minor-title">{nursingHome.rating.answers} {nReviews}</p>
 					<div className="page-survey-results-container">
 						{questions}
 					</div>
-					<p className="page-survey-results-minor-title">Arvioiden keskiarvo:<span className="page-survey-results-bold"> {ratingToString(nursingHome.rating.average)}</span> {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>
+					<p className="page-survey-results-minor-title">{averageReviewScore}:<span className="page-survey-results-bold"> {ratingToString(nursingHome.rating.average)}</span> {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>
 					</>
 				)}
 			</div>
 			<div className="page-survey-results-footer">
-				<p className="page-survey-results-bold">Miten arviointeja kerätään?</p>
-				<p>Omainen voi tehdä arvioinnin Espoon kaupungin antamalla koodilla. 
-					Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja.
-					Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo.</p>
-				<p>1=erittäin huono, 2=huono, 3=tyydyttävä, 4=hyvä, 5=erinomainen</p>
-				<p>Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot on tarkoitus lisätä tähän portaaliin myöhemmin.</p>
-				<p>Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) <a href="https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut" target="_blank">Espoon kaupungin palautepalvelun kautta.</a></p>
+				<p className="page-survey-results-bold">{reviewFooterHeader}</p>
+				<p>{reviewFooterPart1}</p>
+				<p>{reviewFooterPart2}</p>
+				<p>{reviewFooterPart3}</p>
+				<p>{reviewFooterPart4} <a href={urlReviewFooterLink} target="_blank">{reviewFooterLink}</a></p>
 			</div>
 		</div>
 	);

@@ -147,8 +147,10 @@ async function CreateNursingHomeSurveyQuestionsTable(): Promise<void> {
 		table.integer("order");
 		table.boolean("active");
 		table.string("question_type");
-		table.string("question");
-		table.string("question_description");
+		table.string("question_fi");
+		table.string("question_sv");
+		table.string("question_description_fi");
+		table.string("question_description_sv");
 		table.string("question_icon");
 
 	});
@@ -345,8 +347,10 @@ export async function AddNursingHomeSurveyQuestion(
 	surveyId: string,
 	order: number,
 	questionType: string,
-	question: string,
-	questionDescription: string,
+	questionFI: string,
+	questionSV: string,
+	questionDescriptionFI: string,
+	questionDescriptionSV: string,
 	questionIcon: string,
 	active: boolean
 ): Promise<void> {
@@ -354,8 +358,10 @@ export async function AddNursingHomeSurveyQuestion(
 		survey_id: surveyId,
 		order: order,
 		question_type: questionType,
-		question: question,
-		question_description: questionDescription,
+		question_fi: questionFI,
+		question_sv: questionSV,
+		question_description_fi: questionDescriptionFI,
+		question_description_sv: questionDescriptionSV,
 		question_icon: questionIcon,
 		active: active
 	});
@@ -366,8 +372,10 @@ export async function UpdateNursingHomeSurveyQuestion(
 	surveyId: string,
 	order: number,
 	questionType: string,
-	question: string,
-	questionDescription: string,
+	questionFI: string,
+	questionSV: string,
+	questionDescriptionFI: string,
+	questionDescriptionSV: string,
 	questionIcon: string,
 	active: boolean
 ): Promise<void> {
@@ -377,8 +385,10 @@ export async function UpdateNursingHomeSurveyQuestion(
 		survey_id: surveyId,
 		order: order,
 		question_type: questionType,
-		question: question,
-		question_description: questionDescription,
+		question_fi: questionFI,
+		question_sv: questionSV,
+		question_description_fi: questionDescriptionFI,
+		question_description_sv: questionDescriptionSV,
 		question_icon: questionIcon,
 		active: active
 	});

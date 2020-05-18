@@ -519,6 +519,15 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const openReport = useT("openReport");
 	const latestVisit = useT("latestVisit");
 	const reportScoreHeader = useT("reportScoreLong");
+	const giveReview = useT("giveReview");
+	const readMore = useT("readMore");
+	const clientReviews = useT("clientReviews");
+
+	const surveyOption1 = useT("surveyOption1");
+	const surveyOption2 = useT("surveyOption2");
+	const surveyOption3 = useT("surveyOption3");
+	const surveyOption4 = useT("surveyOption4");
+	const surveyOption5 = useT("surveyOption5");
 
 	const reportStatusOk = useT("status_ok_long");
 	const reportStatusSmall = useT("status_small_issues_long");
@@ -545,15 +554,15 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 
 		if (rating){
 			if (rating > 4.5){
-				str = "Erinomainen";
+				str = surveyOption5;
 			} else if (rating > 3.5){
-				str = "Hyvä";
+				str = surveyOption4;
 			} else if (rating > 2.5){
-				str = "Tyydyttävä";
+				str = surveyOption3;
 			} else if (rating > 1.5){
-				str = "Huono";
+				str = surveyOption2;
 			} else if (rating > 0.5){
-				str = "Erittäin huono";
+				str = surveyOption1;
 			}
 		}
 
@@ -589,7 +598,9 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		<>
 			{id && <div id={id} />}
 			<div className={className}>
-				<a className="nursinghome-details-box-survey-link" href={`/hoivakodit/${nursingHome.id}/anna-palautetta`}><button className="btn report_info_btn">Anna arvio hoivakodista</button></a>
+				<Link to={`/hoivakodit/${nursingHome.id}/anna-arvio`} className="nursinghome-details-box-survey-link">
+					<button className="btn report_info_btn">{giveReview}</button>
+				</Link>
 				<div className="nursinghome-details-box-section">
 					<Image
 						nursingHome={nursingHome}
@@ -637,10 +648,12 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"}>Omaisten arvio</p>
+						<p className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"}>{clientReviews}</p>
 						<p className="report_info_minor_header">{nursingHome.rating && nursingHome.rating.average ? ratingToString(nursingHome.rating.average) : "Ei annettuja arvioita"}</p>
 						<p>{nursingHome.rating && nursingHome.rating.average ? `${nursingHome.rating.average.toPrecision(2)} / 5` : ""}</p>
-						<a className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"} href={`/hoivakodit/${nursingHome.id}/arviot`}><button className="btn report_info_btn">Lue lisää</button></a>
+						<Link to={`/hoivakodit/${nursingHome.id}/arviot`} className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"}>
+						<button className="btn report_info_btn">{readMore}</button>
+						</Link>
 					</div>
 				</div>
 				<div className="nursinghome-details-box-section">

@@ -255,7 +255,7 @@ const PageUploadReport: FC = () => {
 										if (isChecked) setNursingHomeState("ok");
 									}}
 								>
-									{"Kaikki kunnossa"}
+									{reportStatusOk}
 								</Radio>
 								<Radio
 									id="nursinghome-status-small"
@@ -265,7 +265,7 @@ const PageUploadReport: FC = () => {
 										if (isChecked) setNursingHomeState("small");
 									}}
 								>
-									{"Pientä parannettavaa"}
+									{reportStatusSmall}
 								</Radio>
 								<Radio
 									id="nursinghome-status-true-significant"
@@ -275,7 +275,7 @@ const PageUploadReport: FC = () => {
 										if (isChecked) setNursingHomeState("significant");
 									}}
 								>
-									{"Merkittävästi parannettavaa"}
+									{reportStatusSignificant}
 								</Radio>
 								<Radio
 									id="nursinghome-status-surveillance"
@@ -285,7 +285,7 @@ const PageUploadReport: FC = () => {
 										if (isChecked) setNursingHomeState("surveillance");
 									}}
 								>
-									{"Tehostetussa valvonnassa"}
+									{reportStatusSurveillance}
 								</Radio>
 								<Radio
 									id="nursinghome-status-waiting"
@@ -295,7 +295,7 @@ const PageUploadReport: FC = () => {
 										if (isChecked) setNursingHomeState("waiting");
 									}}
 								>
-									{"Odottaa käyntiä"}
+									{reportStatus}
 								</Radio>
 								<Radio
 									id="nursinghome-status-no-info"
@@ -305,7 +305,7 @@ const PageUploadReport: FC = () => {
 										if (isChecked) setNursingHomeState("no-info");
 									}}
 								>
-									{"Sijaintikunta valvoo. Tietoja ei saatavilla."}
+									{reportStatusNoInfo}
 								</Radio>
 							</div>
 							<div className="page-update-section">

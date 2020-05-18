@@ -1,8 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
 import { useT } from "../i18n";
+import i18n from "../i18n";
 import "../styles/PageSurvey.scss";
 import Radio from "./Radio";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
@@ -67,24 +68,18 @@ const PageSurvey: FC = () => {
 		});
 	};
 
-	const title = useT("pageUpdateTitle");
-	const freeApartmentsStatus = useT("freeApartmentsStatus");
-	const organizationLogo = useT("organizationLogo");
-	const organizationPhotos = useT("organizationPhotos");
-	const organizationPhotosGuide = useT("organizationPhotosGuide");
-	const intro = useT("pageUpdateIntro");
-	const labelTrue = useT("vacancyTrue");
-	const labelFalse = useT("vacancyFalse");
 	const loadingText = useT("loadingText");
-	const nursingHomeName = useT("nursingHome");
-	const status = useT("status");
-	const lastUpdate = useT("lastUpdate");
-	const noUpdate = useT("noUpdate");
 	const btnSend = useT("btnSend");
+	const aboutToGiveReview = useT("aboutToGiveReview");
+	const reviewHelpPart1 = useT("reviewHelpPart1");
+	const reviewHelpPart2 = useT("reviewHelpPart2");
+	const reviewHelpPart3 = useT("reviewHelpPart3");
+	const code = useT("code");
+	const wrongCode = useT("wrongCode");
+	const start = useT("start");
+	const thankYouReview = useT("thankYouReview");
+	const backToFrontpage = useT("backToFrontpage");
 
-
-	const updatePopupSaved = useT("saved");
-	const updatePopupSaving = useT("saving");
 
 	const updateAnswer = (id: number, state: any) => {
 		const index = surveyState.findIndex( x => x.id === id );
@@ -133,8 +128,8 @@ const PageSurvey: FC = () => {
 	if(surveyDone) {
 		return (
 			<div className="page-survey-done">
-				<h1>Kiitos arviostasi</h1>
-				<a href="/">Palaa palvelun etusivulle</a>
+				<h1>{thankYouReview}</h1>
+				<Link to={`/`}>{backToFrontpage}</Link>
 			</div>
 		);
 	}
@@ -151,7 +146,7 @@ const PageSurvey: FC = () => {
 								className="page-survey-container"
 								onSubmit={handleSubmit}
 							>
-								<h4 className="page-survey-minor-header">Olet antamassa arviota hoivakodista: <span>{nursingHome.name}</span></h4>
+								<h4 className="page-survey-minor-header">{aboutToGiveReview}: <span>{nursingHome.name}</span></h4>
 								{questions}
 	
 								<div className="survey-send-btn-container">
@@ -169,18 +164,18 @@ const PageSurvey: FC = () => {
 	if(nursingHome){
 		return (
 			<div className="login-container">
-					<h4>Olet antamassa arviota hoivakodista</h4>
+					<h4>{aboutToGiveReview}</h4>
 					<h2 className="header-inline">{nursingHome.name}</h2><h3 className="header-inline">{nursingHome.owner}</h3>
-					<h4>Antamalla arvion autat hoivakotia kehittämään palvelujaan.</h4>
-					<h4>Vastaaminen kestää noin 2 minuuttia.</h4>
-					<h4>Kirjoita saamasi tunnus. Tunnus on tarkoitettu vain sinun käyttöösi.</h4>
+					<h4>{reviewHelpPart1}</h4>
+					<h4>{reviewHelpPart2}</h4>
+					<h4>{reviewHelpPart3}</h4>
 					<div>
-						<span>Tunnus</span>
+						<span>{code}</span>
 						<input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
-						<p className={logInFailed ? "survey-login-error" : "hidden"}>Virheellinen tunnus</p>
+						<p className={logInFailed ? "survey-login-error" : "hidden"}>{wrongCode}</p>
 					</div>
 					<div>
-						<button className="btn" onClick={handleLogin}>Aloita</button>
+						<button className="btn" onClick={handleLogin}>{start}</button>
 					</div>
 			</div>
 		);
@@ -188,7 +183,7 @@ const PageSurvey: FC = () => {
 
 	return(
 		<div className="login-container">
-			<h2>Ladataan...</h2>
+			<h2>{loadingText}</h2>
 		</div>
 	);
 
@@ -223,8 +218,8 @@ export const Question: FC<QuestionProps> = ({
 			<div className="survey-card-inner">
 			<div className={"survey-card-question"}>
 				<div className="survey-card--header-container">
-					<h3 className="survey-card--header">{question.question}</h3>
-					<h4 className="survey-card--desc">{question.question_description}</h4>
+					<h3 className="survey-card--header">{i18n.language == "sv-FI" ? question.question_sv : question.question_fi }</h3>
+					<h4 className="survey-card--desc">{i18n.language == "sv-FI" ? question.question_description_sv : question.question_description_fi }</h4>
 				</div>
 				<div className="survey-card-line line-1"></div>
 				<div className="survey-card-line line-2"></div>

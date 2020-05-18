@@ -500,23 +500,23 @@ export const translations = {
 	},
 	surveyOption1: {
 		"fi-FI": "Erittäin huono",
-		"sv-FI": "",
+		"sv-FI": "Mycket dålig",
 	},
 	surveyOption2: {
 		"fi-FI": "Huono",
-		"sv-FI": "",
+		"sv-FI": "Dålig",
 	},
 	surveyOption3: {
 		"fi-FI": "Tyydyttävä",
-		"sv-FI": "",
+		"sv-FI": "Nöjaktig",
 	},
 	surveyOption4: {
 		"fi-FI": "Hyvä",
-		"sv-FI": "",
+		"sv-FI": "God",
 	},
 	surveyOption5: {
 		"fi-FI": "Erinomainen",
-		"sv-FI": "",
+		"sv-FI": "Utmärkt",
 	},
 	espoo: {
 		"fi-FI": "Espoo",
@@ -747,6 +747,102 @@ export const translations = {
 	openReport: {
 		"fi-FI": "Avaa raportti",
 		"sv-FI": "Öppna rapporten",
+	},
+	giveReview: {
+		"fi-FI": "Anna arvio hoivakodista",
+		"sv-FI": "Ge en bedömning av vårdhemmet",
+	},
+	readMore: {
+		"fi-FI": "Lue lisää",
+		"sv-FI": "Läs mer",
+	},
+	clientReviews: {
+		"fi-FI": "Omaisten arvio",
+		"sv-FI": "Anhörigas bedömning",
+	},
+	clientReviewsBy: {
+		"fi-FI": "Omaisten antamat arvio",
+		"sv-FI": "Anhörigas bedömningar",
+	},
+	nursingHomeReviews:{
+		"fi-FI": "Arviot hoivakodista",
+		"sv-FI": "Bedömningar av vårdhemmet",
+	},
+	linkBackToBasicInfo:{
+		"fi-FI": "Palaa perustietoihin",
+		"sv-FI": "Gå tillbaka till basuppgifterna",
+	},
+	nReviews:{
+		"fi-FI": "arviota",
+		"sv-FI": "bedömningar",
+	},
+	averageReviewScore: {
+		"fi-FI": "Arvioiden keskiarvo",
+		"sv-FI": "Medelvärde av bedömningarna",
+	},
+	reviewFooterHeader: {
+		"fi-FI": "Miten arviointeja kerätään?",
+		"sv-FI": "Hur samlas bedömningar in?",
+	},
+	reviewFooterPart1: {
+		"fi-FI": "Omainen voi tehdä arvioinnin Espoon kaupungin antamalla tunnuksella. Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja. Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo.",
+		"sv-FI": "En anhörig kan göra en bedömning med hjälp av en kod som Esbo stad gett. Personuppgifter om den som gör bedömningen lagras inte i portalen. Bedömningen görs genom att man väljer ett siffervärde som beskriver tillfredsställelsen.",
+	},
+	reviewFooterPart2: {
+		"fi-FI": "1=erittäin huono, 2=huono, 3=tyydyttävä, 4=hyvä, 5=erinomainen",
+		"sv-FI": "1=mycket dålig, 2=dålig, 3=nöjaktig, 4=god, 5=utmärkt",
+	},
+	reviewFooterPart3: {
+		"fi-FI": "Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot on tarkoitus lisätä tähän portaaliin myöhemmin.",
+		"sv-FI": "Det är meningen att en möjlighet till fritt formulerad respons och klienternas bedömningar ska läggas till i denna portal senare.",
+	},
+	reviewFooterPart4: {
+		"fi-FI": "Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista)",
+		"sv-FI": "Klienten och/eller den anhöriga kan ge respons på vårdhemmets verksamhet (till exempel på enskilda situationer)",
+	},
+	reviewFooterLink:{
+		"fi-FI": "Espoon kaupungin palautepalvelun kautta.",
+		"sv-FI": "via Esbo stads responstjänst",
+	},
+	urlReviewFooterLink:{
+		"fi-FI": "https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut",
+		"sv-FI": "https://easiointi.espoo.fi/eFeedback/sv/Feedback/21-Senioripalvelut",
+	},
+	aboutToGiveReview:{
+		"fi-FI": "Olet antamassa arviota hoivakodista",
+		"sv-FI": "Du håller på att göra en bedömning av vårdhemmet",
+	},
+	reviewHelpPart1:{
+		"fi-FI": "Antamalla arvion autat hoivakotia kehittämään palvelujaan.",
+		"sv-FI": "Genom att göra en bedömning hjälper du vårdhemmet att utveckla sina tjänster.",
+	},
+	reviewHelpPart2:{
+		"fi-FI": "Vastaaminen kestää noin 2 minuuttia.",
+		"sv-FI": "Det tar cirka 2 minuter att svara.",
+	},
+	reviewHelpPart3:{
+		"fi-FI": "Kirjoita saamasi tunnus. Tunnus on tarkoitettu vain sinun käyttöösi.",
+		"sv-FI": "Skriv koden du fått. Koden är endast avsedd för ditt bruk.",
+	},
+	code:{
+		"fi-FI": "Tunnus",
+		"sv-FI": "Kod",
+	},
+	wrongCode:{
+		"fi-FI": "Virheellinen tunnus",
+		"sv-FI": "Felaktig kod",
+	},
+	start:{
+		"fi-FI": "Aloita",
+		"sv-FI": "Börja",
+	},
+	thankYouReview:{
+		"fi-FI": "Kiitos arviostasi",
+		"sv-FI": "Tack för din bedömning",
+	},
+	backToFrontpage:{
+		"fi-FI": "Palaa palvelun etusivulle",
+		"sv-FI": "Gå tillbaka till tjänstens första sida",
 	},
 	"Suomi|Ruotsi": {
 		"fi-FI": "Suomi|Ruotsi",

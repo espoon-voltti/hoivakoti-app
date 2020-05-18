@@ -433,8 +433,10 @@ export async function AddNursingHomeSurveyQuestion(
 			question.surveyId, 
 			question.order, 
 			question.questionType, 
-			question.question, 
-			question.questionDescription, 
+			question.questionFI, 
+			question.questionSV, 
+			question.questionDescriptionFI, 
+			question.questionDescriptionSV,
 			question.questionIcon,
 			question.active);
 	}
@@ -457,8 +459,10 @@ export async function UpdateNursingHomeSurveyQuestion(
 		ctx.request.body.surveyId, 
 		ctx.request.body.order, 
 		ctx.request.body.questionType, 
-		ctx.request.body.question, 
-		ctx.request.body.questionDescription, 
+		ctx.request.body.questionFI, 
+		ctx.request.body.questionSV,
+		ctx.request.body.uestionDescriptionFI,
+		ctx.request.body.uestionDescriptionSV, 
 		ctx.request.body.questionIcon,
 		ctx.request.body.active);
 	return "updated"
