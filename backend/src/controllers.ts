@@ -430,14 +430,14 @@ export async function AddNursingHomeSurveyQuestion(
 
 	for(const question of ctx.request.body.questions){
 		const res = await AddNursingHomeSurveyQuestionDB( 
-			question.surveyId, 
+			question.survey_id, 
 			question.order, 
-			question.questionType, 
-			question.questionFI, 
-			question.questionSV, 
-			question.questionDescriptionFI, 
-			question.questionDescriptionSV,
-			question.questionIcon,
+			question.question_type, 
+			question.question_fi, 
+			question.question_sv, 
+			question.question_description_fi, 
+			question.question_description_sv,
+			question.question_icon,
 			question.active);
 	}
 	return "inserted"
@@ -456,14 +456,14 @@ export async function UpdateNursingHomeSurveyQuestion(
 
 	const res = await UpdateNursingHomeSurveyQuestionDB( 
 		ctx.request.body.id,
-		ctx.request.body.surveyId, 
+		ctx.request.body.survey_id, 
 		ctx.request.body.order, 
-		ctx.request.body.questionType, 
-		ctx.request.body.questionFI, 
-		ctx.request.body.questionSV,
-		ctx.request.body.uestionDescriptionFI,
-		ctx.request.body.uestionDescriptionSV, 
-		ctx.request.body.questionIcon,
+		ctx.request.body.question_type, 
+		ctx.request.body.question_fi, 
+		ctx.request.body.question_sv, 
+		ctx.request.body.question_description_fi, 
+		ctx.request.body.question_description_sv,
+		ctx.request.body.question_icon,
 		ctx.request.body.active);
 	return "updated"
 }
