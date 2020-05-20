@@ -30,7 +30,7 @@ import {
 	GetAllBasicUpdateKeys,
 	GetLoginCookieHash,
 	GetHasLogin,
-	GetValidSurveyKey,
+	GetIsValidSurveyKey,
 	BasicUpdateKeyEntry,
 	AddNursingHomeSurveyKeys as AddNursingHomeSurveyKeysDB,
 	DeleteNursingHome as DeleteNursingHomeDB,
@@ -407,7 +407,7 @@ export async function CheckLogin(
 export async function CheckSurveyKey(
 	ctx: Context,
 ): Promise<string | null> {
-	const valid = await GetValidSurveyKey(ctx.request.body.surveyKey);
+	const valid = await GetIsValidSurveyKey(ctx.request.body.surveyKey);
 	if(valid){
 		return "OK";
 	}else{

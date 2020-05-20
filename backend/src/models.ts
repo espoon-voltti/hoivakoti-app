@@ -164,6 +164,7 @@ async function CreateNursingHomeSurveyAnswersTable(): Promise<void> {
 		table.string("nursinghome_id");
 		table.string("answer");
 		table.string("key");
+		table.boolean("replaced")
 
 	});
 }
@@ -436,20 +437,19 @@ export async function SubmitSurveyResponse(
 
 	console.log(JSON.stringify(survey));
 
-	const validKey = await GetValidSurveyKey(key);
+	const validKey = await GetIsValidSurveyKey(key);
 
 	if (validKey) {
 
-
 		//remove possible old answers with same key code
-		let oldAnswersNursingHomeId = ""; 
-		let oldAnswersAverage = 0;
+		let oldAnswersNursingHomeId = "";
 		
 		const existingAnswer = await knex
 			.table("NursingHomeSurveyAnswers")
 			.select()
 			.where({
-				key: key
+				key: key,
+				replaced: false
 			});
 		
 		if(existingAnswer.length != 0){
@@ -519,10 +519,12 @@ export async function SubmitSurveyResponse(
 		await knex
 			.table("NursingHomeSurveyAnswers")
 			.where({
-				key: key
+				key: key,
+				replaced: false
 			})
-			.del();
-
+			.update({
+				replaced: true
+			});
 
 		//store new values
 		for (const question of survey) {
@@ -534,15 +536,6 @@ export async function SubmitSurveyResponse(
 					nursinghome_id: nursinghomeId
 				});
 
-			await knex
-				.table("NursingHomeSurveyAnswers")
-				.insert({
-					question_id: question.id, 
-					nursinghome_id: nursinghomeId,
-					answer: question.value,
-					key: key
-				});
-
 			if(currentScores.length === 0 && validNumericSurveyScore(question.value)){
 				await knex
 					.table("NursingHomeSurveyScores")
@@ -551,6 +544,16 @@ export async function SubmitSurveyResponse(
 						nursinghome_id: nursinghomeId,
 						answers: 1,
 						average: question.value
+					});
+				
+				await knex
+					.table("NursingHomeSurveyAnswers")
+					.insert({
+						question_id: question.id, 
+						nursinghome_id: nursinghomeId,
+						answer: question.value,
+						key: key,
+						replaced: false	
 					});
 
 				totalScore += question.value;
@@ -580,7 +583,9 @@ export async function SubmitSurveyResponse(
 								question_id: question.id, 
 								nursinghome_id: nursinghomeId,
 								answer: question.value,
-								key: key
+								key: key,
+								replaced: false
+								
 							});
 
 
@@ -970,7 +975,7 @@ export async function GetHasLogin(cookie: string): Promise<boolean> {
 	}
 }
 
-export async function GetValidSurveyKey(key: string): Promise<boolean> {
+export async function GetIsValidSurveyKey(key: string): Promise<boolean> {
 	const keys = await knex("NursingHomeSurveyKeys").select().where({key: key});
 	if(keys.length == 1){
 		return true;
