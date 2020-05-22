@@ -22,8 +22,10 @@
 	}
 }
 
-.card-list-item-container {
-	display: flex;
+@media(min-width:1130px){
+	.card-list-item-container {
+		display: flex;
+	}
 }
 
 .card-list-item-borders {
@@ -223,20 +225,27 @@
 	}
 }
 
-.card-nursing-home-boxes {
-	display: flex;
+@media(min-width:1130px){
+	.card-nursing-home-boxes {
+		display: flex;
+	}
 }
 
 .card-nursing-home-public-status{
-	width: 33%;
-	text-align: center;
-	height: 105px;
 	padding: 5px 25px 5px 25px;
-	margin-top: 25px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	border-left: solid 1px $border-color;
+	margin-bottom: 15px;
+
+	@media(min-width:1130px){
+		width: 33%;
+		text-align: center;
+		height: 105px;
+		margin-top: 25px;
+		margin-bottom: 0px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
 	p {
 		font-size: 14px;

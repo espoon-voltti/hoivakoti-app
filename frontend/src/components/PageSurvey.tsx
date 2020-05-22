@@ -95,8 +95,9 @@ const PageSurvey: FC = () => {
 	};
 
 	const handleLogin = async (
-		event: React.MouseEvent<HTMLButtonElement>,
+		e: React.FormEvent<HTMLFormElement>,
 		): Promise<void> => {
+			e.preventDefault();
             const login = await axios.post(
                 `${config.API_URL}/survey/check-key`,
                 { 
@@ -169,14 +170,16 @@ const PageSurvey: FC = () => {
 					<h4>{reviewHelpPart1}</h4>
 					<h4>{reviewHelpPart2}</h4>
 					<h4>{reviewHelpPart3}</h4>
-					<div>
-						<span>{code}</span>
-						<input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
-						<p className={logInFailed ? "survey-login-error" : "hidden"}>{wrongCode}</p>
-					</div>
-					<div>
-						<button className="btn" onClick={handleLogin}>{start}</button>
-					</div>
+					<form onSubmit={handleLogin}>
+						<div>
+							<span>{code}</span>
+							<input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
+						</div>
+						<div className="align-right">
+							<p className={logInFailed ? "survey-login-error" : "hidden"}>{wrongCode}</p>
+							<button type="submit" className="btn" value="Submit">{start}</button>
+						</div>
+					</form>
 			</div>
 		);
 	}

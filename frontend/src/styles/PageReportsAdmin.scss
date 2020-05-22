@@ -40,6 +40,7 @@
 
 .login-container {
     margin-top: 20vh;
+    margin-bottom: 150px;
     margin-left: 15vw;
 
     h2 {
@@ -48,8 +49,9 @@
 
     div {
         margin-top: 40px;
-        width: 450px;
-        text-align: right;
+        margin-bottom: -10px;
+        width: 350px;
+        //text-align: right;
     }
 
     input {
@@ -59,8 +61,12 @@
         line-height: 35px;
     }
 
+    .align-right{
+        text-align: right;
+    }
+
     span {
-        margin-left: 20px;
+        //margin-left: 20px;
         margin-right: 40px;
     }
 
