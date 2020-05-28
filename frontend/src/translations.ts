@@ -710,7 +710,7 @@ export const translations = {
 	},
 	status_waiting: {
 		"fi-FI": "Valvontakäynnin tiedot tulossa",
-		"sv-FI": "Väntar på tillsynsbesök",
+		"sv-FI": "Information över tillsynsbesöket är på väg",
 	},
 	status_no_info: {
 		"fi-FI": "Sijaintikunta valvoo. Valvontakäynnin tietoja ei saatavilla.",
