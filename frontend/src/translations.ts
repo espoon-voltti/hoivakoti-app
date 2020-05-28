@@ -709,7 +709,7 @@ export const translations = {
 		"sv-FI": "Under effektiviserad tillsyn",
 	},
 	status_waiting: {
-		"fi-FI": "Odottaa valvontakäyntiä",
+		"fi-FI": "Valvontakäynnin tiedot tulossa",
 		"sv-FI": "Väntar på tillsynsbesök",
 	},
 	status_no_info: {

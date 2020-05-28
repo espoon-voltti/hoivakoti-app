@@ -166,8 +166,9 @@ const PageUploadReport: FC = () => {
 	const reportStatusSignificant = useT("status_significant_issues_long");
 	const reportStatusSurveillance = useT("status_surveillance_long");
 	const reportStatusNoInfo = useT("status_no_info");
+	const reportStatusWaiting = useT("status_waiting");
 
-	let reportStatus = useT("status_waiting");
+	let reportStatus = reportStatusWaiting;
 
 	const getStatusTranslation = (statusStr: string): string => {
 		if(nursingHome && nursingHome.report_status){
@@ -295,7 +296,7 @@ const PageUploadReport: FC = () => {
 										if (isChecked) setNursingHomeState("waiting");
 									}}
 								>
-									{reportStatus}
+									{reportStatusWaiting}
 								</Radio>
 								<Radio
 									id="nursinghome-status-no-info"
