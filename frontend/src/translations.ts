@@ -717,20 +717,20 @@ export const translations = {
 		"sv-FI": "Kommunen där vårdhemmet är beläget sköter tillsynen. Uppgifter saknas.",
 	},
 	status_ok_long: {
-		"fi-FI": "Erinomainen: toiminta on lain vaatimusten ja sopimuksen mukaista",
-		"sv-FI": "Utmärkt: verksamheten är förenlig med lagens krav och avtalet",
+		"fi-FI": "Erinomainen: Toiminta on lain vaatimusten ja sopimuksen mukaista.",
+		"sv-FI": "Utmärkt: Verksamheten är förenlig med lagens krav och avtalet.",
 	},
 	status_small_issues_long: {
-		"fi-FI": "Hyvä: toiminnassa on pientä parannettavaa, joka ei kuitenkaan heikennä asiakkaiden hoivan tai turvallisuuden toteutumista",
-		"sv-FI": "God: det finns små brister i verksamheten som bör avhjälpas, men de försvagar dock inte klienternas omsorg eller säkerhet",
+		"fi-FI": "Hyvä: Toiminnassa on pientä parannettavaa, joka ei kuitenkaan heikennä asiakkaiden hoivan tai turvallisuuden toteutumista.",
+		"sv-FI": "God: Det finns små brister i verksamheten som bör avhjälpas, men de försvagar dock inte klienternas omsorg eller säkerhet.",
 	},
 	status_significant_issues_long: {
 		"fi-FI": "Tyydyttävä: Toiminnassa puutteita, jotka palveluntuottajan tulee korjata annetussa määräajassa laadukkaan hoivan toteuttamiseksi.",
 		"sv-FI": "Nöjaktig: det finns brister i verksamheten som tjänsteproducenten ska avhjälpa inom utsatt tid för att vården ska vara av hög kvalitet.",
 	},
 	status_surveillance_long: {
-		"fi-FI": "Tehostetussa valvonnassa: palveluntuottajan toiminnassa on ilmennyt useita laatupoikkeamia, joiden korjaamista kaupunki valvoo.",
-		"sv-FI": "Under effektiviserad tillsyn: i tjänsteproducentens verksamhet har det framkommit flera kvalitetsavvikelser. Staden övervakar att dessa avhjälps.",
+		"fi-FI": "Tehostetussa valvonnassa: Palveluntuottajan toiminnassa on ilmennyt useita laatupoikkeamia, joiden korjaamista kaupunki valvoo.",
+		"sv-FI": "Under effektiviserad tillsyn: I tjänsteproducentens verksamhet har det framkommit flera kvalitetsavvikelser. Staden övervakar att dessa avhjälps.",
 	},
 	reportScore: {
 		"fi-FI": "Valvontakäynnin loppuarvio",
