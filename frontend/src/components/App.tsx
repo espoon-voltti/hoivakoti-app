@@ -20,7 +20,6 @@ import PageAccessibility from "./PageAccessibility";
 import Title from "./Title";
 import PageUpdate from "./PageUpdate";
 import PageAdmin from "./PageAdmin";
-import ReactGA from "react-ga";
 import config from "./config";
 
 const App: React.FC = () => {
@@ -35,17 +34,6 @@ const App: React.FC = () => {
 		else if (currentPath === "/")
 			window.location.pathname = `/${currentLanguage}/`;
 	}, [currentLanguage, currentPath]);
-
-	const _doNotTrack = navigator.doNotTrack
-		? navigator.doNotTrack === "1" || navigator.doNotTrack === "yes"
-		: window.doNotTrack
-		? window.doNotTrack === "1"
-		: false;
-	if (!_doNotTrack) {
-		ReactGA.initialize("UA-154249998-1", {
-			testMode: config.NODE_ENV === "test",
-		});
-	}
 
 	return (
 		<ErrorBoundary>
