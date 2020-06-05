@@ -217,7 +217,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						<div>
 							<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
 							<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}`}</p>
-							<p className={!nursinghome.report_status.status || ["wating", "no-info"].includes(nursinghome.report_status.status) ? "hidden" : ""}>{reportScore}</p>
+							<p className={!nursinghome.report_status.status || ["waiting", "no-info"].includes(nursinghome.report_status.status) ? "hidden" : ""}>{reportScore}</p>
 						</div>
 					</div>	
 				</div>

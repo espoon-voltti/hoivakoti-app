@@ -360,7 +360,7 @@ export const translations = {
 		"sv-FI": "Bekanta dig med vårdhemmet",
 	},
 	accessibility: { "fi-FI": "Esteettömyys", "sv-FI": "Tillgänglighet" },
-	personnel: { "fi-FI": "Henkilökunta", "sv-FI": "Personnal" },
+	personnel: { "fi-FI": "Henkilökunta", "sv-FI": "Personal" },
 	otherServices: {
 		"fi-FI": "Muut hoivakodin palvelut",
 		"sv-FI": "Vårdhemmets övriga tjänster",
