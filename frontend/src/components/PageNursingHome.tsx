@@ -598,9 +598,9 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		<>
 			{id && <div id={id} />}
 			<div className={className}>
-				<Link to={`/hoivakodit/${nursingHome.id}/anna-arvio`} className="nursinghome-details-box-survey-link">
+				{/*<Link to={`/hoivakodit/${nursingHome.id}/anna-arvio`} className="nursinghome-details-box-survey-link">
 					<button className="btn report_info_btn">{giveReview}</button>
-				</Link>
+				</Link>*/}
 				<div className="nursinghome-details-box-section">
 					<Image
 						nursingHome={nursingHome}
@@ -646,7 +646,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<dd>{nursingHome.arrival_guide_car}</dd>
 					</dl>
 				</div>
-				<div className="nursinghome-details-box-section">
+				{/*<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
 						<p className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"}>{clientReviews}</p>
 						<p className="report_info_minor_header">{nursingHome.rating && nursingHome.rating.average ? ratingToString(nursingHome.rating.average) : "Ei annettuja arvioita"}</p>
@@ -655,7 +655,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<button className="btn report_info_btn">{readMore}</button>
 						</Link>
 					</div>
-				</div>
+					</div>*/}
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
 						<p className={hasReport ? "" : "hidden"}>{reportScoreHeader}</p>

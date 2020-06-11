@@ -128,6 +128,18 @@ async function CreateNursingHomeReportsTable(): Promise<void> {
 		table.binary("report_file");
 		
 	});
+
+	const nursingHomes = await GetAllNursingHomes();
+	for(const nursingHome of nursingHomes){
+		if(nursingHome.city != "Espoo"){
+			await knex
+				.table("NursingHomeReports")
+				.insert({
+					nursinghome_id: nursingHome.id,
+					status: "no-info"
+				});
+		}
+	}
 }
 
 async function CreateAdminSessionsTable(): Promise<void> {
@@ -338,7 +350,14 @@ export async function InsertNursingHomeToDB(
 			district: postal_code_to_district[nursingHome.postal_code],
 			basic_update_key: basicUpdateKey,
 		});
-		//await SetUpRatingsTable(uuid)
+		if(nursingHome.city != "Espoo"){
+			await knex
+				.table("NursingHomeReports")
+				.insert({
+					nursinghome_id: uuid,
+					status: "no-info"
+				});
+		}
 
 		return uuid;
 	}
