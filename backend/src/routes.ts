@@ -12,6 +12,7 @@ import {
 	DropAndRecreateTables,
 	DropAndRecreateSurveyAnswerTables,
 	DropAndRecreateSurveyTables,
+	DropAndRecreateReportsTables,
 	UploadPics,
 	GetAllPicsAndDescriptions,
 	GetPicsAndDescriptions,
@@ -77,6 +78,10 @@ router.post("/api/nursing-homes/drop-survey-answers", async ctx => {
 
 router.post("/api/nursing-homes/drop-surveys", async ctx => {
 	ctx.body = await DropAndRecreateSurveyTables(ctx);
+});
+
+router.post("/api/nursing-homes/drop-reports", async ctx => {
+	ctx.body = await DropAndRecreateReportsTables(ctx);
 });
 
 router.post("/api/nursing-homes/upload-pics", async ctx => {
