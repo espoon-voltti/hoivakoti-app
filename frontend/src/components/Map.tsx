@@ -136,6 +136,7 @@ const Map: FC<Props> = ({ nursingHomes, popup, onSelectNursingHome }) => {
 					>
 						<CardNursingHome
 							nursinghome={popup.selectedNursingHome}
+							type="narrow"
 							className="card-narrow"
 						/>
 					</Popup>

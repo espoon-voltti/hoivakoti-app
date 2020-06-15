@@ -204,7 +204,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				</div>
 				<button className={type== "admin" ? "btn":"hidden"} onClick={(e) => {openBtnLink(e, `/hoivakodit/${nursinghome.id}/valvonta/`)}}>Lisää uusi käynti</button>
 			</div>
-			<div className={type == "admin" ? "hidden": "card-nursing-home-boxes"}>
+			<div className={type == "admin" || type == "narrow" ? "hidden": "card-nursing-home-boxes"}>
 					{/*<div className="card-nursing-home-public-status no-left-border">
 						<div>
 							<p className={nursinghome.rating.average ? "" : "hidden"}>Omaisten arvio</p>

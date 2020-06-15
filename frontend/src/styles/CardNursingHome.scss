@@ -26,6 +26,9 @@
 	.card-list-item-container {
 		display: flex;
 	}
+	.card-narrow > .card-list-item-container {
+		display: block;
+	}
 }
 
 .card-list-item-borders {
