@@ -10,6 +10,8 @@ Hoivakoti-sovellus pyörii osoitteessa: https://hoivakodit.espoo.fi/fi-FI/
 
 Sovelluksen mukana tulee docker- ja docker-compose -tiedostot. Dockerilla ajettaessa ainoa vaatimus on toimiva docker-installaatio.
 
+Circle CI -konfiguraatio käyttää Espoon sisäisiä komponentteja.
+
 Dockerin ulkopuolella ajettaessa tarvitaan:
  - PostgreSQL
  - Node 10+ (`nvm` suositeltu asennettujen Node-versioiden hallintaan)
