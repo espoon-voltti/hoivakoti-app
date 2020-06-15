@@ -131,7 +131,7 @@ async function CreateNursingHomeReportsTable(): Promise<void> {
 
 	const nursingHomes = await GetAllNursingHomes();
 	for(const nursingHome of nursingHomes){
-		if(nursingHome.city != "Espoo"){
+		if(nursingHome.city != "Espoo" && nursingHome.city != "Esbo"){
 			await knex
 				.table("NursingHomeReports")
 				.insert({
@@ -302,6 +302,13 @@ export async function DropAndRecreateNursingHomeSurveyQuestionsTable(): Promise<
 	return result;
 }
 
+export async function DropAndRecreateReportsTable(): Promise<void> {
+	const exists = await knex.schema.hasTable("NursingHomeReports");
+	if (exists) await knex.schema.dropTable("NursingHomeReports");
+	const result = await CreateNursingHomeReportsTable();
+	return result;
+}
+
 export async function InsertNursingHomeToDB(
 	nursingHome: NursingHome,
 ): Promise<string> {
@@ -350,7 +357,7 @@ export async function InsertNursingHomeToDB(
 			district: postal_code_to_district[nursingHome.postal_code],
 			basic_update_key: basicUpdateKey,
 		});
-		if(nursingHome.city != "Espoo"){
+		if(nursingHome.city != "Espoo" && nursingHome.city != "Esbo"){
 			await knex
 				.table("NursingHomeReports")
 				.insert({
