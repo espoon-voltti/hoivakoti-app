@@ -44,7 +44,7 @@ export const translations = {
 	},
 	urlServiceVoucher: {
 		"fi-FI":
-			"https://www.espoo.fi/fi-FI/Seniorit/Seniorien_asuminen/Hoivaasuminen",
+			"https://www.espoo.fi/fi-FI/Seniorit/Seniorien_asuminen/Tehostettu_palveluasuminen",
 		"sv-FI": "https://www.esbo.fi/sv-FI/Seniorer/Seniorboende/Vardboende",
 	},
 	linkServiceVoucher: {
