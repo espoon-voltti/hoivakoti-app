@@ -475,6 +475,7 @@ export async function SubmitSurveyResponse(
 			.select()
 			.where({
 				key: key,
+				nursinghome_id: nursinghomeId,
 				replaced: false
 			});
 		
@@ -546,6 +547,7 @@ export async function SubmitSurveyResponse(
 			.table("NursingHomeSurveyAnswers")
 			.where({
 				key: key,
+				nursinghome_id: nursinghomeId,
 				replaced: false
 			})
 			.update({
