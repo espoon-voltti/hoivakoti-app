@@ -205,21 +205,21 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				<button className={type== "admin" ? "btn":"hidden"} onClick={(e) => {openBtnLink(e, `/hoivakodit/${nursinghome.id}/valvonta/`)}}>Lisää uusi käynti</button>
 			</div>
 			<div className={type == "admin" || type == "narrow" ? "hidden": "card-nursing-home-boxes"}>
-					{/*<div className="card-nursing-home-public-status no-left-border">
+					<div className="card-nursing-home-public-status no-left-border">
 						<div>
 							<p className={nursinghome.rating.average ? "" : "hidden"}>Omaisten arvio</p>
 							<p className="card-nursing-home-public-status-header">{ratingToString(nursinghome.rating.average)}</p>
 							<p>{nursinghome.rating.average ? nursinghome.rating.average.toPrecision(2) + " / 5" : ""}</p>
 							<p>({nursinghome.rating.answers} arviota)</p>
 						</div>
-							</div>	*/}
-					<div className="card-nursing-home-public-status no-left-border">
+					</div>
+					{/*<div className="card-nursing-home-public-status no-left-border">
 						<div>
 							<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
 							<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}`}</p>
 							<p className={!nursinghome.report_status.status || ["waiting", "no-info"].includes(nursinghome.report_status.status) ? "hidden" : ""}>{reportScore}</p>
 						</div>
-					</div>	
+					</div>*/}
 				</div>
 		</Link>
 		
