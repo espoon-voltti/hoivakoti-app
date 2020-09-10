@@ -5,7 +5,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useT } from "../i18n";
 import config from "./config";
 import VacancyStatusBadge from "./VacancyStatusBadge";
-import PageAdmin from "./PageAdmin";
 
 type NursingHomeSmallProps = {
 	nursinghome: NursingHome;
@@ -213,13 +212,13 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 							<p>({nursinghome.rating.answers} arviota)</p>
 						</div>
 					</div>
-					{/*<div className="card-nursing-home-public-status no-left-border">
+					<div className="card-nursing-home-public-status no-left-border">
 						<div>
 							<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
 							<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}`}</p>
 							<p className={!nursinghome.report_status.status || ["waiting", "no-info"].includes(nursinghome.report_status.status) ? "hidden" : ""}>{reportScore}</p>
 						</div>
-					</div>*/}
+					</div>
 				</div>
 		</Link>
 		
