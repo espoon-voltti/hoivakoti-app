@@ -656,7 +656,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						</Link>
 					</div>
 				</div>
-				{/*<div className="nursinghome-details-box-section">
+				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
 						<p className={hasReport ? "" : "hidden"}>{reportScoreHeader}</p>
 						<p className="report_info_minor_header">{reportStatus}</p>
@@ -665,7 +665,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 
 						{hasReport ? <a href={`/api/nursing-homes/${nursingHome.id}/raportti/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(reportDate)}.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">{openReport}</a> : ""}
 					</div>
-				</div>*/}
+				</div>
 			</div>
 		</>
 	);
