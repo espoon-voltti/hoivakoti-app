@@ -107,12 +107,10 @@ async function CreateNursingHomePicturesTable(): Promise<void> {
 		nursing_home_pictures_columns_info.map((row_info: any) => {
 			if (row_info.sql.includes("caption")) {
 				table.string(row_info.sql);
-				console.log("Setting string row: " + row_info.sql);
 			} else {
 				table.binary(row_info.sql);
 				table.string(row_info.sql + "_hash");
 				table.string(row_info.sql + "_drive_id");
-				console.log("Setting binary row: " + row_info.sql);
 			}
 		});
 		table.string("nursinghome_id");
@@ -481,6 +479,8 @@ export async function SubmitSurveyResponse(
 		
 		if(existingAnswer.length != 0){
 
+			updateTotal = 0 //do not increment total count to NursingHomeSurveyTotalScores
+
 			oldAnswersNursingHomeId = existingAnswer[0].nursinghome_id;
 
 			for (const answer of existingAnswer) {
@@ -492,9 +492,9 @@ export async function SubmitSurveyResponse(
 						question_id: answer.question_id, 
 						nursinghome_id: oldAnswersNursingHomeId
 					});
-
+				
 				let newAvg = currentScores[0].average * currentScores[0].answers - answer.answer; //remove old answer from average
-				if (newAvg > 0) newAvg = newAvg / currentScores[0].answers - 1;
+				if (newAvg > 0) newAvg = newAvg / (currentScores[0].answers - 1);
 				
 				await knex
 					.table("NursingHomeSurveyScores")
@@ -508,39 +508,6 @@ export async function SubmitSurveyResponse(
 					});
 			}
 
-			const cleanScores = await knex
-				.table("NursingHomeSurveyScores")
-				.select()
-				.where({
-					nursinghome_id: oldAnswersNursingHomeId
-				});
-
-			let sumAvg = 0;
-			let numQuestions = 0;
-
-			for (const question of cleanScores) {
-				const questions = await knex
-					.table("NursingHomeSurveyQuestions")
-					.select()
-					.where({
-						id: question.question_id
-					});
-				
-				if(questions[0].survey_id == survey[0].surveyId) {
-					sumAvg += question.average;
-					numQuestions += 1;
-				}
-			}
-
-			await knex
-				.table("NursingHomeSurveyTotalScores")
-				.where({
-					nursinghome_id: oldAnswersNursingHomeId
-				})
-				.update({
-					average: (sumAvg / numQuestions),
-					answers: numQuestions
-				});
 		}
 
 		await knex
@@ -590,35 +557,34 @@ export async function SubmitSurveyResponse(
 			}else{
 
 				if (validNumericSurveyScore(question.value)){
+					const newSum = currentScores[0].answers + 1;
+					const newAvg = (currentScores[0].average * currentScores[0].answers + question.value) / newSum;
 
-						const newSum = currentScores[0].answers + 1;
-						const newAvg = (currentScores[0].average * currentScores[0].answers + question.value) / newSum;
+					await knex
+						.table("NursingHomeSurveyScores")
+						.where({
+							question_id: question.id, 
+							nursinghome_id: nursinghomeId
+						})
+						.update({
+							answers: newSum,
+							average: newAvg
+						});
 
-						await knex
-							.table("NursingHomeSurveyScores")
-							.where({
-								question_id: question.id, 
-								nursinghome_id: nursinghomeId
-							})
-							.update({
-								answers: newSum,
-								average: newAvg
-							});
-
-						await knex
-							.table("NursingHomeSurveyAnswers")
-							.insert({
-								question_id: question.id, 
-								nursinghome_id: nursinghomeId,
-								answer: question.value,
-								key: key,
-								replaced: false
-								
-							});
+					await knex
+						.table("NursingHomeSurveyAnswers")
+						.insert({
+							question_id: question.id, 
+							nursinghome_id: nursinghomeId,
+							answer: question.value,
+							key: key,
+							replaced: false
+							
+						});
 
 
-						totalScore += newAvg;
-						numQuestions += 1;
+					totalScore += newAvg;
+					numQuestions += 1;
 
 				}else if (currentScores.length > 0){
 					totalScore += currentScores[0].average;
@@ -634,7 +600,7 @@ export async function SubmitSurveyResponse(
 			.where({
 				nursinghome_id: nursinghomeId
 			});
-
+		
 		if(numQuestions > 0){
 			if(currentTotal.length === 0){
 				await knex
