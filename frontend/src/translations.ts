@@ -594,6 +594,10 @@ export const translations = {
 		"fi-FI": "Raasepori",
 		"sv-FI": "Raseborg",
 	},
+	sipoo: {
+		"fi-FI": "Sipoo",
+		"sv-FI": "Sibbo",
+	},
 	siuntio: {
 		"fi-FI": "Siuntio",
 		"sv-FI": "Sjundeå",
