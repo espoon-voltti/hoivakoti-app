@@ -66,6 +66,7 @@
 		"**/**/node-forge": "^0.10.0",
 		"**/**/yargs-parser": "^13.1.2",
 		"**/**/handlebars": "^4.5.3",
-		"**/**/http-proxy": "^1.18.1" 
+		"**/**/http-proxy": "^1.18.1",
+		"**/**/object-path": "0.11.5"
 	}
 }
