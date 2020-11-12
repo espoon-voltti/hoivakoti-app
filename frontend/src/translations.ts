@@ -765,7 +765,7 @@ export const translations = {
 		"sv-FI": "Anhörigas bedömning",
 	},
 	clientReviewsBy: {
-		"fi-FI": "Omaisten antamat arvio",
+		"fi-FI": "Omaisten antamat arviot",
 		"sv-FI": "Anhörigas bedömningar",
 	},
 	nursingHomeReviews:{
