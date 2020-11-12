@@ -848,6 +848,38 @@ export const translations = {
 		"fi-FI": "Palaa palvelun etusivulle",
 		"sv-FI": "Gå tillbaka till tjänstens första sida",
 	},
+	feedbackRelationReview:{
+		"fi-FI": "Omaisten arvio",
+		"sv-FI": "Anhörigas bedömning",
+	},
+	feedbackNoReviews:{
+		"fi-FI": "Ei annettuja arvioita",
+		"sv-FI": "Inga bedömningar",
+	},
+	feedbackReviews:{
+		"fi-FI": "arviota",
+		"sv-FI": "bedömningar",
+	},
+	feedbackGreat:{
+		"fi-FI": "Erinomainen",
+		"sv-FI": "Utmärkt",
+	},
+	feedbackGood:{
+		"fi-FI": "Hyvä",
+		"sv-FI": "God",
+	},
+	feedbackOk:{
+		"fi-FI": "Tyydyttävä",
+		"sv-FI": "Nöjaktig",
+	},
+	feedbackBad:{
+		"fi-FI": "Huono",
+		"sv-FI": "Dålig",
+	},
+	feedbackVeryBad:{
+		"fi-FI": "Erittäin huono",
+		"sv-FI": "Mycket dålig",
+	},
 	"Suomi|Ruotsi": {
 		"fi-FI": "Suomi|Ruotsi",
 		"sv-FI": "Svenska/Finska",
