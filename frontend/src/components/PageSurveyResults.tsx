@@ -113,7 +113,7 @@ const PageSurveyResults: FC = () => {
 
 					<h3 className="page-survey-results-title">{clientReviewsBy}</h3>
 					<p className="page-survey-results-minor-title">{nursingHome.rating.answers} {nReviews}</p>
-					<div className="page-survey-results-container">
+					<div className="page-survey-results-item">
 						{questions}
 					</div>
 					<p className="page-survey-results-minor-title">{averageReviewScore}:<span className="page-survey-results-bold"> {ratingToString(nursingHome.rating.average)}</span> {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>

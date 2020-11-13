@@ -42,6 +42,15 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	let reportStatus = useT("status_waiting");
 	const reportScore = useT("reportScore");
 
+	const feedbackRelationReview = useT("feedbackRelationReview");
+	const feedbackNoReviews = useT("feedbackNoReviews");
+	const feedbackReviews = useT("feedbackReviews");
+	const feedbackGreat = useT("feedbackGreat");
+	const feedbackGood = useT("feedbackGood");
+	const feedbackOk = useT("feedbackOk");
+	const feedbackBad = useT("feedbackBad");
+	const feedbackVeryBad = useT("feedbackVeryBad");
+
 	const getStatusTranslation = (statusStr: string): string => {
 		if(nursinghome && nursinghome.report_status){
 
@@ -76,19 +85,19 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	};
 
 	const ratingToString = (rating: number | null): string => {
-		let str = "Ei annettuja arvioita";
+		let str = feedbackNoReviews;
 
 		if (rating){
 			if (rating > 4.5){
-				str = "Erinomainen";
+				str = feedbackGreat;
 			} else if (rating > 3.5){
-				str = "Hyvä";
+				str = feedbackGood;
 			} else if (rating > 2.5){
-				str = "Tyydyttävä";
+				str = feedbackOk;
 			} else if (rating > 1.5){
-				str = "Huono";
+				str = feedbackBad;
 			} else if (rating > 0.5){
-				str = "Erittäin huono";
+				str = feedbackVeryBad;
 			}
 		}
 
@@ -206,10 +215,10 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			<div className={type == "admin" || type == "narrow" ? "hidden": "card-nursing-home-boxes"}>
 					<div className="card-nursing-home-public-status no-left-border">
 						<div>
-							<p className={nursinghome.rating.average ? "" : "hidden"}>Omaisten arvio</p>
+							<p className={nursinghome.rating.average ? "" : "hidden"}>{feedbackRelationReview}</p>
 							<p className="card-nursing-home-public-status-header">{ratingToString(nursinghome.rating.average)}</p>
 							<p>{nursinghome.rating.average ? nursinghome.rating.average.toPrecision(2) + " / 5" : ""}</p>
-							<p>({nursinghome.rating.answers} arviota)</p>
+							<p>({nursinghome.rating.answers} {feedbackReviews})</p>
 						</div>
 					</div>
 					<div className="card-nursing-home-public-status no-left-border">
