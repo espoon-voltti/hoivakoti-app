@@ -126,7 +126,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 		.map((item: any) => item.replace("_hash", ""));
 
 	delete nursing_home_data.vacancy_last_updated_at;
-	delete nursing_home_data.basic_update_key;
+	// delete nursing_home_data.basic_update_key;
 
 	nursing_home_data["pic_digests"] = pic_digests;
 	nursing_home_data["pics"] = available_pics;

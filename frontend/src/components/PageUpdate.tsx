@@ -2,16 +2,28 @@ import React, { FC, useEffect, useState } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
+import ImageUpload from "./ImageUpload";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome, NursingHomeImageName } from "./types";
-import { stringify } from "querystring";
 
 interface VacancyStatus {
 	has_vacancy: boolean;
 	vacancy_last_updated_at: string | null;
+}
+
+interface NursingHomeRouteParams {
+	id: string;
+	key: string;
+}
+
+interface InputField {
+	label: string;
+	type: string;
+	name: string;
+	value: string | number | boolean | undefined;
 }
 
 const formatDate = (dateString: string | null): string => {
@@ -29,29 +41,30 @@ const requestVacancyStatusUpdate = async (
 	id: string,
 	key: string,
 	status: boolean,
-	images:any,
+	images: any,
 ): Promise<void> => {
 	await axios.post(
 		`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
 		// eslint-disable-next-line @typescript-eslint/camelcase
-		{ 
-			has_vacancy: status
-		}
+		{
+			has_vacancy: status,
+		},
 	);
 
 	for (const image of images) {
 		await axios.post(
 			`${config.API_URL}/nursing-homes/${id}/update-image/${key}`,
 			// eslint-disable-next-line @typescript-eslint/camelcase
-			{ 
-				image: image
-			}
-		)
+			{
+				image: image,
+			},
+		);
 	}
 };
 
 const PageUpdate: FC = () => {
-	const { id, key } = useParams();
+	const { id, key } = useParams<NursingHomeRouteParams>();
+
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [vacancyStatus, setVacancyStatus] = useState<VacancyStatus | null>(
 		null,
@@ -60,37 +73,6 @@ const PageUpdate: FC = () => {
 		null,
 	);
 	const [formState, setFormState] = useState<boolean>(false);
-	const [picCaptions, setPicCaptions] = useState<Record <string, string> | null>(null);
-
-	const imageState = [
-		{name: "overview_outside", remove: false, value: "", text:""},
-		{name: "apartment", remove: false, value: "", text:""},
-		{name: "lounge", remove: false, value: "", text:""},
-		{name: "dining_room", remove: false, value: "", text:""},
-		{name: "outside", remove: false, value: "", text:""},
-		{name: "entrance", remove: false, value: "", text:""},
-		{name: "bathroom", remove: false, value: "", text:""},
-		{name: "apartment_layout", remove: false, value: "", text:""},
-		{name: "nursinghome_layout", remove: false, value: "", text:""},
-		{name: "owner_logo", remove: false, value: "", text:""},
-	];
-
-	const removeImage = (id: string) => {
-		const index = imageState.findIndex( x => x.name === id );
-		imageState[index].remove = true;
-		imageState[index].value = "";
-	}
-
-	const updateImageState = (id: string, state: string) => {
-		const index = imageState.findIndex( x => x.name === id );
-		imageState[index].value = state;
-		imageState[index].remove = false;
-	}
-
-	const updateCaptionState = (id: string, state: string) => {
-		const index = imageState.findIndex( x => x.name === id );
-		imageState[index].text = state;
-	}
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
@@ -98,6 +80,8 @@ const PageUpdate: FC = () => {
 		axios
 			.get(`${config.API_URL}/nursing-homes/${id}`)
 			.then((response: GetNursingHomeResponse) => {
+				console.log(response.data);
+
 				setNursingHome(response.data);
 			})
 			.catch(e => {
@@ -124,6 +108,48 @@ const PageUpdate: FC = () => {
 		}
 	}, [id, key, popupState, vacancyStatus]);
 
+	const imageState = [
+		{ name: "overview_outside", remove: false, value: "", text: "" },
+		{ name: "apartment", remove: false, value: "", text: "" },
+		{ name: "lounge", remove: false, value: "", text: "" },
+		{ name: "dining_room", remove: false, value: "", text: "" },
+		{ name: "outside", remove: false, value: "", text: "" },
+		{ name: "entrance", remove: false, value: "", text: "" },
+		{ name: "bathroom", remove: false, value: "", text: "" },
+		{ name: "apartment_layout", remove: false, value: "", text: "" },
+		{ name: "nursinghome_layout", remove: false, value: "", text: "" },
+		{ name: "owner_logo", remove: false, value: "", text: "" },
+	];
+
+	const nursinghomeImageTypes = [
+		"overview_outside",
+		"apartment",
+		"lounge",
+		"dining_room",
+		"outside",
+		"entrance",
+		"bathroom",
+		"apartment_layout",
+		"nursinghome_layout",
+	];
+
+	const removeImage = (id: string) => {
+		const index = imageState.findIndex(x => x.name === id);
+		imageState[index].remove = true;
+		imageState[index].value = "";
+	};
+
+	const updateImageState = (id: string, state: string) => {
+		const index = imageState.findIndex(x => x.name === id);
+		imageState[index].value = state;
+		imageState[index].remove = false;
+	};
+
+	const updateCaptionState = (id: string, state: string) => {
+		const index = imageState.findIndex(x => x.name === id);
+		imageState[index].text = state;
+	};
+
 	const title = useT("pageUpdateTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
 	const organizationLogo = useT("organizationLogo");
@@ -140,19 +166,8 @@ const PageUpdate: FC = () => {
 	const btnSave = useT("btnSave");
 	const cancel = useT("cancel");
 
-
 	const updatePopupSaved = useT("saved");
 	const updatePopupSaving = useT("saving");
-	
-	const nursinghomeImageTypes = [	"overview_outside",
-									"apartment",
-									"lounge",
-									"dining_room",
-									"outside",
-									"entrance",
-									"bathroom",
-									"apartment_layout",
-									"nursinghome_layout"];
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
@@ -164,9 +179,287 @@ const PageUpdate: FC = () => {
 		setVacancyStatus(null);
 	};
 
-	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>):void => {
+	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
 		window.location.href = window.location.pathname + "/peruuta";
+	};
+
+	let basicFields: InputField[] = [];
+	let contactFields: InputField[] = [];
+	let foodFields: InputField[] = [];
+	let activitiesFields: InputField[] = [];
+	let nursingHomeContactFields: InputField[] = [];
+	let accessibilityFields: InputField[] = [];
+	let staffFields: InputField[] = [];
+	let otherServicesFields: InputField[] = [];
+	let nearbyServicesFields: InputField[] = [];
+
+	if (nursingHome) {
+		basicFields = [
+			{
+				label: "Yhteenveto",
+				type: "textarea",
+				name: "summary",
+				value: nursingHome.summary ? nursingHome.summary : "",
+			},
+			{
+				label: "Omistaja",
+				type: "text",
+				name: "owner",
+				value: nursingHome.owner,
+			},
+			{
+				label: "ARA-kohde",
+				type: "checkbox",
+				name: "ara",
+				value: nursingHome.ara === "Kyllä",
+			},
+			{
+				label: "Rakennusvuosi",
+				type: "text",
+				name: "construction_year",
+				value: nursingHome.construction_year,
+			},
+			{
+				label: "Asuntojen määrä",
+				type: "number",
+				name: "apartment_count",
+				value: nursingHome.apartment_count,
+			},
+			{
+				label: "Asuntojen neliömäärä",
+				type: "text",
+				name: "apartment_square_meters",
+				value: nursingHome.apartment_square_meters,
+			},
+			{
+				label: "Vuokran määrä",
+				type: "text",
+				name: "rent",
+				value: nursingHome.rent,
+			},
+			{
+				label: "Palvelukieli",
+				type: "text",
+				name: "language",
+				value: nursingHome.language,
+			},
+			{
+				label: "Lyhytaikaisen asumisen asuntoja",
+				type: "checkbox",
+				name: "lah",
+				value: nursingHome.lah,
+			},
+		];
+
+		contactFields = [
+			{
+				label: "Katuosoite",
+				type: "text",
+				name: "address",
+				value: nursingHome.address,
+			},
+			{
+				label: "Postinumero",
+				type: "text",
+				name: "postal_code",
+				value: nursingHome.postal_code,
+			},
+			{
+				label: "Kaupunki",
+				type: "text",
+				name: "city",
+				value: nursingHome.city,
+			},
+			{
+				label: "Verkkosivut",
+				type: "text",
+				name: "www",
+				value: nursingHome.www,
+			},
+			{
+				label: "Saapuminen julkisilla kulkuyhteyksillä",
+				type: "textarea",
+				name: "arrival_guide_public_transit",
+				value: nursingHome.arrival_guide_public_transit
+					? nursingHome.arrival_guide_public_transit
+					: "",
+			},
+			{
+				label: "Saapuminen autolla",
+				type: "textarea",
+				name: "arrival_guide_car",
+				value: nursingHome.arrival_guide_car
+					? nursingHome.arrival_guide_car
+					: "",
+			},
+		];
+
+		foodFields = [
+			{
+				label: "Ruoan valmistuksen tapa",
+				type: "text",
+				name: "meals_preparation",
+				value: nursingHome.meals_preparation,
+			},
+			{
+				label: "Lisätietoa ruoasta",
+				type: "textarea",
+				name: "meals_info",
+				value: nursingHome.meals_info ? nursingHome.meals_info : "",
+			},
+			{
+				label: "Ruokalista (linkki)",
+				type: "text",
+				name: "menu_link",
+				value: nursingHome.menu_link,
+			},
+		];
+
+		activitiesFields = [
+			{
+				label: "Aktiviteetit",
+				type: "textarea",
+				name: "activities_info",
+				value: nursingHome.activities_info
+					? nursingHome.activities_info
+					: "",
+			},
+			{
+				label: "Aktiviteetit (linkki)",
+				type: "text",
+				name: "activities_link",
+				value: nursingHome.activities_link,
+			},
+		];
+
+		nursingHomeContactFields = [
+			{
+				label: "Tutustuminen",
+				type: "textarea",
+				name: "tour_info",
+				value: nursingHome.tour_info ? nursingHome.tour_info : "",
+			},
+			{
+				label: "Yhteyshenkilön nimi",
+				type: "text",
+				name: "contact_name",
+				value: nursingHome.contact_name,
+			},
+			{
+				label: "Yhteyshenkilön titteli",
+				type: "text",
+				name: "contact_title",
+				value: nursingHome.contact_title,
+			},
+			{
+				label: "Yhteyshenkilön puh.",
+				type: "text",
+				name: "contact_phone",
+				value: nursingHome.contact_phone,
+			},
+			{
+				label: "Yhteyshenkilön sähköposti",
+				type: "email",
+				name: "email",
+				value: nursingHome.email,
+			},
+			{
+				label: "Yhteyshenkilön puh. info",
+				type: "text",
+				name: "contact_phone_info",
+				value: nursingHome.contact_phone_info,
+			},
+		];
+
+		accessibilityFields = [
+			{
+				label: "Esteettömyys info",
+				type: "textarea",
+				name: "accessibility_info",
+				value: nursingHome.accessibility_info
+					? nursingHome.accessibility_info
+					: "",
+			},
+		];
+
+		staffFields = [
+			{
+				label: "Henkilökunta info",
+				type: "textarea",
+				name: "staff_info",
+				value: nursingHome.staff_info ? nursingHome.staff_info : "",
+			},
+			{
+				label: "Lisätietoja henkilöstön tyytyväisyydestä (linkki)",
+				type: "text",
+				name: "staff_satisfaction_info",
+				value: nursingHome.staff_satisfaction_info,
+			},
+		];
+
+		otherServicesFields = [
+			{
+				label: "Muut palvelut",
+				type: "textarea",
+				name: "other_services",
+				value: nursingHome.other_services
+					? nursingHome.other_services
+					: "",
+			},
+		];
+
+		nearbyServicesFields = [
+			{
+				label: "Lähellä olevat palvelut",
+				type: "textarea",
+				name: "nearby_services",
+				value: nursingHome.nearby_services
+					? nursingHome.nearby_services
+					: "",
+			},
+		];
+	}
+
+	const getInputField = (field: InputField): JSX.Element => {
+		if (field.type === "textarea") {
+			return (
+				<div className="page-update-input">
+					<label htmlFor={field.name}>{field.label}</label>
+					<textarea
+						value={field.value as string}
+						name={field.name}
+						id={field.name}
+					></textarea>
+				</div>
+			);
+		} else if (field.type === "checkbox") {
+			return (
+				<div className="page-update-input">
+					<label htmlFor={field.name}>
+						{field.label}{" "}
+						<input
+							type={field.type}
+							name={field.name}
+							id={field.name}
+							checked={field.value as boolean}
+						/>
+					</label>
+				</div>
+			);
+		} else {
+			return (
+				<div className="page-update-input">
+					<label htmlFor={field.name}>{field.label}</label>
+					<input
+						value={field.value as string}
+						name={field.name}
+						id={field.name}
+						type={field.type}
+					/>
+				</div>
+			);
+		}
 	};
 
 	return (
@@ -176,112 +469,168 @@ const PageUpdate: FC = () => {
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
-					<h1 className="page-update-title">{title}</h1>
-					<form
+						<h1 className="page-update-title">{title}</h1>
+						<form
 							className="page-update-controls"
 							onSubmit={handleSubmit}
 						>
-					<div className="nav-save">
-					<button className="page-update-cancel" onClick={cancelEdit}>{cancel}</button>
-						<button type="submit" className="btn">{btnSave}</button>
+							<div className="nav-save">
+								<button
+									className="page-update-cancel"
+									onClick={cancelEdit}
+								>
+									{cancel}
+								</button>
+								<button type="submit" className="btn">
+									{btnSave}
+								</button>
 
-						{popupState && (
-							<span className="page-update-popup">
-								{popupState === "saving"
-									? updatePopupSaving
-									: updatePopupSaved}
-							</span>
-						)}
-					</div>
-					<div className="page-update-section">
-						
-						<h3 className="page-update-minor-title">{freeApartmentsStatus}</h3>
-						<p className="page-update-data">
-							<strong>{nursingHomeName}: </strong>
-							{nursingHome.name}
-						</p>
-						<p className="page-update-data">
-							<strong>{status}: </strong>
-							{vacancyStatus
-								? vacancyStatus.has_vacancy
-									? labelTrue
-									: labelFalse
-								: loadingText}
-						</p>
-						<p className="page-update-data">
-							<strong>{lastUpdate}: </strong>
-							{vacancyStatus
-								? formatDate(
-										vacancyStatus.vacancy_last_updated_at,
-								  ) || noUpdate
-								: loadingText}
-						</p>
-						<p className="page-update-intro">{intro}</p>
-							
-							<Radio
-								id="update-vacancy-true"
-								name="update-vacancy-true"
-								isSelected={formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(true);
-								}}
-							>
-								{labelTrue}
-							</Radio>
-							<Radio
-								id="update-vacancy-false"
-								name="update-vacancy-false"
-								isSelected={!formState}
-								onChange={isChecked => {
-									if (isChecked) setFormState(false);
-								}}
-							>
-								{labelFalse}
-							</Radio>
-							
+								{popupState && (
+									<span className="page-update-popup">
+										{popupState === "saving"
+											? updatePopupSaving
+											: updatePopupSaved}
+									</span>
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3 className="page-update-minor-title">
+									{freeApartmentsStatus}
+								</h3>
+								<p className="page-update-data">
+									<strong>{nursingHomeName}: </strong>
+									{nursingHome.name}
+								</p>
+								<p className="page-update-data">
+									<strong>{status}: </strong>
+									{vacancyStatus
+										? vacancyStatus.has_vacancy
+											? labelTrue
+											: labelFalse
+										: loadingText}
+								</p>
+								<p className="page-update-data">
+									<strong>{lastUpdate}: </strong>
+									{vacancyStatus
+										? formatDate(
+												vacancyStatus.vacancy_last_updated_at,
+										  ) || noUpdate
+										: loadingText}
+								</p>
+								<p className="page-update-intro">{intro}</p>
+
+								<Radio
+									id="update-vacancy-true"
+									name="update-vacancy-true"
+									isSelected={formState}
+									onChange={isChecked => {
+										if (isChecked) setFormState(true);
+									}}
+								>
+									{labelTrue}
+								</Radio>
+								<Radio
+									id="update-vacancy-false"
+									name="update-vacancy-false"
+									isSelected={!formState}
+									onChange={isChecked => {
+										if (isChecked) setFormState(false);
+									}}
+								>
+									{labelFalse}
+								</Radio>
 							</div>
 						</form>
-					
-					<div className="page-update-section nursinghome-logo-upload">
-						<h3 className="page-update-minor-title">{organizationLogo}</h3>
-						<ImageUpload
-							nursingHome={nursingHome}
-							imageName={"owner_logo" as NursingHomeImageName}
-							useButton={true}
-							textAreaClass="textarea-hidden"
-							onRemove={
-								() => { removeImage("owner_logo")}
-							}
-							onChange={
-								file => { updateImageState("owner_logo", file); }
-							}
-						/>
-					</div>
-
-					<div className="page-update-section">
-						<h3 className="page-update-minor-title">{organizationPhotos}</h3>
-						<p>{organizationPhotosGuide}</p>
-						<div className="flex-container">
-							{nursinghomeImageTypes.map((imageType, idx) => (
-								<ImageUpload
-									nursingHome={nursingHome}
-									imageName={imageType as NursingHomeImageName}
-									useButton={false}
-									textAreaClass="nursinghome-upload-caption"
-									onRemove={
-										() => { removeImage(imageType)}
-									}
-									onChange={
-										file => { updateImageState(imageType, file); }
-									}
-									onCaptionChange={
-										text => { 
-											updateCaptionState(imageType, text); }
-									}
-								/>
-							))}
+						<div className="page-update-section nursinghome-logo-upload">
+							<h3 className="page-update-minor-title">
+								{organizationLogo}
+							</h3>
+							<ImageUpload
+								nursingHome={nursingHome}
+								imageName={"owner_logo" as NursingHomeImageName}
+								useButton={true}
+								textAreaClass="textarea-hidden"
+								onRemove={() => {
+									removeImage("owner_logo");
+								}}
+								onChange={file => {
+									updateImageState("owner_logo", file);
+								}}
+							/>
 						</div>
-					</div>
+						<div className="page-update-section">
+							<h3 className="page-update-minor-title">
+								{organizationPhotos}
+							</h3>
+							<p>{organizationPhotosGuide}</p>
+							<div className="flex-container">
+								{nursinghomeImageTypes.map(imageType => (
+									<ImageUpload
+										nursingHome={nursingHome}
+										imageName={
+											imageType as NursingHomeImageName
+										}
+										useButton={false}
+										textAreaClass="nursinghome-upload-caption"
+										onRemove={() => {
+											removeImage(imageType);
+										}}
+										onChange={file => {
+											updateImageState(imageType, file);
+										}}
+										onCaptionChange={text => {
+											updateCaptionState(imageType, text);
+										}}
+									/>
+								))}
+							</div>
+						</div>
+						<div className="page-update-section">
+							<h3>Perustiedot</h3>
+							{basicFields.map(field => getInputField(field))}
+						</div>
+						<div className="page-update-section">
+							<h3>Yhteystiedot</h3>
+							{contactFields.map(field => getInputField(field))}
+						</div>
+						<div className="page-update-section">
+							<h3>Ruoka</h3>
+							{foodFields.map(field => getInputField(field))}
+						</div>
+						<div className="page-update-section">
+							<h3>Toiminta</h3>
+							{activitiesFields.map(field =>
+								getInputField(field),
+							)}
+						</div>
+						<div className="page-update-section">
+							<h3>Hoivakotiin tutustuminen</h3>
+							{nursingHomeContactFields.map(field =>
+								getInputField(field),
+							)}
+						</div>
+						<div className="page-update-section">
+							<h3>Esteettömyys</h3>
+							{accessibilityFields.map(field =>
+								getInputField(field),
+							)}
+						</div>
+						<div className="page-update-section">
+							<h3>Henkilökunta</h3>
+							{staffFields.map(field => getInputField(field))}
+						</div>
+						<div className="page-update-section">
+							<h3>Muut hoivakodin palvelut</h3>
+							{otherServicesFields.map(field =>
+								getInputField(field),
+							)}
+						</div>
+						<div className="page-update-section">
+							<h3>Lähellä olevat palvelut</h3>
+							{nearbyServicesFields.map(field =>
+								getInputField(field),
+							)}
+						</div>
 					</>
 				)}
 			</div>
@@ -290,136 +639,3 @@ const PageUpdate: FC = () => {
 };
 
 export default PageUpdate;
-
-interface ImageUploadProps {
-	nursingHome: NursingHome | null;
-	imageName: NursingHomeImageName | null | undefined;
-	useButton: boolean;
-	textAreaClass: string;
-	onRemove?: () => void;
-	onChange: (file: any) => void;
-	onCaptionChange?: (text: string) => void;
-}
-
-export const ImageUpload: FC<ImageUploadProps> = ({
-	nursingHome,
-	imageName,
-	useButton,
-	textAreaClass,
-	onRemove,
-	onChange,
-	onCaptionChange
-}) => {
-
-	const organizationLogoBtn = useT("organizationLogoBtn");
-	const uploadPlaceholder = useT("uploadPlaceholder");
-	const imageSizeWarning = useT("warningImageToLarge");
-	const emptyImageSpot = useT("emptyImageSpot");
-	const imageUploadTooltip = useT("imageUploadTooltip");
-	const swapImage = useT("swapImage");
-	const remove = useT("remove");
-
-	let hasImage = true;
-	let imageStateStr = "";
-
-	if (!imageName || !nursingHome || !nursingHome.pic_digests) hasImage = false;
-	let digest: string = "";
-	let caption: string = "";
-	if (hasImage && nursingHome) {
-		digest = (nursingHome.pic_digests as any)[
-			`${imageName}_hash`
-		];
-		caption = (nursingHome.pic_captions as any)[
-			`${imageName}_caption`
-		];
-	}
-	if (!digest) hasImage = false;
-
-	if(hasImage && nursingHome) {
-		imageStateStr = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`
-	}
-
-	if (imageStateStr) hasImage = true;
-
-	const [srcUrl, setImage] = useState(imageStateStr);
-
-	const [captionState, setCaptionState] = useState(caption);
-
-	if (captionState && onCaptionChange) onCaptionChange(captionState);
-
-	const handleImageChange = (
-		event: React.ChangeEvent<HTMLInputElement>,
-		): void => {
-		let file = new Blob;
-
-		if (event.target.files && event.target.files.length > 0) { 
-			file = event.target.files[0]; 
-
-			if(file.size < 4200000){
-				const reader = new FileReader();
-				reader.onloadend = e => {
-					onChange(reader.result);
-					setImage(reader.result as string);
-				}
-				reader.readAsDataURL(file);
-			}else{
-				alert(imageSizeWarning);
-			}
-		}
-	};
-
-	const handleCaptionChange = (
-		event: React.ChangeEvent<HTMLTextAreaElement>,
-		): void => {
-			if (onCaptionChange && event.target.value.length < 201){
-				onCaptionChange(event.target.value);
-				setCaptionState(event.target.value);
-			}
-	};
-
-	const handleRemove= (
-		event: React.MouseEvent <HTMLDivElement, MouseEvent>,
-		): void => {
-			if(onRemove) onRemove();
-			setImage("");
-	};
-	
-	if (!srcUrl)
-		return (
-			<div className="nursinghome-upload-container">
-				<div className="nursinghome-upload-img nursinghome-upload-placeholder">
-					<div className="nursinghome-upload-img-inner">
-						<div className="nursinghome-upload-img-inner-text">{emptyImageSpot}</div>
-						<input type="file" className={useButton ? "input-button" : "input-hidden"} title={imageUploadTooltip} onChange={handleImageChange}/>
-					</div>
-					<button type="submit" className={useButton ? "btn" : "upload-button-hidden"}>{organizationLogoBtn}</button>
-				</div>
-				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} placeholder={uploadPlaceholder} onChange={handleCaptionChange}></textarea>
-			</div>
-		);
-	else
-		return (
-			<div className={"nursinghome-upload-container " + (useButton ? "input-button-layout" : "input-hidden-layout")}>
-				<div className="nursinghome-upload-img">
-					<div
-						className="nursinghome-upload-img-inner"
-						style={{
-							backgroundImage: `url(${srcUrl})`,
-						}}
-					>
-						<div className="nursinghome-upload-img-hover">
-							<div className={useButton ? "input-button" : "input-hidden"}>
-								<div className="nursinghome-upload-img-change-text">{swapImage}</div>
-								<input type="file"  title={imageUploadTooltip} onChange={handleImageChange}/>
-							</div>
-							<div className={useButton ? "nursinghome-upload-button-remove" : "nursinghome-upload-hidden-remove"} onClick={handleRemove}>
-								<div className="nursinghome-upload-img-remove-text">{remove}</div>
-							</div>
-						</div>
-					</div>
-					<button type="submit" className={useButton ? "btn" : "upload-button-hidden"}>{organizationLogoBtn}</button>
-				</div>
-				<textarea className={textAreaClass} value={captionState} name={imageName as string + "_caption"} placeholder={uploadPlaceholder} onChange={handleCaptionChange}></textarea>
-			</div>
-		);
-};
