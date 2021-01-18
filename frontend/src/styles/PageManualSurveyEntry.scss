@@ -1,0 +1,19 @@
+@import "variables.scss";
+
+.manual-survey-question {
+	margin-bottom: 35px;
+    input {
+        border: none;
+        border-bottom: solid 1px $border-color;
+        font-size: 18px;
+		line-height: 18px;
+		margin-left: 5px;
+		width: 50px;
+		text-align: center;
+    }
+
+    span {
+		font-size: 14px;
+	}
+
+}

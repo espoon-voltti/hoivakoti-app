@@ -143,6 +143,15 @@
 	}
 }
 
+.card-list-item__buttons{
+	text-align: right;
+	max-width: 240px;
+
+	& > *{
+		margin-bottom: 10px;
+	}
+}
+
 .card-nursinghome-vacancy-status-badge {
 	line-height: 26px;
 	margin: 2px 0 1px 0;

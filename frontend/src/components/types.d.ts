@@ -1,3 +1,5 @@
+import { Commune } from "./commune";
+
 export type NursingHomeImageName =
 	| "apartment"
 	| "apartment_layout"
@@ -26,6 +28,7 @@ export interface NursingHome {
 	summary?: string;
 	postal_code: string;
 	city: string;
+	customer_commune?: Commune[];
 	arrival_guide_public_transit?: string;
 	arrival_guide_car?: string;
 	construction_year?: number;
@@ -82,14 +85,22 @@ export interface NursingHome {
 		overview_outside_hash: string | null;
 		owner_logo_hash: string | null;
 	};
-	report_status: {
-		status: string;
-		date: string;
-	}
+	report_status: [
+		{
+			status: string;
+			date: string;
+			type: string;
+		},
+	];
 	has_vacancy: boolean | null;
 	rating: {
-		average: number | null;
-		answers: number | null;
-	}
-	
+		average_relatives: number | null;
+		answers_relatives: number | null;
+		average_customers: number | null;
+		answers_customers: number | null;
+	};
+}
+
+export interface GetNursingHomeResponse {
+	data: NursingHome;
 }
