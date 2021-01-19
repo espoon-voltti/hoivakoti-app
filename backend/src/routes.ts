@@ -33,7 +33,7 @@ import {
 	GetSurvey,
 	AdminLogin,
 	CheckLogin,
-	CheckSurveyKey
+	CheckSurveyKey,
 } from "./controllers";
 import config from "./config";
 
@@ -118,7 +118,17 @@ router.get("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 	}
 });
 
-router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
+// router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
+// 	const success = await UpdateNursingHomeInformation(ctx);
+// 	if (!success) {
+// 		ctx.response.status = 403;
+// 		ctx.body = { error: "Forbidden: invalid ID or key" };
+// 	} else {
+// 		ctx.body = { success };
+// 	}
+// });
+
+router.post("/api/nursing-homes/:id/update/:key", async ctx => {
 	const success = await UpdateNursingHomeInformation(ctx);
 	if (!success) {
 		ctx.response.status = 403;
@@ -129,7 +139,7 @@ router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 });
 
 router.get("/api/nursing-homes/:id/raportti/:key", async ctx => {
-  ctx.body = await GetPdf(ctx);
+	ctx.body = await GetPdf(ctx);
 });
 
 router.post("/api/nursing-homes/:id/update-image/:key", async ctx => {
@@ -204,17 +214,22 @@ router.get("/api/survey/:key", async ctx => {
 });
 
 router.post("/api/survey/:id/responses", async ctx => {
-	const res = ""; await SubmitSurveyResponse(ctx);
+	const res = "";
+	await SubmitSurveyResponse(ctx);
 	ctx.body = res;
 });
 
 router.post("/api/survey/:id/answers/:key", async ctx => {
-	const res = ""; await AddNursingHomeSurveyQuestion(ctx);
+	const res = "";
+	await AddNursingHomeSurveyQuestion(ctx);
 	ctx.body = res;
 });
 
 router.get("/api/survey/:id/results/:survey", async ctx => {
-	const res = await GetSurveyWithNursingHomeResults(ctx.params.survey, ctx.params.id);
+	const res = await GetSurveyWithNursingHomeResults(
+		ctx.params.survey,
+		ctx.params.id,
+	);
 	ctx.body = res;
 });
 

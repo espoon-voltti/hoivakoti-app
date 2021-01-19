@@ -55,8 +55,8 @@ const requestVacancyStatusUpdate = async (
 ): Promise<void> => {
 	await axios.post(
 		`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
-		// eslint-disable-next-line @typescript-eslint/camelcase
 		{
+			// eslint-disable-next-line @typescript-eslint/camelcase
 			has_vacancy: status,
 		},
 	);
@@ -64,7 +64,6 @@ const requestVacancyStatusUpdate = async (
 	for (const image of images) {
 		await axios.post(
 			`${config.API_URL}/nursing-homes/${id}/update-image/${key}`,
-			// eslint-disable-next-line @typescript-eslint/camelcase
 			{
 				image: image,
 			},
@@ -463,19 +462,19 @@ const PageUpdate: FC = () => {
 		];
 	}
 
-	const removeImage = (id: string) => {
+	const removeImage = (id: string): void => {
 		const index = imageState.findIndex(x => x.name === id);
 		imageState[index].remove = true;
 		imageState[index].value = "";
 	};
 
-	const updateImageState = (id: string, state: string) => {
+	const updateImageState = (id: string, state: string): void => {
 		const index = imageState.findIndex(x => x.name === id);
 		imageState[index].value = state;
 		imageState[index].remove = false;
 	};
 
-	const updateCaptionState = (id: string, state: string) => {
+	const updateCaptionState = (id: string, state: string): void => {
 		const index = imageState.findIndex(x => x.name === id);
 		imageState[index].text = state;
 	};
@@ -501,7 +500,7 @@ const PageUpdate: FC = () => {
 			| React.ChangeEvent<HTMLInputElement>
 			| React.ChangeEvent<HTMLTextAreaElement>
 			| boolean,
-	) => {
+	): void => {
 		if (nursingHome) {
 			if (typeof data === "boolean") {
 				setNursingHome({ ...nursingHome, [key]: data });
@@ -544,9 +543,10 @@ const PageUpdate: FC = () => {
 						onChange={checked =>
 							handleInputChange(field.name, checked)
 						}
-						children={field.label}
 						isChecked={(field.value as boolean) || false}
-					/>
+					>
+						{field.label}
+					</Checkbox>
 				</div>
 			);
 		} else {
