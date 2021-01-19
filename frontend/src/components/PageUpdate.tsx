@@ -27,6 +27,14 @@ interface InputField {
 	value: string | number | boolean | undefined;
 }
 
+enum InputTypes {
+	text = "text",
+	textarea = "textarea",
+	number = "number",
+	checkbox = "checkbox",
+	email = "email",
+}
+
 const formatDate = (dateString: string | null): string => {
 	if (!dateString) return "";
 	const date = new Date(dateString);
@@ -134,6 +142,51 @@ const PageUpdate: FC = () => {
 		"nursinghome_layout",
 	];
 
+	const title = useT("pageUpdateTitle");
+	const freeApartmentsStatus = useT("freeApartmentsStatus");
+	const organizationLogo = useT("organizationLogo");
+	const organizationPhotos = useT("organizationPhotos");
+	const organizationPhotosGuide = useT("organizationPhotosGuide");
+	const intro = useT("pageUpdateIntro");
+	const labelTrue = useT("vacancyTrue");
+	const labelFalse = useT("vacancyFalse");
+	const loadingText = useT("loadingText");
+	const nursingHomeName = useT("nursingHome");
+	const status = useT("status");
+	const lastUpdate = useT("lastUpdate");
+	const noUpdate = useT("noUpdate");
+	const btnSave = useT("btnSave");
+	const cancel = useT("cancel");
+
+	const textOwner = useT("owner");
+	const textAra = useT("filterAraLabel");
+	const textYearofConst = useT("yearofConst");
+	const textNumApartments = useT("numApartments");
+	const textApartmentSize = useT("apartmentSize");
+	const textRent = useT("rent");
+	const textServiceLanguage = useT("serviceLanguage");
+	const textLAHapartments = useT("LAHapartments");
+	const textWebpage = useT("webpage");
+	const textCookingMethod = useT("cookingMethod");
+	const textFoodMoreInfo = useT("foodMoreInfo");
+	const textLinkMenu = useT("linkMenu");
+	const textActivies = useT("activies");
+	const textLinkMoreInfoActivies = useT("linkMoreInfoActivies");
+	const textOutdoorActivies = useT("outdoorActivies");
+	const textLinkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
+	const textVisitingInfo = useT("visitingInfo");
+	const textAccessibility = useT("accessibility");
+	const textPersonnel = useT("personnel");
+	const textLinkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
+	const textOtherServices = useT("otherServices");
+	const textNearbyServices = useT("nearbyServices");
+	const textBasicInformation = useT("basicInformation");
+	const textContactInfo = useT("contactInfo");
+	const textFoodHeader = useT("foodHeader");
+
+	const updatePopupSaved = useT("saved");
+	const updatePopupSaving = useT("saving");
+
 	let basicFields: InputField[] = [];
 	let contactFields: InputField[] = [];
 	let foodFields: InputField[] = [];
@@ -148,85 +201,85 @@ const PageUpdate: FC = () => {
 		basicFields = [
 			{
 				label: "Yhteenveto",
-				type: "textarea",
+				type: InputTypes.textarea,
 				name: "summary",
 				value: nursingHome.summary ? nursingHome.summary : "",
 			},
 			{
-				label: "Omistaja",
-				type: "text",
+				label: textOwner,
+				type: InputTypes.text,
 				name: "owner",
 				value: nursingHome.owner,
 			},
 			{
-				label: "ARA-kohde",
-				type: "checkbox",
+				label: textAra,
+				type: InputTypes.checkbox,
 				name: "ara",
 				value: nursingHome.ara === "Kyllä",
 			},
 			{
-				label: "Rakennusvuosi",
-				type: "text",
+				label: textYearofConst,
+				type: InputTypes.text,
 				name: "construction_year",
 				value: nursingHome.construction_year,
 			},
 			{
-				label: "Tietoja rakennuksesta",
-				type: "textarea",
+				label: "Lisätietoja rakennuksesta",
+				type: InputTypes.textarea,
 				name: "building_info",
 				value: nursingHome.building_info,
 			},
 			{
-				label: "Asuntojen määrä",
-				type: "number",
+				label: textNumApartments,
+				type: InputTypes.number,
 				name: "apartment_count",
 				value: nursingHome.apartment_count,
 			},
 			{
-				label: "Asuntojen määrä, lisätietoja",
-				type: "textarea",
+				label: "Lisätietoja asuntojen määrästä",
+				type: InputTypes.textarea,
 				name: "apartment_count_info",
 				value: nursingHome.apartment_count_info,
 			},
 			{
-				label: "Asuntojen neliömäärä",
-				type: "text",
+				label: textApartmentSize,
+				type: InputTypes.text,
 				name: "apartment_square_meters",
 				value: nursingHome.apartment_square_meters,
 			},
 			{
 				label: "Asunnoissa oma kylpyhuone",
-				type: "checkbox",
+				type: InputTypes.checkbox,
 				name: "apartments_have_bathroom",
 				value: nursingHome.apartments_have_bathroom,
 			},
 			{
-				label: "Vuokran määrä",
-				type: "text",
+				label: textRent,
+				type: InputTypes.text,
 				name: "rent",
 				value: nursingHome.rent,
 			},
 			{
-				label: "Vuokra lisätietoja",
-				type: "textarea",
+				label: "Lisätietoja vuokrasta",
+				type: InputTypes.textarea,
 				name: "rent_info",
 				value: nursingHome.rent_info,
 			},
 			{
-				label: "Palvelukieli",
-				type: "text",
+				label: textServiceLanguage,
+				type: InputTypes.text,
 				name: "language",
 				value: nursingHome.language,
 			},
 			{
-				label: "Palvelukieli lisätietoja",
-				type: "textarea",
+				label: "Lisätietoja palvelukielestä",
+				type: InputTypes.textarea,
 				name: "language_info",
 				value: nursingHome.language_info,
 			},
 			{
-				label: "Lyhytaikaisen asumisen asuntoja",
-				type: "checkbox",
+				label: textLAHapartments,
+				type: InputTypes.checkbox,
 				name: "lah",
 				value: nursingHome.lah,
 			},
@@ -235,37 +288,37 @@ const PageUpdate: FC = () => {
 		contactFields = [
 			{
 				label: "Katuosoite",
-				type: "text",
+				type: InputTypes.text,
 				name: "address",
 				value: nursingHome.address,
 			},
 			{
 				label: "Postinumero",
-				type: "text",
+				type: InputTypes.text,
 				name: "postal_code",
 				value: nursingHome.postal_code,
 			},
 			{
 				label: "Kaupunki",
-				type: "text",
+				type: InputTypes.text,
 				name: "city",
 				value: nursingHome.city,
 			},
 			{
 				label: "Kaupunginosa",
-				type: "text",
+				type: InputTypes.text,
 				name: "district",
 				value: nursingHome.district,
 			},
 			{
-				label: "Verkkosivut",
-				type: "text",
+				label: textWebpage,
+				type: InputTypes.text,
 				name: "www",
 				value: nursingHome.www,
 			},
 			{
 				label: "Saapuminen julkisilla kulkuyhteyksillä",
-				type: "textarea",
+				type: InputTypes.textarea,
 				name: "arrival_guide_public_transit",
 				value: nursingHome.arrival_guide_public_transit
 					? nursingHome.arrival_guide_public_transit
@@ -273,7 +326,7 @@ const PageUpdate: FC = () => {
 			},
 			{
 				label: "Saapuminen autolla",
-				type: "textarea",
+				type: InputTypes.textarea,
 				name: "arrival_guide_car",
 				value: nursingHome.arrival_guide_car
 					? nursingHome.arrival_guide_car
@@ -283,20 +336,20 @@ const PageUpdate: FC = () => {
 
 		foodFields = [
 			{
-				label: "Ruoan valmistuksen tapa",
-				type: "text",
+				label: textCookingMethod,
+				type: InputTypes.text,
 				name: "meals_preparation",
 				value: nursingHome.meals_preparation,
 			},
 			{
-				label: "Lisätietoa ruoasta",
-				type: "textarea",
+				label: textFoodMoreInfo,
+				type: InputTypes.textarea,
 				name: "meals_info",
 				value: nursingHome.meals_info ? nursingHome.meals_info : "",
 			},
 			{
-				label: "Ruokalista (linkki)",
-				type: "text",
+				label: textLinkMenu,
+				type: InputTypes.text,
 				name: "menu_link",
 				value: nursingHome.menu_link,
 			},
@@ -304,28 +357,28 @@ const PageUpdate: FC = () => {
 
 		activitiesFields = [
 			{
-				label: "Aktiviteetit",
-				type: "textarea",
+				label: textActivies,
+				type: InputTypes.textarea,
 				name: "activities_info",
 				value: nursingHome.activities_info
 					? nursingHome.activities_info
 					: "",
 			},
 			{
-				label: "Aktiviteetit (linkki)",
-				type: "text",
+				label: textLinkMoreInfoActivies,
+				type: InputTypes.text,
 				name: "activities_link",
 				value: nursingHome.activities_link,
 			},
 			{
-				label: "Ulkoilumahdollisuudet",
-				type: "textarea",
+				label: textOutdoorActivies,
+				type: InputTypes.textarea,
 				name: "outdoors_possibilities_info",
 				value: nursingHome.outdoors_possibilities_info,
 			},
 			{
-				label: "Ulkoilumahdollisuudet (linkki)",
-				type: "text",
+				label: textLinkMoreInfoOutdoor,
+				type: InputTypes.text,
 				name: "outdoors_possibilities_link",
 				value: nursingHome.outdoors_possibilities_link,
 			},
@@ -333,38 +386,38 @@ const PageUpdate: FC = () => {
 
 		nursingHomeContactFields = [
 			{
-				label: "Tutustuminen",
-				type: "textarea",
+				label: textVisitingInfo,
+				type: InputTypes.textarea,
 				name: "tour_info",
 				value: nursingHome.tour_info ? nursingHome.tour_info : "",
 			},
 			{
 				label: "Yhteyshenkilön nimi",
-				type: "text",
+				type: InputTypes.text,
 				name: "contact_name",
 				value: nursingHome.contact_name,
 			},
 			{
 				label: "Yhteyshenkilön titteli",
-				type: "text",
+				type: InputTypes.text,
 				name: "contact_title",
 				value: nursingHome.contact_title,
 			},
 			{
-				label: "Yhteyshenkilön puh.",
-				type: "text",
+				label: "Yhteyshenkilön puhelinnumero",
+				type: InputTypes.text,
 				name: "contact_phone",
 				value: nursingHome.contact_phone,
 			},
 			{
 				label: "Yhteyshenkilön sähköposti",
-				type: "email",
+				type: InputTypes.email,
 				name: "email",
 				value: nursingHome.email,
 			},
 			{
-				label: "Yhteyshenkilön puh. info",
-				type: "text",
+				label: "Lisätietoja yhteyshenkilön puhelinnumerosta",
+				type: InputTypes.text,
 				name: "contact_phone_info",
 				value: nursingHome.contact_phone_info,
 			},
@@ -372,8 +425,8 @@ const PageUpdate: FC = () => {
 
 		accessibilityFields = [
 			{
-				label: "Esteettömyys info",
-				type: "textarea",
+				label: textAccessibility,
+				type: InputTypes.textarea,
 				name: "accessibility_info",
 				value: nursingHome.accessibility_info
 					? nursingHome.accessibility_info
@@ -383,14 +436,14 @@ const PageUpdate: FC = () => {
 
 		staffFields = [
 			{
-				label: "Henkilökunta info",
-				type: "textarea",
+				label: textPersonnel,
+				type: InputTypes.textarea,
 				name: "staff_info",
 				value: nursingHome.staff_info ? nursingHome.staff_info : "",
 			},
 			{
-				label: "Lisätietoja henkilöstön tyytyväisyydestä (linkki)",
-				type: "text",
+				label: textLinkMoreInfoPersonnel,
+				type: InputTypes.text,
 				name: "staff_satisfaction_info",
 				value: nursingHome.staff_satisfaction_info,
 			},
@@ -398,8 +451,8 @@ const PageUpdate: FC = () => {
 
 		otherServicesFields = [
 			{
-				label: "Muut palvelut",
-				type: "textarea",
+				label: textOtherServices,
+				type: InputTypes.textarea,
 				name: "other_services",
 				value: nursingHome.other_services
 					? nursingHome.other_services
@@ -409,8 +462,8 @@ const PageUpdate: FC = () => {
 
 		nearbyServicesFields = [
 			{
-				label: "Lähellä olevat palvelut",
-				type: "textarea",
+				label: textNearbyServices,
+				type: InputTypes.textarea,
 				name: "nearby_services",
 				value: nursingHome.nearby_services
 					? nursingHome.nearby_services
@@ -435,25 +488,6 @@ const PageUpdate: FC = () => {
 		const index = imageState.findIndex(x => x.name === id);
 		imageState[index].text = state;
 	};
-
-	const title = useT("pageUpdateTitle");
-	const freeApartmentsStatus = useT("freeApartmentsStatus");
-	const organizationLogo = useT("organizationLogo");
-	const organizationPhotos = useT("organizationPhotos");
-	const organizationPhotosGuide = useT("organizationPhotosGuide");
-	const intro = useT("pageUpdateIntro");
-	const labelTrue = useT("vacancyTrue");
-	const labelFalse = useT("vacancyFalse");
-	const loadingText = useT("loadingText");
-	const nursingHomeName = useT("nursingHome");
-	const status = useT("status");
-	const lastUpdate = useT("lastUpdate");
-	const noUpdate = useT("noUpdate");
-	const btnSave = useT("btnSave");
-	const cancel = useT("cancel");
-
-	const updatePopupSaved = useT("saved");
-	const updatePopupSaving = useT("saving");
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
@@ -653,13 +687,13 @@ const PageUpdate: FC = () => {
 							</div>
 						</div>
 						<div className="page-update-section">
-							<h3>Perustiedot</h3>
+							<h3>{textBasicInformation}</h3>
 							{basicFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>Yhteystiedot</h3>
+							<h3>{textContactInfo}</h3>
 							{contactFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
@@ -671,37 +705,37 @@ const PageUpdate: FC = () => {
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>Toiminta</h3>
+							<h3>{textFoodHeader}</h3>
 							{activitiesFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>Hoivakotiin tutustuminen</h3>
+							<h3>{textVisitingInfo}</h3>
 							{nursingHomeContactFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>Esteettömyys</h3>
+							<h3>{textAccessibility}</h3>
 							{accessibilityFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>Henkilökunta</h3>
+							<h3>{textPersonnel}</h3>
 							{staffFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>Muut hoivakodin palvelut</h3>
+							<h3>{textOtherServices}</h3>
 							{otherServicesFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>Lähellä olevat palvelut</h3>
+							<h3>{textNearbyServices}</h3>
 							{nearbyServicesFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
