@@ -10,18 +10,34 @@
 #### Checklist for pull request creator
 <!-- Check that the necessary steps have been done before the PR is created -->
 
-- [ ] All Terraform changes adhere to the [infra conventions](https://voltti.atlassian.net/wiki/spaces/VOLTTI/pages/502136959/Infra-k+yt+nn+t)
+- [ ] A task has been created for the PR on the Kanban board with necessary details filled (one task / repo)+t#Commit-viestien-muotoilu)
 - [ ] The code is consistent with the existing code base
-- [ ] The code is self-documenting or has been documented sufficiently, e.g., in the README
-- [ ] The branch has been rebased against master before the PR was created
+- [ ] Tests have been written for the change
+- [ ] All tests pass (unit, e2e)
+- [ ] All new code has been linted and there aren't any lint errors
+- [ ] The change has been tested locally, e.g., with httpie
+- [ ] The change has been tested in the browser with the latest Chrome
+- [ ] The change has been tested with a smaller screen (tablet and smartphone / emulator)
+- [ ] The change conforms to the UX specifications
+- [ ] All translations have been added (fi and sv)
+- [ ] The code is self-documenting or has been documented sufficiently, e.g., in the README or inline
+- [ ] The branch has been rebased against dev branch before the PR was created
 
 #### Checklist for pull request reviewer (copy to review text box)
 <!-- Check that the necessary steps have been done in the review. Copy the template beneath for the review. -->
 
 ```
-- [ ] All Terraform changes adhere to the [infra conventions](https://voltti.atlassian.net/wiki/spaces/VOLTTI/pages/502136959/Infra-k+yt+nn+t)
+- [ ] A task has been created for the PR on the Kanban board with necessary details filled (one task / repo)
 - [ ] The code is consistent with the existing code base
-- [ ] All changes in all changed files have been reviewed
-- [ ] The code is self-documenting or has been documented sufficiently, e.g., in the README
-- [ ] The branch has been rebased against master and force pushed if necessary before merging
+- [ ] All changes in all changed files have been reviewed
+- [ ] Tests have been written for the change
+- [ ] All tests pass (unit, e2e)
+- [ ] All new code has been linted and there aren't any lint errors
+- [ ] The change has been tested locally, e.g., with httpie
+- [ ] The change has been tested in the browser with the latest Chrome
+- [ ] The change has been tested with a smaller screen (tablet and smartphone / emulator)
+- [ ] The change conforms to the UX specifications
+- [ ] All translations have been added (fi and sv)
+- [ ] The code is self-documenting or has been documented sufficiently, e.g., in the README or inline
+- [ ] The PR branch has been rebased against dev branch and force pushed if necessary before merging
 ```
