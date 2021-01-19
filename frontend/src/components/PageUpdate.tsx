@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
@@ -495,9 +495,25 @@ const PageUpdate: FC = () => {
 		window.location.href = window.location.pathname + "/peruuta";
 	};
 
-	const handleInputChange = (key: string, value: string | boolean) => {
+	const handleInputChange = (
+		key: string,
+		data:
+			| ChangeEvent<HTMLInputElement>
+			| ChangeEvent<HTMLTextAreaElement>
+			| boolean,
+	) => {
 		if (nursingHome) {
-			setNursingHome({ ...nursingHome, [key]: value });
+			if (typeof data === "boolean") {
+				setNursingHome({ ...nursingHome, [key]: data });
+			} else {
+				const { value, type } = data.target;
+
+				if (type === "number") {
+					setNursingHome({ ...nursingHome, [key]: parseInt(value) });
+				} else {
+					setNursingHome({ ...nursingHome, [key]: value });
+				}
+			}
 		}
 	};
 
@@ -513,9 +529,7 @@ const PageUpdate: FC = () => {
 						value={(field.value as string) || ""}
 						name={field.name}
 						id={field.name}
-						onChange={event =>
-							handleInputChange(field.name, event.target.value)
-						}
+						onChange={event => handleInputChange(field.name, event)}
 					></textarea>
 				</div>
 			);
@@ -544,13 +558,11 @@ const PageUpdate: FC = () => {
 				>
 					<label htmlFor={field.name}>{field.label}</label>
 					<input
-						value={(field.value as string) || ""}
+						value={(field.value as string | number) || ""}
 						name={field.name}
 						id={field.name}
 						type={field.type}
-						onChange={event =>
-							handleInputChange(field.name, event.target.value)
-						}
+						onChange={event => handleInputChange(field.name, event)}
 					/>
 				</div>
 			);
