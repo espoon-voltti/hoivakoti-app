@@ -49,7 +49,7 @@
 		"**/**/yargs-parser": "^13.1.2"
 	},
 	"scripts": {
-		"watch-server": "nodemon --watch 'src/**/*' --watch '../shared/**/*' -e ts,tsx --exec ts-node ./src/index.ts",
+		"watch-server": "npx nodemon --watch 'src/**/*' --watch '../shared/**/*' -e ts,tsx --exec ts-node ./src/index.ts",
 		"start": "ts-node ./src/index.ts",
 		"test": "tsc --skipLibCheck && ava",
 		"lint": "eslint . --ext .ts"
