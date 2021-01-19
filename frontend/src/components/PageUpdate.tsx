@@ -33,6 +33,7 @@ enum InputTypes {
 	number = "number",
 	checkbox = "checkbox",
 	email = "email",
+	url = "url",
 }
 
 const formatDate = (dateString: string | null): string => {
@@ -203,7 +204,7 @@ const PageUpdate: FC = () => {
 				label: "Yhteenveto",
 				type: InputTypes.textarea,
 				name: "summary",
-				value: nursingHome.summary ? nursingHome.summary : "",
+				value: nursingHome.summary,
 			},
 			{
 				label: textOwner,
@@ -215,7 +216,7 @@ const PageUpdate: FC = () => {
 				label: textAra,
 				type: InputTypes.checkbox,
 				name: "ara",
-				value: nursingHome.ara === "Kyllä",
+				value: nursingHome.ara,
 			},
 			{
 				label: textYearofConst,
@@ -320,17 +321,13 @@ const PageUpdate: FC = () => {
 				label: "Saapuminen julkisilla kulkuyhteyksillä",
 				type: InputTypes.textarea,
 				name: "arrival_guide_public_transit",
-				value: nursingHome.arrival_guide_public_transit
-					? nursingHome.arrival_guide_public_transit
-					: "",
+				value: nursingHome.arrival_guide_public_transit,
 			},
 			{
 				label: "Saapuminen autolla",
 				type: InputTypes.textarea,
 				name: "arrival_guide_car",
-				value: nursingHome.arrival_guide_car
-					? nursingHome.arrival_guide_car
-					: "",
+				value: nursingHome.arrival_guide_car,
 			},
 		];
 
@@ -345,11 +342,11 @@ const PageUpdate: FC = () => {
 				label: textFoodMoreInfo,
 				type: InputTypes.textarea,
 				name: "meals_info",
-				value: nursingHome.meals_info ? nursingHome.meals_info : "",
+				value: nursingHome.meals_info,
 			},
 			{
 				label: textLinkMenu,
-				type: InputTypes.text,
+				type: InputTypes.url,
 				name: "menu_link",
 				value: nursingHome.menu_link,
 			},
@@ -360,13 +357,11 @@ const PageUpdate: FC = () => {
 				label: textActivies,
 				type: InputTypes.textarea,
 				name: "activities_info",
-				value: nursingHome.activities_info
-					? nursingHome.activities_info
-					: "",
+				value: nursingHome.activities_info,
 			},
 			{
 				label: textLinkMoreInfoActivies,
-				type: InputTypes.text,
+				type: InputTypes.url,
 				name: "activities_link",
 				value: nursingHome.activities_link,
 			},
@@ -378,7 +373,7 @@ const PageUpdate: FC = () => {
 			},
 			{
 				label: textLinkMoreInfoOutdoor,
-				type: InputTypes.text,
+				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
 				value: nursingHome.outdoors_possibilities_link,
 			},
@@ -389,7 +384,7 @@ const PageUpdate: FC = () => {
 				label: textVisitingInfo,
 				type: InputTypes.textarea,
 				name: "tour_info",
-				value: nursingHome.tour_info ? nursingHome.tour_info : "",
+				value: nursingHome.tour_info,
 			},
 			{
 				label: "Yhteyshenkilön nimi",
@@ -417,7 +412,7 @@ const PageUpdate: FC = () => {
 			},
 			{
 				label: "Lisätietoja yhteyshenkilön puhelinnumerosta",
-				type: InputTypes.text,
+				type: InputTypes.textarea,
 				name: "contact_phone_info",
 				value: nursingHome.contact_phone_info,
 			},
@@ -428,9 +423,7 @@ const PageUpdate: FC = () => {
 				label: textAccessibility,
 				type: InputTypes.textarea,
 				name: "accessibility_info",
-				value: nursingHome.accessibility_info
-					? nursingHome.accessibility_info
-					: "",
+				value: nursingHome.accessibility_info,
 			},
 		];
 
@@ -439,11 +432,11 @@ const PageUpdate: FC = () => {
 				label: textPersonnel,
 				type: InputTypes.textarea,
 				name: "staff_info",
-				value: nursingHome.staff_info ? nursingHome.staff_info : "",
+				value: nursingHome.staff_info,
 			},
 			{
 				label: textLinkMoreInfoPersonnel,
-				type: InputTypes.text,
+				type: InputTypes.url,
 				name: "staff_satisfaction_info",
 				value: nursingHome.staff_satisfaction_info,
 			},
@@ -454,9 +447,7 @@ const PageUpdate: FC = () => {
 				label: textOtherServices,
 				type: InputTypes.textarea,
 				name: "other_services",
-				value: nursingHome.other_services
-					? nursingHome.other_services
-					: "",
+				value: nursingHome.other_services,
 			},
 		];
 
@@ -465,9 +456,7 @@ const PageUpdate: FC = () => {
 				label: textNearbyServices,
 				type: InputTypes.textarea,
 				name: "nearby_services",
-				value: nursingHome.nearby_services
-					? nursingHome.nearby_services
-					: "",
+				value: nursingHome.nearby_services,
 			},
 		];
 	}
@@ -504,6 +493,16 @@ const PageUpdate: FC = () => {
 		window.location.href = window.location.pathname + "/peruuta";
 	};
 
+	const handleInputChange = (key: string, value: string | boolean) => {
+		if (nursingHome) {
+			const updateNursingHome = { ...nursingHome };
+
+			(updateNursingHome as any)[key] = value;
+
+			setNursingHome(updateNursingHome);
+		}
+	};
+
 	const getInputElement = (field: InputField, index: number): JSX.Element => {
 		if (field.type === "textarea") {
 			return (
@@ -513,10 +512,12 @@ const PageUpdate: FC = () => {
 				>
 					<label htmlFor={field.name}>{field.label}</label>
 					<textarea
-						value={(field.value as string) || ""}
+						defaultValue={(field.value as string) || ""}
 						name={field.name}
 						id={field.name}
-						onChange={() => {}}
+						onChange={event =>
+							handleInputChange(field.name, event.target.value)
+						}
 					></textarea>
 				</div>
 			);
@@ -529,9 +530,11 @@ const PageUpdate: FC = () => {
 					<Checkbox
 						name={field.name}
 						id={field.name}
-						onChange={() => {}}
+						onChange={checked =>
+							handleInputChange(field.name, checked)
+						}
 						children={field.label}
-						isChecked={field.value as boolean}
+						isChecked={(field.value as boolean) || false}
 					/>
 				</div>
 			);
@@ -543,11 +546,13 @@ const PageUpdate: FC = () => {
 				>
 					<label htmlFor={field.name}>{field.label}</label>
 					<input
-						value={(field.value as string) || ""}
+						defaultValue={(field.value as string) || ""}
 						name={field.name}
 						id={field.name}
 						type={field.type}
-						onChange={() => {}}
+						onChange={event =>
+							handleInputChange(field.name, event.target.value)
+						}
 					/>
 				</div>
 			);
