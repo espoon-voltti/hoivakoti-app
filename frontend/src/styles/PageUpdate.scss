@@ -130,4 +130,10 @@
 		border-bottom: solid 1px $border-color;
 		width: auto;
 	}
+
+	.checkbox-container {
+		label {
+			display: flex;
+		}
+	}
 }

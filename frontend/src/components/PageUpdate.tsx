@@ -8,6 +8,7 @@ import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome, NursingHomeImageName } from "./types";
+import Checkbox from "./Checkbox";
 
 interface VacancyStatus {
 	has_vacancy: boolean;
@@ -133,57 +134,6 @@ const PageUpdate: FC = () => {
 		"nursinghome_layout",
 	];
 
-	const removeImage = (id: string) => {
-		const index = imageState.findIndex(x => x.name === id);
-		imageState[index].remove = true;
-		imageState[index].value = "";
-	};
-
-	const updateImageState = (id: string, state: string) => {
-		const index = imageState.findIndex(x => x.name === id);
-		imageState[index].value = state;
-		imageState[index].remove = false;
-	};
-
-	const updateCaptionState = (id: string, state: string) => {
-		const index = imageState.findIndex(x => x.name === id);
-		imageState[index].text = state;
-	};
-
-	const title = useT("pageUpdateTitle");
-	const freeApartmentsStatus = useT("freeApartmentsStatus");
-	const organizationLogo = useT("organizationLogo");
-	const organizationPhotos = useT("organizationPhotos");
-	const organizationPhotosGuide = useT("organizationPhotosGuide");
-	const intro = useT("pageUpdateIntro");
-	const labelTrue = useT("vacancyTrue");
-	const labelFalse = useT("vacancyFalse");
-	const loadingText = useT("loadingText");
-	const nursingHomeName = useT("nursingHome");
-	const status = useT("status");
-	const lastUpdate = useT("lastUpdate");
-	const noUpdate = useT("noUpdate");
-	const btnSave = useT("btnSave");
-	const cancel = useT("cancel");
-
-	const updatePopupSaved = useT("saved");
-	const updatePopupSaving = useT("saving");
-
-	const handleSubmit = async (
-		e: React.FormEvent<HTMLFormElement>,
-	): Promise<void> => {
-		e.preventDefault();
-		setPopupState("saving");
-		await requestVacancyStatusUpdate(id, key, formState, imageState);
-		setPopupState("saved");
-		setVacancyStatus(null);
-	};
-
-	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
-		e.preventDefault();
-		window.location.href = window.location.pathname + "/peruuta";
-	};
-
 	let basicFields: InputField[] = [];
 	let contactFields: InputField[] = [];
 	let foodFields: InputField[] = [];
@@ -221,10 +171,22 @@ const PageUpdate: FC = () => {
 				value: nursingHome.construction_year,
 			},
 			{
+				label: "Tietoja rakennuksesta",
+				type: "textarea",
+				name: "building_info",
+				value: nursingHome.building_info,
+			},
+			{
 				label: "Asuntojen määrä",
 				type: "number",
 				name: "apartment_count",
 				value: nursingHome.apartment_count,
+			},
+			{
+				label: "Asuntojen määrä, lisätietoja",
+				type: "textarea",
+				name: "apartment_count_info",
+				value: nursingHome.apartment_count_info,
 			},
 			{
 				label: "Asuntojen neliömäärä",
@@ -233,16 +195,34 @@ const PageUpdate: FC = () => {
 				value: nursingHome.apartment_square_meters,
 			},
 			{
+				label: "Asunnoissa oma kylpyhuone",
+				type: "checkbox",
+				name: "apartments_have_bathroom",
+				value: nursingHome.apartments_have_bathroom,
+			},
+			{
 				label: "Vuokran määrä",
 				type: "text",
 				name: "rent",
 				value: nursingHome.rent,
 			},
 			{
+				label: "Vuokra lisätietoja",
+				type: "textarea",
+				name: "rent_info",
+				value: nursingHome.rent_info,
+			},
+			{
 				label: "Palvelukieli",
 				type: "text",
 				name: "language",
 				value: nursingHome.language,
+			},
+			{
+				label: "Palvelukieli lisätietoja",
+				type: "textarea",
+				name: "language_info",
+				value: nursingHome.language_info,
 			},
 			{
 				label: "Lyhytaikaisen asumisen asuntoja",
@@ -270,6 +250,12 @@ const PageUpdate: FC = () => {
 				type: "text",
 				name: "city",
 				value: nursingHome.city,
+			},
+			{
+				label: "Kaupunginosa",
+				type: "text",
+				name: "district",
+				value: nursingHome.district,
 			},
 			{
 				label: "Verkkosivut",
@@ -330,6 +316,18 @@ const PageUpdate: FC = () => {
 				type: "text",
 				name: "activities_link",
 				value: nursingHome.activities_link,
+			},
+			{
+				label: "Ulkoilumahdollisuudet",
+				type: "textarea",
+				name: "outdoors_possibilities_info",
+				value: nursingHome.outdoors_possibilities_info,
+			},
+			{
+				label: "Ulkoilumahdollisuudet (linkki)",
+				type: "text",
+				name: "outdoors_possibilities_link",
+				value: nursingHome.outdoors_possibilities_link,
 			},
 		];
 
@@ -421,41 +419,101 @@ const PageUpdate: FC = () => {
 		];
 	}
 
-	const getInputField = (field: InputField): JSX.Element => {
+	const removeImage = (id: string) => {
+		const index = imageState.findIndex(x => x.name === id);
+		imageState[index].remove = true;
+		imageState[index].value = "";
+	};
+
+	const updateImageState = (id: string, state: string) => {
+		const index = imageState.findIndex(x => x.name === id);
+		imageState[index].value = state;
+		imageState[index].remove = false;
+	};
+
+	const updateCaptionState = (id: string, state: string) => {
+		const index = imageState.findIndex(x => x.name === id);
+		imageState[index].text = state;
+	};
+
+	const title = useT("pageUpdateTitle");
+	const freeApartmentsStatus = useT("freeApartmentsStatus");
+	const organizationLogo = useT("organizationLogo");
+	const organizationPhotos = useT("organizationPhotos");
+	const organizationPhotosGuide = useT("organizationPhotosGuide");
+	const intro = useT("pageUpdateIntro");
+	const labelTrue = useT("vacancyTrue");
+	const labelFalse = useT("vacancyFalse");
+	const loadingText = useT("loadingText");
+	const nursingHomeName = useT("nursingHome");
+	const status = useT("status");
+	const lastUpdate = useT("lastUpdate");
+	const noUpdate = useT("noUpdate");
+	const btnSave = useT("btnSave");
+	const cancel = useT("cancel");
+
+	const updatePopupSaved = useT("saved");
+	const updatePopupSaving = useT("saving");
+
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+	): Promise<void> => {
+		e.preventDefault();
+		setPopupState("saving");
+		await requestVacancyStatusUpdate(id, key, formState, imageState);
+		setPopupState("saved");
+		setVacancyStatus(null);
+	};
+
+	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
+		e.preventDefault();
+		window.location.href = window.location.pathname + "/peruuta";
+	};
+
+	const getInputElement = (field: InputField, index: number): JSX.Element => {
 		if (field.type === "textarea") {
 			return (
-				<div className="page-update-input">
+				<div
+					className="page-update-input"
+					key={`${field.name}_${index}`}
+				>
 					<label htmlFor={field.name}>{field.label}</label>
 					<textarea
-						value={field.value as string}
+						value={(field.value as string) || ""}
 						name={field.name}
 						id={field.name}
+						onChange={() => {}}
 					></textarea>
 				</div>
 			);
 		} else if (field.type === "checkbox") {
 			return (
-				<div className="page-update-input">
-					<label htmlFor={field.name}>
-						{field.label}{" "}
-						<input
-							type={field.type}
-							name={field.name}
-							id={field.name}
-							checked={field.value as boolean}
-						/>
-					</label>
+				<div
+					className="page-update-input"
+					key={`${field.name}_${index}`}
+				>
+					<Checkbox
+						name={field.name}
+						id={field.name}
+						onChange={() => {}}
+						children={field.label}
+						isChecked={field.value as boolean}
+					/>
 				</div>
 			);
 		} else {
 			return (
-				<div className="page-update-input">
+				<div
+					className="page-update-input"
+					key={`${field.name}_${index}`}
+				>
 					<label htmlFor={field.name}>{field.label}</label>
 					<input
-						value={field.value as string}
+						value={(field.value as string) || ""}
 						name={field.name}
 						id={field.name}
 						type={field.type}
+						onChange={() => {}}
 					/>
 				</div>
 			);
@@ -564,71 +622,88 @@ const PageUpdate: FC = () => {
 							</h3>
 							<p>{organizationPhotosGuide}</p>
 							<div className="flex-container">
-								{nursinghomeImageTypes.map(imageType => (
-									<ImageUpload
-										nursingHome={nursingHome}
-										imageName={
-											imageType as NursingHomeImageName
-										}
-										useButton={false}
-										textAreaClass="nursinghome-upload-caption"
-										onRemove={() => {
-											removeImage(imageType);
-										}}
-										onChange={file => {
-											updateImageState(imageType, file);
-										}}
-										onCaptionChange={text => {
-											updateCaptionState(imageType, text);
-										}}
-									/>
-								))}
+								{nursinghomeImageTypes.map(
+									(imageType, index) => (
+										<ImageUpload
+											key={`${imageType}_${index}`}
+											nursingHome={nursingHome}
+											imageName={
+												imageType as NursingHomeImageName
+											}
+											useButton={false}
+											textAreaClass="nursinghome-upload-caption"
+											onRemove={() => {
+												removeImage(imageType);
+											}}
+											onChange={file => {
+												updateImageState(
+													imageType,
+													file,
+												);
+											}}
+											onCaptionChange={text => {
+												updateCaptionState(
+													imageType,
+													text,
+												);
+											}}
+										/>
+									),
+								)}
 							</div>
 						</div>
 						<div className="page-update-section">
 							<h3>Perustiedot</h3>
-							{basicFields.map(field => getInputField(field))}
+							{basicFields.map((field, index) =>
+								getInputElement(field, index),
+							)}
 						</div>
 						<div className="page-update-section">
 							<h3>Yhteystiedot</h3>
-							{contactFields.map(field => getInputField(field))}
+							{contactFields.map((field, index) =>
+								getInputElement(field, index),
+							)}
 						</div>
 						<div className="page-update-section">
 							<h3>Ruoka</h3>
-							{foodFields.map(field => getInputField(field))}
+							{foodFields.map((field, index) =>
+								getInputElement(field, index),
+							)}
 						</div>
 						<div className="page-update-section">
 							<h3>Toiminta</h3>
-							{activitiesFields.map(field =>
-								getInputField(field),
+							{activitiesFields.map((field, index) =>
+								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>Hoivakotiin tutustuminen</h3>
-							{nursingHomeContactFields.map(field =>
-								getInputField(field),
+							{nursingHomeContactFields.map((field, index) =>
+								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>Esteettömyys</h3>
-							{accessibilityFields.map(field =>
-								getInputField(field),
+							{accessibilityFields.map((field, index) =>
+								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>Henkilökunta</h3>
-							{staffFields.map(field => getInputField(field))}
+							{staffFields.map((field, index) =>
+								getInputElement(field, index),
+							)}
 						</div>
 						<div className="page-update-section">
 							<h3>Muut hoivakodin palvelut</h3>
-							{otherServicesFields.map(field =>
-								getInputField(field),
+							{otherServicesFields.map((field, index) =>
+								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>Lähellä olevat palvelut</h3>
-							{nearbyServicesFields.map(field =>
-								getInputField(field),
+							{nearbyServicesFields.map((field, index) =>
+								getInputElement(field, index),
 							)}
 						</div>
 					</>
