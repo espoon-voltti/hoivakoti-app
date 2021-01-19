@@ -34,6 +34,7 @@ import {
 	AdminLogin,
 	CheckLogin,
 	CheckSurveyKey,
+	UpdateNursingHomeVacancyStatus,
 } from "./controllers";
 import config from "./config";
 
@@ -96,6 +97,16 @@ router.del("/api/nursing-homes/:id", async ctx => {
 	ctx.body = await DeleteNursingHome(ctx);
 });
 
+router.post("/api/nursing-homes/:id/update/:key", async ctx => {
+	const success = await UpdateNursingHomeInformation(ctx);
+	if (!success) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or key" };
+	} else {
+		ctx.body = { success };
+	}
+});
+
 router.get("/api/nursing-homes/:id/pics", async ctx => {
 	ctx.body = await GetPicsAndDescriptions(ctx);
 });
@@ -118,18 +129,8 @@ router.get("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 	}
 });
 
-// router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
-// 	const success = await UpdateNursingHomeInformation(ctx);
-// 	if (!success) {
-// 		ctx.response.status = 403;
-// 		ctx.body = { error: "Forbidden: invalid ID or key" };
-// 	} else {
-// 		ctx.body = { success };
-// 	}
-// });
-
-router.post("/api/nursing-homes/:id/update/:key", async ctx => {
-	const success = await UpdateNursingHomeInformation(ctx);
+router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
+	const success = await UpdateNursingHomeVacancyStatus(ctx);
 	if (!success) {
 		ctx.response.status = 403;
 		ctx.body = { error: "Forbidden: invalid ID or key" };

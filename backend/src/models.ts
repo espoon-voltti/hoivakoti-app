@@ -664,6 +664,22 @@ export async function DeleteNursingHome(id: string): Promise<number> {
 	return result;
 }
 
+export async function UpdateNursingHomeInformation(
+	id: string,
+	basicUpdateKey: string,
+	body: NursingHome,
+): Promise<boolean> {
+	let count = await knex("NursingHomes")
+		.where({ id, basic_update_key: basicUpdateKey })
+		.update({
+			...body,
+		});
+
+	if (count !== 1) return false;
+
+	return true;
+}
+
 export async function DeleteNursingHomePics(id: string): Promise<number> {
 	const result = await knex
 		.table("NursingHomePictures")
@@ -910,36 +926,17 @@ export async function UpdateNursingHomeImage(
 	return true;
 }
 
-// export async function UpdateNursingHomeInformation(
-// 	id: string,
-// 	basicUdpateKey: string,
-// 	status: boolean,
-// ): Promise<boolean> {
-// 	const now = new Date().toISOString();
-
-// 	let count = await knex("NursingHomes")
-// 		.where({ id, basic_update_key: basicUdpateKey })
-// 		.update({
-// 			has_vacancy: status,
-// 			vacancy_last_updated_at: now,
-// 		});
-
-// 	if (count !== 1) return false;
-
-// 	return true;
-// }
-
-export async function UpdateNursingHomeInformation(
+export async function UpdateNursingHomeVacancyStatus(
 	id: string,
-	basicUpdateKey: string,
-	body: NursingHome,
+	basicUdpateKey: string,
+	status: boolean,
 ): Promise<boolean> {
 	const now = new Date().toISOString();
 
 	let count = await knex("NursingHomes")
-		.where({ id, basic_update_key: basicUpdateKey })
+		.where({ id, basic_update_key: basicUdpateKey })
 		.update({
-			...body,
+			has_vacancy: status,
 			vacancy_last_updated_at: now,
 		});
 

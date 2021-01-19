@@ -26,6 +26,7 @@ import {
 	GetDistinctCities,
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
+	UpdateNursingHomeVacancyStatus as UpdateNursingHomeVacancyStatusDB,
 	UploadNursingHomeReport as UploadNursingHomeReportDB,
 	UpdateNursingHomeImage as UpdateNursingHomeImageDB,
 	GetAllBasicUpdateKeys,
@@ -181,6 +182,16 @@ export async function DeleteNursingHome(ctx: any): Promise<number | null> {
 	return result;
 }
 
+export async function UpdateNursingHomeInformation(
+	ctx: Context,
+): Promise<boolean> {
+	const { id, key } = ctx.params;
+
+	const body: NursingHome = ctx.request.body;
+
+	return await UpdateNursingHomeInformationDB(id, key, body);
+}
+
 export async function DropAndRecreateTables(ctx: any): Promise<void | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
@@ -333,25 +344,15 @@ export async function GetNursingHomeVacancyStatus(
 	return await GetNursingHomeVacancyStatusDB(id, key);
 }
 
-// export async function UpdateNursingHomeInformation(
-// 	ctx: Context,
-// ): Promise<boolean> {
-// 	const { id, key } = ctx.params;
-// 	const has_vacancy: boolean = ctx.request.body.has_vacancy;
-// 	if (typeof has_vacancy !== "boolean")
-// 		throw new Error("Invalid value in field 'has_vacancy'!");
-
-// 	return await UpdateNursingHomeInformationDB(id, key, has_vacancy);
-// }
-
-export async function UpdateNursingHomeInformation(
+export async function UpdateNursingHomeVacancyStatus(
 	ctx: Context,
 ): Promise<boolean> {
 	const { id, key } = ctx.params;
+	const has_vacancy: boolean = ctx.request.body.has_vacancy;
+	if (typeof has_vacancy !== "boolean")
+		throw new Error("Invalid value in field 'has_vacancy'!");
 
-	const body: NursingHome = ctx.request.body;
-
-	return await UpdateNursingHomeInformationDB(id, key, body);
+	return await UpdateNursingHomeVacancyStatusDB(id, key, has_vacancy);
 }
 
 export async function UpdateNursingHomeImage(ctx: Context): Promise<boolean> {
