@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
@@ -498,8 +498,8 @@ const PageUpdate: FC = () => {
 	const handleInputChange = (
 		key: string,
 		data:
-			| ChangeEvent<HTMLInputElement>
-			| ChangeEvent<HTMLTextAreaElement>
+			| React.ChangeEvent<HTMLInputElement>
+			| React.ChangeEvent<HTMLTextAreaElement>
 			| boolean,
 	) => {
 		if (nursingHome) {
@@ -508,11 +508,10 @@ const PageUpdate: FC = () => {
 			} else {
 				const { value, type } = data.target;
 
-				if (type === "number") {
-					setNursingHome({ ...nursingHome, [key]: parseInt(value) });
-				} else {
-					setNursingHome({ ...nursingHome, [key]: value });
-				}
+				setNursingHome({
+					...nursingHome,
+					[key]: type === "number" ? parseInt(value) : value,
+				});
 			}
 		}
 	};
