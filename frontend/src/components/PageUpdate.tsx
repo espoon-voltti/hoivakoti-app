@@ -90,8 +90,6 @@ const PageUpdate: FC = () => {
 		axios
 			.get(`${config.API_URL}/nursing-homes/${id}`)
 			.then((response: GetNursingHomeResponse) => {
-				console.log(response.data);
-
 				setNursingHome(response.data);
 			})
 			.catch(e => {
@@ -117,6 +115,10 @@ const PageUpdate: FC = () => {
 				});
 		}
 	}, [id, key, popupState, vacancyStatus]);
+
+	useEffect(() => {
+		console.log(nursingHome);
+	}, [nursingHome]);
 
 	const imageState = [
 		{ name: "overview_outside", remove: false, value: "", text: "" },
@@ -220,7 +222,7 @@ const PageUpdate: FC = () => {
 			},
 			{
 				label: textYearofConst,
-				type: InputTypes.text,
+				type: InputTypes.number,
 				name: "construction_year",
 				value: nursingHome.construction_year,
 			},
@@ -495,11 +497,7 @@ const PageUpdate: FC = () => {
 
 	const handleInputChange = (key: string, value: string | boolean) => {
 		if (nursingHome) {
-			const updateNursingHome = { ...nursingHome };
-
-			(updateNursingHome as any)[key] = value;
-
-			setNursingHome(updateNursingHome);
+			setNursingHome({ ...nursingHome, [key]: value });
 		}
 	};
 
@@ -512,7 +510,7 @@ const PageUpdate: FC = () => {
 				>
 					<label htmlFor={field.name}>{field.label}</label>
 					<textarea
-						defaultValue={(field.value as string) || ""}
+						value={(field.value as string) || ""}
 						name={field.name}
 						id={field.name}
 						onChange={event =>
@@ -546,7 +544,7 @@ const PageUpdate: FC = () => {
 				>
 					<label htmlFor={field.name}>{field.label}</label>
 					<input
-						defaultValue={(field.value as string) || ""}
+						value={(field.value as string) || ""}
 						name={field.name}
 						id={field.name}
 						type={field.type}
