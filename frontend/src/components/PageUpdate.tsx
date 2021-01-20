@@ -34,6 +34,8 @@ enum InputTypes {
 	checkbox = "checkbox",
 	email = "email",
 	url = "url",
+	tel = "tel",
+	radio = "radio",
 }
 
 const formatDate = (dateString: string | null): string => {
@@ -160,31 +162,33 @@ const PageUpdate: FC = () => {
 	const btnSave = useT("btnSave");
 	const cancel = useT("cancel");
 
-	const textOwner = useT("owner");
-	const textAra = useT("filterAraLabel");
-	const textYearofConst = useT("yearofConst");
-	const textNumApartments = useT("numApartments");
-	const textApartmentSize = useT("apartmentSize");
-	const textRent = useT("rent");
-	const textServiceLanguage = useT("serviceLanguage");
-	const textLAHapartments = useT("LAHapartments");
-	const textWebpage = useT("webpage");
-	const textCookingMethod = useT("cookingMethod");
-	const textFoodMoreInfo = useT("foodMoreInfo");
-	const textLinkMenu = useT("linkMenu");
-	const textActivies = useT("activies");
-	const textLinkMoreInfoActivies = useT("linkMoreInfoActivies");
-	const textOutdoorActivies = useT("outdoorActivies");
-	const textLinkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
-	const textVisitingInfo = useT("visitingInfo");
-	const textAccessibility = useT("accessibility");
-	const textPersonnel = useT("personnel");
-	const textLinkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
-	const textOtherServices = useT("otherServices");
-	const textNearbyServices = useT("nearbyServices");
-	const textBasicInformation = useT("basicInformation");
-	const textContactInfo = useT("contactInfo");
-	const textFoodHeader = useT("foodHeader");
+	const labelOwner = useT("owner");
+	const labelAra = useT("filterAraLabel");
+	const labelYearofConst = useT("yearofConst");
+	const labelNumApartments = useT("numApartments");
+	const labelApartmentSize = useT("apartmentSize");
+	const labelRent = useT("rent");
+	const labelServiceLanguage = useT("serviceLanguage");
+	const labelLAHapartments = useT("LAHapartments");
+	const labelWebpage = useT("webpage");
+	const labelCookingMethod = useT("cookingMethod");
+	const labelFoodMoreInfo = useT("foodMoreInfo");
+	const labelLinkMenu = useT("linkMenu");
+	const labelActivies = useT("activies");
+	const labelLinkMoreInfoActivies = useT("linkMoreInfoActivies");
+	const labelOutdoorActivies = useT("outdoorActivies");
+	const labelLinkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
+	const labelVisitingInfo = useT("visitingInfo");
+	const labelAccessibility = useT("accessibility");
+	const labelPersonnel = useT("personnel");
+	const labelLinkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
+	const labelOtherServices = useT("otherServices");
+	const labelNearbyServices = useT("nearbyServices");
+	const labelBasicInformation = useT("basicInformation");
+	const labelContactInfo = useT("contactInfo");
+	const labelFoodHeader = useT("foodHeader");
+	const labelYes = useT("filterYes");
+	const labelNo = useT("filterNo");
 
 	const updatePopupSaved = useT("saved");
 	const updatePopupSaving = useT("saving");
@@ -208,19 +212,19 @@ const PageUpdate: FC = () => {
 				value: nursingHome.summary,
 			},
 			{
-				label: textOwner,
+				label: labelOwner,
 				type: InputTypes.text,
 				name: "owner",
 				value: nursingHome.owner,
 			},
 			{
-				label: textAra,
-				type: InputTypes.checkbox,
+				label: labelAra,
+				type: InputTypes.radio,
 				name: "ara",
 				value: nursingHome.ara,
 			},
 			{
-				label: textYearofConst,
+				label: labelYearofConst,
 				type: InputTypes.number,
 				name: "construction_year",
 				value: nursingHome.construction_year,
@@ -232,7 +236,7 @@ const PageUpdate: FC = () => {
 				value: nursingHome.building_info,
 			},
 			{
-				label: textNumApartments,
+				label: labelNumApartments,
 				type: InputTypes.number,
 				name: "apartment_count",
 				value: nursingHome.apartment_count,
@@ -244,7 +248,7 @@ const PageUpdate: FC = () => {
 				value: nursingHome.apartment_count_info,
 			},
 			{
-				label: textApartmentSize,
+				label: labelApartmentSize,
 				type: InputTypes.text,
 				name: "apartment_square_meters",
 				value: nursingHome.apartment_square_meters,
@@ -256,7 +260,7 @@ const PageUpdate: FC = () => {
 				value: nursingHome.apartments_have_bathroom,
 			},
 			{
-				label: textRent,
+				label: labelRent,
 				type: InputTypes.text,
 				name: "rent",
 				value: nursingHome.rent,
@@ -268,7 +272,7 @@ const PageUpdate: FC = () => {
 				value: nursingHome.rent_info,
 			},
 			{
-				label: textServiceLanguage,
+				label: labelServiceLanguage,
 				type: InputTypes.text,
 				name: "language",
 				value: nursingHome.language,
@@ -280,7 +284,7 @@ const PageUpdate: FC = () => {
 				value: nursingHome.language_info,
 			},
 			{
-				label: textLAHapartments,
+				label: labelLAHapartments,
 				type: InputTypes.checkbox,
 				name: "lah",
 				value: nursingHome.lah,
@@ -313,8 +317,8 @@ const PageUpdate: FC = () => {
 				value: nursingHome.district,
 			},
 			{
-				label: textWebpage,
-				type: InputTypes.text,
+				label: labelWebpage,
+				type: InputTypes.url,
 				name: "www",
 				value: nursingHome.www,
 			},
@@ -334,19 +338,19 @@ const PageUpdate: FC = () => {
 
 		foodFields = [
 			{
-				label: textCookingMethod,
+				label: labelCookingMethod,
 				type: InputTypes.text,
 				name: "meals_preparation",
 				value: nursingHome.meals_preparation,
 			},
 			{
-				label: textFoodMoreInfo,
+				label: labelFoodMoreInfo,
 				type: InputTypes.textarea,
 				name: "meals_info",
 				value: nursingHome.meals_info,
 			},
 			{
-				label: textLinkMenu,
+				label: labelLinkMenu,
 				type: InputTypes.url,
 				name: "menu_link",
 				value: nursingHome.menu_link,
@@ -355,25 +359,25 @@ const PageUpdate: FC = () => {
 
 		activitiesFields = [
 			{
-				label: textActivies,
+				label: labelActivies,
 				type: InputTypes.textarea,
 				name: "activities_info",
 				value: nursingHome.activities_info,
 			},
 			{
-				label: textLinkMoreInfoActivies,
+				label: labelLinkMoreInfoActivies,
 				type: InputTypes.url,
 				name: "activities_link",
 				value: nursingHome.activities_link,
 			},
 			{
-				label: textOutdoorActivies,
+				label: labelOutdoorActivies,
 				type: InputTypes.textarea,
 				name: "outdoors_possibilities_info",
 				value: nursingHome.outdoors_possibilities_info,
 			},
 			{
-				label: textLinkMoreInfoOutdoor,
+				label: labelLinkMoreInfoOutdoor,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
 				value: nursingHome.outdoors_possibilities_link,
@@ -382,7 +386,7 @@ const PageUpdate: FC = () => {
 
 		nursingHomeContactFields = [
 			{
-				label: textVisitingInfo,
+				label: labelVisitingInfo,
 				type: InputTypes.textarea,
 				name: "tour_info",
 				value: nursingHome.tour_info,
@@ -401,7 +405,7 @@ const PageUpdate: FC = () => {
 			},
 			{
 				label: "Yhteyshenkilön puhelinnumero",
-				type: InputTypes.text,
+				type: InputTypes.tel,
 				name: "contact_phone",
 				value: nursingHome.contact_phone,
 			},
@@ -421,7 +425,7 @@ const PageUpdate: FC = () => {
 
 		accessibilityFields = [
 			{
-				label: textAccessibility,
+				label: labelAccessibility,
 				type: InputTypes.textarea,
 				name: "accessibility_info",
 				value: nursingHome.accessibility_info,
@@ -430,13 +434,13 @@ const PageUpdate: FC = () => {
 
 		staffFields = [
 			{
-				label: textPersonnel,
+				label: labelPersonnel,
 				type: InputTypes.textarea,
 				name: "staff_info",
 				value: nursingHome.staff_info,
 			},
 			{
-				label: textLinkMoreInfoPersonnel,
+				label: labelLinkMoreInfoPersonnel,
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
 				value: nursingHome.staff_satisfaction_info,
@@ -445,7 +449,7 @@ const PageUpdate: FC = () => {
 
 		otherServicesFields = [
 			{
-				label: textOtherServices,
+				label: labelOtherServices,
 				type: InputTypes.textarea,
 				name: "other_services",
 				value: nursingHome.other_services,
@@ -454,7 +458,7 @@ const PageUpdate: FC = () => {
 
 		nearbyServicesFields = [
 			{
-				label: textNearbyServices,
+				label: labelNearbyServices,
 				type: InputTypes.textarea,
 				name: "nearby_services",
 				value: nursingHome.nearby_services,
@@ -496,22 +500,17 @@ const PageUpdate: FC = () => {
 
 	const handleInputChange = (
 		key: string,
-		data:
-			| React.ChangeEvent<HTMLInputElement>
-			| React.ChangeEvent<HTMLTextAreaElement>
-			| boolean,
+		type: string,
+		value: string | number | boolean,
 	): void => {
 		if (nursingHome) {
-			if (typeof data === "boolean") {
-				setNursingHome({ ...nursingHome, [key]: data });
-			} else {
-				const { value, type } = data.target;
-
-				setNursingHome({
-					...nursingHome,
-					[key]: type === "number" ? parseInt(value) : value,
-				});
-			}
+			setNursingHome({
+				...nursingHome,
+				[key]:
+					type === "number" && typeof value === "string"
+						? parseInt(value)
+						: value,
+			});
 		}
 	};
 
@@ -527,7 +526,13 @@ const PageUpdate: FC = () => {
 						value={(field.value as string) || ""}
 						name={field.name}
 						id={field.name}
-						onChange={event => handleInputChange(field.name, event)}
+						onChange={event =>
+							handleInputChange(
+								field.name,
+								field.type,
+								event.target.value,
+							)
+						}
 					></textarea>
 				</div>
 			);
@@ -541,12 +546,54 @@ const PageUpdate: FC = () => {
 						name={field.name}
 						id={field.name}
 						onChange={checked =>
-							handleInputChange(field.name, checked)
+							handleInputChange(field.name, field.type, checked)
 						}
 						isChecked={(field.value as boolean) || false}
 					>
 						{field.label}
 					</Checkbox>
+				</div>
+			);
+		} else if (field.type === "radio") {
+			return (
+				<div
+					className="page-update-input"
+					key={`${field.name}_${index}`}
+				>
+					<Radio
+						id={`${field.name}-true`}
+						name={field.name}
+						isSelected={field.value === labelYes}
+						value={labelYes}
+						onChange={isChecked => {
+							if (isChecked) {
+								handleInputChange(
+									field.name,
+									field.type,
+									labelYes,
+								);
+							}
+						}}
+					>
+						{labelAra}
+					</Radio>
+					<Radio
+						id={`${field.name}-false`}
+						name={field.name}
+						isSelected={field.value !== labelYes}
+						value={labelNo}
+						onChange={isChecked => {
+							if (isChecked) {
+								handleInputChange(
+									field.name,
+									field.type,
+									labelNo,
+								);
+							}
+						}}
+					>
+						Ei {labelAra}
+					</Radio>
 				</div>
 			);
 		} else {
@@ -561,7 +608,13 @@ const PageUpdate: FC = () => {
 						name={field.name}
 						id={field.name}
 						type={field.type}
-						onChange={event => handleInputChange(field.name, event)}
+						onChange={event =>
+							handleInputChange(
+								field.name,
+								field.type,
+								event.target.value,
+							)
+						}
 					/>
 				</div>
 			);
@@ -701,55 +754,55 @@ const PageUpdate: FC = () => {
 							</div>
 						</div>
 						<div className="page-update-section">
-							<h3>{textBasicInformation}</h3>
+							<h3>{labelBasicInformation}</h3>
 							{basicFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>{textContactInfo}</h3>
+							<h3>{labelContactInfo}</h3>
 							{contactFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>Ruoka</h3>
+							<h3>{labelFoodHeader}</h3>
 							{foodFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>{textFoodHeader}</h3>
+							<h3>{labelActivies}</h3>
 							{activitiesFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>{textVisitingInfo}</h3>
+							<h3>{labelVisitingInfo}</h3>
 							{nursingHomeContactFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>{textAccessibility}</h3>
+							<h3>{labelAccessibility}</h3>
 							{accessibilityFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>{textPersonnel}</h3>
+							<h3>{labelPersonnel}</h3>
 							{staffFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>{textOtherServices}</h3>
+							<h3>{labelOtherServices}</h3>
 							{otherServicesFields.map((field, index) =>
 								getInputElement(field, index),
 							)}
 						</div>
 						<div className="page-update-section">
-							<h3>{textNearbyServices}</h3>
+							<h3>{labelNearbyServices}</h3>
 							{nearbyServicesFields.map((field, index) =>
 								getInputElement(field, index),
 							)}

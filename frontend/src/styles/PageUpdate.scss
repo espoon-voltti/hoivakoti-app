@@ -126,13 +126,15 @@
 	input[type="text"],
 	input[type="number"],
 	input[type="email"],
-	input[type="url"] {
+	input[type="url"],
+	input[type="tel"] {
 		border: none;
 		border-bottom: solid 1px $border-color;
 		width: auto;
 	}
 
-	.checkbox-container {
+	.checkbox-container,
+	.radio-container {
 		label {
 			display: flex;
 		}
