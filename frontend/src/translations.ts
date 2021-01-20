@@ -439,18 +439,20 @@ export const translations = {
 		"sv-FI": "Fotografier från vårdhemmet",
 	},
 	organizationPhotosGuide: {
-		"fi-FI": "Laita erilaisia kuvia ulko- ja sisäpuolelta (esimerkiksi sisäänkäynti, piha-alue, oleskelutilat, ruokailutilat, asunto ja kylpyhuone). Ensimmäisessä kuvapaikassa oleva kuva näkyy hoivakotilistauksessa. Kaikki kuvat näkyvät hoivakodin sivulla. Kuvien maksimikoko on 4Mt ja kuvatekstien pituus korkeintaan 200 merkkiä.",
-		"sv-FI": "Lägg ut olika bilder som är tagna utomhus och inomhus (t.ex. ingång, gårdsplan, vistelserum, matsal, bostad och badrum). Om du lägger ut bilder på människor, kom ihåg att be om tillstånd. Bilden på den första bildplatsen syns i listan över vårdhem. Alla bilder syns på vårdhemmets sida. ",
+		"fi-FI":
+			"Laita erilaisia kuvia ulko- ja sisäpuolelta (esimerkiksi sisäänkäynti, piha-alue, oleskelutilat, ruokailutilat, asunto ja kylpyhuone). Ensimmäisessä kuvapaikassa oleva kuva näkyy hoivakotilistauksessa. Kaikki kuvat näkyvät hoivakodin sivulla. Kuvien maksimikoko on 4Mt ja kuvatekstien pituus korkeintaan 200 merkkiä.",
+		"sv-FI":
+			"Lägg ut olika bilder som är tagna utomhus och inomhus (t.ex. ingång, gårdsplan, vistelserum, matsal, bostad och badrum). Om du lägger ut bilder på människor, kom ihåg att be om tillstånd. Bilden på den första bildplatsen syns i listan över vårdhem. Alla bilder syns på vårdhemmets sida. ",
 	},
-	emptyImageSpot:{
+	emptyImageSpot: {
 		"fi-FI": "Tyhjä kuvapaikka",
 		"sv-FI": "Tom bildplats",
 	},
-	swapImage:{
+	swapImage: {
 		"fi-FI": "Vaihda kuva",
 		"sv-FI": "Byt bild",
 	},
-	imageUploadTooltip:{
+	imageUploadTooltip: {
 		"fi-FI": "Valitse kuva",
 		"sv-FI": "Välj bilden",
 	},
@@ -475,8 +477,10 @@ export const translations = {
 		"sv-FI": "Lägg till en bildtext genom att skriva här.",
 	},
 	cancelPageContent: {
-		"fi-FI": "Voit halutessasi palata edelliselle sivulle muokkaamaan tai sulkea tämän sivun.",
-		"sv-FI": "Om du vill kan du gå tillbaka till föregående sida för att redigera eller stänga sidan.",
+		"fi-FI":
+			"Voit halutessasi palata edelliselle sivulle muokkaamaan tai sulkea tämän sivun.",
+		"sv-FI":
+			"Om du vill kan du gå tillbaka till föregående sida för att redigera eller stänga sidan.",
 	},
 	clearFilters: {
 		"fi-FI": "Poista rajaukset",
@@ -718,23 +722,32 @@ export const translations = {
 	},
 	status_no_info: {
 		"fi-FI": "Sijaintikunta valvoo. Valvontakäynnin tietoja ei saatavilla.",
-		"sv-FI": "Kommunen där vårdhemmet är beläget sköter tillsynen. Uppgifter saknas.",
+		"sv-FI":
+			"Kommunen där vårdhemmet är beläget sköter tillsynen. Uppgifter saknas.",
 	},
 	status_ok_long: {
-		"fi-FI": "Erinomainen: Toiminta on lain vaatimusten ja sopimuksen mukaista.",
-		"sv-FI": "Utmärkt: Verksamheten är förenlig med lagens krav och avtalet.",
+		"fi-FI":
+			"Erinomainen: Toiminta on lain vaatimusten ja sopimuksen mukaista.",
+		"sv-FI":
+			"Utmärkt: Verksamheten är förenlig med lagens krav och avtalet.",
 	},
 	status_small_issues_long: {
-		"fi-FI": "Hyvä: Toiminnassa on pientä parannettavaa, joka ei kuitenkaan heikennä asiakkaiden hoivan tai turvallisuuden toteutumista.",
-		"sv-FI": "God: Det finns små brister i verksamheten som bör avhjälpas, men de försvagar dock inte klienternas omsorg eller säkerhet.",
+		"fi-FI":
+			"Hyvä: Toiminnassa on pientä parannettavaa, joka ei kuitenkaan heikennä asiakkaiden hoivan tai turvallisuuden toteutumista.",
+		"sv-FI":
+			"God: Det finns små brister i verksamheten som bör avhjälpas, men de försvagar dock inte klienternas omsorg eller säkerhet.",
 	},
 	status_significant_issues_long: {
-		"fi-FI": "Tyydyttävä: Toiminnassa puutteita, jotka palveluntuottajan tulee korjata annetussa määräajassa laadukkaan hoivan toteuttamiseksi.",
-		"sv-FI": "Nöjaktig: det finns brister i verksamheten som tjänsteproducenten ska avhjälpa inom utsatt tid för att vården ska vara av hög kvalitet.",
+		"fi-FI":
+			"Tyydyttävä: Toiminnassa puutteita, jotka palveluntuottajan tulee korjata annetussa määräajassa laadukkaan hoivan toteuttamiseksi.",
+		"sv-FI":
+			"Nöjaktig: det finns brister i verksamheten som tjänsteproducenten ska avhjälpa inom utsatt tid för att vården ska vara av hög kvalitet.",
 	},
 	status_surveillance_long: {
-		"fi-FI": "Tehostetussa valvonnassa: Palveluntuottajan toiminnassa on ilmennyt useita laatupoikkeamia, joiden korjaamista kaupunki valvoo.",
-		"sv-FI": "Under effektiviserad tillsyn: I tjänsteproducentens verksamhet har det framkommit flera kvalitetsavvikelser. Staden övervakar att dessa avhjälps.",
+		"fi-FI":
+			"Tehostetussa valvonnassa: Palveluntuottajan toiminnassa on ilmennyt useita laatupoikkeamia, joiden korjaamista kaupunki valvoo.",
+		"sv-FI":
+			"Under effektiviserad tillsyn: I tjänsteproducentens verksamhet har det framkommit flera kvalitetsavvikelser. Staden övervakar att dessa avhjälps.",
 	},
 	reportScore: {
 		"fi-FI": "Valvontakäynnin loppuarvio",
@@ -768,15 +781,15 @@ export const translations = {
 		"fi-FI": "Omaisten antamat arviot",
 		"sv-FI": "Anhörigas bedömningar",
 	},
-	nursingHomeReviews:{
+	nursingHomeReviews: {
 		"fi-FI": "Arviot hoivakodista",
 		"sv-FI": "Bedömningar av vårdhemmet",
 	},
-	linkBackToBasicInfo:{
+	linkBackToBasicInfo: {
 		"fi-FI": "Palaa perustietoihin",
 		"sv-FI": "Gå tillbaka till basuppgifterna",
 	},
-	nReviews:{
+	nReviews: {
 		"fi-FI": "arviota",
 		"sv-FI": "bedömningar",
 	},
@@ -789,99 +802,178 @@ export const translations = {
 		"sv-FI": "Hur samlas bedömningar in?",
 	},
 	reviewFooterPart1: {
-		"fi-FI": "Omainen voi tehdä arvioinnin Espoon kaupungin antamalla tunnuksella. Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja. Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo.",
-		"sv-FI": "En anhörig kan göra en bedömning med hjälp av en kod som Esbo stad gett. Personuppgifter om den som gör bedömningen lagras inte i portalen. Bedömningen görs genom att man väljer ett siffervärde som beskriver tillfredsställelsen.",
+		"fi-FI":
+			"Omainen voi tehdä arvioinnin Espoon kaupungin antamalla tunnuksella. Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja. Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo.",
+		"sv-FI":
+			"En anhörig kan göra en bedömning med hjälp av en kod som Esbo stad gett. Personuppgifter om den som gör bedömningen lagras inte i portalen. Bedömningen görs genom att man väljer ett siffervärde som beskriver tillfredsställelsen.",
 	},
 	reviewFooterPart2: {
-		"fi-FI": "1=erittäin huono, 2=huono, 3=tyydyttävä, 4=hyvä, 5=erinomainen",
+		"fi-FI":
+			"1=erittäin huono, 2=huono, 3=tyydyttävä, 4=hyvä, 5=erinomainen",
 		"sv-FI": "1=mycket dålig, 2=dålig, 3=nöjaktig, 4=god, 5=utmärkt",
 	},
 	reviewFooterPart3: {
-		"fi-FI": "Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot on tarkoitus lisätä tähän portaaliin myöhemmin.",
-		"sv-FI": "Det är meningen att en möjlighet till fritt formulerad respons och klienternas bedömningar ska läggas till i denna portal senare.",
+		"fi-FI":
+			"Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot on tarkoitus lisätä tähän portaaliin myöhemmin.",
+		"sv-FI":
+			"Det är meningen att en möjlighet till fritt formulerad respons och klienternas bedömningar ska läggas till i denna portal senare.",
 	},
 	reviewFooterPart4: {
-		"fi-FI": "Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista)",
-		"sv-FI": "Klienten och/eller den anhöriga kan ge respons på vårdhemmets verksamhet (till exempel på enskilda situationer)",
+		"fi-FI":
+			"Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista)",
+		"sv-FI":
+			"Klienten och/eller den anhöriga kan ge respons på vårdhemmets verksamhet (till exempel på enskilda situationer)",
 	},
-	reviewFooterLink:{
+	reviewFooterLink: {
 		"fi-FI": "Espoon kaupungin palautepalvelun kautta.",
 		"sv-FI": "via Esbo stads responstjänst",
 	},
-	urlReviewFooterLink:{
-		"fi-FI": "https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut",
-		"sv-FI": "https://easiointi.espoo.fi/eFeedback/sv/Feedback/21-Senioripalvelut",
+	urlReviewFooterLink: {
+		"fi-FI":
+			"https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut",
+		"sv-FI":
+			"https://easiointi.espoo.fi/eFeedback/sv/Feedback/21-Senioripalvelut",
 	},
-	aboutToGiveReview:{
+	aboutToGiveReview: {
 		"fi-FI": "Olet antamassa arviota hoivakodista",
 		"sv-FI": "Du håller på att göra en bedömning av vårdhemmet",
 	},
-	reviewHelpPart1:{
+	reviewHelpPart1: {
 		"fi-FI": "Antamalla arvion autat hoivakotia kehittämään palvelujaan.",
-		"sv-FI": "Genom att göra en bedömning hjälper du vårdhemmet att utveckla sina tjänster.",
+		"sv-FI":
+			"Genom att göra en bedömning hjälper du vårdhemmet att utveckla sina tjänster.",
 	},
-	reviewHelpPart2:{
+	reviewHelpPart2: {
 		"fi-FI": "Vastaaminen kestää noin 2 minuuttia.",
 		"sv-FI": "Det tar cirka 2 minuter att svara.",
 	},
-	reviewHelpPart3:{
-		"fi-FI": "Kirjoita saamasi tunnus. Tunnus on tarkoitettu vain sinun käyttöösi.",
+	reviewHelpPart3: {
+		"fi-FI":
+			"Kirjoita saamasi tunnus. Tunnus on tarkoitettu vain sinun käyttöösi.",
 		"sv-FI": "Skriv koden du fått. Koden är endast avsedd för ditt bruk.",
 	},
-	code:{
+	code: {
 		"fi-FI": "Tunnus",
 		"sv-FI": "Kod",
 	},
-	wrongCode:{
+	wrongCode: {
 		"fi-FI": "Virheellinen tunnus",
 		"sv-FI": "Felaktig kod",
 	},
-	start:{
+	start: {
 		"fi-FI": "Aloita",
 		"sv-FI": "Börja",
 	},
-	thankYouReview:{
+	thankYouReview: {
 		"fi-FI": "Kiitos arviostasi",
 		"sv-FI": "Tack för din bedömning",
 	},
-	backToFrontpage:{
+	backToFrontpage: {
 		"fi-FI": "Palaa palvelun etusivulle",
 		"sv-FI": "Gå tillbaka till tjänstens första sida",
 	},
-	feedbackRelationReview:{
+	feedbackRelationReview: {
 		"fi-FI": "Omaisten arvio",
 		"sv-FI": "Anhörigas bedömning",
 	},
-	feedbackNoReviews:{
+	feedbackNoReviews: {
 		"fi-FI": "Ei annettuja arvioita",
 		"sv-FI": "Inga bedömningar",
 	},
-	feedbackReviews:{
+	feedbackReviews: {
 		"fi-FI": "arviota",
 		"sv-FI": "bedömningar",
 	},
-	feedbackGreat:{
+	feedbackGreat: {
 		"fi-FI": "Erinomainen",
 		"sv-FI": "Utmärkt",
 	},
-	feedbackGood:{
+	feedbackGood: {
 		"fi-FI": "Hyvä",
 		"sv-FI": "God",
 	},
-	feedbackOk:{
+	feedbackOk: {
 		"fi-FI": "Tyydyttävä",
 		"sv-FI": "Nöjaktig",
 	},
-	feedbackBad:{
+	feedbackBad: {
 		"fi-FI": "Huono",
 		"sv-FI": "Dålig",
 	},
-	feedbackVeryBad:{
+	feedbackVeryBad: {
 		"fi-FI": "Erittäin huono",
 		"sv-FI": "Mycket dålig",
 	},
 	"Suomi|Ruotsi": {
 		"fi-FI": "Suomi|Ruotsi",
 		"sv-FI": "Svenska/Finska",
+	},
+	summary: {
+		"fi-FI": "Yhteenveto",
+		"sv-FI": "Sammandrag",
+	},
+	buildingInfo: {
+		"fi-FI": "Lisätietoja hoivakodista",
+		"sv-FI": "Mera information",
+	},
+	apartmentCountInfo: {
+		"fi-FI": "Lisätietoja asuntojen määrästä",
+		"sv-FI": "Mer information",
+	},
+	apartmentsHaveBathroom: {
+		"fi-FI": "Asunnoissa oma kylpyhuone",
+		"sv-FI": "Eget badrum",
+	},
+	rentInfo: {
+		"fi-FI": "Lisätietoja vuokrasta",
+		"sv-FI": "Mer information",
+	},
+	languageInfo: {
+		"fi-FI": "Lisätietoja palvelukielestä",
+		"sv-FI": "Mer information",
+	},
+	address: {
+		"fi-FI": "Katuosoite",
+		"sv-FI": "Adress",
+	},
+	postalCode: {
+		"fi-FI": "Postinumero",
+		"sv-FI": "Postnummer",
+	},
+	city: {
+		"fi-FI": "Kaupunki",
+		"sv-FI": "Stad",
+	},
+	district: {
+		"fi-FI": "Kaupunginosa",
+		"sv-FI": "Distrikt",
+	},
+	arrivalGuidePublicTransit: {
+		"fi-FI": "Saapuminen julkisilla kulkuyhteyksillä",
+		"sv-FI": "Mer information",
+	},
+	arrivalGuideCar: {
+		"fi-FI": "Saapuminen autolla",
+		"sv-FI": "Mer information",
+	},
+	contactName: {
+		"fi-FI": "Yhteyshenkilön nimi",
+		"sv-FI": "Mer information",
+	},
+	contactTitle: {
+		"fi-FI": "Yhteyshenkilön titteli",
+		"sv-FI": "Mer information",
+	},
+	contactPhone: {
+		"fi-FI": "Yhteyshenkilön puhelinnumero",
+		"sv-FI": "Mer information",
+	},
+	contactEmail: {
+		"fi-FI": "Yhteyshenkilön sähköposti",
+		"sv-FI": "Mer information",
+	},
+	contactPhoneInfo: {
+		"fi-FI": "Lisätietoja yhteyshenkilön puhelinnumerosta",
+		"sv-FI": "Mer information",
 	},
 };

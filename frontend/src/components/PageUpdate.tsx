@@ -217,6 +217,23 @@ const PageUpdate: FC = () => {
 	const labelFoodHeader = useT("foodHeader");
 	const labelYes = useT("filterYes");
 	const labelNo = useT("filterNo");
+	const labelSummary = useT("summary");
+	const labelBuildingInfo = useT("buildingInfo");
+	const labelApartmentCountInfo = useT("apartmentCountInfo");
+	const labelApartmentsHaveBathroom = useT("apartmentsHaveBathroom");
+	const labelRentInfo = useT("rentInfo");
+	const labelLanguageInfo = useT("languageInfo");
+	const labelAddress = useT("address");
+	const labelPostalCode = useT("postalCode");
+	const labelCity = useT("city");
+	const labelDistrict = useT("district");
+	const labelArrivalGuidePublicTransit = useT("arrivalGuidePublicTransit");
+	const labelArrivalGuideCar = useT("arrivalGuideCar");
+	const labelContactName = useT("contactName");
+	const labelContactTitle = useT("contactTitle");
+	const labelContactPhone = useT("contactPhone");
+	const labelContactEmail = useT("contactEmail");
+	const labelContactPhoneInfo = useT("contactPhoneInfo");
 
 	const updatePopupSaved = useT("saved");
 	const updatePopupSaving = useT("saving");
@@ -234,7 +251,7 @@ const PageUpdate: FC = () => {
 	if (nursingHome) {
 		basicFields = [
 			{
-				label: "Yhteenveto",
+				label: labelSummary,
 				type: InputTypes.textarea,
 				name: "summary",
 				model: nursingHome.summary,
@@ -262,7 +279,7 @@ const PageUpdate: FC = () => {
 				model: nursingHome.construction_year,
 			},
 			{
-				label: "Lisätietoja rakennuksesta",
+				label: labelBuildingInfo,
 				type: InputTypes.textarea,
 				name: "building_info",
 				model: nursingHome.building_info,
@@ -274,7 +291,7 @@ const PageUpdate: FC = () => {
 				model: nursingHome.apartment_count,
 			},
 			{
-				label: "Lisätietoja asuntojen määrästä",
+				label: labelApartmentCountInfo,
 				type: InputTypes.textarea,
 				name: "apartment_count_info",
 				model: nursingHome.apartment_count_info,
@@ -286,7 +303,7 @@ const PageUpdate: FC = () => {
 				model: nursingHome.apartment_square_meters,
 			},
 			{
-				label: "Asunnoissa oma kylpyhuone",
+				label: labelApartmentsHaveBathroom,
 				type: InputTypes.checkbox,
 				name: "apartments_have_bathroom",
 				model: nursingHome.apartments_have_bathroom,
@@ -298,7 +315,7 @@ const PageUpdate: FC = () => {
 				model: nursingHome.rent,
 			},
 			{
-				label: "Lisätietoja vuokrasta",
+				label: labelRentInfo,
 				type: InputTypes.textarea,
 				name: "rent_info",
 				model: nursingHome.rent_info,
@@ -310,7 +327,7 @@ const PageUpdate: FC = () => {
 				model: nursingHome.language,
 			},
 			{
-				label: "Lisätietoja palvelukielestä",
+				label: labelLanguageInfo,
 				type: InputTypes.textarea,
 				name: "language_info",
 				model: nursingHome.language_info,
@@ -325,25 +342,25 @@ const PageUpdate: FC = () => {
 
 		contactFields = [
 			{
-				label: "Katuosoite",
+				label: labelAddress,
 				type: InputTypes.text,
 				name: "address",
 				model: nursingHome.address,
 			},
 			{
-				label: "Postinumero",
+				label: labelPostalCode,
 				type: InputTypes.text,
 				name: "postal_code",
 				model: nursingHome.postal_code,
 			},
 			{
-				label: "Kaupunki",
+				label: labelCity,
 				type: InputTypes.text,
 				name: "city",
 				model: nursingHome.city,
 			},
 			{
-				label: "Kaupunginosa",
+				label: labelDistrict,
 				type: InputTypes.text,
 				name: "district",
 				model: nursingHome.district,
@@ -355,13 +372,13 @@ const PageUpdate: FC = () => {
 				model: nursingHome.www,
 			},
 			{
-				label: "Saapuminen julkisilla kulkuyhteyksillä",
+				label: labelArrivalGuidePublicTransit,
 				type: InputTypes.textarea,
 				name: "arrival_guide_public_transit",
 				model: nursingHome.arrival_guide_public_transit,
 			},
 			{
-				label: "Saapuminen autolla",
+				label: labelArrivalGuideCar,
 				type: InputTypes.textarea,
 				name: "arrival_guide_car",
 				model: nursingHome.arrival_guide_car,
@@ -424,31 +441,31 @@ const PageUpdate: FC = () => {
 				model: nursingHome.tour_info,
 			},
 			{
-				label: "Yhteyshenkilön nimi",
+				label: labelContactName,
 				type: InputTypes.text,
 				name: "contact_name",
 				model: nursingHome.contact_name,
 			},
 			{
-				label: "Yhteyshenkilön titteli",
+				label: labelContactTitle,
 				type: InputTypes.text,
 				name: "contact_title",
 				model: nursingHome.contact_title,
 			},
 			{
-				label: "Yhteyshenkilön puhelinnumero",
+				label: labelContactPhone,
 				type: InputTypes.tel,
 				name: "contact_phone",
 				model: nursingHome.contact_phone,
 			},
 			{
-				label: "Yhteyshenkilön sähköposti",
+				label: labelContactEmail,
 				type: InputTypes.email,
 				name: "email",
 				model: nursingHome.email,
 			},
 			{
-				label: "Lisätietoja yhteyshenkilön puhelinnumerosta",
+				label: labelContactPhoneInfo,
 				type: InputTypes.textarea,
 				name: "contact_phone_info",
 				model: nursingHome.contact_phone_info,
