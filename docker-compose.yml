@@ -13,6 +13,7 @@ services:
       - ./backend:/usr/app/
       - /usr/app/node_modules
     working_dir: /usr/app/
+    user: root
     command: sh -c "yarn install && yarn run watch-server"
 
   frontend:
