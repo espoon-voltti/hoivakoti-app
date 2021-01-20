@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
-import { NursingHome, NursingHomeImageName } from "./types";
+import { NursingHome, NursingHomeImageName, OptionalProps } from "./types";
 import Checkbox from "./Checkbox";
 
 enum InputTypes {
@@ -39,7 +39,6 @@ interface InputField {
 	buttons?: { value: string; label: string }[];
 }
 
-type OptionalProps<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 type TransformableNursingHome = OptionalProps<
 	NursingHome,
 	| "id"

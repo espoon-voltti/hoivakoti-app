@@ -85,11 +85,13 @@ export interface NursingHome {
 	report_status: {
 		status: string;
 		date: string;
-	}
+	};
 	has_vacancy: boolean | null;
 	rating: {
 		average: number | null;
 		answers: number | null;
-	}
-	
+	};
 }
+
+export type OptionalProps<T, K extends keyof T> = Pick<Partial<T>, K> &
+	Omit<T, K>;
