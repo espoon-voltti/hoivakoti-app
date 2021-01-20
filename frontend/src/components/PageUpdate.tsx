@@ -555,6 +555,7 @@ const PageUpdate: FC = () => {
 				delete transformNursingHomeData.rating;
 				delete transformNursingHomeData.geolocation;
 				delete transformNursingHomeData.has_vacancy;
+				delete transformNursingHomeData.basic_update_key;
 
 				const nursingHomeUpdateData: NursingHomeUpdateData = transformNursingHomeData;
 
