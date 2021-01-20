@@ -543,19 +543,20 @@ const PageUpdate: FC = () => {
 			await requestVacancyStatusUpdate(id, key, formState, imageState);
 
 			if (nursingHome) {
-				const temporaryData: any = { ...nursingHome };
+				const transformNursingHomeData: any = {
+					...nursingHome,
+				};
 
-				delete temporaryData.id;
-				delete temporaryData.pic_digests;
-				delete temporaryData.pics;
-				delete temporaryData.pic_captions;
-				delete temporaryData.report_status;
-				delete temporaryData.rating;
-				delete temporaryData.geolocation;
-				delete temporaryData.has_vacancy;
-				delete temporaryData.basic_update_key;
+				delete transformNursingHomeData.id;
+				delete transformNursingHomeData.pic_digests;
+				delete transformNursingHomeData.pics;
+				delete transformNursingHomeData.pic_captions;
+				delete transformNursingHomeData.report_status;
+				delete transformNursingHomeData.rating;
+				delete transformNursingHomeData.geolocation;
+				delete transformNursingHomeData.has_vacancy;
 
-				const nursingHomeUpdateData: NursingHomeUpdateData = temporaryData;
+				const nursingHomeUpdateData: NursingHomeUpdateData = transformNursingHomeData;
 
 				await requestNursingHomeUpdate(id, key, nursingHomeUpdateData);
 			}
