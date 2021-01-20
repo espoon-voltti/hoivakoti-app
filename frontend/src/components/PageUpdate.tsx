@@ -39,6 +39,19 @@ interface InputField {
 	buttons?: { value: string; label: string }[];
 }
 
+type OptionalProps<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+type TransformableNursingHome = OptionalProps<
+	NursingHome,
+	| "id"
+	| "pic_digests"
+	| "pics"
+	| "pic_captions"
+	| "report_status"
+	| "rating"
+	| "geolocation"
+	| "has_vacancy"
+>;
+
 type NursingHomeUpdateData = Omit<
 	NursingHome,
 	| "id"
@@ -67,7 +80,7 @@ const requestVacancyStatusUpdate = async (
 	id: string,
 	key: string,
 	status: boolean,
-	images: any,
+	images: object[],
 ): Promise<void> => {
 	await axios.post(
 		`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
@@ -543,7 +556,7 @@ const PageUpdate: FC = () => {
 			await requestVacancyStatusUpdate(id, key, formState, imageState);
 
 			if (nursingHome) {
-				const transformNursingHomeData: any = {
+				const transformNursingHomeData: TransformableNursingHome = {
 					...nursingHome,
 				};
 
@@ -555,7 +568,6 @@ const PageUpdate: FC = () => {
 				delete transformNursingHomeData.rating;
 				delete transformNursingHomeData.geolocation;
 				delete transformNursingHomeData.has_vacancy;
-				delete transformNursingHomeData.basic_update_key;
 
 				const nursingHomeUpdateData: NursingHomeUpdateData = transformNursingHomeData;
 
