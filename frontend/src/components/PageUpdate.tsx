@@ -10,6 +10,17 @@ import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome, NursingHomeImageName } from "./types";
 import Checkbox from "./Checkbox";
 
+enum InputTypes {
+	text = "text",
+	textarea = "textarea",
+	number = "number",
+	checkbox = "checkbox",
+	email = "email",
+	url = "url",
+	tel = "tel",
+	radio = "radio",
+}
+
 interface VacancyStatus {
 	has_vacancy: boolean;
 	vacancy_last_updated_at: string | null;
@@ -22,21 +33,24 @@ interface NursingHomeRouteParams {
 
 interface InputField {
 	label: string;
-	type: string;
+	type: InputTypes;
 	name: string;
-	value: string | number | boolean | undefined;
+	model: string | number | boolean | undefined;
+	buttons?: { value: string; label: string }[];
 }
 
-enum InputTypes {
-	text = "text",
-	textarea = "textarea",
-	number = "number",
-	checkbox = "checkbox",
-	email = "email",
-	url = "url",
-	tel = "tel",
-	radio = "radio",
-}
+type NursingHomeUpdateData = Omit<
+	NursingHome,
+	| "id"
+	| "pic_digests"
+	| "pics"
+	| "pic_captions"
+	| "report_status"
+	| "rating"
+	| "geolocation"
+	| "has_vacancy"
+	| "basic_update_key"
+>;
 
 const formatDate = (dateString: string | null): string => {
 	if (!dateString) return "";
@@ -70,6 +84,24 @@ const requestVacancyStatusUpdate = async (
 				image: image,
 			},
 		);
+	}
+};
+
+const requestNursingHomeUpdate = async (
+	id: string,
+	key: string,
+	nursingHomeUpdateData: NursingHomeUpdateData,
+): Promise<void> => {
+	try {
+		await axios.post(
+			`${config.API_URL}/nursing-homes/${id}/update/${key}`,
+			{
+				...nursingHomeUpdateData,
+			},
+		);
+	} catch (error) {
+		console.error(error);
+		throw error;
 	}
 };
 
@@ -116,10 +148,6 @@ const PageUpdate: FC = () => {
 				});
 		}
 	}, [id, key, popupState, vacancyStatus]);
-
-	useEffect(() => {
-		console.log(nursingHome);
-	}, [nursingHome]);
 
 	const imageState = [
 		{ name: "overview_outside", remove: false, value: "", text: "" },
@@ -209,85 +237,89 @@ const PageUpdate: FC = () => {
 				label: "Yhteenveto",
 				type: InputTypes.textarea,
 				name: "summary",
-				value: nursingHome.summary,
+				model: nursingHome.summary,
 			},
 			{
 				label: labelOwner,
 				type: InputTypes.text,
 				name: "owner",
-				value: nursingHome.owner,
+				model: nursingHome.owner,
 			},
 			{
 				label: labelAra,
 				type: InputTypes.radio,
 				name: "ara",
-				value: nursingHome.ara,
+				model: nursingHome.ara,
+				buttons: [
+					{ value: labelYes, label: `${labelAra} (${labelYes})` },
+					{ value: labelNo, label: `${labelAra} (${labelNo})` },
+				],
 			},
 			{
 				label: labelYearofConst,
 				type: InputTypes.number,
 				name: "construction_year",
-				value: nursingHome.construction_year,
+				model: nursingHome.construction_year,
 			},
 			{
 				label: "Lisätietoja rakennuksesta",
 				type: InputTypes.textarea,
 				name: "building_info",
-				value: nursingHome.building_info,
+				model: nursingHome.building_info,
 			},
 			{
 				label: labelNumApartments,
 				type: InputTypes.number,
 				name: "apartment_count",
-				value: nursingHome.apartment_count,
+				model: nursingHome.apartment_count,
 			},
 			{
 				label: "Lisätietoja asuntojen määrästä",
 				type: InputTypes.textarea,
 				name: "apartment_count_info",
-				value: nursingHome.apartment_count_info,
+				model: nursingHome.apartment_count_info,
 			},
 			{
 				label: labelApartmentSize,
 				type: InputTypes.text,
 				name: "apartment_square_meters",
-				value: nursingHome.apartment_square_meters,
+				model: nursingHome.apartment_square_meters,
 			},
 			{
 				label: "Asunnoissa oma kylpyhuone",
 				type: InputTypes.checkbox,
 				name: "apartments_have_bathroom",
-				value: nursingHome.apartments_have_bathroom,
+				model: nursingHome.apartments_have_bathroom,
 			},
 			{
 				label: labelRent,
 				type: InputTypes.text,
 				name: "rent",
-				value: nursingHome.rent,
+				model: nursingHome.rent,
 			},
 			{
 				label: "Lisätietoja vuokrasta",
 				type: InputTypes.textarea,
 				name: "rent_info",
-				value: nursingHome.rent_info,
+				model: nursingHome.rent_info,
 			},
 			{
 				label: labelServiceLanguage,
 				type: InputTypes.text,
 				name: "language",
-				value: nursingHome.language,
+				model: nursingHome.language,
 			},
 			{
 				label: "Lisätietoja palvelukielestä",
 				type: InputTypes.textarea,
 				name: "language_info",
-				value: nursingHome.language_info,
+				model: nursingHome.language_info,
 			},
 			{
 				label: labelLAHapartments,
 				type: InputTypes.checkbox,
 				name: "lah",
-				value: nursingHome.lah,
+				model: nursingHome.lah,
 			},
 		];
 
@@ -296,43 +328,43 @@ const PageUpdate: FC = () => {
 				label: "Katuosoite",
 				type: InputTypes.text,
 				name: "address",
-				value: nursingHome.address,
+				model: nursingHome.address,
 			},
 			{
 				label: "Postinumero",
 				type: InputTypes.text,
 				name: "postal_code",
-				value: nursingHome.postal_code,
+				model: nursingHome.postal_code,
 			},
 			{
 				label: "Kaupunki",
 				type: InputTypes.text,
 				name: "city",
-				value: nursingHome.city,
+				model: nursingHome.city,
 			},
 			{
 				label: "Kaupunginosa",
 				type: InputTypes.text,
 				name: "district",
-				value: nursingHome.district,
+				model: nursingHome.district,
 			},
 			{
 				label: labelWebpage,
 				type: InputTypes.url,
 				name: "www",
-				value: nursingHome.www,
+				model: nursingHome.www,
 			},
 			{
 				label: "Saapuminen julkisilla kulkuyhteyksillä",
 				type: InputTypes.textarea,
 				name: "arrival_guide_public_transit",
-				value: nursingHome.arrival_guide_public_transit,
+				model: nursingHome.arrival_guide_public_transit,
 			},
 			{
 				label: "Saapuminen autolla",
 				type: InputTypes.textarea,
 				name: "arrival_guide_car",
-				value: nursingHome.arrival_guide_car,
+				model: nursingHome.arrival_guide_car,
 			},
 		];
 
@@ -341,19 +373,19 @@ const PageUpdate: FC = () => {
 				label: labelCookingMethod,
 				type: InputTypes.text,
 				name: "meals_preparation",
-				value: nursingHome.meals_preparation,
+				model: nursingHome.meals_preparation,
 			},
 			{
 				label: labelFoodMoreInfo,
 				type: InputTypes.textarea,
 				name: "meals_info",
-				value: nursingHome.meals_info,
+				model: nursingHome.meals_info,
 			},
 			{
 				label: labelLinkMenu,
 				type: InputTypes.url,
 				name: "menu_link",
-				value: nursingHome.menu_link,
+				model: nursingHome.menu_link,
 			},
 		];
 
@@ -362,25 +394,25 @@ const PageUpdate: FC = () => {
 				label: labelActivies,
 				type: InputTypes.textarea,
 				name: "activities_info",
-				value: nursingHome.activities_info,
+				model: nursingHome.activities_info,
 			},
 			{
 				label: labelLinkMoreInfoActivies,
 				type: InputTypes.url,
 				name: "activities_link",
-				value: nursingHome.activities_link,
+				model: nursingHome.activities_link,
 			},
 			{
 				label: labelOutdoorActivies,
 				type: InputTypes.textarea,
 				name: "outdoors_possibilities_info",
-				value: nursingHome.outdoors_possibilities_info,
+				model: nursingHome.outdoors_possibilities_info,
 			},
 			{
 				label: labelLinkMoreInfoOutdoor,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
-				value: nursingHome.outdoors_possibilities_link,
+				model: nursingHome.outdoors_possibilities_link,
 			},
 		];
 
@@ -389,37 +421,37 @@ const PageUpdate: FC = () => {
 				label: labelVisitingInfo,
 				type: InputTypes.textarea,
 				name: "tour_info",
-				value: nursingHome.tour_info,
+				model: nursingHome.tour_info,
 			},
 			{
 				label: "Yhteyshenkilön nimi",
 				type: InputTypes.text,
 				name: "contact_name",
-				value: nursingHome.contact_name,
+				model: nursingHome.contact_name,
 			},
 			{
 				label: "Yhteyshenkilön titteli",
 				type: InputTypes.text,
 				name: "contact_title",
-				value: nursingHome.contact_title,
+				model: nursingHome.contact_title,
 			},
 			{
 				label: "Yhteyshenkilön puhelinnumero",
 				type: InputTypes.tel,
 				name: "contact_phone",
-				value: nursingHome.contact_phone,
+				model: nursingHome.contact_phone,
 			},
 			{
 				label: "Yhteyshenkilön sähköposti",
 				type: InputTypes.email,
 				name: "email",
-				value: nursingHome.email,
+				model: nursingHome.email,
 			},
 			{
 				label: "Lisätietoja yhteyshenkilön puhelinnumerosta",
 				type: InputTypes.textarea,
 				name: "contact_phone_info",
-				value: nursingHome.contact_phone_info,
+				model: nursingHome.contact_phone_info,
 			},
 		];
 
@@ -428,7 +460,7 @@ const PageUpdate: FC = () => {
 				label: labelAccessibility,
 				type: InputTypes.textarea,
 				name: "accessibility_info",
-				value: nursingHome.accessibility_info,
+				model: nursingHome.accessibility_info,
 			},
 		];
 
@@ -437,13 +469,13 @@ const PageUpdate: FC = () => {
 				label: labelPersonnel,
 				type: InputTypes.textarea,
 				name: "staff_info",
-				value: nursingHome.staff_info,
+				model: nursingHome.staff_info,
 			},
 			{
 				label: labelLinkMoreInfoPersonnel,
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
-				value: nursingHome.staff_satisfaction_info,
+				model: nursingHome.staff_satisfaction_info,
 			},
 		];
 
@@ -452,7 +484,7 @@ const PageUpdate: FC = () => {
 				label: labelOtherServices,
 				type: InputTypes.textarea,
 				name: "other_services",
-				value: nursingHome.other_services,
+				model: nursingHome.other_services,
 			},
 		];
 
@@ -461,7 +493,7 @@ const PageUpdate: FC = () => {
 				label: labelNearbyServices,
 				type: InputTypes.textarea,
 				name: "nearby_services",
-				value: nursingHome.nearby_services,
+				model: nursingHome.nearby_services,
 			},
 		];
 	}
@@ -484,13 +516,39 @@ const PageUpdate: FC = () => {
 	};
 
 	const handleSubmit = async (
-		e: React.FormEvent<HTMLFormElement>,
+		event: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
-		e.preventDefault();
-		setPopupState("saving");
-		await requestVacancyStatusUpdate(id, key, formState, imageState);
-		setPopupState("saved");
-		setVacancyStatus(null);
+		try {
+			event.preventDefault();
+
+			setPopupState("saving");
+
+			await requestVacancyStatusUpdate(id, key, formState, imageState);
+
+			if (nursingHome) {
+				const temporaryData: any = { ...nursingHome };
+
+				delete temporaryData.id;
+				delete temporaryData.pic_digests;
+				delete temporaryData.pics;
+				delete temporaryData.pic_captions;
+				delete temporaryData.report_status;
+				delete temporaryData.rating;
+				delete temporaryData.geolocation;
+				delete temporaryData.has_vacancy;
+				delete temporaryData.basic_update_key;
+
+				const nursingHomeUpdateData: NursingHomeUpdateData = temporaryData;
+
+				await requestNursingHomeUpdate(id, key, nursingHomeUpdateData);
+			}
+
+			setPopupState("saved");
+			setVacancyStatus(null);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
 	};
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
@@ -519,11 +577,11 @@ const PageUpdate: FC = () => {
 			return (
 				<div
 					className="page-update-input"
-					key={`${field.name}_${index}`}
+					key={`${field.name}-${index}`}
 				>
 					<label htmlFor={field.name}>{field.label}</label>
 					<textarea
-						value={(field.value as string) || ""}
+						value={(field.model as string) || ""}
 						name={field.name}
 						id={field.name}
 						onChange={event =>
@@ -540,7 +598,7 @@ const PageUpdate: FC = () => {
 			return (
 				<div
 					className="page-update-input"
-					key={`${field.name}_${index}`}
+					key={`${field.name}-${index}`}
 				>
 					<Checkbox
 						name={field.name}
@@ -548,7 +606,7 @@ const PageUpdate: FC = () => {
 						onChange={checked =>
 							handleInputChange(field.name, field.type, checked)
 						}
-						isChecked={(field.value as boolean) || false}
+						isChecked={(field.model as boolean) || false}
 					>
 						{field.label}
 					</Checkbox>
@@ -558,53 +616,45 @@ const PageUpdate: FC = () => {
 			return (
 				<div
 					className="page-update-input"
-					key={`${field.name}_${index}`}
+					key={`${field.name}-${index}`}
 				>
-					<Radio
-						id={`${field.name}-true`}
-						name={field.name}
-						isSelected={field.value === labelYes}
-						value={labelYes}
-						onChange={isChecked => {
-							if (isChecked) {
-								handleInputChange(
-									field.name,
-									field.type,
-									labelYes,
+					{field.buttons
+						? field.buttons.map(button => {
+								return (
+									<Radio
+										key={`${field.name}-${button.value}`}
+										id={`${field.name}-${button.value}`}
+										name={field.name}
+										isSelected={
+											field.model === button.value
+										}
+										value={button.value}
+										onChange={isChecked => {
+											if (isChecked) {
+												handleInputChange(
+													field.name,
+													field.type,
+													button.value,
+												);
+											}
+										}}
+									>
+										{button.label}
+									</Radio>
 								);
-							}
-						}}
-					>
-						{labelAra}
-					</Radio>
-					<Radio
-						id={`${field.name}-false`}
-						name={field.name}
-						isSelected={field.value !== labelYes}
-						value={labelNo}
-						onChange={isChecked => {
-							if (isChecked) {
-								handleInputChange(
-									field.name,
-									field.type,
-									labelNo,
-								);
-							}
-						}}
-					>
-						Ei {labelAra}
-					</Radio>
+						  })
+						: null}
 				</div>
 			);
 		} else {
 			return (
 				<div
 					className="page-update-input"
-					key={`${field.name}_${index}`}
+					key={`${field.name}-${index}`}
 				>
 					<label htmlFor={field.name}>{field.label}</label>
 					<input
-						value={(field.value as string | number) || ""}
+						value={(field.model as string | number) || ""}
 						name={field.name}
 						id={field.name}
 						type={field.type}
