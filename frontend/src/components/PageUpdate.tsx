@@ -37,6 +37,7 @@ interface InputField {
 	name: string;
 	model: string | number | boolean | undefined;
 	buttons?: { value: string; label: string }[];
+	required?: boolean;
 }
 
 type TransformableNursingHome = OptionalProps<
@@ -124,10 +125,14 @@ const PageUpdate: FC = () => {
 	const [vacancyStatus, setVacancyStatus] = useState<VacancyStatus | null>(
 		null,
 	);
-	const [popupState, setPopupState] = useState<null | "saving" | "saved">(
-		null,
+	const [popupState, setPopupState] = useState<
+		null | "saving" | "saved" | "invalid"
+	>(null);
+	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
+
+	const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>(
+		{},
 	);
-	const [formState, setFormState] = useState<boolean>(false);
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
@@ -151,7 +156,8 @@ const PageUpdate: FC = () => {
 				)
 				.then((response: { data: VacancyStatus }) => {
 					setVacancyStatus(response.data);
-					setFormState(response.data.has_vacancy);
+					setHasVacancy(response.data.has_vacancy);
+
 					if (popupState) setTimeout(() => setPopupState(null), 3000);
 				})
 				.catch(e => {
@@ -246,9 +252,11 @@ const PageUpdate: FC = () => {
 	const labelContactPhone = useT("contactPhone");
 	const labelContactEmail = useT("contactEmail");
 	const labelContactPhoneInfo = useT("contactPhoneInfo");
+	const textFieldIsRequired = useT("fieldIsRequired");
 
 	const updatePopupSaved = useT("saved");
 	const updatePopupSaving = useT("saving");
+	const formIsInvalid = useT("formIsInvalid");
 
 	let basicFields: InputField[] = [];
 	let contactFields: InputField[] = [];
@@ -267,12 +275,14 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "summary",
 				model: nursingHome.summary,
+				required: true,
 			},
 			{
 				label: labelOwner,
 				type: InputTypes.text,
 				name: "owner",
 				model: nursingHome.owner,
+				required: true,
 			},
 			{
 				label: labelAra,
@@ -280,8 +290,8 @@ const PageUpdate: FC = () => {
 				name: "ara",
 				model: nursingHome.ara,
 				buttons: [
-					{ value: labelYes, label: `${labelAra} (${labelYes})` },
-					{ value: labelNo, label: `${labelAra} (${labelNo})` },
+					{ value: labelYes, label: labelYes },
+					{ value: labelNo, label: labelNo },
 				],
 			},
 			{
@@ -289,6 +299,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.number,
 				name: "construction_year",
 				model: nursingHome.construction_year,
+				required: true,
 			},
 			{
 				label: labelBuildingInfo,
@@ -301,6 +312,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.number,
 				name: "apartment_count",
 				model: nursingHome.apartment_count,
+				required: true,
 			},
 			{
 				label: labelApartmentCountInfo,
@@ -309,10 +321,11 @@ const PageUpdate: FC = () => {
 				model: nursingHome.apartment_count_info,
 			},
 			{
-				label: labelApartmentSize,
+				label: labelApartmentSize + " (m²)",
 				type: InputTypes.text,
 				name: "apartment_square_meters",
 				model: nursingHome.apartment_square_meters,
+				required: true,
 			},
 			{
 				label: labelApartmentsHaveBathroom,
@@ -321,10 +334,11 @@ const PageUpdate: FC = () => {
 				model: nursingHome.apartments_have_bathroom,
 			},
 			{
-				label: labelRent,
+				label: labelRent + " (€ / kk)",
 				type: InputTypes.text,
 				name: "rent",
 				model: nursingHome.rent,
+				required: true,
 			},
 			{
 				label: labelRentInfo,
@@ -337,6 +351,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "language",
 				model: nursingHome.language,
+				required: true,
 			},
 			{
 				label: labelLanguageInfo,
@@ -358,18 +373,21 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "address",
 				model: nursingHome.address,
+				required: true,
 			},
 			{
 				label: labelPostalCode,
 				type: InputTypes.text,
 				name: "postal_code",
 				model: nursingHome.postal_code,
+				required: true,
 			},
 			{
 				label: labelCity,
 				type: InputTypes.text,
 				name: "city",
 				model: nursingHome.city,
+				required: true,
 			},
 			{
 				label: labelDistrict,
@@ -403,6 +421,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "meals_preparation",
 				model: nursingHome.meals_preparation,
+				required: true,
 			},
 			{
 				label: labelFoodMoreInfo,
@@ -457,24 +476,28 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "contact_name",
 				model: nursingHome.contact_name,
+				required: true,
 			},
 			{
 				label: labelContactTitle,
 				type: InputTypes.text,
 				name: "contact_title",
 				model: nursingHome.contact_title,
+				required: true,
 			},
 			{
 				label: labelContactPhone,
 				type: InputTypes.tel,
 				name: "contact_phone",
 				model: nursingHome.contact_phone,
+				required: true,
 			},
 			{
 				label: labelContactEmail,
 				type: InputTypes.email,
 				name: "email",
 				model: nursingHome.email,
+				required: true,
 			},
 			{
 				label: labelContactPhoneInfo,
@@ -544,37 +567,61 @@ const PageUpdate: FC = () => {
 		imageState[index].text = state;
 	};
 
+	const validForm = (): boolean => {
+		const formInvalid =
+			Object.keys(formErrors).map(field => formErrors[field]).length > 0;
+
+		if (formInvalid) {
+			setPopupState("invalid");
+
+			return false;
+		} else {
+			return true;
+		}
+	};
+
 	const handleSubmit = async (
 		event: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		try {
 			event.preventDefault();
 
-			setPopupState("saving");
+			if (validForm()) {
+				setPopupState("saving");
 
-			await requestVacancyStatusUpdate(id, key, formState, imageState);
+				await requestVacancyStatusUpdate(
+					id,
+					key,
+					hasVacancy,
+					imageState,
+				);
 
-			if (nursingHome) {
-				const transformNursingHomeData: TransformableNursingHome = {
-					...nursingHome,
-				};
+				if (nursingHome) {
+					const transformNursingHomeData: TransformableNursingHome = {
+						...nursingHome,
+					};
 
-				delete transformNursingHomeData.id;
-				delete transformNursingHomeData.pic_digests;
-				delete transformNursingHomeData.pics;
-				delete transformNursingHomeData.pic_captions;
-				delete transformNursingHomeData.report_status;
-				delete transformNursingHomeData.rating;
-				delete transformNursingHomeData.geolocation;
-				delete transformNursingHomeData.has_vacancy;
+					delete transformNursingHomeData.id;
+					delete transformNursingHomeData.pic_digests;
+					delete transformNursingHomeData.pics;
+					delete transformNursingHomeData.pic_captions;
+					delete transformNursingHomeData.report_status;
+					delete transformNursingHomeData.rating;
+					delete transformNursingHomeData.geolocation;
+					delete transformNursingHomeData.has_vacancy;
 
-				const nursingHomeUpdateData: NursingHomeUpdateData = transformNursingHomeData;
+					const nursingHomeUpdateData: NursingHomeUpdateData = transformNursingHomeData;
 
-				await requestNursingHomeUpdate(id, key, nursingHomeUpdateData);
+					await requestNursingHomeUpdate(
+						id,
+						key,
+						nursingHomeUpdateData,
+					);
+				}
+
+				setPopupState("saved");
+				setVacancyStatus(null);
 			}
-
-			setPopupState("saved");
-			setVacancyStatus(null);
 		} catch (error) {
 			console.error(error);
 			throw error;
@@ -586,15 +633,45 @@ const PageUpdate: FC = () => {
 		window.location.href = window.location.pathname + "/peruuta";
 	};
 
+	const validateField = (value: string | number): boolean => {
+		return value !== null && value !== "";
+	};
+
+	const handleInputBlur = (
+		field: InputField,
+		value: string | number,
+	): void => {
+		if (nursingHome) {
+			const { name, required } = field;
+
+			if (required) {
+				const fieldIsValid = validateField(value);
+
+				if (!fieldIsValid) {
+					setFormErrors({
+						...formErrors,
+						[name]: true,
+					});
+				} else {
+					const newErrors = { ...formErrors };
+					delete newErrors[name];
+
+					setFormErrors(newErrors);
+				}
+			}
+		}
+	};
+
 	const handleInputChange = (
-		key: string,
-		type: string,
+		field: InputField,
 		value: string | number | boolean,
 	): void => {
 		if (nursingHome) {
+			const { name, type } = field;
+
 			setNursingHome({
 				...nursingHome,
-				[key]:
+				[name]:
 					type === "number" && typeof value === "string"
 						? parseInt(value)
 						: value,
@@ -610,18 +687,31 @@ const PageUpdate: FC = () => {
 					key={`${field.name}-${index}`}
 				>
 					<label htmlFor={field.name}>{field.label}</label>
-					<textarea
-						value={(field.model as string) || ""}
-						name={field.name}
-						id={field.name}
-						onChange={event =>
-							handleInputChange(
-								field.name,
-								field.type,
-								event.target.value,
-							)
-						}
-					></textarea>
+					<div className="control">
+						<textarea
+							className={
+								field.required && formErrors[field.name]
+									? "error"
+									: ""
+							}
+							rows={5}
+							value={(field.model as string) || ""}
+							name={field.name}
+							id={field.name}
+							onChange={event =>
+								handleInputChange(field, event.target.value)
+							}
+							required={field.required}
+							onBlur={event =>
+								handleInputBlur(field, event.target.value)
+							}
+						></textarea>
+						{field.required && formErrors[field.name] ? (
+							<span className="page-update-input-error">
+								{textFieldIsRequired}
+							</span>
+						) : null}
+					</div>
 				</div>
 			);
 		} else if (field.type === "checkbox") {
@@ -633,9 +723,7 @@ const PageUpdate: FC = () => {
 					<Checkbox
 						name={field.name}
 						id={field.name}
-						onChange={checked =>
-							handleInputChange(field.name, field.type, checked)
-						}
+						onChange={checked => handleInputChange(field, checked)}
 						isChecked={(field.model as boolean) || false}
 					>
 						{field.label}
@@ -644,10 +732,11 @@ const PageUpdate: FC = () => {
 			);
 		} else if (field.type === "radio") {
 			return (
-				<div
+				<fieldset
 					className="page-update-input"
 					key={`${field.name}-${index}`}
 				>
+					<legend>{labelAra}</legend>
 					{field.buttons
 						? field.buttons.map(button => {
 								return (
@@ -662,8 +751,7 @@ const PageUpdate: FC = () => {
 										onChange={isChecked => {
 											if (isChecked) {
 												handleInputChange(
-													field.name,
-													field.type,
+													field,
 													button.value,
 												);
 											}
@@ -674,7 +762,7 @@ const PageUpdate: FC = () => {
 								);
 						  })
 						: null}
-				</div>
+				</fieldset>
 			);
 		} else {
 			return (
@@ -683,19 +771,30 @@ const PageUpdate: FC = () => {
 					key={`${field.name}-${index}`}
 				>
 					<label htmlFor={field.name}>{field.label}</label>
-					<input
-						value={(field.model as string | number) || ""}
-						name={field.name}
-						id={field.name}
-						type={field.type}
-						onChange={event =>
-							handleInputChange(
-								field.name,
-								field.type,
-								event.target.value,
-							)
-						}
-					/>
+					<div className="control">
+						<input
+							className={
+								field.required && formErrors[field.name]
+									? "error"
+									: ""
+							}
+							value={(field.model as string | number) || ""}
+							name={field.name}
+							id={field.name}
+							type={field.type}
+							onChange={event =>
+								handleInputChange(field, event.target.value)
+							}
+							onBlur={event =>
+								handleInputBlur(field, event.target.value)
+							}
+						/>
+						{field.required && formErrors[field.name] ? (
+							<span className="page-update-input-error">
+								{textFieldIsRequired}
+							</span>
+						) : null}
+					</div>
 				</div>
 			);
 		}
@@ -725,9 +824,17 @@ const PageUpdate: FC = () => {
 								</button>
 
 								{popupState && (
-									<span className="page-update-popup">
+									<span
+										className={
+											popupState === "invalid"
+												? "page-update-popup error"
+												: "page-update-popup"
+										}
+									>
 										{popupState === "saving"
 											? updatePopupSaving
+											: popupState === "invalid"
+											? formIsInvalid
 											: updatePopupSaved}
 									</span>
 								)}
@@ -761,9 +868,9 @@ const PageUpdate: FC = () => {
 								<Radio
 									id="update-vacancy-true"
 									name="update-vacancy-true"
-									isSelected={formState}
+									isSelected={hasVacancy}
 									onChange={isChecked => {
-										if (isChecked) setFormState(true);
+										if (isChecked) setHasVacancy(true);
 									}}
 								>
 									{labelTrue}
@@ -771,9 +878,9 @@ const PageUpdate: FC = () => {
 								<Radio
 									id="update-vacancy-false"
 									name="update-vacancy-false"
-									isSelected={!formState}
+									isSelected={!hasVacancy}
 									onChange={isChecked => {
-										if (isChecked) setFormState(false);
+										if (isChecked) setHasVacancy(false);
 									}}
 								>
 									{labelFalse}

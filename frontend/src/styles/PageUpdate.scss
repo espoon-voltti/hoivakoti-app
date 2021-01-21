@@ -88,6 +88,10 @@
 	margin-left: 20px;
 	color: $primary-blue;
 	font-weight: bold;
+
+	&.error {
+		color: $error-color;
+	}
 }
 
 .nav-save {
@@ -103,24 +107,25 @@
 }
 
 .page-update-input {
-	margin-bottom: 1em;
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: 1rem;
 
 	label {
 		display: block;
-		margin-bottom: 0.5em;
-		font-weight: bold;
-	}
-
-	textarea,
-	input {
-		box-sizing: border-box;
-		line-height: 2;
+		font-size: 1rem;
+		font-weight: 600;
 	}
 
 	textarea {
-		box-sizing: border-box;
+		border: none;
+		border-bottom: solid 1px $border-color;
 		width: 100%;
-		border: 1px solid $border-color;
+		resize: none;
+		box-sizing: border-box;
+		max-width: 100%;
+		width: 100%;
+		padding-bottom: calc(0.5em - 1px);
 	}
 
 	input[type="text"],
@@ -130,7 +135,34 @@
 	input[type="tel"] {
 		border: none;
 		border-bottom: solid 1px $border-color;
-		width: auto;
+		max-width: 100%;
+		width: 100%;
+		padding-bottom: calc(0.5em - 1px);
+		height: 2.5em;
+	}
+
+	textarea,
+	input {
+		box-sizing: border-box;
+		min-height: 2.5em;
+		border-radius: 0;
+		line-height: 1.5;
+		padding-left: calc(0.625em - 1px);
+		padding-right: calc(0.625em - 1px);
+		padding-top: calc(0.5em - 1px);
+		font-size: 1rem;
+
+		&.error {
+			border: 1px solid $error-color;
+		}
+	}
+
+	.control {
+		box-sizing: border-box;
+		clear: both;
+		font-size: 1rem;
+		position: relative;
+		text-align: left;
 	}
 
 	.checkbox-container,
@@ -138,5 +170,16 @@
 		label {
 			display: flex;
 		}
+	}
+
+	&-error {
+		display: block;
+		color: $error-color;
+		margin-top: 10px;
+	}
+
+	legend {
+		@extend label;
+		margin-bottom: 1em;
 	}
 }

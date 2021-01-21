@@ -976,4 +976,12 @@ export const translations = {
 		"fi-FI": "Lisätietoja yhteyshenkilön puhelinnumerosta",
 		"sv-FI": "Mer information",
 	},
+	fieldIsRequired: {
+		"fi-FI": "Kenttä on pakollinen",
+		"sv-FI": "Mer information",
+	},
+	formIsInvalid: {
+		"fi-FI": "Lomakkeessa on virheitä!",
+		"sv-FI": "Mer information",
+	},
 };
