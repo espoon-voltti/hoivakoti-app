@@ -107,8 +107,7 @@
 }
 
 .field {
-	width: 100%;
-	box-sizing: border-box;
+	position: relative;
 	padding-bottom: 1.5rem;
 
 	&:not(:last-child) {
@@ -119,17 +118,17 @@
 		display: block;
 		font-size: 1rem;
 		font-weight: 600;
+		line-height: 1.5;
 	}
 
 	textarea {
-		border: none;
-		border-bottom: solid 1px $border-color;
+		border: solid 1px $border-color;
 		width: 100%;
 		resize: none;
 		box-sizing: border-box;
 		max-width: 100%;
 		width: 100%;
-		padding-bottom: calc(0.5em - 1px);
+		padding-bottom: 0.4rem;
 	}
 
 	input[type="text"],
@@ -141,7 +140,7 @@
 		border-bottom: solid 1px $border-color;
 		max-width: 100%;
 		width: 100%;
-		padding-bottom: calc(0.5em - 1px);
+		padding-bottom: 0.4rem;
 		height: 2.5em;
 	}
 
@@ -151,9 +150,9 @@
 		min-height: 2.5em;
 		border-radius: 0;
 		line-height: 1.5;
-		padding-left: calc(0.625em - 1px);
-		padding-right: calc(0.625em - 1px);
-		padding-top: calc(0.5em - 1px);
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+		padding-top: 0.4rem;
 		font-size: 1rem;
 		font-family: inherit;
 
@@ -174,6 +173,15 @@
 		font-size: 1rem;
 		position: relative;
 		text-align: left;
+
+		.icon {
+			position: absolute;
+			bottom: -25px;
+			right: 0;
+			background: url("/icons/icon-exclamation-circle.svg");
+			width: 1.125rem;
+			height: 1.125rem;
+		}
 	}
 
 	.checkbox-container,
@@ -184,10 +192,16 @@
 		}
 	}
 
-	&-error {
+	.help {
 		display: block;
-		color: $error-color;
-		margin-top: 0.75rem;
+		font-size: 0.75rem;
+		position: absolute;
+		left: 0;
+		margin-top: 0.4rem;
+		padding-left: 0.5rem;
+		line-height: 1.125rem;
+		min-height: 1.125rem;
+		color: $input-border;
 	}
 
 	legend {

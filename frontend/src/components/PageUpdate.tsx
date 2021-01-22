@@ -704,11 +704,12 @@ const PageUpdate: FC = () => {
 							}
 						></textarea>
 						{field.required && formErrors[field.name] ? (
-							<span className="field-error">
-								{textFieldIsRequired}
-							</span>
+							<span className="icon"></span>
 						) : null}
 					</div>
+					{field.required && formErrors[field.name] ? (
+						<p className="help">{textFieldIsRequired}</p>
+					) : null}
 				</div>
 			);
 		} else if (field.type === "checkbox") {
@@ -778,11 +779,12 @@ const PageUpdate: FC = () => {
 							}
 						/>
 						{field.required && formErrors[field.name] ? (
-							<span className="field-error">
-								{textFieldIsRequired}
-							</span>
+							<span className="icon"></span>
 						) : null}
 					</div>
+					{field.required && formErrors[field.name] ? (
+						<p className="help">{textFieldIsRequired}</p>
+					) : null}
 				</div>
 			);
 		}
