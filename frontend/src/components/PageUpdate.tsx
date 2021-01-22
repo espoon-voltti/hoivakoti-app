@@ -31,11 +31,12 @@ interface NursingHomeRouteParams {
 	key: string;
 }
 
+type NursingHomeKey = keyof NursingHome;
+
 interface InputField {
 	label: string;
 	type: InputTypes;
-	name: string;
-	model: string | number | boolean | undefined;
+	name: NursingHomeKey;
 	buttons?: { value: string; label: string }[];
 	required?: boolean;
 }
@@ -274,21 +275,19 @@ const PageUpdate: FC = () => {
 				label: labelSummary,
 				type: InputTypes.textarea,
 				name: "summary",
-				model: nursingHome.summary,
 				required: true,
 			},
 			{
 				label: labelOwner,
 				type: InputTypes.text,
 				name: "owner",
-				model: nursingHome.owner,
 				required: true,
 			},
 			{
 				label: labelAra,
 				type: InputTypes.radio,
 				name: "ara",
-				model: nursingHome.ara,
+
 				buttons: [
 					{ value: labelYes, label: labelYes },
 					{ value: labelNo, label: labelNo },
@@ -298,72 +297,61 @@ const PageUpdate: FC = () => {
 				label: labelYearofConst,
 				type: InputTypes.number,
 				name: "construction_year",
-				model: nursingHome.construction_year,
 				required: true,
 			},
 			{
 				label: labelBuildingInfo,
 				type: InputTypes.textarea,
 				name: "building_info",
-				model: nursingHome.building_info,
 			},
 			{
 				label: labelNumApartments,
 				type: InputTypes.number,
 				name: "apartment_count",
-				model: nursingHome.apartment_count,
 				required: true,
 			},
 			{
 				label: labelApartmentCountInfo,
 				type: InputTypes.textarea,
 				name: "apartment_count_info",
-				model: nursingHome.apartment_count_info,
 			},
 			{
 				label: labelApartmentSize + " (m²)",
 				type: InputTypes.text,
 				name: "apartment_square_meters",
-				model: nursingHome.apartment_square_meters,
 				required: true,
 			},
 			{
 				label: labelApartmentsHaveBathroom,
 				type: InputTypes.checkbox,
 				name: "apartments_have_bathroom",
-				model: nursingHome.apartments_have_bathroom,
 			},
 			{
 				label: labelRent + " (€ / kk)",
 				type: InputTypes.text,
 				name: "rent",
-				model: nursingHome.rent,
 				required: true,
 			},
 			{
 				label: labelRentInfo,
 				type: InputTypes.textarea,
 				name: "rent_info",
-				model: nursingHome.rent_info,
 			},
 			{
 				label: labelServiceLanguage,
 				type: InputTypes.text,
 				name: "language",
-				model: nursingHome.language,
 				required: true,
 			},
 			{
 				label: labelLanguageInfo,
 				type: InputTypes.textarea,
 				name: "language_info",
-				model: nursingHome.language_info,
 			},
 			{
 				label: labelLAHapartments,
 				type: InputTypes.checkbox,
 				name: "lah",
-				model: nursingHome.lah,
 			},
 		];
 
@@ -372,46 +360,39 @@ const PageUpdate: FC = () => {
 				label: labelAddress,
 				type: InputTypes.text,
 				name: "address",
-				model: nursingHome.address,
 				required: true,
 			},
 			{
 				label: labelPostalCode,
 				type: InputTypes.text,
 				name: "postal_code",
-				model: nursingHome.postal_code,
 				required: true,
 			},
 			{
 				label: labelCity,
 				type: InputTypes.text,
 				name: "city",
-				model: nursingHome.city,
 				required: true,
 			},
 			{
 				label: labelDistrict,
 				type: InputTypes.text,
 				name: "district",
-				model: nursingHome.district,
 			},
 			{
 				label: labelWebpage,
 				type: InputTypes.url,
 				name: "www",
-				model: nursingHome.www,
 			},
 			{
 				label: labelArrivalGuidePublicTransit,
 				type: InputTypes.textarea,
 				name: "arrival_guide_public_transit",
-				model: nursingHome.arrival_guide_public_transit,
 			},
 			{
 				label: labelArrivalGuideCar,
 				type: InputTypes.textarea,
 				name: "arrival_guide_car",
-				model: nursingHome.arrival_guide_car,
 			},
 		];
 
@@ -420,20 +401,17 @@ const PageUpdate: FC = () => {
 				label: labelCookingMethod,
 				type: InputTypes.text,
 				name: "meals_preparation",
-				model: nursingHome.meals_preparation,
 				required: true,
 			},
 			{
 				label: labelFoodMoreInfo,
 				type: InputTypes.textarea,
 				name: "meals_info",
-				model: nursingHome.meals_info,
 			},
 			{
 				label: labelLinkMenu,
 				type: InputTypes.url,
 				name: "menu_link",
-				model: nursingHome.menu_link,
 			},
 		];
 
@@ -442,25 +420,21 @@ const PageUpdate: FC = () => {
 				label: labelActivies,
 				type: InputTypes.textarea,
 				name: "activities_info",
-				model: nursingHome.activities_info,
 			},
 			{
 				label: labelLinkMoreInfoActivies,
 				type: InputTypes.url,
 				name: "activities_link",
-				model: nursingHome.activities_link,
 			},
 			{
 				label: labelOutdoorActivies,
 				type: InputTypes.textarea,
 				name: "outdoors_possibilities_info",
-				model: nursingHome.outdoors_possibilities_info,
 			},
 			{
 				label: labelLinkMoreInfoOutdoor,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
-				model: nursingHome.outdoors_possibilities_link,
 			},
 		];
 
@@ -469,41 +443,35 @@ const PageUpdate: FC = () => {
 				label: labelVisitingInfo,
 				type: InputTypes.textarea,
 				name: "tour_info",
-				model: nursingHome.tour_info,
 			},
 			{
 				label: labelContactName,
 				type: InputTypes.text,
 				name: "contact_name",
-				model: nursingHome.contact_name,
 				required: true,
 			},
 			{
 				label: labelContactTitle,
 				type: InputTypes.text,
 				name: "contact_title",
-				model: nursingHome.contact_title,
 				required: true,
 			},
 			{
 				label: labelContactPhone,
 				type: InputTypes.tel,
 				name: "contact_phone",
-				model: nursingHome.contact_phone,
 				required: true,
 			},
 			{
 				label: labelContactEmail,
 				type: InputTypes.email,
 				name: "email",
-				model: nursingHome.email,
 				required: true,
 			},
 			{
 				label: labelContactPhoneInfo,
 				type: InputTypes.textarea,
 				name: "contact_phone_info",
-				model: nursingHome.contact_phone_info,
 			},
 		];
 
@@ -512,7 +480,6 @@ const PageUpdate: FC = () => {
 				label: labelAccessibility,
 				type: InputTypes.textarea,
 				name: "accessibility_info",
-				model: nursingHome.accessibility_info,
 			},
 		];
 
@@ -521,13 +488,11 @@ const PageUpdate: FC = () => {
 				label: labelPersonnel,
 				type: InputTypes.textarea,
 				name: "staff_info",
-				model: nursingHome.staff_info,
 			},
 			{
 				label: labelLinkMoreInfoPersonnel,
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
-				model: nursingHome.staff_satisfaction_info,
 			},
 		];
 
@@ -536,7 +501,6 @@ const PageUpdate: FC = () => {
 				label: labelOtherServices,
 				type: InputTypes.textarea,
 				name: "other_services",
-				model: nursingHome.other_services,
 			},
 		];
 
@@ -545,7 +509,6 @@ const PageUpdate: FC = () => {
 				label: labelNearbyServices,
 				type: InputTypes.textarea,
 				name: "nearby_services",
-				model: nursingHome.nearby_services,
 			},
 		];
 	}
@@ -679,115 +642,130 @@ const PageUpdate: FC = () => {
 		}
 	};
 
-	const getInputElement = (field: InputField, index: number): JSX.Element => {
-		if (field.type === "textarea") {
-			return (
-				<div className="field" key={`${field.name}-${index}`}>
-					<label htmlFor={field.name}>{field.label}</label>
-					<div className="control">
-						<textarea
-							className={
-								field.required && formErrors[field.name]
-									? "error"
-									: ""
-							}
-							rows={5}
-							value={(field.model as string) || ""}
-							name={field.name}
-							id={field.name}
-							onChange={event =>
-								handleInputChange(field, event.target.value)
-							}
-							required={field.required}
-							onBlur={event =>
-								handleInputBlur(field, event.target.value)
-							}
-						></textarea>
+	const getInputElement = (
+		field: InputField,
+		index: number,
+	): JSX.Element | null => {
+		if (nursingHome) {
+			if (field.type === "textarea") {
+				return (
+					<div className="field" key={`${field.name}-${index}`}>
+						<label htmlFor={field.name}>{field.label}</label>
+						<div className="control">
+							<textarea
+								className={
+									field.required && formErrors[field.name]
+										? "error"
+										: ""
+								}
+								rows={5}
+								value={
+									(nursingHome[field.name] as string) || ""
+								}
+								name={field.name}
+								id={field.name}
+								onChange={event =>
+									handleInputChange(field, event.target.value)
+								}
+								required={field.required}
+								onBlur={event =>
+									handleInputBlur(field, event.target.value)
+								}
+							></textarea>
+							{field.required && formErrors[field.name] ? (
+								<span className="icon"></span>
+							) : null}
+						</div>
 						{field.required && formErrors[field.name] ? (
-							<span className="icon"></span>
+							<p className="help">{textFieldIsRequired}</p>
 						) : null}
 					</div>
-					{field.required && formErrors[field.name] ? (
-						<p className="help">{textFieldIsRequired}</p>
-					) : null}
-				</div>
-			);
-		} else if (field.type === "checkbox") {
-			return (
-				<div className="field" key={`${field.name}-${index}`}>
-					<Checkbox
-						name={field.name}
-						id={field.name}
-						onChange={checked => handleInputChange(field, checked)}
-						isChecked={(field.model as boolean) || false}
-					>
-						{field.label}
-					</Checkbox>
-				</div>
-			);
-		} else if (field.type === "radio") {
-			return (
-				<fieldset className="field" key={`${field.name}-${index}`}>
-					<legend>{labelAra}</legend>
-					{field.buttons
-						? field.buttons.map(button => {
-								return (
-									<Radio
-										key={`${field.name}-${button.value}`}
-										id={`${field.name}-${button.value}`}
-										name={field.name}
-										isSelected={
-											field.model === button.value
-										}
-										value={button.value}
-										onChange={isChecked => {
-											if (isChecked) {
-												handleInputChange(
-													field,
-													button.value,
-												);
+				);
+			} else if (field.type === "checkbox") {
+				return (
+					<div className="field" key={`${field.name}-${index}`}>
+						<Checkbox
+							name={field.name}
+							id={field.name}
+							onChange={checked =>
+								handleInputChange(field, checked)
+							}
+							isChecked={
+								(nursingHome[field.name] as boolean) || false
+							}
+						>
+							{field.label}
+						</Checkbox>
+					</div>
+				);
+			} else if (field.type === "radio") {
+				return (
+					<fieldset className="field" key={`${field.name}-${index}`}>
+						<legend>{labelAra}</legend>
+						{field.buttons
+							? field.buttons.map(button => {
+									return (
+										<Radio
+											key={`${field.name}-${button.value}`}
+											id={`${field.name}-${button.value}`}
+											name={field.name}
+											isSelected={
+												(nursingHome[
+													field.name
+												] as string) === button.value
 											}
-										}}
-									>
-										{button.label}
-									</Radio>
-								);
-						  })
-						: null}
-				</fieldset>
-			);
-		} else {
-			return (
-				<div className="field" key={`${field.name}-${index}`}>
-					<label htmlFor={field.name}>{field.label}</label>
-					<div className="control">
-						<input
-							className={
-								field.required && formErrors[field.name]
-									? "error"
-									: ""
-							}
-							value={(field.model as string | number) || ""}
-							name={field.name}
-							id={field.name}
-							type={field.type}
-							onChange={event =>
-								handleInputChange(field, event.target.value)
-							}
-							onBlur={event =>
-								handleInputBlur(field, event.target.value)
-							}
-						/>
+											value={button.value}
+											onChange={isChecked => {
+												if (isChecked) {
+													handleInputChange(
+														field,
+														button.value,
+													);
+												}
+											}}
+										>
+											{button.label}
+										</Radio>
+									);
+							  })
+							: null}
+					</fieldset>
+				);
+			} else {
+				return (
+					<div className="field" key={`${field.name}-${index}`}>
+						<label htmlFor={field.name}>{field.label}</label>
+						<div className="control">
+							<input
+								className={
+									field.required && formErrors[field.name]
+										? "error"
+										: ""
+								}
+								value={nursingHome[field.name] as string}
+								name={field.name}
+								id={field.name}
+								type={field.type}
+								onChange={event =>
+									handleInputChange(field, event.target.value)
+								}
+								onBlur={event =>
+									handleInputBlur(field, event.target.value)
+								}
+							/>
+							{field.required && formErrors[field.name] ? (
+								<span className="icon"></span>
+							) : null}
+						</div>
 						{field.required && formErrors[field.name] ? (
-							<span className="icon"></span>
+							<p className="help">{textFieldIsRequired}</p>
 						) : null}
 					</div>
-					{field.required && formErrors[field.name] ? (
-						<p className="help">{textFieldIsRequired}</p>
-					) : null}
-				</div>
-			);
+				);
+			}
 		}
+
+		return null;
 	};
 
 	return (
