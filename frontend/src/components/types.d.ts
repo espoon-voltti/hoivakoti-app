@@ -92,6 +92,3 @@ export interface NursingHome {
 		answers: number | null;
 	};
 }
-
-export type OptionalProps<T, K extends keyof T> = Pick<Partial<T>, K> &
-	Omit<T, K>;
