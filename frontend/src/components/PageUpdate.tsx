@@ -39,6 +39,7 @@ interface InputField {
 	name: NursingHomeKey;
 	buttons?: { value: string; label: string }[];
 	required?: boolean;
+	valid?: boolean;
 }
 
 type TransformableNursingHome = OptionalProps<
@@ -131,9 +132,9 @@ const PageUpdate: FC = () => {
 	>(null);
 	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
 
-	const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>(
-		{},
-	);
+	// const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>(
+	// 	{},
+	// );
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
@@ -259,29 +260,21 @@ const PageUpdate: FC = () => {
 	const updatePopupSaving = useT("saving");
 	const formIsInvalid = useT("formIsInvalid");
 
-	let basicFields: InputField[] = [];
-	let contactFields: InputField[] = [];
-	let foodFields: InputField[] = [];
-	let activitiesFields: InputField[] = [];
-	let nursingHomeContactFields: InputField[] = [];
-	let accessibilityFields: InputField[] = [];
-	let staffFields: InputField[] = [];
-	let otherServicesFields: InputField[] = [];
-	let nearbyServicesFields: InputField[] = [];
-
-	if (nursingHome) {
-		basicFields = [
+	const [form, setForm] = useState<{ [key: string]: InputField[] }>({
+		basicFields: [
 			{
 				label: labelSummary,
 				type: InputTypes.textarea,
 				name: "summary",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelOwner,
 				type: InputTypes.text,
 				name: "owner",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelAra,
@@ -298,6 +291,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.number,
 				name: "construction_year",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelBuildingInfo,
@@ -309,6 +303,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.number,
 				name: "apartment_count",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelApartmentCountInfo,
@@ -320,6 +315,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "apartment_square_meters",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelApartmentsHaveBathroom,
@@ -331,6 +327,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "rent",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelRentInfo,
@@ -342,6 +339,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "language",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelLanguageInfo,
@@ -353,26 +351,28 @@ const PageUpdate: FC = () => {
 				type: InputTypes.checkbox,
 				name: "lah",
 			},
-		];
-
-		contactFields = [
+		],
+		contactFields: [
 			{
 				label: labelAddress,
 				type: InputTypes.text,
 				name: "address",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelPostalCode,
 				type: InputTypes.text,
 				name: "postal_code",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelCity,
 				type: InputTypes.text,
 				name: "city",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelDistrict,
@@ -394,14 +394,14 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "arrival_guide_car",
 			},
-		];
-
-		foodFields = [
+		],
+		foodFields: [
 			{
 				label: labelCookingMethod,
 				type: InputTypes.text,
 				name: "meals_preparation",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelFoodMoreInfo,
@@ -413,9 +413,8 @@ const PageUpdate: FC = () => {
 				type: InputTypes.url,
 				name: "menu_link",
 			},
-		];
-
-		activitiesFields = [
+		],
+		activitiesFields: [
 			{
 				label: labelActivies,
 				type: InputTypes.textarea,
@@ -436,9 +435,8 @@ const PageUpdate: FC = () => {
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
 			},
-		];
-
-		nursingHomeContactFields = [
+		],
+		nursingHomeContactFields: [
 			{
 				label: labelVisitingInfo,
 				type: InputTypes.textarea,
@@ -449,41 +447,43 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "contact_name",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelContactTitle,
 				type: InputTypes.text,
 				name: "contact_title",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelContactPhone,
 				type: InputTypes.tel,
 				name: "contact_phone",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelContactEmail,
 				type: InputTypes.email,
 				name: "email",
 				required: true,
+				valid: true,
 			},
 			{
 				label: labelContactPhoneInfo,
 				type: InputTypes.textarea,
 				name: "contact_phone_info",
 			},
-		];
-
-		accessibilityFields = [
+		],
+		accessibilityFields: [
 			{
 				label: labelAccessibility,
 				type: InputTypes.textarea,
 				name: "accessibility_info",
 			},
-		];
-
-		staffFields = [
+		],
+		staffFields: [
 			{
 				label: labelPersonnel,
 				type: InputTypes.textarea,
@@ -494,24 +494,22 @@ const PageUpdate: FC = () => {
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
 			},
-		];
-
-		otherServicesFields = [
+		],
+		otherServicesFields: [
 			{
 				label: labelOtherServices,
 				type: InputTypes.textarea,
 				name: "other_services",
 			},
-		];
-
-		nearbyServicesFields = [
+		],
+		nearbyServicesFields: [
 			{
 				label: labelNearbyServices,
 				type: InputTypes.textarea,
 				name: "nearby_services",
 			},
-		];
-	}
+		],
+	});
 
 	const removeImage = (id: string): void => {
 		const index = imageState.findIndex(x => x.name === id);
@@ -531,16 +529,20 @@ const PageUpdate: FC = () => {
 	};
 
 	const validForm = (): boolean => {
-		const formInvalid =
-			Object.keys(formErrors).map(field => formErrors[field]).length > 0;
+		let formIsValid = true;
 
-		if (formInvalid) {
-			setPopupState("invalid");
+		Object.keys(form).forEach(section => {
+			const invalidFields =
+				form[section].filter(field => {
+					return field.valid === false;
+				}).length > 0;
 
-			return false;
-		} else {
-			return true;
-		}
+			if (invalidFields) {
+				formIsValid = false;
+			}
+		});
+
+		return formIsValid;
 	};
 
 	const handleSubmit = async (
@@ -584,6 +586,8 @@ const PageUpdate: FC = () => {
 
 				setPopupState("saved");
 				setVacancyStatus(null);
+			} else {
+				setPopupState("invalid");
 			}
 		} catch (error) {
 			console.error(error);
@@ -602,26 +606,42 @@ const PageUpdate: FC = () => {
 
 	const handleInputBlur = (
 		field: InputField,
+		section: string,
 		value: string | number,
 	): void => {
-		if (nursingHome) {
-			const { name, required } = field;
+		const { name, required } = field;
 
-			if (required) {
-				const fieldIsValid = validateField(value);
+		if (required) {
+			const fieldIsValid = validateField(value);
+			let updatedSection;
 
-				if (!fieldIsValid) {
-					setFormErrors({
-						...formErrors,
-						[name]: true,
-					});
-				} else {
-					const newErrors = { ...formErrors };
-					delete newErrors[name];
+			if (!fieldIsValid) {
+				updatedSection = [...form[section]].map(input => {
+					if (input.name === name) {
+						return {
+							...input,
+							valid: false,
+						};
+					}
 
-					setFormErrors(newErrors);
-				}
+					return input;
+				});
+
+				setForm({ ...form, [section]: updatedSection });
+			} else {
+				updatedSection = [...form[section]].map(input => {
+					if (input.name === name) {
+						return {
+							...input,
+							valid: true,
+						};
+					}
+
+					return input;
+				});
 			}
+
+			setForm({ ...form, [section]: updatedSection });
 		}
 	};
 
@@ -644,6 +664,7 @@ const PageUpdate: FC = () => {
 
 	const getInputElement = (
 		field: InputField,
+		section: string,
 		index: number,
 	): JSX.Element | null => {
 		if (nursingHome) {
@@ -654,7 +675,7 @@ const PageUpdate: FC = () => {
 						<div className="control">
 							<textarea
 								className={
-									field.required && formErrors[field.name]
+									field.required && !field.valid
 										? "error"
 										: ""
 								}
@@ -669,14 +690,18 @@ const PageUpdate: FC = () => {
 								}
 								required={field.required}
 								onBlur={event =>
-									handleInputBlur(field, event.target.value)
+									handleInputBlur(
+										field,
+										section,
+										event.target.value,
+									)
 								}
 							></textarea>
-							{field.required && formErrors[field.name] ? (
+							{field.required && !field.valid ? (
 								<span className="icon"></span>
 							) : null}
 						</div>
-						{field.required && formErrors[field.name] ? (
+						{field.required && !field.valid ? (
 							<p className="help">{textFieldIsRequired}</p>
 						) : null}
 					</div>
@@ -738,7 +763,7 @@ const PageUpdate: FC = () => {
 						<div className="control">
 							<input
 								className={
-									field.required && formErrors[field.name]
+									field.required && !field.valid
 										? "error"
 										: ""
 								}
@@ -750,14 +775,18 @@ const PageUpdate: FC = () => {
 									handleInputChange(field, event.target.value)
 								}
 								onBlur={event =>
-									handleInputBlur(field, event.target.value)
+									handleInputBlur(
+										field,
+										section,
+										event.target.value,
+									)
 								}
 							/>
-							{field.required && formErrors[field.name] ? (
+							{field.required && !field.valid ? (
 								<span className="icon"></span>
 							) : null}
 						</div>
-						{field.required && formErrors[field.name] ? (
+						{field.required && !field.valid ? (
 							<p className="help">{textFieldIsRequired}</p>
 						) : null}
 					</div>
@@ -910,56 +939,76 @@ const PageUpdate: FC = () => {
 						</div>
 						<div className="page-update-section">
 							<h3>{labelBasicInformation}</h3>
-							{basicFields.map((field, index) =>
-								getInputElement(field, index),
+							{form.basicFields.map((field, index) =>
+								getInputElement(field, "basicFields", index),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>{labelContactInfo}</h3>
-							{contactFields.map((field, index) =>
-								getInputElement(field, index),
+							{form.contactFields.map((field, index) =>
+								getInputElement(field, "contactFields", index),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>{labelFoodHeader}</h3>
-							{foodFields.map((field, index) =>
-								getInputElement(field, index),
+							{form.foodFields.map((field, index) =>
+								getInputElement(field, "foodFields", index),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>{labelActivies}</h3>
-							{activitiesFields.map((field, index) =>
-								getInputElement(field, index),
+							{form.activitiesFields.map((field, index) =>
+								getInputElement(
+									field,
+									"activitiesFields",
+									index,
+								),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>{labelVisitingInfo}</h3>
-							{nursingHomeContactFields.map((field, index) =>
-								getInputElement(field, index),
+							{form.nursingHomeContactFields.map((field, index) =>
+								getInputElement(
+									field,
+									"nursingHomeContactFields",
+									index,
+								),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>{labelAccessibility}</h3>
-							{accessibilityFields.map((field, index) =>
-								getInputElement(field, index),
+							{form.accessibilityFields.map((field, index) =>
+								getInputElement(
+									field,
+									"accessibilityFields",
+									index,
+								),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>{labelPersonnel}</h3>
-							{staffFields.map((field, index) =>
-								getInputElement(field, index),
+							{form.staffFields.map((field, index) =>
+								getInputElement(field, "staffFields", index),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>{labelOtherServices}</h3>
-							{otherServicesFields.map((field, index) =>
-								getInputElement(field, index),
+							{form.otherServicesFields.map((field, index) =>
+								getInputElement(
+									field,
+									"otherServicesFields",
+									index,
+								),
 							)}
 						</div>
 						<div className="page-update-section">
 							<h3>{labelNearbyServices}</h3>
-							{nearbyServicesFields.map((field, index) =>
-								getInputElement(field, index),
+							{form.nearbyServicesFields.map((field, index) =>
+								getInputElement(
+									field,
+									"nearbyServicesFields",
+									index,
+								),
 							)}
 						</div>
 					</>
