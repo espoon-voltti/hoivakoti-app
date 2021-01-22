@@ -132,10 +132,6 @@ const PageUpdate: FC = () => {
 	>(null);
 	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
 
-	// const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>(
-	// 	{},
-	// );
-
 	if (!id || !key) throw new Error("Invalid URL!");
 
 	useEffect(() => {
