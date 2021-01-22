@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
-import { NursingHome, NursingHomeImageName, OptionalProps } from "./types";
+import { NursingHome, NursingHomeImageName } from "./types";
 import Checkbox from "./Checkbox";
 
 enum InputTypes {
@@ -31,8 +31,6 @@ interface NursingHomeRouteParams {
 	key: string;
 }
 
-type NursingHomeKey = keyof NursingHome;
-
 interface InputField {
 	label: string;
 	type: InputTypes;
@@ -42,17 +40,7 @@ interface InputField {
 	valid?: boolean;
 }
 
-type TransformableNursingHome = OptionalProps<
-	NursingHome,
-	| "id"
-	| "pic_digests"
-	| "pics"
-	| "pic_captions"
-	| "report_status"
-	| "rating"
-	| "geolocation"
-	| "has_vacancy"
->;
+type NursingHomeKey = keyof NursingHome;
 
 type NursingHomeUpdateData = Omit<
 	NursingHome,
@@ -132,80 +120,6 @@ const PageUpdate: FC = () => {
 	>(null);
 	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
 
-	if (!id || !key) throw new Error("Invalid URL!");
-
-	useEffect(() => {
-		axios
-			.get(`${config.API_URL}/nursing-homes/${id}`)
-			.then((response: GetNursingHomeResponse) => {
-				setNursingHome(response.data);
-			})
-			.catch(e => {
-				console.error(e);
-				throw e;
-			});
-	}, [id]);
-
-	useEffect(() => {
-		if (!vacancyStatus) {
-			axios
-				.get(
-					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
-				)
-				.then((response: { data: VacancyStatus }) => {
-					setVacancyStatus(response.data);
-					setHasVacancy(response.data.has_vacancy);
-
-					if (popupState) setTimeout(() => setPopupState(null), 3000);
-				})
-				.catch(e => {
-					console.error(e);
-					throw e;
-				});
-		}
-	}, [id, key, popupState, vacancyStatus]);
-
-	const imageState = [
-		{ name: "overview_outside", remove: false, value: "", text: "" },
-		{ name: "apartment", remove: false, value: "", text: "" },
-		{ name: "lounge", remove: false, value: "", text: "" },
-		{ name: "dining_room", remove: false, value: "", text: "" },
-		{ name: "outside", remove: false, value: "", text: "" },
-		{ name: "entrance", remove: false, value: "", text: "" },
-		{ name: "bathroom", remove: false, value: "", text: "" },
-		{ name: "apartment_layout", remove: false, value: "", text: "" },
-		{ name: "nursinghome_layout", remove: false, value: "", text: "" },
-		{ name: "owner_logo", remove: false, value: "", text: "" },
-	];
-
-	const nursinghomeImageTypes = [
-		"overview_outside",
-		"apartment",
-		"lounge",
-		"dining_room",
-		"outside",
-		"entrance",
-		"bathroom",
-		"apartment_layout",
-		"nursinghome_layout",
-	];
-
-	const title = useT("pageUpdateTitle");
-	const freeApartmentsStatus = useT("freeApartmentsStatus");
-	const organizationLogo = useT("organizationLogo");
-	const organizationPhotos = useT("organizationPhotos");
-	const organizationPhotosGuide = useT("organizationPhotosGuide");
-	const intro = useT("pageUpdateIntro");
-	const labelTrue = useT("vacancyTrue");
-	const labelFalse = useT("vacancyFalse");
-	const loadingText = useT("loadingText");
-	const nursingHomeName = useT("nursingHome");
-	const status = useT("status");
-	const lastUpdate = useT("lastUpdate");
-	const noUpdate = useT("noUpdate");
-	const btnSave = useT("btnSave");
-	const cancel = useT("cancel");
-
 	const labelOwner = useT("owner");
 	const labelAra = useT("filterAraLabel");
 	const labelYearofConst = useT("yearofConst");
@@ -250,11 +164,6 @@ const PageUpdate: FC = () => {
 	const labelContactPhone = useT("contactPhone");
 	const labelContactEmail = useT("contactEmail");
 	const labelContactPhoneInfo = useT("contactPhoneInfo");
-	const textFieldIsRequired = useT("fieldIsRequired");
-
-	const updatePopupSaved = useT("saved");
-	const updatePopupSaving = useT("saving");
-	const formIsInvalid = useT("formIsInvalid");
 
 	const [form, setForm] = useState<{ [key: string]: InputField[] }>({
 		basicFields: [
@@ -507,6 +416,84 @@ const PageUpdate: FC = () => {
 		],
 	});
 
+	if (!id || !key) throw new Error("Invalid URL!");
+
+	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/nursing-homes/${id}`)
+			.then((response: GetNursingHomeResponse) => {
+				setNursingHome(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+	}, [id]);
+
+	useEffect(() => {
+		if (!vacancyStatus) {
+			axios
+				.get(
+					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
+				)
+				.then((response: { data: VacancyStatus }) => {
+					setVacancyStatus(response.data);
+					setHasVacancy(response.data.has_vacancy);
+
+					if (popupState) setTimeout(() => setPopupState(null), 3000);
+				})
+				.catch(e => {
+					console.error(e);
+					throw e;
+				});
+		}
+	}, [id, key, popupState, vacancyStatus]);
+
+	const imageState = [
+		{ name: "overview_outside", remove: false, value: "", text: "" },
+		{ name: "apartment", remove: false, value: "", text: "" },
+		{ name: "lounge", remove: false, value: "", text: "" },
+		{ name: "dining_room", remove: false, value: "", text: "" },
+		{ name: "outside", remove: false, value: "", text: "" },
+		{ name: "entrance", remove: false, value: "", text: "" },
+		{ name: "bathroom", remove: false, value: "", text: "" },
+		{ name: "apartment_layout", remove: false, value: "", text: "" },
+		{ name: "nursinghome_layout", remove: false, value: "", text: "" },
+		{ name: "owner_logo", remove: false, value: "", text: "" },
+	];
+
+	const nursinghomeImageTypes = [
+		"overview_outside",
+		"apartment",
+		"lounge",
+		"dining_room",
+		"outside",
+		"entrance",
+		"bathroom",
+		"apartment_layout",
+		"nursinghome_layout",
+	];
+
+	const title = useT("pageUpdateTitle");
+	const freeApartmentsStatus = useT("freeApartmentsStatus");
+	const organizationLogo = useT("organizationLogo");
+	const organizationPhotos = useT("organizationPhotos");
+	const organizationPhotosGuide = useT("organizationPhotosGuide");
+	const intro = useT("pageUpdateIntro");
+	const labelTrue = useT("vacancyTrue");
+	const labelFalse = useT("vacancyFalse");
+	const loadingText = useT("loadingText");
+	const nursingHomeName = useT("nursingHome");
+	const status = useT("status");
+	const lastUpdate = useT("lastUpdate");
+	const noUpdate = useT("noUpdate");
+	const btnSave = useT("btnSave");
+	const cancel = useT("cancel");
+	const textFieldIsRequired = useT("fieldIsRequired");
+	const updatePopupSaved = useT("saved");
+	const updatePopupSaving = useT("saving");
+	const formIsInvalid = useT("formIsInvalid");
+
 	const removeImage = (id: string): void => {
 		const index = imageState.findIndex(x => x.name === id);
 		imageState[index].remove = true;
@@ -558,25 +545,26 @@ const PageUpdate: FC = () => {
 				);
 
 				if (nursingHome) {
-					const transformNursingHomeData: TransformableNursingHome = {
-						...nursingHome,
-					};
+					let fields: InputField[] = [];
 
-					delete transformNursingHomeData.id;
-					delete transformNursingHomeData.pic_digests;
-					delete transformNursingHomeData.pics;
-					delete transformNursingHomeData.pic_captions;
-					delete transformNursingHomeData.report_status;
-					delete transformNursingHomeData.rating;
-					delete transformNursingHomeData.geolocation;
-					delete transformNursingHomeData.has_vacancy;
+					Object.keys(form)
+						.map(section => form[section])
+						.forEach(section => {
+							fields = [...fields, ...section];
+						});
 
-					const nursingHomeUpdateData: NursingHomeUpdateData = transformNursingHomeData;
+					const formData: any = {};
+
+					fields.forEach(field => {
+						formData[field.name] = nursingHome[field.name];
+					});
+
+					const updateNursingHomeData: NursingHomeUpdateData = formData;
 
 					await requestNursingHomeUpdate(
 						id,
 						key,
-						nursingHomeUpdateData,
+						updateNursingHomeData,
 					);
 				}
 
@@ -608,10 +596,11 @@ const PageUpdate: FC = () => {
 		const { name, required } = field;
 
 		if (required) {
-			const fieldIsValid = validateField(value);
+			const validField = validateField(value);
+
 			let updatedSection;
 
-			if (!fieldIsValid) {
+			if (!validField) {
 				updatedSection = [...form[section]].map(input => {
 					if (input.name === name) {
 						return {
@@ -664,129 +653,142 @@ const PageUpdate: FC = () => {
 		index: number,
 	): JSX.Element | null => {
 		if (nursingHome) {
-			if (field.type === "textarea") {
-				return (
-					<div className="field" key={`${field.name}-${index}`}>
-						<label htmlFor={field.name}>{field.label}</label>
-						<div className="control">
-							<textarea
-								className={
-									field.required && !field.valid
-										? "error"
-										: ""
-								}
-								rows={5}
-								value={
-									(nursingHome[field.name] as string) || ""
-								}
-								name={field.name}
-								id={field.name}
-								onChange={event =>
-									handleInputChange(field, event.target.value)
-								}
-								required={field.required}
-								onBlur={event =>
-									handleInputBlur(
-										field,
-										section,
-										event.target.value,
-									)
-								}
-							></textarea>
+			switch (field.type) {
+				case "textarea":
+					return (
+						<div className="field" key={`${field.name}-${index}`}>
+							<label htmlFor={field.name}>{field.label}</label>
+							<div className="control">
+								<textarea
+									className={
+										field.required && !field.valid
+											? "error"
+											: ""
+									}
+									rows={5}
+									value={
+										(nursingHome[field.name] as string) ||
+										""
+									}
+									name={field.name}
+									id={field.name}
+									onChange={event =>
+										handleInputChange(
+											field,
+											event.target.value,
+										)
+									}
+									required={field.required}
+									onBlur={event =>
+										handleInputBlur(
+											field,
+											section,
+											event.target.value,
+										)
+									}
+								></textarea>
+								{field.required && !field.valid ? (
+									<span className="icon"></span>
+								) : null}
+							</div>
 							{field.required && !field.valid ? (
-								<span className="icon"></span>
+								<p className="help">{textFieldIsRequired}</p>
 							) : null}
 						</div>
-						{field.required && !field.valid ? (
-							<p className="help">{textFieldIsRequired}</p>
-						) : null}
-					</div>
-				);
-			} else if (field.type === "checkbox") {
-				return (
-					<div className="field" key={`${field.name}-${index}`}>
-						<Checkbox
-							name={field.name}
-							id={field.name}
-							onChange={checked =>
-								handleInputChange(field, checked)
-							}
-							isChecked={
-								(nursingHome[field.name] as boolean) || false
-							}
+					);
+				case "checkbox":
+					return (
+						<div className="field" key={`${field.name}-${index}`}>
+							<Checkbox
+								name={field.name}
+								id={field.name}
+								onChange={checked =>
+									handleInputChange(field, checked)
+								}
+								isChecked={
+									(nursingHome[field.name] as boolean) ||
+									false
+								}
+							>
+								{field.label}
+							</Checkbox>
+						</div>
+					);
+				case "radio":
+					return (
+						<fieldset
+							className="field"
+							key={`${field.name}-${index}`}
 						>
-							{field.label}
-						</Checkbox>
-					</div>
-				);
-			} else if (field.type === "radio") {
-				return (
-					<fieldset className="field" key={`${field.name}-${index}`}>
-						<legend>{labelAra}</legend>
-						{field.buttons
-							? field.buttons.map(button => {
-									return (
-										<Radio
-											key={`${field.name}-${button.value}`}
-											id={`${field.name}-${button.value}`}
-											name={field.name}
-											isSelected={
-												(nursingHome[
-													field.name
-												] as string) === button.value
-											}
-											value={button.value}
-											onChange={isChecked => {
-												if (isChecked) {
-													handleInputChange(
-														field,
-														button.value,
-													);
+							<legend>{labelAra}</legend>
+							{field.buttons
+								? field.buttons.map(button => {
+										return (
+											<Radio
+												key={`${field.name}-${button.value}`}
+												id={`${field.name}-${button.value}`}
+												name={field.name}
+												isSelected={
+													(nursingHome[
+														field.name
+													] as string) ===
+													button.value
 												}
-											}}
-										>
-											{button.label}
-										</Radio>
-									);
-							  })
-							: null}
-					</fieldset>
-				);
-			} else {
-				return (
-					<div className="field" key={`${field.name}-${index}`}>
-						<label htmlFor={field.name}>{field.label}</label>
-						<div className="control">
-							<input
-								className={
-									field.required && !field.valid
-										? "error"
-										: ""
-								}
-								value={nursingHome[field.name] as string}
-								name={field.name}
-								id={field.name}
-								type={field.type}
-								onChange={event =>
-									handleInputChange(field, event.target.value)
-								}
-								onBlur={event =>
-									handleInputBlur(
-										field,
-										section,
-										event.target.value,
-									)
-								}
-							/>
+												value={button.value}
+												onChange={isChecked => {
+													if (isChecked) {
+														handleInputChange(
+															field,
+															button.value,
+														);
+													}
+												}}
+											>
+												{button.label}
+											</Radio>
+										);
+								  })
+								: null}
+						</fieldset>
+					);
+				default:
+					return (
+						<div className="field" key={`${field.name}-${index}`}>
+							<label htmlFor={field.name}>{field.label}</label>
+							<div className="control">
+								<input
+									className={
+										field.required && !field.valid
+											? "error"
+											: ""
+									}
+									value={nursingHome[field.name] as string}
+									name={field.name}
+									id={field.name}
+									type={field.type}
+									onChange={event =>
+										handleInputChange(
+											field,
+											event.target.value,
+										)
+									}
+									onBlur={event =>
+										handleInputBlur(
+											field,
+											section,
+											event.target.value,
+										)
+									}
+								/>
+								{field.required && !field.valid ? (
+									<span className="icon"></span>
+								) : null}
+							</div>
 							{field.required && !field.valid ? (
-								<span className="icon"></span>
+								<p className="help">{textFieldIsRequired}</p>
 							) : null}
 						</div>
-						{field.required && !field.valid ? (
-							<p className="help">{textFieldIsRequired}</p>
-						) : null}
-					</div>
-				);
+					);
 			}
 		}
 
