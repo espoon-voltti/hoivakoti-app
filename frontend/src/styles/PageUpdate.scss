@@ -106,10 +106,14 @@
 	}
 }
 
-.page-update-input {
+.field {
 	width: 100%;
 	box-sizing: border-box;
-	margin-bottom: 1rem;
+	padding-bottom: 1.5rem;
+
+	&:not(:last-child) {
+		margin-bottom: 0.75rem;
+	}
 
 	label {
 		display: block;
@@ -151,9 +155,16 @@
 		padding-right: calc(0.625em - 1px);
 		padding-top: calc(0.5em - 1px);
 		font-size: 1rem;
+		font-family: inherit;
 
 		&.error {
-			border: 1px solid $error-color;
+			border-color: $error-color;
+		}
+
+		&:focus {
+			border-color: $link-color;
+			border-bottom-width: 2px;
+			outline: none;
 		}
 	}
 
@@ -169,13 +180,14 @@
 	.radio-container {
 		label {
 			display: flex;
+			font-weight: 400;
 		}
 	}
 
 	&-error {
 		display: block;
 		color: $error-color;
-		margin-top: 10px;
+		margin-top: 0.75rem;
 	}
 
 	legend {

@@ -682,10 +682,7 @@ const PageUpdate: FC = () => {
 	const getInputElement = (field: InputField, index: number): JSX.Element => {
 		if (field.type === "textarea") {
 			return (
-				<div
-					className="page-update-input"
-					key={`${field.name}-${index}`}
-				>
+				<div className="field" key={`${field.name}-${index}`}>
 					<label htmlFor={field.name}>{field.label}</label>
 					<div className="control">
 						<textarea
@@ -707,7 +704,7 @@ const PageUpdate: FC = () => {
 							}
 						></textarea>
 						{field.required && formErrors[field.name] ? (
-							<span className="page-update-input-error">
+							<span className="field-error">
 								{textFieldIsRequired}
 							</span>
 						) : null}
@@ -716,10 +713,7 @@ const PageUpdate: FC = () => {
 			);
 		} else if (field.type === "checkbox") {
 			return (
-				<div
-					className="page-update-input"
-					key={`${field.name}-${index}`}
-				>
+				<div className="field" key={`${field.name}-${index}`}>
 					<Checkbox
 						name={field.name}
 						id={field.name}
@@ -732,10 +726,7 @@ const PageUpdate: FC = () => {
 			);
 		} else if (field.type === "radio") {
 			return (
-				<fieldset
-					className="page-update-input"
-					key={`${field.name}-${index}`}
-				>
+				<fieldset className="field" key={`${field.name}-${index}`}>
 					<legend>{labelAra}</legend>
 					{field.buttons
 						? field.buttons.map(button => {
@@ -766,10 +757,7 @@ const PageUpdate: FC = () => {
 			);
 		} else {
 			return (
-				<div
-					className="page-update-input"
-					key={`${field.name}-${index}`}
-				>
+				<div className="field" key={`${field.name}-${index}`}>
 					<label htmlFor={field.name}>{field.label}</label>
 					<div className="control">
 						<input
@@ -790,7 +778,7 @@ const PageUpdate: FC = () => {
 							}
 						/>
 						{field.required && formErrors[field.name] ? (
-							<span className="page-update-input-error">
+							<span className="field-error">
 								{textFieldIsRequired}
 							</span>
 						) : null}
