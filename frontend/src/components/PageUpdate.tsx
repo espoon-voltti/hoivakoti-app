@@ -657,13 +657,15 @@ const PageUpdate: FC = () => {
 				case "textarea":
 					return (
 						<div className="field" key={`${field.name}-${index}`}>
-							<label htmlFor={field.name}>{field.label}</label>
+							<label className="label" htmlFor={field.name}>
+								{field.label}
+							</label>
 							<div className="control">
 								<textarea
 									className={
 										field.required && !field.valid
-											? "error"
-											: ""
+											? "input error"
+											: "input"
 									}
 									rows={5}
 									value={
@@ -754,13 +756,15 @@ const PageUpdate: FC = () => {
 				default:
 					return (
 						<div className="field" key={`${field.name}-${index}`}>
-							<label htmlFor={field.name}>{field.label}</label>
+							<label className="label" htmlFor={field.name}>
+								{field.label}
+							</label>
 							<div className="control">
 								<input
 									className={
 										field.required && !field.valid
-											? "error"
-											: ""
+											? "input error"
+											: "input"
 									}
 									value={nursingHome[field.name] as string}
 									name={field.name}

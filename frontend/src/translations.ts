@@ -910,27 +910,27 @@ export const translations = {
 	},
 	summary: {
 		"fi-FI": "Yhteenveto",
-		"sv-FI": "Sammandrag",
+		"sv-FI": "Yhteenveto",
 	},
 	buildingInfo: {
 		"fi-FI": "Lisätietoja hoivakodista",
-		"sv-FI": "Mera information",
+		"sv-FI": "Lisätietoja hoivakodista",
 	},
 	apartmentCountInfo: {
 		"fi-FI": "Lisätietoja asuntojen määrästä",
-		"sv-FI": "Mer information",
+		"sv-FI": "Lisätietoja asuntojen määrästä",
 	},
 	apartmentsHaveBathroom: {
 		"fi-FI": "Asunnoissa oma kylpyhuone",
-		"sv-FI": "Eget badrum",
+		"sv-FI": "Asunnoissa oma kylpyhuone",
 	},
 	rentInfo: {
 		"fi-FI": "Lisätietoja vuokrasta",
-		"sv-FI": "Mer information",
+		"sv-FI": "Lisätietoja vuokrasta",
 	},
 	languageInfo: {
 		"fi-FI": "Lisätietoja palvelukielestä",
-		"sv-FI": "Mer information",
+		"sv-FI": "Lisätietoja palvelukielestä",
 	},
 	address: {
 		"fi-FI": "Katuosoite",
@@ -950,38 +950,38 @@ export const translations = {
 	},
 	arrivalGuidePublicTransit: {
 		"fi-FI": "Saapuminen julkisilla kulkuyhteyksillä",
-		"sv-FI": "Mer information",
+		"sv-FI": "Saapuminen julkisilla kulkuyhteyksillä",
 	},
 	arrivalGuideCar: {
 		"fi-FI": "Saapuminen autolla",
-		"sv-FI": "Mer information",
+		"sv-FI": "Saapuminen autolla",
 	},
 	contactName: {
 		"fi-FI": "Yhteyshenkilön nimi",
-		"sv-FI": "Mer information",
+		"sv-FI": "Yhteyshenkilön nimi",
 	},
 	contactTitle: {
 		"fi-FI": "Yhteyshenkilön titteli",
-		"sv-FI": "Mer information",
+		"sv-FI": "Yhteyshenkilön titteli",
 	},
 	contactPhone: {
 		"fi-FI": "Yhteyshenkilön puhelinnumero",
-		"sv-FI": "Mer information",
+		"sv-FI": "Yhteyshenkilön puhelinnumero",
 	},
 	contactEmail: {
 		"fi-FI": "Yhteyshenkilön sähköposti",
-		"sv-FI": "Mer information",
+		"sv-FI": "Yhteyshenkilön sähköposti",
 	},
 	contactPhoneInfo: {
 		"fi-FI": "Lisätietoja yhteyshenkilön puhelinnumerosta",
-		"sv-FI": "Mer information",
+		"sv-FI": "Lisätietoja yhteyshenkilön puhelinnumerosta",
 	},
 	fieldIsRequired: {
 		"fi-FI": "Kenttä on pakollinen",
-		"sv-FI": "Mer information",
+		"sv-FI": "Kenttä on pakollinen",
 	},
 	formIsInvalid: {
 		"fi-FI": "Lomakkeessa on virheitä!",
-		"sv-FI": "Mer information",
+		"sv-FI": "Lomakkeessa on virheitä!",
 	},
 };

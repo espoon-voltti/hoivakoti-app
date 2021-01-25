@@ -114,41 +114,20 @@
 		margin-bottom: 0.75rem;
 	}
 
-	label {
+	.label {
 		display: block;
 		font-size: 1rem;
 		font-weight: 600;
 		line-height: 1.5;
 	}
 
-	textarea {
-		border: solid 1px $border-color;
-		width: 100%;
-		resize: none;
+	.input {
 		box-sizing: border-box;
-		max-width: 100%;
 		width: 100%;
-		padding-bottom: 0.4rem;
-	}
-
-	input[type="text"],
-	input[type="number"],
-	input[type="email"],
-	input[type="url"],
-	input[type="tel"] {
-		border: none;
-		border-bottom: solid 1px $border-color;
 		max-width: 100%;
-		width: 100%;
 		padding-bottom: 0.4rem;
-		height: 2.5em;
-	}
-
-	textarea,
-	input {
-		box-sizing: border-box;
-		min-height: 2.5em;
 		border-radius: 0;
+		min-height: 2.5em;
 		line-height: 1.5;
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
@@ -167,6 +146,21 @@
 		}
 	}
 
+	textarea {
+		border: solid 1px $border-color;
+		resize: none;
+	}
+
+	input[type="text"],
+	input[type="number"],
+	input[type="email"],
+	input[type="url"],
+	input[type="tel"] {
+		border: none;
+		border-bottom: solid 1px $border-color;
+		height: 2.5em;
+	}
+
 	.control {
 		box-sizing: border-box;
 		clear: both;
@@ -176,7 +170,7 @@
 
 		.icon {
 			position: absolute;
-			bottom: -25px;
+			bottom: -1.56rem;
 			right: 0;
 			background: url("/icons/icon-exclamation-circle.svg");
 			width: 1.125rem;
@@ -184,19 +178,12 @@
 		}
 	}
 
-	.checkbox-container,
-	.radio-container {
-		label {
-			display: flex;
-			font-weight: 400;
-		}
-	}
-
 	.help {
 		display: block;
-		font-size: 0.75rem;
 		position: absolute;
 		left: 0;
+		right: 1.2rem;
+		font-size: 0.75rem;
 		margin-top: 0.4rem;
 		padding-left: 0.5rem;
 		line-height: 1.125rem;
@@ -205,7 +192,7 @@
 	}
 
 	legend {
-		@extend label;
+		@extend .label;
 		margin-bottom: 1em;
 	}
 }
