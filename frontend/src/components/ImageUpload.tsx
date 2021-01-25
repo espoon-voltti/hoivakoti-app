@@ -29,8 +29,10 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
 
 	if (!imageName || !nursingHome || !nursingHome.pic_digests)
 		hasImage = false;
-	let digest: string = "";
-	let caption: string = "";
+
+	let digest = "";
+	let caption = "";
+
 	if (hasImage && nursingHome) {
 		digest = (nursingHome.pic_digests as any)[`${imageName}_hash`];
 		caption = (nursingHome.pic_captions as any)[`${imageName}_caption`];
