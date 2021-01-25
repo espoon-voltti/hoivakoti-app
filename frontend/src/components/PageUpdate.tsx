@@ -21,6 +21,21 @@ enum InputTypes {
 	radio = "radio",
 }
 
+type NursingHomeKey = keyof NursingHome;
+
+type NursingHomeUpdateData = Omit<
+	NursingHome,
+	| "id"
+	| "pic_digests"
+	| "pics"
+	| "pic_captions"
+	| "report_status"
+	| "rating"
+	| "geolocation"
+	| "has_vacancy"
+	| "basic_update_key"
+>;
+
 interface VacancyStatus {
 	has_vacancy: boolean;
 	vacancy_last_updated_at: string | null;
@@ -39,21 +54,6 @@ interface InputField {
 	required?: boolean;
 	valid?: boolean;
 }
-
-type NursingHomeKey = keyof NursingHome;
-
-type NursingHomeUpdateData = Omit<
-	NursingHome,
-	| "id"
-	| "pic_digests"
-	| "pics"
-	| "pic_captions"
-	| "report_status"
-	| "rating"
-	| "geolocation"
-	| "has_vacancy"
-	| "basic_update_key"
->;
 
 const formatDate = (dateString: string | null): string => {
 	if (!dateString) return "";
@@ -164,6 +164,25 @@ const PageUpdate: FC = () => {
 	const labelContactPhone = useT("contactPhone");
 	const labelContactEmail = useT("contactEmail");
 	const labelContactPhoneInfo = useT("contactPhoneInfo");
+	const title = useT("pageUpdateTitle");
+	const freeApartmentsStatus = useT("freeApartmentsStatus");
+	const organizationLogo = useT("organizationLogo");
+	const organizationPhotos = useT("organizationPhotos");
+	const organizationPhotosGuide = useT("organizationPhotosGuide");
+	const intro = useT("pageUpdateIntro");
+	const labelTrue = useT("vacancyTrue");
+	const labelFalse = useT("vacancyFalse");
+	const loadingText = useT("loadingText");
+	const nursingHomeName = useT("nursingHome");
+	const status = useT("status");
+	const lastUpdate = useT("lastUpdate");
+	const noUpdate = useT("noUpdate");
+	const btnSave = useT("btnSave");
+	const cancel = useT("cancel");
+	const textFieldIsRequired = useT("fieldIsRequired");
+	const updatePopupSaved = useT("saved");
+	const updatePopupSaving = useT("saving");
+	const formIsInvalid = useT("formIsInvalid");
 
 	const [form, setForm] = useState<{ [key: string]: InputField[] }>({
 		basicFields: [
@@ -474,26 +493,6 @@ const PageUpdate: FC = () => {
 		"nursinghome_layout",
 	];
 
-	const title = useT("pageUpdateTitle");
-	const freeApartmentsStatus = useT("freeApartmentsStatus");
-	const organizationLogo = useT("organizationLogo");
-	const organizationPhotos = useT("organizationPhotos");
-	const organizationPhotosGuide = useT("organizationPhotosGuide");
-	const intro = useT("pageUpdateIntro");
-	const labelTrue = useT("vacancyTrue");
-	const labelFalse = useT("vacancyFalse");
-	const loadingText = useT("loadingText");
-	const nursingHomeName = useT("nursingHome");
-	const status = useT("status");
-	const lastUpdate = useT("lastUpdate");
-	const noUpdate = useT("noUpdate");
-	const btnSave = useT("btnSave");
-	const cancel = useT("cancel");
-	const textFieldIsRequired = useT("fieldIsRequired");
-	const updatePopupSaved = useT("saved");
-	const updatePopupSaving = useT("saving");
-	const formIsInvalid = useT("formIsInvalid");
-
 	const removeImage = (id: string): void => {
 		const index = imageState.findIndex(x => x.name === id);
 		imageState[index].remove = true;
@@ -597,36 +596,12 @@ const PageUpdate: FC = () => {
 
 		if (required) {
 			const validField = validateField(value);
+			const fields = [...form[section]];
+			const index = fields.findIndex(input => input.name === name);
 
-			let updatedSection;
+			fields[index] = { ...field, valid: validField };
 
-			if (!validField) {
-				updatedSection = [...form[section]].map(input => {
-					if (input.name === name) {
-						return {
-							...input,
-							valid: false,
-						};
-					}
-
-					return input;
-				});
-
-				setForm({ ...form, [section]: updatedSection });
-			} else {
-				updatedSection = [...form[section]].map(input => {
-					if (input.name === name) {
-						return {
-							...input,
-							valid: true,
-						};
-					}
-
-					return input;
-				});
-			}
-
-			setForm({ ...form, [section]: updatedSection });
+			setForm({ ...form, [section]: fields });
 		}
 	};
 
@@ -737,13 +712,11 @@ const PageUpdate: FC = () => {
 													button.value
 												}
 												value={button.value}
-												onChange={isChecked => {
-													if (isChecked) {
-														handleInputChange(
-															field,
-															button.value,
-														);
-													}
+												onChange={() => {
+													handleInputChange(
+														field,
+														button.value,
+													);
 												}}
 											>
 												{button.label}
