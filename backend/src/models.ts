@@ -132,6 +132,7 @@ async function CreateNursingHomeReportsTable(): Promise<void> {
 		table.string("nursinghome_id");
 		table.string("date");
 		table.string("status");
+		table.string("type");
 		table.binary("report_file");
 	});
 
@@ -827,8 +828,9 @@ export async function GetDistinctCities(): Promise<any[]> {
 
 export async function UploadNursingHomeReport( //USE ONLY WHEN AUTHENTICATED
 	id: string,
-	status: string,
 	date: string,
+	type: string,
+	status: string,
 	file: any,
 ): Promise<boolean> {
 	const nursingHomeValid = await knex
@@ -838,28 +840,38 @@ export async function UploadNursingHomeReport( //USE ONLY WHEN AUTHENTICATED
 
 	if (nursingHomeValid.length === 0) return false;
 
-	const nursingHomeExsists = await knex
+	const existingReports = await knex
 		.select()
 		.table("NursingHomeReports")
-		.where({ nursinghome_id: id });
+		.where({ nursinghome_id: id })
+		.orderBy("date", "desc");
 
-	if (nursingHomeExsists.length < 1) {
-		await knex("NursingHomeReports").insert({ nursinghome_id: id });
-	}
-
-	let fileData =
+	const fileData =
 		file != "" ? Buffer.from(file.split(",")[1], "base64") : null;
 
-	let count = await knex("NursingHomeReports")
-		.where({ nursinghome_id: id })
-		.update({
-			status: status,
-			date: date,
-			report_file: fileData,
-		});
+	if( status == 'waiting' || status == 'no-info' ){
+		await knex("NursingHomeReports").delete().where({ nursinghome_id: id })
+	} else if( existingReports.length == 2 ) {
+		if( type != 'announced' && existingReports[0].type != 'announced' && existingReports[1].type == 'announced' ){
+			// only older existing report is from announced visit. We should remove the newer one in this case.
+			await knex("NursingHomeReports").delete().where({ nursinghome_id: id , date: existingReports[0].date })
+		} else {
+			await knex("NursingHomeReports").delete().where({ nursinghome_id: id , date: existingReports[1].date })
+		}
 
-	if (count == 0) return false;
+	} else if ( existingReports.length == 1 && existingReports[0].status == 'no-info' ){
+		// remove no information row from database if its been placed for this numsing home
+		await knex("NursingHomeReports").delete().where({ nursinghome_id: id })
+	}
 
+	await knex("NursingHomeReports").insert({
+		nursinghome_id: id,
+		date: date,
+		type: type,
+		status: status,
+		report_file: fileData
+	});
+	
 	return true;
 }
 

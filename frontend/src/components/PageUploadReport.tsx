@@ -27,6 +27,7 @@ const requestReportStatusUpdate = async (
 	id: string,
 	key:string,
 	reportStatus: string,
+	reportType: string,
 	reportDate: string,
 	reportFile: string,
 ): Promise<void> => {
@@ -34,6 +35,7 @@ const requestReportStatusUpdate = async (
 		`${config.API_URL}/nursing-homes/${id}/report-status/`,
 		{ 
 			status: reportStatus,
+			type: reportType,
 			date: reportDate,
 			file: reportFile
 		},
@@ -54,6 +56,7 @@ const PageUploadReport: FC = () => {
 	const [nursingHomeState, setNursingHomeState] = useState<string>("");
 	const [reportDate, setReportDate] = useState<string>("");
 	const [reportFile, setReportFile] = useState<string>("");
+	const [reportType, setReportType] = useState<string>("");
 
 	if (!id) throw new Error("Invalid URL!");
 
@@ -96,12 +99,12 @@ const PageUploadReport: FC = () => {
 	): Promise<void> => {
 		e.preventDefault();
 		if(nursingHomeState){
-			if(reportDate && reportFile){
+			if(reportDate && reportFile && reportType){
 
 				setPopupState("saving");
 				const dateObj = new Date(reportDate);
 				console.log(nursingHomeState);
-				await requestReportStatusUpdate(id, key, nursingHomeState, dateObj.toISOString(), reportFile);
+				await requestReportStatusUpdate(id, key, nursingHomeState, reportType, dateObj.toISOString(), reportFile);
 				axios
 					.get(`${config.API_URL}/nursing-homes/${id}`)
 					.then((response: GetNursingHomeResponse) => {
@@ -117,7 +120,7 @@ const PageUploadReport: FC = () => {
 
 				setPopupState("saving");
 				console.log(nursingHomeState);
-				await requestReportStatusUpdate(id, key, nursingHomeState, "", "");
+				await requestReportStatusUpdate(id, key, nursingHomeState, "", "", "");
 				axios
 					.get(`${config.API_URL}/nursing-homes/${id}`)
 					.then((response: GetNursingHomeResponse) => {
@@ -167,6 +170,9 @@ const PageUploadReport: FC = () => {
 	const reportStatusSurveillance = useT("status_surveillance_long");
 	const reportStatusNoInfo = useT("status_no_info");
 	const reportStatusWaiting = useT("status_waiting");
+	const reportTypeAnnounced = useT("reportTypeAnnounced");
+	const reportTypeAudit = useT("reportTypeAudit");
+	const reportTypeConcern = useT("reportTypeConcern");
 
 	let reportStatus = reportStatusWaiting;
 
@@ -240,89 +246,127 @@ const PageUploadReport: FC = () => {
 								? formatDate(nursingHome.report_status.date)
 								: "-"}
 						</p>
-							</div>
-							<div className="page-update-section">
-								<h3 className="page-report-minor-title">{"Käyntipäivämäärä*:"}</h3>
-								
-								<input className="page-report-datepicker" type="date" value={reportDate} onChange={(event: React.ChangeEvent<HTMLInputElement>,): void => {setReportDate(event.target.value)}}></input>
-								
-								<h3 className="page-report-minor-title">{"Hoivakodin tilanne*:"}</h3>
-								
-								<Radio
-									id="nursinghome-status-ok"
-									name="update-vacancy-true"
-									isSelected={nursingHomeState == "ok"}
-									onChange={isChecked => {
-										if (isChecked) setNursingHomeState("ok");
-									}}
-								>
-									{reportStatusOk}
-								</Radio>
-								<Radio
-									id="nursinghome-status-small"
-									name="nursinghome-status-small"
-									isSelected={nursingHomeState == "small"}
-									onChange={isChecked => {
-										if (isChecked) setNursingHomeState("small");
-									}}
-								>
-									{reportStatusSmall}
-								</Radio>
-								<Radio
-									id="nursinghome-status-true-significant"
-									name="nursinghome-status-significant"
-									isSelected={nursingHomeState == "significant"}
-									onChange={isChecked => {
-										if (isChecked) setNursingHomeState("significant");
-									}}
-								>
-									{reportStatusSignificant}
-								</Radio>
-								<Radio
-									id="nursinghome-status-surveillance"
-									name="nursinghome-status-surveillance"
-									isSelected={nursingHomeState == "surveillance"}
-									onChange={isChecked => {
-										if (isChecked) setNursingHomeState("surveillance");
-									}}
-								>
-									{reportStatusSurveillance}
-								</Radio>
-								<Radio
-									id="nursinghome-status-waiting"
-									name="nursinghome-status-waiting"
-									isSelected={nursingHomeState == "waiting"}
-									onChange={isChecked => {
-										if (isChecked) setNursingHomeState("waiting");
-									}}
-								>
-									{reportStatusWaiting}
-								</Radio>
-								<Radio
-									id="nursinghome-status-no-info"
-									name="nursinghome-status-no-info"
-									isSelected={nursingHomeState == "no-info"}
-									onChange={isChecked => {
-										if (isChecked) setNursingHomeState("no-info");
-									}}
-								>
-									{reportStatusNoInfo}
-								</Radio>
-							</div>
-							<div className="page-update-section">
-							<h3 className="page-report-minor-title">{"Lisää käyntiraportti (.pdf)*"}</h3>
-								
-								<div className="page-report-file">{reportFileName}</div>
-								<div className="page-report-file-drop">
-									<h1>Lataa liite</h1>
-									<p>Selaa tiedostoja painamalla</p>
-								</div>
-								<input type="file" className="page-report-input-hidden" onChange={handleFileChange} title={"Lataa raportti"}/>
-							</div>
-						</form>
-				
+					</div>
+					<div className="page-update-section">
+						<h3 className="page-report-minor-title">{"Käyntipäivämäärä*:"}</h3>
 						
-					</>
+						<input className="page-report-datepicker" type="date" value={reportDate} onChange={(event: React.ChangeEvent<HTMLInputElement>,): void => {setReportDate(event.target.value)}}></input>
+						
+						<h3 className="page-report-minor-title">{"Hoivakodin tilanne*:"}</h3>
+						
+						<Radio
+							id="nursinghome-status-ok"
+							name="update-vacancy-true"
+							isSelected={nursingHomeState == "ok"}
+							onChange={isChecked => {
+								if (isChecked) setNursingHomeState("ok");
+							}}
+						>
+							{reportStatusOk}
+						</Radio>
+						<Radio
+							id="nursinghome-status-small"
+							name="nursinghome-status-small"
+							isSelected={nursingHomeState == "small"}
+							onChange={isChecked => {
+								if (isChecked) setNursingHomeState("small");
+							}}
+						>
+							{reportStatusSmall}
+						</Radio>
+						<Radio
+							id="nursinghome-status-true-significant"
+							name="nursinghome-status-significant"
+							isSelected={nursingHomeState == "significant"}
+							onChange={isChecked => {
+								if (isChecked) setNursingHomeState("significant");
+							}}
+						>
+							{reportStatusSignificant}
+						</Radio>
+						<Radio
+							id="nursinghome-status-surveillance"
+							name="nursinghome-status-surveillance"
+							isSelected={nursingHomeState == "surveillance"}
+							onChange={isChecked => {
+								if (isChecked) setNursingHomeState("surveillance");
+							}}
+						>
+							{reportStatusSurveillance}
+						</Radio>
+						<Radio
+							id="nursinghome-status-waiting"
+							name="nursinghome-status-waiting"
+							isSelected={nursingHomeState == "waiting"}
+							onChange={isChecked => {
+								if (isChecked) setNursingHomeState("waiting");
+							}}
+						>
+							{reportStatusWaiting}
+						</Radio>
+						<Radio
+							id="nursinghome-status-no-info"
+							name="nursinghome-status-no-info"
+							isSelected={nursingHomeState == "no-info"}
+							onChange={isChecked => {
+								if (isChecked) setNursingHomeState("no-info");
+							}}
+						>
+							{reportStatusNoInfo}
+						</Radio>
+
+					</div>
+					<div className="page-update-section">
+
+						<h3 className="page-report-minor-title">{"Käynnin tyyppi*:"}</h3>
+						<p>Pakollinen jos hoivakodin tilanne muu kuin Odottaa käyntiä tai Sijaintikunta valvoo.</p>
+
+						<Radio
+							id="nursinghome-report-type-announced"
+							name="nursinghome-report-type-announced"
+							isSelected={reportType == "announced"}
+							onChange={isChecked => {
+								if (isChecked) setReportType("announced");
+							}}
+						>
+							{reportTypeAnnounced}
+						</Radio>
+						<Radio
+							id="nursinghome-report-type-audit"
+							name="nursinghome-report-type-audit"
+							isSelected={reportType == "audit"}
+							onChange={isChecked => {
+								if (isChecked) setReportType("audit");
+							}}
+						>
+							{reportTypeAudit}
+						</Radio>
+						<Radio
+							id="nursinghome-report-type-concern"
+							name="nursinghome-report-type-concern"
+							isSelected={reportType == "concern"}
+							onChange={isChecked => {
+								if (isChecked) setReportType("concern");
+							}}
+						>
+							{reportTypeConcern}
+						</Radio>
+						
+						
+					</div>
+					<div className="page-update-section">
+					<h3 className="page-report-minor-title">{"Lisää käyntiraportti (.pdf)*"}</h3>
+					<p>Pakollinen jos hoivakodin tilanne muu kuin Odottaa käyntiä tai Sijaintikunta valvoo.</p>
+						
+						<div className="page-report-file">{reportFileName}</div>
+						<div className="page-report-file-drop">
+							<h1>Lataa liite</h1>
+							<p>Selaa tiedostoja painamalla</p>
+						</div>
+						<input type="file" className="page-report-input-hidden" onChange={handleFileChange} title={"Lataa raportti"}/>
+					</div>
+				</form>		
+				</>
 				)}
 			</div>
 		</div>

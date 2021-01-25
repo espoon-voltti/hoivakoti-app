@@ -494,6 +494,22 @@ export const translations = {
 		"fi-FI": "Lisää uusi käynti",
 		"sv-FI": "",
 	},
+	reportTypeAnnounced: {
+		"fi-FI": "Ennalta ilmoitettu käynti",
+		"sv-FI": "",
+	},
+	reportTypeUnannounced: {
+		"fi-FI": "Ennalta ilmoittamaton käynti",
+		"sv-FI": "",
+	},
+	reportTypeAudit: {
+		"fi-FI": "Auditointikäynti",
+		"sv-FI": "",
+	},
+	reportTypeConcern: {
+		"fi-FI": "Huolikäynti",
+		"sv-FI": "",
+	},
 	selectFile: {
 		"fi-FI": "Valitse tiedosto",
 		"sv-FI": "",

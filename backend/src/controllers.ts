@@ -367,11 +367,12 @@ export async function UploadNursingHomeReport(ctx: Context): Promise<boolean> {
 
 	if (loggedIn) {
 		const { id } = ctx.params;
-		const status: string = ctx.request.body.status;
 		const date: string = ctx.request.body.date;
+		const type: string = ctx.request.body.type;
+		const status: string = ctx.request.body.status;
 		const file: any = ctx.request.body.file;
 
-		return await UploadNursingHomeReportDB(id, status, date, file);
+		return await UploadNursingHomeReportDB(id, date, type, status, file);
 	}
 	return false;
 }
