@@ -2,12 +2,11 @@ import React, { FC, useEffect, useState } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
-// import ImageUpload from "./ImageUpload";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
-import { NursingHome, NursingHomeImageName } from "./types";
+import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";
 
 enum InputTypes {
@@ -22,6 +21,7 @@ enum InputTypes {
 }
 
 type NursingHomeKey = keyof NursingHome;
+type InputFieldValue = string | number | boolean;
 
 type NursingHomeUpdateData = Omit<
 	NursingHome,
@@ -53,7 +53,8 @@ interface InputField {
 	buttons?: { value: string | boolean; label: string }[];
 	required?: boolean;
 	valid?: boolean;
-	change?: (arg: any) => void;
+	touched?: boolean;
+	change?: (arg: InputFieldValue) => void;
 }
 
 const formatDate = (dateString: string | null): string => {
@@ -71,7 +72,6 @@ const requestVacancyStatusUpdate = async (
 	id: string,
 	key: string,
 	status: boolean,
-	images: object[],
 ): Promise<void> => {
 	await axios.post(
 		`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
@@ -80,15 +80,6 @@ const requestVacancyStatusUpdate = async (
 			has_vacancy: status,
 		},
 	);
-
-	for (const image of images) {
-		await axios.post(
-			`${config.API_URL}/nursing-homes/${id}/update-image/${key}`,
-			{
-				image: image,
-			},
-		);
-	}
 };
 
 const requestNursingHomeUpdate = async (
@@ -168,9 +159,7 @@ const PageUpdate: FC = () => {
 	const labelContactDescription = useT("contactDescription");
 	const title = useT("pageUpdateTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
-	// const organizationLogo = useT("organizationLogo");
-	// const organizationPhotos = useT("organizationPhotos");
-	// const organizationPhotosGuide = useT("organizationPhotosGuide");
+
 	const intro = useT("pageUpdateIntro");
 	const labelTrue = useT("vacancyTrue");
 	const labelFalse = useT("vacancyFalse");
@@ -193,14 +182,16 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "summary",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelOwner,
 				type: InputTypes.text,
 				name: "owner",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelAra,
@@ -216,7 +207,8 @@ const PageUpdate: FC = () => {
 				type: InputTypes.number,
 				name: "construction_year",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelBuildingInfo,
@@ -228,7 +220,8 @@ const PageUpdate: FC = () => {
 				type: InputTypes.number,
 				name: "apartment_count",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelApartmentCountInfo,
@@ -240,7 +233,8 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "apartment_square_meters",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelApartmentsHaveBathroom,
@@ -252,7 +246,8 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "rent",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelRentInfo,
@@ -264,7 +259,8 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "language",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelLanguageInfo,
@@ -278,35 +274,40 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "address",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelPostalCode,
 				type: InputTypes.text,
 				name: "postal_code",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelCity,
 				type: InputTypes.text,
 				name: "city",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelDistrict,
 				type: InputTypes.text,
 				name: "district",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelWebpage,
 				type: InputTypes.url,
 				name: "www",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelArrivalGuidePublicTransit,
@@ -325,21 +326,24 @@ const PageUpdate: FC = () => {
 				type: InputTypes.text,
 				name: "meals_preparation",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelFoodMoreInfo,
 				type: InputTypes.textarea,
 				name: "meals_info",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelLinkMenu,
 				type: InputTypes.url,
 				name: "menu_link",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 		],
 		activitiesFields: [
@@ -348,28 +352,32 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "activities_info",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelLinkMoreInfoActivies,
 				type: InputTypes.url,
 				name: "activities_link",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelOutdoorActivies,
 				type: InputTypes.textarea,
 				name: "outdoors_possibilities_info",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelLinkMoreInfoOutdoor,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 		],
 		nursingHomeContactFields: [
@@ -378,35 +386,40 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "tour_info",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelContactName,
 				type: InputTypes.text,
 				name: "contact_name",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelContactTitle,
 				type: InputTypes.text,
 				name: "contact_title",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelContactPhone,
 				type: InputTypes.tel,
 				name: "contact_phone",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelContactEmail,
 				type: InputTypes.email,
 				name: "email",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelContactPhoneInfo,
@@ -420,7 +433,8 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "accessibility_info",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 		],
 		staffFields: [
@@ -448,7 +462,8 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "nearby_services",
 				required: true,
-				valid: true,
+				valid: false,
+				touched: false,
 			},
 		],
 		vacancyFields: [
@@ -460,10 +475,8 @@ const PageUpdate: FC = () => {
 					{ value: false, label: labelFalse },
 				],
 				name: "has_vacancy",
-				change: (selected: boolean) => {
-					console.log(selected);
-
-					setHasVacancy(selected);
+				change: (selected: InputFieldValue) => {
+					setHasVacancy(selected as boolean);
 				},
 			},
 			{
@@ -473,6 +486,8 @@ const PageUpdate: FC = () => {
 			},
 		],
 	});
+
+	const [formIsValid, setFormIsValid] = useState(false);
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
@@ -507,63 +522,20 @@ const PageUpdate: FC = () => {
 		}
 	}, [id, key, popupState, vacancyStatus]);
 
-	const imageState = [
-		{ name: "overview_outside", remove: false, value: "", text: "" },
-		{ name: "apartment", remove: false, value: "", text: "" },
-		{ name: "lounge", remove: false, value: "", text: "" },
-		{ name: "dining_room", remove: false, value: "", text: "" },
-		{ name: "outside", remove: false, value: "", text: "" },
-		{ name: "entrance", remove: false, value: "", text: "" },
-		{ name: "bathroom", remove: false, value: "", text: "" },
-		{ name: "apartment_layout", remove: false, value: "", text: "" },
-		{ name: "nursinghome_layout", remove: false, value: "", text: "" },
-		{ name: "owner_logo", remove: false, value: "", text: "" },
-	];
+	const validateField = (value: any): boolean => {
+		return value !== null && value !== "";
+	};
 
-	// const nursinghomeImageTypes = [
-	// 	"overview_outside",
-	// 	"apartment",
-	// 	"lounge",
-	// 	"dining_room",
-	// 	"outside",
-	// 	"entrance",
-	// 	"bathroom",
-	// 	"apartment_layout",
-	// 	"nursinghome_layout",
-	// ];
+	const getAllFields = (): InputField[] => {
+		let fields: InputField[] = [];
 
-	// const removeImage = (id: string): void => {
-	// 	const index = imageState.findIndex(x => x.name === id);
-	// 	imageState[index].remove = true;
-	// 	imageState[index].value = "";
-	// };
+		const sections = Object.keys(form).map(section => form[section]);
 
-	// const updateImageState = (id: string, state: string): void => {
-	// 	const index = imageState.findIndex(x => x.name === id);
-	// 	imageState[index].value = state;
-	// 	imageState[index].remove = false;
-	// };
+		for (const section of sections) {
+			fields = [...fields, ...section];
+		}
 
-	// const updateCaptionState = (id: string, state: string): void => {
-	// 	const index = imageState.findIndex(x => x.name === id);
-	// 	imageState[index].text = state;
-	// };
-
-	const validForm = (): boolean => {
-		let formIsValid = true;
-
-		Object.keys(form).forEach(section => {
-			const invalidFields =
-				form[section].filter((field: InputField) => {
-					return field.valid === false;
-				}).length > 0;
-
-			if (invalidFields) {
-				formIsValid = false;
-			}
-		});
-
-		return formIsValid;
+		return fields;
 	};
 
 	const handleSubmit = async (
@@ -572,32 +544,21 @@ const PageUpdate: FC = () => {
 		try {
 			event.preventDefault();
 
-			if (validForm()) {
+			if (formIsValid) {
 				setPopupState("saving");
 
-				await requestVacancyStatusUpdate(
-					id,
-					key,
-					hasVacancy,
-					imageState,
-				);
+				await requestVacancyStatusUpdate(id, key, hasVacancy);
 
 				if (nursingHome) {
-					let fields: InputField[] = [];
-
-					Object.keys(form)
-						.map(section => form[section])
-						.forEach(section => {
-							fields = [...fields, ...section];
-						});
+					const fields = getAllFields();
 
 					const formData: any = {};
 
-					fields.forEach(field => {
+					for (const field of fields) {
 						if (field.name !== "has_vacancy") {
 							formData[field.name] = nursingHome[field.name];
 						}
-					});
+					}
 
 					const updateNursingHomeData: NursingHomeUpdateData = formData;
 
@@ -624,34 +585,81 @@ const PageUpdate: FC = () => {
 		window.location.href = window.location.pathname + "/peruuta";
 	};
 
-	const validateField = (value: string | number): boolean => {
-		return value !== null && value !== "";
+	const validateForm = (): void => {
+		if (nursingHome) {
+			let validForm = true;
+
+			const validatedForm = { ...form };
+
+			for (const section in validatedForm) {
+				const fields = validatedForm[section];
+				const validatedFields = [];
+
+				for (const field of fields) {
+					if (field.required) {
+						const validField = validateField(
+							nursingHome[field.name],
+						);
+
+						if (!validField) {
+							validForm = false;
+						}
+
+						validatedFields.push({
+							...field,
+							touched: true,
+							valid: validField,
+						});
+					} else {
+						validatedFields.push(field);
+					}
+				}
+
+				validatedForm[section] = validatedFields;
+			}
+
+			setForm(validatedForm);
+			setFormIsValid(validForm);
+		}
 	};
 
 	const handleInputBlur = (
 		field: InputField,
 		section: string,
-		value: string | number,
+		value: InputFieldValue,
 	): void => {
 		const { name, required } = field;
 
 		if (required) {
 			const validField = validateField(value);
+
 			const fields = [...form[section]];
 			const index = fields.findIndex(input => input.name === name);
 
-			fields[index] = { ...field, valid: validField };
+			fields[index] = { ...field, touched: true, valid: validField };
 
 			setForm({ ...form, [section]: fields });
 		}
+
+		validateForm();
 	};
 
 	const handleInputChange = (
 		field: InputField,
-		value: string | number | boolean,
+		section: string,
+		value: InputFieldValue,
 	): void => {
 		if (nursingHome) {
-			const { name, type } = field;
+			const { name, type, touched } = field;
+
+			if (!touched) {
+				const fields = [...form[section]];
+				const index = fields.findIndex(input => input.name === name);
+
+				fields[index] = { ...field, touched: true };
+
+				setForm({ ...form, [section]: fields });
+			}
 
 			setNursingHome({
 				...nursingHome,
@@ -661,6 +669,8 @@ const PageUpdate: FC = () => {
 						: value,
 			});
 		}
+
+		validateForm();
 	};
 
 	const getInputElement = (
@@ -669,6 +679,9 @@ const PageUpdate: FC = () => {
 		index: number,
 	): JSX.Element | null => {
 		if (nursingHome) {
+			const fieldInvalid =
+				field.required && field.touched && !field.valid;
+
 			switch (field.type) {
 				case "textarea":
 					return (
@@ -679,9 +692,7 @@ const PageUpdate: FC = () => {
 							<div className="control">
 								<textarea
 									className={
-										field.required && !field.valid
-											? "input error"
-											: "input"
+										fieldInvalid ? "input error" : "input"
 									}
 									rows={5}
 									value={
@@ -693,6 +704,7 @@ const PageUpdate: FC = () => {
 									onChange={event =>
 										handleInputChange(
 											field,
+											section,
 											event.target.value,
 										)
 									}
@@ -705,11 +717,11 @@ const PageUpdate: FC = () => {
 										)
 									}
 								></textarea>
-								{field.required && !field.valid ? (
+								{fieldInvalid ? (
 									<span className="icon"></span>
 								) : null}
 							</div>
-							{field.required && !field.valid ? (
+							{fieldInvalid ? (
 								<p className="help">{textFieldIsRequired}</p>
 							) : null}
 						</div>
@@ -721,7 +733,7 @@ const PageUpdate: FC = () => {
 								name={field.name}
 								id={field.name}
 								onChange={checked =>
-									handleInputChange(field, checked)
+									handleInputChange(field, section, checked)
 								}
 								isChecked={
 									(nursingHome[field.name] as boolean) ||
@@ -762,6 +774,7 @@ const PageUpdate: FC = () => {
 
 													handleInputChange(
 														field,
+														section,
 														button.value,
 													);
 												}}
@@ -782,9 +795,7 @@ const PageUpdate: FC = () => {
 							<div className="control">
 								<input
 									className={
-										field.required && !field.valid
-											? "input error"
-											: "input"
+										fieldInvalid ? "input error" : "input"
 									}
 									value={nursingHome[field.name] as string}
 									name={field.name}
@@ -793,6 +804,7 @@ const PageUpdate: FC = () => {
 									onChange={event =>
 										handleInputChange(
 											field,
+											section,
 											event.target.value,
 										)
 									}
@@ -804,11 +816,11 @@ const PageUpdate: FC = () => {
 										)
 									}
 								/>
-								{field.required && !field.valid ? (
+								{fieldInvalid ? (
 									<span className="icon"></span>
 								) : null}
 							</div>
-							{field.required && !field.valid ? (
+							{fieldInvalid ? (
 								<p className="help">{textFieldIsRequired}</p>
 							) : null}
 						</div>
@@ -838,7 +850,11 @@ const PageUpdate: FC = () => {
 								>
 									{cancel}
 								</button>
-								<button type="submit" className="btn">
+								<button
+									type="submit"
+									className="btn page-update-submit"
+									disabled={!formIsValid}
+								>
 									{btnSave}
 								</button>
 
@@ -893,7 +909,12 @@ const PageUpdate: FC = () => {
 									)}
 								</div>
 								<div className="page-update-data">
-									<Link to={"/"}>Lisää kuvia</Link>
+									<Link
+										className="btn update-images-button"
+										to={`/hoivakodit/${id}/paivita/${key}/kuvat`}
+									>
+										Lisää kuvia
+									</Link>
 								</div>
 							</div>
 							<div className="page-update-section">
@@ -984,59 +1005,6 @@ const PageUpdate: FC = () => {
 								)}
 							</div>
 						</form>
-						{/* <div className="page-update-section nursinghome-logo-upload">
-							<h3 className="page-update-minor-title">
-								{organizationLogo}
-							</h3>
-							<ImageUpload
-								nursingHome={nursingHome}
-								imageName={"owner_logo" as NursingHomeImageName}
-								useButton={true}
-								textAreaClass="textarea-hidden"
-								onRemove={() => {
-									removeImage("owner_logo");
-								}}
-								onChange={file => {
-									updateImageState("owner_logo", file);
-								}}
-							/>
-						</div>
-						<div className="page-update-section">
-							<h3 className="page-update-minor-title">
-								{organizationPhotos}
-							</h3>
-							<p>{organizationPhotosGuide}</p>
-							<div className="flex-container">
-								{nursinghomeImageTypes.map(
-									(imageType, index) => (
-										<ImageUpload
-											key={`${imageType}_${index}`}
-											nursingHome={nursingHome}
-											imageName={
-												imageType as NursingHomeImageName
-											}
-											useButton={false}
-											textAreaClass="nursinghome-upload-caption"
-											onRemove={() => {
-												removeImage(imageType);
-											}}
-											onChange={file => {
-												updateImageState(
-													imageType,
-													file,
-												);
-											}}
-											onCaptionChange={text => {
-												updateCaptionState(
-													imageType,
-													text,
-												);
-											}}
-										/>
-									),
-								)}
-							</div>
-						</div> */}
 					</>
 				)}
 			</div>
