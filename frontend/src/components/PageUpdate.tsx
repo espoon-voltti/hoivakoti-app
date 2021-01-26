@@ -268,7 +268,7 @@ const PageUpdate: FC = () => {
 				name: "language_info",
 			},
 		],
-		contactFields: [
+		addressFields: [
 			{
 				label: labelAddress,
 				type: InputTypes.text,
@@ -301,6 +301,8 @@ const PageUpdate: FC = () => {
 				valid: false,
 				touched: false,
 			},
+		],
+		contactFields: [
 			{
 				label: labelWebpage,
 				type: InputTypes.url,
@@ -930,6 +932,15 @@ const PageUpdate: FC = () => {
 							</div>
 							<div className="page-update-section">
 								<h3>{labelContactInfo}</h3>
+								<div className="page-update-columns">
+									{form.addressFields.map((field, index) =>
+										getInputElement(
+											field,
+											"addressFields",
+											index,
+										),
+									)}
+								</div>
 								{form.contactFields.map((field, index) =>
 									getInputElement(
 										field,
