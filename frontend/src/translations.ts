@@ -908,13 +908,13 @@ export const translations = {
 		"fi-FI": "Suomi|Ruotsi",
 		"sv-FI": "Svenska/Finska",
 	},
-	summary: {
-		"fi-FI": "Yhteenveto",
-		"sv-FI": "Yhteenveto",
+	nursingHomeSummary: {
+		"fi-FI": "Tiivistelmä hoivakodista",
+		"sv-FI": "Tiivistelmä hoivakodista",
 	},
 	buildingInfo: {
-		"fi-FI": "Lisätietoja hoivakodista",
-		"sv-FI": "Lisätietoja hoivakodista",
+		"fi-FI": "Lisätietoja rakennuksesta",
+		"sv-FI": "Lisätietoja rakennuksesta",
 	},
 	apartmentCountInfo: {
 		"fi-FI": "Lisätietoja asuntojen määrästä",
@@ -983,5 +983,9 @@ export const translations = {
 	formIsInvalid: {
 		"fi-FI": "Lomakkeessa on virheitä!",
 		"sv-FI": "Lomakkeessa on virheitä!",
+	},
+	contactDescription: {
+		"fi-FI": "Yhteydenottoihin liittyvä kuvaus",
+		"sv-FI": "Yhteydenottoihin liittyvä kuvaus",
 	},
 };

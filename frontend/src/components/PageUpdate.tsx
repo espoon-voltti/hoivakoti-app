@@ -2,8 +2,8 @@ import React, { FC, useEffect, useState } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
-import ImageUpload from "./ImageUpload";
-import { useParams } from "react-router-dom";
+// import ImageUpload from "./ImageUpload";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
@@ -50,9 +50,10 @@ interface InputField {
 	label: string;
 	type: InputTypes;
 	name: NursingHomeKey;
-	buttons?: { value: string; label: string }[];
+	buttons?: { value: string | boolean; label: string }[];
 	required?: boolean;
 	valid?: boolean;
+	change?: (arg: any) => void;
 }
 
 const formatDate = (dateString: string | null): string => {
@@ -147,7 +148,7 @@ const PageUpdate: FC = () => {
 	const labelFoodHeader = useT("foodHeader");
 	const labelYes = useT("filterYes");
 	const labelNo = useT("filterNo");
-	const labelSummary = useT("summary");
+	const labelSummary = useT("nursingHomeSummary");
 	const labelBuildingInfo = useT("buildingInfo");
 	const labelApartmentCountInfo = useT("apartmentCountInfo");
 	const labelApartmentsHaveBathroom = useT("apartmentsHaveBathroom");
@@ -164,11 +165,12 @@ const PageUpdate: FC = () => {
 	const labelContactPhone = useT("contactPhone");
 	const labelContactEmail = useT("contactEmail");
 	const labelContactPhoneInfo = useT("contactPhoneInfo");
+	const labelContactDescription = useT("contactDescription");
 	const title = useT("pageUpdateTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
-	const organizationLogo = useT("organizationLogo");
-	const organizationPhotos = useT("organizationPhotos");
-	const organizationPhotosGuide = useT("organizationPhotosGuide");
+	// const organizationLogo = useT("organizationLogo");
+	// const organizationPhotos = useT("organizationPhotos");
+	// const organizationPhotosGuide = useT("organizationPhotosGuide");
 	const intro = useT("pageUpdateIntro");
 	const labelTrue = useT("vacancyTrue");
 	const labelFalse = useT("vacancyFalse");
@@ -204,7 +206,6 @@ const PageUpdate: FC = () => {
 				label: labelAra,
 				type: InputTypes.radio,
 				name: "ara",
-
 				buttons: [
 					{ value: labelYes, label: labelYes },
 					{ value: labelNo, label: labelNo },
@@ -270,11 +271,6 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "language_info",
 			},
-			{
-				label: labelLAHapartments,
-				type: InputTypes.checkbox,
-				name: "lah",
-			},
 		],
 		contactFields: [
 			{
@@ -302,11 +298,15 @@ const PageUpdate: FC = () => {
 				label: labelDistrict,
 				type: InputTypes.text,
 				name: "district",
+				required: true,
+				valid: true,
 			},
 			{
 				label: labelWebpage,
 				type: InputTypes.url,
 				name: "www",
+				required: true,
+				valid: true,
 			},
 			{
 				label: labelArrivalGuidePublicTransit,
@@ -331,11 +331,15 @@ const PageUpdate: FC = () => {
 				label: labelFoodMoreInfo,
 				type: InputTypes.textarea,
 				name: "meals_info",
+				required: true,
+				valid: true,
 			},
 			{
 				label: labelLinkMenu,
 				type: InputTypes.url,
 				name: "menu_link",
+				required: true,
+				valid: true,
 			},
 		],
 		activitiesFields: [
@@ -343,28 +347,38 @@ const PageUpdate: FC = () => {
 				label: labelActivies,
 				type: InputTypes.textarea,
 				name: "activities_info",
+				required: true,
+				valid: true,
 			},
 			{
 				label: labelLinkMoreInfoActivies,
 				type: InputTypes.url,
 				name: "activities_link",
+				required: true,
+				valid: true,
 			},
 			{
 				label: labelOutdoorActivies,
 				type: InputTypes.textarea,
 				name: "outdoors_possibilities_info",
+				required: true,
+				valid: true,
 			},
 			{
 				label: labelLinkMoreInfoOutdoor,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
+				required: true,
+				valid: true,
 			},
 		],
 		nursingHomeContactFields: [
 			{
-				label: labelVisitingInfo,
+				label: labelContactDescription,
 				type: InputTypes.textarea,
 				name: "tour_info",
+				required: true,
+				valid: true,
 			},
 			{
 				label: labelContactName,
@@ -405,6 +419,8 @@ const PageUpdate: FC = () => {
 				label: labelAccessibility,
 				type: InputTypes.textarea,
 				name: "accessibility_info",
+				required: true,
+				valid: true,
 			},
 		],
 		staffFields: [
@@ -431,6 +447,29 @@ const PageUpdate: FC = () => {
 				label: labelNearbyServices,
 				type: InputTypes.textarea,
 				name: "nearby_services",
+				required: true,
+				valid: true,
+			},
+		],
+		vacancyFields: [
+			{
+				label: intro,
+				type: InputTypes.radio,
+				buttons: [
+					{ value: true, label: labelTrue },
+					{ value: false, label: labelFalse },
+				],
+				name: "has_vacancy",
+				change: (selected: boolean) => {
+					console.log(selected);
+
+					setHasVacancy(selected);
+				},
+			},
+			{
+				label: labelLAHapartments,
+				type: InputTypes.checkbox,
+				name: "lah",
 			},
 		],
 	});
@@ -481,41 +520,41 @@ const PageUpdate: FC = () => {
 		{ name: "owner_logo", remove: false, value: "", text: "" },
 	];
 
-	const nursinghomeImageTypes = [
-		"overview_outside",
-		"apartment",
-		"lounge",
-		"dining_room",
-		"outside",
-		"entrance",
-		"bathroom",
-		"apartment_layout",
-		"nursinghome_layout",
-	];
+	// const nursinghomeImageTypes = [
+	// 	"overview_outside",
+	// 	"apartment",
+	// 	"lounge",
+	// 	"dining_room",
+	// 	"outside",
+	// 	"entrance",
+	// 	"bathroom",
+	// 	"apartment_layout",
+	// 	"nursinghome_layout",
+	// ];
 
-	const removeImage = (id: string): void => {
-		const index = imageState.findIndex(x => x.name === id);
-		imageState[index].remove = true;
-		imageState[index].value = "";
-	};
+	// const removeImage = (id: string): void => {
+	// 	const index = imageState.findIndex(x => x.name === id);
+	// 	imageState[index].remove = true;
+	// 	imageState[index].value = "";
+	// };
 
-	const updateImageState = (id: string, state: string): void => {
-		const index = imageState.findIndex(x => x.name === id);
-		imageState[index].value = state;
-		imageState[index].remove = false;
-	};
+	// const updateImageState = (id: string, state: string): void => {
+	// 	const index = imageState.findIndex(x => x.name === id);
+	// 	imageState[index].value = state;
+	// 	imageState[index].remove = false;
+	// };
 
-	const updateCaptionState = (id: string, state: string): void => {
-		const index = imageState.findIndex(x => x.name === id);
-		imageState[index].text = state;
-	};
+	// const updateCaptionState = (id: string, state: string): void => {
+	// 	const index = imageState.findIndex(x => x.name === id);
+	// 	imageState[index].text = state;
+	// };
 
 	const validForm = (): boolean => {
 		let formIsValid = true;
 
 		Object.keys(form).forEach(section => {
 			const invalidFields =
-				form[section].filter(field => {
+				form[section].filter((field: InputField) => {
 					return field.valid === false;
 				}).length > 0;
 
@@ -555,7 +594,9 @@ const PageUpdate: FC = () => {
 					const formData: any = {};
 
 					fields.forEach(field => {
-						formData[field.name] = nursingHome[field.name];
+						if (field.name !== "has_vacancy") {
+							formData[field.name] = nursingHome[field.name];
+						}
 					});
 
 					const updateNursingHomeData: NursingHomeUpdateData = formData;
@@ -633,7 +674,7 @@ const PageUpdate: FC = () => {
 					return (
 						<div className="field" key={`${field.name}-${index}`}>
 							<label className="label" htmlFor={field.name}>
-								{field.label}
+								{field.label} {field.required ? "*" : ""}
 							</label>
 							<div className="control">
 								<textarea
@@ -697,7 +738,7 @@ const PageUpdate: FC = () => {
 							className="field"
 							key={`${field.name}-${index}`}
 						>
-							<legend>{labelAra}</legend>
+							<legend>{field.label}</legend>
 							{field.buttons
 								? field.buttons.map(button => {
 										return (
@@ -713,6 +754,12 @@ const PageUpdate: FC = () => {
 												}
 												value={button.value}
 												onChange={() => {
+													if (field.change) {
+														field.change(
+															button.value,
+														);
+													}
+
 													handleInputChange(
 														field,
 														button.value,
@@ -730,7 +777,7 @@ const PageUpdate: FC = () => {
 					return (
 						<div className="field" key={`${field.name}-${index}`}>
 							<label className="label" htmlFor={field.name}>
-								{field.label}
+								{field.label} {field.required ? "*" : ""}
 							</label>
 							<div className="control">
 								<input
@@ -835,31 +882,109 @@ const PageUpdate: FC = () => {
 										  ) || noUpdate
 										: loadingText}
 								</p>
-								<p className="page-update-intro">{intro}</p>
 
-								<Radio
-									id="update-vacancy-true"
-									name="update-vacancy-true"
-									isSelected={hasVacancy}
-									onChange={isChecked => {
-										if (isChecked) setHasVacancy(true);
-									}}
-								>
-									{labelTrue}
-								</Radio>
-								<Radio
-									id="update-vacancy-false"
-									name="update-vacancy-false"
-									isSelected={!hasVacancy}
-									onChange={isChecked => {
-										if (isChecked) setHasVacancy(false);
-									}}
-								>
-									{labelFalse}
-								</Radio>
+								<div className="page-update-data">
+									{form.vacancyFields.map((field, index) =>
+										getInputElement(
+											field,
+											"vacancyFields",
+											index,
+										),
+									)}
+								</div>
+								<div className="page-update-data">
+									<Link to={"/"}>Lisää kuvia</Link>
+								</div>
+							</div>
+							<div className="page-update-section">
+								<h3>{labelVisitingInfo}</h3>
+								{form.nursingHomeContactFields.map(
+									(field, index) =>
+										getInputElement(
+											field,
+											"nursingHomeContactFields",
+											index,
+										),
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3>{labelContactInfo}</h3>
+								{form.contactFields.map((field, index) =>
+									getInputElement(
+										field,
+										"contactFields",
+										index,
+									),
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3>{labelBasicInformation}</h3>
+								{form.basicFields.map((field, index) =>
+									getInputElement(
+										field,
+										"basicFields",
+										index,
+									),
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3>{labelNearbyServices}</h3>
+								{form.nearbyServicesFields.map((field, index) =>
+									getInputElement(
+										field,
+										"nearbyServicesFields",
+										index,
+									),
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3>{labelFoodHeader}</h3>
+								{form.foodFields.map((field, index) =>
+									getInputElement(field, "foodFields", index),
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3>{labelActivies}</h3>
+								{form.activitiesFields.map((field, index) =>
+									getInputElement(
+										field,
+										"activitiesFields",
+										index,
+									),
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3>{labelAccessibility}</h3>
+								{form.accessibilityFields.map((field, index) =>
+									getInputElement(
+										field,
+										"accessibilityFields",
+										index,
+									),
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3>{labelPersonnel}</h3>
+								{form.staffFields.map((field, index) =>
+									getInputElement(
+										field,
+										"staffFields",
+										index,
+									),
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3>{labelOtherServices}</h3>
+								{form.otherServicesFields.map((field, index) =>
+									getInputElement(
+										field,
+										"otherServicesFields",
+										index,
+									),
+								)}
 							</div>
 						</form>
-						<div className="page-update-section nursinghome-logo-upload">
+						{/* <div className="page-update-section nursinghome-logo-upload">
 							<h3 className="page-update-minor-title">
 								{organizationLogo}
 							</h3>
@@ -911,81 +1036,7 @@ const PageUpdate: FC = () => {
 									),
 								)}
 							</div>
-						</div>
-						<div className="page-update-section">
-							<h3>{labelBasicInformation}</h3>
-							{form.basicFields.map((field, index) =>
-								getInputElement(field, "basicFields", index),
-							)}
-						</div>
-						<div className="page-update-section">
-							<h3>{labelContactInfo}</h3>
-							{form.contactFields.map((field, index) =>
-								getInputElement(field, "contactFields", index),
-							)}
-						</div>
-						<div className="page-update-section">
-							<h3>{labelFoodHeader}</h3>
-							{form.foodFields.map((field, index) =>
-								getInputElement(field, "foodFields", index),
-							)}
-						</div>
-						<div className="page-update-section">
-							<h3>{labelActivies}</h3>
-							{form.activitiesFields.map((field, index) =>
-								getInputElement(
-									field,
-									"activitiesFields",
-									index,
-								),
-							)}
-						</div>
-						<div className="page-update-section">
-							<h3>{labelVisitingInfo}</h3>
-							{form.nursingHomeContactFields.map((field, index) =>
-								getInputElement(
-									field,
-									"nursingHomeContactFields",
-									index,
-								),
-							)}
-						</div>
-						<div className="page-update-section">
-							<h3>{labelAccessibility}</h3>
-							{form.accessibilityFields.map((field, index) =>
-								getInputElement(
-									field,
-									"accessibilityFields",
-									index,
-								),
-							)}
-						</div>
-						<div className="page-update-section">
-							<h3>{labelPersonnel}</h3>
-							{form.staffFields.map((field, index) =>
-								getInputElement(field, "staffFields", index),
-							)}
-						</div>
-						<div className="page-update-section">
-							<h3>{labelOtherServices}</h3>
-							{form.otherServicesFields.map((field, index) =>
-								getInputElement(
-									field,
-									"otherServicesFields",
-									index,
-								),
-							)}
-						</div>
-						<div className="page-update-section">
-							<h3>{labelNearbyServices}</h3>
-							{form.nearbyServicesFields.map((field, index) =>
-								getInputElement(
-									field,
-									"nearbyServicesFields",
-									index,
-								),
-							)}
-						</div>
+						</div> */}
 					</>
 				)}
 			</div>

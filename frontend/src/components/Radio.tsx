@@ -7,7 +7,7 @@ interface Props {
 	isSelected: boolean;
 	onChange: (checked: boolean) => void;
 	tag?: string;
-	value?: string;
+	value?: string | boolean;
 }
 
 const Radio: React.FunctionComponent<Props> = ({
@@ -30,7 +30,7 @@ const Radio: React.FunctionComponent<Props> = ({
 				type="radio"
 				id={id}
 				className="radio-button"
-				value={value}
+				value={value as string}
 			/>
 			<label
 				htmlFor={id}
