@@ -310,7 +310,7 @@ export async function GetCaptions(ctx: any): Promise<any> {
 }
 
 export async function GetPdf(ctx: any): Promise<any> {
-	const document = (await GetPdfData(ctx.params.id))[0];
+	const document = (await GetPdfData(ctx.params.id))[ctx.params.key];
 	if (document) {
 		ctx.response.set("Content-Type", "application/pdf");
 		ctx.response.set("Content-Length", document.length);

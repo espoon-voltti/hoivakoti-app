@@ -791,7 +791,8 @@ export async function GetPdfData(nursinghome_id: string): Promise<any[]> {
 	return await knex
 		.select("report_file")
 		.table("NursingHomeReports")
-		.where({ nursinghome_id: nursinghome_id });
+		.where({ nursinghome_id: nursinghome_id })
+		.orderBy("date", "desc");
 }
 
 export async function GetNursingHomeStatus(

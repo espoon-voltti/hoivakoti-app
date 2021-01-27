@@ -621,7 +621,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 			<div className={(hasReport ? "" : "report_hidden")} card-key={index}>
 				<p className={"report_info_item"}>{getTypeTranslation(status.type)} {formatDate(status.date)}</p>
 
-				<a href={`/api/nursing-homes/${nursingHome.id}/raportti/0/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(status.date)}.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">{openReport}</a>
+				<a href={`/api/nursing-homes/${nursingHome.id}/raportti/${index}/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(status.date)}.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">{openReport}</a>
 			</div>
 		));
 
