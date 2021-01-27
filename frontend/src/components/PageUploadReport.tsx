@@ -237,13 +237,13 @@ const PageUploadReport: FC = () => {
 						<p className="page-update-data">
 							<strong>{status}: </strong>
 							{nursingHome.report_status
-								? getStatusTranslation(nursingHome.report_status.status)
+								? getStatusTranslation(nursingHome.report_status[0].status)
 									: getStatusTranslation("waiting")}
 						</p>
 						<p className="page-update-data">
 							<strong>{lastUpdate}: </strong>
 							{nursingHome.report_status
-								? formatDate(nursingHome.report_status.date)
+								? formatDate(nursingHome.report_status[0].date)
 								: "-"}
 						</p>
 					</div>

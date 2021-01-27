@@ -535,8 +535,11 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reportStatusSurveillance = useT("status_surveillance_long");
 	const reportStatusNoInfo = useT("status_no_info");
 
+	const reportTypeAnnounced = useT("reportTypeAnnounced");
+	const reportTypeUnannounced = useT("reportTypeUnannounced");
+	const reportTypeConcern = useT("reportTypeConcern");
+
 	let reportStatus = useT("status_waiting");
-	let reportDate = "-";
 	let hasReport = false;
 
 	const formatDate = (dateStr: string | null, ): string => {
@@ -569,10 +572,27 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		return str;
 	};
 
-	if(nursingHome.report_status){
-		reportDate = nursingHome.report_status.date;
+	const getTypeTranslation = (typeStr: string): string => {
+		if(nursingHome){
 
-		switch (nursingHome.report_status.status) {
+			switch (typeStr) {
+				case "announced":
+					return reportTypeAnnounced;
+				break;
+				case "audit":
+					return reportTypeUnannounced;
+				break;
+				case "concern":
+					return reportTypeConcern;
+				break;
+			}
+		}
+		return "";
+	}
+
+	if(nursingHome.report_status){
+
+		switch (nursingHome.report_status[0].status) {
 			case "ok":
 				reportStatus = reportStatusOk;
 				hasReport = true;
@@ -594,6 +614,17 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 			break;
 		}
 	}
+
+	const reports: JSX.Element[] | null =
+		nursingHome.report_status &&
+		nursingHome.report_status.map((status, index) => (
+			<div className={(hasReport ? "" : "report_hidden")} card-key={index}>
+				<p className={"report_info_item"}>{getTypeTranslation(status.type)} {formatDate(status.date)}</p>
+
+				<a href={`/api/nursing-homes/${nursingHome.id}/raportti/0/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(status.date)}.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">{openReport}</a>
+			</div>
+		));
+
 	return (
 		<>
 			{id && <div id={id} />}
@@ -660,10 +691,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					<div className="report_info_container">
 						<p className={hasReport ? "" : "hidden"}>{reportScoreHeader}</p>
 						<p className="report_info_minor_header">{reportStatus}</p>
-						<p className={(nursingHome.report_status ? "" : " report_hidden")}>{latestVisit}</p>
-						<p className={"report_info_item" + (nursingHome.report_status ? "" : " report_hidden")}>{formatDate(reportDate)}</p>
-
-						{hasReport ? <a href={`/api/nursing-homes/${nursingHome.id}/raportti/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(reportDate)}.pdf`} target="_blank" rel="noopener" className="btn-secondary-link">{openReport}</a> : ""}
+						{reports}
 					</div>
 				</div>
 			</div>

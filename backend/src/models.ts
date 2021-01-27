@@ -798,9 +798,10 @@ export async function GetNursingHomeStatus(
 	nursinghome_id: string,
 ): Promise<any[]> {
 	return await knex
-		.select("status", "date")
+		.select("status", "date", "type")
 		.table("NursingHomeReports")
-		.where({ nursinghome_id: nursinghome_id });
+		.where({ nursinghome_id: nursinghome_id })
+		.orderBy("date", "desc");
 }
 
 export async function GetNursingHomeRating(
@@ -814,8 +815,10 @@ export async function GetNursingHomeRating(
 
 export async function GetAllNursingHomeStatus(): Promise<any[]> {
 	return await knex
-		.select("status", "date", "nursinghome_id")
-		.table("NursingHomeReports");
+		.select("nursinghome_id", "status", "date")
+		.table("NursingHomeReports")
+		.orderBy("date", "asc");
+		// here we sort with order asc so (older first) we get the latest status when mapping thru the list and avoid need to filter by date later
 }
 
 export async function GetAllNursingHomeRatings(): Promise<any[]> {

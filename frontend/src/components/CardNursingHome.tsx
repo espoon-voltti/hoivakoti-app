@@ -52,7 +52,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const feedbackVeryBad = useT("feedbackVeryBad");
 
 	const getStatusTranslation = (statusStr: string): string => {
-		if(nursinghome && nursinghome.report_status){
+		if(nursinghome && nursinghome.report_status[0]){
 
 			switch (statusStr) {
 				case "ok":
@@ -125,7 +125,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						imageUrl ? "has-pic" : ""
 					}`}
 				/>
-				<div className={(type == "admin" && nursinghome.report_status.status == "surveillance")? "card-list-item-alert-tag" : "hidden"}>
+				<div className={(type == "admin" && nursinghome.report_status[0] && nursinghome.report_status[0].status == "surveillance")? "card-list-item-alert-tag" : "hidden"}>
 					<div className="card-list-item-alert-tag-mark"></div>
 					<div className="card-list-item-alert-tag-label">Tehostetussa valvonnassa</div>
 				</div>
@@ -184,11 +184,11 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					<div className={type == "admin" ? "": "hidden"}>
 						<div className="card-nursing-home-status">
 							<span>Tilanne:{" "}</span>
-							{nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}
+							{nursinghome.report_status[0] ? getStatusTranslation(nursinghome.report_status[0].status) : getStatusTranslation("")}
 						</div>	
 						<div className="card-nursing-home-status">
 							<span>Viimeisin käynti:{" "}</span>
-							{nursinghome.report_status ? formatDate(nursinghome.report_status.date) : "-"}
+							{nursinghome.report_status[0] ? formatDate(nursinghome.report_status[0].date) : "-"}
 						</div>	
 					</div>
 				</div>
@@ -223,9 +223,9 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					</div>
 					<div className="card-nursing-home-public-status no-left-border">
 						<div>
-							<div className={nursinghome.report_status.status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
-							<p className={"card-nursing-home-public-status-header" + (nursinghome.report_status.status == "surveillance" ? " card-nursing-home-alert" : "")}>{`${nursinghome.report_status ? getStatusTranslation(nursinghome.report_status.status) : ""}`}</p>
-							<p className={!nursinghome.report_status.status || ["waiting", "no-info"].includes(nursinghome.report_status.status) ? "hidden" : ""}>{reportScore}</p>
+							<div className={nursinghome.report_status[0] && nursinghome.report_status[0].status == "surveillance" ? "card-nursing-home-alert-sign" : "hidden"}></div>
+							<p className={"card-nursing-home-public-status-header" + ((nursinghome.report_status[0] && nursinghome.report_status[0].status) == "surveillance" ? " card-nursing-home-alert" : "")}>{`${nursinghome.report_status[0] ? getStatusTranslation(nursinghome.report_status[0].status) : getStatusTranslation("")}`}</p>
+							<p className={ !nursinghome.report_status[0] || (nursinghome.report_status[0] && ["waiting", "no-info"].includes(nursinghome.report_status[0].status)) ? "hidden" : ""}>{reportScore}</p>
 						</div>
 					</div>
 				</div>

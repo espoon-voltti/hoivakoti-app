@@ -87,10 +87,10 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 			}
 		});
 
-		nursinghome.report_status = {};
+		nursinghome.report_status = [];
 		report_status.map((status: any) => {
 			if (status.nursinghome_id === nursinghome.id) {
-				nursinghome.report_status = status;
+				nursinghome.report_status = [status];
 			}
 		});
 
@@ -115,7 +115,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	const nursing_home_data = (await GetNursingHomeDB(ctx.params.id))[0];
 	const pic_digests = (await GetPicDigests(ctx.params.id))[0];
 	const pic_captions = (await GetPicCaptions(ctx.params.id))[0];
-	const nursing_home_status = (await GetNursingHomeStatus(ctx.params.id))[0];
+	const nursing_home_status = await GetNursingHomeStatus(ctx.params.id);
 	const rating = (await GetNursingHomeRating(ctx.params.id))[0];
 	const available_pics = Object.keys(pic_digests || {})
 		.filter((item: any) => (pic_digests[item] != null ? true : false))
@@ -130,7 +130,7 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	nursing_home_data["pic_digests"] = pic_digests;
 	nursing_home_data["pics"] = available_pics;
 	nursing_home_data["pic_captions"] = pic_captions;
-	nursing_home_data["report_status"] = nursing_home_status;
+	nursing_home_data["report_status"] = nursing_home_status.length > 0 ? nursing_home_status : null;
 	nursing_home_data["rating"] = rating;
 	return nursing_home_data;
 }
