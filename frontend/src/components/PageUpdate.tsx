@@ -50,11 +50,13 @@ interface InputField {
 	label: string;
 	type: InputTypes;
 	name: NursingHomeKey;
+	description?: string;
 	buttons?: { value: string | boolean; label: string }[];
 	required?: boolean;
 	valid?: boolean;
 	touched?: boolean;
 	change?: (arg: InputFieldValue) => void;
+	maxlength?: number;
 }
 
 const formatDate = (dateString: string | null): string => {
@@ -112,14 +114,14 @@ const PageUpdate: FC = () => {
 	>(null);
 	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
 
-	const labelOwner = useT("owner");
+	const labelOwner = useT("ownerOrganisation");
 	const labelAra = useT("filterAraLabel");
 	const labelYearofConst = useT("yearofConst");
-	const labelNumApartments = useT("numApartments");
+	const labelNumApartments = useT("numTotalApartments");
 	const labelApartmentSize = useT("apartmentSize");
 	const labelRent = useT("rent");
 	const labelServiceLanguage = useT("serviceLanguage");
-	const labelLAHapartments = useT("LAHapartments");
+	const labelHasLAHapartments = useT("hasLAHapartments");
 	const labelWebpage = useT("webpage");
 	const labelCookingMethod = useT("cookingMethod");
 	const labelFoodMoreInfo = useT("foodMoreInfo");
@@ -130,6 +132,7 @@ const PageUpdate: FC = () => {
 	const labelLinkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
 	const labelVisitingInfo = useT("visitingInfo");
 	const labelAccessibility = useT("accessibility");
+	const labelAccessibilityInfo = useT("accessibilityInfo");
 	const labelPersonnel = useT("personnel");
 	const labelLinkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
 	const labelOtherServices = useT("otherServices");
@@ -157,15 +160,12 @@ const PageUpdate: FC = () => {
 	const labelContactEmail = useT("contactEmail");
 	const labelContactPhoneInfo = useT("contactPhoneInfo");
 	const labelContactDescription = useT("contactDescription");
-	const title = useT("pageUpdateTitle");
+	const labelNursingHomeName = useT("nursingHomeName");
+	const title = useT("updateNursingHomeTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
-
-	const intro = useT("pageUpdateIntro");
 	const labelTrue = useT("vacancyTrue");
 	const labelFalse = useT("vacancyFalse");
 	const loadingText = useT("loadingText");
-	const nursingHomeName = useT("nursingHome");
-	const status = useT("status");
 	const lastUpdate = useT("lastUpdate");
 	const noUpdate = useT("noUpdate");
 	const btnSave = useT("btnSave");
@@ -181,6 +181,7 @@ const PageUpdate: FC = () => {
 				label: labelSummary,
 				type: InputTypes.textarea,
 				name: "summary",
+				description: "Hoivakodin palvelulupaus",
 				required: true,
 				valid: false,
 				touched: false,
@@ -200,6 +201,7 @@ const PageUpdate: FC = () => {
 				buttons: [
 					{ value: labelYes, label: labelYes },
 					{ value: labelNo, label: labelNo },
+					{ value: "Osittain", label: "Osa paikoista" },
 				],
 			},
 			{
@@ -214,6 +216,9 @@ const PageUpdate: FC = () => {
 				label: labelBuildingInfo,
 				type: InputTypes.textarea,
 				name: "building_info",
+				description:
+					"Tässä voit kertoa mahdollisista tehdyistä tai tulossa olevista peruskorjauksista, laajennuksista jne.",
+				maxlength: 200,
 			},
 			{
 				label: labelNumApartments,
@@ -227,11 +232,18 @@ const PageUpdate: FC = () => {
 				label: labelApartmentCountInfo,
 				type: InputTypes.textarea,
 				name: "apartment_count_info",
+				description:
+					"Tässä voit kertoa esim. minkä kokoisiin ryhmäkoteihin hoivakoti jakaantuu ja kuinka monta asuntoa on per kerros.",
+				maxlength: 300,
+				required: true,
+				valid: false,
+				touched: false,
 			},
 			{
 				label: labelApartmentSize + " (m²)",
 				type: InputTypes.text,
 				name: "apartment_square_meters",
+				description: "Esim. 18-25",
 				required: true,
 				valid: false,
 				touched: false,
@@ -245,6 +257,7 @@ const PageUpdate: FC = () => {
 				label: labelRent + " (€ / kk)",
 				type: InputTypes.text,
 				name: "rent",
+				description: "Esim. 700-800",
 				required: true,
 				valid: false,
 				touched: false,
@@ -253,6 +266,9 @@ const PageUpdate: FC = () => {
 				label: labelRentInfo,
 				type: InputTypes.textarea,
 				name: "rent_info",
+				description:
+					"Mitä yhteisiä tiloja asiakkaan vuokraan sisältyy?",
+				maxlength: 200,
 			},
 			{
 				label: labelServiceLanguage,
@@ -266,6 +282,9 @@ const PageUpdate: FC = () => {
 				label: labelLanguageInfo,
 				type: InputTypes.textarea,
 				name: "language_info",
+				description:
+					"Esim. lisätietoa henkilökunnan muusta kielitaidosta.",
+				maxlength: 200,
 			},
 		],
 		addressFields: [
@@ -315,14 +334,24 @@ const PageUpdate: FC = () => {
 				label: labelArrivalGuidePublicTransit,
 				type: InputTypes.textarea,
 				name: "arrival_guide_public_transit",
+				maxlength: 200,
 			},
 			{
 				label: labelArrivalGuideCar,
 				type: InputTypes.textarea,
 				name: "arrival_guide_car",
+				maxlength: 200,
 			},
 		],
 		foodFields: [
+			{
+				label: labelLinkMenu,
+				type: InputTypes.url,
+				name: "menu_link",
+				required: true,
+				valid: false,
+				touched: false,
+			},
 			{
 				label: labelCookingMethod,
 				type: InputTypes.text,
@@ -335,17 +364,9 @@ const PageUpdate: FC = () => {
 				label: labelFoodMoreInfo,
 				type: InputTypes.textarea,
 				name: "meals_info",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelLinkMenu,
-				type: InputTypes.url,
-				name: "menu_link",
-				required: true,
-				valid: false,
-				touched: false,
+				maxlength: 200,
+				description:
+					"Tässä voi halutessasi antaa lisätietoja ruuan valmistukseen ja ruokailuun liittyen.",
 			},
 		],
 		activitiesFields: [
@@ -356,11 +377,16 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				description:
+					"Kuvaus hoivakodissa järjestettävästä toiminnasta.",
+				maxlength: 400,
 			},
 			{
 				label: labelLinkMoreInfoActivies,
 				type: InputTypes.url,
 				name: "activities_link",
+				description:
+					"Jos hoivakodin sivuilla on esim. ulkoilukalenteri, laita sen linkki tähän.",
 				required: true,
 				valid: false,
 				touched: false,
@@ -369,14 +395,16 @@ const PageUpdate: FC = () => {
 				label: labelOutdoorActivies,
 				type: InputTypes.textarea,
 				name: "outdoors_possibilities_info",
-				required: true,
-				valid: false,
-				touched: false,
+				description:
+					"Kuvaa hoivakodin ulkoilumahdollisuuksia. Kuvaile esim. miten ulkoilua järjestetään ja miten asiakkaat ulkoilevat.",
+				maxlength: 200,
 			},
 			{
 				label: labelLinkMoreInfoOutdoor,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
+				description:
+					"Jos hoivakodin sivuilla on esim. ulkoilukalenteri, laita se tähän.",
 				required: true,
 				valid: false,
 				touched: false,
@@ -427,16 +455,17 @@ const PageUpdate: FC = () => {
 				label: labelContactPhoneInfo,
 				type: InputTypes.textarea,
 				name: "contact_phone_info",
+				maxlength: 200,
 			},
 		],
 		accessibilityFields: [
 			{
-				label: labelAccessibility,
+				label: labelAccessibilityInfo,
 				type: InputTypes.textarea,
 				name: "accessibility_info",
-				required: true,
-				valid: false,
-				touched: false,
+				description:
+					"Tähän voit tarvittaessa kirjoittaa esteettömyyttä koskevia lisätietoja.",
+				maxlength: 200,
 			},
 		],
 		staffFields: [
@@ -444,11 +473,16 @@ const PageUpdate: FC = () => {
 				label: labelPersonnel,
 				type: InputTypes.textarea,
 				name: "staff_info",
+				description:
+					"Kerro halutessasi henkilöstöstä, sen rakenteesta ja erityisosaamisesta",
+				maxlength: 400,
 			},
 			{
 				label: labelLinkMoreInfoPersonnel,
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
+				description:
+					"Lisää linkki jos hoivakodin sivuilla on tietoa henkilöstön tyytyväisyydestä (kyselyn tulokset tms.).",
 			},
 		],
 		otherServicesFields: [
@@ -456,6 +490,9 @@ const PageUpdate: FC = () => {
 				label: labelOtherServices,
 				type: InputTypes.textarea,
 				name: "other_services",
+				description:
+					"Kuvaa tähän mitä muita palvelukonseptiin kuulumattomia palveluita on saatavilla. Kerro myös mistä niiden hinnat löytyvät.",
+				maxlength: 200,
 			},
 		],
 		nearbyServicesFields: [
@@ -463,14 +500,22 @@ const PageUpdate: FC = () => {
 				label: labelNearbyServices,
 				type: InputTypes.textarea,
 				name: "nearby_services",
-				required: true,
-				valid: false,
-				touched: false,
+				description:
+					"Mitä palveluita löytyy hoivakodin läheltä esim. kauppa, kirjasto, ravintola jne.",
+				maxlength: 200,
 			},
 		],
 		vacancyFields: [
 			{
-				label: intro,
+				label: labelNursingHomeName,
+				type: InputTypes.text,
+				name: "name",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: freeApartmentsStatus,
 				type: InputTypes.radio,
 				buttons: [
 					{ value: true, label: labelTrue },
@@ -482,7 +527,7 @@ const PageUpdate: FC = () => {
 				},
 			},
 			{
-				label: labelLAHapartments,
+				label: labelHasLAHapartments,
 				type: InputTypes.checkbox,
 				name: "lah",
 			},
@@ -524,22 +569,6 @@ const PageUpdate: FC = () => {
 		}
 	}, [id, key, popupState, vacancyStatus]);
 
-	const validateField = (value: any): boolean => {
-		return value !== null && value !== "";
-	};
-
-	const getAllFields = (): InputField[] => {
-		let fields: InputField[] = [];
-
-		const sections = Object.keys(form).map(section => form[section]);
-
-		for (const section of sections) {
-			fields = [...fields, ...section];
-		}
-
-		return fields;
-	};
-
 	const handleSubmit = async (
 		event: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
@@ -552,7 +581,15 @@ const PageUpdate: FC = () => {
 				await requestVacancyStatusUpdate(id, key, hasVacancy);
 
 				if (nursingHome) {
-					const fields = getAllFields();
+					let fields: InputField[] = [];
+
+					const sections = Object.keys(form).map(
+						section => form[section],
+					);
+
+					for (const section of sections) {
+						fields = [...fields, ...section];
+					}
 
 					const formData: any = {};
 
@@ -573,8 +610,6 @@ const PageUpdate: FC = () => {
 
 				setPopupState("saved");
 				setVacancyStatus(null);
-			} else {
-				setPopupState("invalid");
 			}
 		} catch (error) {
 			console.error(error);
@@ -585,6 +620,16 @@ const PageUpdate: FC = () => {
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
 		window.location.href = window.location.pathname + "/peruuta";
+	};
+
+	const validateField = <T extends NursingHome, K extends keyof T>(
+		value: T[K],
+	): boolean => {
+		if (typeof value === "string") {
+			return value.trim() !== "";
+		}
+
+		return value !== null;
 	};
 
 	const validateForm = (): void => {
@@ -621,47 +666,23 @@ const PageUpdate: FC = () => {
 			}
 
 			setForm(validatedForm);
+
+			if (!validForm) {
+				setPopupState("invalid");
+			} else {
+				setPopupState(null);
+			}
+
 			setFormIsValid(validForm);
 		}
 	};
 
-	const handleInputBlur = (
-		field: InputField,
-		section: string,
-		value: InputFieldValue,
-	): void => {
-		const { name, required } = field;
-
-		if (required) {
-			const validField = validateField(value);
-
-			const fields = [...form[section]];
-			const index = fields.findIndex(input => input.name === name);
-
-			fields[index] = { ...field, touched: true, valid: validField };
-
-			setForm({ ...form, [section]: fields });
-		}
-
-		validateForm();
-	};
-
 	const handleInputChange = (
 		field: InputField,
-		section: string,
 		value: InputFieldValue,
 	): void => {
 		if (nursingHome) {
-			const { name, type, touched } = field;
-
-			if (!touched) {
-				const fields = [...form[section]];
-				const index = fields.findIndex(input => input.name === name);
-
-				fields[index] = { ...field, touched: true };
-
-				setForm({ ...form, [section]: fields });
-			}
+			const { name, type } = field;
 
 			setNursingHome({
 				...nursingHome,
@@ -677,47 +698,53 @@ const PageUpdate: FC = () => {
 
 	const getInputElement = (
 		field: InputField,
-		section: string,
 		index: number,
 	): JSX.Element | null => {
 		if (nursingHome) {
 			const fieldInvalid =
 				field.required && field.touched && !field.valid;
+			const key = `${field.name}-${index}`;
 
 			switch (field.type) {
 				case "textarea":
 					return (
-						<div className="field" key={`${field.name}-${index}`}>
+						<div className="field" key={key}>
 							<label className="label" htmlFor={field.name}>
-								{field.label} {field.required ? "*" : ""}
+								{field.label}
+								{field.required ? (
+									<span
+										className="asterisk"
+										aria-hidden="true"
+									>
+										{" "}
+										*
+									</span>
+								) : null}
 							</label>
+							{field.description ? (
+								<span className="input-description">
+									{field.description}
+								</span>
+							) : null}
 							<div className="control">
 								<textarea
 									className={
 										fieldInvalid ? "input error" : "input"
 									}
 									rows={5}
-									value={
-										(nursingHome[field.name] as string) ||
-										""
-									}
+									maxLength={field.maxlength}
+									value={nursingHome[field.name] as string}
 									name={field.name}
 									id={field.name}
 									onChange={event =>
 										handleInputChange(
 											field,
-											section,
 											event.target.value,
 										)
 									}
 									required={field.required}
-									onBlur={event =>
-										handleInputBlur(
-											field,
-											section,
-											event.target.value,
-										)
-									}
+									aria-required={field.required}
+									onBlur={validateForm}
 								></textarea>
 								{fieldInvalid ? (
 									<span className="icon"></span>
@@ -730,12 +757,12 @@ const PageUpdate: FC = () => {
 					);
 				case "checkbox":
 					return (
-						<div className="field" key={`${field.name}-${index}`}>
+						<div className="field" key={key}>
 							<Checkbox
 								name={field.name}
 								id={field.name}
 								onChange={checked =>
-									handleInputChange(field, section, checked)
+									handleInputChange(field, checked)
 								}
 								isChecked={
 									(nursingHome[field.name] as boolean) ||
@@ -748,10 +775,7 @@ const PageUpdate: FC = () => {
 					);
 				case "radio":
 					return (
-						<fieldset
-							className="field"
-							key={`${field.name}-${index}`}
-						>
+						<fieldset className="field" key={key}>
 							<legend>{field.label}</legend>
 							{field.buttons
 								? field.buttons.map(button => {
@@ -776,7 +800,6 @@ const PageUpdate: FC = () => {
 
 													handleInputChange(
 														field,
-														section,
 														button.value,
 													);
 												}}
@@ -790,10 +813,24 @@ const PageUpdate: FC = () => {
 					);
 				default:
 					return (
-						<div className="field" key={`${field.name}-${index}`}>
+						<div className="field" key={key}>
 							<label className="label" htmlFor={field.name}>
-								{field.label} {field.required ? "*" : ""}
+								{field.label}
+								{field.required ? (
+									<span
+										className="asterisk"
+										aria-hidden="true"
+									>
+										{" "}
+										*
+									</span>
+								) : null}
 							</label>
+							{field.description ? (
+								<span className="input-description">
+									{field.description}
+								</span>
+							) : null}
 							<div className="control">
 								<input
 									className={
@@ -806,17 +843,12 @@ const PageUpdate: FC = () => {
 									onChange={event =>
 										handleInputChange(
 											field,
-											section,
 											event.target.value,
 										)
 									}
-									onBlur={event =>
-										handleInputBlur(
-											field,
-											section,
-											event.target.value,
-										)
-									}
+									onBlur={validateForm}
+									required={field.required}
+									aria-required={field.required}
 								/>
 								{fieldInvalid ? (
 									<span className="icon"></span>
@@ -835,6 +867,13 @@ const PageUpdate: FC = () => {
 
 	return (
 		<div className="page-update">
+			<p className="page-update-status">
+				<strong>{lastUpdate}: </strong>
+				{vacancyStatus
+					? formatDate(vacancyStatus.vacancy_last_updated_at) ||
+					  noUpdate
+					: loadingText}
+			</p>
 			<div className="page-update-content">
 				{!nursingHome ? (
 					<h1 className="page-update-title">{loadingText}</h1>
@@ -877,40 +916,11 @@ const PageUpdate: FC = () => {
 								)}
 							</div>
 							<div className="page-update-section">
-								<h3 className="page-update-minor-title">
-									{freeApartmentsStatus}
-								</h3>
-								<p className="page-update-data">
-									<strong>{nursingHomeName}: </strong>
-									{nursingHome.name}
-								</p>
-								<p className="page-update-data">
-									<strong>{status}: </strong>
-									{vacancyStatus
-										? vacancyStatus.has_vacancy
-											? labelTrue
-											: labelFalse
-										: loadingText}
-								</p>
-								<p className="page-update-data">
-									<strong>{lastUpdate}: </strong>
-									{vacancyStatus
-										? formatDate(
-												vacancyStatus.vacancy_last_updated_at,
-										  ) || noUpdate
-										: loadingText}
-								</p>
-
 								<div className="page-update-data">
 									{form.vacancyFields.map((field, index) =>
-										getInputElement(
-											field,
-											"vacancyFields",
-											index,
-										),
+										getInputElement(field, index),
 									)}
-								</div>
-								<div className="page-update-data">
+
 									<Link
 										className="btn update-images-button"
 										to={`/hoivakodit/${id}/paivita/${key}/kuvat`}
@@ -923,96 +933,60 @@ const PageUpdate: FC = () => {
 								<h3>{labelVisitingInfo}</h3>
 								{form.nursingHomeContactFields.map(
 									(field, index) =>
-										getInputElement(
-											field,
-											"nursingHomeContactFields",
-											index,
-										),
+										getInputElement(field, index),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelContactInfo}</h3>
 								<div className="page-update-columns">
 									{form.addressFields.map((field, index) =>
-										getInputElement(
-											field,
-											"addressFields",
-											index,
-										),
+										getInputElement(field, index),
 									)}
 								</div>
 								{form.contactFields.map((field, index) =>
-									getInputElement(
-										field,
-										"contactFields",
-										index,
-									),
+									getInputElement(field, index),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelBasicInformation}</h3>
 								{form.basicFields.map((field, index) =>
-									getInputElement(
-										field,
-										"basicFields",
-										index,
-									),
-								)}
-							</div>
-							<div className="page-update-section">
-								<h3>{labelNearbyServices}</h3>
-								{form.nearbyServicesFields.map((field, index) =>
-									getInputElement(
-										field,
-										"nearbyServicesFields",
-										index,
-									),
+									getInputElement(field, index),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelFoodHeader}</h3>
 								{form.foodFields.map((field, index) =>
-									getInputElement(field, "foodFields", index),
+									getInputElement(field, index),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelActivies}</h3>
 								{form.activitiesFields.map((field, index) =>
-									getInputElement(
-										field,
-										"activitiesFields",
-										index,
-									),
+									getInputElement(field, index),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelAccessibility}</h3>
 								{form.accessibilityFields.map((field, index) =>
-									getInputElement(
-										field,
-										"accessibilityFields",
-										index,
-									),
+									getInputElement(field, index),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelPersonnel}</h3>
 								{form.staffFields.map((field, index) =>
-									getInputElement(
-										field,
-										"staffFields",
-										index,
-									),
+									getInputElement(field, index),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelOtherServices}</h3>
 								{form.otherServicesFields.map((field, index) =>
-									getInputElement(
-										field,
-										"otherServicesFields",
-										index,
-									),
+									getInputElement(field, index),
+								)}
+							</div>
+							<div className="page-update-section">
+								<h3>{labelNearbyServices}</h3>
+								{form.nearbyServicesFields.map((field, index) =>
+									getInputElement(field, index),
 								)}
 							</div>
 						</form>

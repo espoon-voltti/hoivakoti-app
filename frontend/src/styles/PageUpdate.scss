@@ -1,6 +1,7 @@
 @import "variables.scss";
 
 .page-update {
+	position: relative;
 	padding: 80px 20px 20px 20px;
 }
 
@@ -36,13 +37,10 @@
 	margin-top: 1em;
 }
 
-.page-update-minor-title {
-	margin-bottom: 40px;
-}
-
-.page-update-data {
-	margin-bottom: 0.5em;
-	padding: 0 0 0 30px;
+.page-update-status {
+	width: 100%;
+	text-align: right;
+	margin: 1rem auto 0 auto;
 }
 
 .page-update-controls {
@@ -100,10 +98,10 @@
 		flex-wrap: wrap;
 
 		.field {
-			flex: 1 1 31%;
+			flex: 1 1 47%;
 			margin-right: 3%;
 
-			&:nth-child(3n),
+			&:nth-child(2n),
 			&:last-child {
 				margin-right: 0;
 			}
@@ -126,6 +124,7 @@
 .update-images-button {
 	display: inline-flex;
 	align-items: center;
+	min-width: 18.75rem;
 }
 
 .field {
@@ -141,6 +140,10 @@
 		font-size: 1rem;
 		font-weight: 600;
 		line-height: 1.5;
+
+		.asterisk {
+			font-size: 0.9em;
+		}
 	}
 
 	.input {
@@ -165,6 +168,15 @@
 			border-color: $link-color;
 			border-bottom-width: 2px;
 			outline: none;
+		}
+
+		&-description {
+			display: inline-block;
+			line-height: 1.5;
+			font-style: italic;
+			font-size: 0.85rem;
+			color: $headline-color;
+			margin: 0.6rem 0;
 		}
 	}
 

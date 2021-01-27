@@ -909,8 +909,8 @@ export const translations = {
 		"sv-FI": "Svenska/Finska",
 	},
 	nursingHomeSummary: {
-		"fi-FI": "Tiivistelmä hoivakodista",
-		"sv-FI": "Tiivistelmä hoivakodista",
+		"fi-FI": "Lyhyt kuvaus hoivakodista",
+		"sv-FI": "Lyhyt kuvaus hoivakodista",
 	},
 	buildingInfo: {
 		"fi-FI": "Lisätietoja rakennuksesta",
@@ -921,8 +921,8 @@ export const translations = {
 		"sv-FI": "Lisätietoja asuntojen määrästä",
 	},
 	apartmentsHaveBathroom: {
-		"fi-FI": "Asunnoissa oma kylpyhuone",
-		"sv-FI": "Asunnoissa oma kylpyhuone",
+		"fi-FI": "Kaikissa asunnoissa on oma kylpyhuone",
+		"sv-FI": "Kaikissa asunnoissa on oma kylpyhuone",
 	},
 	rentInfo: {
 		"fi-FI": "Lisätietoja vuokrasta",
@@ -987,5 +987,35 @@ export const translations = {
 	contactDescription: {
 		"fi-FI": "Yhteydenottoihin liittyvä kuvaus",
 		"sv-FI": "Yhteydenottoihin liittyvä kuvaus",
+	},
+	hasLAHapartments: {
+		"fi-FI": "Hoivakodissa on lyhytaikaisen asumisen asuntoja",
+		"sv-FI": "Hoivakodissa on lyhytaikaisen asumisen asuntoja",
+	},
+	updateNursingHomeTitle: {
+		"fi-FI": "Hoivakodin tietojen muokkaaminen",
+		"sv-FI": "Hoivakodin tietojen muokkaaminen",
+	},
+	ownerOrganisation: {
+		"fi-FI": "Organisaatio joka omistaa hoivakodin",
+		"sv-FI": "Organisaatio joka omistaa hoivakodin",
+	},
+	numTotalApartments: {
+		"fi-FI": "Hoivakodin asuntojen kokonaismäärä",
+		"sv-FI": "Hoivakodin asuntojen kokonaismäärä",
+	},
+	tourInfoPlaceholder: {
+		"fi-FI":
+			"Etukäteen sopimalla voit tulla tutustumaan toimintaamme paikan päälle",
+		"sv-FI":
+			"Etukäteen sopimalla voit tulla tutustumaan toimintaamme paikan päälle",
+	},
+	accessibilityInfo: {
+		"fi-FI": "Tietoja esteettömyydestä",
+		"sv-FI": "Tietoja esteettömyydestä",
+	},
+	nursingHomeName: {
+		"fi-FI": "Hoivakodin nimi",
+		"sv-FI": "Hoivakodin nimi",
 	},
 };
