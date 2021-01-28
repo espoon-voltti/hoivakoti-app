@@ -475,34 +475,30 @@ const PageUpdate: FC = () => {
 					{ label: filterFinnish, value: filterFinnish },
 					{ label: filterSwedish, value: filterSwedish },
 				],
-				change: (currentValue: string, buttonValue: string) => {
-					const valArray: Array<string> = currentValue
+				change: (current: string, value: string) => {
+					const languages: string[] = current
 						.split("|")
 						.filter((value: string) => value !== "");
 
-					let newValue;
+					if (languages.includes(value)) {
+						const index = languages.indexOf(value);
 
-					if (valArray.includes(buttonValue)) {
-						const itemIndex = valArray.indexOf(buttonValue);
-
-						valArray.splice(itemIndex, 1);
+						languages.splice(index, 1);
 					} else {
-						valArray.push(buttonValue);
+						languages.push(value);
 					}
 
-					const sortArray = valArray.sort((a, b) => {
+					const sortLanguages = languages.sort((a, b) => {
 						return a.localeCompare(b);
 					});
 
-					if (sortArray.length > 1) {
-						newValue = sortArray.join("|");
-					} else if (sortArray.length === 1) {
-						newValue = sortArray[0];
+					if (sortLanguages.length > 1) {
+						return sortLanguages.join("|");
+					} else if (sortLanguages.length === 1) {
+						return sortLanguages[0];
 					} else {
-						newValue = "";
+						return "";
 					}
-
-					return newValue;
 				},
 				required: true,
 				valid: false,
@@ -727,14 +723,13 @@ const PageUpdate: FC = () => {
 			}
 
 			setForm(validatedForm);
+			setFormIsValid(validForm);
 
 			if (!validForm) {
 				setPopupState("invalid");
 			} else {
 				setPopupState(null);
 			}
-
-			setFormIsValid(validForm);
 		}
 	};
 
