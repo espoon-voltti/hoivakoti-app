@@ -198,6 +198,9 @@ const PageUpdate: FC = () => {
 	const filterFinnish = useT("filterFinnish");
 	const filterSwedish = useT("filterSwedish");
 	const nearbyServices = useT("nearbyServices");
+	const fieldsWithAsteriskAreMandatory = useT(
+		"fieldsWithAsteriskAreMandatory",
+	);
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
@@ -774,7 +777,11 @@ const PageUpdate: FC = () => {
 				case "textarea":
 					return (
 						<div className="field" key={key}>
-							<label className="label" htmlFor={field.name}>
+							<label
+								id={`${field.name}-label`}
+								className="label"
+								htmlFor={field.name}
+							>
 								{field.label}
 								{field.required ? (
 									<span
@@ -787,7 +794,10 @@ const PageUpdate: FC = () => {
 								) : null}
 							</label>
 							{field.description ? (
-								<span className="input-description">
+								<span
+									id={`${field.name}-description`}
+									className="input-description"
+								>
 									{field.description}
 								</span>
 							) : null}
@@ -811,6 +821,11 @@ const PageUpdate: FC = () => {
 									required={field.required}
 									aria-required={field.required}
 									onBlur={validateForm}
+									aria-labelledby={
+										field.description
+											? `${field.name}-label ${field.name}-description`
+											: undefined
+									}
 								></textarea>
 								{fieldInvalid ? (
 									<span className="icon"></span>
@@ -980,7 +995,11 @@ const PageUpdate: FC = () => {
 				default:
 					return (
 						<div className="field" key={key}>
-							<label className="label" htmlFor={field.name}>
+							<label
+								id={`${field.name}-label`}
+								className="label"
+								htmlFor={field.name}
+							>
 								{field.label}
 								{field.required ? (
 									<span
@@ -993,7 +1012,10 @@ const PageUpdate: FC = () => {
 								) : null}
 							</label>
 							{field.description ? (
-								<span className="input-description">
+								<span
+									id={`${field.name}-description`}
+									className="input-description"
+								>
 									{field.description}
 								</span>
 							) : null}
@@ -1016,6 +1038,11 @@ const PageUpdate: FC = () => {
 									onBlur={validateForm}
 									required={field.required}
 									aria-required={field.required}
+									aria-labelledby={
+										field.description
+											? `${field.name}-label ${field.name}-description`
+											: undefined
+									}
 								/>
 								{fieldInvalid ? (
 									<span className="icon"></span>
@@ -1051,37 +1078,9 @@ const PageUpdate: FC = () => {
 							className="page-update-controls"
 							onSubmit={handleSubmit}
 						>
-							<div className="nav-save">
-								<button
-									className="page-update-cancel"
-									onClick={cancelEdit}
-								>
-									{cancel}
-								</button>
-								<button
-									type="submit"
-									className="btn page-update-submit"
-									disabled={!formIsValid}
-								>
-									{btnSave}
-								</button>
-
-								{popupState && (
-									<span
-										className={
-											popupState === "invalid"
-												? "page-update-popup error"
-												: "page-update-popup"
-										}
-									>
-										{popupState === "saving"
-											? updatePopupSaving
-											: popupState === "invalid"
-											? formIsInvalid
-											: updatePopupSaved}
-									</span>
-								)}
-							</div>
+							<p className="page-update-info" aria-hidden="true">
+								{fieldsWithAsteriskAreMandatory}
+							</p>
 							<div className="page-update-section">
 								<h3>{freeApartmentsStatus}</h3>
 								{form.vacancyFields.map((field, index) =>
@@ -1193,6 +1192,37 @@ const PageUpdate: FC = () => {
 										"nearbyServicesFields",
 										index,
 									),
+								)}
+							</div>
+							<div className="nav-save">
+								<button
+									className="page-update-cancel"
+									onClick={cancelEdit}
+								>
+									{cancel}
+								</button>
+								<button
+									type="submit"
+									className="btn page-update-submit"
+									disabled={!formIsValid}
+								>
+									{btnSave}
+								</button>
+
+								{popupState && (
+									<span
+										className={
+											popupState === "invalid"
+												? "page-update-popup error"
+												: "page-update-popup"
+										}
+									>
+										{popupState === "saving"
+											? updatePopupSaving
+											: popupState === "invalid"
+											? formIsInvalid
+											: updatePopupSaved}
+									</span>
 								)}
 							</div>
 						</form>

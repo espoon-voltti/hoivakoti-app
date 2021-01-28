@@ -1112,4 +1112,8 @@ export const translations = {
 		"fi-FI": "Lisää kuvia",
 		"sv-FI": "Lisää kuvia",
 	},
+	fieldsWithAsteriskAreMandatory: {
+		"fi-FI": "Tähdellä * merkityt kentät ovat pakollisia",
+		"sv-FI": "Tähdellä * merkityt kentät ovat pakollisia",
+	},
 };

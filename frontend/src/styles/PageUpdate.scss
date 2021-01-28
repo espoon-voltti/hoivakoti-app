@@ -14,8 +14,13 @@
 
 .page-update-section {
 	max-width: 680px;
-	padding: 50px 0 50px 0;
 	border-bottom: 1px solid $border-color;
+	padding: 2rem 0 3rem 0;
+	margin-bottom: 1rem;
+
+	&:last-of-type {
+		margin-bottom: 0;
+	}
 }
 
 .nursinghome-logo-upload {
@@ -35,6 +40,11 @@
 
 .page-update-title {
 	margin-top: 1em;
+}
+
+.page-update-info {
+	margin: 2rem 0 0 0;
+	font-size: 0.8rem;
 }
 
 .page-update-status {
