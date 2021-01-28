@@ -1018,4 +1018,98 @@ export const translations = {
 		"fi-FI": "Hoivakodin nimi",
 		"sv-FI": "Hoivakodin nimi",
 	},
+	helperSummary: {
+		"fi-FI": "Hoivakodin palvelulupaus.",
+		"sv-FI": "Hoivakodin palvelulupaus.",
+	},
+	partlyARADestination: {
+		"fi-FI": "Osa paikoista ARA-talossa",
+		"sv-FI": "Osa paikoista ARA-talossa",
+	},
+	helperBuildingInfo: {
+		"fi-FI":
+			"Tässä voit kertoa mahdollisista tehdyistä tai tulossa olevista peruskorjauksista, laajennuksista jne.",
+		"sv-FI":
+			"Tässä voit kertoa mahdollisista tehdyistä tai tulossa olevista peruskorjauksista, laajennuksista jne.",
+	},
+	helperApartmentCountInfo: {
+		"fi-FI":
+			"Tässä voit kertoa esim. minkä kokoisiin ryhmäkoteihin hoivakoti jakaantuu ja kuinka monta asuntoa on per kerros.",
+		"sv-FI":
+			"Tässä voit kertoa esim. minkä kokoisiin ryhmäkoteihin hoivakoti jakaantuu ja kuinka monta asuntoa on per kerros.",
+	},
+	helperApartmentSize: {
+		"fi-FI": "Esim. 18-25.",
+		"sv-FI": "Esim. 18-25.",
+	},
+	helperRent: {
+		"fi-FI": "Esim. 700-800.",
+		"sv-FI": "Esim. 700-800.",
+	},
+	helperRentInfo: {
+		"fi-FI": "Mitä yhteisiä tiloja asiakkaan vuokraan sisältyy.",
+		"sv-FI": "Mitä yhteisiä tiloja asiakkaan vuokraan sisältyy.",
+	},
+	helperLanguage: {
+		"fi-FI": "Esim. lisätietoa henkilökunnan muusta kielitaidosta.",
+		"sv-FI": "Esim. lisätietoa henkilökunnan muusta kielitaidosta.",
+	},
+	foodOwnKitchen: {
+		"fi-FI": "Oma valmistuskeittiö",
+		"sv-FI": "Oma valmistuskeittiö",
+	},
+	foodDelivered: {
+		"fi-FI": "Ruoka toimitetaan muualta (valmiina tai puolivalmiina)",
+		"sv-FI": "Ruoka toimitetaan muualta (valmiina tai puolivalmiina)",
+	},
+	activitiesInfo: {
+		"fi-FI": "Kuvaus hoivakodissa järjestettävästä toiminnasta",
+		"sv-FI": "Kuvaus hoivakodissa järjestettävästä toiminnasta",
+	},
+	helperActivitiesLink: {
+		"fi-FI":
+			"Jos hoivakodin sivuilla on esim. ulkoilukalenteri, laita sen linkki tähän.",
+		"sv-FI":
+			"Jos hoivakodin sivuilla on esim. ulkoilukalenteri, laita sen linkki tähän.",
+	},
+	helperOutdoorActivities: {
+		"fi-FI":
+			"Kuvaa hoivakodin ulkoilumahdollisuuksia. Kuvaile esim. miten ulkoilua järjestetään ja miten asiakkaat ulkoilevat.",
+		"sv-FI":
+			"Kuvaa hoivakodin ulkoilumahdollisuuksia. Kuvaile esim. miten ulkoilua järjestetään ja miten asiakkaat ulkoilevat.",
+	},
+	helperAccessibilityInfo: {
+		"fi-FI":
+			"Tähän voit tarvittaessa kirjoittaa esteettömyyttä koskevia lisätietoja.",
+		"sv-FI":
+			"Tähän voit tarvittaessa kirjoittaa esteettömyyttä koskevia lisätietoja.",
+	},
+	staffInfo: {
+		"fi-FI":
+			"Kerro halutessasi henkilöstöstä, sen rakenteesta ja erityisosaamisesta",
+		"sv-FI":
+			"Kerro halutessasi henkilöstöstä, sen rakenteesta ja erityisosaamisesta",
+	},
+	helperStaffSatisfaction: {
+		"fi-FI":
+			"Lisää linkki jos hoivakodin sivuilla on tietoa henkilöstön tyytyväisyydestä (kyselyn tulokset tms.).",
+		"sv-FI":
+			"Lisää linkki jos hoivakodin sivuilla on tietoa henkilöstön tyytyväisyydestä (kyselyn tulokset tms.).",
+	},
+	helperOtherServices: {
+		"fi-FI":
+			"Kuvaa tähän mitä muita palvelukonseptiin kuulumattomia palveluita hoivakodissa on saatavilla. Kerro myös mistä niiden hinnat löytyvät.",
+		"sv-FI":
+			"Kuvaa tähän mitä muita palvelukonseptiin kuulumattomia palveluita hoivakodissa on saatavilla. Kerro myös mistä niiden hinnat löytyvät.",
+	},
+	labelNearbyServices: {
+		"fi-FI":
+			"Hoivakodin läheltä löytyvät palvelut esim. kauppa, kirjasto, ravintola jne.",
+		"sv-FI":
+			"Hoivakodin läheltä löytyvät palvelut esim. kauppa, kirjasto, ravintola jne.",
+	},
+	labelAddImages: {
+		"fi-FI": "Lisää kuvia",
+		"sv-FI": "Lisää kuvia",
+	},
 };

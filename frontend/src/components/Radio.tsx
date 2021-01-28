@@ -6,6 +6,7 @@ interface Props {
 	id: string;
 	isSelected: boolean;
 	onChange: (checked: boolean) => void;
+	onBlur?: () => void;
 	tag?: string;
 	value?: string | boolean;
 }
@@ -14,6 +15,7 @@ const Radio: React.FunctionComponent<Props> = ({
 	name,
 	id,
 	onChange,
+	onBlur,
 	children,
 	isSelected,
 	tag,
@@ -31,6 +33,7 @@ const Radio: React.FunctionComponent<Props> = ({
 				id={id}
 				className="radio-button"
 				value={value as string}
+				onBlur={onBlur}
 			/>
 			<label
 				htmlFor={id}

@@ -136,7 +136,6 @@ const PageUpdate: FC = () => {
 	const labelPersonnel = useT("personnel");
 	const labelLinkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
 	const labelOtherServices = useT("otherServices");
-	const labelNearbyServices = useT("nearbyServices");
 	const labelBasicInformation = useT("basicInformation");
 	const labelContactInfo = useT("contactInfo");
 	const labelFoodHeader = useT("foodHeader");
@@ -162,10 +161,31 @@ const PageUpdate: FC = () => {
 	const labelContactDescription = useT("contactDescription");
 	const labelNursingHomeName = useT("nursingHomeName");
 	const labelSelectVancyStatus = useT("selectVancyStatus");
-	const title = useT("updateNursingHomeTitle");
-	const freeApartmentsStatus = useT("freeApartmentsStatus");
 	const labelTrue = useT("vacancyTrue");
 	const labelFalse = useT("vacancyFalse");
+	const labelPartlyARADestination = useT("partlyARADestination");
+	const labelFoodOwnKitchen = useT("foodOwnKitchen");
+	const labelFoodDelivered = useT("foodDelivered");
+	const labelActivitiesInfo = useT("activitiesInfo");
+	const labelStaffInfo = useT("staffInfo");
+	const labelNearbyServices = useT("labelNearbyServices");
+	const labelAddImages = useT("labelAddImages");
+
+	const helperSummary = useT("helperSummary");
+	const helperBuildingInfo = useT("helperBuildingInfo");
+	const helperApartmentCountInfo = useT("helperApartmentCountInfo");
+	const helperApartmentSize = useT("helperApartmentSize");
+	const helperRent = useT("helperRent");
+	const helperRentInfo = useT("helperRentInfo");
+	const helperLanguage = useT("helperLanguage");
+	const helperActivitiesLink = useT("helperActivitiesLink");
+	const helperOutdoorActivities = useT("helperOutdoorActivities");
+	const helperAccessibilityInfo = useT("helperAccessibilityInfo");
+	const helperStaffSatisfaction = useT("helperStaffSatisfaction");
+	const helperOtherServices = useT("helperOtherServices");
+
+	const title = useT("updateNursingHomeTitle");
+	const freeApartmentsStatus = useT("freeApartmentsStatus");
 	const loadingText = useT("loadingText");
 	const lastUpdate = useT("lastUpdate");
 	const noUpdate = useT("noUpdate");
@@ -175,6 +195,9 @@ const PageUpdate: FC = () => {
 	const updatePopupSaved = useT("saved");
 	const updatePopupSaving = useT("saving");
 	const formIsInvalid = useT("formIsInvalid");
+	const filterFinnish = useT("filterFinnish");
+	const filterSwedish = useT("filterSwedish");
+	const nearbyServices = useT("nearbyServices");
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
@@ -210,150 +233,36 @@ const PageUpdate: FC = () => {
 	}, [id, key, popupState, vacancyStatus]);
 
 	const [form, setForm] = useState<{ [key: string]: InputField[] }>({
-		basicFields: [
+		vacancyFields: [
 			{
-				label: labelSummary,
-				type: InputTypes.textarea,
-				name: "summary",
-				description: "Hoivakodin palvelulupaus",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelOwner,
+				label: labelNursingHomeName,
 				type: InputTypes.text,
-				name: "owner",
+				name: "name",
 				required: true,
 				valid: false,
 				touched: false,
 			},
 			{
-				label: labelAra,
+				label: labelSelectVancyStatus,
 				type: InputTypes.radio,
-				name: "ara",
 				buttons: [
-					{ value: labelYes, label: labelYes },
-					{ value: labelNo, label: labelNo },
-					{
-						value: "Osa paikoista ARA-talossa",
-						label: "Osa paikoista ARA-talossa",
-					},
+					{ value: true, label: labelTrue },
+					{ value: false, label: labelFalse },
 				],
-			},
-			{
-				label: labelYearofConst,
-				type: InputTypes.number,
-				name: "construction_year",
+				name: "has_vacancy",
 				required: true,
 				valid: false,
 				touched: false,
-			},
-			{
-				label: labelBuildingInfo,
-				type: InputTypes.textarea,
-				name: "building_info",
-				description:
-					"Tässä voit kertoa mahdollisista tehdyistä tai tulossa olevista peruskorjauksista, laajennuksista jne.",
-				maxlength: 200,
-			},
-			{
-				label: labelNumApartments,
-				type: InputTypes.number,
-				name: "apartment_count",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelApartmentCountInfo,
-				type: InputTypes.textarea,
-				name: "apartment_count_info",
-				description:
-					"Tässä voit kertoa esim. minkä kokoisiin ryhmäkoteihin hoivakoti jakaantuu ja kuinka monta asuntoa on per kerros.",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelApartmentSize + " (m²)",
-				type: InputTypes.text,
-				name: "apartment_square_meters",
-				description: "Esim. 18-25",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelApartmentsHaveBathroom,
-				type: InputTypes.checkbox,
-				name: "apartments_have_bathroom",
-			},
-			{
-				label: labelRent + " (€ / kk)",
-				type: InputTypes.text,
-				name: "rent",
-				description: "Esim. 700-800",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelRentInfo,
-				type: InputTypes.textarea,
-				name: "rent_info",
-				description: "Mitä yhteisiä tiloja asiakkaan vuokraan sisältyy",
-			},
-			{
-				label: labelServiceLanguage,
-				type: InputTypes.checkbox,
-				name: "language",
-				buttons: [
-					{ label: "Suomi", value: "Suomi" },
-					{ label: "Ruotsi", value: "Ruotsi" },
-				],
-				change: (currentValue: any, buttonValue: string) => {
-					const valArray: Array<string> = currentValue
-						.split("|")
-						.filter((value: string) => value !== "");
+				change: (selected: InputFieldValue) => {
+					setHasVacancy(selected as boolean);
 
-					let newValue;
-
-					if (valArray.includes(buttonValue)) {
-						const itemIndex = valArray.indexOf(buttonValue);
-
-						valArray.splice(itemIndex, 1);
-					} else {
-						valArray.push(buttonValue);
-					}
-
-					const sortArray = valArray.sort((a, b) => {
-						return a.localeCompare(b);
-					});
-
-					if (sortArray.length > 1) {
-						newValue = sortArray.join("|");
-					} else if (sortArray.length === 1) {
-						newValue = sortArray[0];
-					} else {
-						newValue = "";
-					}
-
-					console.log(newValue);
-
-					return newValue;
+					return selected;
 				},
-				required: true,
-				valid: false,
-				touched: false,
 			},
 			{
-				label: labelLanguageInfo,
-				type: InputTypes.textarea,
-				name: "language_info",
-				description:
-					"Esim. lisätietoa henkilökunnan muusta kielitaidosta.",
-				maxlength: 200,
+				label: labelHasLAHapartments,
+				type: InputTypes.checkbox,
+				name: "lah",
 			},
 		],
 		addressFields: [
@@ -412,73 +321,6 @@ const PageUpdate: FC = () => {
 				maxlength: 200,
 			},
 		],
-		foodFields: [
-			{
-				label: labelLinkMenu,
-				type: InputTypes.url,
-				name: "menu_link",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelCookingMethod,
-				type: InputTypes.text,
-				name: "meals_preparation",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelFoodMoreInfo,
-				type: InputTypes.textarea,
-				name: "meals_info",
-				maxlength: 200,
-				description:
-					"Tässä voi halutessasi antaa lisätietoja ruuan valmistukseen ja ruokailuun liittyen.",
-			},
-		],
-		activitiesFields: [
-			{
-				label: labelActivies,
-				type: InputTypes.textarea,
-				name: "activities_info",
-				required: true,
-				valid: false,
-				touched: false,
-				description:
-					"Kuvaus hoivakodissa järjestettävästä toiminnasta.",
-				maxlength: 400,
-			},
-			{
-				label: labelLinkMoreInfoActivies,
-				type: InputTypes.url,
-				name: "activities_link",
-				description:
-					"Jos hoivakodin sivuilla on esim. ulkoilukalenteri, laita sen linkki tähän.",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelOutdoorActivies,
-				type: InputTypes.textarea,
-				name: "outdoors_possibilities_info",
-				description:
-					"Kuvaa hoivakodin ulkoilumahdollisuuksia. Kuvaile esim. miten ulkoilua järjestetään ja miten asiakkaat ulkoilevat.",
-				maxlength: 200,
-			},
-			{
-				label: labelLinkMoreInfoOutdoor,
-				type: InputTypes.url,
-				name: "outdoors_possibilities_link",
-				description:
-					"Jos hoivakodin sivuilla on esim. ulkoilukalenteri, laita se tähän.",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-		],
 		nursingHomeContactFields: [
 			{
 				label: labelContactDescription,
@@ -527,31 +369,244 @@ const PageUpdate: FC = () => {
 				maxlength: 200,
 			},
 		],
+		basicFields: [
+			{
+				label: labelSummary,
+				type: InputTypes.textarea,
+				name: "summary",
+				description: helperSummary,
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelOwner,
+				type: InputTypes.text,
+				name: "owner",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelAra,
+				type: InputTypes.radio,
+				name: "ara",
+				buttons: [
+					{ value: labelYes, label: labelYes },
+					{ value: labelNo, label: labelNo },
+					{
+						value: labelPartlyARADestination,
+						label: labelPartlyARADestination,
+					},
+				],
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelYearofConst,
+				type: InputTypes.number,
+				name: "construction_year",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelBuildingInfo,
+				type: InputTypes.textarea,
+				name: "building_info",
+				description: helperBuildingInfo,
+				maxlength: 200,
+			},
+			{
+				label: labelNumApartments,
+				type: InputTypes.number,
+				name: "apartment_count",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelApartmentCountInfo,
+				type: InputTypes.textarea,
+				name: "apartment_count_info",
+				description: helperApartmentCountInfo,
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelApartmentSize + " (m²)",
+				type: InputTypes.text,
+				name: "apartment_square_meters",
+				description: helperApartmentSize,
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelApartmentsHaveBathroom,
+				type: InputTypes.checkbox,
+				name: "apartments_have_bathroom",
+			},
+			{
+				label: labelRent + " (€ / kk)",
+				type: InputTypes.text,
+				name: "rent",
+				description: helperRent,
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelRentInfo,
+				type: InputTypes.textarea,
+				name: "rent_info",
+				description: helperRentInfo,
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelServiceLanguage,
+				type: InputTypes.checkbox,
+				name: "language",
+				buttons: [
+					{ label: filterFinnish, value: filterFinnish },
+					{ label: filterSwedish, value: filterSwedish },
+				],
+				change: (currentValue: string, buttonValue: string) => {
+					const valArray: Array<string> = currentValue
+						.split("|")
+						.filter((value: string) => value !== "");
+
+					let newValue;
+
+					if (valArray.includes(buttonValue)) {
+						const itemIndex = valArray.indexOf(buttonValue);
+
+						valArray.splice(itemIndex, 1);
+					} else {
+						valArray.push(buttonValue);
+					}
+
+					const sortArray = valArray.sort((a, b) => {
+						return a.localeCompare(b);
+					});
+
+					if (sortArray.length > 1) {
+						newValue = sortArray.join("|");
+					} else if (sortArray.length === 1) {
+						newValue = sortArray[0];
+					} else {
+						newValue = "";
+					}
+
+					return newValue;
+				},
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelLanguageInfo,
+				type: InputTypes.textarea,
+				name: "language_info",
+				description: helperLanguage,
+				maxlength: 200,
+			},
+		],
+		foodFields: [
+			{
+				label: labelLinkMenu,
+				type: InputTypes.url,
+				name: "menu_link",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelCookingMethod,
+				type: InputTypes.radio,
+				name: "meals_preparation",
+				buttons: [
+					{
+						value: labelFoodOwnKitchen,
+						label: labelFoodOwnKitchen,
+					},
+					{
+						value: labelFoodDelivered,
+						label: labelFoodDelivered,
+					},
+				],
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelFoodMoreInfo,
+				type: InputTypes.textarea,
+				name: "meals_info",
+				maxlength: 200,
+			},
+		],
+		activitiesFields: [
+			{
+				label: labelActivitiesInfo,
+				type: InputTypes.textarea,
+				name: "activities_info",
+				maxlength: 400,
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelLinkMoreInfoActivies,
+				type: InputTypes.url,
+				name: "activities_link",
+				description: helperActivitiesLink,
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelOutdoorActivies,
+				type: InputTypes.textarea,
+				name: "outdoors_possibilities_info",
+				description: helperOutdoorActivities,
+				maxlength: 200,
+			},
+			{
+				label: labelLinkMoreInfoOutdoor,
+				type: InputTypes.url,
+				name: "outdoors_possibilities_link",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+		],
 		accessibilityFields: [
 			{
 				label: labelAccessibilityInfo,
 				type: InputTypes.textarea,
 				name: "accessibility_info",
-				description:
-					"Tähän voit tarvittaessa kirjoittaa esteettömyyttä koskevia lisätietoja.",
+				description: helperAccessibilityInfo,
 				maxlength: 200,
 			},
 		],
+
 		staffFields: [
 			{
-				label: labelPersonnel,
+				label: labelStaffInfo,
 				type: InputTypes.textarea,
 				name: "staff_info",
-				description:
-					"Kerro halutessasi henkilöstöstä, sen rakenteesta ja erityisosaamisesta",
 				maxlength: 400,
 			},
 			{
 				label: labelLinkMoreInfoPersonnel,
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
-				description:
-					"Lisää linkki jos hoivakodin sivuilla on tietoa henkilöstön tyytyväisyydestä (kyselyn tulokset tms.).",
+				description: helperStaffSatisfaction,
 			},
 		],
 		otherServicesFields: [
@@ -559,8 +614,7 @@ const PageUpdate: FC = () => {
 				label: labelOtherServices,
 				type: InputTypes.textarea,
 				name: "other_services",
-				description:
-					"Kuvaa tähän mitä muita palvelukonseptiin kuulumattomia palveluita on saatavilla. Kerro myös mistä niiden hinnat löytyvät.",
+				description: helperOtherServices,
 				maxlength: 200,
 			},
 		],
@@ -569,38 +623,7 @@ const PageUpdate: FC = () => {
 				label: labelNearbyServices,
 				type: InputTypes.textarea,
 				name: "nearby_services",
-				description:
-					"Mitä palveluita löytyy hoivakodin läheltä esim. kauppa, kirjasto, ravintola jne.",
 				maxlength: 200,
-			},
-		],
-		vacancyFields: [
-			{
-				label: labelNursingHomeName,
-				type: InputTypes.text,
-				name: "name",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelSelectVancyStatus,
-				type: InputTypes.radio,
-				buttons: [
-					{ value: true, label: labelTrue },
-					{ value: false, label: labelFalse },
-				],
-				name: "has_vacancy",
-				change: (selected: InputFieldValue) => {
-					setHasVacancy(selected as boolean);
-
-					return selected;
-				},
-			},
-			{
-				label: labelHasLAHapartments,
-				type: InputTypes.checkbox,
-				name: "lah",
 			},
 		],
 	});
@@ -717,10 +740,20 @@ const PageUpdate: FC = () => {
 
 	const handleInputChange = (
 		field: InputField,
+		section: string,
 		value: InputFieldValue,
 	): void => {
 		if (nursingHome) {
 			const { name, type } = field;
+
+			const fields = [...form[section]];
+			const index = fields.findIndex(input => input.name === name);
+
+			const validField = validateField(value);
+
+			fields[index] = { ...field, touched: true, valid: validField };
+
+			setForm({ ...form, [section]: fields });
 
 			setNursingHome({
 				...nursingHome,
@@ -730,12 +763,11 @@ const PageUpdate: FC = () => {
 						: value,
 			});
 		}
-
-		validateForm();
 	};
 
 	const getInputElement = (
 		field: InputField,
+		section: string,
 		index: number,
 	): JSX.Element | null => {
 		if (nursingHome) {
@@ -777,6 +809,7 @@ const PageUpdate: FC = () => {
 									onChange={event =>
 										handleInputChange(
 											field,
+											section,
 											event.target.value,
 										)
 									}
@@ -798,45 +831,63 @@ const PageUpdate: FC = () => {
 						<Fragment key={key}>
 							{field.buttons ? (
 								<fieldset className="field">
-									<legend>{field.label}</legend>
-									{field.buttons.map(button => {
-										return (
-											<Checkbox
-												key={`${field.name}-${button.value}`}
-												id={`${field.name}-${button.value}`}
-												name={field.name}
-												onChange={() => {
-													if (field.change) {
-														const transformValue = field.change(
-															nursingHome[
-																field.name
-															],
-															button.value,
-														);
+									<legend>
+										{field.label}
+										{field.required ? (
+											<span
+												className="asterisk"
+												aria-hidden="true"
+											>
+												{" "}
+												*
+											</span>
+										) : null}
+									</legend>
+									<div className="control">
+										{field.buttons.map(button => {
+											return (
+												<Checkbox
+													key={`${field.name}-${button.value}`}
+													id={`${field.name}-${button.value}`}
+													name={field.name}
+													onChange={() => {
+														let newValue = button.value as InputFieldValue;
+
+														if (field.change) {
+															newValue = field.change(
+																nursingHome[
+																	field.name
+																],
+																button.value,
+															);
+														}
 
 														handleInputChange(
 															field,
-															transformValue,
+															section,
+															newValue,
 														);
-													} else {
-														handleInputChange(
-															field,
-															button.value,
-														);
-													}
-												}}
-												isChecked={(
-													(nursingHome[
+													}}
+													onBlur={validateForm}
+													isChecked={(nursingHome[
 														field.name
-													] as string) || ""
-												).includes(
-													button.value as string,
-												)}
-											>
-												{button.value}
-											</Checkbox>
-										);
-									})}
+													] as string).includes(
+														button.value as string,
+													)}
+												>
+													{button.value}
+												</Checkbox>
+											);
+										})}
+										{fieldInvalid ? (
+											<span className="icon"></span>
+										) : null}
+									</div>
+									{fieldInvalid ? (
+										<p className="help">
+											{textFieldIsRequired}
+										</p>
+									) : null}
 								</fieldset>
 							) : (
 								<div className="field">
@@ -844,8 +895,13 @@ const PageUpdate: FC = () => {
 										name={field.name}
 										id={field.name}
 										onChange={checked =>
-											handleInputChange(field, checked)
+											handleInputChange(
+												field,
+												section,
+												checked,
+											)
 										}
+										onBlur={validateForm}
 										isChecked={
 											(nursingHome[
 												field.name
@@ -861,44 +917,69 @@ const PageUpdate: FC = () => {
 				case "radio":
 					return (
 						<fieldset className="field" key={key}>
-							<legend>{field.label}</legend>
-							{field.buttons
-								? field.buttons.map(button => {
-										return (
-											<Radio
-												key={`${field.name}-${button.value}`}
-												id={`${field.name}-${button.value}`}
-												name={field.name}
-												isSelected={
-													(nursingHome[
-														field.name
-													] as string) ===
-													button.value
-												}
-												value={button.value}
-												onChange={() => {
-													if (field.change) {
-														const transformValue = field.change(
-															button.value,
-														);
+							<legend>
+								{field.label}
+								{field.required ? (
+									<span
+										className="asterisk"
+										aria-hidden="true"
+									>
+										{" "}
+										*
+									</span>
+								) : null}
+							</legend>
+							{field.buttons ? (
+								<Fragment>
+									<div className="control">
+										{field.buttons.map(button => {
+											return (
+												<Radio
+													key={`${field.name}-${button.value}`}
+													id={`${field.name}-${button.value}`}
+													name={field.name}
+													isSelected={
+														(nursingHome[
+															field.name
+														] as string) ===
+														button.value
+													}
+													value={button.value}
+													onChange={() => {
+														let newValue = button.value as InputFieldValue;
+
+														if (field.change) {
+															newValue = field.change(
+																nursingHome[
+																	field.name
+																],
+																button.value,
+															);
+														}
 
 														handleInputChange(
 															field,
-															transformValue,
+															section,
+															newValue,
 														);
-													} else {
-														handleInputChange(
-															field,
-															button.value,
-														);
-													}
-												}}
-											>
-												{button.label}
-											</Radio>
-										);
-								  })
-								: null}
+													}}
+													onBlur={validateForm}
+												>
+													{button.label}
+												</Radio>
+											);
+										})}
+										{fieldInvalid ? (
+											<span className="icon"></span>
+										) : null}
+									</div>
+									{fieldInvalid ? (
+										<p className="help">
+											{textFieldIsRequired}
+										</p>
+									) : null}
+								</Fragment>
+							) : null}
 						</fieldset>
 					);
 				default:
@@ -933,6 +1014,7 @@ const PageUpdate: FC = () => {
 									onChange={event =>
 										handleInputChange(
 											field,
+											section,
 											event.target.value,
 										)
 									}
@@ -1008,74 +1090,114 @@ const PageUpdate: FC = () => {
 							<div className="page-update-section">
 								<h3>{freeApartmentsStatus}</h3>
 								{form.vacancyFields.map((field, index) =>
-									getInputElement(field, index),
+									getInputElement(
+										field,
+										"vacancyFields",
+										index,
+									),
 								)}
 
 								<Link
 									className="btn update-images-button"
 									to={`/hoivakodit/${id}/paivita/${key}/kuvat`}
 								>
-									Lisää kuvia
+									{labelAddImages}
 								</Link>
 							</div>
 							<div className="page-update-section">
 								<h3>{labelVisitingInfo}</h3>
 								{form.nursingHomeContactFields.map(
 									(field, index) =>
-										getInputElement(field, index),
+										getInputElement(
+											field,
+											"nursingHomeContactFields",
+											index,
+										),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelContactInfo}</h3>
 								<div className="page-update-columns">
 									{form.addressFields.map((field, index) =>
-										getInputElement(field, index),
+										getInputElement(
+											field,
+											"addressFields",
+											index,
+										),
 									)}
 								</div>
 								{form.contactFields.map((field, index) =>
-									getInputElement(field, index),
+									getInputElement(
+										field,
+										"contactFields",
+										index,
+									),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelBasicInformation}</h3>
 								{form.basicFields.map((field, index) =>
-									getInputElement(field, index),
+									getInputElement(
+										field,
+										"basicFields",
+										index,
+									),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelFoodHeader}</h3>
 								{form.foodFields.map((field, index) =>
-									getInputElement(field, index),
+									getInputElement(field, "foodFields", index),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelActivies}</h3>
 								{form.activitiesFields.map((field, index) =>
-									getInputElement(field, index),
+									getInputElement(
+										field,
+										"activitiesFields",
+										index,
+									),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelAccessibility}</h3>
 								{form.accessibilityFields.map((field, index) =>
-									getInputElement(field, index),
+									getInputElement(
+										field,
+										"accessibilityFields",
+										index,
+									),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelPersonnel}</h3>
 								{form.staffFields.map((field, index) =>
-									getInputElement(field, index),
+									getInputElement(
+										field,
+										"staffFields",
+										index,
+									),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelOtherServices}</h3>
 								{form.otherServicesFields.map((field, index) =>
-									getInputElement(field, index),
+									getInputElement(
+										field,
+										"otherServicesFields",
+										index,
+									),
 								)}
 							</div>
 							<div className="page-update-section">
-								<h3>{labelNearbyServices}</h3>
+								<h3>{nearbyServices}</h3>
 								{form.nearbyServicesFields.map((field, index) =>
-									getInputElement(field, index),
+									getInputElement(
+										field,
+										"nearbyServicesFields",
+										index,
+									),
 								)}
 							</div>
 						</form>
