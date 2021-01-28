@@ -35,7 +35,6 @@ type NursingHomeUpdateData = Omit<
 	| "has_vacancy"
 	| "basic_update_key"
 >;
-
 interface VacancyStatus {
 	has_vacancy: boolean;
 	vacancy_last_updated_at: string | null;
@@ -55,7 +54,7 @@ interface InputField {
 	required?: boolean;
 	valid?: boolean;
 	touched?: boolean;
-	change?: (...arg: any) => InputFieldValue;
+	change?: (...arg: string[]) => InputFieldValue;
 	maxlength?: number;
 }
 
@@ -256,10 +255,10 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
-				change: (selected: InputFieldValue) => {
-					setHasVacancy(selected as boolean);
+				change: (_, value: InputFieldValue) => {
+					setHasVacancy(value as boolean);
 
-					return selected;
+					return value;
 				},
 			},
 			{
@@ -659,13 +658,9 @@ const PageUpdate: FC = () => {
 						}
 					}
 
-					const updateNursingHomeData: NursingHomeUpdateData = formData;
+					const updateFormData: NursingHomeUpdateData = formData;
 
-					await requestNursingHomeUpdate(
-						id,
-						key,
-						updateNursingHomeData,
-					);
+					await requestNursingHomeUpdate(id, key, updateFormData);
 				}
 
 				setPopupState("saved");
@@ -867,8 +862,8 @@ const PageUpdate: FC = () => {
 															newValue = field.change(
 																nursingHome[
 																	field.name
-																],
-																button.value,
+																] as string,
+																button.value as string,
 															);
 														}
 
@@ -949,10 +944,9 @@ const PageUpdate: FC = () => {
 													id={`${field.name}-${button.value}`}
 													name={field.name}
 													isSelected={
-														(nursingHome[
+														nursingHome[
 															field.name
-														] as string) ===
-														button.value
+														] === button.value
 													}
 													value={button.value}
 													onChange={() => {
@@ -962,8 +956,8 @@ const PageUpdate: FC = () => {
 															newValue = field.change(
 																nursingHome[
 																	field.name
-																],
-																button.value,
+																] as string,
+																button.value as string,
 															);
 														}
 
