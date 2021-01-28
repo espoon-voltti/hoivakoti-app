@@ -426,9 +426,9 @@ export const translations = {
 		"fi-FI": "Vapaiden asuntojen tilanne",
 		"sv-FI": "Lediga bostäder",
 	},
-	pageUpdateIntro: {
-		"fi-FI": "Valitse hoivakodin vapaiden asuntojen tilanne:",
-		"sv-FI": "Välj situationen för lediga bostäder på vårdhemmet:",
+	selectVancyStatus: {
+		"fi-FI": "Valitse hoivakodin vapaiden asuntojen tilanne",
+		"sv-FI": "Välj situationen för lediga bostäder på vårdhemmet",
 	},
 	organizationLogo: {
 		"fi-FI": "Organisaation / Hoivakodin omistajan logo",

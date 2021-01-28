@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, Fragment } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
@@ -55,7 +55,7 @@ interface InputField {
 	required?: boolean;
 	valid?: boolean;
 	touched?: boolean;
-	change?: (arg: InputFieldValue) => void;
+	change?: (...arg: any) => InputFieldValue;
 	maxlength?: number;
 }
 
@@ -161,6 +161,7 @@ const PageUpdate: FC = () => {
 	const labelContactPhoneInfo = useT("contactPhoneInfo");
 	const labelContactDescription = useT("contactDescription");
 	const labelNursingHomeName = useT("nursingHomeName");
+	const labelSelectVancyStatus = useT("selectVancyStatus");
 	const title = useT("updateNursingHomeTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
 	const labelTrue = useT("vacancyTrue");
@@ -174,6 +175,39 @@ const PageUpdate: FC = () => {
 	const updatePopupSaved = useT("saved");
 	const updatePopupSaving = useT("saving");
 	const formIsInvalid = useT("formIsInvalid");
+
+	if (!id || !key) throw new Error("Invalid URL!");
+
+	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/nursing-homes/${id}`)
+			.then((response: GetNursingHomeResponse) => {
+				setNursingHome(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+	}, [id]);
+
+	useEffect(() => {
+		if (!vacancyStatus) {
+			axios
+				.get(
+					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
+				)
+				.then((response: { data: VacancyStatus }) => {
+					setVacancyStatus(response.data);
+					setHasVacancy(response.data.has_vacancy);
+
+					if (popupState) setTimeout(() => setPopupState(null), 3000);
+				})
+				.catch(e => {
+					console.error(e);
+					throw e;
+				});
+		}
+	}, [id, key, popupState, vacancyStatus]);
 
 	const [form, setForm] = useState<{ [key: string]: InputField[] }>({
 		basicFields: [
@@ -201,7 +235,10 @@ const PageUpdate: FC = () => {
 				buttons: [
 					{ value: labelYes, label: labelYes },
 					{ value: labelNo, label: labelNo },
-					{ value: "Osittain", label: "Osa paikoista" },
+					{
+						value: "Osa paikoista ARA-talossa",
+						label: "Osa paikoista ARA-talossa",
+					},
 				],
 			},
 			{
@@ -234,7 +271,6 @@ const PageUpdate: FC = () => {
 				name: "apartment_count_info",
 				description:
 					"Tässä voit kertoa esim. minkä kokoisiin ryhmäkoteihin hoivakoti jakaantuu ja kuinka monta asuntoa on per kerros.",
-				maxlength: 300,
 				required: true,
 				valid: false,
 				touched: false,
@@ -266,14 +302,47 @@ const PageUpdate: FC = () => {
 				label: labelRentInfo,
 				type: InputTypes.textarea,
 				name: "rent_info",
-				description:
-					"Mitä yhteisiä tiloja asiakkaan vuokraan sisältyy?",
-				maxlength: 200,
+				description: "Mitä yhteisiä tiloja asiakkaan vuokraan sisältyy",
 			},
 			{
 				label: labelServiceLanguage,
-				type: InputTypes.text,
+				type: InputTypes.checkbox,
 				name: "language",
+				buttons: [
+					{ label: "Suomi", value: "Suomi" },
+					{ label: "Ruotsi", value: "Ruotsi" },
+				],
+				change: (currentValue: any, buttonValue: string) => {
+					const valArray: Array<string> = currentValue
+						.split("|")
+						.filter((value: string) => value !== "");
+
+					let newValue;
+
+					if (valArray.includes(buttonValue)) {
+						const itemIndex = valArray.indexOf(buttonValue);
+
+						valArray.splice(itemIndex, 1);
+					} else {
+						valArray.push(buttonValue);
+					}
+
+					const sortArray = valArray.sort((a, b) => {
+						return a.localeCompare(b);
+					});
+
+					if (sortArray.length > 1) {
+						newValue = sortArray.join("|");
+					} else if (sortArray.length === 1) {
+						newValue = sortArray[0];
+					} else {
+						newValue = "";
+					}
+
+					console.log(newValue);
+
+					return newValue;
+				},
 				required: true,
 				valid: false,
 				touched: false,
@@ -515,7 +584,7 @@ const PageUpdate: FC = () => {
 				touched: false,
 			},
 			{
-				label: freeApartmentsStatus,
+				label: labelSelectVancyStatus,
 				type: InputTypes.radio,
 				buttons: [
 					{ value: true, label: labelTrue },
@@ -524,6 +593,8 @@ const PageUpdate: FC = () => {
 				name: "has_vacancy",
 				change: (selected: InputFieldValue) => {
 					setHasVacancy(selected as boolean);
+
+					return selected;
 				},
 			},
 			{
@@ -535,39 +606,6 @@ const PageUpdate: FC = () => {
 	});
 
 	const [formIsValid, setFormIsValid] = useState(false);
-
-	if (!id || !key) throw new Error("Invalid URL!");
-
-	useEffect(() => {
-		axios
-			.get(`${config.API_URL}/nursing-homes/${id}`)
-			.then((response: GetNursingHomeResponse) => {
-				setNursingHome(response.data);
-			})
-			.catch(e => {
-				console.error(e);
-				throw e;
-			});
-	}, [id]);
-
-	useEffect(() => {
-		if (!vacancyStatus) {
-			axios
-				.get(
-					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
-				)
-				.then((response: { data: VacancyStatus }) => {
-					setVacancyStatus(response.data);
-					setHasVacancy(response.data.has_vacancy);
-
-					if (popupState) setTimeout(() => setPopupState(null), 3000);
-				})
-				.catch(e => {
-					console.error(e);
-					throw e;
-				});
-		}
-	}, [id, key, popupState, vacancyStatus]);
 
 	const handleSubmit = async (
 		event: React.FormEvent<HTMLFormElement>,
@@ -757,21 +795,68 @@ const PageUpdate: FC = () => {
 					);
 				case "checkbox":
 					return (
-						<div className="field" key={key}>
-							<Checkbox
-								name={field.name}
-								id={field.name}
-								onChange={checked =>
-									handleInputChange(field, checked)
-								}
-								isChecked={
-									(nursingHome[field.name] as boolean) ||
-									false
-								}
-							>
-								{field.label}
-							</Checkbox>
-						</div>
+						<Fragment key={key}>
+							{field.buttons ? (
+								<fieldset className="field">
+									<legend>{field.label}</legend>
+									{field.buttons.map(button => {
+										return (
+											<Checkbox
+												key={`${field.name}-${button.value}`}
+												id={`${field.name}-${button.value}`}
+												name={field.name}
+												onChange={() => {
+													if (field.change) {
+														const transformValue = field.change(
+															nursingHome[
+																field.name
+															],
+															button.value,
+														);
+
+														handleInputChange(
+															field,
+															transformValue,
+														);
+													} else {
+														handleInputChange(
+															field,
+															button.value,
+														);
+													}
+												}}
+												isChecked={(
+													(nursingHome[
+														field.name
+													] as string) || ""
+												).includes(
+													button.value as string,
+												)}
+											>
+												{button.value}
+											</Checkbox>
+										);
+									})}
+								</fieldset>
+							) : (
+								<div className="field">
+									<Checkbox
+										name={field.name}
+										id={field.name}
+										onChange={checked =>
+											handleInputChange(field, checked)
+										}
+										isChecked={
+											(nursingHome[
+												field.name
+											] as boolean) || false
+										}
+									>
+										{field.label}
+									</Checkbox>
+								</div>
+							)}
+						</Fragment>
 					);
 				case "radio":
 					return (
@@ -793,15 +878,20 @@ const PageUpdate: FC = () => {
 												value={button.value}
 												onChange={() => {
 													if (field.change) {
-														field.change(
+														const transformValue = field.change(
+															button.value,
+														);
+
+														handleInputChange(
+															field,
+															transformValue,
+														);
+													} else {
+														handleInputChange(
+															field,
 															button.value,
 														);
 													}
-
-													handleInputChange(
-														field,
-														button.value,
-													);
 												}}
 											>
 												{button.label}
@@ -916,18 +1006,17 @@ const PageUpdate: FC = () => {
 								)}
 							</div>
 							<div className="page-update-section">
-								<div className="page-update-data">
-									{form.vacancyFields.map((field, index) =>
-										getInputElement(field, index),
-									)}
+								<h3>{freeApartmentsStatus}</h3>
+								{form.vacancyFields.map((field, index) =>
+									getInputElement(field, index),
+								)}
 
-									<Link
-										className="btn update-images-button"
-										to={`/hoivakodit/${id}/paivita/${key}/kuvat`}
-									>
-										Lisää kuvia
-									</Link>
-								</div>
+								<Link
+									className="btn update-images-button"
+									to={`/hoivakodit/${id}/paivita/${key}/kuvat`}
+								>
+									Lisää kuvia
+								</Link>
 							</div>
 							<div className="page-update-section">
 								<h3>{labelVisitingInfo}</h3>
