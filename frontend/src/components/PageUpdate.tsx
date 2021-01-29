@@ -434,9 +434,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "apartment_count_info",
 				description: helperApartmentCountInfo,
-				required: true,
-				valid: false,
-				touched: false,
+				maxlength: 300,
 			},
 			{
 				label: labelApartmentSize + " (m²)",
@@ -466,9 +464,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "rent_info",
 				description: helperRentInfo,
-				required: true,
-				valid: false,
-				touched: false,
+				maxlength: 200,
 			},
 			{
 				label: labelServiceLanguage,
@@ -564,9 +560,6 @@ const PageUpdate: FC = () => {
 				type: InputTypes.url,
 				name: "activities_link",
 				description: helperActivitiesLink,
-				required: true,
-				valid: false,
-				touched: false,
 			},
 			{
 				label: labelOutdoorActivies,
@@ -579,9 +572,6 @@ const PageUpdate: FC = () => {
 				label: labelLinkMoreOutdoorInfo,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
-				required: true,
-				valid: false,
-				touched: false,
 			},
 		],
 		accessibilityFields: [
