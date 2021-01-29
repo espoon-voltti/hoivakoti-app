@@ -948,11 +948,11 @@ export const translations = {
 		"fi-FI": "Kaupunginosa",
 		"sv-FI": "Distrikt",
 	},
-	arrivalGuidePublicTransit: {
+	arrivalPublicTransit: {
 		"fi-FI": "Saapuminen julkisilla kulkuyhteyksillä",
 		"sv-FI": "Saapuminen julkisilla kulkuyhteyksillä",
 	},
-	arrivalGuideCar: {
+	arrivalCar: {
 		"fi-FI": "Saapuminen autolla",
 		"sv-FI": "Saapuminen autolla",
 	},

@@ -35,6 +35,7 @@ type NursingHomeUpdateData = Omit<
 	| "has_vacancy"
 	| "basic_update_key"
 >;
+
 interface VacancyStatus {
 	has_vacancy: boolean;
 	vacancy_last_updated_at: string | null;
@@ -104,18 +105,20 @@ const requestNursingHomeUpdate = async (
 const PageUpdate: FC = () => {
 	const { id, key } = useParams<NursingHomeRouteParams>();
 
+	if (!id || !key) throw new Error("Invalid URL!");
+
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [vacancyStatus, setVacancyStatus] = useState<VacancyStatus | null>(
 		null,
 	);
+	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
 	const [popupState, setPopupState] = useState<
 		null | "saving" | "saved" | "invalid"
 	>(null);
-	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
 
 	const labelOwner = useT("ownerOrganisation");
 	const labelAra = useT("filterAraLabel");
-	const labelYearofConst = useT("yearofConst");
+	const labelYearOfConst = useT("yearofConst");
 	const labelNumApartments = useT("numTotalApartments");
 	const labelApartmentSize = useT("apartmentSize");
 	const labelRent = useT("rent");
@@ -126,14 +129,14 @@ const PageUpdate: FC = () => {
 	const labelFoodMoreInfo = useT("foodMoreInfo");
 	const labelLinkMenu = useT("linkMenu");
 	const labelActivies = useT("activies");
-	const labelLinkMoreInfoActivies = useT("linkMoreInfoActivies");
+	const labelLinkMoreActiviesInfo = useT("linkMoreInfoActivies");
 	const labelOutdoorActivies = useT("outdoorActivies");
-	const labelLinkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
+	const labelLinkMoreOutdoorInfo = useT("linkMoreInfoOutdoor");
 	const labelVisitingInfo = useT("visitingInfo");
 	const labelAccessibility = useT("accessibility");
 	const labelAccessibilityInfo = useT("accessibilityInfo");
 	const labelPersonnel = useT("personnel");
-	const labelLinkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
+	const labelLinkMorePersonnelInfo = useT("linkMoreInfoPersonnel");
 	const labelOtherServices = useT("otherServices");
 	const labelBasicInformation = useT("basicInformation");
 	const labelContactInfo = useT("contactInfo");
@@ -150,8 +153,8 @@ const PageUpdate: FC = () => {
 	const labelPostalCode = useT("postalCode");
 	const labelCity = useT("city");
 	const labelDistrict = useT("district");
-	const labelArrivalGuidePublicTransit = useT("arrivalGuidePublicTransit");
-	const labelArrivalGuideCar = useT("arrivalGuideCar");
+	const labelArrivalPublicTransit = useT("arrivalPublicTransit");
+	const labelArrivalCar = useT("arrivalCar");
 	const labelContactName = useT("contactName");
 	const labelContactTitle = useT("contactTitle");
 	const labelContactPhone = useT("contactPhone");
@@ -200,8 +203,6 @@ const PageUpdate: FC = () => {
 	const fieldsWithAsteriskAreMandatory = useT(
 		"fieldsWithAsteriskAreMandatory",
 	);
-
-	if (!id || !key) throw new Error("Invalid URL!");
 
 	useEffect(() => {
 		axios
@@ -267,63 +268,7 @@ const PageUpdate: FC = () => {
 				name: "lah",
 			},
 		],
-		addressFields: [
-			{
-				label: labelAddress,
-				type: InputTypes.text,
-				name: "address",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelPostalCode,
-				type: InputTypes.text,
-				name: "postal_code",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelCity,
-				type: InputTypes.text,
-				name: "city",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelDistrict,
-				type: InputTypes.text,
-				name: "district",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-		],
 		contactFields: [
-			{
-				label: labelWebpage,
-				type: InputTypes.url,
-				name: "www",
-				required: true,
-				valid: false,
-				touched: false,
-			},
-			{
-				label: labelArrivalGuidePublicTransit,
-				type: InputTypes.textarea,
-				name: "arrival_guide_public_transit",
-				maxlength: 200,
-			},
-			{
-				label: labelArrivalGuideCar,
-				type: InputTypes.textarea,
-				name: "arrival_guide_car",
-				maxlength: 200,
-			},
-		],
-		nursingHomeContactFields: [
 			{
 				label: labelContactDescription,
 				type: InputTypes.textarea,
@@ -371,7 +316,63 @@ const PageUpdate: FC = () => {
 				maxlength: 200,
 			},
 		],
-		basicFields: [
+		addressFields: [
+			{
+				label: labelAddress,
+				type: InputTypes.text,
+				name: "address",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelPostalCode,
+				type: InputTypes.text,
+				name: "postal_code",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelCity,
+				type: InputTypes.text,
+				name: "city",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelDistrict,
+				type: InputTypes.text,
+				name: "district",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+		],
+		guideFields: [
+			{
+				label: labelWebpage,
+				type: InputTypes.url,
+				name: "www",
+				required: true,
+				valid: false,
+				touched: false,
+			},
+			{
+				label: labelArrivalPublicTransit,
+				type: InputTypes.textarea,
+				name: "arrival_guide_public_transit",
+				maxlength: 200,
+			},
+			{
+				label: labelArrivalCar,
+				type: InputTypes.textarea,
+				name: "arrival_guide_car",
+				maxlength: 200,
+			},
+		],
+		infoFields: [
 			{
 				label: labelSummary,
 				type: InputTypes.textarea,
@@ -406,7 +407,7 @@ const PageUpdate: FC = () => {
 				touched: false,
 			},
 			{
-				label: labelYearofConst,
+				label: labelYearOfConst,
 				type: InputTypes.number,
 				name: "construction_year",
 				required: true,
@@ -559,7 +560,7 @@ const PageUpdate: FC = () => {
 				touched: false,
 			},
 			{
-				label: labelLinkMoreInfoActivies,
+				label: labelLinkMoreActiviesInfo,
 				type: InputTypes.url,
 				name: "activities_link",
 				description: helperActivitiesLink,
@@ -575,7 +576,7 @@ const PageUpdate: FC = () => {
 				maxlength: 200,
 			},
 			{
-				label: labelLinkMoreInfoOutdoor,
+				label: labelLinkMoreOutdoorInfo,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
 				required: true,
@@ -601,7 +602,7 @@ const PageUpdate: FC = () => {
 				maxlength: 400,
 			},
 			{
-				label: labelLinkMoreInfoPersonnel,
+				label: labelLinkMorePersonnelInfo,
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
 				description: helperStaffSatisfaction,
@@ -738,15 +739,18 @@ const PageUpdate: FC = () => {
 	): void => {
 		if (nursingHome) {
 			const { name, type } = field;
+			const shouldValidate = "touched" in field && "required" in field;
 
-			const fields = [...form[section]];
-			const index = fields.findIndex(input => input.name === name);
+			if (shouldValidate) {
+				const fields = [...form[section]];
+				const index = fields.findIndex(input => input.name === name);
 
-			const validField = validateField(value);
+				const validField = validateField(value);
 
-			fields[index] = { ...field, touched: true, valid: validField };
+				fields[index] = { ...field, touched: true, valid: validField };
 
-			setForm({ ...form, [section]: fields });
+				setForm({ ...form, [section]: fields });
+			}
 
 			setNursingHome({
 				...nursingHome,
@@ -1094,13 +1098,12 @@ const PageUpdate: FC = () => {
 							</div>
 							<div className="page-update-section">
 								<h3>{labelVisitingInfo}</h3>
-								{form.nursingHomeContactFields.map(
-									(field, index) =>
-										getInputElement(
-											field,
-											"nursingHomeContactFields",
-											index,
-										),
+								{form.contactFields.map((field, index) =>
+									getInputElement(
+										field,
+										"contactFields",
+										index,
+									),
 								)}
 							</div>
 							<div className="page-update-section">
@@ -1114,22 +1117,18 @@ const PageUpdate: FC = () => {
 										),
 									)}
 								</div>
-								{form.contactFields.map((field, index) =>
+								{form.guideFields.map((field, index) =>
 									getInputElement(
 										field,
-										"contactFields",
+										"guideFields",
 										index,
 									),
 								)}
 							</div>
 							<div className="page-update-section">
 								<h3>{labelBasicInformation}</h3>
-								{form.basicFields.map((field, index) =>
-									getInputElement(
-										field,
-										"basicFields",
-										index,
-									),
+								{form.infoFields.map((field, index) =>
+									getInputElement(field, "infoFields", index),
 								)}
 							</div>
 							<div className="page-update-section">
