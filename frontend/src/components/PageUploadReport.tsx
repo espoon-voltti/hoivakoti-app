@@ -250,13 +250,18 @@ const PageUploadReport: FC = () => {
 					<div className="page-update-section">
 						<h3 className="page-report-minor-title">{"Käyntipäivämäärä*:"}</h3>
 						
-						<input className="page-report-datepicker" type="date" value={reportDate} onChange={(event: React.ChangeEvent<HTMLInputElement>,): void => {setReportDate(event.target.value)}}></input>
+						<input 
+							className="page-report-datepicker" 
+							type="date" 
+							value={reportDate} 
+							onChange={(event: React.ChangeEvent<HTMLInputElement>,): void => {setReportDate(event.target.value)}}
+						></input>
 						
 						<h3 className="page-report-minor-title">{"Hoivakodin tilanne*:"}</h3>
 						
 						<Radio
 							id="nursinghome-status-ok"
-							name="update-vacancy-true"
+							name="nursinghome-status-ok"
 							isSelected={nursingHomeState == "ok"}
 							onChange={isChecked => {
 								if (isChecked) setNursingHomeState("ok");
