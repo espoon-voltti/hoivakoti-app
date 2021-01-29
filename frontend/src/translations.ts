@@ -1116,4 +1116,8 @@ export const translations = {
 		"fi-FI": "Tähdellä * merkityt kentät ovat pakollisia",
 		"sv-FI": "Tähdellä * merkityt kentät ovat pakollisia",
 	},
+	helperUrl: {
+		"fi-FI": "Esim. https://www.example.com.",
+		"sv-FI": "Esim. https://www.example.com.",
+	},
 };

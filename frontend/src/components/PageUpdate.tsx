@@ -185,6 +185,7 @@ const PageUpdate: FC = () => {
 	const helperAccessibilityInfo = useT("helperAccessibilityInfo");
 	const helperStaffSatisfaction = useT("helperStaffSatisfaction");
 	const helperOtherServices = useT("helperOtherServices");
+	const helperUrl = useT("helperUrl");
 
 	const title = useT("updateNursingHomeTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
@@ -355,6 +356,7 @@ const PageUpdate: FC = () => {
 				label: labelWebpage,
 				type: InputTypes.url,
 				name: "www",
+				description: helperUrl,
 				required: true,
 				valid: false,
 				touched: false,
@@ -516,6 +518,7 @@ const PageUpdate: FC = () => {
 				label: labelLinkMenu,
 				type: InputTypes.url,
 				name: "menu_link",
+				description: helperUrl,
 				required: true,
 				valid: false,
 				touched: false,
@@ -559,7 +562,7 @@ const PageUpdate: FC = () => {
 				label: labelLinkMoreActiviesInfo,
 				type: InputTypes.url,
 				name: "activities_link",
-				description: helperActivitiesLink,
+				description: `${helperActivitiesLink} ${helperUrl}`,
 			},
 			{
 				label: labelOutdoorActivies,
@@ -572,6 +575,7 @@ const PageUpdate: FC = () => {
 				label: labelLinkMoreOutdoorInfo,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
+				description: helperUrl,
 			},
 		],
 		accessibilityFields: [
@@ -595,7 +599,7 @@ const PageUpdate: FC = () => {
 				label: labelLinkMorePersonnelInfo,
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
-				description: helperStaffSatisfaction,
+				description: `${helperStaffSatisfaction} ${helperUrl}`,
 			},
 		],
 		otherServicesFields: [
