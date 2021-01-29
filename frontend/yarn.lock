@@ -2777,7 +2777,7 @@ chrome-trace-event@^1.0.2:
   dependencies:
     tslib "^1.9.0"
 
-chromedriver@^87.0.7:
+chromedriver@87.0.7:
   version "87.0.7"
   resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-87.0.7.tgz#74041e02ff7f633e91b98eb707e2476f713dc4ca"
   integrity sha512-7J7iN2rJuSDsKb9BUUMewJt07PuTlZYd809D10dUCT1rjMD3i2jUw7dum9RxdC1xO3aFwMd8TwZ5NR82T+S+Dg==
