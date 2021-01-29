@@ -85,11 +85,10 @@ export interface NursingHome {
 	report_status: {
 		status: string;
 		date: string;
-	}
+	};
 	has_vacancy: boolean | null;
 	rating: {
 		average: number | null;
 		answers: number | null;
-	}
-	
+	};
 }
