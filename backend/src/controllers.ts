@@ -39,6 +39,7 @@ import {
 	DeleteNursingHomePics,
 	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
 	UpdateNursingHomeSurveyQuestion as UpdateNursingHomeSurveyQuestionDB,
+	SubmitSurveyData as SubmitSurveyDataDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
 	GetSurvey as GetSurveyDB,
 } from "./models";
@@ -443,6 +444,7 @@ export async function AddNursingHomeSurveyQuestion(
 		typeof adminPw === "string" &&
 		adminPw.length > 0 &&
 		requestPw === adminPw;
+	console.log(isPwValid);
 	if (!isPwValid) return null;
 
 	for (const question of ctx.request.body.questions) {
@@ -500,6 +502,20 @@ export async function AddNursingHomeSurveyKeys(
 
 	const res = await AddNursingHomeSurveyKeysDB(ctx.request.body.amount);
 	return res;
+}
+
+export async function SubmitSurveyData(
+	ctx: Context
+):Promise<string | null>{
+	const loggedIn = await GetHasLogin(ctx.get('authentication') as string);
+
+	if (loggedIn) {
+		const { id } = ctx.params;
+		const surveyData = ctx.request.body.surveyData;
+
+		return await SubmitSurveyDataDB(id, surveyData);
+	}
+	return null;
 }
 
 export async function SubmitSurveyResponse(

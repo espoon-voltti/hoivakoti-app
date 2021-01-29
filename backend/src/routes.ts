@@ -27,6 +27,7 @@ import {
 	AdminRevealSecrets,
 	AddNursingHomeSurveyQuestion,
 	UpdateNursingHomeSurveyQuestion,
+	SubmitSurveyData,
 	SubmitSurveyResponse,
 	GetSurveyWithNursingHomeResults,
 	AddNursingHomeSurveyKeys,
@@ -206,6 +207,11 @@ router.post("/api/survey/update-question", async ctx => {
 
 router.post("/api/survey/check-key", async ctx => {
 	const res = await CheckSurveyKey(ctx);
+	ctx.body = res;
+});
+
+router.post("/api/survey/:id/manual-entry", async ctx => {
+	const res = await SubmitSurveyData(ctx);
 	ctx.body = res;
 });
 

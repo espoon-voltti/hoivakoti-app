@@ -461,6 +461,13 @@ export async function GetNursingHomeSurveyResults(
 	return results;
 }
 
+export async function SubmitSurveyData( //USE ONLY WHEN AUTHENTICATED
+	nursinghomeId: string,
+	surveyData: any,
+): Promise<string> {
+	return "updated"
+}
+
 export async function SubmitSurveyResponse(
 	survey: any,
 	nursinghomeId: string,
