@@ -383,7 +383,6 @@ const PageNursingHome: FC<PageNursingHomeProps> = (
 						id="yhteystiedot"
 						className="nursinghome-details-box"
 					/>
-
 				</div>
 			)}
 			<a className="backToTopLink" href="#pageTop">
@@ -542,7 +541,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	let reportStatus = useT("status_waiting");
 	let hasReport = false;
 
-	const formatDate = (dateStr: string | null, ): string => {
+	const formatDate = (dateStr: string | null): string => {
 		if (!dateStr) return "";
 		console.log(dateStr);
 		const date = new Date(dateStr);
@@ -555,16 +554,16 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const ratingToString = (rating: number | null): string => {
 		let str = "";
 
-		if (rating){
-			if (rating > 4.5){
+		if (rating) {
+			if (rating > 4.5) {
 				str = surveyOption5;
-			} else if (rating > 3.5){
+			} else if (rating > 3.5) {
 				str = surveyOption4;
-			} else if (rating > 2.5){
+			} else if (rating > 2.5) {
 				str = surveyOption3;
-			} else if (rating > 1.5){
+			} else if (rating > 1.5) {
 				str = surveyOption2;
-			} else if (rating > 0.5){
+			} else if (rating > 0.5) {
 				str = surveyOption1;
 			}
 		}
@@ -573,55 +572,61 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	};
 
 	const getTypeTranslation = (typeStr: string): string => {
-		if(nursingHome){
-
+		if (nursingHome) {
 			switch (typeStr) {
 				case "announced":
 					return reportTypeAnnounced;
-				break;
 				case "audit":
 					return reportTypeUnannounced;
-				break;
 				case "concern":
 					return reportTypeConcern;
-				break;
 			}
 		}
 		return "";
-	}
+	};
 
-	if(nursingHome.report_status){
-
+	if (nursingHome.report_status) {
 		switch (nursingHome.report_status[0].status) {
 			case "ok":
 				reportStatus = reportStatusOk;
 				hasReport = true;
-			break;
+				break;
 			case "small":
 				reportStatus = reportStatusSmall;
 				hasReport = true;
-			break;
+				break;
 			case "significant":
 				reportStatus = reportStatusSignificant;
 				hasReport = true;
-			break;
+				break;
 			case "surveillance":
 				reportStatus = reportStatusSurveillance;
 				hasReport = true;
-			break;
+				break;
 			case "no-info":
 				reportStatus = reportStatusNoInfo;
-			break;
+				break;
 		}
 	}
 
 	const reports: JSX.Element[] | null =
 		nursingHome.report_status &&
 		nursingHome.report_status.map((status, index) => (
-			<div className={(hasReport ? "" : "report_hidden")} key={index}>
-				<p className={"report_info_item"}>{getTypeTranslation(status.type)} {formatDate(status.date)}</p>
+			<div className={hasReport ? "" : "report_hidden"} key={index}>
+				<p className={"report_info_item"}>
+					{getTypeTranslation(status.type)} {formatDate(status.date)}
+				</p>
 
-				<a href={`/api/nursing-homes/${nursingHome.id}/raportti/${index}/Valvontaraportti-${nursingHome.owner}-${nursingHome.name}-${formatDate(status.date)}.pdf`} target="_blank" rel="noopener noreferrer" className="btn-secondary-link">{openReport}</a>
+				<a
+					href={`/api/nursing-homes/${nursingHome.id}
+						/raportti/${index}/Valvontaraportti-${nursingHome.owner}
+						-${nursingHome.name}-${formatDate(status.date)}.pdf`}
+					target="_blank"
+					rel="noopener noreferrer"
+					className="btn-secondary-link"
+				>
+					{openReport}
+				</a>
 			</div>
 		));
 
@@ -629,9 +634,16 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		<>
 			{id && <div id={id} />}
 			<div className={className}>
-				{<Link to={`/hoivakodit/${nursingHome.id}/anna-arvio`} className="nursinghome-details-box-survey-link">
-					<button className="btn report_info_btn">{giveReview}</button>
-				</Link>}
+				{
+					<Link
+						to={`/hoivakodit/${nursingHome.id}/anna-arvio`}
+						className="nursinghome-details-box-survey-link"
+					>
+						<button className="btn report_info_btn">
+							{giveReview}
+						</button>
+					</Link>
+				}
 				<div className="nursinghome-details-box-section">
 					<Image
 						nursingHome={nursingHome}
@@ -639,7 +651,9 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						className="nursinghome-details-logo"
 						alt="Omistajan logo"
 					/>
-					<h4 className="nursinghome-details-name">{nursingHome.name}</h4>
+					<h4 className="nursinghome-details-name">
+						{nursingHome.name}
+					</h4>
 					<a
 						href={`https://www.google.com/maps/search/${
 							nursingHome.name
@@ -679,18 +693,49 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"}>{clientReviews}</p>
-						<p className="report_info_minor_header">{nursingHome.rating && nursingHome.rating.average ? ratingToString(nursingHome.rating.average) : "Ei annettuja arvioita"}</p>
-						<p>{nursingHome.rating && nursingHome.rating.average ? `${nursingHome.rating.average.toPrecision(2)} / 5` : ""}</p>
-						<Link to={`/hoivakodit/${nursingHome.id}/arviot`} className={nursingHome.rating && nursingHome.rating.average ? "" : "hidden"}>
-						<button className="btn report_info_btn">{readMore}</button>
+						<p
+							className={
+								nursingHome.rating && nursingHome.rating.average
+									? ""
+									: "hidden"
+							}
+						>
+							{clientReviews}
+						</p>
+						<p className="report_info_minor_header">
+							{nursingHome.rating && nursingHome.rating.average
+								? ratingToString(nursingHome.rating.average)
+								: "Ei annettuja arvioita"}
+						</p>
+						<p>
+							{nursingHome.rating && nursingHome.rating.average
+								? `${nursingHome.rating.average.toPrecision(
+										2,
+								  )} / 5`
+								: ""}
+						</p>
+						<Link
+							to={`/hoivakodit/${nursingHome.id}/arviot`}
+							className={
+								nursingHome.rating && nursingHome.rating.average
+									? ""
+									: "hidden"
+							}
+						>
+							<button className="btn report_info_btn">
+								{readMore}
+							</button>
 						</Link>
 					</div>
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p className={hasReport ? "" : "hidden"}>{reportScoreHeader}</p>
-						<p className="report_info_minor_header">{reportStatus}</p>
+						<p className={hasReport ? "" : "hidden"}>
+							{reportScoreHeader}
+						</p>
+						<p className="report_info_minor_header">
+							{reportStatus}
+						</p>
 						{reports}
 					</div>
 				</div>
