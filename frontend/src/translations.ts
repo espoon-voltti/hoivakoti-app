@@ -492,15 +492,31 @@ export const translations = {
 	},
 	pageUploadReportTitle: {
 		"fi-FI": "Lisää uusi käynti",
-		"sv-FI": "",
+		"sv-FI": "Lisää uusi käynti",
+	},
+	reportTypeAnnounced: {
+		"fi-FI": "Ennalta ilmoitettu käynti",
+		"sv-FI": "Ennalta ilmoitettu käynti",
+	},
+	reportTypeUnannounced: {
+		"fi-FI": "Ennalta ilmoittamaton käynti",
+		"sv-FI": "Ennalta ilmoittamaton käynti",
+	},
+	reportTypeAudit: {
+		"fi-FI": "Auditointikäynti",
+		"sv-FI": "Auditointikäynti",
+	},
+	reportTypeConcern: {
+		"fi-FI": "Huolikäynti",
+		"sv-FI": "Huolikäynti",
 	},
 	selectFile: {
 		"fi-FI": "Valitse tiedosto",
-		"sv-FI": "",
+		"sv-FI": "Valitse tiedosto",
 	},
 	reportFailed: {
 		"fi-FI": "Täytä kaikki kentät ja yritä uudelleen",
-		"sv-FI": "",
+		"sv-FI": "Täytä kaikki kentät ja yritä uudelleen",
 	},
 	surveyOption1: {
 		"fi-FI": "Erittäin huono",
