@@ -209,13 +209,31 @@ const PageUpdate: FC = () => {
 		axios
 			.get(`${config.API_URL}/nursing-homes/${id}`)
 			.then((response: GetNursingHomeResponse) => {
-				setNursingHome(response.data);
+				const data = response.data;
+				const shouldSetDefaults =
+					data.has_vacancy === null || data.language === "";
+
+				if (shouldSetDefaults) {
+					const prepopulateNursingHome = { ...data };
+
+					if (data.has_vacancy === null) {
+						prepopulateNursingHome["has_vacancy"] = false;
+					}
+
+					if (data.language === "") {
+						prepopulateNursingHome.language = filterFinnish;
+					}
+
+					setNursingHome(prepopulateNursingHome);
+				} else {
+					setNursingHome(data);
+				}
 			})
 			.catch(e => {
 				console.error(e);
 				throw e;
 			});
-	}, [id]);
+	}, [id, filterFinnish]);
 
 	useEffect(() => {
 		if (!vacancyStatus) {
