@@ -279,6 +279,14 @@ const PageUpdate: FC = () => {
 				touched: false,
 			},
 			{
+				label: labelContactPhoneInfo,
+				type: InputTypes.textarea,
+				name: "contact_phone_info",
+				maxlength: 200,
+			},
+		],
+		contactColumnFields: [
+			{
 				label: labelContactName,
 				type: InputTypes.text,
 				name: "contact_name",
@@ -309,12 +317,6 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
-			},
-			{
-				label: labelContactPhoneInfo,
-				type: InputTypes.textarea,
-				name: "contact_phone_info",
-				maxlength: 200,
 			},
 		],
 		addressFields: [
@@ -1092,12 +1094,25 @@ const PageUpdate: FC = () => {
 							</div>
 							<div className="page-update-section">
 								<h3>{labelVisitingInfo}</h3>
-								{form.contactFields.map((field, index) =>
-									getInputElement(
-										field,
-										"contactFields",
-										index,
-									),
+								{getInputElement(
+									form.contactFields[0],
+									"contactFields",
+									0,
+								)}
+								<div className="page-update-columns">
+									{form.contactColumnFields.map(
+										(field, index) =>
+											getInputElement(
+												field,
+												"contactColumnFields",
+												index,
+											),
+									)}
+								</div>
+								{getInputElement(
+									form.contactFields[1],
+									"contactFields",
+									1,
 								)}
 							</div>
 							<div className="page-update-section">
@@ -1171,7 +1186,7 @@ const PageUpdate: FC = () => {
 									),
 								)}
 							</div>
-							<div className="page-update-section">
+							<div className="page-update-section page-update-section-last">
 								<h3>{nearbyServices}</h3>
 								{form.nearbyServicesFields.map((field, index) =>
 									getInputElement(
