@@ -33,7 +33,8 @@ import {
 	GetSurvey,
 	AdminLogin,
 	CheckLogin,
-	CheckSurveyKey
+	CheckSurveyKey,
+	UpdateNursingHomeVacancyStatus,
 } from "./controllers";
 import config from "./config";
 
@@ -96,6 +97,16 @@ router.del("/api/nursing-homes/:id", async ctx => {
 	ctx.body = await DeleteNursingHome(ctx);
 });
 
+router.post("/api/nursing-homes/:id/update/:key", async ctx => {
+	const success = await UpdateNursingHomeInformation(ctx);
+	if (!success) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or key" };
+	} else {
+		ctx.body = { success };
+	}
+});
+
 router.get("/api/nursing-homes/:id/pics", async ctx => {
 	ctx.body = await GetPicsAndDescriptions(ctx);
 });
@@ -119,7 +130,7 @@ router.get("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 });
 
 router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
-	const success = await UpdateNursingHomeInformation(ctx);
+	const success = await UpdateNursingHomeVacancyStatus(ctx);
 	if (!success) {
 		ctx.response.status = 403;
 		ctx.body = { error: "Forbidden: invalid ID or key" };
@@ -128,7 +139,7 @@ router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 	}
 });
 
-router.get("/api/nursing-homes/:id/raportti/:key", async ctx => {
+router.get("/api/nursing-homes/:id/raportti/:key/:file", async ctx => {
   ctx.body = await GetPdf(ctx);
 });
 
@@ -204,17 +215,22 @@ router.get("/api/survey/:key", async ctx => {
 });
 
 router.post("/api/survey/:id/responses", async ctx => {
-	const res = ""; await SubmitSurveyResponse(ctx);
+	const res = "";
+	await SubmitSurveyResponse(ctx);
 	ctx.body = res;
 });
 
 router.post("/api/survey/:id/answers/:key", async ctx => {
-	const res = ""; await AddNursingHomeSurveyQuestion(ctx);
+	const res = "";
+	await AddNursingHomeSurveyQuestion(ctx);
 	ctx.body = res;
 });
 
 router.get("/api/survey/:id/results/:survey", async ctx => {
-	const res = await GetSurveyWithNursingHomeResults(ctx.params.survey, ctx.params.id);
+	const res = await GetSurveyWithNursingHomeResults(
+		ctx.params.survey,
+		ctx.params.id,
+	);
 	ctx.body = res;
 });
 

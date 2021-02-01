@@ -13,6 +13,9 @@ services:
       - ./backend:/usr/app/
       - /usr/app/node_modules
     working_dir: /usr/app/
+    user: root
+    environment:
+      NODE_ENV: development
     command: sh -c "yarn install && yarn run watch-server"
 
   frontend:

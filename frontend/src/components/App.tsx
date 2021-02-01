@@ -19,6 +19,7 @@ import ScrollToTop from "./ScrollToTop";
 import PageAccessibility from "./PageAccessibility";
 import Title from "./Title";
 import PageUpdate from "./PageUpdate";
+import PageUpdateImages from "./PageUpdateImages";
 import PageUploadReport from "./PageUploadReport";
 import PageReportsAdmin from "./PageReportsAdmin";
 import PageCancel from "./PageCancel";
@@ -64,6 +65,11 @@ const App: React.FC = () => {
 								exact
 								path="/hoivakodit/:id/paivita/:key"
 								component={PageUpdate}
+							/>
+							<Route
+								exact
+								path="/hoivakodit/:id/paivita/:key/kuvat"
+								component={PageUpdateImages}
 							/>
 							<Route
 								exact
