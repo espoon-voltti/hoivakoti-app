@@ -28,6 +28,8 @@ RUN yarn install --prod --frozen-lockfile \
 # Bundle app source
 COPY --chown=1000 . .
 
+RUN yarn build
+
 EXPOSE 3000
 
 CMD ["yarn", "start"]
