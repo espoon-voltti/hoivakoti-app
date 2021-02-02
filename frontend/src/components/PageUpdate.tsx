@@ -821,7 +821,10 @@ const PageUpdate: FC = () => {
 									}
 									rows={5}
 									maxLength={field.maxlength}
-									value={nursingHome[field.name] as string}
+									value={
+										(nursingHome[field.name] as string) ||
+										""
+									}
 									name={field.name}
 									id={field.name}
 									onChange={event =>
@@ -966,7 +969,10 @@ const PageUpdate: FC = () => {
 															field.name
 														] === button.value
 													}
-													value={button.value}
+													value={
+														(button.value as string) ||
+														""
+													}
 													onChange={() => {
 														let newValue = button.value as InputFieldValue;
 
@@ -1036,7 +1042,10 @@ const PageUpdate: FC = () => {
 									className={
 										fieldInvalid ? "input error" : "input"
 									}
-									value={nursingHome[field.name] as string}
+									value={
+										(nursingHome[field.name] as string) ||
+										""
+									}
 									name={field.name}
 									id={field.name}
 									type={field.type}
