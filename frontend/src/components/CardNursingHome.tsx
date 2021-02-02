@@ -182,7 +182,10 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 							<span className="nowrap">
 								{serviceLanguage}: {nursinghome && language}{" "}
 							</span>
-							<span className="card-list-item__text--dot"> • </span>{" "}
+							<span className="card-list-item__text--dot">
+								{" "}
+								•{" "}
+							</span>{" "}
 							<span className="nowrap">
 								{numApartments}:{" "}
 								{nursinghome && nursinghome.apartment_count}
@@ -251,7 +254,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				<div className="card-nursing-home-public-status no-left-border">
 					<div>
 						<p
-							className={nursinghome.rating.average ? "" : "hidden"
+							className={
+								nursinghome.rating.average ? "" : "hidden"
 							}
 						>
 							{feedbackRelationReview}
@@ -261,7 +265,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						</p>
 						<p>
 							{nursinghome.rating.average
-								? nursinghome.rating.average.toPrecision(2) + " / 5"
+								? nursinghome.rating.average.toPrecision(2) +
+								  " / 5"
 								: ""}
 						</p>
 						<p>
@@ -271,33 +276,43 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				</div>
 				<div className="card-nursing-home-public-status no-left-border">
 					<div>
-						<div 
+						<div
 							className={
 								nursinghome.report_status[0] &&
-								nursinghome.report_status[0].status == "surveillance"
+								nursinghome.report_status[0].status ==
+									"surveillance"
 									? "card-nursing-home-alert-sign"
 									: "hidden"
-								}
-						>
-						</div>
+							}
+						></div>
 						<p
 							className={
 								"card-nursing-home-public-status-header" +
-								((nursinghome.report_status[0] 
-								&& nursinghome.report_status[0].status) == "surveillance" 
-									? " card-nursing-home-alert" 
-									: "")}
+								((nursinghome.report_status[0] &&
+									nursinghome.report_status[0].status) ==
+								"surveillance"
+									? " card-nursing-home-alert"
+									: "")
+							}
 						>
-							{`${nursinghome.report_status[0] ? getStatusTranslation(nursinghome.report_status[0].status) : getStatusTranslation("")}`}
+							{`${
+								nursinghome.report_status[0]
+									? getStatusTranslation(
+											nursinghome.report_status[0].status,
+									  )
+									: getStatusTranslation("")
+							}`}
 						</p>
-						<p 
+						<p
 							className={
-								!nursinghome.report_status[0] || 
-								(nursinghome.report_status[0] && 
-								["waiting", "no-info"].includes(nursinghome.report_status[0].status)) 
-									? "hidden" 
+								!nursinghome.report_status[0] ||
+								(nursinghome.report_status[0] &&
+									["waiting", "no-info"].includes(
+										nursinghome.report_status[0].status,
+									))
+									? "hidden"
 									: ""
-								}
+							}
 						>
 							{reportScore}
 						</p>
@@ -305,8 +320,6 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				</div>
 			</div>
 		</Link>
-		
-		
 	);
 };
 

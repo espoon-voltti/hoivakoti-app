@@ -20,15 +20,16 @@ interface SearchFilters {
 	readonly alue?: string[];
 	readonly language?: Language;
 	readonly ara?: boolean;
-    readonly lah?: boolean;
-    readonly name?: string;
+	readonly lah?: boolean;
+	readonly name?: string;
 }
 
 const PageReportsAdmin: FC = () => {
-
-    const sessionCookies = new Cookies();
-    const [loggedIn, setLoggedIn] = useState<boolean>(false);
-    const [password, setPassword] = useState<string>("");
+	const [sessionCookies, setSessionCookies] = useState<Cookies>(
+		new Cookies(),
+	);
+	const [loggedIn, setLoggedIn] = useState<boolean>(false);
+	const [password, setPassword] = useState<string>("");
 
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
@@ -36,25 +37,13 @@ const PageReportsAdmin: FC = () => {
 	const [mapPopup, setMapPopup] = useState<{
 		selectedNursingHome: NursingHome;
 		isExpanded: boolean;
-    } | null>(null);
-    
+	} | null>(null);
+
 	const [isMapVisible, setIsMapVisible] = useState(
 		calculateMapVisible(window.innerWidth),
-    );
-    
+	);
 
-    const [searchField, setSearchField] = useState<string>();
-
-    const clearSearchfield = (e: React.FormEvent<HTMLButtonElement>):void => {
-        e.preventDefault();
-        setSearchField("");
-        const newSearchFilters = {
-            ...searchFilters,
-            name: undefined,
-        };
-        const stringfield = queryString.stringify(newSearchFilters);
-        history.push("/valvonta?" + stringfield);
-    };
+	const [searchField, setSearchField] = useState<string>();
 
 	const history = useHistory();
 	const { search } = useLocation();
@@ -123,7 +112,13 @@ const PageReportsAdmin: FC = () => {
 
 	useEffect(() => {
 		axios
-			.get(config.API_URL + "/admin/login", {headers:{Authentication: `${sessionCookies.get("hoivakoti_session")}`}})
+			.get(config.API_URL + "/admin/login", {
+				headers: {
+					Authentication: `${sessionCookies.get(
+						"hoivakoti_session",
+					)}`,
+				},
+			})
 			.then(function() {
 				setLoggedIn(true);
 			})
@@ -141,7 +136,7 @@ const PageReportsAdmin: FC = () => {
 				console.error(error.message);
 				throw error;
 			});
-	}, []);
+	}, [sessionCookies]);
 
 	const parsed = queryString.parse(search);
 	const alue = parsed.alue
@@ -150,13 +145,13 @@ const PageReportsAdmin: FC = () => {
 			: parsed.alue
 		: undefined;
 	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
-    const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
+	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
 	const searchFilters: SearchFilters = {
 		alue,
 		ara,
 		lah,
-        language: parsed.language as Language,
-        name: parsed.name as string
+		language: parsed.language as Language,
+		name: parsed.name as string,
 	};
 	const hasFilters = search !== "";
 
@@ -220,18 +215,21 @@ const PageReportsAdmin: FC = () => {
 						(citiesAndDistrictsToSwedish as any)[
 							nursinghome.district
 						],
-					))
-				{
+					)
+				) {
 					return false;
 				}
-				
-                if (
-                        searchFilters.name &&
-                        searchFilters.name.length > 0 &&
-                        (!nursinghome.name.toLocaleLowerCase().includes(searchFilters.name)) &&
-                        (!nursinghome.owner.toLocaleLowerCase().includes(searchFilters.name))
-                    )
-				{
+
+				if (
+					searchFilters.name &&
+					searchFilters.name.length > 0 &&
+					!nursinghome.name
+						.toLocaleLowerCase()
+						.includes(searchFilters.name) &&
+					!nursinghome.owner
+						.toLocaleLowerCase()
+						.includes(searchFilters.name)
+				) {
 					return false;
 				}
 				if (
@@ -276,11 +274,7 @@ const PageReportsAdmin: FC = () => {
 	const filterNo = useT("filterNo");
 	const filterLocation = useT("filterLocation");
 
-	const summaryLabel = useT("summaryLabel");
-	const loadingText = useT("loadingText");
-	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
-	const linkBacktoTop = useT("linkBacktoTop");
 
 	const optionsAra: FilterOption[] = [
 		{
@@ -506,7 +500,7 @@ const PageReportsAdmin: FC = () => {
 	const cards: JSX.Element[] | null =
 		filteredNursingHomes &&
 		filteredNursingHomes.map((nursingHome, index) => (
-			<div card-key={index}>
+			<div key={index}>
 				<div
 					className={`card-list-item-borders ${
 						index === filteredNursingHomes.length - 1
@@ -517,65 +511,101 @@ const PageReportsAdmin: FC = () => {
 					<CardNursingHome nursinghome={nursingHome} type={"admin"} />
 				</div>
 			</div>
-        ));
-        
-    const handleLogin = async (
+		));
+
+	const clearSearchfield = (e: React.FormEvent<HTMLButtonElement>): void => {
+		e.preventDefault();
+		setSearchField("");
+		const newSearchFilters = {
+			...searchFilters,
+			name: undefined,
+		};
+		const stringfield = queryString.stringify(newSearchFilters);
+		history.push("/valvonta?" + stringfield);
+	};
+
+	const handleLogin = async (
 		event: React.MouseEvent<HTMLButtonElement>,
-		): Promise<void> => {
-            const login = await axios.post(
-                `${config.API_URL}/admin/login`,
-                { 
-                    adminPassword: password,
-                }
-			).then(function(response: { data: string }) {
+	): Promise<void> => {
+		const login = await axios
+			.post(`${config.API_URL}/admin/login`, {
+				adminPassword: password,
+			})
+			.then(function(response: { data: string }) {
 				console.log(response.data);
-				sessionCookies.set('hoivakoti_session', response.data, {path:"/", maxAge: 36000});
+				sessionCookies.set("hoivakoti_session", response.data, {
+					path: "/",
+					maxAge: 36000,
+				});
 				setLoggedIn(true);
-			}).catch((error: Error) => {
+			})
+			.catch((error: Error) => {
 				console.error(error.message);
 			});
 	};
 
-    if (loggedIn){
-        return (
-            <div>
-                <div className="filters filters-admin">
-                    <div className="filters-text">{filterLabel}</div>
-                    {filterElements}
-                </div>
-                <div className="card-list-container">
-                    <div className="card-list">
-                        <div className="card-list-searchfield-container">
-                            <input className="card-list-searchfield" value={searchField} type="text" placeholder="Etsi hoivakotia nimellä..." onChange={e => {
-                                    setSearchField(e.target.value);
-                                    const newSearchFilters = {
-                                        ...searchFilters,
-                                        name: (e.target.value != "" ? e.target.value : undefined),
-                                    };
-                                    const stringfield = queryString.stringify(newSearchFilters);
-                                    history.push("/valvonta?" + stringfield);
-                                }}>
-                            </input><button className="card-list-searchfield-btn" onClick={clearSearchfield}></button>
-                        </div>
-                        <div className="card-container">{cards}</div>
-                    </div>
-                </div>
-            </div>
-        );
-    }else{
-        return (
-            <div className="login-container">
+	if (loggedIn) {
+		return (
+			<div>
+				<div className="filters filters-admin">
+					<div className="filters-text">{filterLabel}</div>
+					{filterElements}
+				</div>
+				<div className="card-list-container">
+					<div className="card-list">
+						<div className="card-list-searchfield-container">
+							<input
+								className="card-list-searchfield"
+								value={searchField}
+								type="text"
+								placeholder="Etsi hoivakotia nimellä..."
+								onChange={e => {
+									setSearchField(e.target.value);
+									const newSearchFilters = {
+										...searchFilters,
+										name:
+											e.target.value != ""
+												? e.target.value
+												: undefined,
+									};
+									const stringfield = queryString.stringify(
+										newSearchFilters,
+									);
+									history.push("/valvonta?" + stringfield);
+								}}
+							></input>
+							<button
+								className="card-list-searchfield-btn"
+								onClick={clearSearchfield}
+							></button>
+						</div>
+						<div className="card-container">{cards}</div>
+					</div>
+				</div>
+			</div>
+		);
+	} else {
+		return (
+			<div className="login-container">
 				<h2>Kirjaudu valvontatiimin työkaluun</h2>
 				<div>
 					<span>Salasana</span>
-					<input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
+					<input
+						type="password"
+						value={password}
+						onChange={e => {
+							setPassword(e.target.value);
+						}}
+					></input>
 				</div>
 				<div>
-					<button className="btn" onClick={handleLogin}>Kirjaudu sisään</button>
+					<button className="btn" onClick={handleLogin}>
+						Kirjaudu sisään
+					</button>
 				</div>
-            </div>
-        );
-    }
+			</div>
+		);
+	}
 };
 
 export default PageReportsAdmin;
