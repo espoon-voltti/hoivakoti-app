@@ -128,6 +128,7 @@ jobs:
           package: backend
       - run:
           working_directory: backend
+          name: Build and run backend
           command: yarn build && yarn start
           background: true
       - run:
