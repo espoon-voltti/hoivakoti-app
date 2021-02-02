@@ -232,17 +232,30 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						<dd>{nursinghome.contact_phone_info}</dd>
 					</dl>
 				</div>
-				<button
-					className={type == "admin" ? "btn" : "hidden"}
-					onClick={e => {
-						openBtnLink(
-							e,
-							`/hoivakodit/${nursinghome.id}/valvonta/`,
-						);
-					}}
-				>
-					Lisää uusi käynti
-				</button>
+				<div className="card-list-item__buttons">
+					<button
+						className={type == "admin" ? "btn" : "hidden"}
+						onClick={e => {
+							openBtnLink(
+								e,
+								`/hoivakodit/${nursinghome.id}/valvonta/`,
+							);
+						}}
+					>
+						Lisää uusi käynti
+					</button>
+					<button
+						className={type == "admin" ? "btn" : "hidden"}
+						onClick={e => {
+							openBtnLink(
+								e,
+								`/hoivakodit/${nursinghome.id}/asikaskyselyn-vastaukset/`,
+							);
+						}}
+					>
+						Lisää kyselyn tulokset
+					</button>
+				</div>
 			</div>
 			<div
 				className={

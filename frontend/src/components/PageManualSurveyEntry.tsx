@@ -146,8 +146,9 @@ const PageManualSurveyEntry: FC = () => {
 									{nursingHome.address}
 								</p>
 							</div>
-							<div>
-								<span>Vastauksia yhteensä: </span>
+							<div className="page-update-section manual-survey-question">
+								<h4>Kyselyyn vastaajia yhteensä</h4>
+								<span>Kpl: </span>
 								<input
 									type="text"
 									value={temp}
