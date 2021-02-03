@@ -209,13 +209,31 @@ const PageUpdate: FC = () => {
 		axios
 			.get(`${config.API_URL}/nursing-homes/${id}`)
 			.then((response: GetNursingHomeResponse) => {
-				setNursingHome(response.data);
+				const data = response.data;
+				const shouldSetDefaults =
+					data.has_vacancy === null || data.language === "";
+
+				if (shouldSetDefaults) {
+					const prepopulateNursingHome = { ...data };
+
+					if (data.has_vacancy === null) {
+						prepopulateNursingHome["has_vacancy"] = false;
+					}
+
+					if (data.language === "") {
+						prepopulateNursingHome.language = filterFinnish;
+					}
+
+					setNursingHome(prepopulateNursingHome);
+				} else {
+					setNursingHome(data);
+				}
 			})
 			.catch(e => {
 				console.error(e);
 				throw e;
 			});
-	}, [id]);
+	}, [id, filterFinnish]);
 
 	useEffect(() => {
 		if (!vacancyStatus) {
@@ -279,6 +297,14 @@ const PageUpdate: FC = () => {
 				touched: false,
 			},
 			{
+				label: labelContactPhoneInfo,
+				type: InputTypes.textarea,
+				name: "contact_phone_info",
+				maxlength: 200,
+			},
+		],
+		contactColumnFields: [
+			{
 				label: labelContactName,
 				type: InputTypes.text,
 				name: "contact_name",
@@ -309,12 +335,6 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
-			},
-			{
-				label: labelContactPhoneInfo,
-				type: InputTypes.textarea,
-				name: "contact_phone_info",
-				maxlength: 200,
 			},
 		],
 		addressFields: [
@@ -801,7 +821,10 @@ const PageUpdate: FC = () => {
 									}
 									rows={5}
 									maxLength={field.maxlength}
-									value={nursingHome[field.name] as string}
+									value={
+										(nursingHome[field.name] as string) ||
+										""
+									}
 									name={field.name}
 									id={field.name}
 									onChange={event =>
@@ -946,7 +969,10 @@ const PageUpdate: FC = () => {
 															field.name
 														] === button.value
 													}
-													value={button.value}
+													value={
+														(button.value as string) ||
+														""
+													}
 													onChange={() => {
 														let newValue = button.value as InputFieldValue;
 
@@ -1016,7 +1042,10 @@ const PageUpdate: FC = () => {
 									className={
 										fieldInvalid ? "input error" : "input"
 									}
-									value={nursingHome[field.name] as string}
+									value={
+										(nursingHome[field.name] as string) ||
+										""
+									}
 									name={field.name}
 									id={field.name}
 									type={field.type}
@@ -1092,12 +1121,25 @@ const PageUpdate: FC = () => {
 							</div>
 							<div className="page-update-section">
 								<h3>{labelVisitingInfo}</h3>
-								{form.contactFields.map((field, index) =>
-									getInputElement(
-										field,
-										"contactFields",
-										index,
-									),
+								{getInputElement(
+									form.contactFields[0],
+									"contactFields",
+									0,
+								)}
+								<div className="page-update-columns">
+									{form.contactColumnFields.map(
+										(field, index) =>
+											getInputElement(
+												field,
+												"contactColumnFields",
+												index,
+											),
+									)}
+								</div>
+								{getInputElement(
+									form.contactFields[1],
+									"contactFields",
+									1,
 								)}
 							</div>
 							<div className="page-update-section">
@@ -1171,7 +1213,7 @@ const PageUpdate: FC = () => {
 									),
 								)}
 							</div>
-							<div className="page-update-section">
+							<div className="page-update-section page-update-section-last">
 								<h3>{nearbyServices}</h3>
 								{form.nearbyServicesFields.map((field, index) =>
 									getInputElement(

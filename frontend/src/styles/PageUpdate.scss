@@ -18,8 +18,9 @@
 	padding: 2rem 0 3rem 0;
 	margin-bottom: 1rem;
 
-	&:last-of-type {
+	&-last {
 		margin-bottom: 0;
+		border: none;
 	}
 }
 
@@ -150,6 +151,7 @@
 		font-size: 1rem;
 		font-weight: 600;
 		line-height: 1.5;
+		margin-bottom: 0.6rem;
 
 		.asterisk {
 			font-size: 0.8em;
@@ -186,7 +188,7 @@
 			font-style: italic;
 			font-size: 0.85rem;
 			color: $headline-color;
-			margin: 0.6rem 0;
+			margin-bottom: 0.6rem;
 		}
 	}
 
@@ -237,6 +239,5 @@
 
 	legend {
 		@extend .label;
-		margin-bottom: 1em;
 	}
 }
