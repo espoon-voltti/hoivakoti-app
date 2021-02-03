@@ -9,6 +9,8 @@ import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";
 
+import { Cities } from "../cities";
+
 enum InputTypes {
 	text = "text",
 	textarea = "textarea",
@@ -21,7 +23,7 @@ enum InputTypes {
 }
 
 type NursingHomeKey = keyof NursingHome;
-type InputFieldValue = string | number | boolean;
+type InputFieldValue = string | number | boolean | string[];
 
 type NursingHomeUpdateData = Omit<
 	NursingHome,
@@ -55,7 +57,7 @@ interface InputField {
 	required?: boolean;
 	valid?: boolean;
 	touched?: boolean;
-	change?: (...arg: string[]) => InputFieldValue;
+	change?: (...arg: any) => InputFieldValue;
 	maxlength?: number;
 }
 
@@ -204,6 +206,30 @@ const PageUpdate: FC = () => {
 	const fieldsWithAsteriskAreMandatory = useT(
 		"fieldsWithAsteriskAreMandatory",
 	);
+
+	const cityTranslations = {
+		[Cities.EPO]: useT("espoo"),
+		[Cities.EPK]: useT("espoon keskus"),
+		[Cities.EPL]: useT("espoonlahti"),
+		[Cities.LPV]: useT("leppävaara"),
+		[Cities.MKL]: useT("matinkylä"),
+		[Cities.TAP]: useT("tapiola"),
+		[Cities.HNK]: useT("hanko"),
+		[Cities.HEL]: useT("helsinki"),
+		[Cities.HVK]: useT("hyvinkää"),
+		[Cities.JVP]: useT("järvenpää"),
+		[Cities.KAR]: useT("karjaa"),
+		[Cities.KER]: useT("kerava"),
+		[Cities.KRN]: useT("kirkkonummi"),
+		[Cities.LHJ]: useT("lohja"),
+		[Cities.NRJ]: useT("nurmijärvi"),
+		[Cities.RPO]: useT("raasepori"),
+		[Cities.SPO]: useT("sipoo"),
+		[Cities.STO]: useT("siuntio"),
+		[Cities.TSL]: useT("tuusula"),
+		[Cities.VTA]: useT("vantaa"),
+		[Cities.VTI]: useT("vihti"),
+	};
 
 	useEffect(() => {
 		axios
@@ -531,6 +557,42 @@ const PageUpdate: FC = () => {
 				name: "language_info",
 				description: helperLanguage,
 				maxlength: 200,
+			},
+			{
+				label: "Asiakkaan kotikunta",
+				description:
+					"Määrittele hoivakodin vaatimus asiakkaan kotikunnaksi",
+				type: InputTypes.checkbox,
+				name: "city_restrictions",
+				buttons: [
+					...Object.values(Cities).map(city => {
+						return {
+							label: cityTranslations[city],
+							value: city,
+						};
+					}),
+				],
+				change: (current: string[], value: string) => {
+					let newList: string[];
+
+					if (!current) {
+						newList = [];
+					} else {
+						newList = [...current];
+					}
+
+					if (newList.includes(value)) {
+						const index = newList.indexOf(value);
+
+						newList.splice(index, 1);
+					} else {
+						newList.push(value);
+					}
+
+					console.log(newList);
+
+					return newList;
+				},
 			},
 		],
 		foodFields: [
@@ -869,6 +931,14 @@ const PageUpdate: FC = () => {
 											</span>
 										) : null}
 									</legend>
+									{field.description ? (
+										<span
+											id={`${field.name}-description`}
+											className="input-description"
+										>
+											{field.description}
+										</span>
+									) : null}
 									<div className="control">
 										{field.buttons.map(button => {
 											return (
@@ -895,13 +965,17 @@ const PageUpdate: FC = () => {
 														);
 													}}
 													onBlur={validateForm}
-													isChecked={(nursingHome[
-														field.name
-													] as string).includes(
-														button.value as string,
-													)}
+													isChecked={
+														nursingHome[field.name]
+															? (nursingHome[
+																	field.name
+															  ] as string).includes(
+																	button.value as string,
+															  )
+															: false
+													}
 												>
-													{button.value}
+													{button.label}
 												</Checkbox>
 											);
 										})}
