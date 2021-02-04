@@ -16,7 +16,7 @@ type Language = string;
 const calculateMapVisible = (width: number): boolean => width >= 1130;
 
 interface SearchFilters {
-	readonly area?: string[];
+	readonly alue?: string[];
 	readonly language?: Language;
 	readonly ara?: boolean;
 	readonly lah?: boolean;
@@ -75,7 +75,7 @@ const PageNursingHomes: FC = () => {
 	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
 
 	const searchFilters: SearchFilters = {
-		area,
+		alue: area,
 		ara,
 		lah,
 		language: parsed.language as Language,
@@ -120,14 +120,14 @@ const PageNursingHomes: FC = () => {
 				| NursingHome[]
 				| null = nursingHomes.filter(nursinghome => {
 				const filterAreaInvalid =
-					searchFilters.area &&
-					searchFilters.area.length > 0 &&
-					(!searchFilters.area.includes(nursinghome.district) &&
-						!searchFilters.area.includes(nursinghome.city)) &&
-					!searchFilters.area.includes(
+					searchFilters.alue &&
+					searchFilters.alue.length > 0 &&
+					(!searchFilters.alue.includes(nursinghome.district) &&
+						!searchFilters.alue.includes(nursinghome.city)) &&
+					!searchFilters.alue.includes(
 						(citiesAndDistrictsToFinnish as any)[nursinghome.city],
 					) &&
-					!searchFilters.area.includes(
+					!searchFilters.alue.includes(
 						(citiesAndDistrictsToSwedish as any)[
 							nursinghome.district
 						],
@@ -225,8 +225,8 @@ const PageNursingHomes: FC = () => {
 	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
 
-	const espooChecked = searchFilters.area
-		? searchFilters.area.includes("Espoo")
+	const espooChecked = searchFilters.alue
+		? searchFilters.alue.includes("Espoo")
 		: false;
 
 	const espooCheckboxItem: FilterOption = {
@@ -237,17 +237,14 @@ const PageNursingHomes: FC = () => {
 		bold: true,
 	};
 
-	let optionsArea: FilterOption[] = [
+	const optionsArea: FilterOption[] = [
 		{ text: locationPickerLabel, type: "header" },
-	];
-
-	optionsArea = [
-		...optionsArea,
 		espooCheckboxItem,
 		...espooAreas.map<FilterOption>((value: string) => {
-			const checked = searchFilters.area
-				? searchFilters.area.includes(value)
+			const checked = searchFilters.alue
+				? searchFilters.alue.includes(value)
 				: false;
+
 			return {
 				name: value,
 				label: value,
@@ -256,13 +253,9 @@ const PageNursingHomes: FC = () => {
 				withMargin: true,
 			};
 		}),
-	];
-
-	optionsArea = [
-		...optionsArea,
 		...otherCities.map<FilterOption>((value: string) => {
-			const checked = searchFilters.area
-				? searchFilters.area.includes(value)
+			const checked = searchFilters.alue
+				? searchFilters.alue.includes(value)
 				: false;
 			return {
 				name: value,
@@ -321,10 +314,10 @@ const PageNursingHomes: FC = () => {
 			<FilterItem
 				prefix={filterLocation}
 				value={
-					searchFilters.area !== undefined
-						? searchFilters.area.length <= 2
-							? searchFilters.area.join(", ")
-							: `(${searchFilters.area.length} ${filterSelections})`
+					searchFilters.alue !== undefined
+						? searchFilters.alue.length <= 2
+							? searchFilters.alue.join(", ")
+							: `(${searchFilters.alue.length} ${filterSelections})`
 						: null
 				}
 				values={optionsArea}
@@ -333,12 +326,14 @@ const PageNursingHomes: FC = () => {
 				onChange={({ newValue, name }) => {
 					const newSearchFilters = { ...searchFilters };
 
-					if (!newSearchFilters.area) newSearchFilters.area = [];
+					if (!newSearchFilters.alue) {
+						newSearchFilters.alue = [];
+					}
 					// If the district/city was unchecked
 					if (!newValue) {
 						// Normal flow: Remove district/city to search filters if
 						// present
-						newSearchFilters.area = newSearchFilters.area.filter(
+						newSearchFilters.alue = newSearchFilters.alue.filter(
 							(value: string) => {
 								return value !== name;
 							},
@@ -346,7 +341,7 @@ const PageNursingHomes: FC = () => {
 
 						// Weird flow to accommodate the Espoo special selection
 						if (name === "Espoo")
-							newSearchFilters.area = newSearchFilters.area.filter(
+							newSearchFilters.alue = newSearchFilters.alue.filter(
 								(value: string) => {
 									if (espooAreas.includes(value))
 										return false;
@@ -354,7 +349,7 @@ const PageNursingHomes: FC = () => {
 								},
 							);
 						else if (espooAreas.includes(name))
-							newSearchFilters.area = newSearchFilters.area.filter(
+							newSearchFilters.alue = newSearchFilters.alue.filter(
 								(value: string) => {
 									return value !== "Espoo";
 								},
@@ -363,25 +358,26 @@ const PageNursingHomes: FC = () => {
 					} else {
 						// Normal flow: Add district/city to search filters if
 						// not already added
-						if (!newSearchFilters.area.includes(name))
-							newSearchFilters.area.push(name);
+						if (!newSearchFilters.alue.includes(name)) {
+							newSearchFilters.alue.push(name);
+						}
 
 						// Weird flow to accommodate the Espoo special selection
 						if (name === "Espoo")
 							for (let i = 0; i < espooAreas.length; i++) {
 								const district = espooAreas[i];
-								if (!newSearchFilters.area.includes(district))
-									newSearchFilters.area.push(district);
+								if (!newSearchFilters.alue.includes(district))
+									newSearchFilters.alue.push(district);
 							}
 						else if (espooAreas.includes(name)) {
 							let included = 0;
 							for (let i = 0; i < espooAreas.length; i++) {
 								const district = espooAreas[i];
-								if (newSearchFilters.area.includes(district))
+								if (newSearchFilters.alue.includes(district))
 									included++;
 							}
 							if (included === espooAreas.length) {
-								newSearchFilters.area.push("Espoo");
+								newSearchFilters.alue.push("Espoo");
 							}
 						}
 					}
@@ -391,7 +387,7 @@ const PageNursingHomes: FC = () => {
 				onReset={(): void => {
 					const newSearchFilters = {
 						...searchFilters,
-						alue: undefined,
+						area: undefined,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);

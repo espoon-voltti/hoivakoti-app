@@ -4,7 +4,6 @@ import uuidv4 from "uuid/v4";
 import rp from "request-promise-native";
 import crypto, { BinaryLike } from "crypto";
 import {
-	Cities,
 	NursingHome,
 	nursing_home_pictures_columns_info,
 	postal_code_to_district,
@@ -229,7 +228,7 @@ async function CreateNursingHomeTable(): Promise<void> {
 			table.text("summary");
 			table.string("postal_code");
 			table.string("city");
-			table.string("city_restrictions");
+			table.json("city_restrictions");
 			table.text("arrival_guide_public_transit");
 			table.text("arrival_guide_car");
 			table.integer("construction_year");
@@ -792,10 +791,13 @@ export async function UpdateNursingHomeInformation(
 	basicUpdateKey: string,
 	body: NursingHome,
 ): Promise<boolean> {
+	console.log(JSON.stringify(body.city_restrictions));
+
 	let count = await knex("NursingHomes")
 		.where({ id, basic_update_key: basicUpdateKey })
 		.update({
 			...body,
+			city_restrictions: JSON.stringify(body.city_restrictions),
 		});
 
 	if (count !== 1) return false;
