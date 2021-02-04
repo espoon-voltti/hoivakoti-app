@@ -128,7 +128,7 @@ const PageNursingHomes: FC = () => {
 			const filteredNursingHomes:
 				| NursingHome[]
 				| null = nursingHomes.filter(nursinghome => {
-				const filterAreaInvalid =
+				const notCorrectArea =
 					searchFilters.alue &&
 					searchFilters.alue.length > 0 &&
 					(!searchFilters.alue.includes(nursinghome.district) &&
@@ -142,32 +142,32 @@ const PageNursingHomes: FC = () => {
 						],
 					);
 
-				if (filterAreaInvalid) {
+				if (notCorrectArea) {
 					return false;
 				}
 
-				const filterLanguageInvalid =
+				const notCorrecLanguage =
 					searchFilters.language &&
 					nursinghome.language &&
 					!nursinghome.language.includes(searchFilters.language);
 
-				if (filterLanguageInvalid) {
+				if (notCorrecLanguage) {
 					return false;
 				}
 
-				const filterAraInvalid =
+				const notARADestination =
 					searchFilters.ara !== undefined &&
 					((nursinghome.ara === "Kyllä" && !searchFilters.ara) ||
 						(nursinghome.ara === "Ei" && searchFilters.ara));
 
-				if (filterAraInvalid) {
+				if (notARADestination) {
 					return false;
 				}
 
-				const filterLahInvalid =
+				const notLahDestination =
 					searchFilters.lah && nursinghome.lah !== searchFilters.lah;
 
-				if (filterLahInvalid) {
+				if (notLahDestination) {
 					return false;
 				}
 
@@ -351,7 +351,7 @@ const PageNursingHomes: FC = () => {
 				label: name,
 				type: "checkbox",
 				checked: searchFilters.homeTown
-					? searchFilters.homeTown.includes(name)
+					? searchFilters.homeTown.includes(city)
 					: false,
 			};
 		}),
@@ -456,6 +456,14 @@ const PageNursingHomes: FC = () => {
 				onChange={({ newValue, name }) => {
 					const newSearchFilters = { ...searchFilters };
 
+					const cityKey = Object.keys(cityTranslations).filter(
+						(item: any) => {
+							const key = item as Cities;
+
+							return cityTranslations[key] === name;
+						},
+					)[0];
+
 					if (!newSearchFilters.homeTown) {
 						newSearchFilters.homeTown = [];
 					}
@@ -463,11 +471,11 @@ const PageNursingHomes: FC = () => {
 					if (!newValue) {
 						newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
 							(value: string) => {
-								return value !== name;
+								return value !== cityKey;
 							},
 						);
 
-						if (name === "Espoo") {
+						if (cityKey === "EPO") {
 							newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
 								(value: string) => {
 									if (espooAreas.includes(value))
@@ -477,19 +485,19 @@ const PageNursingHomes: FC = () => {
 							);
 						}
 
-						if (espooAreas.includes(name)) {
+						if (espooAreas.includes(cityKey)) {
 							newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
 								(value: string) => {
-									return value !== "Espoo";
+									return value !== "EPO";
 								},
 							);
 						}
 					} else {
-						if (!newSearchFilters.homeTown.includes(name)) {
-							newSearchFilters.homeTown.push(name);
+						if (!newSearchFilters.homeTown.includes(cityKey)) {
+							newSearchFilters.homeTown.push(cityKey);
 						}
 
-						if (name === "Espoo") {
+						if (cityKey === "EPO") {
 							for (let i = 0; i < espooAreas.length; i++) {
 								const district = espooAreas[i];
 								if (
@@ -501,7 +509,7 @@ const PageNursingHomes: FC = () => {
 							}
 						}
 
-						if (espooAreas.includes(name)) {
+						if (espooAreas.includes(cityKey)) {
 							let included = 0;
 							for (let i = 0; i < espooAreas.length; i++) {
 								const district = espooAreas[i];
@@ -511,7 +519,7 @@ const PageNursingHomes: FC = () => {
 									included++;
 							}
 							if (included === espooAreas.length) {
-								newSearchFilters.homeTown.push("Espoo");
+								newSearchFilters.homeTown.push("EPO");
 							}
 						}
 					}
