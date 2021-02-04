@@ -1,5 +1,3 @@
-import { Cities } from "../cities";
-
 export type NursingHomeImageName =
 	| "apartment"
 	| "apartment_layout"
@@ -28,7 +26,7 @@ export interface NursingHome {
 	summary?: string;
 	postal_code: string;
 	city: string;
-	city_restrictions?: Cities[];
+	city_restrictions?: string;
 	arrival_guide_public_transit?: string;
 	arrival_guide_car?: string;
 	construction_year?: number;

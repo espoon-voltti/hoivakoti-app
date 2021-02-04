@@ -1,3 +1,27 @@
+export enum Cities {
+	EPO = "EPO",
+	EPK = "EPK",
+	EPL = "EPL",
+	LPV = "LPV",
+	MKL = "MKL",
+	TAP = "TAP",
+	HNK = "HNK",
+	HEL = "HEL",
+	HVK = "HVK",
+	JVP = "JVP",
+	KAR = "KAR",
+	KER = "KER",
+	KRN = "KRN",
+	LHJ = "LHJ",
+	NRJ = "NRJ",
+	RPO = "RPO",
+	SPO = "SPO",
+	STO = "STO",
+	TSL = "TSL",
+	VTA = "VTA",
+	VTI = "VTI",
+}
+
 // This interface declaration is duplicated in frontend and backend. Please
 // modify both at the same time to keep them in sync
 export interface NursingHome {
@@ -14,6 +38,7 @@ export interface NursingHome {
 	summary?: string;
 	postal_code: string;
 	city: string;
+	city_restrictions?: string;
 	arrival_guide_public_transit?: string;
 	arrival_guide_car?: string;
 	construction_year?: number;

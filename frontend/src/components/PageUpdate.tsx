@@ -9,7 +9,7 @@ import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";
 
-import { Cities } from "../cities";
+import { Cities } from "./cities";
 
 enum InputTypes {
 	text = "text",
@@ -23,7 +23,7 @@ enum InputTypes {
 }
 
 type NursingHomeKey = keyof NursingHome;
-type InputFieldValue = string | number | boolean | string[];
+type InputFieldValue = string | number | boolean;
 
 type NursingHomeUpdateData = Omit<
 	NursingHome,
@@ -572,26 +572,26 @@ const PageUpdate: FC = () => {
 						};
 					}),
 				],
-				change: (current: string[], value: string) => {
-					let newList: string[];
+				change: (current: string, value: string) => {
+					let newList: Cities[];
 
 					if (!current) {
 						newList = [];
 					} else {
-						newList = [...current];
+						newList = current.split(",") as Cities[];
 					}
 
-					if (newList.includes(value)) {
-						const index = newList.indexOf(value);
+					const city = value as Cities;
+
+					if (newList.includes(city)) {
+						const index = newList.indexOf(city);
 
 						newList.splice(index, 1);
 					} else {
-						newList.push(value);
+						newList.push(city);
 					}
 
-					console.log(newList);
-
-					return newList;
+					return newList.toString();
 				},
 			},
 		],
@@ -953,7 +953,7 @@ const PageUpdate: FC = () => {
 															newValue = field.change(
 																nursingHome[
 																	field.name
-																] as string,
+																] as InputFieldValue,
 																button.value as string,
 															);
 														}
@@ -969,7 +969,9 @@ const PageUpdate: FC = () => {
 														nursingHome[field.name]
 															? (nursingHome[
 																	field.name
-															  ] as string).includes(
+															  ] as
+																	| string
+																	| string[]).includes(
 																	button.value as string,
 															  )
 															: false
@@ -1054,7 +1056,7 @@ const PageUpdate: FC = () => {
 															newValue = field.change(
 																nursingHome[
 																	field.name
-																] as string,
+																] as InputFieldValue,
 																button.value as string,
 															);
 														}
