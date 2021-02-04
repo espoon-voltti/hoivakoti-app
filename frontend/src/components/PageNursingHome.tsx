@@ -14,6 +14,8 @@ import { useT } from "../i18n";
 import Lightbox from "./Lightbox";
 import Title from "./Title";
 import VacancyStatusBadge from "./VacancyStatusBadge";
+import DefinitionItem from "./DefinitionItem";
+import ParagraphLink from "./ParagraphLink";
 
 interface ParagraphProps {
 	title?: string;
@@ -31,45 +33,6 @@ const Paragraph: FC<ParagraphProps> = ({ title, text, className }) => {
 			)}
 			<p className={className}>{text}</p>
 		</>
-	);
-};
-
-interface DefinitionItemProps {
-	term?: string;
-	definition?: string;
-	classNameTerm?: string;
-	classNameDefinition?: string;
-}
-
-const DefinitionItem: FC<DefinitionItemProps> = ({
-	term,
-	definition,
-	classNameTerm,
-	classNameDefinition,
-}) => {
-	if (!definition) return null;
-
-	return (
-		<>
-			{term && <dt className={classNameTerm}>{term}</dt>}
-			<dd className={classNameDefinition}>{definition}</dd>
-		</>
-	);
-};
-
-interface ParagraphLinkProps {
-	text?: string;
-	to?: string;
-}
-
-const ParagraphLink: FC<ParagraphLinkProps> = ({ text, to }) => {
-	if (!to) return null;
-	return (
-		<p>
-			<a href={to} target="_blank" rel="noreferrer noopener external">
-				{text || to}
-			</a>
-		</p>
 	);
 };
 
@@ -94,6 +57,7 @@ export const Image: FC<ImageProps> = ({
 }) => {
 	if (!imageName || !nursingHome || !nursingHome.pic_digests)
 		return placeholder;
+
 	const digest: string = (nursingHome.pic_digests as any)[
 		`${imageName}_hash`
 	];
@@ -288,7 +252,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<MapSmall nursingHome={nursingHome} />
 					</a>
 
-					<dl className="nursingHome-info-list nursingHome-info-list--contact">
+					<dl className="nursinghome-info-list nursinghome-info-list--contact">
 						<dt>{contactInfo}</dt>
 						<dd>
 							{nursingHome.address}, {nursingHome.postal_code}{" "}
@@ -308,7 +272,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						</dd>
 					</dl>
 
-					<dl className="nursingHome-info-list nursingHome-info-list--directions">
+					<dl className="nursinghome-info-list nursinghome-info-list--directions">
 						<dt>{directions}</dt>
 						<dd>{nursingHome.arrival_guide_public_transit}</dd>
 						<dd>{nursingHome.arrival_guide_car}</dd>
@@ -618,7 +582,7 @@ const PageNursingHome: FC = () => {
 						<Paragraph text={nursingHome.summary} />
 
 						<h3>{basicInformation}</h3>
-						<dl className="nursingHome-info-list">
+						<dl className="nursinghome-info-list">
 							<DefinitionItem
 								term={owner}
 								definition={nursingHome.owner}
@@ -668,7 +632,7 @@ const PageNursingHome: FC = () => {
 							/>
 						</dl>
 						<h3>{foodHeader}</h3>
-						<dl className="nursingHome-info-list">
+						<dl className="nursinghome-info-list">
 							<DefinitionItem
 								term={cookingMethod}
 								definition={nursingHome.meals_preparation}
@@ -708,7 +672,7 @@ const PageNursingHome: FC = () => {
 
 						<h3 id="visitingInfo">{visitingInfo}</h3>
 						<Paragraph text={nursingHome.tour_info} />
-						<dl className="nursingHome-info-list nursingHome-info-list--contact">
+						<dl className="nursinghome-info-list nursinghome-info-list--contact">
 							<dt>{nursingHome.contact_name}</dt>
 							<dd>{nursingHome.contact_title}</dd>
 							<dd>Puh. {nursingHome.contact_phone}</dd>
