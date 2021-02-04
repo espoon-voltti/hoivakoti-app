@@ -10,6 +10,7 @@ import axios from "axios";
 import Map from "./Map";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
+import { Cities } from "./cities";
 
 type Language = string;
 
@@ -20,6 +21,7 @@ interface SearchFilters {
 	readonly language?: Language;
 	readonly ara?: boolean;
 	readonly lah?: boolean;
+	readonly homeTown?: string[];
 }
 
 const PageNursingHomes: FC = () => {
@@ -74,11 +76,18 @@ const PageNursingHomes: FC = () => {
 	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
 	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
 
+	const homeTown = parsed.homeTown
+		? !Array.isArray(parsed.homeTown)
+			? [parsed.homeTown]
+			: parsed.homeTown
+		: undefined;
+
 	const searchFilters: SearchFilters = {
 		alue: area,
 		ara,
 		lah,
 		language: parsed.language as Language,
+		homeTown,
 	};
 
 	const citiesAndDistrictsToFinnish = {
@@ -225,6 +234,30 @@ const PageNursingHomes: FC = () => {
 	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
 
+	const cityTranslations = {
+		[Cities.EPO]: useT("espoo"),
+		[Cities.EPK]: useT("espoon keskus"),
+		[Cities.EPL]: useT("espoonlahti"),
+		[Cities.LPV]: useT("leppävaara"),
+		[Cities.MKL]: useT("matinkylä"),
+		[Cities.TAP]: useT("tapiola"),
+		[Cities.HNK]: useT("hanko"),
+		[Cities.HEL]: useT("helsinki"),
+		[Cities.HVK]: useT("hyvinkää"),
+		[Cities.JVP]: useT("järvenpää"),
+		[Cities.KAR]: useT("karjaa"),
+		[Cities.KER]: useT("kerava"),
+		[Cities.KRN]: useT("kirkkonummi"),
+		[Cities.LHJ]: useT("lohja"),
+		[Cities.NRJ]: useT("nurmijärvi"),
+		[Cities.RPO]: useT("raasepori"),
+		[Cities.SPO]: useT("sipoo"),
+		[Cities.STO]: useT("siuntio"),
+		[Cities.TSL]: useT("tuusula"),
+		[Cities.VTA]: useT("vantaa"),
+		[Cities.VTI]: useT("vihti"),
+	};
+
 	const espooChecked = searchFilters.alue
 		? searchFilters.alue.includes("Espoo")
 		: false;
@@ -309,6 +342,21 @@ const PageNursingHomes: FC = () => {
 		},
 	];
 
+	const optionsHomeTown: FilterOption[] = [
+		...Object.values(Cities).map<FilterOption>(city => {
+			const name = cityTranslations[city];
+
+			return {
+				name: name,
+				label: name,
+				type: "checkbox",
+				checked: searchFilters.homeTown
+					? searchFilters.homeTown.includes(name)
+					: false,
+			};
+		}),
+	];
+
 	const filterElements: JSX.Element | null = (
 		<>
 			<FilterItem
@@ -389,6 +437,94 @@ const PageNursingHomes: FC = () => {
 						...searchFilters,
 						area: undefined,
 					};
+					const stringfield = queryString.stringify(newSearchFilters);
+					history.push("/hoivakodit?" + stringfield);
+				}}
+			/>
+			<FilterItem
+				prefix="Kotikunta"
+				value={
+					searchFilters.homeTown !== undefined
+						? searchFilters.homeTown.length <= 2
+							? searchFilters.homeTown.join(", ")
+							: `(${searchFilters.homeTown.length} ${filterSelections})`
+						: null
+				}
+				values={optionsHomeTown}
+				ariaLabel="Valitse kotikunta"
+				disabled={isFilterDisabled}
+				onChange={({ newValue, name }) => {
+					const newSearchFilters = { ...searchFilters };
+
+					if (!newSearchFilters.homeTown) {
+						newSearchFilters.homeTown = [];
+					}
+
+					if (!newValue) {
+						newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
+							(value: string) => {
+								return value !== name;
+							},
+						);
+
+						if (name === "Espoo") {
+							newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
+								(value: string) => {
+									if (espooAreas.includes(value))
+										return false;
+									return true;
+								},
+							);
+						}
+
+						if (espooAreas.includes(name)) {
+							newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
+								(value: string) => {
+									return value !== "Espoo";
+								},
+							);
+						}
+					} else {
+						if (!newSearchFilters.homeTown.includes(name)) {
+							newSearchFilters.homeTown.push(name);
+						}
+
+						if (name === "Espoo") {
+							for (let i = 0; i < espooAreas.length; i++) {
+								const district = espooAreas[i];
+								if (
+									!newSearchFilters.homeTown.includes(
+										district,
+									)
+								)
+									newSearchFilters.homeTown.push(district);
+							}
+						}
+
+						if (espooAreas.includes(name)) {
+							let included = 0;
+							for (let i = 0; i < espooAreas.length; i++) {
+								const district = espooAreas[i];
+								if (
+									newSearchFilters.homeTown.includes(district)
+								)
+									included++;
+							}
+							if (included === espooAreas.length) {
+								newSearchFilters.homeTown.push("Espoo");
+							}
+						}
+					}
+
+					const stringfield = queryString.stringify(newSearchFilters);
+					history.push("/hoivakodit?" + stringfield);
+				}}
+				onReset={(): void => {
+					const newSearchFilters = {
+						...searchFilters,
+						homeTown: undefined,
+					};
+
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
