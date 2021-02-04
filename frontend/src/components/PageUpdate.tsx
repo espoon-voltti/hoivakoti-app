@@ -23,7 +23,7 @@ enum InputTypes {
 }
 
 type NursingHomeKey = keyof NursingHome;
-type InputFieldValue = string | number | boolean;
+type InputFieldValue = string | number | boolean | Cities[];
 
 type NursingHomeUpdateData = Omit<
 	NursingHome,
@@ -559,7 +559,7 @@ const PageUpdate: FC = () => {
 				maxlength: 200,
 			},
 			{
-				label: "Asiakkaan kotikunta",
+				label: "Kotikunta",
 				description:
 					"Määrittele hoivakodin vaatimus asiakkaan kotikunnaksi",
 				type: InputTypes.checkbox,
@@ -572,13 +572,13 @@ const PageUpdate: FC = () => {
 						};
 					}),
 				],
-				change: (current: string, value: string) => {
+				change: (current: Cities[], value: string) => {
 					let newList: Cities[];
 
 					if (!current) {
 						newList = [];
 					} else {
-						newList = current.split(",") as Cities[];
+						newList = [...current];
 					}
 
 					const city = value as Cities;
@@ -591,7 +591,9 @@ const PageUpdate: FC = () => {
 						newList.push(city);
 					}
 
-					return newList.toString();
+					console.log(newList);
+
+					return newList;
 				},
 			},
 		],
