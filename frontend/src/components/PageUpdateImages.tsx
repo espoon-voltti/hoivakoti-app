@@ -5,7 +5,7 @@ import axios from "axios";
 import config from "./config";
 import ImageUpload from "./ImageUpload";
 import { NursingHome, NursingHomeImageName } from "./types";
-import { GetNursingHomeResponse } from "./PageNursingHome";
+import { GetNursingHomeResponse } from "./types";
 
 interface NursingHomeRouteParams {
 	id: string;

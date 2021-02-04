@@ -339,6 +339,10 @@ export const translations = {
 			"I bostaden finns en ställbar, elektrisk säng, madrass, klädskåp, låsbart förvaringsutrymme och taklampa. Klienten kan ta med sig egna möbler och saker till bostaden.",
 	},
 	rent: { "fi-FI": "Vuokran määrä", "sv-FI": "Hyra" },
+	checkRentWithNursingHome: {
+		"fi-FI": "Tarkista vuokran määrä hoivakodista. Vuokran määrä on noin",
+		"sv-FI": "Tarkista vuokran määrä hoivakodista. Vuokran määrä on noin",
+	},
 	LAHapartments: {
 		"fi-FI": "Lyhytaikaisen asumisen asuntoja",
 		"sv-FI": "Bostäder för kortvarigt boende",

@@ -5,7 +5,7 @@ import "../styles/PageSurveyResults.scss";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
-import { GetNursingHomeResponse } from "./PageNursingHome";
+import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
 
 let surveyState: any[] = [];
