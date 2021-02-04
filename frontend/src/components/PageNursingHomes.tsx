@@ -16,13 +16,16 @@ type Language = string;
 const calculateMapVisible = (width: number): boolean => width >= 1130;
 
 interface SearchFilters {
-	readonly alue?: string[];
+	readonly area?: string[];
 	readonly language?: Language;
 	readonly ara?: boolean;
 	readonly lah?: boolean;
 }
 
 const PageNursingHomes: FC = () => {
+	const history = useHistory();
+	const { search } = useLocation();
+
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
 	);
@@ -33,9 +36,6 @@ const PageNursingHomes: FC = () => {
 	const [isMapVisible, setIsMapVisible] = useState(
 		calculateMapVisible(window.innerWidth),
 	);
-
-	const history = useHistory();
-	const { search } = useLocation();
 	const [filteredNursingHomes, setFilteredNursingHomes] = useState<
 		NursingHome[] | null
 	>(null);
@@ -48,31 +48,38 @@ const PageNursingHomes: FC = () => {
 		return () => window.removeEventListener("resize", listener);
 	}, []);
 
-	const espooAreas = [
-		useT("espoon keskus"),
-		useT("espoonlahti"),
-		useT("leppävaara"),
-		useT("matinkylä"),
-		useT("tapiola"),
-	];
-	const espoo = useT("espoo");
-	const otherCities = [
-		useT("hanko"),
-		useT("helsinki"),
-		useT("hyvinkää"),
-		useT("järvenpää"),
-		useT("karkkila"),
-		useT("kerava"),
-		useT("kirkkonummi"),
-		useT("lohja"),
-		useT("nurmijärvi"),
-		useT("raasepori"),
-		useT("sipoo"),
-		useT("siuntio"),
-		useT("tuusula"),
-		useT("vantaa"),
-		useT("vihti"),
-	];
+	useEffect(() => {
+		axios
+			.get(config.API_URL + "/nursing-homes")
+			.then(function(response: { data: NursingHome[] }) {
+				setNursingHomes(response.data);
+			})
+			.catch((error: Error) => {
+				console.error(error.message);
+				throw error;
+			});
+	}, []);
+
+	const hasFilters = search !== "";
+	const isFilterDisabled = nursingHomes === null;
+
+	const parsed = queryString.parse(search);
+
+	const area = parsed.alue
+		? !Array.isArray(parsed.alue)
+			? [parsed.alue]
+			: parsed.alue
+		: undefined;
+
+	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
+	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
+
+	const searchFilters: SearchFilters = {
+		area,
+		ara,
+		lah,
+		language: parsed.language as Language,
+	};
 
 	const citiesAndDistrictsToFinnish = {
 		"Esbo centrum": "Espoon keskus",
@@ -108,117 +115,89 @@ const PageNursingHomes: FC = () => {
 	};
 
 	useEffect(() => {
-		axios
-			.get(config.API_URL + "/nursing-homes")
-			.then(function(response: { data: NursingHome[] }) {
-				setNursingHomes(response.data);
-			})
-			.catch((error: Error) => {
-				console.error(error.message);
-				throw error;
-			});
-	}, []);
-
-	const parsed = queryString.parse(search);
-	const alue = parsed.alue
-		? !Array.isArray(parsed.alue)
-			? [parsed.alue]
-			: parsed.alue
-		: undefined;
-	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
-	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
-	const searchFilters: SearchFilters = {
-		alue,
-		ara,
-		lah,
-		language: parsed.language as Language,
-	};
-	const hasFilters = search !== "";
-
-	const locationPickerLabel = useT("locationPickerLabel");
-
-	const espooChecked = searchFilters.alue
-		? searchFilters.alue.includes("Espoo")
-		: false;
-	const espooCheckboxItem: FilterOption = {
-		name: "Espoo",
-		label: espoo,
-		type: "checkbox",
-		checked: espooChecked,
-		bold: true,
-	};
-
-	const optionsArea: FilterOption[] = [
-		{ text: locationPickerLabel, type: "header" },
-		espooCheckboxItem,
-		...espooAreas.map<FilterOption>((value: string) => {
-			const checked = searchFilters.alue
-				? searchFilters.alue.includes(value)
-				: false;
-			return {
-				name: value,
-				label: value,
-				type: "checkbox",
-				checked: checked,
-				withMargin: true,
-			};
-		}),
-		...otherCities.map<FilterOption>((value: string) => {
-			const checked = searchFilters.alue
-				? searchFilters.alue.includes(value)
-				: false;
-			return {
-				name: value,
-				label: value,
-				type: "checkbox",
-				checked: checked,
-				bold: true,
-				alignment: "right",
-			};
-		}),
-	];
-
-	//const filtersCityTranslatedInclude = nursinghome.language.includes(useTFI(searchFilters.language));
-	useEffect(() => {
-		const filteredNHs: NursingHome[] | null =
-			nursingHomes &&
-			nursingHomes.filter(nursinghome => {
-				if (
-					searchFilters.alue &&
-					searchFilters.alue.length > 0 &&
-					(!searchFilters.alue.includes(nursinghome.district) &&
-						!searchFilters.alue.includes(nursinghome.city)) &&
-					!searchFilters.alue.includes(
+		if (nursingHomes) {
+			const filteredNursingHomes:
+				| NursingHome[]
+				| null = nursingHomes.filter(nursinghome => {
+				const filterAreaInvalid =
+					searchFilters.area &&
+					searchFilters.area.length > 0 &&
+					(!searchFilters.area.includes(nursinghome.district) &&
+						!searchFilters.area.includes(nursinghome.city)) &&
+					!searchFilters.area.includes(
 						(citiesAndDistrictsToFinnish as any)[nursinghome.city],
 					) &&
-					!searchFilters.alue.includes(
+					!searchFilters.area.includes(
 						(citiesAndDistrictsToSwedish as any)[
 							nursinghome.district
 						],
-					)
-				) {
+					);
+
+				if (filterAreaInvalid) {
 					return false;
 				}
-				if (
+
+				const filterLanguageInvalid =
 					searchFilters.language &&
 					nursinghome.language &&
-					!nursinghome.language.includes(searchFilters.language)
-				)
+					!nursinghome.language.includes(searchFilters.language);
+
+				if (filterLanguageInvalid) {
 					return false;
-				if (
+				}
+
+				const filterAraInvalid =
 					searchFilters.ara !== undefined &&
 					((nursinghome.ara === "Kyllä" && !searchFilters.ara) ||
-						(nursinghome.ara === "Ei" && searchFilters.ara))
-				)
+						(nursinghome.ara === "Ei" && searchFilters.ara));
+
+				if (filterAraInvalid) {
 					return false;
-				if (searchFilters.lah && nursinghome.lah !== searchFilters.lah)
+				}
+
+				const filterLahInvalid =
+					searchFilters.lah && nursinghome.lah !== searchFilters.lah;
+
+				if (filterLahInvalid) {
 					return false;
+				}
 
 				return true;
 			});
-		setFilteredNursingHomes(filteredNHs);
+
+			setFilteredNursingHomes(filteredNursingHomes);
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [search, history, nursingHomes]);
+
+	const locationPickerLabel = useT("locationPickerLabel");
+
+	const espooAreas = [
+		useT("espoon keskus"),
+		useT("espoonlahti"),
+		useT("leppävaara"),
+		useT("matinkylä"),
+		useT("tapiola"),
+	];
+	const espoo = useT("espoo");
+	const otherCities = [
+		useT("hanko"),
+		useT("helsinki"),
+		useT("hyvinkää"),
+		useT("järvenpää"),
+		useT("karkkila"),
+		useT("kerava"),
+		useT("kirkkonummi"),
+		useT("lohja"),
+		useT("nurmijärvi"),
+		useT("raasepori"),
+		useT("sipoo"),
+		useT("siuntio"),
+		useT("tuusula"),
+		useT("vantaa"),
+		useT("vihti"),
+	];
 
 	const filterLabel = useT("filterLabel");
 	const filterAraLabel = useT("filterAraLabel");
@@ -245,7 +224,56 @@ const PageNursingHomes: FC = () => {
 	const loadingText = useT("loadingText");
 	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
-	const linkBacktoTop = useT("linkBacktoTop");
+
+	const espooChecked = searchFilters.area
+		? searchFilters.area.includes("Espoo")
+		: false;
+
+	const espooCheckboxItem: FilterOption = {
+		name: "Espoo",
+		label: espoo,
+		type: "checkbox",
+		checked: espooChecked,
+		bold: true,
+	};
+
+	let optionsArea: FilterOption[] = [
+		{ text: locationPickerLabel, type: "header" },
+	];
+
+	optionsArea = [
+		...optionsArea,
+		espooCheckboxItem,
+		...espooAreas.map<FilterOption>((value: string) => {
+			const checked = searchFilters.area
+				? searchFilters.area.includes(value)
+				: false;
+			return {
+				name: value,
+				label: value,
+				type: "checkbox",
+				checked: checked,
+				withMargin: true,
+			};
+		}),
+	];
+
+	optionsArea = [
+		...optionsArea,
+		...otherCities.map<FilterOption>((value: string) => {
+			const checked = searchFilters.area
+				? searchFilters.area.includes(value)
+				: false;
+			return {
+				name: value,
+				label: value,
+				type: "checkbox",
+				checked: checked,
+				bold: true,
+				alignment: "right",
+			};
+		}),
+	];
 
 	const optionsAra: FilterOption[] = [
 		{
@@ -288,17 +316,15 @@ const PageNursingHomes: FC = () => {
 		},
 	];
 
-	const isFilterDisabled = nursingHomes === null;
-
-	const filterElements = (
+	const filterElements: JSX.Element | null = (
 		<>
 			<FilterItem
 				prefix={filterLocation}
 				value={
-					searchFilters.alue !== undefined
-						? searchFilters.alue.length <= 2
-							? searchFilters.alue.join(", ")
-							: `(${searchFilters.alue.length} ${filterSelections})`
+					searchFilters.area !== undefined
+						? searchFilters.area.length <= 2
+							? searchFilters.area.join(", ")
+							: `(${searchFilters.area.length} ${filterSelections})`
 						: null
 				}
 				values={optionsArea}
@@ -306,12 +332,13 @@ const PageNursingHomes: FC = () => {
 				disabled={isFilterDisabled}
 				onChange={({ newValue, name }) => {
 					const newSearchFilters = { ...searchFilters };
-					if (!newSearchFilters.alue) newSearchFilters.alue = [];
+
+					if (!newSearchFilters.area) newSearchFilters.area = [];
 					// If the district/city was unchecked
 					if (!newValue) {
 						// Normal flow: Remove district/city to search filters if
 						// present
-						newSearchFilters.alue = newSearchFilters.alue.filter(
+						newSearchFilters.area = newSearchFilters.area.filter(
 							(value: string) => {
 								return value !== name;
 							},
@@ -319,7 +346,7 @@ const PageNursingHomes: FC = () => {
 
 						// Weird flow to accommodate the Espoo special selection
 						if (name === "Espoo")
-							newSearchFilters.alue = newSearchFilters.alue.filter(
+							newSearchFilters.area = newSearchFilters.area.filter(
 								(value: string) => {
 									if (espooAreas.includes(value))
 										return false;
@@ -327,7 +354,7 @@ const PageNursingHomes: FC = () => {
 								},
 							);
 						else if (espooAreas.includes(name))
-							newSearchFilters.alue = newSearchFilters.alue.filter(
+							newSearchFilters.area = newSearchFilters.area.filter(
 								(value: string) => {
 									return value !== "Espoo";
 								},
@@ -336,25 +363,25 @@ const PageNursingHomes: FC = () => {
 					} else {
 						// Normal flow: Add district/city to search filters if
 						// not already added
-						if (!newSearchFilters.alue.includes(name))
-							newSearchFilters.alue.push(name);
+						if (!newSearchFilters.area.includes(name))
+							newSearchFilters.area.push(name);
 
 						// Weird flow to accommodate the Espoo special selection
 						if (name === "Espoo")
 							for (let i = 0; i < espooAreas.length; i++) {
 								const district = espooAreas[i];
-								if (!newSearchFilters.alue.includes(district))
-									newSearchFilters.alue.push(district);
+								if (!newSearchFilters.area.includes(district))
+									newSearchFilters.area.push(district);
 							}
 						else if (espooAreas.includes(name)) {
 							let included = 0;
 							for (let i = 0; i < espooAreas.length; i++) {
 								const district = espooAreas[i];
-								if (newSearchFilters.alue.includes(district))
+								if (newSearchFilters.area.includes(district))
 									included++;
 							}
 							if (included === espooAreas.length) {
-								newSearchFilters.alue.push("Espoo");
+								newSearchFilters.area.push("Espoo");
 							}
 						}
 					}
