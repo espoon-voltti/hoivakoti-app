@@ -171,6 +171,23 @@ const PageNursingHomes: FC = () => {
 					return false;
 				}
 
+				if (searchFilters.homeTown) {
+					const correctHomeTown = searchFilters.homeTown.some(
+						city => {
+							return (
+								nursinghome.city_restrictions &&
+								nursinghome.city_restrictions.includes(
+									city as Cities,
+								)
+							);
+						},
+					);
+
+					if (!correctHomeTown) {
+						return false;
+					}
+				}
+
 				return true;
 			});
 
