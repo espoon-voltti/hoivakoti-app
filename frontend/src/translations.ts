@@ -801,7 +801,7 @@ export const translations = {
 		"fi-FI": "Asiakkaiden antamat arviot",
 		"sv-FI": "Asiakkaiden antamat arviot",
 	},
-	nursingHomeReviews:{
+	nursingHomeReviews: {
 		"fi-FI": "Arviot hoivakodista",
 		"sv-FI": "Bedömningar av vårdhemmet",
 	},
@@ -1161,5 +1161,29 @@ export const translations = {
 	numberOfShort: {
 		"fi-FI": "Kpl",
 		"sv-FI": "Stycken",
+	},
+	filterNursingHomeArea: {
+		"fi-FI": "Valitse hoivakodin alue",
+		"sv-FI": "Valitse hoivakodin alue",
+	},
+	commune: {
+		"fi-FI": "Kotikunta",
+		"sv-FI": "Kotikunta",
+	},
+	filterCommune: {
+		"fi-FI": "Valitse kotikunta",
+		"sv-FI": "Valitse kotikunta",
+	},
+	filterLanguage: {
+		"fi-FI": "Valitse hoivakodin kieli",
+		"sv-FI": "Valitse hoivakodin kieli",
+	},
+	filterShowARA: {
+		"fi-FI": "Valitse, näytetäänkö vain Ara-kohteet",
+		"sv-FI": "Valitse, näytetäänkö vain Ara-kohteet",
+	},
+	filterShowLah: {
+		"fi-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
+		"sv-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
 	},
 };

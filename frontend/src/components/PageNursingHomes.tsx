@@ -4,7 +4,6 @@ import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import "../styles/PageNursingHomes.scss";
 import config from "./config";
-import { Link as div } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
 import Map from "./Map";
@@ -28,7 +27,7 @@ interface SearchFilters {
 	readonly language?: Language;
 	readonly ara?: boolean;
 	readonly lah?: boolean;
-	readonly commune?: string[];
+	readonly kotikunta?: string[];
 }
 
 interface Translation {
@@ -64,9 +63,9 @@ const PageNursingHomes: FC = () => {
 	useEffect(() => {
 		axios
 			.get(config.API_URL + "/nursing-homes")
-			.then(function(response: { data: NursingHome[] }) {
-				setNursingHomes(response.data);
-			})
+			.then((response: { data: NursingHome[] }) =>
+				setNursingHomes(response.data),
+			)
 			.catch((error: Error) => {
 				console.error(error.message);
 				throw error;
@@ -87,10 +86,10 @@ const PageNursingHomes: FC = () => {
 	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
 	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
 
-	const commune = parsed.commune
-		? !Array.isArray(parsed.commune)
-			? [parsed.commune]
-			: parsed.commune
+	const commune = parsed.kotikunta
+		? !Array.isArray(parsed.kotikunta)
+			? [parsed.kotikunta]
+			: parsed.kotikunta
 		: undefined;
 
 	const searchFilters: SearchFilters = {
@@ -98,7 +97,7 @@ const PageNursingHomes: FC = () => {
 		ara,
 		lah,
 		language: parsed.language as Language,
-		commune,
+		kotikunta: commune,
 	};
 
 	const espooAreaTranslations: Translation = {
@@ -160,11 +159,11 @@ const PageNursingHomes: FC = () => {
 	};
 
 	const districtsSV: Translation = {
-		[Commune.EPK]: getTranslationByLanguage("fi-FI", "espoon keskus"),
-		[Commune.EPL]: getTranslationByLanguage("fi-FI", "espoonlahti"),
-		[Commune.LPV]: getTranslationByLanguage("fi-FI", "leppävaara"),
-		[Commune.MKL]: getTranslationByLanguage("fi-FI", "matinkylä"),
-		[Commune.TAP]: getTranslationByLanguage("fi-FI", "tapiola"),
+		[Commune.EPK]: getTranslationByLanguage("sv-FI", "espoon keskus"),
+		[Commune.EPL]: getTranslationByLanguage("sv-FI", "espoonlahti"),
+		[Commune.LPV]: getTranslationByLanguage("sv-FI", "leppävaara"),
+		[Commune.MKL]: getTranslationByLanguage("sv-FI", "matinkylä"),
+		[Commune.TAP]: getTranslationByLanguage("sv-FI", "tapiola"),
 	};
 
 	useEffect(() => {
@@ -228,14 +227,14 @@ const PageNursingHomes: FC = () => {
 					return false;
 				}
 
-				if (searchFilters.commune) {
+				if (searchFilters.kotikunta) {
 					const filtersToKeys = Object.keys(
 						citiesTranslationsAll,
 					).filter(commune => {
 						const key = commune as Commune;
 						if (
-							searchFilters.commune &&
-							searchFilters.commune.includes(
+							searchFilters.kotikunta &&
+							searchFilters.kotikunta.includes(
 								citiesTranslationsAll[key],
 							)
 						) {
@@ -299,6 +298,12 @@ const PageNursingHomes: FC = () => {
 	const loadingText = useT("loadingText");
 	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
+	const filterNursingHomeArea = useT("filterNursingHomeArea");
+	const labelCommune = useT("commune");
+	const filterCommune = useT("filterCommune");
+	const filterLanguage = useT("filterLanguage");
+	const filterShowARA = useT("filterShowARA");
+	const filterShowLah = useT("filterShowLah");
 
 	const espooChecked = searchFilters.alue
 		? searchFilters.alue.includes("Espoo")
@@ -354,8 +359,8 @@ const PageNursingHomes: FC = () => {
 				name: espooTranslation[key],
 				label: espooTranslation[key],
 				type: "checkbox",
-				checked: searchFilters.commune
-					? searchFilters.commune.includes(espooTranslation[key])
+				checked: searchFilters.kotikunta
+					? searchFilters.kotikunta.includes(espooTranslation[key])
 					: false,
 				bold: true,
 			};
@@ -367,8 +372,10 @@ const PageNursingHomes: FC = () => {
 				name: value,
 				label: value,
 				type: "checkbox",
-				checked: searchFilters.commune
-					? searchFilters.commune.includes(espooAreaTranslations[key])
+				checked: searchFilters.kotikunta
+					? searchFilters.kotikunta.includes(
+							espooAreaTranslations[key],
+					  )
 					: false,
 				withMargin: true,
 			};
@@ -380,8 +387,8 @@ const PageNursingHomes: FC = () => {
 				name: value,
 				label: value,
 				type: "checkbox",
-				checked: searchFilters.commune
-					? searchFilters.commune.includes(
+				checked: searchFilters.kotikunta
+					? searchFilters.kotikunta.includes(
 							otherCitiesTranslations[key],
 					  )
 					: false,
@@ -435,7 +442,7 @@ const PageNursingHomes: FC = () => {
 	const handleCityInputChange = (
 		checked: boolean,
 		name: string,
-		filterGroup: "alue" | "commune",
+		filterGroup: "alue" | "kotikunta",
 	): void => {
 		const newSearchFilters = { ...searchFilters };
 		let groupFilters = newSearchFilters[filterGroup];
@@ -506,7 +513,7 @@ const PageNursingHomes: FC = () => {
 						: null
 				}
 				values={optionsArea}
-				ariaLabel="Valitse hoivakodin alue"
+				ariaLabel={filterNursingHomeArea}
 				disabled={isFilterDisabled}
 				onChange={({ newValue, name }) =>
 					handleCityInputChange(newValue, name, "alue")
@@ -521,19 +528,19 @@ const PageNursingHomes: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix="Kotikunta"
+				prefix={labelCommune}
 				value={
-					searchFilters.commune !== undefined
-						? searchFilters.commune.length <= 2
-							? searchFilters.commune.join(", ")
-							: `(${searchFilters.commune.length} ${filterSelections})`
+					searchFilters.kotikunta !== undefined
+						? searchFilters.kotikunta.length <= 2
+							? searchFilters.kotikunta.join(", ")
+							: `(${searchFilters.kotikunta.length} ${filterSelections})`
 						: null
 				}
 				values={optionsCommune}
-				ariaLabel="Valitse kotikunta"
+				ariaLabel={filterCommune}
 				disabled={isFilterDisabled}
 				onChange={({ newValue, name }) =>
-					handleCityInputChange(newValue, name, "commune")
+					handleCityInputChange(newValue, name, "kotikunta")
 				}
 				onReset={(): void => {
 					const newSearchFilters = {
@@ -555,7 +562,7 @@ const PageNursingHomes: FC = () => {
 						: null
 				}
 				values={optionsLanguage}
-				ariaLabel="Valitse hoivakodin kieli"
+				ariaLabel={filterLanguage}
 				disabled={isFilterDisabled}
 				onChange={({ name }): void => {
 					const newSearchFilters = {
@@ -583,7 +590,7 @@ const PageNursingHomes: FC = () => {
 						: null
 				}
 				values={optionsAra}
-				ariaLabel="Valitse, näytetäänkö vain Ara-kohteet"
+				ariaLabel={filterShowARA}
 				disabled={isFilterDisabled}
 				onChange={({ name }) => {
 					const newSearchFilters = {
@@ -621,7 +628,7 @@ const PageNursingHomes: FC = () => {
 						checked: searchFilters.lah === true,
 					},
 				]}
-				ariaLabel="Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet."
+				ariaLabel={filterShowLah}
 				disabled={isFilterDisabled}
 				onChange={({ newValue }): void => {
 					const newSearchFilters = {
