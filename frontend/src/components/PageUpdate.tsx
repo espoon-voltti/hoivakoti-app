@@ -591,8 +591,6 @@ const PageUpdate: FC = () => {
 						newList.push(commune);
 					}
 
-					console.log(newList);
-
 					return newList;
 				},
 			},
