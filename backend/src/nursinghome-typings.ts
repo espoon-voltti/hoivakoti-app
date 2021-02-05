@@ -1,4 +1,4 @@
-export enum Cities {
+export enum Commune {
 	EPO = "EPO",
 	EPK = "EPK",
 	EPL = "EPL",
@@ -38,7 +38,7 @@ export interface NursingHome {
 	summary?: string;
 	postal_code: string;
 	city: string;
-	city_restrictions?: Cities[];
+	communes?: Commune[];
 	arrival_guide_public_transit?: string;
 	arrival_guide_car?: string;
 	construction_year?: number;

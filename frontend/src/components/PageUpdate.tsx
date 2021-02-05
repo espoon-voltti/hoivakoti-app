@@ -9,7 +9,7 @@ import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";
 
-import { Cities } from "./cities";
+import { Commune } from "./commune";
 
 enum InputTypes {
 	text = "text",
@@ -23,7 +23,7 @@ enum InputTypes {
 }
 
 type NursingHomeKey = keyof NursingHome;
-type InputFieldValue = string | number | boolean | Cities[];
+type InputFieldValue = string | number | boolean | Commune[];
 
 type NursingHomeUpdateData = Omit<
 	NursingHome,
@@ -207,28 +207,28 @@ const PageUpdate: FC = () => {
 		"fieldsWithAsteriskAreMandatory",
 	);
 
-	const cityTranslations = {
-		[Cities.EPO]: useT("espoo"),
-		[Cities.EPK]: useT("espoon keskus"),
-		[Cities.EPL]: useT("espoonlahti"),
-		[Cities.LPV]: useT("leppävaara"),
-		[Cities.MKL]: useT("matinkylä"),
-		[Cities.TAP]: useT("tapiola"),
-		[Cities.HNK]: useT("hanko"),
-		[Cities.HEL]: useT("helsinki"),
-		[Cities.HVK]: useT("hyvinkää"),
-		[Cities.JVP]: useT("järvenpää"),
-		[Cities.KAR]: useT("karjaa"),
-		[Cities.KER]: useT("kerava"),
-		[Cities.KRN]: useT("kirkkonummi"),
-		[Cities.LHJ]: useT("lohja"),
-		[Cities.NRJ]: useT("nurmijärvi"),
-		[Cities.RPO]: useT("raasepori"),
-		[Cities.SPO]: useT("sipoo"),
-		[Cities.STO]: useT("siuntio"),
-		[Cities.TSL]: useT("tuusula"),
-		[Cities.VTA]: useT("vantaa"),
-		[Cities.VTI]: useT("vihti"),
+	const communeTranslations = {
+		[Commune.EPO]: useT("espoo"),
+		[Commune.EPK]: useT("espoon keskus"),
+		[Commune.EPL]: useT("espoonlahti"),
+		[Commune.LPV]: useT("leppävaara"),
+		[Commune.MKL]: useT("matinkylä"),
+		[Commune.TAP]: useT("tapiola"),
+		[Commune.HNK]: useT("hanko"),
+		[Commune.HEL]: useT("helsinki"),
+		[Commune.HVK]: useT("hyvinkää"),
+		[Commune.JVP]: useT("järvenpää"),
+		[Commune.KAR]: useT("karjaa"),
+		[Commune.KER]: useT("kerava"),
+		[Commune.KRN]: useT("kirkkonummi"),
+		[Commune.LHJ]: useT("lohja"),
+		[Commune.NRJ]: useT("nurmijärvi"),
+		[Commune.RPO]: useT("raasepori"),
+		[Commune.SPO]: useT("sipoo"),
+		[Commune.STO]: useT("siuntio"),
+		[Commune.TSL]: useT("tuusula"),
+		[Commune.VTA]: useT("vantaa"),
+		[Commune.VTI]: useT("vihti"),
 	};
 
 	useEffect(() => {
@@ -563,17 +563,17 @@ const PageUpdate: FC = () => {
 				description:
 					"Määrittele hoivakodin vaatimus asiakkaan kotikunnaksi",
 				type: InputTypes.checkbox,
-				name: "city_restrictions",
+				name: "communes",
 				buttons: [
-					...Object.values(Cities).map(city => {
+					...Object.values(Commune).map(commune => {
 						return {
-							label: cityTranslations[city],
-							value: city,
+							label: communeTranslations[commune],
+							value: commune,
 						};
 					}),
 				],
-				change: (current: Cities[], value: string) => {
-					let newList: Cities[];
+				change: (current: Commune[], value: string) => {
+					let newList: Commune[];
 
 					if (!current) {
 						newList = [];
@@ -581,14 +581,14 @@ const PageUpdate: FC = () => {
 						newList = [...current];
 					}
 
-					const city = value as Cities;
+					const commune = value as Commune;
 
-					if (newList.includes(city)) {
-						const index = newList.indexOf(city);
+					if (newList.includes(commune)) {
+						const index = newList.indexOf(commune);
 
 						newList.splice(index, 1);
 					} else {
-						newList.push(city);
+						newList.push(commune);
 					}
 
 					console.log(newList);

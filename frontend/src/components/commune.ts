@@ -1,4 +1,4 @@
-export enum Cities {
+export enum Commune {
 	EPO = "EPO",
 	EPK = "EPK",
 	EPL = "EPL",

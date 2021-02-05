@@ -1,4 +1,4 @@
-import { Cities } from "./cities";
+import { Commune } from "./commune";
 
 export type NursingHomeImageName =
 	| "apartment"
@@ -28,7 +28,7 @@ export interface NursingHome {
 	summary?: string;
 	postal_code: string;
 	city: string;
-	city_restrictions?: Cities[];
+	communes?: Commune[];
 	arrival_guide_public_transit?: string;
 	arrival_guide_car?: string;
 	construction_year?: number;
