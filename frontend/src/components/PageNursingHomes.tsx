@@ -386,6 +386,68 @@ const PageNursingHomes: FC = () => {
 		}),
 	];
 
+	const handleCityInputChange = (
+		checked: boolean,
+		name: string,
+		filterGroup: "alue" | "homeTown",
+	): void => {
+		const newSearchFilters = { ...searchFilters };
+		let groupFilters = newSearchFilters[filterGroup];
+
+		if (!groupFilters) {
+			groupFilters = [];
+		}
+		// If the district/city was unchecked
+		if (!checked) {
+			// Normal flow: Remove district/city to search filters if
+			// present
+
+			groupFilters = groupFilters.filter((value: string) => {
+				return value !== name;
+			});
+
+			// Weird flow to accommodate the Espoo special selection
+			if (name === "Espoo") {
+				groupFilters = groupFilters.filter((value: string) => {
+					return !espooAreas.includes(value);
+				});
+			} else if (espooAreas.includes(name)) {
+				groupFilters = groupFilters.filter((value: string) => {
+					return value !== "Espoo";
+				});
+			}
+			// If the district/city was checked
+		} else {
+			// Normal flow: Add district/city to search filters if
+			// not already added
+			if (!groupFilters.includes(name)) {
+				groupFilters.push(name);
+			}
+
+			// Weird flow to accommodate the Espoo special selection
+			if (name === "Espoo") {
+				for (const district of espooAreas) {
+					if (!groupFilters.includes(district)) {
+						groupFilters.push(district);
+					}
+				}
+			} else if (espooAreas.includes(name)) {
+				const included = espooAreas.filter(disctrict => {
+					return groupFilters && groupFilters.includes(disctrict);
+				}).length;
+
+				if (included === espooAreas.length) {
+					groupFilters.push("Espoo");
+				}
+			}
+		}
+
+		newSearchFilters[filterGroup] = groupFilters;
+
+		const stringfield = queryString.stringify(newSearchFilters);
+		history.push("/hoivakodit?" + stringfield);
+	};
+
 	const filterElements: JSX.Element | null = (
 		<>
 			<FilterItem
@@ -400,67 +462,9 @@ const PageNursingHomes: FC = () => {
 				values={optionsArea}
 				ariaLabel="Valitse hoivakodin alue"
 				disabled={isFilterDisabled}
-				onChange={({ newValue, name }) => {
-					const newSearchFilters = { ...searchFilters };
-
-					if (!newSearchFilters.alue) {
-						newSearchFilters.alue = [];
-					}
-					// If the district/city was unchecked
-					if (!newValue) {
-						// Normal flow: Remove district/city to search filters if
-						// present
-						newSearchFilters.alue = newSearchFilters.alue.filter(
-							(value: string) => {
-								return value !== name;
-							},
-						);
-
-						// Weird flow to accommodate the Espoo special selection
-						if (name === "Espoo")
-							newSearchFilters.alue = newSearchFilters.alue.filter(
-								(value: string) => {
-									if (espooAreas.includes(value))
-										return false;
-									return true;
-								},
-							);
-						else if (espooAreas.includes(name))
-							newSearchFilters.alue = newSearchFilters.alue.filter(
-								(value: string) => {
-									return value !== "Espoo";
-								},
-							);
-						// If the district/city was checked
-					} else {
-						// Normal flow: Add district/city to search filters if
-						// not already added
-						if (!newSearchFilters.alue.includes(name)) {
-							newSearchFilters.alue.push(name);
-						}
-
-						// Weird flow to accommodate the Espoo special selection
-						if (name === "Espoo")
-							for (let i = 0; i < espooAreas.length; i++) {
-								const district = espooAreas[i];
-								if (!newSearchFilters.alue.includes(district))
-									newSearchFilters.alue.push(district);
-							}
-						else if (espooAreas.includes(name)) {
-							let included = 0;
-							for (let i = 0; i < espooAreas.length; i++) {
-								const district = espooAreas[i];
-								if (newSearchFilters.alue.includes(district))
-									included++;
-							}
-							if (included === espooAreas.length) {
-								newSearchFilters.alue.push("Espoo");
-							}
-						}
-					}
-					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
-				}}
+				onChange={({ newValue, name }) =>
+					handleCityInputChange(newValue, name, "alue")
+				}
 				onReset={(): void => {
 					const newSearchFilters = {
 						...searchFilters,
@@ -482,82 +486,9 @@ const PageNursingHomes: FC = () => {
 				values={optionsHomeTown}
 				ariaLabel="Valitse kotikunta"
 				disabled={isFilterDisabled}
-				onChange={({ newValue, name }) => {
-					const newSearchFilters = { ...searchFilters };
-
-					console.log(name);
-
-					// const cityKey = Object.keys(cityTranslations).filter(
-					// 	(item: any) => {
-					// 		const key = item as Cities;
-
-					// 		return cityTranslations[key] === name;
-					// 	},
-					// )[0];
-
-					if (!newSearchFilters.homeTown) {
-						newSearchFilters.homeTown = [];
-					}
-
-					if (!newValue) {
-						newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
-							(value: string) => {
-								return value !== name;
-							},
-						);
-
-						if (name === "Espoo") {
-							newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
-								(value: string) => {
-									if (espooAreas.includes(value))
-										return false;
-									return true;
-								},
-							);
-						}
-
-						if (espooAreas.includes(name)) {
-							newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
-								(value: string) => {
-									return value !== "Espoo";
-								},
-							);
-						}
-					} else {
-						if (!newSearchFilters.homeTown.includes(name)) {
-							newSearchFilters.homeTown.push(name);
-						}
-
-						if (name === "Espoo") {
-							for (let i = 0; i < espooAreas.length; i++) {
-								const district = espooAreas[i];
-								if (
-									!newSearchFilters.homeTown.includes(
-										district,
-									)
-								)
-									newSearchFilters.homeTown.push(district);
-							}
-						}
-
-						if (espooAreas.includes(name)) {
-							let included = 0;
-							for (let i = 0; i < espooAreas.length; i++) {
-								const district = espooAreas[i];
-								if (
-									newSearchFilters.homeTown.includes(district)
-								)
-									included++;
-							}
-							if (included === espooAreas.length) {
-								newSearchFilters.homeTown.push("Espoo");
-							}
-						}
-					}
-
-					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
-				}}
+				onChange={({ newValue, name }) =>
+					handleCityInputChange(newValue, name, "homeTown")
+				}
 				onReset={(): void => {
 					const newSearchFilters = {
 						...searchFilters,
