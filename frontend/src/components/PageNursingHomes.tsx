@@ -123,6 +123,30 @@ const PageNursingHomes: FC = () => {
 		Tapiola: "Hagalund",
 	};
 
+	const cityTranslations = {
+		[Cities.EPO]: useT("espoo"),
+		[Cities.EPK]: useT("espoon keskus"),
+		[Cities.EPL]: useT("espoonlahti"),
+		[Cities.LPV]: useT("leppävaara"),
+		[Cities.MKL]: useT("matinkylä"),
+		[Cities.TAP]: useT("tapiola"),
+		[Cities.HNK]: useT("hanko"),
+		[Cities.HEL]: useT("helsinki"),
+		[Cities.HVK]: useT("hyvinkää"),
+		[Cities.JVP]: useT("järvenpää"),
+		[Cities.KAR]: useT("karjaa"),
+		[Cities.KER]: useT("kerava"),
+		[Cities.KRN]: useT("kirkkonummi"),
+		[Cities.LHJ]: useT("lohja"),
+		[Cities.NRJ]: useT("nurmijärvi"),
+		[Cities.RPO]: useT("raasepori"),
+		[Cities.SPO]: useT("sipoo"),
+		[Cities.STO]: useT("siuntio"),
+		[Cities.TSL]: useT("tuusula"),
+		[Cities.VTA]: useT("vantaa"),
+		[Cities.VTI]: useT("vihti"),
+	};
+
 	useEffect(() => {
 		if (nursingHomes) {
 			const filteredNursingHomes:
@@ -172,16 +196,28 @@ const PageNursingHomes: FC = () => {
 				}
 
 				if (searchFilters.homeTown) {
-					const correctHomeTown = searchFilters.homeTown.some(
+					const filtersToKeys = Object.keys(cityTranslations).filter(
 						city => {
-							return (
-								nursinghome.city_restrictions &&
-								nursinghome.city_restrictions.includes(
-									city as Cities,
+							const key = city as Cities;
+							if (
+								searchFilters.homeTown &&
+								searchFilters.homeTown.includes(
+									cityTranslations[key],
 								)
-							);
+							) {
+								return key;
+							}
 						},
 					);
+
+					const correctHomeTown = filtersToKeys.some(city => {
+						return (
+							nursinghome.city_restrictions &&
+							nursinghome.city_restrictions.includes(
+								city as Cities,
+							)
+						);
+					});
 
 					if (!correctHomeTown) {
 						return false;
@@ -250,30 +286,6 @@ const PageNursingHomes: FC = () => {
 	const loadingText = useT("loadingText");
 	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
-
-	const cityTranslations = {
-		[Cities.EPO]: useT("espoo"),
-		[Cities.EPK]: useT("espoon keskus"),
-		[Cities.EPL]: useT("espoonlahti"),
-		[Cities.LPV]: useT("leppävaara"),
-		[Cities.MKL]: useT("matinkylä"),
-		[Cities.TAP]: useT("tapiola"),
-		[Cities.HNK]: useT("hanko"),
-		[Cities.HEL]: useT("helsinki"),
-		[Cities.HVK]: useT("hyvinkää"),
-		[Cities.JVP]: useT("järvenpää"),
-		[Cities.KAR]: useT("karjaa"),
-		[Cities.KER]: useT("kerava"),
-		[Cities.KRN]: useT("kirkkonummi"),
-		[Cities.LHJ]: useT("lohja"),
-		[Cities.NRJ]: useT("nurmijärvi"),
-		[Cities.RPO]: useT("raasepori"),
-		[Cities.SPO]: useT("sipoo"),
-		[Cities.STO]: useT("siuntio"),
-		[Cities.TSL]: useT("tuusula"),
-		[Cities.VTA]: useT("vantaa"),
-		[Cities.VTI]: useT("vihti"),
-	};
 
 	const espooChecked = searchFilters.alue
 		? searchFilters.alue.includes("Espoo")
@@ -368,7 +380,7 @@ const PageNursingHomes: FC = () => {
 				label: name,
 				type: "checkbox",
 				checked: searchFilters.homeTown
-					? searchFilters.homeTown.includes(city)
+					? searchFilters.homeTown.includes(name)
 					: false,
 			};
 		}),
@@ -473,13 +485,15 @@ const PageNursingHomes: FC = () => {
 				onChange={({ newValue, name }) => {
 					const newSearchFilters = { ...searchFilters };
 
-					const cityKey = Object.keys(cityTranslations).filter(
-						(item: any) => {
-							const key = item as Cities;
+					console.log(name);
 
-							return cityTranslations[key] === name;
-						},
-					)[0];
+					// const cityKey = Object.keys(cityTranslations).filter(
+					// 	(item: any) => {
+					// 		const key = item as Cities;
+
+					// 		return cityTranslations[key] === name;
+					// 	},
+					// )[0];
 
 					if (!newSearchFilters.homeTown) {
 						newSearchFilters.homeTown = [];
@@ -488,11 +502,11 @@ const PageNursingHomes: FC = () => {
 					if (!newValue) {
 						newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
 							(value: string) => {
-								return value !== cityKey;
+								return value !== name;
 							},
 						);
 
-						if (cityKey === "EPO") {
+						if (name === "Espoo") {
 							newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
 								(value: string) => {
 									if (espooAreas.includes(value))
@@ -502,19 +516,19 @@ const PageNursingHomes: FC = () => {
 							);
 						}
 
-						if (espooAreas.includes(cityKey)) {
+						if (espooAreas.includes(name)) {
 							newSearchFilters.homeTown = newSearchFilters.homeTown.filter(
 								(value: string) => {
-									return value !== "EPO";
+									return value !== "Espoo";
 								},
 							);
 						}
 					} else {
-						if (!newSearchFilters.homeTown.includes(cityKey)) {
-							newSearchFilters.homeTown.push(cityKey);
+						if (!newSearchFilters.homeTown.includes(name)) {
+							newSearchFilters.homeTown.push(name);
 						}
 
-						if (cityKey === "EPO") {
+						if (name === "Espoo") {
 							for (let i = 0; i < espooAreas.length; i++) {
 								const district = espooAreas[i];
 								if (
@@ -526,7 +540,7 @@ const PageNursingHomes: FC = () => {
 							}
 						}
 
-						if (espooAreas.includes(cityKey)) {
+						if (espooAreas.includes(name)) {
 							let included = 0;
 							for (let i = 0; i < espooAreas.length; i++) {
 								const district = espooAreas[i];
@@ -536,7 +550,7 @@ const PageNursingHomes: FC = () => {
 									included++;
 							}
 							if (included === espooAreas.length) {
-								newSearchFilters.homeTown.push("EPO");
+								newSearchFilters.homeTown.push("Espoo");
 							}
 						}
 					}
