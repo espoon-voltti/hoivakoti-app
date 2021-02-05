@@ -101,37 +101,6 @@ const PageNursingHomes: FC = () => {
 		commune,
 	};
 
-	const citiesFI: Translation = {
-		[Commune.EPK]: getTranslationByLanguage("fi-FI", "espoon keskus"),
-		[Commune.EPL]: getTranslationByLanguage("fi-FI", "espoonlahti"),
-		[Commune.LPV]: getTranslationByLanguage("fi-FI", "leppävaara"),
-		[Commune.MKL]: getTranslationByLanguage("fi-FI", "matinkylä"),
-		[Commune.TAP]: getTranslationByLanguage("fi-FI", "tapiola"),
-		[Commune.HEL]: getTranslationByLanguage("fi-FI", "helsinki"),
-		[Commune.HVK]: getTranslationByLanguage("fi-FI", "hyvinkää"),
-		[Commune.JVP]: getTranslationByLanguage("fi-FI", "järvenpää"),
-		[Commune.KAR]: getTranslationByLanguage("fi-FI", "karjaa"),
-		[Commune.HNK]: getTranslationByLanguage("fi-FI", "hanko"),
-		[Commune.KER]: getTranslationByLanguage("fi-FI", "kerava"),
-		[Commune.KRN]: getTranslationByLanguage("fi-FI", "kirkkonummi"),
-		[Commune.LHJ]: getTranslationByLanguage("fi-FI", "lohja"),
-		[Commune.NRJ]: getTranslationByLanguage("fi-FI", "nurmijärvi"),
-		[Commune.RPO]: getTranslationByLanguage("fi-FI", "raasepori"),
-		[Commune.STO]: getTranslationByLanguage("fi-FI", "sipoo"),
-		[Commune.MKL]: getTranslationByLanguage("fi-FI", "siuntio"),
-		[Commune.TSL]: getTranslationByLanguage("fi-FI", "tuusula"),
-		[Commune.VTA]: getTranslationByLanguage("fi-FI", "vantaa"),
-		[Commune.VTI]: getTranslationByLanguage("fi-FI", "vihti"),
-	};
-
-	const districtsSV: Translation = {
-		[Commune.EPK]: getTranslationByLanguage("fi-FI", "espoon keskus"),
-		[Commune.EPL]: getTranslationByLanguage("fi-FI", "espoonlahti"),
-		[Commune.LPV]: getTranslationByLanguage("fi-FI", "leppävaara"),
-		[Commune.MKL]: getTranslationByLanguage("fi-FI", "matinkylä"),
-		[Commune.TAP]: getTranslationByLanguage("fi-FI", "tapiola"),
-	};
-
 	const espooAreaTranslations: Translation = {
 		[Commune.EPK]: useT("espoon keskus"),
 		[Commune.EPL]: useT("espoonlahti"),
@@ -166,6 +135,38 @@ const PageNursingHomes: FC = () => {
 		...otherCitiesTranslations,
 	};
 
+	//City or district can appear in Finnish or Swedish reqardless of the current language.
+	const citiesFI: Translation = {
+		[Commune.EPK]: getTranslationByLanguage("fi-FI", "espoon keskus"),
+		[Commune.EPL]: getTranslationByLanguage("fi-FI", "espoonlahti"),
+		[Commune.LPV]: getTranslationByLanguage("fi-FI", "leppävaara"),
+		[Commune.MKL]: getTranslationByLanguage("fi-FI", "matinkylä"),
+		[Commune.TAP]: getTranslationByLanguage("fi-FI", "tapiola"),
+		[Commune.HEL]: getTranslationByLanguage("fi-FI", "helsinki"),
+		[Commune.HVK]: getTranslationByLanguage("fi-FI", "hyvinkää"),
+		[Commune.JVP]: getTranslationByLanguage("fi-FI", "järvenpää"),
+		[Commune.KAR]: getTranslationByLanguage("fi-FI", "karjaa"),
+		[Commune.HNK]: getTranslationByLanguage("fi-FI", "hanko"),
+		[Commune.KER]: getTranslationByLanguage("fi-FI", "kerava"),
+		[Commune.KRN]: getTranslationByLanguage("fi-FI", "kirkkonummi"),
+		[Commune.LHJ]: getTranslationByLanguage("fi-FI", "lohja"),
+		[Commune.NRJ]: getTranslationByLanguage("fi-FI", "nurmijärvi"),
+		[Commune.RPO]: getTranslationByLanguage("fi-FI", "raasepori"),
+		[Commune.STO]: getTranslationByLanguage("fi-FI", "sipoo"),
+		[Commune.MKL]: getTranslationByLanguage("fi-FI", "siuntio"),
+		[Commune.TSL]: getTranslationByLanguage("fi-FI", "tuusula"),
+		[Commune.VTA]: getTranslationByLanguage("fi-FI", "vantaa"),
+		[Commune.VTI]: getTranslationByLanguage("fi-FI", "vihti"),
+	};
+
+	const districtsSV: Translation = {
+		[Commune.EPK]: getTranslationByLanguage("fi-FI", "espoon keskus"),
+		[Commune.EPL]: getTranslationByLanguage("fi-FI", "espoonlahti"),
+		[Commune.LPV]: getTranslationByLanguage("fi-FI", "leppävaara"),
+		[Commune.MKL]: getTranslationByLanguage("fi-FI", "matinkylä"),
+		[Commune.TAP]: getTranslationByLanguage("fi-FI", "tapiola"),
+	};
+
 	useEffect(() => {
 		if (nursingHomes) {
 			const filteredNursingHomes:
@@ -191,13 +192,13 @@ const PageNursingHomes: FC = () => {
 						},
 					)[0];
 
-					const notCorrectAreaTranslation =
+					const notCorrectTranslatedArea =
 						!searchFilters.alue.includes(citiesFI[cityKeyFI]) &&
 						!searchFilters.alue.includes(
 							districtsSV[districtKeySV],
 						);
 
-					if (notCorrectArea && notCorrectAreaTranslation) {
+					if (notCorrectArea && notCorrectTranslatedArea) {
 						return false;
 					}
 				}
@@ -392,7 +393,7 @@ const PageNursingHomes: FC = () => {
 
 	const optionsAra: FilterOption[] = [
 		{
-			name: "ARA-kohde",
+			name: filterAraLabel,
 			label: filterAraLabel,
 			subLabel: filterAraText,
 			type: "radio",
@@ -418,16 +419,16 @@ const PageNursingHomes: FC = () => {
 	const optionsLanguage: FilterOption[] = [
 		{ text: serviceLanguageLabel, type: "header" },
 		{
-			name: "Suomi",
+			name: filterFinnish,
 			label: filterFinnish,
 			type: "radio",
-			checked: searchFilters.language === "Suomi",
+			checked: searchFilters.language === filterFinnish,
 		},
 		{
-			name: "Ruotsi",
+			name: filterSwedish,
 			label: filterSwedish,
 			type: "radio",
-			checked: searchFilters.language === "Ruotsi",
+			checked: searchFilters.language === filterSwedish,
 		},
 	];
 
@@ -452,13 +453,13 @@ const PageNursingHomes: FC = () => {
 			});
 
 			// Weird flow to accommodate the Espoo special selection
-			if (name === "Espoo") {
+			if (name === espooTranslation["EPO"]) {
 				groupFilters = groupFilters.filter((value: string) => {
 					return !espooAreas.includes(value);
 				});
 			} else if (espooAreas.includes(name)) {
 				groupFilters = groupFilters.filter((value: string) => {
-					return value !== "Espoo";
+					return value !== espooTranslation["EPO"];
 				});
 			}
 			// If the district/city was checked
@@ -470,7 +471,7 @@ const PageNursingHomes: FC = () => {
 			}
 
 			// Weird flow to accommodate the Espoo special selection
-			if (name === "Espoo") {
+			if (name === espooTranslation["EPO"]) {
 				for (const district of espooAreas) {
 					if (!groupFilters.includes(district)) {
 						groupFilters.push(district);
@@ -482,7 +483,7 @@ const PageNursingHomes: FC = () => {
 				}).length;
 
 				if (included === espooAreas.length) {
-					groupFilters.push("Espoo");
+					groupFilters.push(espooTranslation["EPO"]);
 				}
 			}
 		}
@@ -547,9 +548,9 @@ const PageNursingHomes: FC = () => {
 			<FilterItem
 				prefix={serviceLanguage}
 				value={
-					searchFilters.language === "Suomi"
+					searchFilters.language === filterFinnish
 						? filterFinnish
-						: searchFilters.language === "Ruotsi"
+						: searchFilters.language === filterSwedish
 						? filterSwedish
 						: null
 				}
@@ -587,7 +588,7 @@ const PageNursingHomes: FC = () => {
 				onChange={({ name }) => {
 					const newSearchFilters = {
 						...searchFilters,
-						ara: name === "ARA-kohde" ? true : false,
+						ara: name === filterAraLabel ? true : false,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
