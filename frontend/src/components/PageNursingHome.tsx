@@ -49,7 +49,7 @@ const PageNursingHome: FC<PageNursingHomeProps> = (
 		string,
 		string
 	> | null>(null);
-	const { id } = useParams();
+	const { id } = useParams() as any;
 	const [lightboxState, setLightboxState] = useState<"hidden" | number>(
 		"hidden",
 	);
@@ -520,7 +520,8 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reportScoreHeader = useT("reportScoreLong");
 	const giveReview = useT("giveReview");
 	const readMore = useT("readMore");
-	const clientReviews = useT("clientReviews");
+	const feedbackCustomerReview = useT("feedbackCustomerReview");
+	const feedbackRelativeReview = useT("feedbackRelativeReview");
 
 	const surveyOption1 = useT("surveyOption1");
 	const surveyOption2 = useT("surveyOption2");
@@ -568,7 +569,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 			}
 		}
 
-		return str;
+		return str + " ";
 	};
 
 	const getTypeTranslation = (typeStr: string): string => {
@@ -693,31 +694,53 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				</div>
 				<div className="nursinghome-details-box-section">
 					<div className="report_info_container">
-						<p
-							className={
-								nursingHome.rating && nursingHome.rating.average
-									? ""
-									: "hidden"
-							}
-						>
-							{clientReviews}
-						</p>
-						<p className="report_info_minor_header">
-							{nursingHome.rating && nursingHome.rating.average
-								? ratingToString(nursingHome.rating.average)
-								: "Ei annettuja arvioita"}
-						</p>
-						<p>
-							{nursingHome.rating && nursingHome.rating.average
-								? `${nursingHome.rating.average.toPrecision(
-										2,
-								  )} / 5`
-								: ""}
-						</p>
+						<div>
+							<p>{feedbackCustomerReview}</p>
+							<p>
+								<span className="report_info_minor_header">
+									{nursingHome.rating &&
+									nursingHome.rating.average_relatives
+										? ratingToString(
+												nursingHome.rating
+													.average_relatives,
+										  )
+										: "Ei annettuja arvioita"}
+								</span>
+
+								{nursingHome.rating &&
+								nursingHome.rating.average_relatives
+									? `${nursingHome.rating.average_relatives.toPrecision(
+											2,
+									  )} / 5`
+									: ""}
+							</p>
+						</div>
+						<div>
+							<p>{feedbackRelativeReview}</p>
+							<p>
+								<span className="report_info_minor_header">
+									{nursingHome.rating &&
+									nursingHome.rating.average_relatives
+										? ratingToString(
+												nursingHome.rating
+													.average_relatives,
+										  )
+										: "Ei annettuja arvioita"}
+								</span>
+
+								{nursingHome.rating &&
+								nursingHome.rating.average_relatives
+									? `${nursingHome.rating.average_relatives.toPrecision(
+											2,
+									  )} / 5`
+									: ""}
+							</p>
+						</div>
 						<Link
 							to={`/hoivakodit/${nursingHome.id}/arviot`}
 							className={
-								nursingHome.rating && nursingHome.rating.average
+								nursingHome.rating &&
+								nursingHome.rating.average_relatives
 									? ""
 									: "hidden"
 							}

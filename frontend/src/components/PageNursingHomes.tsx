@@ -195,8 +195,8 @@ const PageNursingHomes: FC = () => {
 						(citiesAndDistrictsToSwedish as any)[
 							nursinghome.district
 						],
-					))
-				{
+					)
+				) {
 					return false;
 				}
 				if (
@@ -471,7 +471,7 @@ const PageNursingHomes: FC = () => {
 	const cards: JSX.Element[] | null =
 		filteredNursingHomes &&
 		filteredNursingHomes.map((nursingHome, index) => (
-			<div card-key={index}>
+			<div key={index}>
 				<div
 					className={`card-list-item-borders ${
 						index === filteredNursingHomes.length - 1

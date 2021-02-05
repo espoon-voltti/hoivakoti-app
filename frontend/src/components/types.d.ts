@@ -91,7 +91,9 @@ export interface NursingHome {
 	];
 	has_vacancy: boolean | null;
 	rating: {
-		average: number | null;
-		answers: number | null;
+		average_relatives: number | null;
+		answers_relatives: number | null;
+		average_customers: number | null;
+		answers_customers: number | null;
 	};
 }

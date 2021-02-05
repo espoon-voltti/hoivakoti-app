@@ -96,12 +96,16 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 		});
 
 		nursinghome.rating = {};
-		nursinghome.rating.average = null;
-		nursinghome.rating.answers = 0;
+		nursinghome.rating.average_relatives = null;
+		nursinghome.rating.average_customers = null;
+		nursinghome.rating.answers_relatives = 0;
+		nursinghome.rating.answers_customers = 0;
 		ratings.map((rating: any) => {
 			if (rating.nursinghome_id === nursinghome.id) {
-				nursinghome.rating.average = rating.average;
-				nursinghome.rating.answers = rating.answers;
+				nursinghome.rating.average_relatives = rating.average_relatives;
+				nursinghome.rating.answers_relatives = rating.answers_relatives;
+				nursinghome.rating.average_customers = rating.average_customers;
+				nursinghome.rating.answers_customers = rating.answers_customers;
 			}
 		});
 
@@ -511,7 +515,7 @@ export async function SubmitSurveyData(
 
 	if (loggedIn) {
 		const { id } = ctx.params;
-		const surveyData = ctx.request.body.surveyData;
+		const surveyData = ctx.request.body.survey;
 
 		return await SubmitSurveyDataDB(id, surveyData);
 	}

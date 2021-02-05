@@ -789,15 +789,15 @@ export const translations = {
 		"fi-FI": "Lue lisää",
 		"sv-FI": "Läs mer",
 	},
-	clientReviews: {
-		"fi-FI": "Omaisten arvio",
-		"sv-FI": "Anhörigas bedömning",
-	},
-	clientReviewsBy: {
+	relativeReviewsBy: {
 		"fi-FI": "Omaisten antamat arviot",
 		"sv-FI": "Anhörigas bedömningar",
 	},
-	nursingHomeReviews: {
+	customerReviewsBy: {
+		"fi-FI": "Asiakkaiden antamat arviot",
+		"sv-FI": "Asiakkaiden antamat arviot",
+	},
+	nursingHomeReviews:{
 		"fi-FI": "Arviot hoivakodista",
 		"sv-FI": "Bedömningar av vårdhemmet",
 	},
@@ -888,11 +888,15 @@ export const translations = {
 		"fi-FI": "Palaa palvelun etusivulle",
 		"sv-FI": "Gå tillbaka till tjänstens första sida",
 	},
-	feedbackRelationReview: {
+	feedbackRelativeReview: {
 		"fi-FI": "Omaisten arvio",
 		"sv-FI": "Anhörigas bedömning",
 	},
-	feedbackNoReviews: {
+	feedbackCustomerReview: {
+		"fi-FI": "Asiakkaiden arvio",
+		"sv-FI": "Asiakkaiden arvio",
+	},
+	feedbackNoReviews:{
 		"fi-FI": "Ei annettuja arvioita",
 		"sv-FI": "Inga bedömningar",
 	},

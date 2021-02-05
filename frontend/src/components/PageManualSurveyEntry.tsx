@@ -8,18 +8,20 @@ import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
 
+let resultState: any[] = [];
+
 const PageManualSurveyEntry: FC = () => {
 	const sessionCookies = new Cookies();
 
-	const { id } = useParams();
+	const { id } = useParams() as any;
 	const key = sessionCookies.get("hoivakoti_session");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [popupState, setPopupState] = useState<
 		null | "saving" | "saved" | "failed"
 	>(null);
 
-	const [results, setResults] = useState<any[] | null>(null);
-	const [temp, setTemp] = useState<any | null>(null);
+	const [results, setResults] = useState<any[]>([]);
+	const [count, setCount] = useState<number>(0);
 
 	if (!id) throw new Error("Invalid URL!");
 
@@ -46,6 +48,8 @@ const PageManualSurveyEntry: FC = () => {
 		axios
 			.get(`${config.API_URL}/survey/${id}/results/asiakaskysely`)
 			.then((response: { data: any[] }) => {
+				resultState = response.data;
+				setCount(response.data[0].answers);
 				setResults(response.data);
 			})
 			.catch(e => {
@@ -62,11 +66,34 @@ const PageManualSurveyEntry: FC = () => {
 	const updatePopupFailed = useT("reportFailed");
 	const updatePopupSaving = useT("saving");
 
+	const updateAnswer = (id: number, value: number): void => {
+		const index = resultState.findIndex(x => x.id === id);
+		resultState[index].average = value;
+		setResults(resultState);
+	};
+
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
 		setPopupState("saving");
+		await axios
+			.post(
+				`${config.API_URL}/survey/${id}/manual-entry`,
+				{
+					survey: results,
+				},
+				{
+					headers: { Authentication: key },
+				},
+			)
+			.then(_ => {
+				setPopupState("saved");
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
 	};
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
@@ -79,18 +106,14 @@ const PageManualSurveyEntry: FC = () => {
 		results.map((question: any, index: number) => (
 			<div key={index}>
 				<div className={"manual-survey-question"}>
-					<h4>{question.question_fi}</h4>
-
-					<span>Vastausten keskiarvo: </span>
-					<input
-						type="text"
-						value={temp}
-						onChange={(
-							event: React.ChangeEvent<HTMLInputElement>,
-						): void => {
-							setTemp(event.target.value);
+					<Question
+						question={question}
+						onChange={value => {
+							{
+								updateAnswer(question.id, value);
+							}
 						}}
-					></input>
+					/>
 				</div>
 			</div>
 		));
@@ -151,13 +174,19 @@ const PageManualSurveyEntry: FC = () => {
 								<span>Kpl: </span>
 								<input
 									type="text"
-									value={temp}
+									value={count}
 									onChange={(
 										event: React.ChangeEvent<
 											HTMLInputElement
 										>,
 									): void => {
-										setTemp(event.target.value);
+										for (const question of resultState) {
+											question.answers = parseInt(
+												event.target.value,
+											);
+										}
+										setResults(resultState);
+										setCount(parseInt(event.target.value));
 									}}
 								></input>
 							</div>
@@ -173,3 +202,32 @@ const PageManualSurveyEntry: FC = () => {
 };
 
 export default PageManualSurveyEntry;
+
+interface QuestionProps {
+	question: any;
+	onChange: (value: any) => void;
+}
+
+export const Question: FC<QuestionProps> = ({ question, onChange }) => {
+	const [questionState, setQuestionState] = useState<string>(
+		question.average,
+	);
+
+	return (
+		<>
+			<h4>{question.question_fi}</h4>
+
+			<span>Vastausten keskiarvo: </span>
+			<input
+				type="string"
+				value={questionState}
+				onChange={(
+					event: React.ChangeEvent<HTMLInputElement>,
+				): void => {
+					onChange(parseFloat(event.target.value));
+					setQuestionState(event.target.value);
+				}}
+			></input>
+		</>
+	);
+};

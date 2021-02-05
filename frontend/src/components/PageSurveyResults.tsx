@@ -8,28 +8,39 @@ import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome } from "./types";
 
-
 let surveyState: any[] = [];
 
 const PageSurveyResults: FC = () => {
-	const { id } = useParams();
-	const [survey, setSurvey] = useState<any[] | null>(null);
+	const { id } = useParams() as any;
+	const [relativeSurvey, setRelativeSurvey] = useState<any[] | null>(null);
+	const [customerSurvey, setCustomerSurvey] = useState<any[] | null>(null);
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 
 	if (!id) throw new Error("Invalid URL!");
 
 	useEffect(() => {
 		axios
-			.get(`${config.API_URL}/survey/${id}/results/omaiskysely`)
+			.get(`${config.API_URL}/survey/${id}/results/asiakaskysely`)
 			.then((response: { data: any[] }) => {
 				surveyState = response.data;
-				setSurvey(response.data);
+				setCustomerSurvey(response.data);
 			})
 			.catch(e => {
 				console.error(e);
 				throw e;
 			});
-	}, []);
+
+		axios
+			.get(`${config.API_URL}/survey/${id}/results/omaiskysely`)
+			.then((response: { data: any[] }) => {
+				surveyState = response.data;
+				setRelativeSurvey(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+	}, [id]);
 
 	useEffect(() => {
 		axios
@@ -46,7 +57,8 @@ const PageSurveyResults: FC = () => {
 	const loadingText = useT("loadingText");
 	const nursingHomeReviews = useT("nursingHomeReviews");
 	const linkBackToBasicInfo = useT("linkBackToBasicInfo");
-	const clientReviewsBy = useT("clientReviewsBy");
+	const relativeReviewsBy = useT("relativeReviewsBy");
+	const customerReviewsBy = useT("customerReviewsBy");
 	const nReviews = useT("nReviews");
 	const averageReviewScore = useT("averageReviewScore");
 	const reviewFooterHeader = useT("reviewFooterHeader");
@@ -66,16 +78,16 @@ const PageSurveyResults: FC = () => {
 	const ratingToString = (rating: number | null): string => {
 		let str = "-";
 
-		if (rating){
-			if (rating > 4.5){
+		if (rating) {
+			if (rating > 4.5) {
 				str = optionText5;
-			} else if (rating > 3.5){
+			} else if (rating > 3.5) {
 				str = optionText4;
-			} else if (rating > 2.5){
+			} else if (rating > 2.5) {
 				str = optionText3;
-			} else if (rating > 1.5){
+			} else if (rating > 1.5) {
 				str = optionText2;
-			} else if (rating > 0.5){
+			} else if (rating > 0.5) {
 				str = optionText1;
 			}
 		}
@@ -83,18 +95,60 @@ const PageSurveyResults: FC = () => {
 		return str;
 	};
 
-	const questions: JSX.Element[] | null =
+	const questions = (survey: any): JSX.Element[] | null =>
 		survey &&
 		survey.map((question: any, index: number) => (
-			<div card-key={index}>
-				<div className={`page-survey-results-result`}>
-					<div className="page-survey-results-result-question">{i18n.language == "sv-FI" ? question.question_sv : question.question_fi }</div>
+			<div key={index}>
+				<div className={"page-survey-results-result"}>
+					<div className="page-survey-results-result-question">
+						{i18n.language == "sv-FI"
+							? question.question_sv
+							: question.question_fi}
+					</div>
 					<div className="page-survey-results-result-score">
-						<div className={`page-survey-results-result-image${question.average > 0.5 ? " star-full" : " star-none"}`}></div>
-						<div className={`page-survey-results-result-image${question.average > 1.75 ? " star-full" : (question.average > 1.25 ? " star-half" : " star-none")}`}></div>
-						<div className={`page-survey-results-result-image${question.average > 2.75 ? " star-full" : (question.average > 2.25 ? " star-half" : " star-none")}`}></div>
-						<div className={`page-survey-results-result-image${question.average > 3.75 ? " star-full" : (question.average > 3.25 ? " star-half" : " star-none")}`}></div>
-						<div className={`page-survey-results-result-image${question.average > 4.75 ? " star-full" : (question.average > 4.25 ? " star-half" : " star-none")}`}></div>
+						<div
+							className={`page-survey-results-result-image${
+								question.average > 0.5
+									? " star-full"
+									: " star-none"
+							}`}
+						></div>
+						<div
+							className={`page-survey-results-result-image${
+								question.average > 1.75
+									? " star-full"
+									: question.average > 1.25
+									? " star-half"
+									: " star-none"
+							}`}
+						></div>
+						<div
+							className={`page-survey-results-result-image${
+								question.average > 2.75
+									? " star-full"
+									: question.average > 2.25
+									? " star-half"
+									: " star-none"
+							}`}
+						></div>
+						<div
+							className={`page-survey-results-result-image${
+								question.average > 3.75
+									? " star-full"
+									: question.average > 3.25
+									? " star-half"
+									: " star-none"
+							}`}
+						></div>
+						<div
+							className={`page-survey-results-result-image${
+								question.average > 4.75
+									? " star-full"
+									: question.average > 4.25
+									? " star-half"
+									: " star-none"
+							}`}
+						></div>
 					</div>
 				</div>
 			</div>
@@ -103,20 +157,75 @@ const PageSurveyResults: FC = () => {
 	return (
 		<div className="page-survey-results">
 			<div>
-				{!survey || !nursingHome ? (
+				{!relativeSurvey || !customerSurvey || !nursingHome ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
-					<Link to={`/hoivakodit/${nursingHome.id}`} className="nursinghome-back-link">{linkBackToBasicInfo}</Link>
-					<h2>{nursingHomeReviews}</h2>
-					<p>{nursingHome.name} - {nursingHome.address}, {nursingHome.city}</p>
-
-					<h3 className="page-survey-results-title">{clientReviewsBy}</h3>
-					<p className="page-survey-results-minor-title">{nursingHome.rating.answers} {nReviews}</p>
-					<div className="page-survey-results-item">
-						{questions}
-					</div>
-					<p className="page-survey-results-minor-title">{averageReviewScore}:<span className="page-survey-results-bold"> {ratingToString(nursingHome.rating.average)}</span> {nursingHome.rating && nursingHome.rating.average ? nursingHome.rating.average.toPrecision(2) : "-"} / 5</p>
+						<Link
+							to={`/hoivakodit/${nursingHome.id}`}
+							className="nursinghome-back-link"
+						>
+							{linkBackToBasicInfo}
+						</Link>
+						<h2>{nursingHomeReviews}</h2>
+						<p>
+							{nursingHome.name} - {nursingHome.address},{" "}
+							{nursingHome.city}
+						</p>
+						<div className="page-survey-results-set">
+							<h3 className="page-survey-results-title">
+								{customerReviewsBy}
+							</h3>
+							<p className="page-survey-results-minor-title">
+								{nursingHome.rating.answers_customers} {nReviews}
+							</p>
+							<div className="page-survey-results-item">
+								{questions(customerSurvey)}
+							</div>
+							<p className="page-survey-results-minor-title">
+								{averageReviewScore}:
+								<span className="page-survey-results-bold">
+									{" "}
+									{ratingToString(
+										nursingHome.rating.average_customers,
+									)}
+								</span>{" "}
+								{nursingHome.rating &&
+								nursingHome.rating.average_customers
+									? nursingHome.rating.average_customers.toPrecision(
+											2,
+									  )
+									: "-"}{" "}
+								/ 5
+							</p>
+						</div>
+						<div className="page-survey-results-set">
+							<h3 className="page-survey-results-title">
+								{relativeReviewsBy}
+							</h3>
+							<p className="page-survey-results-minor-title">
+								{nursingHome.rating.answers_relatives} {nReviews}
+							</p>
+							<div className="page-survey-results-item">
+								{questions(relativeSurvey)}
+							</div>
+							<p className="page-survey-results-minor-title">
+								{averageReviewScore}:
+								<span className="page-survey-results-bold">
+									{" "}
+									{ratingToString(
+										nursingHome.rating.average_relatives,
+									)}
+								</span>{" "}
+								{nursingHome.rating &&
+								nursingHome.rating.average_relatives
+									? nursingHome.rating.average_relatives.toPrecision(
+											2,
+									)
+									: "-"}{" "}
+								/ 5
+							</p>
+						</div>
 					</>
 				)}
 			</div>
@@ -125,7 +234,16 @@ const PageSurveyResults: FC = () => {
 				<p>{reviewFooterPart1}</p>
 				<p>{reviewFooterPart2}</p>
 				<p>{reviewFooterPart3}</p>
-				<p>{reviewFooterPart4} <a href={urlReviewFooterLink} target="_blank">{reviewFooterLink}</a></p>
+				<p>
+					{reviewFooterPart4}{" "}
+					<a
+						href={urlReviewFooterLink}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{reviewFooterLink}
+					</a>
+				</p>
 			</div>
 		</div>
 	);

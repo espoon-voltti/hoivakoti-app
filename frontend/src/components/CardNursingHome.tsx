@@ -41,7 +41,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	let reportStatus = useT("status_waiting");
 	const reportScore = useT("reportScore");
 
-	const feedbackRelationReview = useT("feedbackRelationReview");
+	const feedbackRelativeReview = useT("feedbackRelativeReview");
+	const feedbackCustomerReview = useT("feedbackCustomerReview");
 	const feedbackNoReviews = useT("feedbackNoReviews");
 	const feedbackReviews = useT("feedbackReviews");
 	const feedbackGreat = useT("feedbackGreat");
@@ -268,22 +269,57 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					<div>
 						<p
 							className={
-								nursinghome.rating.average ? "" : "hidden"
+								nursinghome.rating.average_customers
+									? ""
+									: "hidden"
 							}
 						>
-							{feedbackRelationReview}
+							{feedbackCustomerReview}
 						</p>
 						<p className="card-nursing-home-public-status-header">
-							{ratingToString(nursinghome.rating.average)}
+							{ratingToString(
+								nursinghome.rating.average_customers,
+							)}
 						</p>
 						<p>
-							{nursinghome.rating.average
-								? nursinghome.rating.average.toPrecision(2) +
-								  " / 5"
+							{nursinghome.rating.average_customers
+								? nursinghome.rating.average_customers.toPrecision(
+										2,
+								  ) + " / 5"
 								: ""}
 						</p>
 						<p>
-							({nursinghome.rating.answers} {feedbackReviews})
+							({nursinghome.rating.answers_customers}{" "}
+							{feedbackReviews})
+						</p>
+					</div>
+				</div>
+				<div className="card-nursing-home-public-status no-left-border">
+					<div>
+						<p
+							className={
+								nursinghome.rating.average_relatives
+									? ""
+									: "hidden"
+							}
+						>
+							{feedbackRelativeReview}
+						</p>
+						<p className="card-nursing-home-public-status-header">
+							{ratingToString(
+								nursinghome.rating.average_relatives,
+							)}
+						</p>
+						<p>
+							{nursinghome.rating.average_relatives
+								? nursinghome.rating.average_relatives.toPrecision(
+										2,
+								  ) + " / 5"
+								: ""}
+						</p>
+						<p>
+							({nursinghome.rating.answers_relatives}{" "}
+							{feedbackReviews})
 						</p>
 					</div>
 				</div>
