@@ -12,6 +12,7 @@ import {
 	DropAndRecreateTables,
 	DropAndRecreateSurveyAnswerTables,
 	DropAndRecreateSurveyTables,
+	DropAndRecreateSurveyTotalScoreTable,
 	DropAndRecreateReportsTables,
 	UploadPics,
 	GetAllPicsAndDescriptions,
@@ -79,7 +80,7 @@ router.post("/api/nursing-homes/drop-survey-answers", async ctx => {
 });
 
 router.post("/api/nursing-homes/recalculate-survey-total-scores", async ctx => {
-	//ctx.body = await DropAndRecreateSurveyAnswerTables(ctx);
+	ctx.body = await DropAndRecreateSurveyTotalScoreTable(ctx);
 });
 
 router.post("/api/nursing-homes/drop-surveys", async ctx => {

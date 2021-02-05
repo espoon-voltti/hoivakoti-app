@@ -303,7 +303,44 @@ export async function DropAndRecreateNursingHomeSurveyTotalScoresTable(): Promis
 	const exists = await knex.schema.hasTable("NursingHomeSurveyTotalScores");
 	if (exists) await knex.schema.dropTable("NursingHomeSurveyTotalScores");
 	const result = await CreateNursingHomeSurveyTotalScoresTable();
-	return result;
+	const surveys = [
+		{ name: "asiakaskysely", db: "_customers" },
+		{ name: "omaiskysely", db: "_relatives" },
+	];
+
+	const nursingHomes = await knex.table("NursingHomes").select("id");
+
+	for (const nursingHome of nursingHomes) {
+		await knex.table("NursingHomeSurveyTotalScores").insert({
+			nursinghome_id: nursingHome.id,
+		});
+	}
+
+	for (const survey of surveys) {
+		const nursingHomeScores = await knex
+			.table("NursingHomeSurveyScores")
+			.join(
+				"NursingHomeSurveyQuestions",
+				"NursingHomeSurveyQuestions.id",
+				"NursingHomeSurveyScores.question_id",
+			)
+			.select("nursinghome_id", "answers")
+			.avg("average")
+			.where({ survey_id: survey.name })
+			.groupBy("nursinghome_id", "answers");
+
+		for (const score of nursingHomeScores) {
+			await knex
+				.table("NursingHomeSurveyTotalScores")
+				.update({
+					["average" + survey.db]: score.avg,
+					["answers" + survey.db]: score.answers,
+				})
+				.where({
+					nursinghome_id: score.nursinghome_id,
+				});
+		}
+	}
 }
 
 export async function DropAndRecreateNursingHomeSurveyQuestionsTable(): Promise<
