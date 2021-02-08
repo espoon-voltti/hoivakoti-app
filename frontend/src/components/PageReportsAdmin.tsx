@@ -4,17 +4,13 @@ import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import "../styles/PageReportsAdmin.scss";
 import config from "./config";
-import { Link as div } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
-import Map from "./Map";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
 
 type Language = string;
-
-const calculateMapVisible = (width: number): boolean => width >= 1130;
 
 interface SearchFilters {
 	readonly alue?: string[];
@@ -25,22 +21,13 @@ interface SearchFilters {
 }
 
 const PageReportsAdmin: FC = () => {
-	const [sessionCookies, setSessionCookies] = useState<Cookies>(
-		new Cookies(),
-	);
+	const [sessionCookies] = useState<Cookies>(new Cookies());
+
 	const [loggedIn, setLoggedIn] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
 
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
-	);
-	const [mapPopup, setMapPopup] = useState<{
-		selectedNursingHome: NursingHome;
-		isExpanded: boolean;
-	} | null>(null);
-
-	const [isMapVisible, setIsMapVisible] = useState(
-		calculateMapVisible(window.innerWidth),
 	);
 
 	const [searchField, setSearchField] = useState<string>();
@@ -153,7 +140,6 @@ const PageReportsAdmin: FC = () => {
 		language: parsed.language as Language,
 		name: parsed.name as string,
 	};
-	const hasFilters = search !== "";
 
 	const locationPickerLabel = useT("locationPickerLabel");
 
@@ -532,7 +518,6 @@ const PageReportsAdmin: FC = () => {
 				adminPassword: password,
 			})
 			.then(function(response: { data: string }) {
-				console.log(response.data);
 				sessionCookies.set("hoivakoti_session", response.data, {
 					path: "/",
 					maxAge: 36000,

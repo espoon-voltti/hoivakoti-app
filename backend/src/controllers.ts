@@ -238,8 +238,8 @@ export async function DropAndRecreateSurveyTotalScoreTable(
 		adminPw.length > 0 &&
 		requestPw === adminPw;
 	if (!isPwValid) return null;
-	const result1 = await DropAndRecreateNursingHomeSurveyTotalScoresTable();
-	return result1;
+	const result = await DropAndRecreateNursingHomeSurveyTotalScoresTable();
+	return result;
 }
 
 export async function DropAndRecreateSurveyTables(ctx: any): Promise<void | null> {
@@ -460,7 +460,6 @@ export async function AddNursingHomeSurveyQuestion(
 		typeof adminPw === "string" &&
 		adminPw.length > 0 &&
 		requestPw === adminPw;
-	console.log(isPwValid);
 	if (!isPwValid) return null;
 
 	for (const question of ctx.request.body.questions) {

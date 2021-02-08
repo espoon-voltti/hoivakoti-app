@@ -302,7 +302,7 @@ export async function DropAndRecreateNursingHomeSurveyTotalScoresTable(): Promis
 > {
 	const exists = await knex.schema.hasTable("NursingHomeSurveyTotalScores");
 	if (exists) await knex.schema.dropTable("NursingHomeSurveyTotalScores");
-	const result = await CreateNursingHomeSurveyTotalScoresTable();
+	await CreateNursingHomeSurveyTotalScoresTable();
 	const surveys = [
 		{ name: "asiakaskysely", db: "_customers" },
 		{ name: "omaiskysely", db: "_relatives" },
