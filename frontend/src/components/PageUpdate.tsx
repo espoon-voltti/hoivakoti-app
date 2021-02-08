@@ -104,6 +104,20 @@ const requestNursingHomeUpdate = async (
 	}
 };
 
+const requestCommunesUpdate = async (
+	id: string,
+	communes: Commune[],
+): Promise<void> => {
+	try {
+		await axios.post(`${config.API_URL}/communes/${id}`, {
+			communes: communes,
+		});
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
 const PageUpdate: FC = () => {
 	const { id, key } = useParams<NursingHomeRouteParams>();
 
@@ -114,6 +128,8 @@ const PageUpdate: FC = () => {
 		null,
 	);
 	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
+	const [communes, setCommunes] = useState<Commune[] | null>(null);
+
 	const [popupState, setPopupState] = useState<
 		null | "saving" | "saved" | "invalid"
 	>(null);
@@ -281,6 +297,20 @@ const PageUpdate: FC = () => {
 				});
 		}
 	}, [id, key, popupState, vacancyStatus]);
+
+	useEffect(() => {
+		if (!communes) {
+			axios
+				.get(`${config.API_URL}/communes/${id}`)
+				.then(res => {
+					setCommunes(res.data);
+				})
+				.catch(err => {
+					console.error(err);
+					throw err;
+				});
+		}
+	}, [communes, id]);
 
 	const [form, setForm] = useState<{ [key: string]: InputField[] }>({
 		vacancyFields: [
@@ -593,6 +623,8 @@ const PageUpdate: FC = () => {
 					} else {
 						newList.push(commune);
 					}
+
+					setCommunes(newList);
 
 					return newList;
 				},

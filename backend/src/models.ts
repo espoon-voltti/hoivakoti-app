@@ -4,6 +4,7 @@ import uuidv4 from "uuid/v4";
 import rp from "request-promise-native";
 import crypto, { BinaryLike } from "crypto";
 import {
+	Commune,
 	NursingHome,
 	nursing_home_pictures_columns_info,
 	postal_code_to_district,
@@ -43,6 +44,12 @@ knex.schema.hasTable("NursingHomePictures").then(async (exists: boolean) => {
 	//	await knex.schema.dropTable("NursingHomePictures");
 
 	await CreateNursingHomePicturesTable();
+});
+
+knex.schema.hasTable("NursingHomeCommunes").then(async (exists: boolean) => {
+	if (exists) return;
+
+	await CreateNursingHomeCommunesTable();
 });
 
 knex.schema.hasTable("NursingHomeReports").then(async (exists: boolean) => {
@@ -125,6 +132,16 @@ async function CreateNursingHomePicturesTable(): Promise<void> {
 		});
 		table.string("nursinghome_id");
 	});
+}
+
+async function CreateNursingHomeCommunesTable(): Promise<void> {
+	await knex.schema.createTable(
+		"NursingHomeCommunes",
+		(table: CreateTableBuilder) => {
+			table.string("nursinghome_id");
+			table.json("communes");
+		},
+	);
 }
 
 async function CreateNursingHomeReportsTable(): Promise<void> {
@@ -228,7 +245,6 @@ async function CreateNursingHomeTable(): Promise<void> {
 			table.text("summary");
 			table.string("postal_code");
 			table.string("city");
-			table.json("communes");
 			table.text("arrival_guide_public_transit");
 			table.text("arrival_guide_car");
 			table.integer("construction_year");
@@ -1151,6 +1167,50 @@ export async function GetIsValidSurveyKey(key: string): Promise<boolean> {
 	} else {
 		return false;
 	}
+}
+
+export async function GetCommunesForNursingHome(
+	id: string,
+): Promise<Commune[] | null> {
+	const result = await knex("NursingHomeCommunes")
+		.select("communes")
+		.where({ nursinghome_id: id });
+
+	console.log(result);
+
+	return result[0].communes;
+}
+
+export async function UpdateCommunesForNursingHome(
+	id: string,
+	communes: Commune[],
+): Promise<boolean> {
+	let requestValid = true;
+
+	for (const commune of communes) {
+		if (!Object.values(Commune).includes(commune)) {
+			requestValid = false;
+		}
+	}
+
+	if (requestValid) {
+		const currentCommunes = await GetCommunesForNursingHome(id);
+
+		if (currentCommunes && currentCommunes.length > 0) {
+			await knex("NursingHomeCommunes")
+				.where({ nursinghome_id: id })
+				.update({ communes: JSON.stringify(communes) });
+		} else {
+			await knex("NursingHomeCommunes").insert({
+				nursinghome_id: id,
+				communes: JSON.stringify(communes),
+			});
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
 //DUMMY DATA FOR TESTING

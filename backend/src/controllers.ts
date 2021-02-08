@@ -42,12 +42,14 @@ import {
 	SubmitSurveyData as SubmitSurveyDataDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
 	GetSurvey as GetSurveyDB,
+	GetCommunesForNursingHome,
+	UpdateCommunesForNursingHome,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
 import Knex = require("knex");
 import { Context } from "koa";
-import { NursingHome } from "./nursinghome-typings";
+import { Commune, NursingHome } from "./nursinghome-typings";
 
 export async function AddNursingHome(ctx: any): Promise<string> {
 	await InsertNursingHomeToDB({
@@ -135,7 +137,8 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	nursing_home_data["pic_digests"] = pic_digests;
 	nursing_home_data["pics"] = available_pics;
 	nursing_home_data["pic_captions"] = pic_captions;
-	nursing_home_data["report_status"] = nursing_home_status.length > 0 ? nursing_home_status : null;
+	nursing_home_data["report_status"] =
+		nursing_home_status.length > 0 ? nursing_home_status : null;
 	nursing_home_data["rating"] = rating;
 	return nursing_home_data;
 }
@@ -569,4 +572,23 @@ export async function GetSurveyWithNursingHomeResults(
 	});
 
 	return survey;
+}
+
+export async function GetNursingHomeCommunes(
+	ctx: Context,
+): Promise<Commune[] | null> {
+	const { id } = ctx.params;
+
+	const result = await GetCommunesForNursingHome(id);
+
+	return result;
+}
+
+export async function UpdateNursingHomeCommunes(ctx: Context): Promise<any> {
+	const { id } = ctx.params;
+	const communes = ctx.request.body.communes;
+
+	const result = await UpdateCommunesForNursingHome(id, communes);
+
+	return result;
 }
