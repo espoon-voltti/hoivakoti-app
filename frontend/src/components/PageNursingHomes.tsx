@@ -172,7 +172,7 @@ const PageNursingHomes: FC = () => {
 				| NursingHome[]
 				| null = nursingHomes.filter(nursinghome => {
 				if (searchFilters.alue && searchFilters.alue.length > 0) {
-					const notCorrectArea =
+					const notInCorrectArea =
 						!searchFilters.alue.includes(nursinghome.district) &&
 						!searchFilters.alue.includes(nursinghome.city);
 
@@ -191,23 +191,23 @@ const PageNursingHomes: FC = () => {
 						},
 					)[0];
 
-					const notCorrectTranslatedArea =
+					const notInCorrectAreaTranslation =
 						!searchFilters.alue.includes(citiesFI[cityKeyFI]) &&
 						!searchFilters.alue.includes(
 							districtsSV[districtKeySV],
 						);
 
-					if (notCorrectArea && notCorrectTranslatedArea) {
+					if (notInCorrectArea && notInCorrectAreaTranslation) {
 						return false;
 					}
 				}
 
-				const notCorrecLanguage =
+				const notCorrectLanguage =
 					searchFilters.language &&
 					nursinghome.language &&
 					!nursinghome.language.includes(searchFilters.language);
 
-				if (notCorrecLanguage) {
+				if (notCorrectLanguage) {
 					return false;
 				}
 
@@ -242,14 +242,14 @@ const PageNursingHomes: FC = () => {
 						}
 					});
 
-					const correctCommune = filtersToKeys.some(commune => {
+					const inCorrectCommune = filtersToKeys.some(commune => {
 						return (
 							nursinghome.communes &&
 							nursinghome.communes.includes(commune as Commune)
 						);
 					});
 
-					if (!correctCommune) {
+					if (!inCorrectCommune) {
 						return false;
 					}
 				}
@@ -305,21 +305,17 @@ const PageNursingHomes: FC = () => {
 	const filterShowARA = useT("filterShowARA");
 	const filterShowLah = useT("filterShowLah");
 
-	const espooChecked = searchFilters.alue
-		? searchFilters.alue.includes("Espoo")
-		: false;
-
 	const optionsArea: FilterOption[] = [
 		{ text: locationPickerLabel, type: "header" },
-		...Object.keys(espooTranslation).map<FilterOption>(key => {
-			return {
-				name: espooTranslation[key],
-				label: espooTranslation[key],
-				type: "checkbox",
-				checked: espooChecked,
-				bold: true,
-			};
-		}),
+		{
+			name: espooTranslation["EPO"],
+			label: espooTranslation["EPO"],
+			type: "checkbox",
+			checked: searchFilters.alue
+				? searchFilters.alue.includes(espooTranslation["EPO"])
+				: false,
+			bold: true,
+		},
 		...Object.keys(espooAreaTranslations).map<FilterOption>(key => {
 			const value = espooAreaTranslations[key];
 
@@ -354,17 +350,15 @@ const PageNursingHomes: FC = () => {
 	];
 
 	const optionsCommune: FilterOption[] = [
-		...Object.keys(espooTranslation).map<FilterOption>(key => {
-			return {
-				name: espooTranslation[key],
-				label: espooTranslation[key],
-				type: "checkbox",
-				checked: searchFilters.kotikunta
-					? searchFilters.kotikunta.includes(espooTranslation[key])
-					: false,
-				bold: true,
-			};
-		}),
+		{
+			name: espooTranslation["EPO"],
+			label: espooTranslation["EPO"],
+			type: "checkbox",
+			checked: searchFilters.kotikunta
+				? searchFilters.kotikunta.includes(espooTranslation["EPO"])
+				: false,
+			bold: true,
+		},
 		...Object.keys(espooAreaTranslations).map<FilterOption>(key => {
 			const value = espooAreaTranslations[key];
 
