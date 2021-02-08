@@ -134,7 +134,7 @@ const PageNursingHomes: FC = () => {
 		...otherCitiesTranslations,
 	};
 
-	//City or district can appear in Finnish or Swedish reqardless of the current language.
+	//City or district can appear in Finnish or Swedish regardless of the current language.
 	const citiesFI: Translation = {
 		[Commune.EPK]: getTranslationByLanguage("fi-FI", "espoon keskus"),
 		[Commune.EPL]: getTranslationByLanguage("fi-FI", "espoonlahti"),
