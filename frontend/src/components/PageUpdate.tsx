@@ -23,7 +23,7 @@ enum InputTypes {
 }
 
 type NursingHomeKey = keyof NursingHome;
-type InputFieldValue = string | number | boolean | Commune[];
+type InputFieldValue = string | number | boolean | Commune[] | null;
 
 type NursingHomeUpdateData = Omit<
 	NursingHome,
@@ -59,6 +59,7 @@ interface InputField {
 	touched?: boolean;
 	change?: (...arg: any) => InputFieldValue;
 	maxlength?: number;
+	value: InputFieldValue;
 }
 
 const formatDate = (dateString: string | null): string => {
@@ -249,69 +250,6 @@ const PageUpdate: FC = () => {
 		[Commune.VTI]: useT("vihti"),
 	};
 
-	useEffect(() => {
-		axios
-			.get(`${config.API_URL}/nursing-homes/${id}`)
-			.then((response: GetNursingHomeResponse) => {
-				const data = response.data;
-				const shouldSetDefaults =
-					data.has_vacancy === null || data.language === "";
-
-				if (shouldSetDefaults) {
-					const prepopulateNursingHome = { ...data };
-
-					if (data.has_vacancy === null) {
-						prepopulateNursingHome["has_vacancy"] = false;
-					}
-
-					if (data.language === "") {
-						prepopulateNursingHome.language = filterFinnish;
-					}
-
-					setNursingHome(prepopulateNursingHome);
-				} else {
-					setNursingHome(data);
-				}
-			})
-			.catch(e => {
-				console.error(e);
-				throw e;
-			});
-	}, [id, filterFinnish]);
-
-	useEffect(() => {
-		if (!vacancyStatus) {
-			axios
-				.get(
-					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
-				)
-				.then((response: { data: VacancyStatus }) => {
-					setVacancyStatus(response.data);
-					setHasVacancy(response.data.has_vacancy);
-
-					if (popupState) setTimeout(() => setPopupState(null), 3000);
-				})
-				.catch(e => {
-					console.error(e);
-					throw e;
-				});
-		}
-	}, [id, key, popupState, vacancyStatus]);
-
-	useEffect(() => {
-		if (!communes) {
-			axios
-				.get(`${config.API_URL}/communes/${id}`)
-				.then(res => {
-					setCommunes(res.data);
-				})
-				.catch(err => {
-					console.error(err);
-					throw err;
-				});
-		}
-	}, [communes, id]);
-
 	const [form, setForm] = useState<{ [key: string]: InputField[] }>({
 		vacancyFields: [
 			{
@@ -321,6 +259,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelSelectVancyStatus,
@@ -333,6 +272,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: false,
 				change: (_, value: InputFieldValue) => {
 					setHasVacancy(value as boolean);
 
@@ -343,6 +283,7 @@ const PageUpdate: FC = () => {
 				label: labelHasLAHapartments,
 				type: InputTypes.checkbox,
 				name: "lah",
+				value: false,
 			},
 		],
 		contactFields: [
@@ -353,12 +294,14 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelContactPhoneInfo,
 				type: InputTypes.textarea,
 				name: "contact_phone_info",
 				maxlength: 200,
+				value: "",
 			},
 		],
 		contactColumnFields: [
@@ -369,6 +312,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelContactTitle,
@@ -377,6 +321,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelContactPhone,
@@ -385,6 +330,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelContactEmail,
@@ -393,6 +339,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 		],
 		addressFields: [
@@ -403,6 +350,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelPostalCode,
@@ -411,6 +359,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelCity,
@@ -419,6 +368,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelDistrict,
@@ -427,6 +377,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 		],
 		guideFields: [
@@ -438,18 +389,21 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelArrivalPublicTransit,
 				type: InputTypes.textarea,
 				name: "arrival_guide_public_transit",
 				maxlength: 200,
+				value: "",
 			},
 			{
 				label: labelArrivalCar,
 				type: InputTypes.textarea,
 				name: "arrival_guide_car",
 				maxlength: 200,
+				value: "",
 			},
 		],
 		infoFields: [
@@ -461,6 +415,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelOwner,
@@ -469,6 +424,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelAra,
@@ -482,6 +438,7 @@ const PageUpdate: FC = () => {
 						label: labelPartlyARADestination,
 					},
 				],
+				value: "",
 				required: true,
 				valid: false,
 				touched: false,
@@ -493,6 +450,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: null,
 			},
 			{
 				label: labelBuildingInfo,
@@ -500,6 +458,7 @@ const PageUpdate: FC = () => {
 				name: "building_info",
 				description: helperBuildingInfo,
 				maxlength: 200,
+				value: "",
 			},
 			{
 				label: labelNumApartments,
@@ -508,6 +467,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: null,
 			},
 			{
 				label: labelApartmentCountInfo,
@@ -515,6 +475,7 @@ const PageUpdate: FC = () => {
 				name: "apartment_count_info",
 				description: helperApartmentCountInfo,
 				maxlength: 300,
+				value: "",
 			},
 			{
 				label: labelApartmentSize + " (m²)",
@@ -524,11 +485,13 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelApartmentsHaveBathroom,
 				type: InputTypes.checkbox,
 				name: "apartments_have_bathroom",
+				value: false,
 			},
 			{
 				label: labelRent + " (€ / kk)",
@@ -538,6 +501,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelRentInfo,
@@ -545,6 +509,7 @@ const PageUpdate: FC = () => {
 				name: "rent_info",
 				description: helperRentInfo,
 				maxlength: 200,
+				value: "",
 			},
 			{
 				label: labelServiceLanguage,
@@ -554,6 +519,7 @@ const PageUpdate: FC = () => {
 					{ label: filterFinnish, value: filterFinnish },
 					{ label: filterSwedish, value: filterSwedish },
 				],
+				value: "",
 				change: (current: string, value: string) => {
 					const languages: string[] = current
 						.split("|")
@@ -589,6 +555,7 @@ const PageUpdate: FC = () => {
 				name: "language_info",
 				description: helperLanguage,
 				maxlength: 200,
+				value: "",
 			},
 		],
 		communesFields: [
@@ -605,6 +572,7 @@ const PageUpdate: FC = () => {
 						};
 					}),
 				],
+				value: null,
 				change: (current: Commune[], value: string) => {
 					let newList: Commune[];
 
@@ -636,6 +604,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.url,
 				name: "menu_link",
 				description: helperUrl,
+				value: "",
 				required: true,
 				valid: false,
 				touched: false,
@@ -654,6 +623,7 @@ const PageUpdate: FC = () => {
 						label: labelFoodDelivered,
 					},
 				],
+				value: "",
 				required: true,
 				valid: false,
 				touched: false,
@@ -663,6 +633,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "meals_info",
 				maxlength: 200,
+				value: "",
 			},
 		],
 		activitiesFields: [
@@ -674,12 +645,14 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelLinkMoreActiviesInfo,
 				type: InputTypes.url,
 				name: "activities_link",
 				description: `${helperActivitiesLink} ${helperUrl}`,
+				value: "",
 			},
 			{
 				label: labelOutdoorActivies,
@@ -687,12 +660,14 @@ const PageUpdate: FC = () => {
 				name: "outdoors_possibilities_info",
 				description: helperOutdoorActivities,
 				maxlength: 200,
+				value: "",
 			},
 			{
 				label: labelLinkMoreOutdoorInfo,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
 				description: helperUrl,
+				value: "",
 			},
 		],
 		accessibilityFields: [
@@ -702,6 +677,7 @@ const PageUpdate: FC = () => {
 				name: "accessibility_info",
 				description: helperAccessibilityInfo,
 				maxlength: 200,
+				value: "",
 			},
 		],
 
@@ -711,12 +687,14 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "staff_info",
 				maxlength: 400,
+				value: "",
 			},
 			{
 				label: labelLinkMorePersonnelInfo,
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
 				description: `${helperStaffSatisfaction} ${helperUrl}`,
+				value: "",
 			},
 		],
 		otherServicesFields: [
@@ -726,6 +704,7 @@ const PageUpdate: FC = () => {
 				name: "other_services",
 				description: helperOtherServices,
 				maxlength: 200,
+				value: "",
 			},
 		],
 		nearbyServicesFields: [
@@ -734,9 +713,75 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "nearby_services",
 				maxlength: 200,
+				value: "",
 			},
 		],
 	});
+
+	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/nursing-homes/${id}`)
+			.then((response: GetNursingHomeResponse) => {
+				const data = response.data;
+
+				setNursingHome(data);
+
+				const prepopulatedForm = { ...form };
+
+				for (const section in prepopulatedForm) {
+					const modifiedSection = [...prepopulatedForm[section]].map(
+						field => {
+							return {
+								...field,
+								value: data[field.name] as InputFieldValue,
+							};
+						},
+					);
+
+					prepopulatedForm[section] = modifiedSection;
+				}
+
+				setForm({ ...prepopulatedForm });
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [id, filterFinnish]);
+
+	useEffect(() => {
+		if (!vacancyStatus) {
+			axios
+				.get(
+					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
+				)
+				.then((response: { data: VacancyStatus }) => {
+					setVacancyStatus(response.data);
+					setHasVacancy(response.data.has_vacancy);
+
+					if (popupState) setTimeout(() => setPopupState(null), 3000);
+				})
+				.catch(e => {
+					console.error(e);
+					throw e;
+				});
+		}
+	}, [id, key, popupState, vacancyStatus]);
+
+	useEffect(() => {
+		if (!communes) {
+			axios
+				.get(`${config.API_URL}/communes/${id}`)
+				.then(res => {
+					setCommunes(res.data);
+				})
+				.catch(err => {
+					console.error(err);
+					throw err;
+				});
+		}
+	}, [communes, id]);
 
 	const [formIsValid, setFormIsValid] = useState(false);
 
