@@ -1170,6 +1170,10 @@ export const translations = {
 		"fi-FI": "Kotikunta",
 		"sv-FI": "Kotikunta",
 	},
+	helperCommune: {
+		"fi-FI": "Määrittele hoivakodin vaatimukset asiakkaan kotikunnaksi",
+		"sv-FI": "Määrittele hoivakodin vaatimukset asiakkaan kotikunnaksi",
+	},
 	filterCommune: {
 		"fi-FI": "Valitse kotikunta",
 		"sv-FI": "Valitse kotikunta",

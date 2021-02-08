@@ -138,6 +138,13 @@
 	min-width: 18.75rem;
 }
 
+.checkbox-columns {
+	.control {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+
 .field {
 	position: relative;
 	padding-bottom: 1.5rem;

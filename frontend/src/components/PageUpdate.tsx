@@ -174,6 +174,7 @@ const PageUpdate: FC = () => {
 	const labelStaffInfo = useT("staffInfo");
 	const labelNearbyServices = useT("labelNearbyServices");
 	const labelAddImages = useT("labelAddImages");
+	const labelCommune = useT("commune");
 
 	const helperSummary = useT("helperSummary");
 	const helperBuildingInfo = useT("helperBuildingInfo");
@@ -188,6 +189,7 @@ const PageUpdate: FC = () => {
 	const helperStaffSatisfaction = useT("helperStaffSatisfaction");
 	const helperOtherServices = useT("helperOtherServices");
 	const helperUrl = useT("helperUrl");
+	const helperCommune = useT("helperCommune");
 
 	const title = useT("updateNursingHomeTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
@@ -558,10 +560,11 @@ const PageUpdate: FC = () => {
 				description: helperLanguage,
 				maxlength: 200,
 			},
+		],
+		communesFields: [
 			{
-				label: "Kotikunta",
-				description:
-					"Määrittele hoivakodin vaatimus asiakkaan kotikunnaksi",
+				label: labelCommune,
+				description: helperCommune,
 				type: InputTypes.checkbox,
 				name: "communes",
 				buttons: [
@@ -1242,6 +1245,15 @@ const PageUpdate: FC = () => {
 								{form.infoFields.map((field, index) =>
 									getInputElement(field, "infoFields", index),
 								)}
+								<div className="checkbox-columns">
+									{form.communesFields.map((field, index) =>
+										getInputElement(
+											field,
+											"communesFields",
+											index,
+										),
+									)}
+								</div>
 							</div>
 							<div className="page-update-section">
 								<h3>{labelFoodHeader}</h3>
