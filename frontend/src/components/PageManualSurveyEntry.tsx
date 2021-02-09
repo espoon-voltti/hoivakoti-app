@@ -232,8 +232,8 @@ export const Question: FC<QuestionProps> = ({ question, onChange }) => {
 				onChange={(
 					event: React.ChangeEvent<HTMLInputElement>,
 				): void => {
-					onChange(parseFloat(event.target.value));
-					setQuestionState(event.target.value);
+					onChange(parseFloat(event.target.value.replace(",", ".")));
+					setQuestionState(event.target.value.replace(",", "."));
 				}}
 			></input>
 		</>
