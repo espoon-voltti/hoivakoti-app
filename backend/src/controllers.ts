@@ -574,14 +574,12 @@ export async function GetSurveyWithNursingHomeResults(
 	return survey;
 }
 
-export async function GetNursingHomeCommunes(
-	ctx: Context,
-): Promise<Commune[] | null> {
+export async function GetNursingHomeCommunes(ctx: Context): Promise<any> {
 	const { id } = ctx.params;
 
 	const result = await GetCommunesForNursingHome(id);
 
-	return result;
+	return result[0] ? result[0].communes : [];
 }
 
 export async function UpdateNursingHomeCommunes(ctx: Context): Promise<any> {

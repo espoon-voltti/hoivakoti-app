@@ -811,7 +811,6 @@ export async function UpdateNursingHomeInformation(
 		.where({ id, basic_update_key: basicUpdateKey })
 		.update({
 			...body,
-			communes: JSON.stringify(body.communes),
 		});
 
 	if (count !== 1) return false;
@@ -1169,16 +1168,12 @@ export async function GetIsValidSurveyKey(key: string): Promise<boolean> {
 	}
 }
 
-export async function GetCommunesForNursingHome(
-	id: string,
-): Promise<Commune[] | null> {
+export async function GetCommunesForNursingHome(id: string): Promise<any> {
 	const result = await knex("NursingHomeCommunes")
-		.select("communes")
+		.select()
 		.where({ nursinghome_id: id });
 
-	console.log(result);
-
-	return result[0] ? result[0].communes : [];
+	return result;
 }
 
 export async function UpdateCommunesForNursingHome(
