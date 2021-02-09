@@ -71,10 +71,10 @@ const PageNursingHomes: FC = () => {
 						`${config.API_URL}/communes/${item.id}`,
 					);
 
-					const updateNursinHome = { ...item };
-					updateNursinHome.communes = communesRequest.data;
+					const updateNursingHome = { ...item };
+					updateNursingHome.communes = communesRequest.data;
 
-					nursingHomesTempData.push(updateNursinHome);
+					nursingHomesTempData.push(updateNursingHome);
 				}
 
 				setNursingHomes(nursingHomesTempData);

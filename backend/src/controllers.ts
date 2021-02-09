@@ -49,7 +49,7 @@ import {
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
 import Knex = require("knex");
 import { Context } from "koa";
-import { Commune, NursingHome } from "./nursinghome-typings";
+import { NursingHome } from "./nursinghome-typings";
 
 export async function AddNursingHome(ctx: any): Promise<string> {
 	await InsertNursingHomeToDB({
