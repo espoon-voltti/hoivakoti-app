@@ -10,7 +10,6 @@ import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";
 
 import { Commune } from "./commune";
-import { InputFiles } from "typescript";
 
 enum InputTypes {
 	text = "text",
@@ -274,11 +273,6 @@ const PageUpdate: FC = () => {
 				valid: false,
 				touched: false,
 				value: null,
-				change: (_, value: InputFieldValue) => {
-					setHasVacancy(value as boolean);
-
-					return value;
-				},
 			},
 			{
 				label: labelHasLAHapartments,
@@ -603,8 +597,6 @@ const PageUpdate: FC = () => {
 						newList.push(commune);
 					}
 
-					setCommunes(newList);
-
 					return newList;
 				},
 			},
@@ -742,42 +734,41 @@ const PageUpdate: FC = () => {
 					if (field.name in data) {
 						const value = data[field.name];
 
-						if (value) {
-							if (field.type === "checkbox" && field.buttons) {
-								const preSelected = field.buttons.map(
-									button => {
-										return {
-											...button,
-											checked: (value as string).includes(
-												button.value as string,
-											),
-										};
-									},
-								);
+						if (value !== "" && value !== null) {
+							if (field.buttons) {
+								if (field.type === InputTypes.checkbox) {
+									const preSelected = field.buttons.map(
+										button => {
+											return {
+												...button,
+												checked: (value as string).includes(
+													button.value as string,
+												),
+											};
+										},
+									);
 
-								return {
-									...field,
-									buttons: preSelected,
-									value: value,
-								};
-							} else if (
-								field.type === "radio" &&
-								field.buttons
-							) {
-								const preSelected = field.buttons.map(
-									button => {
-										return {
-											...button,
-											checked: value === button.value,
-										};
-									},
-								);
+									return {
+										...field,
+										buttons: preSelected,
+										value: value,
+									};
+								} else {
+									const preSelected = field.buttons.map(
+										button => {
+											return {
+												...button,
+												checked: value === button.value,
+											};
+										},
+									);
 
-								return {
-									...field,
-									buttons: preSelected,
-									value: value,
-								};
+									return {
+										...field,
+										buttons: preSelected,
+										value: value,
+									};
+								}
 							} else {
 								return {
 									...field,
@@ -809,7 +800,7 @@ const PageUpdate: FC = () => {
 				console.error(e);
 				throw e;
 			});
-	}, [id, filterFinnish, prepopulateFields]);
+	}, [id, filterFinnish]);
 
 	useEffect(() => {
 		if (!vacancyStatus) {
@@ -830,7 +821,7 @@ const PageUpdate: FC = () => {
 					throw e;
 				});
 		}
-	}, [id, key, popupState, prepopulateFields, vacancyStatus]);
+	}, [id, key, popupState, vacancyStatus]);
 
 	useEffect(() => {
 		if (!communes) {
@@ -844,7 +835,7 @@ const PageUpdate: FC = () => {
 					throw err;
 				});
 		}
-	}, [communes, id, prepopulateFields]);
+	}, [communes, id]);
 
 	useEffect(() => {
 		prepopulateFields({
@@ -853,7 +844,7 @@ const PageUpdate: FC = () => {
 			has_vacancy: hasVacancy,
 			communes: communes,
 		});
-	}, [nursingHome, vacancyStatus, communes, prepopulateFields, hasVacancy]);
+	}, [nursingHome, communes, prepopulateFields, hasVacancy]);
 
 	const handleSubmit = async (
 		event: React.FormEvent<HTMLFormElement>,
@@ -864,9 +855,6 @@ const PageUpdate: FC = () => {
 			if (formIsValid) {
 				setPopupState("saving");
 
-				await requestVacancyStatusUpdate(id, key, hasVacancy);
-				await requestCommunesUpdate(id, communes as Commune[]);
-
 				let fields: InputField[] = [];
 
 				const sections = Object.keys(form).map(
@@ -875,6 +863,28 @@ const PageUpdate: FC = () => {
 
 				for (const section of sections) {
 					fields = [...fields, ...section];
+				}
+
+				const vacancyField = fields.find(
+					field => field.name === "has_vacancy",
+				);
+
+				const communesField = fields.find(
+					field => field.name === "communes",
+				);
+				if (vacancyField) {
+					await requestVacancyStatusUpdate(
+						id,
+						key,
+						vacancyField.value as boolean,
+					);
+				}
+
+				if (communesField) {
+					await requestCommunesUpdate(
+						id,
+						communesField.value as Commune[],
+					);
 				}
 
 				const formData: any = {};
@@ -967,7 +977,10 @@ const PageUpdate: FC = () => {
 
 		const newField = { ...field };
 
-		if (field.type === "checkbox" || field.type === "radio") {
+		if (
+			field.type === InputTypes.checkbox ||
+			field.type === InputTypes.radio
+		) {
 			if (newField.buttons) {
 				const newButtons = [];
 
@@ -1017,299 +1030,285 @@ const PageUpdate: FC = () => {
 		section: string,
 		index: number,
 	): JSX.Element | null => {
-		if (nursingHome) {
-			const fieldInvalid =
-				field.required && field.touched && !field.valid;
-			const key = `${field.name}-${index}`;
+		const fieldInvalid = field.required && field.touched && !field.valid;
+		const key = `${field.name}-${index}`;
 
-			switch (field.type) {
-				case "textarea":
-					return (
-						<div className="field" key={key}>
-							<label
-								id={`${field.name}-label`}
-								className="label"
-								htmlFor={field.name}
-							>
-								{field.label}
-								{field.required ? (
-									<span
-										className="asterisk"
-										aria-hidden="true"
-									>
-										{" "}
-										*
-									</span>
-								) : null}
-							</label>
-							{field.description ? (
-								<span
-									id={`${field.name}-description`}
-									className="input-description"
-								>
-									{field.description}
+		switch (field.type) {
+			case "textarea":
+				return (
+					<div className="field" key={key}>
+						<label
+							id={`${field.name}-label`}
+							className="label"
+							htmlFor={field.name}
+						>
+							{field.label}
+							{field.required ? (
+								<span className="asterisk" aria-hidden="true">
+									{" "}
+									*
 								</span>
 							) : null}
-							<div className="control">
-								<textarea
-									className={
-										fieldInvalid ? "input error" : "input"
-									}
-									rows={5}
-									maxLength={field.maxlength}
-									value={(field.value as string) || ""}
-									name={field.name}
-									id={field.name}
-									onChange={event =>
-										handleInputChange(
-											field,
-											section,
-											event.target.value,
-										)
-									}
-									required={field.required}
-									aria-required={field.required}
-									onBlur={validateForm}
-									aria-labelledby={
-										field.description
-											? `${field.name}-label ${field.name}-description`
-											: undefined
-									}
-								></textarea>
-								{fieldInvalid ? (
-									<span className="icon"></span>
-								) : null}
-							</div>
+						</label>
+						{field.description ? (
+							<span
+								id={`${field.name}-description`}
+								className="input-description"
+							>
+								{field.description}
+							</span>
+						) : null}
+						<div className="control">
+							<textarea
+								className={
+									fieldInvalid ? "input error" : "input"
+								}
+								rows={5}
+								maxLength={field.maxlength}
+								value={(field.value as string) || ""}
+								name={field.name}
+								id={field.name}
+								onChange={event =>
+									handleInputChange(
+										field,
+										section,
+										event.target.value,
+									)
+								}
+								required={field.required}
+								aria-required={field.required}
+								onBlur={validateForm}
+								aria-labelledby={
+									field.description
+										? `${field.name}-label ${field.name}-description`
+										: undefined
+								}
+							></textarea>
 							{fieldInvalid ? (
-								<p className="help">{textFieldIsRequired}</p>
+								<span className="icon"></span>
 							) : null}
 						</div>
-					);
-				case "checkbox":
-					return (
-						<Fragment key={key}>
-							{field.buttons ? (
-								<fieldset className="field">
-									<legend>
-										{field.label}
-										{field.required ? (
-											<span
-												className="asterisk"
-												aria-hidden="true"
-											>
-												{" "}
-												*
-											</span>
-										) : null}
-									</legend>
-									{field.description ? (
+						{fieldInvalid ? (
+							<p className="help">{textFieldIsRequired}</p>
+						) : null}
+					</div>
+				);
+			case "checkbox":
+				return (
+					<Fragment key={key}>
+						{field.buttons ? (
+							<fieldset className="field">
+								<legend>
+									{field.label}
+									{field.required ? (
 										<span
-											id={`${field.name}-description`}
-											className="input-description"
+											className="asterisk"
+											aria-hidden="true"
 										>
-											{field.description}
+											{" "}
+											*
 										</span>
 									) : null}
-									<div className="control">
-										{field.buttons.map(button => {
-											return (
-												<Checkbox
-													key={`${field.name}-${button.value}`}
-													id={`${field.name}-${button.value}`}
-													name={field.name}
-													onChange={() => {
-														if (field.change) {
-															const newValue = field.change(
-																field.value,
-																button.value as string,
-															);
-
-															handleInputChange(
-																field,
-																section,
-																newValue,
-															);
-														} else {
-															handleInputChange(
-																field,
-																section,
-																button.value,
-															);
-														}
-													}}
-													onBlur={validateForm}
-													isChecked={
-														button.checked || false
-													}
-												>
-													{button.label}
-												</Checkbox>
-											);
-										})}
-										{fieldInvalid ? (
-											<span className="icon"></span>
-										) : null}
-									</div>
-									{fieldInvalid ? (
-										<p className="help">
-											{textFieldIsRequired}
-										</p>
-									) : null}
-								</fieldset>
-							) : (
-								<div className="field">
-									<Checkbox
-										name={field.name}
-										id={field.name}
-										onChange={checked =>
-											handleInputChange(
-												field,
-												section,
-												checked,
-											)
-										}
-										onBlur={validateForm}
-										isChecked={
-											(field.value as boolean) || false
-										}
-									>
-										{field.label}
-									</Checkbox>
-								</div>
-							)}
-						</Fragment>
-					);
-				case "radio":
-					return (
-						<fieldset className="field" key={key}>
-							<legend>
-								{field.label}
-								{field.required ? (
+								</legend>
+								{field.description ? (
 									<span
-										className="asterisk"
-										aria-hidden="true"
+										id={`${field.name}-description`}
+										className="input-description"
 									>
-										{" "}
-										*
+										{field.description}
 									</span>
 								) : null}
-							</legend>
-							{field.buttons ? (
-								<Fragment>
-									<div className="control">
-										{field.buttons.map(button => {
-											return (
-												<Radio
-													key={`${field.name}-${button.value}`}
-													id={`${field.name}-${button.value}`}
-													name={field.name}
-													isSelected={
-														button.checked || false
-													}
-													value={
-														(button.value as string) ||
-														""
-													}
-													onChange={() => {
-														let newValue = button.value as InputFieldValue;
-
-														if (field.change) {
-															newValue = field.change(
-																field.value,
-																button.value as string,
-															);
-														}
+								<div className="control">
+									{field.buttons.map(button => {
+										return (
+											<Checkbox
+												key={`${field.name}-${button.value}`}
+												id={`${field.name}-${button.value}`}
+												name={field.name}
+												onChange={() => {
+													if (field.change) {
+														const newValue = field.change(
+															field.value,
+															button.value as string,
+														);
 
 														handleInputChange(
 															field,
 															section,
 															newValue,
 														);
-													}}
-													onBlur={validateForm}
-												>
-													{button.label}
-												</Radio>
-											);
-										})}
-										{fieldInvalid ? (
-											<span className="icon"></span>
-										) : null}
-									</div>
+													} else {
+														handleInputChange(
+															field,
+															section,
+															button.value,
+														);
+													}
+												}}
+												onBlur={validateForm}
+												isChecked={
+													button.checked || false
+												}
+											>
+												{button.label}
+											</Checkbox>
+										);
+									})}
 									{fieldInvalid ? (
-										<p className="help">
-											{textFieldIsRequired}
-										</p>
+										<span className="icon"></span>
 									) : null}
-								</Fragment>
-							) : null}
-						</fieldset>
-					);
-				default:
-					return (
-						<div className="field" key={key}>
-							<label
-								id={`${field.name}-label`}
-								className="label"
-								htmlFor={field.name}
-							>
-								{field.label}
-								{field.required ? (
-									<span
-										className="asterisk"
-										aria-hidden="true"
-									>
-										{" "}
-										*
-									</span>
+								</div>
+								{fieldInvalid ? (
+									<p className="help">
+										{textFieldIsRequired}
+									</p>
 								) : null}
-							</label>
-							{field.description ? (
-								<span
-									id={`${field.name}-description`}
-									className="input-description"
-								>
-									{field.description}
-								</span>
-							) : null}
-							<div className="control">
-								<input
-									className={
-										fieldInvalid ? "input error" : "input"
-									}
-									value={(field.value as string) || ""}
+							</fieldset>
+						) : (
+							<div className="field">
+								<Checkbox
 									name={field.name}
 									id={field.name}
-									type={field.type}
-									onChange={event =>
+									onChange={checked =>
 										handleInputChange(
 											field,
 											section,
-											event.target.value,
+											checked,
 										)
 									}
 									onBlur={validateForm}
-									required={field.required}
-									aria-required={field.required}
-									aria-labelledby={
-										field.description
-											? `${field.name}-label ${field.name}-description`
-											: undefined
+									isChecked={
+										(field.value as boolean) || false
 									}
-								/>
-								{fieldInvalid ? (
-									<span className="icon"></span>
-								) : null}
+								>
+									{field.label}
+								</Checkbox>
 							</div>
+						)}
+					</Fragment>
+				);
+			case "radio":
+				return (
+					<fieldset className="field" key={key}>
+						<legend>
+							{field.label}
+							{field.required ? (
+								<span className="asterisk" aria-hidden="true">
+									{" "}
+									*
+								</span>
+							) : null}
+						</legend>
+						{field.buttons ? (
+							<Fragment>
+								<div className="control">
+									{field.buttons.map(button => {
+										return (
+											<Radio
+												key={`${field.name}-${button.value}`}
+												id={`${field.name}-${button.value}`}
+												name={field.name}
+												isSelected={
+													button.checked || false
+												}
+												value={
+													(button.value as string) ||
+													""
+												}
+												onChange={() => {
+													let newValue = button.value as InputFieldValue;
+
+													if (field.change) {
+														newValue = field.change(
+															field.value,
+															button.value as string,
+														);
+													}
+
+													handleInputChange(
+														field,
+														section,
+														newValue,
+													);
+												}}
+												onBlur={validateForm}
+											>
+												{button.label}
+											</Radio>
+										);
+									})}
+									{fieldInvalid ? (
+										<span className="icon"></span>
+									) : null}
+								</div>
+								{fieldInvalid ? (
+									<p className="help">
+										{textFieldIsRequired}
+									</p>
+								) : null}
+							</Fragment>
+						) : null}
+					</fieldset>
+				);
+			default:
+				return (
+					<div className="field" key={key}>
+						<label
+							id={`${field.name}-label`}
+							className="label"
+							htmlFor={field.name}
+						>
+							{field.label}
+							{field.required ? (
+								<span className="asterisk" aria-hidden="true">
+									{" "}
+									*
+								</span>
+							) : null}
+						</label>
+						{field.description ? (
+							<span
+								id={`${field.name}-description`}
+								className="input-description"
+							>
+								{field.description}
+							</span>
+						) : null}
+						<div className="control">
+							<input
+								className={
+									fieldInvalid ? "input error" : "input"
+								}
+								value={(field.value as string) || ""}
+								name={field.name}
+								id={field.name}
+								type={field.type}
+								onChange={event =>
+									handleInputChange(
+										field,
+										section,
+										event.target.value,
+									)
+								}
+								onBlur={validateForm}
+								required={field.required}
+								aria-required={field.required}
+								aria-labelledby={
+									field.description
+										? `${field.name}-label ${field.name}-description`
+										: undefined
+								}
+							/>
 							{fieldInvalid ? (
-								<p className="help">{textFieldIsRequired}</p>
+								<span className="icon"></span>
 							) : null}
 						</div>
-					);
-			}
+						{fieldInvalid ? (
+							<p className="help">{textFieldIsRequired}</p>
+						) : null}
+					</div>
+				);
 		}
-
-		return null;
 	};
 
 	return (
@@ -1322,7 +1321,7 @@ const PageUpdate: FC = () => {
 					: loadingText}
 			</p>
 			<div className="page-update-content">
-				{formLoading ? (
+				{!form && formLoading ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
