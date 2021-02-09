@@ -17,6 +17,8 @@ services:
     environment:
       NODE_ENV: development
     command: sh -c "yarn install && yarn run watch-server"
+    environment:
+      NODE_ENV: development
 
   frontend:
     build: ./frontend

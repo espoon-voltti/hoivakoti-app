@@ -25,6 +25,7 @@ import PageReportsAdmin from "./PageReportsAdmin";
 import PageCancel from "./PageCancel";
 import PageSurvey from "./PageSurvey";
 import PageSurveyResults from "./PageSurveyResults";
+import PageManualSurveyEntry from "./PageManualSurveyEntry";
 import PageAdmin from "./PageAdmin";
 import config from "./config";
 
@@ -75,6 +76,11 @@ const App: React.FC = () => {
 								exact
 								path="/hoivakodit/:id/valvonta"
 								component={PageUploadReport}
+							/>
+							<Route
+								exact
+								path="/hoivakodit/:id/asikaskyselyn-vastaukset"
+								component={PageManualSurveyEntry}
 							/>
 							<Route
 								exact

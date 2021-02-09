@@ -82,14 +82,18 @@ export interface NursingHome {
 		overview_outside_hash: string | null;
 		owner_logo_hash: string | null;
 	};
-	report_status: [{
-		status: string;
-		date: string;
-		type: string;
-	}];
+	report_status: [
+		{
+			status: string;
+			date: string;
+			type: string;
+		},
+	];
 	has_vacancy: boolean | null;
 	rating: {
-		average: number | null;
-		answers: number | null;
+		average_relatives: number | null;
+		answers_relatives: number | null;
+		average_customers: number | null;
+		answers_customers: number | null;
 	};
 }
