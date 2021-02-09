@@ -522,6 +522,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const readMore = useT("readMore");
 	const feedbackCustomerReview = useT("feedbackCustomerReview");
 	const feedbackRelativeReview = useT("feedbackRelativeReview");
+	const feedbackNoReviews = useT("feedbackNoReviews");
 
 	const surveyOption1 = useT("surveyOption1");
 	const surveyOption2 = useT("surveyOption2");
@@ -704,7 +705,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 												nursingHome.rating
 													.average_relatives,
 										  )
-										: "Ei annettuja arvioita"}
+										: feedbackNoReviews}
 								</span>
 
 								{nursingHome.rating &&
@@ -725,7 +726,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 												nursingHome.rating
 													.average_relatives,
 										  )
-										: "Ei annettuja arvioita"}
+										: feedbackNoReviews}
 								</span>
 
 								{nursingHome.rating &&

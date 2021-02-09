@@ -313,6 +313,10 @@ export const translations = {
 		"fi-FI": "Takaisin hoivakotilistaukseen",
 		"sv-FI": "tillbaka till listan över vårdhem",
 	},
+	linkBacktoListShort: {
+		"fi-FI": "Takaisin listaukseen",
+		"sv-FI": "Tillbaka till listan",
+	},
 	anchorDetailsBox: {
 		"fi-FI": ">> Hoivakodin yhteystiedot",
 		"sv-FI": ">> Kontaktuppgifter",
@@ -896,7 +900,7 @@ export const translations = {
 		"fi-FI": "Asiakkaiden arvio",
 		"sv-FI": "Asiakkaiden arvio",
 	},
-	feedbackNoReviews:{
+	feedbackNoReviews: {
 		"fi-FI": "Ei annettuja arvioita",
 		"sv-FI": "Inga bedömningar",
 	},
@@ -1139,5 +1143,23 @@ export const translations = {
 	helperUrl: {
 		"fi-FI": "Esim. https://www.example.com.",
 		"sv-FI": "Esim. https://www.example.com.",
+	},
+	manualSurveyEntryHelpText: {
+		"fi-FI":
+			"Syötä vastaukset numerona välillä 1-5. Käytä tarvittaessa desimaalierottimena pistettä.",
+		"sv-FI":
+			"Syötä vastaukset numerona välillä 1-5. Käytä tarvittaessa desimaalierottimena pistettä.",
+	},
+	manualSurveyEntryTitle: {
+		"fi-FI": "Syötä asiakaskyselyn vastaukset",
+		"sv-FI": "Syötä asiakaskyselyn vastaukset",
+	},
+	surveyAnswersTotal: {
+		"fi-FI": "Kyselyyn vastaajia yhteensä",
+		"sv-FI": "Kyselyyn vastaajia yhteensä",
+	},
+	numberOfShort: {
+		"fi-FI": "Kpl",
+		"sv-FI": "Stycken",
 	},
 };

@@ -58,9 +58,14 @@ const PageManualSurveyEntry: FC = () => {
 			});
 	}, [id, key]);
 
-	const title = "Syötä asiakaskyselyn vastaukset";
+	const title = useT("manualSurveyEntryTitle");
 	const loadingText = useT("loadingText");
 	const btnSave = useT("btnSave");
+	const manualSurveyEntryHelpText = useT("manualSurveyEntryHelpText");
+	const linkBacktoListShort = useT("linkBacktoListShort");
+	const address = useT("address");
+	const surveyAnswersTotal = useT("surveyAnswersTotal");
+	const numberOfShort = useT("numberOfShort");
 
 	const updatePopupSaved = useT("saved");
 	const updatePopupFailed = useT("reportFailed");
@@ -135,7 +140,7 @@ const PageManualSurveyEntry: FC = () => {
 									className="page-update-cancel"
 									onClick={cancelEdit}
 								>
-									Takaisin listaukseen
+									{linkBacktoListShort}
 								</button>
 								<button type="submit" className="btn">
 									{btnSave}
@@ -165,13 +170,13 @@ const PageManualSurveyEntry: FC = () => {
 									{nursingHome.owner}
 								</h4>
 								<p className="page-update-data">
-									<strong>Osoite: </strong>
+									<strong>{address}: </strong>
 									{nursingHome.address}
 								</p>
 							</div>
 							<div className="page-update-section manual-survey-question">
-								<h4>Kyselyyn vastaajia yhteensä</h4>
-								<span>Kpl: </span>
+								<h4>{surveyAnswersTotal}</h4>
+								<span>{numberOfShort}: </span>
 								<input
 									type="text"
 									value={count}
@@ -191,6 +196,7 @@ const PageManualSurveyEntry: FC = () => {
 								></input>
 							</div>
 							<div className="page-update-section">
+								<p>{manualSurveyEntryHelpText}</p>
 								{questions}
 							</div>
 						</form>
@@ -213,11 +219,13 @@ export const Question: FC<QuestionProps> = ({ question, onChange }) => {
 		question.average,
 	);
 
+	const averageReviewScore = useT("averageReviewScore");
+
 	return (
 		<>
 			<h4>{question.question_fi}</h4>
 
-			<span>Vastausten keskiarvo: </span>
+			<span>{averageReviewScore}: </span>
 			<input
 				type="string"
 				value={questionState}
