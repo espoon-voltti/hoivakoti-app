@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, Fragment } from "react";
+import React, { FC, useEffect, useState, Fragment, useCallback } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
@@ -10,6 +10,7 @@ import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";
 
 import { Commune } from "./commune";
+import { InputFiles } from "typescript";
 
 enum InputTypes {
 	text = "text",
@@ -53,7 +54,7 @@ interface InputField {
 	type: InputTypes;
 	name: NursingHomeKey;
 	description?: string;
-	buttons?: { value: string | boolean; label: string }[];
+	buttons?: { value: string | boolean; label: string; checked?: boolean }[];
 	required?: boolean;
 	valid?: boolean;
 	touched?: boolean;
@@ -272,7 +273,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
-				value: false,
+				value: null,
 				change: (_, value: InputFieldValue) => {
 					setHasVacancy(value as boolean);
 
@@ -283,7 +284,7 @@ const PageUpdate: FC = () => {
 				label: labelHasLAHapartments,
 				type: InputTypes.checkbox,
 				name: "lah",
-				value: false,
+				value: null,
 			},
 		],
 		contactFields: [
@@ -516,14 +517,24 @@ const PageUpdate: FC = () => {
 				type: InputTypes.checkbox,
 				name: "language",
 				buttons: [
-					{ label: filterFinnish, value: filterFinnish },
-					{ label: filterSwedish, value: filterSwedish },
+					{
+						label: filterFinnish,
+						value: filterFinnish,
+					},
+					{
+						label: filterSwedish,
+						value: filterSwedish,
+					},
 				],
 				value: "",
 				change: (current: string, value: string) => {
-					const languages: string[] = current
-						.split("|")
-						.filter((value: string) => value !== "");
+					let languages: string[] = [];
+
+					if (current) {
+						languages = current
+							.split("|")
+							.filter((value: string) => value !== "");
+					}
 
 					if (languages.includes(value)) {
 						const index = languages.indexOf(value);
@@ -718,37 +729,87 @@ const PageUpdate: FC = () => {
 		],
 	});
 
+	const [formIsValid, setFormIsValid] = useState(false);
+	const [formLoading, setFormLoading] = useState(true);
+
+	const prepopulateFields = useCallback((data: any): void => {
+		setFormLoading(true);
+		const prepopulatedForm = { ...form };
+
+		for (const section in prepopulatedForm) {
+			const modifiedSection = [...prepopulatedForm[section]].map(
+				field => {
+					if (field.name in data) {
+						const value = data[field.name];
+
+						if (value) {
+							if (field.type === "checkbox" && field.buttons) {
+								const preSelected = field.buttons.map(
+									button => {
+										return {
+											...button,
+											checked: (value as string).includes(
+												button.value as string,
+											),
+										};
+									},
+								);
+
+								return {
+									...field,
+									buttons: preSelected,
+									value: value,
+								};
+							} else if (
+								field.type === "radio" &&
+								field.buttons
+							) {
+								const preSelected = field.buttons.map(
+									button => {
+										return {
+											...button,
+											checked: value === button.value,
+										};
+									},
+								);
+
+								return {
+									...field,
+									buttons: preSelected,
+									value: value,
+								};
+							} else {
+								return {
+									...field,
+									value: value,
+								};
+							}
+						}
+					}
+
+					return field;
+				},
+			);
+
+			prepopulatedForm[section] = modifiedSection;
+		}
+
+		setForm(prepopulatedForm);
+		setFormLoading(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	useEffect(() => {
 		axios
 			.get(`${config.API_URL}/nursing-homes/${id}`)
 			.then((response: GetNursingHomeResponse) => {
-				const data = response.data;
-
-				setNursingHome(data);
-
-				const prepopulatedForm = { ...form };
-
-				for (const section in prepopulatedForm) {
-					const modifiedSection = [...prepopulatedForm[section]].map(
-						field => {
-							return {
-								...field,
-								value: data[field.name] as InputFieldValue,
-							};
-						},
-					);
-
-					prepopulatedForm[section] = modifiedSection;
-				}
-
-				setForm({ ...prepopulatedForm });
+				setNursingHome(response.data);
 			})
 			.catch(e => {
 				console.error(e);
 				throw e;
 			});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [id, filterFinnish]);
+	}, [id, filterFinnish, prepopulateFields]);
 
 	useEffect(() => {
 		if (!vacancyStatus) {
@@ -757,8 +818,10 @@ const PageUpdate: FC = () => {
 					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
 				)
 				.then((response: { data: VacancyStatus }) => {
-					setVacancyStatus(response.data);
-					setHasVacancy(response.data.has_vacancy);
+					const data = response.data;
+
+					setVacancyStatus(data);
+					setHasVacancy(data.has_vacancy);
 
 					if (popupState) setTimeout(() => setPopupState(null), 3000);
 				})
@@ -767,7 +830,7 @@ const PageUpdate: FC = () => {
 					throw e;
 				});
 		}
-	}, [id, key, popupState, vacancyStatus]);
+	}, [id, key, popupState, prepopulateFields, vacancyStatus]);
 
 	useEffect(() => {
 		if (!communes) {
@@ -781,9 +844,16 @@ const PageUpdate: FC = () => {
 					throw err;
 				});
 		}
-	}, [communes, id]);
+	}, [communes, id, prepopulateFields]);
 
-	const [formIsValid, setFormIsValid] = useState(false);
+	useEffect(() => {
+		prepopulateFields({
+			...nursingHome,
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			has_vacancy: hasVacancy,
+			communes: communes,
+		});
+	}, [nursingHome, vacancyStatus, communes, prepopulateFields, hasVacancy]);
 
 	const handleSubmit = async (
 		event: React.FormEvent<HTMLFormElement>,
@@ -795,30 +865,32 @@ const PageUpdate: FC = () => {
 				setPopupState("saving");
 
 				await requestVacancyStatusUpdate(id, key, hasVacancy);
+				await requestCommunesUpdate(id, communes as Commune[]);
 
-				if (nursingHome) {
-					let fields: InputField[] = [];
+				let fields: InputField[] = [];
 
-					const sections = Object.keys(form).map(
-						section => form[section],
-					);
+				const sections = Object.keys(form).map(
+					section => form[section],
+				);
 
-					for (const section of sections) {
-						fields = [...fields, ...section];
-					}
-
-					const formData: any = {};
-
-					for (const field of fields) {
-						if (field.name !== "has_vacancy") {
-							formData[field.name] = nursingHome[field.name];
-						}
-					}
-
-					const updateFormData: NursingHomeUpdateData = formData;
-
-					await requestNursingHomeUpdate(id, key, updateFormData);
+				for (const section of sections) {
+					fields = [...fields, ...section];
 				}
+
+				const formData: any = {};
+
+				for (const field of fields) {
+					if (
+						field.name !== "has_vacancy" &&
+						field.name !== "communes"
+					) {
+						formData[field.name] = field.value;
+					}
+				}
+
+				const updateFormData: NursingHomeUpdateData = formData;
+
+				await requestNursingHomeUpdate(id, key, updateFormData);
 
 				setPopupState("saved");
 				setVacancyStatus(null);
@@ -845,46 +917,42 @@ const PageUpdate: FC = () => {
 	};
 
 	const validateForm = (): void => {
-		if (nursingHome) {
-			let validForm = true;
+		let validForm = true;
 
-			const validatedForm = { ...form };
+		const validatedForm = { ...form };
 
-			for (const section in validatedForm) {
-				const fields = validatedForm[section];
-				const validatedFields = [];
+		for (const section in validatedForm) {
+			const fields = validatedForm[section];
+			const validatedFields = [];
 
-				for (const field of fields) {
-					if (field.required) {
-						const validField = validateField(
-							nursingHome[field.name],
-						);
+			for (const field of fields) {
+				if (field.required) {
+					const validField = validateField(field.value);
 
-						if (!validField) {
-							validForm = false;
-						}
-
-						validatedFields.push({
-							...field,
-							touched: true,
-							valid: validField,
-						});
-					} else {
-						validatedFields.push(field);
+					if (!validField) {
+						validForm = false;
 					}
+
+					validatedFields.push({
+						...field,
+						touched: true,
+						valid: validField,
+					});
+				} else {
+					validatedFields.push(field);
 				}
-
-				validatedForm[section] = validatedFields;
 			}
 
-			setForm(validatedForm);
-			setFormIsValid(validForm);
+			validatedForm[section] = validatedFields;
+		}
 
-			if (!validForm) {
-				setPopupState("invalid");
-			} else {
-				setPopupState(null);
-			}
+		setForm(validatedForm);
+		setFormIsValid(validForm);
+
+		if (!validForm) {
+			setPopupState("invalid");
+		} else {
+			setPopupState(null);
 		}
 	};
 
@@ -893,29 +961,55 @@ const PageUpdate: FC = () => {
 		section: string,
 		value: InputFieldValue,
 	): void => {
-		if (nursingHome) {
-			const { name, type } = field;
-			const shouldValidate = "touched" in field && "required" in field;
+		const { name, type } = field;
 
-			if (shouldValidate) {
-				const fields = [...form[section]];
-				const index = fields.findIndex(input => input.name === name);
+		const shouldValidate = "touched" in field && "required" in field;
 
-				const validField = validateField(value);
+		const newField = { ...field };
 
-				fields[index] = { ...field, touched: true, valid: validField };
+		if (field.type === "checkbox" || field.type === "radio") {
+			if (newField.buttons) {
+				const newButtons = [];
 
-				setForm({ ...form, [section]: fields });
+				for (const button of newField.buttons) {
+					let checked;
+
+					if (typeof button.value === "string") {
+						checked = (value as string).includes(
+							button.value as string,
+						);
+					} else {
+						checked = value === button.value;
+					}
+
+					newButtons.push({
+						...button,
+						checked: checked,
+					});
+				}
+
+				newField.buttons = newButtons;
 			}
-
-			setNursingHome({
-				...nursingHome,
-				[name]:
-					type === "number" && typeof value === "string"
-						? parseInt(value)
-						: value,
-			});
 		}
+
+		if (shouldValidate) {
+			const validField = validateField(value);
+
+			newField.touched = true;
+			newField.valid = validField;
+		}
+
+		newField.value =
+			type === "number" && typeof value === "string"
+				? parseInt(value)
+				: value;
+
+		const fields = [...form[section]];
+		const index = fields.findIndex(input => input.name === name);
+
+		fields[index] = newField;
+
+		setForm({ ...form, [section]: fields });
 	};
 
 	const getInputElement = (
@@ -963,10 +1057,7 @@ const PageUpdate: FC = () => {
 									}
 									rows={5}
 									maxLength={field.maxlength}
-									value={
-										(nursingHome[field.name] as string) ||
-										""
-									}
+									value={(field.value as string) || ""}
 									name={field.name}
 									id={field.name}
 									onChange={event =>
@@ -1027,34 +1118,28 @@ const PageUpdate: FC = () => {
 													id={`${field.name}-${button.value}`}
 													name={field.name}
 													onChange={() => {
-														let newValue = button.value as InputFieldValue;
-
 														if (field.change) {
-															newValue = field.change(
-																nursingHome[
-																	field.name
-																] as InputFieldValue,
+															const newValue = field.change(
+																field.value,
 																button.value as string,
 															);
-														}
 
-														handleInputChange(
-															field,
-															section,
-															newValue,
-														);
+															handleInputChange(
+																field,
+																section,
+																newValue,
+															);
+														} else {
+															handleInputChange(
+																field,
+																section,
+																button.value,
+															);
+														}
 													}}
 													onBlur={validateForm}
 													isChecked={
-														nursingHome[field.name]
-															? (nursingHome[
-																	field.name
-															  ] as
-																	| string
-																	| string[]).includes(
-																	button.value as string,
-															  )
-															: false
+														button.checked || false
 													}
 												>
 													{button.label}
@@ -1085,9 +1170,7 @@ const PageUpdate: FC = () => {
 										}
 										onBlur={validateForm}
 										isChecked={
-											(nursingHome[
-												field.name
-											] as boolean) || false
+											(field.value as boolean) || false
 										}
 									>
 										{field.label}
@@ -1121,9 +1204,7 @@ const PageUpdate: FC = () => {
 													id={`${field.name}-${button.value}`}
 													name={field.name}
 													isSelected={
-														nursingHome[
-															field.name
-														] === button.value
+														button.checked || false
 													}
 													value={
 														(button.value as string) ||
@@ -1134,9 +1215,7 @@ const PageUpdate: FC = () => {
 
 														if (field.change) {
 															newValue = field.change(
-																nursingHome[
-																	field.name
-																] as InputFieldValue,
+																field.value,
 																button.value as string,
 															);
 														}
@@ -1198,10 +1277,7 @@ const PageUpdate: FC = () => {
 									className={
 										fieldInvalid ? "input error" : "input"
 									}
-									value={
-										(nursingHome[field.name] as string) ||
-										""
-									}
+									value={(field.value as string) || ""}
 									name={field.name}
 									id={field.name}
 									type={field.type}
@@ -1246,7 +1322,7 @@ const PageUpdate: FC = () => {
 					: loadingText}
 			</p>
 			<div className="page-update-content">
-				{!nursingHome ? (
+				{formLoading ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
