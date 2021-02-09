@@ -1178,7 +1178,7 @@ export async function GetCommunesForNursingHome(
 
 	console.log(result);
 
-	return result[0].communes;
+	return result[0] ? result[0].communes : [];
 }
 
 export async function UpdateCommunesForNursingHome(
