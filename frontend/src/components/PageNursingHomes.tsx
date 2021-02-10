@@ -86,34 +86,6 @@ const PageNursingHomes: FC = () => {
 			});
 	}, []);
 
-	const hasFilters = search !== "";
-	const isFilterDisabled = nursingHomes === null;
-
-	const parsed = queryString.parse(search);
-
-	const area = parsed.alue
-		? !Array.isArray(parsed.alue)
-			? [parsed.alue]
-			: parsed.alue
-		: undefined;
-
-	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
-	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
-
-	const commune = parsed.kotikunta
-		? !Array.isArray(parsed.kotikunta)
-			? [parsed.kotikunta]
-			: parsed.kotikunta
-		: undefined;
-
-	const searchFilters: SearchFilters = {
-		alue: area,
-		ara,
-		lah,
-		language: parsed.language as Language,
-		kotikunta: commune,
-	};
-
 	const LUCommunes: Translation = {
 		[Commune.EPO]: useT("espoo"),
 		[Commune.HNK]: useT("hanko"),
@@ -126,67 +98,14 @@ const PageNursingHomes: FC = () => {
 		[Commune.STO]: useT("siuntio"),
 	};
 
+	const communesKeysList: string[] = Object.keys(LUCommunes);
+
+	const communesIntoThirds = communesKeysList.map(_ =>
+		communesKeysList.splice(0, 3),
+	);
+
 	const locationPickerLabel = useT("locationPickerLabel");
-
-	const espooAreas = [
-		useT("espoon keskus"),
-		useT("espoonlahti"),
-		useT("leppävaara"),
-		useT("matinkylä"),
-		useT("tapiola"),
-	];
-	const espoo = useT("espoo");
-	const otherCities = [
-		useT("hanko"),
-		useT("helsinki"),
-		useT("hyvinkää"),
-		useT("järvenpää"),
-		useT("karkkila"),
-		useT("kerava"),
-		useT("kirkkonummi"),
-		useT("lohja"),
-		useT("nurmijärvi"),
-		useT("raasepori"),
-		useT("sipoo"),
-		useT("siuntio"),
-		useT("tuusula"),
-		useT("vantaa"),
-		useT("vihti"),
-	];
-
-	//City or district can appear in Finnish or Swedish regardless of the current language.
-	const citiesAndDistrictsToFinnish: Translation = {
-		"Esbo centrum": "Espoon keskus",
-		Esboviken: "Espoonlahti",
-		Alberga: "Leppävaara",
-		Mattby: "Matinkylä",
-		Hagalund: "Tapiola",
-		Helsingfors: "Helsinki",
-		Hyvinge: "Hyvinkää",
-		Träskända: "Järvenpää",
-		Karis: "Karjaa",
-		Hangö: "Hanko",
-		Högfors: "Karkkila",
-		Kervo: "Kerava",
-		Kyrkslätt: "Kirkkonummi",
-		Lojo: "Lohja",
-		Nurmijärvi: "Nurmijärvi",
-		Raseborg: "Raasepori",
-		Sibbo: "Sipoo",
-		Sjundeå: "Siuntio",
-		Ekenäs: "Tammisaari",
-		Tusby: "Tuusula",
-		Vanda: "Vantaa",
-		Vichtis: "Vihti",
-	};
-
-	const citiesAndDistrictsToSwedish: Translation = {
-		"Espoon keskus": "Esbo centrum",
-		Espoonlahti: "Esboviken",
-		Leppävaara: "Alberga",
-		Matinkylä: "Mattby",
-		Tapiola: "Hagalund",
-	};
+	const selectCommuneLabel = useT("selectCommuneLabel");
 
 	const filterLabel = useT("filterLabel");
 	const filterAraLabel = useT("filterAraLabel");
@@ -220,6 +139,175 @@ const PageNursingHomes: FC = () => {
 	const filterShowARA = useT("filterShowARA");
 	const filterShowLah = useT("filterShowLah");
 
+	const espooAreas = [
+		useT("espoon keskus"),
+		useT("espoonlahti"),
+		useT("leppävaara"),
+		useT("matinkylä"),
+		useT("tapiola"),
+	];
+	const espoo = useT("espoo");
+	const otherCities = [
+		useT("hanko"),
+		useT("helsinki"),
+		useT("hyvinkää"),
+		useT("järvenpää"),
+		useT("karkkila"),
+		useT("kerava"),
+		useT("kirkkonummi"),
+		useT("lohja"),
+		useT("nurmijärvi"),
+		useT("raasepori"),
+		useT("sipoo"),
+		useT("siuntio"),
+		useT("tuusula"),
+		useT("vantaa"),
+		useT("vihti"),
+	];
+
+	//City or district can appear in Finnish or Swedish regardless of the current language.
+	const citiesAndDistrictsMapFI: Translation = {
+		[getTranslationByLanguage(
+			"fi-SV",
+			"espoon keskus",
+		)]: getTranslationByLanguage("fi-FI", "espoon keskus"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"espoonlahti",
+		)]: getTranslationByLanguage("fi-FI", "espoonlahti"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"leppävaara",
+		)]: getTranslationByLanguage("fi-FI", "leppävaara"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"matinkylä",
+		)]: getTranslationByLanguage("fi-FI", "matinkylä"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"tapiola",
+		)]: getTranslationByLanguage("fi-FI", "tapiola"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"helsinki",
+		)]: getTranslationByLanguage("fi-FI", "helsinki"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"hyvinkää",
+		)]: getTranslationByLanguage("fi-FI", "hyvinkää"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"järvenpää",
+		)]: getTranslationByLanguage("fi-FI", "järvenpää"),
+		[getTranslationByLanguage("fi-SV", "karjaa")]: getTranslationByLanguage(
+			"fi-FI",
+			"karjaa",
+		),
+		[getTranslationByLanguage("fi-SV", "hanko")]: getTranslationByLanguage(
+			"fi-FI",
+			"hanko",
+		),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"karkkila",
+		)]: getTranslationByLanguage("fi-FI", "karkkila"),
+		[getTranslationByLanguage("fi-SV", "kerava")]: getTranslationByLanguage(
+			"fi-FI",
+			"kerava",
+		),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"kirkkonummi",
+		)]: getTranslationByLanguage("fi-FI", "kirkkonummi"),
+		[getTranslationByLanguage("fi-SV", "lohja")]: getTranslationByLanguage(
+			"fi-FI",
+			"lohja",
+		),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"nurmijärvi",
+		)]: getTranslationByLanguage("fi-FI", "nurmijärvi"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"raasepori",
+		)]: getTranslationByLanguage("fi-FI", "raasepori"),
+		[getTranslationByLanguage("fi-SV", "sipoo")]: getTranslationByLanguage(
+			"fi-FI",
+			"sipoo",
+		),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"siuntio",
+		)]: getTranslationByLanguage("fi-FI", "siuntio"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"tammisaari",
+		)]: getTranslationByLanguage("fi-FI", "tammisaari"),
+		[getTranslationByLanguage(
+			"fi-SV",
+			"tuusula",
+		)]: getTranslationByLanguage("fi-FI", "tuusula"),
+		[getTranslationByLanguage("fi-SV", "vantaa")]: getTranslationByLanguage(
+			"fi-FI",
+			"vantaa",
+		),
+		[getTranslationByLanguage("fi-SV", "vihti")]: getTranslationByLanguage(
+			"fi-FI",
+			"vihti",
+		),
+	};
+
+	const citiesAndDistrictsMapSV: Translation = {
+		[getTranslationByLanguage(
+			"fi-FI",
+			"espoon keskus",
+		)]: getTranslationByLanguage("fi-SV", "espoon keskus"),
+		[getTranslationByLanguage(
+			"fi-FI",
+			"espoonlahti",
+		)]: getTranslationByLanguage("fi-SV", "espoonlahti"),
+		[getTranslationByLanguage(
+			"fi-FI",
+			"leppävaara",
+		)]: getTranslationByLanguage("fi-SV", "leppävaara"),
+		[getTranslationByLanguage(
+			"fi-FI",
+			"matinkylä",
+		)]: getTranslationByLanguage("fi-SV", "matinkylä"),
+		[getTranslationByLanguage(
+			"fi-FI",
+			"tapiola",
+		)]: getTranslationByLanguage("fi-SV", "tapiola"),
+	};
+
+	const hasFilters = search !== "";
+	const isFilterDisabled = nursingHomes === null;
+
+	const parsed = queryString.parse(search);
+
+	const area = parsed.alue
+		? !Array.isArray(parsed.alue)
+			? [parsed.alue]
+			: parsed.alue
+		: undefined;
+
+	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
+	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
+
+	const commune = parsed.kotikunta
+		? !Array.isArray(parsed.kotikunta)
+			? [parsed.kotikunta]
+			: parsed.kotikunta
+		: undefined;
+
+	const searchFilters: SearchFilters = {
+		alue: area,
+		ara,
+		lah,
+		language: parsed.language as Language,
+		kotikunta: commune,
+	};
+
 	useEffect(() => {
 		if (nursingHomes) {
 			const filteredNursingHomes:
@@ -231,29 +319,29 @@ const PageNursingHomes: FC = () => {
 						!searchFilters.alue.includes(nursinghome.city);
 
 					const cityKeyFI = Object.keys(
-						citiesAndDistrictsToFinnish,
+						citiesAndDistrictsMapFI,
 					).filter(translation => {
 						return (
-							citiesAndDistrictsToFinnish[translation] ===
+							citiesAndDistrictsMapFI[translation] ===
 							nursinghome.city
 						);
 					})[0];
 
 					const districtKeySV = Object.keys(
-						citiesAndDistrictsToSwedish,
+						citiesAndDistrictsMapSV,
 					).filter(translation => {
 						return (
-							citiesAndDistrictsToSwedish[translation] ===
+							citiesAndDistrictsMapSV[translation] ===
 							nursinghome.district
 						);
 					})[0];
 
 					const notInCorrectAreaTranslation =
 						!searchFilters.alue.includes(
-							citiesAndDistrictsToFinnish[cityKeyFI],
+							citiesAndDistrictsMapFI[cityKeyFI],
 						) &&
 						!searchFilters.alue.includes(
-							citiesAndDistrictsToSwedish[districtKeySV],
+							citiesAndDistrictsMapSV[districtKeySV],
 						);
 
 					if (notInCorrectArea && notInCorrectAreaTranslation) {
@@ -363,7 +451,8 @@ const PageNursingHomes: FC = () => {
 	];
 
 	const optionsCustomerCommune: FilterOption[] = [
-		...Object.keys(LUCommunes).map<FilterOption>(key => {
+		{ text: selectCommuneLabel, type: "header" },
+		...communesIntoThirds[0].map<FilterOption>(key => {
 			const value = LUCommunes[key];
 
 			return {
@@ -374,6 +463,33 @@ const PageNursingHomes: FC = () => {
 					? searchFilters.kotikunta.includes(LUCommunes[key])
 					: false,
 				bold: true,
+			};
+		}),
+		...communesIntoThirds[1].map<FilterOption>(key => {
+			const value = LUCommunes[key];
+
+			return {
+				name: value,
+				label: value,
+				type: "checkbox",
+				checked: searchFilters.kotikunta
+					? searchFilters.kotikunta.includes(LUCommunes[key])
+					: false,
+				bold: true,
+			};
+		}),
+		...communesIntoThirds[2].map<FilterOption>(key => {
+			const value = LUCommunes[key];
+
+			return {
+				name: value,
+				label: value,
+				type: "checkbox",
+				checked: searchFilters.kotikunta
+					? searchFilters.kotikunta.includes(LUCommunes[key])
+					: false,
+				bold: true,
+				alignment: "right",
 			};
 		}),
 	];

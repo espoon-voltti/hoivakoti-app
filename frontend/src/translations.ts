@@ -1202,4 +1202,8 @@ export const translations = {
 		"fi-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
 		"sv-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
 	},
+	selectCommuneLabel: {
+		"fi-FI": "Valitse oma kotikuntasi.",
+		"sv-FI": "Valitse oma kotikuntasi.",
+	},
 };

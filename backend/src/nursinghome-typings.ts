@@ -1,25 +1,13 @@
 export enum Commune {
 	EPO = "EPO",
-	EPK = "EPK",
-	EPL = "EPL",
-	LPV = "LPV",
-	MKL = "MKL",
-	TAP = "TAP",
 	HNK = "HNK",
-	HEL = "HEL",
-	HVK = "HVK",
-	JVP = "JVP",
-	KAR = "KAR",
-	KER = "KER",
 	KRN = "KRN",
 	LHJ = "LHJ",
-	NRJ = "NRJ",
 	RPO = "RPO",
-	SPO = "SPO",
 	STO = "STO",
-	TSL = "TSL",
-	VTA = "VTA",
-	VTI = "VTI",
+	INK = "INK",
+	KAU = "KAU",
+	PKA = "PKA",
 }
 
 // This interface declaration is duplicated in frontend and backend. Please
