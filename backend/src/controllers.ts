@@ -42,8 +42,8 @@ import {
 	SubmitSurveyData as SubmitSurveyDataDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
 	GetSurvey as GetSurveyDB,
-	GetCommunesForNursingHome,
-	UpdateCommunesForNursingHome,
+	GetCustomerCommunesForNursingHome,
+	UpdateCustomerCommunesForNursingHome,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -574,19 +574,19 @@ export async function GetSurveyWithNursingHomeResults(
 	return survey;
 }
 
-export async function GetNursingHomeCommunes(ctx: Context): Promise<any> {
+export async function GetNursingHomeCustomerCommunes(ctx: Context): Promise<any> {
 	const { id } = ctx.params;
 
-	const result = await GetCommunesForNursingHome(id);
+	const result = await GetCustomerCommunesForNursingHome(id);
 
-	return result[0] ? result[0].communes : [];
+	return result[0] ? result[0]["customer_commune"] : [];
 }
 
-export async function UpdateNursingHomeCommunes(ctx: Context): Promise<any> {
+export async function UpdateNursingHomeCustomerCommunes(ctx: Context): Promise<any> {
 	const { id } = ctx.params;
-	const communes = ctx.request.body.communes;
+	const communes = ctx.request.body["customer_commune"];
 
-	const result = await UpdateCommunesForNursingHome(id, communes);
+	const result = await UpdateCustomerCommunesForNursingHome(id, communes);
 
 	return result;
 }

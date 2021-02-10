@@ -642,6 +642,18 @@ export const translations = {
 		"fi-FI": "Vihti",
 		"sv-FI": "Vichtis",
 	},
+	inkoo: {
+		"fi-FI": "Inkoo",
+		"sv-FI": "Ingå",
+	},
+	kauniainen: {
+		"fi-FI": "Kauniainen",
+		"sv-FI": "Grankulla",
+	},
+	karviainen: {
+		"fi-FI": "Perusturvakuntayhtymä Karviainen",
+		"sv-FI": "Perusturvakuntayhtymä Karviainen",
+	},
 	imageCarouselNextTitle: {
 		"fi-FI": "Seuraava (oikea nuoli)",
 		"sv-FI": "Nästa (högerpil)",
@@ -1166,13 +1178,13 @@ export const translations = {
 		"fi-FI": "Valitse hoivakodin alue",
 		"sv-FI": "Valitse hoivakodin alue",
 	},
-	commune: {
-		"fi-FI": "Kotikunta",
-		"sv-FI": "Kotikunta",
+	customerCommune: {
+		"fi-FI": " Asiakkaan kotikunta",
+		"sv-FI": " Asiakkaan kotikunta",
 	},
 	helperCommune: {
-		"fi-FI": "Määrittele hoivakodin vaatimukset asiakkaan kotikunnaksi",
-		"sv-FI": "Määrittele hoivakodin vaatimukset asiakkaan kotikunnaksi",
+		"fi-FI": "Määrittele asiakkaiden sallitut kotikunnat",
+		"sv-FI": "Määrittele asiakkaiden sallitut kotikunnat",
 	},
 	filterCommune: {
 		"fi-FI": "Valitse kotikunta",

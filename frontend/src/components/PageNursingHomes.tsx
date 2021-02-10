@@ -68,11 +68,12 @@ const PageNursingHomes: FC = () => {
 
 				for (const item of response.data) {
 					const communesRequest = await axios.get(
-						`${config.API_URL}/communes/${item.id}`,
+						`${config.API_URL}/nursing-homes/${item.id}/communes`,
 					);
 
 					const updateNursingHome = { ...item };
-					updateNursingHome.communes = communesRequest.data;
+					updateNursingHome["customer_commune"] =
+						communesRequest.data;
 
 					nursingHomesTempData.push(updateNursingHome);
 				}
@@ -113,168 +114,17 @@ const PageNursingHomes: FC = () => {
 		kotikunta: commune,
 	};
 
-	const espooAreaTranslations: Translation = {
-		[Commune.EPK]: useT("espoon keskus"),
-		[Commune.EPL]: useT("espoonlahti"),
-		[Commune.LPV]: useT("leppävaara"),
-		[Commune.MKL]: useT("matinkylä"),
-		[Commune.TAP]: useT("tapiola"),
-	};
-	const espooTranslation: Translation = {
+	const LUCommunes: Translation = {
 		[Commune.EPO]: useT("espoo"),
-	};
-	const otherCitiesTranslations: Translation = {
 		[Commune.HNK]: useT("hanko"),
-		[Commune.HEL]: useT("helsinki"),
-		[Commune.HVK]: useT("hyvinkää"),
-		[Commune.JVP]: useT("järvenpää"),
-		[Commune.KAR]: useT("karjaa"),
-		[Commune.KER]: useT("kerava"),
+		[Commune.INK]: useT("inkoo"),
+		[Commune.KAU]: useT("kauniainen"),
 		[Commune.KRN]: useT("kirkkonummi"),
 		[Commune.LHJ]: useT("lohja"),
-		[Commune.NRJ]: useT("nurmijärvi"),
+		[Commune.PKA]: useT("karviainen"),
 		[Commune.RPO]: useT("raasepori"),
-		[Commune.SPO]: useT("sipoo"),
 		[Commune.STO]: useT("siuntio"),
-		[Commune.TSL]: useT("tuusula"),
-		[Commune.VTA]: useT("vantaa"),
-		[Commune.VTI]: useT("vihti"),
 	};
-
-	const citiesTranslationsAll = {
-		...espooTranslation,
-		...espooAreaTranslations,
-		...otherCitiesTranslations,
-	};
-
-	//City or district can appear in Finnish or Swedish regardless of the current language.
-	const citiesFI: Translation = {
-		[Commune.EPK]: getTranslationByLanguage("fi-FI", "espoon keskus"),
-		[Commune.EPL]: getTranslationByLanguage("fi-FI", "espoonlahti"),
-		[Commune.LPV]: getTranslationByLanguage("fi-FI", "leppävaara"),
-		[Commune.MKL]: getTranslationByLanguage("fi-FI", "matinkylä"),
-		[Commune.TAP]: getTranslationByLanguage("fi-FI", "tapiola"),
-		[Commune.HEL]: getTranslationByLanguage("fi-FI", "helsinki"),
-		[Commune.HVK]: getTranslationByLanguage("fi-FI", "hyvinkää"),
-		[Commune.JVP]: getTranslationByLanguage("fi-FI", "järvenpää"),
-		[Commune.KAR]: getTranslationByLanguage("fi-FI", "karjaa"),
-		[Commune.HNK]: getTranslationByLanguage("fi-FI", "hanko"),
-		[Commune.KER]: getTranslationByLanguage("fi-FI", "kerava"),
-		[Commune.KRN]: getTranslationByLanguage("fi-FI", "kirkkonummi"),
-		[Commune.LHJ]: getTranslationByLanguage("fi-FI", "lohja"),
-		[Commune.NRJ]: getTranslationByLanguage("fi-FI", "nurmijärvi"),
-		[Commune.RPO]: getTranslationByLanguage("fi-FI", "raasepori"),
-		[Commune.STO]: getTranslationByLanguage("fi-FI", "sipoo"),
-		[Commune.MKL]: getTranslationByLanguage("fi-FI", "siuntio"),
-		[Commune.TSL]: getTranslationByLanguage("fi-FI", "tuusula"),
-		[Commune.VTA]: getTranslationByLanguage("fi-FI", "vantaa"),
-		[Commune.VTI]: getTranslationByLanguage("fi-FI", "vihti"),
-	};
-
-	const districtsSV: Translation = {
-		[Commune.EPK]: getTranslationByLanguage("sv-FI", "espoon keskus"),
-		[Commune.EPL]: getTranslationByLanguage("sv-FI", "espoonlahti"),
-		[Commune.LPV]: getTranslationByLanguage("sv-FI", "leppävaara"),
-		[Commune.MKL]: getTranslationByLanguage("sv-FI", "matinkylä"),
-		[Commune.TAP]: getTranslationByLanguage("sv-FI", "tapiola"),
-	};
-
-	useEffect(() => {
-		if (nursingHomes) {
-			const filteredNursingHomes:
-				| NursingHome[]
-				| null = nursingHomes.filter(nursinghome => {
-				if (searchFilters.alue && searchFilters.alue.length > 0) {
-					const notInCorrectArea =
-						!searchFilters.alue.includes(nursinghome.district) &&
-						!searchFilters.alue.includes(nursinghome.city);
-
-					const cityKeyFI = Object.keys(citiesFI).filter(
-						translation => {
-							return citiesFI[translation] === nursinghome.city;
-						},
-					)[0];
-
-					const districtKeySV = Object.keys(districtsSV).filter(
-						translation => {
-							return (
-								districtsSV[translation] ===
-								nursinghome.district
-							);
-						},
-					)[0];
-
-					const notInCorrectAreaTranslation =
-						!searchFilters.alue.includes(citiesFI[cityKeyFI]) &&
-						!searchFilters.alue.includes(
-							districtsSV[districtKeySV],
-						);
-
-					if (notInCorrectArea && notInCorrectAreaTranslation) {
-						return false;
-					}
-				}
-
-				const notCorrectLanguage =
-					searchFilters.language &&
-					nursinghome.language &&
-					!nursinghome.language.includes(searchFilters.language);
-
-				if (notCorrectLanguage) {
-					return false;
-				}
-
-				const notARADestination =
-					searchFilters.ara !== undefined &&
-					((nursinghome.ara === "Kyllä" && !searchFilters.ara) ||
-						(nursinghome.ara === "Ei" && searchFilters.ara));
-
-				if (notARADestination) {
-					return false;
-				}
-
-				const notLahDestination =
-					searchFilters.lah && nursinghome.lah !== searchFilters.lah;
-
-				if (notLahDestination) {
-					return false;
-				}
-
-				if (searchFilters.kotikunta) {
-					const filtersToKeys = Object.keys(
-						citiesTranslationsAll,
-					).filter(commune => {
-						const key = commune as Commune;
-						if (
-							searchFilters.kotikunta &&
-							searchFilters.kotikunta.includes(
-								citiesTranslationsAll[key],
-							)
-						) {
-							return key;
-						}
-					});
-
-					const inCorrectCommune = filtersToKeys.some(commune => {
-						return (
-							nursinghome.communes &&
-							nursinghome.communes.includes(commune as Commune)
-						);
-					});
-
-					if (!inCorrectCommune) {
-						return false;
-					}
-				}
-
-				return true;
-			});
-
-			setFilteredNursingHomes(filteredNursingHomes);
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [search, history, nursingHomes]);
 
 	const locationPickerLabel = useT("locationPickerLabel");
 
@@ -285,6 +135,58 @@ const PageNursingHomes: FC = () => {
 		useT("matinkylä"),
 		useT("tapiola"),
 	];
+	const espoo = useT("espoo");
+	const otherCities = [
+		useT("hanko"),
+		useT("helsinki"),
+		useT("hyvinkää"),
+		useT("järvenpää"),
+		useT("karkkila"),
+		useT("kerava"),
+		useT("kirkkonummi"),
+		useT("lohja"),
+		useT("nurmijärvi"),
+		useT("raasepori"),
+		useT("sipoo"),
+		useT("siuntio"),
+		useT("tuusula"),
+		useT("vantaa"),
+		useT("vihti"),
+	];
+
+	//City or district can appear in Finnish or Swedish regardless of the current language.
+	const citiesAndDistrictsToFinnish: Translation = {
+		"Esbo centrum": "Espoon keskus",
+		Esboviken: "Espoonlahti",
+		Alberga: "Leppävaara",
+		Mattby: "Matinkylä",
+		Hagalund: "Tapiola",
+		Helsingfors: "Helsinki",
+		Hyvinge: "Hyvinkää",
+		Träskända: "Järvenpää",
+		Karis: "Karjaa",
+		Hangö: "Hanko",
+		Högfors: "Karkkila",
+		Kervo: "Kerava",
+		Kyrkslätt: "Kirkkonummi",
+		Lojo: "Lohja",
+		Nurmijärvi: "Nurmijärvi",
+		Raseborg: "Raasepori",
+		Sibbo: "Sipoo",
+		Sjundeå: "Siuntio",
+		Ekenäs: "Tammisaari",
+		Tusby: "Tuusula",
+		Vanda: "Vantaa",
+		Vichtis: "Vihti",
+	};
+
+	const citiesAndDistrictsToSwedish: Translation = {
+		"Espoon keskus": "Esbo centrum",
+		Espoonlahti: "Esboviken",
+		Leppävaara: "Alberga",
+		Matinkylä: "Mattby",
+		Tapiola: "Hagalund",
+	};
 
 	const filterLabel = useT("filterLabel");
 	const filterAraLabel = useT("filterAraLabel");
@@ -312,30 +214,131 @@ const PageNursingHomes: FC = () => {
 	const clearFilters = useT("clearFilters");
 	const filterSelections = useT("filterSelections");
 	const filterNursingHomeArea = useT("filterNursingHomeArea");
-	const labelCommune = useT("commune");
+	const labelCustomerCommune = useT("customerCommune");
 	const filterCommune = useT("filterCommune");
 	const filterLanguage = useT("filterLanguage");
 	const filterShowARA = useT("filterShowARA");
 	const filterShowLah = useT("filterShowLah");
 
+	useEffect(() => {
+		if (nursingHomes) {
+			const filteredNursingHomes:
+				| NursingHome[]
+				| null = nursingHomes.filter(nursinghome => {
+				if (searchFilters.alue && searchFilters.alue.length > 0) {
+					const notInCorrectArea =
+						!searchFilters.alue.includes(nursinghome.district) &&
+						!searchFilters.alue.includes(nursinghome.city);
+
+					const cityKeyFI = Object.keys(
+						citiesAndDistrictsToFinnish,
+					).filter(translation => {
+						return (
+							citiesAndDistrictsToFinnish[translation] ===
+							nursinghome.city
+						);
+					})[0];
+
+					const districtKeySV = Object.keys(
+						citiesAndDistrictsToSwedish,
+					).filter(translation => {
+						return (
+							citiesAndDistrictsToSwedish[translation] ===
+							nursinghome.district
+						);
+					})[0];
+
+					const notInCorrectAreaTranslation =
+						!searchFilters.alue.includes(
+							citiesAndDistrictsToFinnish[cityKeyFI],
+						) &&
+						!searchFilters.alue.includes(
+							citiesAndDistrictsToSwedish[districtKeySV],
+						);
+
+					if (notInCorrectArea && notInCorrectAreaTranslation) {
+						return false;
+					}
+				}
+
+				const notCorrectLanguage =
+					searchFilters.language &&
+					nursinghome.language &&
+					!nursinghome.language.includes(searchFilters.language);
+
+				if (notCorrectLanguage) {
+					return false;
+				}
+
+				const notARADestination =
+					searchFilters.ara !== undefined &&
+					((nursinghome.ara === filterYes && !searchFilters.ara) ||
+						(nursinghome.ara === filterNo && searchFilters.ara));
+
+				if (notARADestination) {
+					return false;
+				}
+
+				const notLahDestination =
+					searchFilters.lah && nursinghome.lah !== searchFilters.lah;
+
+				if (notLahDestination) {
+					return false;
+				}
+
+				if (searchFilters.kotikunta) {
+					const filtersToKeys = Object.keys(LUCommunes).filter(
+						commune => {
+							const key = commune as Commune;
+							if (
+								searchFilters.kotikunta &&
+								searchFilters.kotikunta.includes(
+									LUCommunes[key],
+								)
+							) {
+								return key;
+							}
+						},
+					);
+
+					const inCorrectCommune = filtersToKeys.some(commune => {
+						return (
+							nursinghome["customer_commune"] &&
+							nursinghome["customer_commune"].includes(
+								commune as Commune,
+							)
+						);
+					});
+
+					if (!inCorrectCommune) {
+						return false;
+					}
+				}
+
+				return true;
+			});
+
+			setFilteredNursingHomes(filteredNursingHomes);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [search, history, nursingHomes]);
+
 	const optionsArea: FilterOption[] = [
 		{ text: locationPickerLabel, type: "header" },
 		{
-			name: espooTranslation["EPO"],
-			label: espooTranslation["EPO"],
+			name: espoo,
+			label: espoo,
 			type: "checkbox",
 			checked: searchFilters.alue
-				? searchFilters.alue.includes(espooTranslation["EPO"])
+				? searchFilters.alue.includes(espoo)
 				: false,
 			bold: true,
 		},
-		...Object.keys(espooAreaTranslations).map<FilterOption>(key => {
-			const value = espooAreaTranslations[key];
-
+		...espooAreas.map<FilterOption>((value: string) => {
 			const checked = searchFilters.alue
 				? searchFilters.alue.includes(value)
 				: false;
-
 			return {
 				name: value,
 				label: value,
@@ -344,13 +347,10 @@ const PageNursingHomes: FC = () => {
 				withMargin: true,
 			};
 		}),
-		...Object.keys(otherCitiesTranslations).map<FilterOption>(key => {
-			const value = otherCitiesTranslations[key];
-
+		...otherCities.map<FilterOption>((value: string) => {
 			const checked = searchFilters.alue
 				? searchFilters.alue.includes(value)
 				: false;
-
 			return {
 				name: value,
 				label: value,
@@ -362,45 +362,18 @@ const PageNursingHomes: FC = () => {
 		}),
 	];
 
-	const optionsCommune: FilterOption[] = [
-		{
-			name: espooTranslation["EPO"],
-			label: espooTranslation["EPO"],
-			type: "checkbox",
-			checked: searchFilters.kotikunta
-				? searchFilters.kotikunta.includes(espooTranslation["EPO"])
-				: false,
-			bold: true,
-		},
-		...Object.keys(espooAreaTranslations).map<FilterOption>(key => {
-			const value = espooAreaTranslations[key];
+	const optionsCustomerCommune: FilterOption[] = [
+		...Object.keys(LUCommunes).map<FilterOption>(key => {
+			const value = LUCommunes[key];
 
 			return {
 				name: value,
 				label: value,
 				type: "checkbox",
 				checked: searchFilters.kotikunta
-					? searchFilters.kotikunta.includes(
-							espooAreaTranslations[key],
-					  )
-					: false,
-				withMargin: true,
-			};
-		}),
-		...Object.keys(otherCitiesTranslations).map<FilterOption>(key => {
-			const value = otherCitiesTranslations[key];
-
-			return {
-				name: value,
-				label: value,
-				type: "checkbox",
-				checked: searchFilters.kotikunta
-					? searchFilters.kotikunta.includes(
-							otherCitiesTranslations[key],
-					  )
+					? searchFilters.kotikunta.includes(LUCommunes[key])
 					: false,
 				bold: true,
-				alignment: "right",
 			};
 		}),
 	];
@@ -446,68 +419,6 @@ const PageNursingHomes: FC = () => {
 		},
 	];
 
-	const handleCityInputChange = (
-		checked: boolean,
-		name: string,
-		filterGroup: "alue" | "kotikunta",
-	): void => {
-		const newSearchFilters = { ...searchFilters };
-		let groupFilters = newSearchFilters[filterGroup];
-
-		if (!groupFilters) {
-			groupFilters = [];
-		}
-		// If the district/city was unchecked
-		if (!checked) {
-			// Normal flow: Remove district/city to search filters if
-			// present
-
-			groupFilters = groupFilters.filter((value: string) => {
-				return value !== name;
-			});
-
-			// Weird flow to accommodate the Espoo special selection
-			if (name === espooTranslation["EPO"]) {
-				groupFilters = groupFilters.filter((value: string) => {
-					return !espooAreas.includes(value);
-				});
-			} else if (espooAreas.includes(name)) {
-				groupFilters = groupFilters.filter((value: string) => {
-					return value !== espooTranslation["EPO"];
-				});
-			}
-			// If the district/city was checked
-		} else {
-			// Normal flow: Add district/city to search filters if
-			// not already added
-			if (!groupFilters.includes(name)) {
-				groupFilters.push(name);
-			}
-
-			// Weird flow to accommodate the Espoo special selection
-			if (name === espooTranslation["EPO"]) {
-				for (const district of espooAreas) {
-					if (!groupFilters.includes(district)) {
-						groupFilters.push(district);
-					}
-				}
-			} else if (espooAreas.includes(name)) {
-				const included = espooAreas.filter(disctrict => {
-					return groupFilters && groupFilters.includes(disctrict);
-				}).length;
-
-				if (included === espooAreas.length) {
-					groupFilters.push(espooTranslation["EPO"]);
-				}
-			}
-		}
-
-		newSearchFilters[filterGroup] = groupFilters;
-
-		const stringfield = queryString.stringify(newSearchFilters);
-		history.push("/hoivakodit?" + stringfield);
-	};
-
 	const filterElements: JSX.Element | null = (
 		<>
 			<FilterItem
@@ -522,9 +433,70 @@ const PageNursingHomes: FC = () => {
 				values={optionsArea}
 				ariaLabel={filterNursingHomeArea}
 				disabled={isFilterDisabled}
-				onChange={({ newValue, name }) =>
-					handleCityInputChange(newValue, name, "alue")
-				}
+				onChange={({ newValue, name }) => {
+					const newSearchFilters = { ...searchFilters };
+					let groupFilters = newSearchFilters["alue"];
+
+					if (!groupFilters) {
+						groupFilters = [];
+					}
+					// If the district/city was unchecked
+					if (!newValue) {
+						// Normal flow: Remove district/city to search filters if
+						// present
+
+						groupFilters = groupFilters.filter((value: string) => {
+							return value !== name;
+						});
+
+						// Weird flow to accommodate the Espoo special selection
+						if (name === espoo) {
+							groupFilters = groupFilters.filter(
+								(value: string) => {
+									return !espooAreas.includes(value);
+								},
+							);
+						} else if (espooAreas.includes(name)) {
+							groupFilters = groupFilters.filter(
+								(value: string) => {
+									return value !== espoo;
+								},
+							);
+						}
+						// If the district/city was checked
+					} else {
+						// Normal flow: Add district/city to search filters if
+						// not already added
+						if (!groupFilters.includes(name)) {
+							groupFilters.push(name);
+						}
+
+						// Weird flow to accommodate the Espoo special selection
+						if (name === espoo) {
+							for (const district of espooAreas) {
+								if (!groupFilters.includes(district)) {
+									groupFilters.push(district);
+								}
+							}
+						} else if (espooAreas.includes(name)) {
+							const included = espooAreas.filter(disctrict => {
+								return (
+									groupFilters &&
+									groupFilters.includes(disctrict)
+								);
+							}).length;
+
+							if (included === espooAreas.length) {
+								groupFilters.push(espoo);
+							}
+						}
+					}
+
+					newSearchFilters["alue"] = groupFilters;
+
+					const stringfield = queryString.stringify(newSearchFilters);
+					history.push("/hoivakodit?" + stringfield);
+				}}
 				onReset={(): void => {
 					const newSearchFilters = {
 						...searchFilters,
@@ -535,7 +507,7 @@ const PageNursingHomes: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix={labelCommune}
+				prefix={labelCustomerCommune}
 				value={
 					searchFilters.kotikunta !== undefined
 						? searchFilters.kotikunta.length <= 2
@@ -543,12 +515,32 @@ const PageNursingHomes: FC = () => {
 							: `(${searchFilters.kotikunta.length} ${filterSelections})`
 						: null
 				}
-				values={optionsCommune}
+				values={optionsCustomerCommune}
 				ariaLabel={filterCommune}
 				disabled={isFilterDisabled}
-				onChange={({ newValue, name }) =>
-					handleCityInputChange(newValue, name, "kotikunta")
-				}
+				onChange={({ newValue, name }) => {
+					const newSearchFilters = { ...searchFilters };
+					let groupFilters = newSearchFilters["kotikunta"];
+
+					if (!groupFilters) {
+						groupFilters = [];
+					}
+
+					if (!newValue) {
+						groupFilters = groupFilters.filter((value: string) => {
+							return value !== name;
+						});
+					} else {
+						if (!groupFilters.includes(name)) {
+							groupFilters.push(name);
+						}
+					}
+
+					newSearchFilters["kotikunta"] = groupFilters;
+
+					const stringfield = queryString.stringify(newSearchFilters);
+					history.push("/hoivakodit?" + stringfield);
+				}}
 				onReset={(): void => {
 					const newSearchFilters = {
 						...searchFilters,

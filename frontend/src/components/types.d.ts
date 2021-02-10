@@ -28,7 +28,7 @@ export interface NursingHome {
 	summary?: string;
 	postal_code: string;
 	city: string;
-	communes?: Commune[];
+	customer_commune?: Commune[];
 	arrival_guide_public_transit?: string;
 	arrival_guide_car?: string;
 	construction_year?: number;

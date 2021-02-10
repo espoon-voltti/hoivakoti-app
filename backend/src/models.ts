@@ -46,11 +46,13 @@ knex.schema.hasTable("NursingHomePictures").then(async (exists: boolean) => {
 	await CreateNursingHomePicturesTable();
 });
 
-knex.schema.hasTable("NursingHomeCommunes").then(async (exists: boolean) => {
-	if (exists) return;
+knex.schema
+	.hasTable("NursingHomeCustomerCommunes")
+	.then(async (exists: boolean) => {
+		if (exists) return;
 
-	await CreateNursingHomeCommunesTable();
-});
+		await CreateNursingHomeCustomerCommunesTable();
+	});
 
 knex.schema.hasTable("NursingHomeReports").then(async (exists: boolean) => {
 	if (exists) return;
@@ -134,12 +136,12 @@ async function CreateNursingHomePicturesTable(): Promise<void> {
 	});
 }
 
-async function CreateNursingHomeCommunesTable(): Promise<void> {
+async function CreateNursingHomeCustomerCommunesTable(): Promise<void> {
 	await knex.schema.createTable(
-		"NursingHomeCommunes",
+		"NursingHomeCustomerCommunes",
 		(table: CreateTableBuilder) => {
 			table.string("nursinghome_id");
-			table.json("communes");
+			table.json("customer_commune");
 		},
 	);
 }
@@ -1168,15 +1170,17 @@ export async function GetIsValidSurveyKey(key: string): Promise<boolean> {
 	}
 }
 
-export async function GetCommunesForNursingHome(id: string): Promise<any> {
-	const result = await knex("NursingHomeCommunes")
+export async function GetCustomerCommunesForNursingHome(
+	id: string,
+): Promise<any> {
+	const result = await knex("NursingHomeCustomerCommunes")
 		.select()
 		.where({ nursinghome_id: id });
 
 	return result;
 }
 
-export async function UpdateCommunesForNursingHome(
+export async function UpdateCustomerCommunesForNursingHome(
 	id: string,
 	communes: Commune[],
 ): Promise<boolean> {
@@ -1189,16 +1193,16 @@ export async function UpdateCommunesForNursingHome(
 	}
 
 	if (requestValid) {
-		const currentCommunes = await GetCommunesForNursingHome(id);
+		const customerCommunes = await GetCustomerCommunesForNursingHome(id);
 
-		if (currentCommunes && currentCommunes.length > 0) {
-			await knex("NursingHomeCommunes")
+		if (customerCommunes && customerCommunes.length > 0) {
+			await knex("NursingHomeCustomerCommunes")
 				.where({ nursinghome_id: id })
-				.update({ communes: JSON.stringify(communes) });
+				.update({ customer_commune: JSON.stringify(communes) });
 		} else {
-			await knex("NursingHomeCommunes").insert({
+			await knex("NursingHomeCustomerCommunes").insert({
 				nursinghome_id: id,
-				communes: JSON.stringify(communes),
+				customer_commune: JSON.stringify(communes),
 			});
 		}
 

@@ -37,8 +37,8 @@ import {
 	CheckLogin,
 	CheckSurveyKey,
 	UpdateNursingHomeVacancyStatus,
-	GetNursingHomeCommunes,
-	UpdateNursingHomeCommunes,
+	GetNursingHomeCustomerCommunes,
+	UpdateNursingHomeCustomerCommunes,
 } from "./controllers";
 import config from "./config";
 
@@ -171,6 +171,18 @@ router.post("/api/nursing-homes/:id/report-status", async ctx => {
 	}
 });
 
+router.get("/api/nursing-homes/:id/communes", async ctx => {
+	const res = await GetNursingHomeCustomerCommunes(ctx);
+
+	ctx.body = res;
+});
+
+router.post("/api/nursing-homes/:id/communes", async ctx => {
+	const res = await UpdateNursingHomeCustomerCommunes(ctx);
+
+	ctx.body = { success: res };
+});
+
 router.get("/api/health", async ctx => {
 	ctx.body = "healthy";
 });
@@ -245,18 +257,6 @@ router.get("/api/survey/:id/results/:survey", async ctx => {
 		ctx.params.id,
 	);
 	ctx.body = res;
-});
-
-router.get("/api/communes/:id", async ctx => {
-	const res = await GetNursingHomeCommunes(ctx);
-
-	ctx.body = res;
-});
-
-router.post("/api/communes/:id", async ctx => {
-	const res = await UpdateNursingHomeCommunes(ctx);
-
-	ctx.body = { success: res };
 });
 
 const routes = router.routes();

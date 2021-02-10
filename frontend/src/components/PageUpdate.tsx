@@ -48,6 +48,10 @@ interface NursingHomeRouteParams {
 	key: string;
 }
 
+interface Translation {
+	[key: string]: string;
+}
+
 interface InputField {
 	label: string;
 	type: InputTypes;
@@ -110,8 +114,9 @@ const requestCommunesUpdate = async (
 	communes: Commune[],
 ): Promise<void> => {
 	try {
-		await axios.post(`${config.API_URL}/communes/${id}`, {
-			communes: communes,
+		await axios.post(`${config.API_URL}/nursing-homes/${id}/communes`, {
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			customer_commune: communes,
 		});
 	} catch (error) {
 		console.error(error);
@@ -191,7 +196,7 @@ const PageUpdate: FC = () => {
 	const labelStaffInfo = useT("staffInfo");
 	const labelNearbyServices = useT("labelNearbyServices");
 	const labelAddImages = useT("labelAddImages");
-	const labelCommune = useT("commune");
+	const labelCustomerCommune = useT("customerCommune");
 
 	const helperSummary = useT("helperSummary");
 	const helperBuildingInfo = useT("helperBuildingInfo");
@@ -226,28 +231,16 @@ const PageUpdate: FC = () => {
 		"fieldsWithAsteriskAreMandatory",
 	);
 
-	const communeTranslations = {
+	const LUCommunes: Translation = {
 		[Commune.EPO]: useT("espoo"),
-		[Commune.EPK]: useT("espoon keskus"),
-		[Commune.EPL]: useT("espoonlahti"),
-		[Commune.LPV]: useT("leppävaara"),
-		[Commune.MKL]: useT("matinkylä"),
-		[Commune.TAP]: useT("tapiola"),
 		[Commune.HNK]: useT("hanko"),
-		[Commune.HEL]: useT("helsinki"),
-		[Commune.HVK]: useT("hyvinkää"),
-		[Commune.JVP]: useT("järvenpää"),
-		[Commune.KAR]: useT("karjaa"),
-		[Commune.KER]: useT("kerava"),
+		[Commune.INK]: useT("inkoo"),
+		[Commune.KAU]: useT("kauniainen"),
 		[Commune.KRN]: useT("kirkkonummi"),
 		[Commune.LHJ]: useT("lohja"),
-		[Commune.NRJ]: useT("nurmijärvi"),
+		[Commune.PKA]: useT("karviainen"),
 		[Commune.RPO]: useT("raasepori"),
-		[Commune.SPO]: useT("sipoo"),
 		[Commune.STO]: useT("siuntio"),
-		[Commune.TSL]: useT("tuusula"),
-		[Commune.VTA]: useT("vantaa"),
-		[Commune.VTI]: useT("vihti"),
 	};
 
 	const [form, setForm] = useState<{ [key: string]: InputField[] }>({
@@ -565,15 +558,15 @@ const PageUpdate: FC = () => {
 		],
 		communesFields: [
 			{
-				label: labelCommune,
+				label: labelCustomerCommune,
 				description: helperCommune,
 				type: InputTypes.checkbox,
-				name: "communes",
+				name: "customer_commune",
 				buttons: [
-					...Object.values(Commune).map(commune => {
+					...Object.keys(LUCommunes).map(key => {
 						return {
-							label: communeTranslations[commune],
-							value: commune,
+							label: LUCommunes[key],
+							value: key,
 						};
 					}),
 				],
@@ -826,7 +819,7 @@ const PageUpdate: FC = () => {
 	useEffect(() => {
 		if (!communes) {
 			axios
-				.get(`${config.API_URL}/communes/${id}`)
+				.get(`${config.API_URL}/nursing-homes/${id}/communes`)
 				.then(res => {
 					setCommunes(res.data);
 				})
@@ -842,7 +835,8 @@ const PageUpdate: FC = () => {
 			...nursingHome,
 			// eslint-disable-next-line @typescript-eslint/camelcase
 			has_vacancy: hasVacancy,
-			communes: communes,
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			customer_commune: communes,
 		});
 	}, [nursingHome, communes, prepopulateFields, hasVacancy]);
 
@@ -870,7 +864,7 @@ const PageUpdate: FC = () => {
 				);
 
 				const communesField = fields.find(
-					field => field.name === "communes",
+					field => field.name === "customer_commune",
 				);
 				if (vacancyField) {
 					await requestVacancyStatusUpdate(
@@ -892,7 +886,7 @@ const PageUpdate: FC = () => {
 				for (const field of fields) {
 					if (
 						field.name !== "has_vacancy" &&
-						field.name !== "communes"
+						field.name !== "customer_commune"
 					) {
 						formData[field.name] = field.value;
 					}
