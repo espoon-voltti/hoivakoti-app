@@ -1182,6 +1182,12 @@ export const translations = {
 		"fi-FI": "Asiakkaan kotikunta",
 		"sv-FI": "Asiakkaan kotikunta",
 	},
+	labelCustomerCommune: {
+		"fi-FI":
+			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palvelun hankinnassa",
+		"sv-FI":
+			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palvelun hankinnassa",
+	},
 	helperCommune: {
 		"fi-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
 		"sv-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
@@ -1203,7 +1209,9 @@ export const translations = {
 		"sv-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
 	},
 	selectCommuneLabel: {
-		"fi-FI": "Valitse oma kotikuntasi.",
-		"sv-FI": "Valitse oma kotikuntasi.",
+		"fi-FI":
+			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
+		"sv-FI":
+			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
 	},
 };

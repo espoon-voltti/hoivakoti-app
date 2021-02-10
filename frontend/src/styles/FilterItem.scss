@@ -38,6 +38,7 @@
 .header-item {
 	font-weight: 600;
 	margin-bottom: 25px;
+	line-height: 1.5;
 }
 
 .text-item {
@@ -56,21 +57,21 @@
 }
 
 .with-margin {
-	margin-left: 10px,
+	margin-left: 10px;
 }
 
 .with-bold {
-	font-weight: bold,
+	font-weight: bold;
 }
 
 .option-container {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
-	max-height:270px;
+	max-height: 270px;
 	width: 650px;
 	@media screen and (max-width: 1024px) {
-		max-height:calc(100vh - 200px);
+		max-height: calc(100vh - 200px);
 		width: auto;
 	}
 }

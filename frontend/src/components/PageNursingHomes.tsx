@@ -7,7 +7,7 @@ import config from "./config";
 import queryString from "query-string";
 import axios from "axios";
 import Map from "./Map";
-import i18next, { TranslationKey, useT } from "../i18n";
+import i18next, { TranslationKey, useCurrentLanguage, useT } from "../i18n";
 import { NursingHome } from "./types";
 import { Commune } from "./commune";
 
@@ -17,10 +17,26 @@ const getTranslationByLanguage = (
 	language: Language,
 	key: TranslationKey,
 ): string => {
-	return i18next.getResource(language, "defaultNameSpace", key);
+	return i18next.getResource(language, "defaultNamespace", key);
 };
 
 const calculateMapVisible = (width: number): boolean => width >= 1130;
+
+interface Translation {
+	[key: string]: string;
+}
+
+const reverseObjectKeyValues = (obj: Translation): Translation => {
+	const reversedObject: Translation = {};
+
+	for (const key in obj) {
+		const value = obj[key];
+
+		reversedObject[value] = key;
+	}
+
+	return reversedObject;
+};
 
 interface SearchFilters {
 	readonly alue?: string[];
@@ -30,13 +46,10 @@ interface SearchFilters {
 	readonly kotikunta?: string[];
 }
 
-interface Translation {
-	[key: string]: string;
-}
-
 const PageNursingHomes: FC = () => {
 	const history = useHistory();
 	const { search } = useLocation();
+	const currentLanguage = useCurrentLanguage();
 
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
@@ -162,117 +175,98 @@ const PageNursingHomes: FC = () => {
 	//City or district can appear in Finnish or Swedish regardless of the current language.
 	const citiesAndDistrictsMapFI: Translation = {
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"espoon keskus",
 		)]: getTranslationByLanguage("fi-FI", "espoon keskus"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"espoonlahti",
 		)]: getTranslationByLanguage("fi-FI", "espoonlahti"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"leppävaara",
 		)]: getTranslationByLanguage("fi-FI", "leppävaara"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"matinkylä",
 		)]: getTranslationByLanguage("fi-FI", "matinkylä"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"tapiola",
 		)]: getTranslationByLanguage("fi-FI", "tapiola"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"helsinki",
 		)]: getTranslationByLanguage("fi-FI", "helsinki"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"hyvinkää",
 		)]: getTranslationByLanguage("fi-FI", "hyvinkää"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"järvenpää",
 		)]: getTranslationByLanguage("fi-FI", "järvenpää"),
-		[getTranslationByLanguage("fi-SV", "karjaa")]: getTranslationByLanguage(
+		[getTranslationByLanguage("sv-FI", "karjaa")]: getTranslationByLanguage(
 			"fi-FI",
 			"karjaa",
 		),
-		[getTranslationByLanguage("fi-SV", "hanko")]: getTranslationByLanguage(
+		[getTranslationByLanguage("sv-FI", "hanko")]: getTranslationByLanguage(
 			"fi-FI",
 			"hanko",
 		),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"karkkila",
 		)]: getTranslationByLanguage("fi-FI", "karkkila"),
-		[getTranslationByLanguage("fi-SV", "kerava")]: getTranslationByLanguage(
+		[getTranslationByLanguage("sv-FI", "kerava")]: getTranslationByLanguage(
 			"fi-FI",
 			"kerava",
 		),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"kirkkonummi",
 		)]: getTranslationByLanguage("fi-FI", "kirkkonummi"),
-		[getTranslationByLanguage("fi-SV", "lohja")]: getTranslationByLanguage(
+		[getTranslationByLanguage("sv-FI", "lohja")]: getTranslationByLanguage(
 			"fi-FI",
 			"lohja",
 		),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"nurmijärvi",
 		)]: getTranslationByLanguage("fi-FI", "nurmijärvi"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"raasepori",
 		)]: getTranslationByLanguage("fi-FI", "raasepori"),
-		[getTranslationByLanguage("fi-SV", "sipoo")]: getTranslationByLanguage(
+		[getTranslationByLanguage("sv-FI", "sipoo")]: getTranslationByLanguage(
 			"fi-FI",
 			"sipoo",
 		),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"siuntio",
 		)]: getTranslationByLanguage("fi-FI", "siuntio"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"tammisaari",
 		)]: getTranslationByLanguage("fi-FI", "tammisaari"),
 		[getTranslationByLanguage(
-			"fi-SV",
+			"sv-FI",
 			"tuusula",
 		)]: getTranslationByLanguage("fi-FI", "tuusula"),
-		[getTranslationByLanguage("fi-SV", "vantaa")]: getTranslationByLanguage(
+		[getTranslationByLanguage("sv-FI", "vantaa")]: getTranslationByLanguage(
 			"fi-FI",
 			"vantaa",
 		),
-		[getTranslationByLanguage("fi-SV", "vihti")]: getTranslationByLanguage(
+		[getTranslationByLanguage("sv-FI", "vihti")]: getTranslationByLanguage(
 			"fi-FI",
 			"vihti",
 		),
 	};
 
-	const citiesAndDistrictsMapSV: Translation = {
-		[getTranslationByLanguage(
-			"fi-FI",
-			"espoon keskus",
-		)]: getTranslationByLanguage("fi-SV", "espoon keskus"),
-		[getTranslationByLanguage(
-			"fi-FI",
-			"espoonlahti",
-		)]: getTranslationByLanguage("fi-SV", "espoonlahti"),
-		[getTranslationByLanguage(
-			"fi-FI",
-			"leppävaara",
-		)]: getTranslationByLanguage("fi-SV", "leppävaara"),
-		[getTranslationByLanguage(
-			"fi-FI",
-			"matinkylä",
-		)]: getTranslationByLanguage("fi-SV", "matinkylä"),
-		[getTranslationByLanguage(
-			"fi-FI",
-			"tapiola",
-		)]: getTranslationByLanguage("fi-SV", "tapiola"),
-	};
+	const citiesAndDistrictsMapSV: Translation = reverseObjectKeyValues(
+		citiesAndDistrictsMapFI,
+	);
 
 	const hasFilters = search !== "";
 	const isFilterDisabled = nursingHomes === null;
@@ -312,31 +306,39 @@ const PageNursingHomes: FC = () => {
 						!searchFilters.alue.includes(nursinghome.district) &&
 						!searchFilters.alue.includes(nursinghome.city);
 
-					const cityKeyFI = Object.keys(
-						citiesAndDistrictsMapFI,
-					).filter(translation => {
-						return (
-							citiesAndDistrictsMapFI[translation] ===
-							nursinghome.city
-						);
-					})[0];
+					let notInCorrectAreaTranslation;
 
-					const districtKeySV = Object.keys(
-						citiesAndDistrictsMapSV,
-					).filter(translation => {
-						return (
-							citiesAndDistrictsMapSV[translation] ===
-							nursinghome.district
-						);
-					})[0];
+					if (currentLanguage === "sv-FI") {
+						const cityKey = Object.keys(
+							citiesAndDistrictsMapFI,
+						).find(translation => {
+							return (
+								citiesAndDistrictsMapFI[translation] ===
+									nursinghome.city ||
+								citiesAndDistrictsMapFI[translation] ===
+									nursinghome.district
+							);
+						});
 
-					const notInCorrectAreaTranslation =
-						!searchFilters.alue.includes(
-							citiesAndDistrictsMapFI[cityKeyFI],
-						) &&
-						!searchFilters.alue.includes(
-							citiesAndDistrictsMapSV[districtKeySV],
+						notInCorrectAreaTranslation = !searchFilters.alue.includes(
+							cityKey as string,
 						);
+					} else {
+						const cityKey = Object.keys(
+							citiesAndDistrictsMapSV,
+						).find(translation => {
+							return (
+								citiesAndDistrictsMapSV[translation] ===
+									nursinghome.city ||
+								citiesAndDistrictsMapSV[translation] ===
+									nursinghome.district
+							);
+						});
+
+						notInCorrectAreaTranslation = !searchFilters.alue.includes(
+							cityKey as string,
+						);
+					}
 
 					if (notInCorrectArea && notInCorrectAreaTranslation) {
 						return false;

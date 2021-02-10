@@ -196,7 +196,7 @@ const PageUpdate: FC = () => {
 	const labelStaffInfo = useT("staffInfo");
 	const labelNearbyServices = useT("labelNearbyServices");
 	const labelAddImages = useT("labelAddImages");
-	const labelCustomerCommune = useT("customerCommune");
+	const labelCustomerCommune = useT("labelCustomerCommune");
 
 	const helperSummary = useT("helperSummary");
 	const helperBuildingInfo = useT("helperBuildingInfo");
@@ -559,7 +559,6 @@ const PageUpdate: FC = () => {
 		communesFields: [
 			{
 				label: labelCustomerCommune,
-				description: helperCommune,
 				type: InputTypes.checkbox,
 				name: "customer_commune",
 				buttons: [
