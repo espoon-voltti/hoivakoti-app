@@ -1119,24 +1119,20 @@ const PageUpdate: FC = () => {
 												id={`${field.name}-${button.value}`}
 												name={field.name}
 												onChange={() => {
+													let newValue = button.value as InputFieldValue;
+
 													if (field.change) {
-														const newValue = field.change(
+														newValue = field.change(
 															field.value,
 															button.value as string,
 														);
-
-														handleInputChange(
-															field,
-															section,
-															newValue,
-														);
-													} else {
-														handleInputChange(
-															field,
-															section,
-															button.value,
-														);
 													}
+
+													handleInputChange(
+														field,
+														section,
+														newValue,
+													);
 												}}
 												onBlur={validateForm}
 												isChecked={
