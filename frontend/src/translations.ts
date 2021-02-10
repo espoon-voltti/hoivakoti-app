@@ -1179,12 +1179,12 @@ export const translations = {
 		"sv-FI": "Valitse hoivakodin alue",
 	},
 	customerCommune: {
-		"fi-FI": " Asiakkaan kotikunta",
-		"sv-FI": " Asiakkaan kotikunta",
+		"fi-FI": "Asiakkaan kotikunta",
+		"sv-FI": "Asiakkaan kotikunta",
 	},
 	helperCommune: {
-		"fi-FI": "Määrittele asiakkaiden sallitut kotikunnat",
-		"sv-FI": "Määrittele asiakkaiden sallitut kotikunnat",
+		"fi-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
+		"sv-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
 	},
 	filterCommune: {
 		"fi-FI": "Valitse kotikunta",
