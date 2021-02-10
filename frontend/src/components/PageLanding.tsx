@@ -100,7 +100,8 @@ const PageLanding: FC = () => {
 					</div>
 					<div className="location-picker-select">
 						<FilterItem
-							prefix=""
+							prefix="location"
+							label=""
 							value={filterText}
 							values={optionsArea}
 							ariaLabel="Valitse hoivakodin alue"

@@ -91,18 +91,12 @@ const PageNursingHomes: FC = () => {
 		[Commune.HNK]: useT("hanko"),
 		[Commune.INK]: useT("inkoo"),
 		[Commune.KAU]: useT("kauniainen"),
+		[Commune.PKA]: useT("karviainen"),
 		[Commune.KRN]: useT("kirkkonummi"),
 		[Commune.LHJ]: useT("lohja"),
-		[Commune.PKA]: useT("karviainen"),
 		[Commune.RPO]: useT("raasepori"),
 		[Commune.STO]: useT("siuntio"),
 	};
-
-	const communesKeysList: string[] = Object.keys(LUCommunes);
-
-	const communesIntoThirds = communesKeysList.map(_ =>
-		communesKeysList.splice(0, 3),
-	);
 
 	const locationPickerLabel = useT("locationPickerLabel");
 	const selectCommuneLabel = useT("selectCommuneLabel");
@@ -452,44 +446,16 @@ const PageNursingHomes: FC = () => {
 
 	const optionsCustomerCommune: FilterOption[] = [
 		{ text: selectCommuneLabel, type: "header" },
-		...communesIntoThirds[0].map<FilterOption>(key => {
+		...Object.keys(LUCommunes).map<FilterOption>(key => {
 			const value = LUCommunes[key];
 
 			return {
 				name: value,
 				label: value,
-				type: "checkbox",
+				type: "radio",
 				checked: searchFilters.kotikunta
 					? searchFilters.kotikunta.includes(LUCommunes[key])
 					: false,
-				bold: true,
-			};
-		}),
-		...communesIntoThirds[1].map<FilterOption>(key => {
-			const value = LUCommunes[key];
-
-			return {
-				name: value,
-				label: value,
-				type: "checkbox",
-				checked: searchFilters.kotikunta
-					? searchFilters.kotikunta.includes(LUCommunes[key])
-					: false,
-				bold: true,
-			};
-		}),
-		...communesIntoThirds[2].map<FilterOption>(key => {
-			const value = LUCommunes[key];
-
-			return {
-				name: value,
-				label: value,
-				type: "checkbox",
-				checked: searchFilters.kotikunta
-					? searchFilters.kotikunta.includes(LUCommunes[key])
-					: false,
-				bold: true,
-				alignment: "right",
 			};
 		}),
 	];
@@ -538,7 +504,8 @@ const PageNursingHomes: FC = () => {
 	const filterElements: JSX.Element | null = (
 		<>
 			<FilterItem
-				prefix={filterLocation}
+				label={filterLocation}
+				prefix="area"
 				value={
 					searchFilters.alue !== undefined
 						? searchFilters.alue.length <= 2
@@ -623,7 +590,8 @@ const PageNursingHomes: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix={labelCustomerCommune}
+				label={labelCustomerCommune}
+				prefix="commune"
 				value={
 					searchFilters.kotikunta !== undefined
 						? searchFilters.kotikunta.length <= 2
@@ -634,33 +602,39 @@ const PageNursingHomes: FC = () => {
 				values={optionsCustomerCommune}
 				ariaLabel={filterCommune}
 				disabled={isFilterDisabled}
-				onChange={({ newValue, name }) => {
-					const newSearchFilters = { ...searchFilters };
-					let groupFilters = newSearchFilters["kotikunta"];
+				onChange={({ name }) => {
+					// const newSearchFilters = { ...searchFilters };
+					// let groupFilters = newSearchFilters["kotikunta"];
 
-					if (!groupFilters) {
-						groupFilters = [];
-					}
+					// if (!groupFilters) {
+					// 	groupFilters = [];
+					// }
 
-					if (!newValue) {
-						groupFilters = groupFilters.filter((value: string) => {
-							return value !== name;
-						});
-					} else {
-						if (!groupFilters.includes(name)) {
-							groupFilters.push(name);
-						}
-					}
+					// if (!newValue) {
+					// 	groupFilters = groupFilters.filter((value: string) => {
+					// 		return value !== name;
+					// 	});
+					// } else {
+					// 	if (!groupFilters.includes(name)) {
+					// 		groupFilters.push(name);
+					// 	}
+					// }
 
-					newSearchFilters["kotikunta"] = groupFilters;
+					// newSearchFilters["kotikunta"] = groupFilters;
 
+					// const stringfield = queryString.stringify(newSearchFilters);
+					// history.push("/hoivakodit?" + stringfield);
+					const newSearchFilters = {
+						...searchFilters,
+						kotikunta: name,
+					};
 					const stringfield = queryString.stringify(newSearchFilters);
 					history.push("/hoivakodit?" + stringfield);
 				}}
 				onReset={(): void => {
 					const newSearchFilters = {
 						...searchFilters,
-						commune: undefined,
+						kotikunta: undefined,
 					};
 
 					const stringfield = queryString.stringify(newSearchFilters);
@@ -668,7 +642,8 @@ const PageNursingHomes: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix={serviceLanguage}
+				label={serviceLanguage}
+				prefix="language"
 				value={
 					searchFilters.language === filterFinnish
 						? filterFinnish
@@ -696,7 +671,8 @@ const PageNursingHomes: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix={filterAraLabel}
+				label={filterAraLabel}
+				prefix="ara"
 				value={
 					searchFilters.ara !== undefined
 						? searchFilters.ara
@@ -726,7 +702,8 @@ const PageNursingHomes: FC = () => {
 			/>
 
 			<FilterItem
-				prefix={filterLAH}
+				prefix="lah"
+				label={filterLAH}
 				value={
 					searchFilters.lah !== undefined
 						? searchFilters.lah

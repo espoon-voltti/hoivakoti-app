@@ -651,8 +651,8 @@ export const translations = {
 		"sv-FI": "Grankulla",
 	},
 	karviainen: {
-		"fi-FI": "Perusturvakuntayhtymä Karviainen",
-		"sv-FI": "Perusturvakuntayhtymä Karviainen",
+		"fi-FI": "Karviainen",
+		"sv-FI": "Karviainen",
 	},
 	imageCarouselNextTitle: {
 		"fi-FI": "Seuraava (oikea nuoli)",

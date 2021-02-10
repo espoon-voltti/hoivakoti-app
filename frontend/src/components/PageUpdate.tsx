@@ -236,9 +236,9 @@ const PageUpdate: FC = () => {
 		[Commune.HNK]: useT("hanko"),
 		[Commune.INK]: useT("inkoo"),
 		[Commune.KAU]: useT("kauniainen"),
+		[Commune.PKA]: useT("karviainen"),
 		[Commune.KRN]: useT("kirkkonummi"),
 		[Commune.LHJ]: useT("lohja"),
-		[Commune.PKA]: useT("karviainen"),
 		[Commune.RPO]: useT("raasepori"),
 		[Commune.STO]: useT("siuntio"),
 	};

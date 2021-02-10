@@ -30,6 +30,7 @@ export type FilterOption =
 
 export type Props = {
 	prefix: string;
+	label: string;
 	value: string | null;
 	values: FilterOption[];
 	ariaLabel: string;
@@ -137,6 +138,7 @@ function CreateFilterItems(
 
 const FilterItem: FC<Props> = ({
 	prefix,
+	label,
 	value,
 	values,
 	disabled,
@@ -227,7 +229,7 @@ const FilterItem: FC<Props> = ({
 		</div>
 	);
 
-	const label = `${prefix}${value ? `${prefix ? ": " : ""}${value}` : ""}`;
+	const labelText = `${label}${value ? `${label ? ": " : ""}${value}` : ""}`;
 	const filterActive = value !== null;
 
 	return (
@@ -235,7 +237,7 @@ const FilterItem: FC<Props> = ({
 			isExpanded={isDropdownExpanded}
 			onExpandedChange={setIsDropdownExpanded}
 			variant={dropdownVariant}
-			label={label}
+			label={labelText}
 			active={filterActive}
 			disabled={disabled}
 		>
