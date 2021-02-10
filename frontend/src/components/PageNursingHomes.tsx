@@ -603,27 +603,6 @@ const PageNursingHomes: FC = () => {
 				ariaLabel={filterCommune}
 				disabled={isFilterDisabled}
 				onChange={({ name }) => {
-					// const newSearchFilters = { ...searchFilters };
-					// let groupFilters = newSearchFilters["kotikunta"];
-
-					// if (!groupFilters) {
-					// 	groupFilters = [];
-					// }
-
-					// if (!newValue) {
-					// 	groupFilters = groupFilters.filter((value: string) => {
-					// 		return value !== name;
-					// 	});
-					// } else {
-					// 	if (!groupFilters.includes(name)) {
-					// 		groupFilters.push(name);
-					// 	}
-					// }
-
-					// newSearchFilters["kotikunta"] = groupFilters;
-
-					// const stringfield = queryString.stringify(newSearchFilters);
-					// history.push("/hoivakodit?" + stringfield);
 					const newSearchFilters = {
 						...searchFilters,
 						kotikunta: name,
