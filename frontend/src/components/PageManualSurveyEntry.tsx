@@ -4,8 +4,8 @@ import "../styles/PageManualSurveyEntry.scss";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
-import { GetNursingHomeResponse } from "./PageNursingHome";
-import { NursingHome } from "./types";
+
+import { NursingHome, GetNursingHomeResponse } from "./types";
 import Cookies from "universal-cookie";
 
 let resultState: any[] = [];
