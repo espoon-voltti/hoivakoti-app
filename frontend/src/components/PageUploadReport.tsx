@@ -46,7 +46,7 @@ const requestReportStatusUpdate = async (
 const PageUploadReport: FC = () => {
 	const sessionCookies = new Cookies();
 
-	const { id } = useParams();
+	const { id } = useParams() as any;
 	const key = sessionCookies.get("hoivakoti_session");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [popupState, setPopupState] = useState<
