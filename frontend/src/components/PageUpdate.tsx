@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, Fragment } from "react";
+import React, { FC, useEffect, useState, Fragment, useCallback } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
@@ -8,6 +8,8 @@ import config from "./config";
 import { GetNursingHomeResponse } from "./PageNursingHome";
 import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";
+
+import { Commune } from "./commune";
 
 enum InputTypes {
 	text = "text",
@@ -21,7 +23,7 @@ enum InputTypes {
 }
 
 type NursingHomeKey = keyof NursingHome;
-type InputFieldValue = string | number | boolean;
+type InputFieldValue = string | number | boolean | Commune[] | null;
 
 type NursingHomeUpdateData = Omit<
 	NursingHome,
@@ -46,17 +48,22 @@ interface NursingHomeRouteParams {
 	key: string;
 }
 
+interface Translation {
+	[key: string]: string;
+}
+
 interface InputField {
 	label: string;
 	type: InputTypes;
 	name: NursingHomeKey;
 	description?: string;
-	buttons?: { value: string | boolean; label: string }[];
+	buttons?: { value: string | boolean; label: string; checked?: boolean }[];
 	required?: boolean;
 	valid?: boolean;
 	touched?: boolean;
-	change?: (...arg: string[]) => InputFieldValue;
+	change?: (...arg: any) => InputFieldValue;
 	maxlength?: number;
+	value: InputFieldValue;
 }
 
 const formatDate = (dateString: string | null): string => {
@@ -102,6 +109,21 @@ const requestNursingHomeUpdate = async (
 	}
 };
 
+const requestCommunesUpdate = async (
+	id: string,
+	communes: Commune[],
+): Promise<void> => {
+	try {
+		await axios.post(`${config.API_URL}/nursing-homes/${id}/communes`, {
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			customer_commune: communes,
+		});
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
 const PageUpdate: FC = () => {
 	const { id, key } = useParams<NursingHomeRouteParams>();
 
@@ -112,6 +134,8 @@ const PageUpdate: FC = () => {
 		null,
 	);
 	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
+	const [communes, setCommunes] = useState<Commune[] | null>(null);
+
 	const [popupState, setPopupState] = useState<
 		null | "saving" | "saved" | "invalid"
 	>(null);
@@ -172,6 +196,7 @@ const PageUpdate: FC = () => {
 	const labelStaffInfo = useT("staffInfo");
 	const labelNearbyServices = useT("labelNearbyServices");
 	const labelAddImages = useT("labelAddImages");
+	const labelCustomerCommune = useT("labelCustomerCommune");
 
 	const helperSummary = useT("helperSummary");
 	const helperBuildingInfo = useT("helperBuildingInfo");
@@ -186,6 +211,7 @@ const PageUpdate: FC = () => {
 	const helperStaffSatisfaction = useT("helperStaffSatisfaction");
 	const helperOtherServices = useT("helperOtherServices");
 	const helperUrl = useT("helperUrl");
+	const helperCommune = useT("helperCommune");
 
 	const title = useT("updateNursingHomeTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
@@ -205,54 +231,17 @@ const PageUpdate: FC = () => {
 		"fieldsWithAsteriskAreMandatory",
 	);
 
-	useEffect(() => {
-		axios
-			.get(`${config.API_URL}/nursing-homes/${id}`)
-			.then((response: GetNursingHomeResponse) => {
-				const data = response.data;
-				const shouldSetDefaults =
-					data.has_vacancy === null || data.language === "";
-
-				if (shouldSetDefaults) {
-					const prepopulateNursingHome = { ...data };
-
-					if (data.has_vacancy === null) {
-						prepopulateNursingHome["has_vacancy"] = false;
-					}
-
-					if (data.language === "") {
-						prepopulateNursingHome.language = filterFinnish;
-					}
-
-					setNursingHome(prepopulateNursingHome);
-				} else {
-					setNursingHome(data);
-				}
-			})
-			.catch(e => {
-				console.error(e);
-				throw e;
-			});
-	}, [id, filterFinnish]);
-
-	useEffect(() => {
-		if (!vacancyStatus) {
-			axios
-				.get(
-					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
-				)
-				.then((response: { data: VacancyStatus }) => {
-					setVacancyStatus(response.data);
-					setHasVacancy(response.data.has_vacancy);
-
-					if (popupState) setTimeout(() => setPopupState(null), 3000);
-				})
-				.catch(e => {
-					console.error(e);
-					throw e;
-				});
-		}
-	}, [id, key, popupState, vacancyStatus]);
+	const LUCommunes: Translation = {
+		[Commune.EPO]: useT("espoo"),
+		[Commune.HNK]: useT("hanko"),
+		[Commune.INK]: useT("inkoo"),
+		[Commune.KAU]: useT("kauniainen"),
+		[Commune.PKA]: useT("karviainen"),
+		[Commune.KRN]: useT("kirkkonummi"),
+		[Commune.LHJ]: useT("lohja"),
+		[Commune.RPO]: useT("raasepori"),
+		[Commune.STO]: useT("siuntio"),
+	};
 
 	const [form, setForm] = useState<{ [key: string]: InputField[] }>({
 		vacancyFields: [
@@ -263,6 +252,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelSelectVancyStatus,
@@ -275,16 +265,13 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
-				change: (_, value: InputFieldValue) => {
-					setHasVacancy(value as boolean);
-
-					return value;
-				},
+				value: null,
 			},
 			{
 				label: labelHasLAHapartments,
 				type: InputTypes.checkbox,
 				name: "lah",
+				value: null,
 			},
 		],
 		contactFields: [
@@ -295,12 +282,14 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelContactPhoneInfo,
 				type: InputTypes.textarea,
 				name: "contact_phone_info",
 				maxlength: 200,
+				value: "",
 			},
 		],
 		contactColumnFields: [
@@ -311,6 +300,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelContactTitle,
@@ -319,6 +309,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelContactPhone,
@@ -327,6 +318,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelContactEmail,
@@ -335,6 +327,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 		],
 		addressFields: [
@@ -345,6 +338,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelPostalCode,
@@ -353,6 +347,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelCity,
@@ -361,6 +356,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelDistrict,
@@ -369,6 +365,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 		],
 		guideFields: [
@@ -380,18 +377,21 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelArrivalPublicTransit,
 				type: InputTypes.textarea,
 				name: "arrival_guide_public_transit",
 				maxlength: 200,
+				value: "",
 			},
 			{
 				label: labelArrivalCar,
 				type: InputTypes.textarea,
 				name: "arrival_guide_car",
 				maxlength: 200,
+				value: "",
 			},
 		],
 		infoFields: [
@@ -403,6 +403,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelOwner,
@@ -411,6 +412,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelAra,
@@ -424,6 +426,7 @@ const PageUpdate: FC = () => {
 						label: labelPartlyARADestination,
 					},
 				],
+				value: "",
 				required: true,
 				valid: false,
 				touched: false,
@@ -435,6 +438,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: null,
 			},
 			{
 				label: labelBuildingInfo,
@@ -442,6 +446,7 @@ const PageUpdate: FC = () => {
 				name: "building_info",
 				description: helperBuildingInfo,
 				maxlength: 200,
+				value: "",
 			},
 			{
 				label: labelNumApartments,
@@ -450,6 +455,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: null,
 			},
 			{
 				label: labelApartmentCountInfo,
@@ -457,6 +463,7 @@ const PageUpdate: FC = () => {
 				name: "apartment_count_info",
 				description: helperApartmentCountInfo,
 				maxlength: 300,
+				value: "",
 			},
 			{
 				label: labelApartmentSize + " (m²)",
@@ -466,11 +473,13 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelApartmentsHaveBathroom,
 				type: InputTypes.checkbox,
 				name: "apartments_have_bathroom",
+				value: false,
 			},
 			{
 				label: labelRent + " (€ / kk)",
@@ -480,6 +489,7 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelRentInfo,
@@ -487,19 +497,31 @@ const PageUpdate: FC = () => {
 				name: "rent_info",
 				description: helperRentInfo,
 				maxlength: 200,
+				value: "",
 			},
 			{
 				label: labelServiceLanguage,
 				type: InputTypes.checkbox,
 				name: "language",
 				buttons: [
-					{ label: filterFinnish, value: filterFinnish },
-					{ label: filterSwedish, value: filterSwedish },
+					{
+						label: filterFinnish,
+						value: filterFinnish,
+					},
+					{
+						label: filterSwedish,
+						value: filterSwedish,
+					},
 				],
+				value: "",
 				change: (current: string, value: string) => {
-					const languages: string[] = current
-						.split("|")
-						.filter((value: string) => value !== "");
+					let languages: string[] = [];
+
+					if (current) {
+						languages = current
+							.split("|")
+							.filter((value: string) => value !== "");
+					}
 
 					if (languages.includes(value)) {
 						const index = languages.indexOf(value);
@@ -531,6 +553,44 @@ const PageUpdate: FC = () => {
 				name: "language_info",
 				description: helperLanguage,
 				maxlength: 200,
+				value: "",
+			},
+		],
+		communesFields: [
+			{
+				label: labelCustomerCommune,
+				type: InputTypes.checkbox,
+				name: "customer_commune",
+				buttons: [
+					...Object.keys(LUCommunes).map(key => {
+						return {
+							label: LUCommunes[key],
+							value: key,
+						};
+					}),
+				],
+				value: null,
+				change: (current: Commune[], value: string) => {
+					let newList: Commune[];
+
+					if (!current) {
+						newList = [];
+					} else {
+						newList = [...current];
+					}
+
+					const commune = value as Commune;
+
+					if (newList.includes(commune)) {
+						const index = newList.indexOf(commune);
+
+						newList.splice(index, 1);
+					} else {
+						newList.push(commune);
+					}
+
+					return newList;
+				},
 			},
 		],
 		foodFields: [
@@ -539,6 +599,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.url,
 				name: "menu_link",
 				description: helperUrl,
+				value: "",
 				required: true,
 				valid: false,
 				touched: false,
@@ -557,6 +618,7 @@ const PageUpdate: FC = () => {
 						label: labelFoodDelivered,
 					},
 				],
+				value: "",
 				required: true,
 				valid: false,
 				touched: false,
@@ -566,6 +628,7 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "meals_info",
 				maxlength: 200,
+				value: "",
 			},
 		],
 		activitiesFields: [
@@ -577,12 +640,14 @@ const PageUpdate: FC = () => {
 				required: true,
 				valid: false,
 				touched: false,
+				value: "",
 			},
 			{
 				label: labelLinkMoreActiviesInfo,
 				type: InputTypes.url,
 				name: "activities_link",
 				description: `${helperActivitiesLink} ${helperUrl}`,
+				value: "",
 			},
 			{
 				label: labelOutdoorActivies,
@@ -590,12 +655,14 @@ const PageUpdate: FC = () => {
 				name: "outdoors_possibilities_info",
 				description: helperOutdoorActivities,
 				maxlength: 200,
+				value: "",
 			},
 			{
 				label: labelLinkMoreOutdoorInfo,
 				type: InputTypes.url,
 				name: "outdoors_possibilities_link",
 				description: helperUrl,
+				value: "",
 			},
 		],
 		accessibilityFields: [
@@ -605,6 +672,7 @@ const PageUpdate: FC = () => {
 				name: "accessibility_info",
 				description: helperAccessibilityInfo,
 				maxlength: 200,
+				value: "",
 			},
 		],
 
@@ -614,12 +682,14 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "staff_info",
 				maxlength: 400,
+				value: "",
 			},
 			{
 				label: labelLinkMorePersonnelInfo,
 				type: InputTypes.url,
 				name: "staff_satisfaction_info",
 				description: `${helperStaffSatisfaction} ${helperUrl}`,
+				value: "",
 			},
 		],
 		otherServicesFields: [
@@ -629,6 +699,7 @@ const PageUpdate: FC = () => {
 				name: "other_services",
 				description: helperOtherServices,
 				maxlength: 200,
+				value: "",
 			},
 		],
 		nearbyServicesFields: [
@@ -637,11 +708,136 @@ const PageUpdate: FC = () => {
 				type: InputTypes.textarea,
 				name: "nearby_services",
 				maxlength: 200,
+				value: "",
 			},
 		],
 	});
 
 	const [formIsValid, setFormIsValid] = useState(false);
+	const [formLoading, setFormLoading] = useState(true);
+
+	const prepopulateFields = useCallback((data: any): void => {
+		setFormLoading(true);
+		const prepopulatedForm = { ...form };
+
+		for (const section in prepopulatedForm) {
+			const modifiedSection = [...prepopulatedForm[section]].map(
+				field => {
+					if (field.name in data) {
+						const value = data[field.name];
+
+						if (value !== "" && value !== null) {
+							if (field.buttons) {
+								if (field.type === InputTypes.checkbox) {
+									const preSelected = field.buttons.map(
+										button => {
+											return {
+												...button,
+												checked: (value as string).includes(
+													button.value as string,
+												),
+											};
+										},
+									);
+
+									return {
+										...field,
+										buttons: preSelected,
+										value: value,
+									};
+								} else {
+									const preSelected = field.buttons.map(
+										button => {
+											return {
+												...button,
+												checked: value === button.value,
+											};
+										},
+									);
+
+									return {
+										...field,
+										buttons: preSelected,
+										value: value,
+									};
+								}
+							} else {
+								return {
+									...field,
+									value: value,
+								};
+							}
+						}
+					}
+
+					return field;
+				},
+			);
+
+			prepopulatedForm[section] = modifiedSection;
+		}
+
+		setForm(prepopulatedForm);
+		setFormLoading(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/nursing-homes/${id}`)
+			.then((response: GetNursingHomeResponse) => {
+				setNursingHome(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+	}, [id, filterFinnish]);
+
+	useEffect(() => {
+		if (!vacancyStatus) {
+			axios
+				.get(
+					`${config.API_URL}/nursing-homes/${id}/vacancy-status/${key}`,
+				)
+				.then((response: { data: VacancyStatus }) => {
+					const data = response.data;
+
+					setVacancyStatus(data);
+					setHasVacancy(data.has_vacancy);
+
+					if (popupState) setTimeout(() => setPopupState(null), 3000);
+				})
+				.catch(e => {
+					console.error(e);
+					throw e;
+				});
+		}
+	}, [id, key, popupState, vacancyStatus]);
+
+	useEffect(() => {
+		if (!communes) {
+			axios
+				.get(`${config.API_URL}/nursing-homes/${id}/communes`)
+				.then(res => {
+					setCommunes(res.data);
+				})
+				.catch(err => {
+					console.error(err);
+					throw err;
+				});
+		}
+	}, [communes, id]);
+
+	useEffect(() => {
+		prepopulateFields({
+			...nursingHome,
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			has_vacancy: hasVacancy,
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			customer_commune: communes,
+		});
+	}, [nursingHome, communes, prepopulateFields, hasVacancy]);
 
 	const handleSubmit = async (
 		event: React.FormEvent<HTMLFormElement>,
@@ -652,31 +848,52 @@ const PageUpdate: FC = () => {
 			if (formIsValid) {
 				setPopupState("saving");
 
-				await requestVacancyStatusUpdate(id, key, hasVacancy);
+				let fields: InputField[] = [];
 
-				if (nursingHome) {
-					let fields: InputField[] = [];
+				const sections = Object.keys(form).map(
+					section => form[section],
+				);
 
-					const sections = Object.keys(form).map(
-						section => form[section],
-					);
-
-					for (const section of sections) {
-						fields = [...fields, ...section];
-					}
-
-					const formData: any = {};
-
-					for (const field of fields) {
-						if (field.name !== "has_vacancy") {
-							formData[field.name] = nursingHome[field.name];
-						}
-					}
-
-					const updateFormData: NursingHomeUpdateData = formData;
-
-					await requestNursingHomeUpdate(id, key, updateFormData);
+				for (const section of sections) {
+					fields = [...fields, ...section];
 				}
+
+				const vacancyField = fields.find(
+					field => field.name === "has_vacancy",
+				);
+
+				const communesField = fields.find(
+					field => field.name === "customer_commune",
+				);
+				if (vacancyField) {
+					await requestVacancyStatusUpdate(
+						id,
+						key,
+						vacancyField.value as boolean,
+					);
+				}
+
+				if (communesField) {
+					await requestCommunesUpdate(
+						id,
+						communesField.value as Commune[],
+					);
+				}
+
+				const formData: any = {};
+
+				for (const field of fields) {
+					if (
+						field.name !== "has_vacancy" &&
+						field.name !== "customer_commune"
+					) {
+						formData[field.name] = field.value;
+					}
+				}
+
+				const updateFormData: NursingHomeUpdateData = formData;
+
+				await requestNursingHomeUpdate(id, key, updateFormData);
 
 				setPopupState("saved");
 				setVacancyStatus(null);
@@ -703,46 +920,42 @@ const PageUpdate: FC = () => {
 	};
 
 	const validateForm = (): void => {
-		if (nursingHome) {
-			let validForm = true;
+		let validForm = true;
 
-			const validatedForm = { ...form };
+		const validatedForm = { ...form };
 
-			for (const section in validatedForm) {
-				const fields = validatedForm[section];
-				const validatedFields = [];
+		for (const section in validatedForm) {
+			const fields = validatedForm[section];
+			const validatedFields = [];
 
-				for (const field of fields) {
-					if (field.required) {
-						const validField = validateField(
-							nursingHome[field.name],
-						);
+			for (const field of fields) {
+				if (field.required) {
+					const validField = validateField(field.value);
 
-						if (!validField) {
-							validForm = false;
-						}
-
-						validatedFields.push({
-							...field,
-							touched: true,
-							valid: validField,
-						});
-					} else {
-						validatedFields.push(field);
+					if (!validField) {
+						validForm = false;
 					}
+
+					validatedFields.push({
+						...field,
+						touched: true,
+						valid: validField,
+					});
+				} else {
+					validatedFields.push(field);
 				}
-
-				validatedForm[section] = validatedFields;
 			}
 
-			setForm(validatedForm);
-			setFormIsValid(validForm);
+			validatedForm[section] = validatedFields;
+		}
 
-			if (!validForm) {
-				setPopupState("invalid");
-			} else {
-				setPopupState(null);
-			}
+		setForm(validatedForm);
+		setFormIsValid(validForm);
+
+		if (!validForm) {
+			setPopupState("invalid");
+		} else {
+			setPopupState(null);
 		}
 	};
 
@@ -751,29 +964,58 @@ const PageUpdate: FC = () => {
 		section: string,
 		value: InputFieldValue,
 	): void => {
-		if (nursingHome) {
-			const { name, type } = field;
-			const shouldValidate = "touched" in field && "required" in field;
+		const { name, type } = field;
 
-			if (shouldValidate) {
-				const fields = [...form[section]];
-				const index = fields.findIndex(input => input.name === name);
+		const shouldValidate = "touched" in field && "required" in field;
 
-				const validField = validateField(value);
+		const newField = { ...field };
 
-				fields[index] = { ...field, touched: true, valid: validField };
+		if (
+			field.type === InputTypes.checkbox ||
+			field.type === InputTypes.radio
+		) {
+			if (newField.buttons) {
+				const newButtons = [];
 
-				setForm({ ...form, [section]: fields });
+				for (const button of newField.buttons) {
+					let checked;
+
+					if (typeof button.value === "string") {
+						checked = (value as string).includes(
+							button.value as string,
+						);
+					} else {
+						checked = value === button.value;
+					}
+
+					newButtons.push({
+						...button,
+						checked: checked,
+					});
+				}
+
+				newField.buttons = newButtons;
 			}
-
-			setNursingHome({
-				...nursingHome,
-				[name]:
-					type === "number" && typeof value === "string"
-						? parseInt(value)
-						: value,
-			});
 		}
+
+		if (shouldValidate) {
+			const validField = validateField(value);
+
+			newField.touched = true;
+			newField.valid = validField;
+		}
+
+		newField.value =
+			type === "number" && typeof value === "string"
+				? parseInt(value)
+				: value;
+
+		const fields = [...form[section]];
+		const index = fields.findIndex(input => input.name === name);
+
+		fields[index] = newField;
+
+		setForm({ ...form, [section]: fields });
 	};
 
 	const getInputElement = (
@@ -781,303 +1023,281 @@ const PageUpdate: FC = () => {
 		section: string,
 		index: number,
 	): JSX.Element | null => {
-		if (nursingHome) {
-			const fieldInvalid =
-				field.required && field.touched && !field.valid;
-			const key = `${field.name}-${index}`;
+		const fieldInvalid = field.required && field.touched && !field.valid;
+		const key = `${field.name}-${index}`;
 
-			switch (field.type) {
-				case "textarea":
-					return (
-						<div className="field" key={key}>
-							<label
-								id={`${field.name}-label`}
-								className="label"
-								htmlFor={field.name}
-							>
-								{field.label}
-								{field.required ? (
-									<span
-										className="asterisk"
-										aria-hidden="true"
-									>
-										{" "}
-										*
-									</span>
-								) : null}
-							</label>
-							{field.description ? (
-								<span
-									id={`${field.name}-description`}
-									className="input-description"
-								>
-									{field.description}
+		switch (field.type) {
+			case "textarea":
+				return (
+					<div className="field" key={key}>
+						<label
+							id={`${field.name}-label`}
+							className="label"
+							htmlFor={field.name}
+						>
+							{field.label}
+							{field.required ? (
+								<span className="asterisk" aria-hidden="true">
+									{" "}
+									*
 								</span>
 							) : null}
-							<div className="control">
-								<textarea
-									className={
-										fieldInvalid ? "input error" : "input"
-									}
-									rows={5}
-									maxLength={field.maxlength}
-									value={
-										(nursingHome[field.name] as string) ||
-										""
-									}
-									name={field.name}
-									id={field.name}
-									onChange={event =>
-										handleInputChange(
-											field,
-											section,
-											event.target.value,
-										)
-									}
-									required={field.required}
-									aria-required={field.required}
-									onBlur={validateForm}
-									aria-labelledby={
-										field.description
-											? `${field.name}-label ${field.name}-description`
-											: undefined
-									}
-								></textarea>
-								{fieldInvalid ? (
-									<span className="icon"></span>
-								) : null}
-							</div>
+						</label>
+						{field.description ? (
+							<span
+								id={`${field.name}-description`}
+								className="input-description"
+							>
+								{field.description}
+							</span>
+						) : null}
+						<div className="control">
+							<textarea
+								className={
+									fieldInvalid ? "input error" : "input"
+								}
+								rows={5}
+								maxLength={field.maxlength}
+								value={(field.value as string) || ""}
+								name={field.name}
+								id={field.name}
+								onChange={event =>
+									handleInputChange(
+										field,
+										section,
+										event.target.value,
+									)
+								}
+								required={field.required}
+								aria-required={field.required}
+								onBlur={validateForm}
+								aria-labelledby={
+									field.description
+										? `${field.name}-label ${field.name}-description`
+										: undefined
+								}
+							></textarea>
 							{fieldInvalid ? (
-								<p className="help">{textFieldIsRequired}</p>
+								<span className="icon"></span>
 							) : null}
 						</div>
-					);
-				case "checkbox":
-					return (
-						<Fragment key={key}>
-							{field.buttons ? (
-								<fieldset className="field">
-									<legend>
-										{field.label}
-										{field.required ? (
-											<span
-												className="asterisk"
-												aria-hidden="true"
+						{fieldInvalid ? (
+							<p className="help">{textFieldIsRequired}</p>
+						) : null}
+					</div>
+				);
+			case "checkbox":
+				return (
+					<Fragment key={key}>
+						{field.buttons ? (
+							<fieldset className="field">
+								<legend>
+									{field.label}
+									{field.required ? (
+										<span
+											className="asterisk"
+											aria-hidden="true"
+										>
+											{" "}
+											*
+										</span>
+									) : null}
+								</legend>
+								{field.description ? (
+									<span
+										id={`${field.name}-description`}
+										className="input-description"
+									>
+										{field.description}
+									</span>
+								) : null}
+								<div className="control">
+									{field.buttons.map(button => {
+										return (
+											<Checkbox
+												key={`${field.name}-${button.value}`}
+												id={`${field.name}-${button.value}`}
+												name={field.name}
+												onChange={() => {
+													let newValue = button.value as InputFieldValue;
+
+													if (field.change) {
+														newValue = field.change(
+															field.value,
+															button.value as string,
+														);
+													}
+
+													handleInputChange(
+														field,
+														section,
+														newValue,
+													);
+												}}
+												onBlur={validateForm}
+												isChecked={
+													button.checked || false
+												}
 											>
-												{" "}
-												*
-											</span>
-										) : null}
-									</legend>
-									<div className="control">
-										{field.buttons.map(button => {
-											return (
-												<Checkbox
-													key={`${field.name}-${button.value}`}
-													id={`${field.name}-${button.value}`}
-													name={field.name}
-													onChange={() => {
-														let newValue = button.value as InputFieldValue;
-
-														if (field.change) {
-															newValue = field.change(
-																nursingHome[
-																	field.name
-																] as string,
-																button.value as string,
-															);
-														}
-
-														handleInputChange(
-															field,
-															section,
-															newValue,
-														);
-													}}
-													onBlur={validateForm}
-													isChecked={(nursingHome[
-														field.name
-													] as string).includes(
-														button.value as string,
-													)}
-												>
-													{button.value}
-												</Checkbox>
-											);
-										})}
-										{fieldInvalid ? (
-											<span className="icon"></span>
-										) : null}
-									</div>
+												{button.label}
+											</Checkbox>
+										);
+									})}
 									{fieldInvalid ? (
-										<p className="help">
-											{textFieldIsRequired}
-										</p>
+										<span className="icon"></span>
 									) : null}
-								</fieldset>
-							) : (
-								<div className="field">
-									<Checkbox
-										name={field.name}
-										id={field.name}
-										onChange={checked =>
-											handleInputChange(
-												field,
-												section,
-												checked,
-											)
-										}
-										onBlur={validateForm}
-										isChecked={
-											(nursingHome[
-												field.name
-											] as boolean) || false
-										}
-									>
-										{field.label}
-									</Checkbox>
 								</div>
-							)}
-						</Fragment>
-					);
-				case "radio":
-					return (
-						<fieldset className="field" key={key}>
-							<legend>
-								{field.label}
-								{field.required ? (
-									<span
-										className="asterisk"
-										aria-hidden="true"
-									>
-										{" "}
-										*
-									</span>
+								{fieldInvalid ? (
+									<p className="help">
+										{textFieldIsRequired}
+									</p>
 								) : null}
-							</legend>
-							{field.buttons ? (
-								<Fragment>
-									<div className="control">
-										{field.buttons.map(button => {
-											return (
-												<Radio
-													key={`${field.name}-${button.value}`}
-													id={`${field.name}-${button.value}`}
-													name={field.name}
-													isSelected={
-														nursingHome[
-															field.name
-														] === button.value
-													}
-													value={
-														(button.value as string) ||
-														""
-													}
-													onChange={() => {
-														let newValue = button.value as InputFieldValue;
-
-														if (field.change) {
-															newValue = field.change(
-																nursingHome[
-																	field.name
-																] as string,
-																button.value as string,
-															);
-														}
-
-														handleInputChange(
-															field,
-															section,
-															newValue,
-														);
-													}}
-													onBlur={validateForm}
-												>
-													{button.label}
-												</Radio>
-											);
-										})}
-										{fieldInvalid ? (
-											<span className="icon"></span>
-										) : null}
-									</div>
-									{fieldInvalid ? (
-										<p className="help">
-											{textFieldIsRequired}
-										</p>
-									) : null}
-								</Fragment>
-							) : null}
-						</fieldset>
-					);
-				default:
-					return (
-						<div className="field" key={key}>
-							<label
-								id={`${field.name}-label`}
-								className="label"
-								htmlFor={field.name}
-							>
-								{field.label}
-								{field.required ? (
-									<span
-										className="asterisk"
-										aria-hidden="true"
-									>
-										{" "}
-										*
-									</span>
-								) : null}
-							</label>
-							{field.description ? (
-								<span
-									id={`${field.name}-description`}
-									className="input-description"
-								>
-									{field.description}
-								</span>
-							) : null}
-							<div className="control">
-								<input
-									className={
-										fieldInvalid ? "input error" : "input"
-									}
-									value={
-										(nursingHome[field.name] as string) ||
-										""
-									}
+							</fieldset>
+						) : (
+							<div className="field">
+								<Checkbox
 									name={field.name}
 									id={field.name}
-									type={field.type}
-									onChange={event =>
+									onChange={checked =>
 										handleInputChange(
 											field,
 											section,
-											event.target.value,
+											checked,
 										)
 									}
 									onBlur={validateForm}
-									required={field.required}
-									aria-required={field.required}
-									aria-labelledby={
-										field.description
-											? `${field.name}-label ${field.name}-description`
-											: undefined
+									isChecked={
+										(field.value as boolean) || false
 									}
-								/>
-								{fieldInvalid ? (
-									<span className="icon"></span>
-								) : null}
+								>
+									{field.label}
+								</Checkbox>
 							</div>
+						)}
+					</Fragment>
+				);
+			case "radio":
+				return (
+					<fieldset className="field" key={key}>
+						<legend>
+							{field.label}
+							{field.required ? (
+								<span className="asterisk" aria-hidden="true">
+									{" "}
+									*
+								</span>
+							) : null}
+						</legend>
+						{field.buttons ? (
+							<Fragment>
+								<div className="control">
+									{field.buttons.map(button => {
+										return (
+											<Radio
+												key={`${field.name}-${button.value}`}
+												id={`${field.name}-${button.value}`}
+												name={field.name}
+												isSelected={
+													button.checked || false
+												}
+												value={
+													(button.value as string) ||
+													""
+												}
+												onChange={() => {
+													let newValue = button.value as InputFieldValue;
+
+													if (field.change) {
+														newValue = field.change(
+															field.value,
+															button.value as string,
+														);
+													}
+
+													handleInputChange(
+														field,
+														section,
+														newValue,
+													);
+												}}
+												onBlur={validateForm}
+											>
+												{button.label}
+											</Radio>
+										);
+									})}
+									{fieldInvalid ? (
+										<span className="icon"></span>
+									) : null}
+								</div>
+								{fieldInvalid ? (
+									<p className="help">
+										{textFieldIsRequired}
+									</p>
+								) : null}
+							</Fragment>
+						) : null}
+					</fieldset>
+				);
+			default:
+				return (
+					<div className="field" key={key}>
+						<label
+							id={`${field.name}-label`}
+							className="label"
+							htmlFor={field.name}
+						>
+							{field.label}
+							{field.required ? (
+								<span className="asterisk" aria-hidden="true">
+									{" "}
+									*
+								</span>
+							) : null}
+						</label>
+						{field.description ? (
+							<span
+								id={`${field.name}-description`}
+								className="input-description"
+							>
+								{field.description}
+							</span>
+						) : null}
+						<div className="control">
+							<input
+								className={
+									fieldInvalid ? "input error" : "input"
+								}
+								value={(field.value as string) || ""}
+								name={field.name}
+								id={field.name}
+								type={field.type}
+								onChange={event =>
+									handleInputChange(
+										field,
+										section,
+										event.target.value,
+									)
+								}
+								onBlur={validateForm}
+								required={field.required}
+								aria-required={field.required}
+								aria-labelledby={
+									field.description
+										? `${field.name}-label ${field.name}-description`
+										: undefined
+								}
+							/>
 							{fieldInvalid ? (
-								<p className="help">{textFieldIsRequired}</p>
+								<span className="icon"></span>
 							) : null}
 						</div>
-					);
-			}
+						{fieldInvalid ? (
+							<p className="help">{textFieldIsRequired}</p>
+						) : null}
+					</div>
+				);
 		}
-
-		return null;
 	};
 
 	return (
@@ -1090,7 +1310,7 @@ const PageUpdate: FC = () => {
 					: loadingText}
 			</p>
 			<div className="page-update-content">
-				{!nursingHome ? (
+				{!form && formLoading ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
@@ -1166,6 +1386,15 @@ const PageUpdate: FC = () => {
 								{form.infoFields.map((field, index) =>
 									getInputElement(field, "infoFields", index),
 								)}
+								<div className="checkbox-columns">
+									{form.communesFields.map((field, index) =>
+										getInputElement(
+											field,
+											"communesFields",
+											index,
+										),
+									)}
+								</div>
 							</div>
 							<div className="page-update-section">
 								<h3>{labelFoodHeader}</h3>

@@ -308,7 +308,8 @@ const PageReportsAdmin: FC = () => {
 	const filterElements = (
 		<>
 			<FilterItem
-				prefix={filterLocation}
+				label={filterLocation}
+				prefix="location"
 				value={
 					searchFilters.alue !== undefined
 						? searchFilters.alue.length <= 2
@@ -386,7 +387,8 @@ const PageReportsAdmin: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix={serviceLanguage}
+				label={serviceLanguage}
+				prefix="language"
 				value={
 					searchFilters.language === "Suomi"
 						? filterFinnish
@@ -414,7 +416,8 @@ const PageReportsAdmin: FC = () => {
 				}}
 			/>
 			<FilterItem
-				prefix={filterAraLabel}
+				label={filterAraLabel}
+				prefix="ara"
 				value={
 					searchFilters.ara !== undefined
 						? searchFilters.ara
@@ -444,7 +447,8 @@ const PageReportsAdmin: FC = () => {
 			/>
 
 			<FilterItem
-				prefix={filterLAH}
+				label={filterLAH}
+				prefix="lah"
 				value={
 					searchFilters.lah !== undefined
 						? searchFilters.lah

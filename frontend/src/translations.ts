@@ -642,6 +642,18 @@ export const translations = {
 		"fi-FI": "Vihti",
 		"sv-FI": "Vichtis",
 	},
+	inkoo: {
+		"fi-FI": "Inkoo",
+		"sv-FI": "Ingå",
+	},
+	kauniainen: {
+		"fi-FI": "Kauniainen",
+		"sv-FI": "Grankulla",
+	},
+	karviainen: {
+		"fi-FI": "Karviainen",
+		"sv-FI": "Karviainen",
+	},
 	imageCarouselNextTitle: {
 		"fi-FI": "Seuraava (oikea nuoli)",
 		"sv-FI": "Nästa (högerpil)",
@@ -801,7 +813,7 @@ export const translations = {
 		"fi-FI": "Asiakkaiden antamat arviot",
 		"sv-FI": "Asiakkaiden antamat arviot",
 	},
-	nursingHomeReviews:{
+	nursingHomeReviews: {
 		"fi-FI": "Arviot hoivakodista",
 		"sv-FI": "Bedömningar av vårdhemmet",
 	},
@@ -1161,5 +1173,45 @@ export const translations = {
 	numberOfShort: {
 		"fi-FI": "Kpl",
 		"sv-FI": "Stycken",
+	},
+	filterNursingHomeArea: {
+		"fi-FI": "Valitse hoivakodin alue",
+		"sv-FI": "Valitse hoivakodin alue",
+	},
+	customerCommune: {
+		"fi-FI": "Asiakkaan kotikunta",
+		"sv-FI": "Asiakkaan kotikunta",
+	},
+	labelCustomerCommune: {
+		"fi-FI":
+			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palvelun hankinnassa",
+		"sv-FI":
+			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palvelun hankinnassa",
+	},
+	helperCommune: {
+		"fi-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
+		"sv-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
+	},
+	filterCommune: {
+		"fi-FI": "Valitse kotikunta",
+		"sv-FI": "Valitse kotikunta",
+	},
+	filterLanguage: {
+		"fi-FI": "Valitse hoivakodin kieli",
+		"sv-FI": "Valitse hoivakodin kieli",
+	},
+	filterShowARA: {
+		"fi-FI": "Valitse, näytetäänkö vain Ara-kohteet",
+		"sv-FI": "Valitse, näytetäänkö vain Ara-kohteet",
+	},
+	filterShowLah: {
+		"fi-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
+		"sv-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
+	},
+	selectCommuneLabel: {
+		"fi-FI":
+			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
+		"sv-FI":
+			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
 	},
 };

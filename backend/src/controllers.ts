@@ -42,6 +42,8 @@ import {
 	SubmitSurveyData as SubmitSurveyDataDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
 	GetSurvey as GetSurveyDB,
+	GetCustomerCommunesForNursingHome,
+	UpdateCustomerCommunesForNursingHome,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -135,7 +137,8 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	nursing_home_data["pic_digests"] = pic_digests;
 	nursing_home_data["pics"] = available_pics;
 	nursing_home_data["pic_captions"] = pic_captions;
-	nursing_home_data["report_status"] = nursing_home_status.length > 0 ? nursing_home_status : null;
+	nursing_home_data["report_status"] =
+		nursing_home_status.length > 0 ? nursing_home_status : null;
 	nursing_home_data["rating"] = rating;
 	return nursing_home_data;
 }
@@ -569,4 +572,21 @@ export async function GetSurveyWithNursingHomeResults(
 	});
 
 	return survey;
+}
+
+export async function GetNursingHomeCustomerCommunes(ctx: Context): Promise<any> {
+	const { id } = ctx.params;
+
+	const result = await GetCustomerCommunesForNursingHome(id);
+
+	return result[0] ? result[0]["customer_commune"] : [];
+}
+
+export async function UpdateNursingHomeCustomerCommunes(ctx: Context): Promise<any> {
+	const { id } = ctx.params;
+	const communes = ctx.request.body["customer_commune"];
+
+	const result = await UpdateCustomerCommunesForNursingHome(id, communes);
+
+	return result;
 }

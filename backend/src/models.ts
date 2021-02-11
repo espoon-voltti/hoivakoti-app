@@ -4,6 +4,7 @@ import uuidv4 from "uuid/v4";
 import rp from "request-promise-native";
 import crypto, { BinaryLike } from "crypto";
 import {
+	Commune,
 	NursingHome,
 	nursing_home_pictures_columns_info,
 	postal_code_to_district,
@@ -44,6 +45,14 @@ knex.schema.hasTable("NursingHomePictures").then(async (exists: boolean) => {
 
 	await CreateNursingHomePicturesTable();
 });
+
+knex.schema
+	.hasTable("NursingHomeCustomerCommunes")
+	.then(async (exists: boolean) => {
+		if (exists) return;
+
+		await CreateNursingHomeCustomerCommunesTable();
+	});
 
 knex.schema.hasTable("NursingHomeReports").then(async (exists: boolean) => {
 	if (exists) return;
@@ -125,6 +134,16 @@ async function CreateNursingHomePicturesTable(): Promise<void> {
 		});
 		table.string("nursinghome_id");
 	});
+}
+
+async function CreateNursingHomeCustomerCommunesTable(): Promise<void> {
+	await knex.schema.createTable(
+		"NursingHomeCustomerCommunes",
+		(table: CreateTableBuilder) => {
+			table.string("nursinghome_id");
+			table.json("customer_commune");
+		},
+	);
 }
 
 async function CreateNursingHomeReportsTable(): Promise<void> {
@@ -944,7 +963,7 @@ export async function GetAllNursingHomeStatus(): Promise<any[]> {
 		.select("nursinghome_id", "status", "date")
 		.table("NursingHomeReports")
 		.orderBy("date", "asc");
-		// here we sort with order asc so (older first) we get the latest status when mapping thru the list and avoid need to filter by date later
+	// here we sort with order asc so (older first) we get the latest status when mapping thru the list and avoid need to filter by date later
 }
 
 export async function GetAllNursingHomeRatings(): Promise<any[]> {
@@ -978,19 +997,33 @@ export async function UploadNursingHomeReport( //USE ONLY WHEN AUTHENTICATED
 	const fileData =
 		file != "" ? Buffer.from(file.split(",")[1], "base64") : null;
 
-	if( status == 'waiting' || status == 'no-info' ){
-		await knex("NursingHomeReports").delete().where({ nursinghome_id: id })
-	} else if( existingReports.length == 2 ) {
-		if( type != 'announced' && existingReports[0].type != 'announced' && existingReports[1].type == 'announced' ){
+	if (status == "waiting" || status == "no-info") {
+		await knex("NursingHomeReports")
+			.delete()
+			.where({ nursinghome_id: id });
+	} else if (existingReports.length == 2) {
+		if (
+			type != "announced" &&
+			existingReports[0].type != "announced" &&
+			existingReports[1].type == "announced"
+		) {
 			// only older existing report is from announced visit. We should remove the newer one in this case.
-			await knex("NursingHomeReports").delete().where({ nursinghome_id: id , date: existingReports[0].date })
+			await knex("NursingHomeReports")
+				.delete()
+				.where({ nursinghome_id: id, date: existingReports[0].date });
 		} else {
-			await knex("NursingHomeReports").delete().where({ nursinghome_id: id , date: existingReports[1].date })
+			await knex("NursingHomeReports")
+				.delete()
+				.where({ nursinghome_id: id, date: existingReports[1].date });
 		}
-
-	} else if ( existingReports.length == 1 && existingReports[0].status == 'no-info' ){
+	} else if (
+		existingReports.length == 1 &&
+		existingReports[0].status == "no-info"
+	) {
 		// remove no information row from database if its been placed for this numsing home
-		await knex("NursingHomeReports").delete().where({ nursinghome_id: id })
+		await knex("NursingHomeReports")
+			.delete()
+			.where({ nursinghome_id: id });
 	}
 
 	await knex("NursingHomeReports").insert({
@@ -998,9 +1031,9 @@ export async function UploadNursingHomeReport( //USE ONLY WHEN AUTHENTICATED
 		date: date,
 		type: type,
 		status: status,
-		report_file: fileData
+		report_file: fileData,
 	});
-	
+
 	return true;
 }
 
@@ -1135,6 +1168,48 @@ export async function GetIsValidSurveyKey(key: string): Promise<boolean> {
 	} else {
 		return false;
 	}
+}
+
+export async function GetCustomerCommunesForNursingHome(
+	id: string,
+): Promise<any> {
+	const result = await knex("NursingHomeCustomerCommunes")
+		.select()
+		.where({ nursinghome_id: id });
+
+	return result;
+}
+
+export async function UpdateCustomerCommunesForNursingHome(
+	id: string,
+	communes: Commune[],
+): Promise<boolean> {
+	let requestValid = true;
+
+	for (const commune of communes) {
+		if (!Object.values(Commune).includes(commune)) {
+			requestValid = false;
+		}
+	}
+
+	if (requestValid) {
+		const customerCommunes = await GetCustomerCommunesForNursingHome(id);
+
+		if (customerCommunes && customerCommunes.length > 0) {
+			await knex("NursingHomeCustomerCommunes")
+				.where({ nursinghome_id: id })
+				.update({ customer_commune: JSON.stringify(communes) });
+		} else {
+			await knex("NursingHomeCustomerCommunes").insert({
+				nursinghome_id: id,
+				customer_commune: JSON.stringify(communes),
+			});
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
 //DUMMY DATA FOR TESTING
