@@ -100,3 +100,7 @@ export interface NursingHome {
 		answers_customers: number | null;
 	};
 }
+
+export interface GetNursingHomeResponse {
+	data: NursingHome;
+}

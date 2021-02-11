@@ -4,395 +4,18 @@ import { useParams, Link, useLocation } from "react-router-dom";
 import "../styles/PageNursingHome.scss";
 import config from "./config";
 import axios from "axios";
-import { NursingHome, NursingHomeImageName } from "./types";
+import {
+	GetNursingHomeResponse,
+	NursingHome,
+	NursingHomeImageName,
+} from "./types";
 import { MapSmall } from "./Map";
 import { useT } from "../i18n";
 import Lightbox from "./Lightbox";
 import Title from "./Title";
 import VacancyStatusBadge from "./VacancyStatusBadge";
-
-function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const { pic_digests = [] }: { pic_digests: any } = nursingHome;
-
-	const availablePicHashes =
-		nursingHome &&
-		nursingHome.pic_digests &&
-		Object.keys(nursingHome.pic_digests)
-			.filter(name => pic_digests[name] !== null)
-			.filter(hashName => hashName !== "owner_logo_hash");
-
-	if (!availablePicHashes || availablePicHashes.length === 0) return null;
-
-	const availablePics = availablePicHashes.map<[string, string]>(hashName => {
-		const imageName = hashName.replace("_hash", "");
-		const digest: string = pic_digests[imageName];
-		return [imageName, digest];
-	});
-
-	return availablePics;
-}
-
-export interface GetNursingHomeResponse {
-	data: NursingHome;
-}
-
-type PageNursingHomeProps = {
-	querystring?: string;
-};
-
-const PageNursingHome: FC<PageNursingHomeProps> = (
-	props: PageNursingHomeProps,
-) => {
-	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
-	const [picCaptions, setPicCaptions] = useState<Record<
-		string,
-		string
-	> | null>(null);
-	const { id } = useParams() as any;
-	const [lightboxState, setLightboxState] = useState<"hidden" | number>(
-		"hidden",
-	);
-
-	const location = useLocation();
-
-	useEffect(() => {
-		axios
-			.get(`${config.API_URL}/nursing-homes/${id}`)
-			.then((response: GetNursingHomeResponse) => {
-				setNursingHome(response.data);
-			})
-			.catch(e => {
-				console.error(e);
-				throw e;
-			});
-	}, [id]);
-
-	useEffect(() => {
-		axios
-			.get(`${config.API_URL}/nursing-homes/${id}/pics/captions`)
-			.then((response: { data: Record<string, string> }) => {
-				setPicCaptions(response.data);
-			})
-			.catch(e => {
-				console.error(e);
-				throw e;
-			});
-	}, [id]);
-
-	const availablePics = nursingHome && getAvailablePics(nursingHome);
-
-	const linkBacktoList = useT("linkBacktoList");
-
-	const anchorDetailsBox = useT("anchorDetailsBox");
-
-	const loadingText = useT("loadingText");
-	const filterAraLabel = useT("filterAraLabel");
-	const numApartments = useT("numApartments");
-	const serviceLanguage = useT("serviceLanguage");
-
-	const language = useT(nursingHome && (nursingHome.language as any));
-
-	const linkBacktoTop = useT("linkBacktoTop");
-
-	const basicInformation = useT("basicInformation");
-	const owner = useT("owner");
-	const yearofConst = useT("yearofConst");
-	const apartmentSize = useT("apartmentSize");
-	const apartmentFurnitureLabel = useT("apartmentFurnitureLabel");
-	const apartmentFurnitureText = useT("apartmentFurnitureText");
-	const rent = useT("rent");
-	const LAHapartments = useT("LAHapartments");
-	const foodHeader = useT("foodHeader");
-	const cookingMethod = useT("cookingMethod");
-
-	// const ownKitchen = useT("ownKitchen");
-	const foodMoreInfo = useT("foodMoreInfo");
-	const linkMenu = useT("linkMenu");
-	const activies = useT("activies");
-	const outdoorActivies = useT("outdoorActivies");
-	const visitingInfo = useT("visitingInfo");
-	const accessibility = useT("accessibility");
-	const personnel = useT("personnel");
-	const otherServices = useT("otherServices");
-	const nearbyServices = useT("nearbyServices");
-	const monthShort = useT("monthShort");
-	const btnShowImages = useT("btnShowImages");
-
-	const linkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
-	const linkMoreInfoActivies = useT("linkMoreInfoActivies");
-	const linkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
-
-	// const filterFinnish = useT("filterFinnish");
-	// const filterSwedish = useT("filterSwedish");
-	const filterYes = useT("filterYes");
-	const filterNo = useT("filterNo");
-	const filterARABoth = useT("filterARABoth");
-
-	const images =
-		nursingHome &&
-		availablePics &&
-		availablePics.map(([imageName, digest]) => {
-			return {
-				src:
-					`${config.API_URL}/nursing-homes/${nursingHome.id}` +
-					`/pics/${imageName}/${digest}`,
-				caption:
-					(picCaptions && picCaptions[`${imageName}_caption`]) ||
-					null,
-			};
-		});
-
-	const numPics = availablePics
-		? availablePics.length >= 5
-			? 5
-			: availablePics.length >= 3
-			? 3
-			: 1
-		: 0;
-
-	const heroPics =
-		availablePics &&
-		availablePics.length &&
-		availablePics.slice(0, numPics);
-
-	return (
-		<div className="nursinghome-page-container">
-			<Title title={nursingHome ? nursingHome.name : undefined} />
-			{images && (
-				<Lightbox
-					state={lightboxState}
-					onClose={() => setLightboxState("hidden")}
-					images={images}
-				/>
-			)}
-			<div className="nursinghome-hero-container">
-				<div
-					className={`nursinghome-hero nursinghome-hero-n${numPics}`}
-				>
-					{heroPics ? (
-						heroPics.map(([imageName], idx) => (
-							<Image
-								key={imageName}
-								nursingHome={nursingHome}
-								imageName={imageName as NursingHomeImageName}
-								className="nursinghome-hero-img"
-								variant="background"
-								placeholder={
-									<div
-										className={
-											"nursinghome-hero-img " +
-											"nursinghome-hero-placeholder"
-										}
-									/>
-								}
-								onClick={() => setLightboxState(idx)}
-							/>
-						))
-					) : (
-						<div className="nursinghome-hero-placeholder" />
-					)}
-				</div>
-				{images && (
-					<button
-						onClick={() => setLightboxState(0)}
-						className="nursinghome-hero-lightbox-button"
-					>
-						{btnShowImages}
-					</button>
-				)}
-			</div>
-			{!nursingHome ? (
-				loadingText
-			) : (
-				<div className="nursinghome-info-container">
-					<div className="nursinghome-info">
-						<Link
-							to={
-								("/hoivakodit" +
-									(location.state
-										? location.state.fromFilterQuery
-										: "")) as string
-							}
-							className="nursinghome-back-link"
-						>
-							{linkBacktoList}
-						</Link>
-						<h2 className="nursinghome-title">
-							{nursingHome.name}
-						</h2>
-
-						<div className="nursinghomeDistrict-container">
-							<Paragraph
-								className="nursinghomeDistrict"
-								text={`${
-									nursingHome.district != null
-										? nursingHome.district + ", "
-										: ""
-								} ${nursingHome.city}`}
-							/>
-
-							<a
-								className="nursinghome-anchor-details"
-								href="#yhteystiedot"
-							>
-								{anchorDetailsBox}
-							</a>
-						</div>
-
-						<VacancyStatusBadge
-							vacancyStatus={nursingHome.has_vacancy}
-							className="nursinghome-title-vacancy-status-badge"
-						/>
-
-						<Paragraph text={nursingHome.summary} />
-
-						<h3>{basicInformation}</h3>
-						<dl className="nursingHome-info-list">
-							<DefinitionItem
-								term={owner}
-								definition={nursingHome.owner}
-							/>
-							<DefinitionItem
-								term={filterAraLabel}
-								definition={
-									nursingHome.ara === "Kyllä"
-										? filterYes
-										: nursingHome.ara === "Ei"
-										? filterNo
-										: filterARABoth
-								}
-							/>
-							<DefinitionItem
-								term={yearofConst}
-								definition={String(
-									nursingHome.construction_year,
-								)}
-							/>
-							<DefinitionItem
-								term={numApartments}
-								definition={`${nursingHome.apartment_count}`}
-							/>
-							<DefinitionItem
-								term={apartmentSize}
-								definition={`${nursingHome.apartment_square_meters} m²`}
-							/>
-							<DefinitionItem
-								term={apartmentFurnitureLabel}
-								definition={apartmentFurnitureText}
-							/>
-							<DefinitionItem
-								term={rent}
-								definition={`${nursingHome.rent} € / ${monthShort}`}
-							/>
-							<DefinitionItem
-								term={serviceLanguage}
-								definition={language}
-							/>
-							<DefinitionItem
-								term={LAHapartments}
-								definition={
-									nursingHome.lah ? filterYes : filterNo
-								}
-							/>
-						</dl>
-						<h3>{foodHeader}</h3>
-						<dl className="nursingHome-info-list">
-							<DefinitionItem
-								term={cookingMethod}
-								definition={nursingHome.meals_preparation}
-							/>
-							<DefinitionItem
-								term={foodMoreInfo}
-								definition={nursingHome.meals_info}
-							/>
-						</dl>
-						<ParagraphLink
-							text={linkMenu}
-							to={nursingHome.menu_link}
-						/>
-						<h3>{activies}</h3>
-						<Paragraph text={nursingHome.activities_info} />
-						<ParagraphLink
-							text={linkMoreInfoActivies}
-							to={nursingHome.activities_link}
-						/>
-						<h3>{outdoorActivies}</h3>
-						<Paragraph
-							text={nursingHome.outdoors_possibilities_info}
-						/>
-						{nursingHome.outdoors_possibilities_link && (
-							<>
-								<a
-									href={
-										nursingHome.outdoors_possibilities_link
-									}
-									target="_blank"
-									rel="noreferrer noopener external"
-								>
-									{linkMoreInfoOutdoor}
-								</a>
-							</>
-						)}
-
-						<h3 id="visitingInfo">{visitingInfo}</h3>
-						<Paragraph text={nursingHome.tour_info} />
-						<dl className="nursingHome-info-list nursingHome-info-list--contact">
-							<dt>{nursingHome.contact_name}</dt>
-							<dd>{nursingHome.contact_title}</dd>
-							<dd>Puh. {nursingHome.contact_phone}</dd>
-							<dd>
-								<a href={"mailto:" + nursingHome.email}>
-									{nursingHome.email}
-								</a>
-							</dd>
-							<dd>
-								<br />
-							</dd>
-							<dd>{nursingHome.contact_phone_info}</dd>
-						</dl>
-						<h3>{accessibility}</h3>
-						<Paragraph text={nursingHome.accessibility_info} />
-						<h3>{personnel}</h3>
-						<Paragraph text={nursingHome.staff_info} />
-
-						{nursingHome.staff_satisfaction_info && (
-							<>
-								<a
-									href={nursingHome.staff_satisfaction_info}
-									target="_blank"
-									rel="noreferrer noopener external"
-								>
-									{linkMoreInfoPersonnel}
-								</a>
-							</>
-						)}
-
-						{nursingHome.other_services && (
-							<>
-								<h3>{otherServices}</h3>
-								<Paragraph text={nursingHome.other_services} />
-							</>
-						)}
-						<h3>{nearbyServices}</h3>
-						<Paragraph text={nursingHome.nearby_services} />
-					</div>
-
-					<NursingHomeDetailsBox
-						nursingHome={nursingHome}
-						id="yhteystiedot"
-						className="nursinghome-details-box"
-					/>
-				</div>
-			)}
-			<a className="backToTopLink" href="#pageTop">
-				{linkBacktoTop}
-			</a>
-		</div>
-	);
-};
-
-export default PageNursingHome;
+import DefinitionItem from "./DefinitionItem";
+import ParagraphLink from "./ParagraphLink";
 
 interface ParagraphProps {
 	title?: string;
@@ -410,45 +33,6 @@ const Paragraph: FC<ParagraphProps> = ({ title, text, className }) => {
 			)}
 			<p className={className}>{text}</p>
 		</>
-	);
-};
-
-interface DefinitionItemProps {
-	term?: string;
-	definition?: string;
-	classNameTerm?: string;
-	classNameDefinition?: string;
-}
-
-const DefinitionItem: FC<DefinitionItemProps> = ({
-	term,
-	definition,
-	classNameTerm,
-	classNameDefinition,
-}) => {
-	if (!definition) return null;
-
-	return (
-		<>
-			{term && <dt className={classNameTerm}>{term}</dt>}
-			<dd className={classNameDefinition}>{definition}</dd>
-		</>
-	);
-};
-
-interface ParagraphLinkProps {
-	text?: string;
-	to?: string;
-}
-
-const ParagraphLink: FC<ParagraphLinkProps> = ({ text, to }) => {
-	if (!to) return null;
-	return (
-		<p>
-			<a href={to} target="_blank" rel="noreferrer noopener external">
-				{text || to}
-			</a>
-		</p>
 	);
 };
 
@@ -473,6 +57,7 @@ export const Image: FC<ImageProps> = ({
 }) => {
 	if (!imageName || !nursingHome || !nursingHome.pic_digests)
 		return placeholder;
+
 	const digest: string = (nursingHome.pic_digests as any)[
 		`${imageName}_hash`
 	];
@@ -516,7 +101,6 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const webpage = useT("webpage");
 	const visitingInfo = useT("visitingInfo");
 	const openReport = useT("openReport");
-	const latestVisit = useT("latestVisit");
 	const reportScoreHeader = useT("reportScoreLong");
 	const giveReview = useT("giveReview");
 	const readMore = useT("readMore");
@@ -667,7 +251,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<MapSmall nursingHome={nursingHome} />
 					</a>
 
-					<dl className="nursingHome-info-list nursingHome-info-list--contact">
+					<dl className="nursinghome-info-list nursinghome-info-list--contact">
 						<dt>{contactInfo}</dt>
 						<dd>
 							{nursingHome.address}, {nursingHome.postal_code}{" "}
@@ -687,7 +271,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						</dd>
 					</dl>
 
-					<dl className="nursingHome-info-list nursingHome-info-list--directions">
+					<dl className="nursinghome-info-list nursinghome-info-list--directions">
 						<dt>{directions}</dt>
 						<dd>{nursingHome.arrival_guide_public_transit}</dd>
 						<dd>{nursingHome.arrival_guide_car}</dd>
@@ -767,3 +351,379 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 		</>
 	);
 };
+
+function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
+	const { pic_digests = [] }: { pic_digests: any } = nursingHome;
+
+	const availablePicHashes =
+		nursingHome &&
+		nursingHome.pic_digests &&
+		Object.keys(nursingHome.pic_digests)
+			.filter(name => pic_digests[name] !== null)
+			.filter(hashName => hashName !== "owner_logo_hash");
+
+	if (!availablePicHashes || availablePicHashes.length === 0) return null;
+
+	const availablePics = availablePicHashes.map<[string, string]>(hashName => {
+		const imageName = hashName.replace("_hash", "");
+		const digest: string = pic_digests[imageName];
+		return [imageName, digest];
+	});
+
+	return availablePics;
+}
+
+interface NursingHomeRouteParams {
+	id: string;
+}
+
+const PageNursingHome: FC = () => {
+	const { id } = useParams<NursingHomeRouteParams>();
+
+	const location = useLocation();
+
+	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
+	const [picCaptions, setPicCaptions] = useState<Record<
+		string,
+		string
+	> | null>(null);
+	const [lightboxState, setLightboxState] = useState<"hidden" | number>(
+		"hidden",
+	);
+
+	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/nursing-homes/${id}`)
+			.then((response: GetNursingHomeResponse) => {
+				setNursingHome(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+	}, [id]);
+
+	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/nursing-homes/${id}/pics/captions`)
+			.then((response: { data: Record<string, string> }) => {
+				setPicCaptions(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+	}, [id]);
+
+	const linkBacktoList = useT("linkBacktoList");
+
+	const anchorDetailsBox = useT("anchorDetailsBox");
+
+	const loadingText = useT("loadingText");
+	const filterAraLabel = useT("filterAraLabel");
+	const numApartments = useT("numApartments");
+	const serviceLanguage = useT("serviceLanguage");
+
+	const language = useT(nursingHome && (nursingHome.language as any));
+
+	const linkBacktoTop = useT("linkBacktoTop");
+
+	const basicInformation = useT("basicInformation");
+	const owner = useT("owner");
+	const yearofConst = useT("yearofConst");
+	const apartmentSize = useT("apartmentSize");
+	const apartmentFurnitureLabel = useT("apartmentFurnitureLabel");
+	const apartmentFurnitureText = useT("apartmentFurnitureText");
+	const rent = useT("rent");
+	const checkRentWithNursingHome = useT("checkRentWithNursingHome");
+	const LAHapartments = useT("LAHapartments");
+	const foodHeader = useT("foodHeader");
+	const cookingMethod = useT("cookingMethod");
+
+	const foodMoreInfo = useT("foodMoreInfo");
+	const linkMenu = useT("linkMenu");
+	const activies = useT("activies");
+	const outdoorActivies = useT("outdoorActivies");
+	const visitingInfo = useT("visitingInfo");
+	const accessibility = useT("accessibility");
+	const personnel = useT("personnel");
+	const otherServices = useT("otherServices");
+	const nearbyServices = useT("nearbyServices");
+	const monthShort = useT("monthShort");
+	const btnShowImages = useT("btnShowImages");
+
+	const linkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
+	const linkMoreInfoActivies = useT("linkMoreInfoActivies");
+	const linkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
+
+	const filterYes = useT("filterYes");
+	const filterNo = useT("filterNo");
+	const filterARABoth = useT("filterARABoth");
+
+	const availablePics = nursingHome && getAvailablePics(nursingHome);
+
+	const images =
+		nursingHome &&
+		availablePics &&
+		availablePics.map(([imageName, digest]) => {
+			return {
+				src:
+					`${config.API_URL}/nursing-homes/${nursingHome.id}` +
+					`/pics/${imageName}/${digest}`,
+				caption:
+					(picCaptions && picCaptions[`${imageName}_caption`]) ||
+					null,
+			};
+		});
+
+	const numPics = availablePics
+		? availablePics.length >= 5
+			? 5
+			: availablePics.length >= 3
+			? 3
+			: 1
+		: 0;
+
+	const heroPics =
+		availablePics &&
+		availablePics.length &&
+		availablePics.slice(0, numPics);
+
+	return (
+		<div className="nursinghome-page-container">
+			<Title title={nursingHome ? nursingHome.name : undefined} />
+			{images && (
+				<Lightbox
+					state={lightboxState}
+					onClose={() => setLightboxState("hidden")}
+					images={images}
+				/>
+			)}
+			<div className="nursinghome-hero-container">
+				<div
+					className={`nursinghome-hero nursinghome-hero-n${numPics}`}
+				>
+					{heroPics ? (
+						heroPics.map(([imageName], idx) => (
+							<Image
+								key={imageName}
+								nursingHome={nursingHome}
+								imageName={imageName as NursingHomeImageName}
+								className="nursinghome-hero-img"
+								variant="background"
+								placeholder={
+									<div
+										className={
+											"nursinghome-hero-img " +
+											"nursinghome-hero-placeholder"
+										}
+									/>
+								}
+								onClick={() => setLightboxState(idx)}
+							/>
+						))
+					) : (
+						<div className="nursinghome-hero-placeholder" />
+					)}
+				</div>
+				{images && (
+					<button
+						onClick={() => setLightboxState(0)}
+						className="nursinghome-hero-lightbox-button"
+					>
+						{btnShowImages}
+					</button>
+				)}
+			</div>
+			{!nursingHome ? (
+				loadingText
+			) : (
+				<div className="nursinghome-info-container">
+					<div className="nursinghome-info">
+						<Link
+							to={
+								("/hoivakodit" +
+									(location.state
+										? location.state.fromFilterQuery
+										: "")) as string
+							}
+							className="nursinghome-back-link"
+						>
+							{linkBacktoList}
+						</Link>
+						<h2 className="nursinghome-title">
+							{nursingHome.name}
+						</h2>
+
+						<div className="nursinghomeDistrict-container">
+							<Paragraph
+								className="nursinghomeDistrict"
+								text={`${
+									nursingHome.district != null
+										? nursingHome.district + ", "
+										: ""
+								} ${nursingHome.city}`}
+							/>
+
+							<a
+								className="nursinghome-anchor-details"
+								href="#yhteystiedot"
+							>
+								{anchorDetailsBox}
+							</a>
+						</div>
+
+						<VacancyStatusBadge
+							vacancyStatus={nursingHome.has_vacancy}
+							className="nursinghome-title-vacancy-status-badge"
+						/>
+
+						<Paragraph text={nursingHome.summary} />
+
+						<h3>{basicInformation}</h3>
+						<dl className="nursinghome-info-list">
+							<DefinitionItem
+								term={owner}
+								definition={nursingHome.owner}
+							/>
+							<DefinitionItem
+								term={filterAraLabel}
+								definition={
+									nursingHome.ara === "Kyllä"
+										? filterYes
+										: nursingHome.ara === "Ei"
+										? filterNo
+										: filterARABoth
+								}
+							/>
+							<DefinitionItem
+								term={yearofConst}
+								definition={String(
+									nursingHome.construction_year,
+								)}
+							/>
+							<DefinitionItem
+								term={numApartments}
+								definition={`${nursingHome.apartment_count}`}
+							/>
+							<DefinitionItem
+								term={apartmentSize}
+								definition={`${nursingHome.apartment_square_meters} m²`}
+							/>
+							<DefinitionItem
+								term={apartmentFurnitureLabel}
+								definition={apartmentFurnitureText}
+							/>
+							<DefinitionItem
+								term={rent}
+								definition={`${checkRentWithNursingHome} ${nursingHome.rent}€ / ${monthShort}`}
+							/>
+
+							<DefinitionItem
+								term={serviceLanguage}
+								definition={language}
+							/>
+							<DefinitionItem
+								term={LAHapartments}
+								definition={
+									nursingHome.lah ? filterYes : filterNo
+								}
+							/>
+						</dl>
+						<h3>{foodHeader}</h3>
+						<dl className="nursinghome-info-list">
+							<DefinitionItem
+								term={cookingMethod}
+								definition={nursingHome.meals_preparation}
+							/>
+							<DefinitionItem
+								term={foodMoreInfo}
+								definition={nursingHome.meals_info}
+							/>
+						</dl>
+						<ParagraphLink
+							text={linkMenu}
+							to={nursingHome.menu_link}
+						/>
+						<h3>{activies}</h3>
+						<Paragraph text={nursingHome.activities_info} />
+						<ParagraphLink
+							text={linkMoreInfoActivies}
+							to={nursingHome.activities_link}
+						/>
+						<h3>{outdoorActivies}</h3>
+						<Paragraph
+							text={nursingHome.outdoors_possibilities_info}
+						/>
+						{nursingHome.outdoors_possibilities_link && (
+							<>
+								<a
+									href={
+										nursingHome.outdoors_possibilities_link
+									}
+									target="_blank"
+									rel="noreferrer noopener external"
+								>
+									{linkMoreInfoOutdoor}
+								</a>
+							</>
+						)}
+
+						<h3 id="visitingInfo">{visitingInfo}</h3>
+						<Paragraph text={nursingHome.tour_info} />
+						<dl className="nursinghome-info-list nursinghome-info-list--contact">
+							<dt>{nursingHome.contact_name}</dt>
+							<dd>{nursingHome.contact_title}</dd>
+							<dd>Puh. {nursingHome.contact_phone}</dd>
+							<dd>
+								<a href={"mailto:" + nursingHome.email}>
+									{nursingHome.email}
+								</a>
+							</dd>
+							<dd>
+								<br />
+							</dd>
+							<dd>{nursingHome.contact_phone_info}</dd>
+						</dl>
+						<h3>{accessibility}</h3>
+						<Paragraph text={nursingHome.accessibility_info} />
+						<h3>{personnel}</h3>
+						<Paragraph text={nursingHome.staff_info} />
+
+						{nursingHome.staff_satisfaction_info && (
+							<>
+								<a
+									href={nursingHome.staff_satisfaction_info}
+									target="_blank"
+									rel="noreferrer noopener external"
+								>
+									{linkMoreInfoPersonnel}
+								</a>
+							</>
+						)}
+
+						{nursingHome.other_services && (
+							<>
+								<h3>{otherServices}</h3>
+								<Paragraph text={nursingHome.other_services} />
+							</>
+						)}
+						<h3>{nearbyServices}</h3>
+						<Paragraph text={nursingHome.nearby_services} />
+					</div>
+
+					<NursingHomeDetailsBox
+						nursingHome={nursingHome}
+						id="yhteystiedot"
+						className="nursinghome-details-box"
+					/>
+				</div>
+			)}
+			<a className="backToTopLink" href="#pageTop">
+				{linkBacktoTop}
+			</a>
+		</div>
+	);
+};
+
+export default PageNursingHome;

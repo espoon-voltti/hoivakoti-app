@@ -5,7 +5,7 @@ import "../styles/PageSurveyResults.scss";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
-import { GetNursingHomeResponse } from "./PageNursingHome";
+import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
 
 let surveyState: any[] = [];
@@ -177,7 +177,8 @@ const PageSurveyResults: FC = () => {
 								{customerReviewsBy}
 							</h3>
 							<p className="page-survey-results-minor-title">
-								{nursingHome.rating.answers_customers} {nReviews}
+								{nursingHome.rating.answers_customers}{" "}
+								{nReviews}
 							</p>
 							<div className="page-survey-results-item">
 								{questions(customerSurvey)}
@@ -204,7 +205,8 @@ const PageSurveyResults: FC = () => {
 								{relativeReviewsBy}
 							</h3>
 							<p className="page-survey-results-minor-title">
-								{nursingHome.rating.answers_relatives} {nReviews}
+								{nursingHome.rating.answers_relatives}{" "}
+								{nReviews}
 							</p>
 							<div className="page-survey-results-item">
 								{questions(relativeSurvey)}
@@ -221,7 +223,7 @@ const PageSurveyResults: FC = () => {
 								nursingHome.rating.average_relatives
 									? nursingHome.rating.average_relatives.toPrecision(
 											2,
-									)
+									  )
 									: "-"}{" "}
 								/ 5
 							</p>

@@ -5,7 +5,7 @@ import Radio from "./Radio";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
-import { GetNursingHomeResponse } from "./PageNursingHome";
+import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";
 
