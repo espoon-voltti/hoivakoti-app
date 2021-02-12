@@ -1,0 +1,67 @@
+@import "./variables.scss";
+
+$green: #c6db00;
+
+.filters {
+	margin-top: 5rem;
+}
+
+.page-open-feedback-results {
+	display: flex;
+	flex-direction: column;
+	max-width: 63.5rem;
+	margin: 5rem auto 0 auto;
+	padding: 1rem;
+}
+
+.check-all-results {
+	align-self: flex-end;
+}
+
+.feedback-results {
+	&-list {
+		margin-top: 1rem;
+
+		&-item {
+			border-bottom: solid 1px $border-color;
+			padding: 1rem 0;
+		}
+	}
+}
+
+.feedback-result {
+	&-answer {
+		width: 100%;
+		margin: 0 1rem 1rem 0;
+
+		p {
+			margin: 0;
+			line-height: 1.5;
+			font-size: 0.9rem;
+		}
+	}
+	&-actions {
+		display: flex;
+		justify-content: flex-end;
+
+		button {
+			margin-right: 0.5rem;
+
+			&:last-of-type {
+				margin-right: 0;
+			}
+
+			&.unchecked {
+				opacity: 0.5;
+			}
+
+			&.rejected {
+				background-color: $error-color;
+			}
+
+			&.approved {
+				background-color: $green;
+			}
+		}
+	}
+}
