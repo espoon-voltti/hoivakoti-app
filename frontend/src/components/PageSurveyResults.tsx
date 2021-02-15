@@ -8,11 +8,10 @@ import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
 
-let surveyState: any[] = [];
-
 const PageSurveyResults: FC = () => {
 	const { id } = useParams() as any;
 	const [relativeSurvey, setRelativeSurvey] = useState<any[] | null>(null);
+	const [textResults, setTextResults] = useState<any[] | null>(null);
 	const [customerSurvey, setCustomerSurvey] = useState<any[] | null>(null);
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 
@@ -22,7 +21,6 @@ const PageSurveyResults: FC = () => {
 		axios
 			.get(`${config.API_URL}/survey/${id}/results/asiakaskysely`)
 			.then((response: { data: any[] }) => {
-				surveyState = response.data;
 				setCustomerSurvey(response.data);
 			})
 			.catch(e => {
@@ -33,8 +31,17 @@ const PageSurveyResults: FC = () => {
 		axios
 			.get(`${config.API_URL}/survey/${id}/results/omaiskysely`)
 			.then((response: { data: any[] }) => {
-				surveyState = response.data;
 				setRelativeSurvey(response.data);
+			})
+			.catch(e => {
+				console.error(e);
+				throw e;
+			});
+
+		axios
+			.get(`${config.API_URL}/survey/${id}/text-results/omaiskysely`)
+			.then((response: { data: any[] }) => {
+				setTextResults(response.data);
 			})
 			.catch(e => {
 				console.error(e);
@@ -154,6 +161,14 @@ const PageSurveyResults: FC = () => {
 			</div>
 		));
 
+	const answers = (answers: any): JSX.Element[] | null =>
+		answers &&
+		answers.map((answer: any, index: number) => (
+			<p className="answer" key={index}>
+				&quot;{answer.answer_text}&quot;
+			</p>
+		));
+
 	return (
 		<div className="page-survey-results">
 			<div>
@@ -177,7 +192,9 @@ const PageSurveyResults: FC = () => {
 								{customerReviewsBy}
 							</h3>
 							<p className="page-survey-results-minor-title">
-								{nursingHome.rating.answers_customers}{" "}
+								{nursingHome.rating.answers_customers
+									? nursingHome.rating.answers_customers
+									: "0"}{" "}
 								{nReviews}
 							</p>
 							<div className="page-survey-results-item">
@@ -196,7 +213,7 @@ const PageSurveyResults: FC = () => {
 									? nursingHome.rating.average_customers.toPrecision(
 											2,
 									  )
-									: "-"}{" "}
+									: ""}{" "}
 								/ 5
 							</p>
 						</div>
@@ -205,7 +222,9 @@ const PageSurveyResults: FC = () => {
 								{relativeReviewsBy}
 							</h3>
 							<p className="page-survey-results-minor-title">
-								{nursingHome.rating.answers_relatives}{" "}
+								{nursingHome.rating.answers_relatives
+									? nursingHome.rating.answers_relatives
+									: "0"}{" "}
 								{nReviews}
 							</p>
 							<div className="page-survey-results-item">
@@ -224,9 +243,17 @@ const PageSurveyResults: FC = () => {
 									? nursingHome.rating.average_relatives.toPrecision(
 											2,
 									  )
-									: "-"}{" "}
+									: ""}{" "}
 								/ 5
 							</p>
+							<div className="page-survey-results-answer-container">
+								<div className="page-survey-results-answer-header">
+									Omaisilta
+								</div>
+								<div className="page-survey-results-answer-content">
+									{answers(textResults)}
+								</div>
+							</div>
 						</div>
 					</>
 				)}

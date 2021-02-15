@@ -244,6 +244,13 @@ strong {
 	color: #fff;
 }
 
+.btn-secondary {
+	border-radius: $border-radius;
+	background-color: transparent;
+	border-color: $link-color;
+	color: $link-color;
+}
+
 .btn-secondary-link {
 	display: block;
 	width: 90%;
@@ -257,6 +264,11 @@ strong {
 
 .btn:hover {
 	background-color: $primary-blue;
+}
+
+.btn-secondary:hover {
+	background-color: $primary-blue;
+	color: #fff;
 }
 
 .btn:active {

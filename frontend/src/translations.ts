@@ -1218,4 +1218,20 @@ export const translations = {
 		"sv-FI":
 			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
 	},
+	charactersLeft: {
+		"fi-FI": "merkkiä jäljellä",
+		"sv-FI": "merkkiä jäljellä",
+	},
+	openFeedbackPlaceholder: {
+		"fi-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
+		"sv-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
+	},
+	next: {
+		"fi-FI": "Seuraava",
+		"sv-FI": "Seuraava",
+	},
+	previous: {
+		"fi-FI": "Edellinen",
+		"sv-FI": "Edellinen",
+	},
 };

@@ -101,6 +101,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const webpage = useT("webpage");
 	const visitingInfo = useT("visitingInfo");
 	const openReport = useT("openReport");
+	const latestVisit = useT("latestVisit");
 	const reportScoreHeader = useT("reportScoreLong");
 	const giveReview = useT("giveReview");
 	const readMore = useT("readMore");
@@ -251,7 +252,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<MapSmall nursingHome={nursingHome} />
 					</a>
 
-					<dl className="nursinghome-info-list nursinghome-info-list--contact">
+					<dl className="nursingHome-info-list nursingHome-info-list--contact">
 						<dt>{contactInfo}</dt>
 						<dd>
 							{nursingHome.address}, {nursingHome.postal_code}{" "}
@@ -271,7 +272,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						</dd>
 					</dl>
 
-					<dl className="nursinghome-info-list nursinghome-info-list--directions">
+					<dl className="nursingHome-info-list nursingHome-info-list--directions">
 						<dt>{directions}</dt>
 						<dd>{nursingHome.arrival_guide_public_transit}</dd>
 						<dd>{nursingHome.arrival_guide_car}</dd>
@@ -284,17 +285,17 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							<p>
 								<span className="report_info_minor_header">
 									{nursingHome.rating &&
-									nursingHome.rating.average_relatives
+									nursingHome.rating.answers_customers
 										? ratingToString(
 												nursingHome.rating
-													.average_relatives,
+													.average_customers,
 										  )
 										: feedbackNoReviews}
 								</span>
 
 								{nursingHome.rating &&
-								nursingHome.rating.average_relatives
-									? `${nursingHome.rating.average_relatives.toPrecision(
+								nursingHome.rating.average_customers
+									? `${nursingHome.rating.average_customers.toPrecision(
 											2,
 									  )} / 5`
 									: ""}
@@ -325,7 +326,8 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							to={`/hoivakodit/${nursingHome.id}/arviot`}
 							className={
 								nursingHome.rating &&
-								nursingHome.rating.average_relatives
+								(nursingHome.rating.average_relatives ||
+									nursingHome.rating.average_customers)
 									? ""
 									: "hidden"
 							}

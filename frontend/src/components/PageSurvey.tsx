@@ -7,7 +7,8 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
-import { NursingHome } from "./types";
+import { NursingHome, NursingHomeImageName } from "./types";
+import { stringify } from "querystring";
 
 let surveyState: any[] = [];
 
@@ -19,6 +20,8 @@ const PageSurvey: FC = () => {
 	const { id } = useParams() as any;
 	const [survey, setSurvey] = useState<any[] | null>(null);
 	const [surveyDone, setSurveyDone] = useState<boolean>(false);
+
+	const [surveyPage, setSurveyPage] = useState<number>(0);
 
 	if (!id) throw new Error("Invalid URL!");
 
@@ -61,7 +64,7 @@ const PageSurvey: FC = () => {
 					surveyKey: key,
 				},
 			)
-			.then(responce => {
+			.then(() => {
 				setSurveyDone(true);
 			});
 	};
@@ -77,6 +80,8 @@ const PageSurvey: FC = () => {
 	const start = useT("start");
 	const thankYouReview = useT("thankYouReview");
 	const backToFrontpage = useT("backToFrontpage");
+	const next = useT("next");
+	const previous = useT("previous");
 
 	const updateAnswer = (id: number, state: any): void => {
 		const index = surveyState.findIndex(x => x.id === id);
@@ -107,20 +112,35 @@ const PageSurvey: FC = () => {
 			});
 	};
 
-	const questions: JSX.Element[] | null =
+	const raitingQuestions: JSX.Element[] | null =
 		survey &&
-		survey.map((question: any, index: number) => (
-			<div key={index}>
-				<div className={"page-survey-section"}>
+		survey
+			.filter(q => q.question_type == "rating")
+			.map((question: any, index: number) => (
+				<section className={"page-survey-section"} key={index}>
 					<Question
 						question={question}
 						onChange={value => {
 							updateAnswer(question.id, value);
 						}}
 					/>
-				</div>
-			</div>
-		));
+				</section>
+			));
+
+	const textQuestions: JSX.Element[] | null =
+		survey &&
+		survey
+			.filter(q => q.question_type == "text")
+			.map((question: any, index: number) => (
+				<section className={"page-survey-section"} key={index}>
+					<TextQuestion
+						question={question}
+						onChange={value => {
+							updateAnswer(question.id, value);
+						}}
+					/>
+				</section>
+			));
 
 	if (surveyDone) {
 		return (
@@ -147,12 +167,49 @@ const PageSurvey: FC = () => {
 									{aboutToGiveReview}:{" "}
 									<span>{nursingHome.name}</span>
 								</h4>
-								{questions}
-
-								<div className="survey-send-btn-container">
-									<button type="submit" className="btn">
-										{btnSend}
-									</button>
+								<div
+									className={
+										"page-survey-page" +
+										(surveyPage == 0 ? "" : " hidden")
+									}
+								>
+									{raitingQuestions}
+									<div className="survey-send-btn-container">
+										<button
+											className="btn btn-right"
+											onClick={e => {
+												e.preventDefault();
+												setSurveyPage(1);
+											}}
+										>
+											{next}
+										</button>
+									</div>
+								</div>
+								<div
+									className={
+										"page-survey-page" +
+										(surveyPage == 1 ? "" : " hidden")
+									}
+								>
+									{textQuestions}
+									<div className="survey-send-btn-container">
+										<button
+											className="btn btn-secondary"
+											onClick={e => {
+												e.preventDefault();
+												setSurveyPage(0);
+											}}
+										>
+											{previous}
+										</button>
+										<button
+											type="submit"
+											className="btn btn-right"
+										>
+											{btnSend}
+										</button>
+									</div>
 								</div>
 							</form>
 						</>
@@ -234,7 +291,7 @@ export const Question: FC<QuestionProps> = ({ question, onChange }) => {
 				</div>
 			</div>
 			<div className="survey-card-inner">
-				<div className={"survey-card-question"}>
+				<div className="survey-card-question">
 					<div className="survey-card--header-container">
 						<h3 className="survey-card--header">
 							{i18n.language == "sv-FI"
@@ -327,6 +384,48 @@ export const Question: FC<QuestionProps> = ({ question, onChange }) => {
 							{optionText5}
 						</Radio>
 					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export const TextQuestion: FC<QuestionProps> = ({ question, onChange }) => {
+	const charactersLeft = useT("charactersLeft");
+	const openFeedbackPlaceholder = useT("openFeedbackPlaceholder");
+	const [questionState, setQuestionState] = useState<string>("");
+
+	return (
+		<div className="survey-card-container">
+			<div className="survey-card-inner">
+				<div className="survey-card-question">
+					<div className="survey-card--header-container">
+						<h3 className="survey-card--header">
+							{i18n.language == "sv-FI"
+								? question.question_sv
+								: question.question_fi}
+						</h3>
+						<h4 className="survey-card--desc">
+							{i18n.language == "sv-FI"
+								? question.question_description_sv
+								: question.question_description_fi}
+						</h4>
+					</div>
+					<textarea
+						value={questionState}
+						placeholder={openFeedbackPlaceholder}
+						onChange={(
+							event: React.ChangeEvent<HTMLTextAreaElement>,
+						): void => {
+							if (event.target.value.length <= 1000) {
+								onChange(event.target.value);
+								setQuestionState(event.target.value);
+							}
+						}}
+					></textarea>
+					<p>
+						{1000 - questionState.length}/1000 {charactersLeft}
+					</p>
 				</div>
 			</div>
 		</div>

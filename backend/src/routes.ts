@@ -31,6 +31,7 @@ import {
 	SubmitSurveyData,
 	SubmitSurveyResponse,
 	GetSurveyWithNursingHomeResults,
+	GetSurveyTextResults,
 	AddNursingHomeSurveyKeys,
 	GetSurvey,
 	AdminLogin,
@@ -256,6 +257,11 @@ router.get("/api/survey/:id/results/:survey", async ctx => {
 		ctx.params.survey,
 		ctx.params.id,
 	);
+	ctx.body = res;
+});
+
+router.get("/api/survey/:id/text-results/:survey", async ctx => {
+	const res = await GetSurveyTextResults(ctx.params.id);
 	ctx.body = res;
 });
 
