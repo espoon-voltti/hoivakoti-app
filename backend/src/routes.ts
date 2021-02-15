@@ -39,6 +39,7 @@ import {
 	CheckSurveyKey,
 	UpdateNursingHomeVacancyStatus,
 	UpdateNursingHomeCustomerCommunes,
+	GetAllSurveyTextResults,
 } from "./controllers";
 import config from "./config";
 
@@ -255,6 +256,14 @@ router.get("/api/survey/:id/results/:survey", async ctx => {
 
 router.get("/api/survey/:id/text-results/:survey", async ctx => {
 	const res = await GetSurveyTextResults(ctx.params.id);
+	ctx.body = res;
+});
+
+router.get("/api/survey/text-results/:survey", async ctx => {
+	const res = await GetAllSurveyTextResults(ctx);
+
+	console.log("Näi");
+
 	ctx.body = res;
 });
 

@@ -1,3 +1,4 @@
+import { FeedbackState } from "./nursinghome-typings";
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import Knex, { CreateTableBuilder } from "knex";
 import uuidv4 from "uuid/v4";
@@ -216,6 +217,7 @@ async function CreateNursingHomeSurveyTextAnswersTable(): Promise<void> {
 		(table: any) => {
 			table.string("id", 16);
 			table.string("answer_text", 1000);
+			table.enu("feedback_state", [...Object.values(FeedbackState)]);
 		},
 	);
 }
@@ -547,8 +549,22 @@ export async function GetSurveyTextResults(
 			"NursingHomeSurveyAnswers.answer",
 			"NursingHomeSurveyTextAnswers.id",
 		)
-		.select("answer_text")
+		.select("answer_text", "feedback_state")
 		.where({ nursinghome_id: nursingHomeId });
+
+	return results;
+}
+
+export async function GetAllSurveyTextResults(surveyId: string): Promise<any> {
+	const results = await knex
+		.table("NursingHomeSurveyTextAnswers")
+		.join(
+			"NursingHomeSurveyAnswers",
+			"NursingHomeSurveyAnswers.answer",
+			"NursingHomeSurveyTextAnswers.id",
+		)
+		.select("answer_text", "feedback_state", "nursinghome_id")
+		.where({ survey_id: surveyId });
 
 	return results;
 }
@@ -786,6 +802,7 @@ export async function SubmitSurveyResponse(
 				await knex.table("NursingHomeSurveyTextAnswers").insert({
 					id: sqlJoinKey,
 					answer_text: question.value.slice(0, 1000),
+					feedback_state: FeedbackState.OPEN,
 				});
 			}
 		}

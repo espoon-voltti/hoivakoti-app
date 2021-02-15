@@ -45,6 +45,7 @@ import {
 	GetCustomerCommunesForNursingHome,
 	UpdateCustomerCommunesForNursingHome,
 	GetSurveyTextResults as GetSurveyTextResultsDB,
+	GetAllSurveyTextResults as GetAllSurveyTextResultsDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -608,6 +609,27 @@ export async function GetSurveyTextResults(
 	return await GetSurveyTextResultsDB(nursingHomeId);
 }
 
+<<<<<<< HEAD
+=======
+export async function GetAllSurveyTextResults(ctx: Context): Promise<any> {
+	const { survey } = ctx.params;
+
+	const result = await GetAllSurveyTextResultsDB(survey);
+
+	return result;
+}
+
+export async function GetNursingHomeCustomerCommunes(
+	ctx: Context,
+): Promise<any> {
+	const { id } = ctx.params;
+
+	const result = await GetCustomerCommunesForNursingHome(id);
+
+	return result[0] ? result[0]["customer_commune"] : [];
+}
+
+>>>>>>> Add backend route
 export async function UpdateNursingHomeCustomerCommunes(
 	ctx: Context,
 ): Promise<any> {

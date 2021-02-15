@@ -10,6 +10,12 @@ export enum Commune {
 	PKA = "PKA",
 }
 
+export enum FeedbackState {
+	OPEN = "open",
+	APPROVED = "approved",
+	REJECTED = "rejected",
+}
+
 // This interface declaration is duplicated in frontend and backend. Please
 // modify both at the same time to keep them in sync
 export interface NursingHome {
