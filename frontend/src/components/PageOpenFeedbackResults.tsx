@@ -7,7 +7,7 @@ import queryString from "query-string";
 
 enum FeedbackState {
 	OPEN = "open",
-	APPROVED = "seen",
+	APPROVED = "approved",
 	REJECTED = "rejected",
 }
 
@@ -20,12 +20,14 @@ interface OpenFeedback {
 
 interface SearchFilters {
 	readonly name?: string;
-	readonly feedbackState?: FeedbackState;
+	readonly feedbackState?: FeedbackState[];
 }
 
 const PageOpenFeedbackResults: FC = () => {
 	const [results, setResults] = useState<OpenFeedback[]>([]);
 	const [filteredResults, setFilteredResults] = useState<OpenFeedback[]>([]);
+	const [, setHasOpenCases] = useState(false);
+
 	const history = useHistory();
 	const { search } = useLocation();
 
@@ -57,34 +59,57 @@ const PageOpenFeedbackResults: FC = () => {
 			},
 		];
 
+		const openCases = resultsStatic.some(
+			result => result.state === FeedbackState.OPEN,
+		);
+
 		setResults(resultsStatic);
+		setHasOpenCases(openCases);
 	}, []);
 
 	const parsed = queryString.parse(search);
+	const parsedFeedbackState = parsed.feedbackState
+		? !Array.isArray(parsed.feedbackState)
+			? [parsed.feedbackState]
+			: parsed.feedbackState
+		: undefined;
 
 	const searchFilters: SearchFilters = {
-		feedbackState: parsed.feedbackState as FeedbackState,
+		feedbackState: parsedFeedbackState as FeedbackState[],
 		name: parsed.name as string,
 	};
 
 	const optionState: FilterOption[] = [
 		{
-			name: "state",
+			name: FeedbackState.OPEN,
 			label: "Avoin",
 			type: "checkbox",
 			checked: searchFilters.feedbackState
-				? searchFilters.feedbackState == FeedbackState.OPEN
+				? searchFilters.feedbackState.includes(FeedbackState.OPEN)
+				: false,
+		},
+		{
+			name: FeedbackState.APPROVED,
+			label: "Hyväksytty",
+			type: "checkbox",
+			checked: searchFilters.feedbackState
+				? searchFilters.feedbackState.includes(FeedbackState.APPROVED)
+				: false,
+		},
+		{
+			name: FeedbackState.REJECTED,
+			label: "Hylätty",
+			type: "checkbox",
+			checked: searchFilters.feedbackState
+				? searchFilters.feedbackState.includes(FeedbackState.REJECTED)
 				: false,
 		},
 	];
 
 	useEffect(() => {
 		const filterResults: OpenFeedback[] = results.filter(result => {
-			if (
-				searchFilters.feedbackState &&
-				searchFilters.feedbackState === FeedbackState.OPEN
-			) {
-				return result.state === FeedbackState.OPEN;
+			if (searchFilters.feedbackState) {
+				return searchFilters.feedbackState.includes(result.state);
 			}
 
 			return result;
@@ -144,26 +169,54 @@ const PageOpenFeedbackResults: FC = () => {
 		setResults(newResults);
 	};
 
+	const submitForm = (event: React.FormEvent<HTMLFormElement>): void => {
+		event.preventDefault();
+
+		const openCases = results.some(
+			result => result.state === FeedbackState.OPEN,
+		);
+
+		if (openCases) {
+			console.log("ERROR");
+		} else {
+			setHasOpenCases(openCases);
+			console.log(results);
+		}
+	};
+
 	const filterElements = (
 		<FilterItem
 			label="Palautteen tila"
 			prefix="state"
 			value={
-				searchFilters.feedbackState === FeedbackState.OPEN
-					? FeedbackState.OPEN
+				searchFilters.feedbackState !== undefined
+					? searchFilters.feedbackState.length <= 2
+						? searchFilters.feedbackState.join(", ")
+						: `(${searchFilters.feedbackState.length} $valintaa`
 					: null
 			}
 			values={optionState}
 			ariaLabel="Valitse palautteen tila"
 			disabled={false}
-			onChange={({ newValue }) => {
+			onChange={({ newValue, name }) => {
 				const newSearchFilters = { ...searchFilters };
+				let newStateFilters = newSearchFilters["feedbackState"];
+
+				if (!newStateFilters) {
+					newStateFilters = [];
+				}
 
 				if (newValue) {
-					newSearchFilters.feedbackState = FeedbackState.OPEN;
+					if (!newStateFilters.includes(name as FeedbackState)) {
+						newStateFilters.push(name as FeedbackState);
+					}
 				} else {
-					newSearchFilters.feedbackState = undefined;
+					newStateFilters = newStateFilters.filter(
+						stateItem => stateItem !== name,
+					);
 				}
+
+				newSearchFilters["feedbackState"] = newStateFilters;
 
 				const stringfield = queryString.stringify(newSearchFilters);
 				history.push("/valvonta/avoin-palaute?" + stringfield);
@@ -196,61 +249,81 @@ const PageOpenFeedbackResults: FC = () => {
 					>
 						Hyväksy kaikki avoimet
 					</button>
-					<ul className="feedback-results-list">
-						{filteredResults.map(result => {
-							return (
-								<li
-									className="feedback-results-list-item"
-									key={result.id}
-								>
-									<div className="feedback-result-answer">
-										<textarea
-											className={
-												result.state ===
-												FeedbackState.APPROVED
-													? "approved"
-													: result.state ===
-													  FeedbackState.REJECTED
-													? "rejected"
-													: ""
-											}
-											rows={7}
-											value={result.answer}
-											readOnly={true}
-										></textarea>
-									</div>
-									<div className="feedback-result-actions">
-										<button
-											className={
-												result.state ===
-												FeedbackState.REJECTED
-													? "btn unchecked"
-													: "btn"
-											}
-											onClick={() => {
-												markAsApproved(result.id);
-											}}
-										>
-											Hyväksy
-										</button>
-										<button
-											className={
-												result.state ===
-												FeedbackState.APPROVED
-													? "btn unchecked"
-													: "btn"
-											}
-											onClick={() => {
-												markAsRejected(result.id);
-											}}
-										>
-											Hylkää
-										</button>
-									</div>
-								</li>
-							);
-						})}
-					</ul>
+					<form onSubmit={submitForm}>
+						<ul className="feedback-results-list">
+							{filteredResults.map(result => {
+								return (
+									<li
+										className="feedback-results-list-item"
+										key={result.id}
+									>
+										<div className="feedback-result-answer">
+											<textarea
+												className={
+													result.state ===
+													FeedbackState.APPROVED
+														? "approved"
+														: result.state ===
+														  FeedbackState.REJECTED
+														? "rejected"
+														: ""
+												}
+												rows={7}
+												value={result.answer}
+												readOnly={true}
+											></textarea>
+										</div>
+										<div className="feedback-result-actions">
+											<button
+												type="button"
+												className={
+													result.state ===
+													FeedbackState.REJECTED
+														? "btn unchecked"
+														: "btn"
+												}
+												onClick={() => {
+													markAsApproved(result.id);
+												}}
+											>
+												Hyväksy
+											</button>
+											<button
+												type="button"
+												className={
+													result.state ===
+													FeedbackState.APPROVED
+														? "btn unchecked"
+														: "btn"
+												}
+												onClick={() => {
+													markAsRejected(result.id);
+												}}
+											>
+												Hylkää
+											</button>
+										</div>
+									</li>
+								);
+							})}
+						</ul>
+						<div className="nav-save">
+							<button
+								type="button"
+								className="cancel"
+								onClick={event => {
+									event.preventDefault();
+
+									history.push("/valvonta");
+								}}
+							>
+								Peruuta
+							</button>
+							<button type="submit" className="btn submit">
+								Tallenna
+							</button>
+						</div>
+					</form>
 				</div>
 			) : null}
 		</div>
