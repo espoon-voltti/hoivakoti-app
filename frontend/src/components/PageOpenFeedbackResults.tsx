@@ -323,8 +323,8 @@ const PageOpenFeedbackResults: FC = () => {
 												type="button"
 												className={
 													result.state ===
-													FeedbackState.REJECTED
-														? "btn unchecked"
+													FeedbackState.APPROVED
+														? "btn checked"
 														: "btn"
 												}
 												onClick={() => {
@@ -337,8 +337,8 @@ const PageOpenFeedbackResults: FC = () => {
 												type="button"
 												className={
 													result.state ===
-													FeedbackState.APPROVED
-														? "btn unchecked"
+													FeedbackState.REJECTED
+														? "btn checked"
 														: "btn"
 												}
 												onClick={() => {
