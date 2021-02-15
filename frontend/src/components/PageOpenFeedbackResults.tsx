@@ -2,7 +2,8 @@ import React, { FC, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import "../styles/PageOpenFeedbackResults.scss";
 import FilterItem, { FilterOption } from "./FilterItem";
-import queryString, { parse } from "query-string";
+
+import queryString from "query-string";
 
 enum FeedbackState {
 	OPEN = "open",
@@ -19,7 +20,7 @@ interface OpenFeedback {
 
 interface SearchFilters {
 	readonly name?: string;
-	readonly state?: FeedbackState;
+	readonly feedbackState?: FeedbackState;
 }
 
 const PageOpenFeedbackResults: FC = () => {
@@ -62,7 +63,7 @@ const PageOpenFeedbackResults: FC = () => {
 	const parsed = queryString.parse(search);
 
 	const searchFilters: SearchFilters = {
-		state: parsed.state as FeedbackState,
+		feedbackState: parsed.feedbackState as FeedbackState,
 		name: parsed.name as string,
 	};
 
@@ -71,8 +72,8 @@ const PageOpenFeedbackResults: FC = () => {
 			name: "state",
 			label: "Avoin",
 			type: "checkbox",
-			checked: searchFilters.state
-				? searchFilters.state == FeedbackState.OPEN
+			checked: searchFilters.feedbackState
+				? searchFilters.feedbackState == FeedbackState.OPEN
 				: false,
 		},
 	];
@@ -80,8 +81,8 @@ const PageOpenFeedbackResults: FC = () => {
 	useEffect(() => {
 		const filterResults: OpenFeedback[] = results.filter(result => {
 			if (
-				searchFilters.state &&
-				searchFilters.state === FeedbackState.OPEN
+				searchFilters.feedbackState &&
+				searchFilters.feedbackState === FeedbackState.OPEN
 			) {
 				return result.state === FeedbackState.OPEN;
 			}
@@ -148,7 +149,7 @@ const PageOpenFeedbackResults: FC = () => {
 			label="Palautteen tila"
 			prefix="state"
 			value={
-				searchFilters.state === FeedbackState.OPEN
+				searchFilters.feedbackState === FeedbackState.OPEN
 					? FeedbackState.OPEN
 					: null
 			}
@@ -159,9 +160,9 @@ const PageOpenFeedbackResults: FC = () => {
 				const newSearchFilters = { ...searchFilters };
 
 				if (newValue) {
-					newSearchFilters.state = FeedbackState.OPEN;
+					newSearchFilters.feedbackState = FeedbackState.OPEN;
 				} else {
-					newSearchFilters.state = undefined;
+					newSearchFilters.feedbackState = undefined;
 				}
 
 				const stringfield = queryString.stringify(newSearchFilters);
@@ -170,7 +171,7 @@ const PageOpenFeedbackResults: FC = () => {
 			onReset={(): void => {
 				const newSearchFilters = {
 					...searchFilters,
-					state: undefined,
+					feedbackState: undefined,
 				};
 				const stringfield = queryString.stringify(newSearchFilters);
 				history.push("/valvonta/avoin-palaute?" + stringfield);
@@ -186,6 +187,9 @@ const PageOpenFeedbackResults: FC = () => {
 			</div>
 			{results ? (
 				<div className="page-open-feedback-results">
+					<h1 className="feedback-results-heading">
+						Avoimet palautteet
+					</h1>
 					<button
 						className="btn check-all-results"
 						onClick={markAllOpenAsApproved}
@@ -200,16 +204,26 @@ const PageOpenFeedbackResults: FC = () => {
 									key={result.id}
 								>
 									<div className="feedback-result-answer">
-										<p>{result.answer}</p>
+										<textarea
+											className={
+												result.state ===
+												FeedbackState.APPROVED
+													? "approved"
+													: result.state ===
+													  FeedbackState.REJECTED
+													? "rejected"
+													: ""
+											}
+											rows={7}
+											value={result.answer}
+											readOnly={true}
+										></textarea>
 									</div>
 									<div className="feedback-result-actions">
 										<button
 											className={
-												result.state ==
-												FeedbackState.APPROVED
-													? "btn approved"
-													: result.state ==
-													  FeedbackState.REJECTED
+												result.state ===
+												FeedbackState.REJECTED
 													? "btn unchecked"
 													: "btn"
 											}
@@ -221,11 +235,8 @@ const PageOpenFeedbackResults: FC = () => {
 										</button>
 										<button
 											className={
-												result.state ==
-												FeedbackState.REJECTED
-													? "btn rejected"
-													: result.state ==
-													  FeedbackState.APPROVED
+												result.state ===
+												FeedbackState.APPROVED
 													? "btn unchecked"
 													: "btn"
 											}

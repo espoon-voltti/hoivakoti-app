@@ -11,7 +11,7 @@ $green: #c6db00;
 	flex-direction: column;
 	max-width: 63.5rem;
 	margin: 5rem auto 0 auto;
-	padding: 1rem;
+	padding: 0 1rem 1rem 1rem;
 }
 
 .check-all-results {
@@ -19,8 +19,13 @@ $green: #c6db00;
 }
 
 .feedback-results {
+	&-heading {
+		margin-bottom: 1rem;
+	}
+
 	&-list {
-		margin-top: 1rem;
+		margin-top: 2rem;
+		border-top: solid 1px $border-color;
 
 		&-item {
 			border-bottom: solid 1px $border-color;
@@ -34,12 +39,31 @@ $green: #c6db00;
 		width: 100%;
 		margin: 0 1rem 1rem 0;
 
-		p {
+		textarea {
 			margin: 0;
 			line-height: 1.5;
-			font-size: 0.9rem;
+			font-size: 1rem;
+			font-family: inherit;
+			resize: none;
+			box-sizing: border-box;
+			width: 100%;
+			border-radius: 0;
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+			padding-top: 0.4rem;
+			border: solid 1px $border-color;
+
+			&.approved {
+				border-bottom: solid 2px $green;
+			}
+
+			&.rejected {
+				opacity: 0.5;
+				background-color: $border-color;
+			}
 		}
 	}
+
 	&-actions {
 		display: flex;
 		justify-content: flex-end;
@@ -53,14 +77,6 @@ $green: #c6db00;
 
 			&.unchecked {
 				opacity: 0.5;
-			}
-
-			&.rejected {
-				background-color: $error-color;
-			}
-
-			&.approved {
-				background-color: $green;
 			}
 		}
 	}
