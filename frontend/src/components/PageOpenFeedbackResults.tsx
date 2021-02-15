@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import "../styles/PageOpenFeedbackResults.scss";
 import FilterItem, { FilterOption } from "./FilterItem";
-
 import queryString from "query-string";
+
+import "../styles/PageOpenFeedbackResults.scss";
 
 enum FeedbackState {
 	OPEN = "open",
@@ -20,7 +20,11 @@ interface OpenFeedback {
 
 interface SearchFilters {
 	readonly name?: string;
-	readonly feedbackState?: FeedbackState[];
+	readonly tila?: string[];
+}
+
+interface KeyToString {
+	[key: string]: string;
 }
 
 const PageOpenFeedbackResults: FC = () => {
@@ -39,7 +43,7 @@ const PageOpenFeedbackResults: FC = () => {
 				nursinghome_id: "967731a488",
 				answer:
 					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam hendrerit dui quis ligula elementum maximus. Donec quis posuere nisi. Duis eu euismod turpis. Nam libero erat, laoreet quis tincidunt quis, lobortis in lacus. Ut scelerisque orci sit amet ante finibus, sit amet tempor arcu dapibus. Aliquam vitae lectus felis. Mauris commodo vel dolor at molestie. Etiam non eros orci. Pellentesque a dolor augue. Integer nec nulla in enim sodales blandit. Vivamus suscipit est sagittis tellus aliquam, sit amet dapibus sem commodo. Aliquam commodo luctus augue non lacinia. Fusce varius ut lacus quis egestas. Phasellus dolor quam, bibendum pellentesque nisi at, venenatis tempor ante.",
-				state: FeedbackState.OPEN,
+				state: FeedbackState.REJECTED,
 			},
 			{
 				id: "result-2",
@@ -55,27 +59,43 @@ const PageOpenFeedbackResults: FC = () => {
 				nursinghome_id: "967731a488",
 				answer:
 					"Curabitur fringilla lobortis odio, et ultrices lectus efficitur ac. Donec quis lacus vehicula, posuere lorem a, semper diam. Nunc vitae blandit odio. Nulla facilisi. Quisque tincidunt ex a purus placerat, vel dignissim dolor porta. Curabitur ullamcorper porta nisl. Donec augue metus, egestas et molestie ut, laoreet nec justo. Praesent tristique lectus tincidunt arcu facilisis pellentesque. Cras vitae molestie nisl, ac volutpat velit. Nam elit tellus, vulputate in nisl in, rhoncus cursus ex. Nulla pulvinar leo orci, non hendrerit libero varius eu. Nulla viverra arcu at mauris convallis, vitae iaculis tortor luctus. Nunc eros elit, ultrices sed feugiat lacinia, congue a arcu. Nam dolor neque, rhoncus nec eros eget, ultrices iaculis arcu. Vestibulum quis efficitur massa.",
-				state: FeedbackState.OPEN,
+				state: FeedbackState.APPROVED,
 			},
 		];
 
-		const openCases = resultsStatic.some(
+		const openCases = resultsStatic.filter(
 			result => result.state === FeedbackState.OPEN,
 		);
 
-		setResults(resultsStatic);
-		setHasOpenCases(openCases);
+		const approvedCases = resultsStatic.filter(
+			result => result.state === FeedbackState.APPROVED,
+		);
+
+		const rejectedCases = resultsStatic.filter(
+			result => result.state === FeedbackState.REJECTED,
+		);
+
+		const sortResults = [...openCases, ...approvedCases, ...rejectedCases];
+
+		setResults(sortResults);
+		setHasOpenCases(openCases.length > 0);
 	}, []);
 
+	const mapFeedbackStateString: KeyToString = {
+		[FeedbackState.OPEN]: "Avoin",
+		[FeedbackState.APPROVED]: "Hyväksytty",
+		[FeedbackState.REJECTED]: "Hylätty",
+	};
+
 	const parsed = queryString.parse(search);
-	const parsedFeedbackState = parsed.feedbackState
-		? !Array.isArray(parsed.feedbackState)
-			? [parsed.feedbackState]
-			: parsed.feedbackState
+	const parsedFeedbackState = parsed.tila
+		? !Array.isArray(parsed.tila)
+			? [parsed.tila]
+			: parsed.tila
 		: undefined;
 
 	const searchFilters: SearchFilters = {
-		feedbackState: parsedFeedbackState as FeedbackState[],
+		tila: parsedFeedbackState as string[],
 		name: parsed.name as string,
 	};
 
@@ -84,32 +104,40 @@ const PageOpenFeedbackResults: FC = () => {
 			name: FeedbackState.OPEN,
 			label: "Avoin",
 			type: "checkbox",
-			checked: searchFilters.feedbackState
-				? searchFilters.feedbackState.includes(FeedbackState.OPEN)
+			checked: searchFilters.tila
+				? searchFilters.tila.includes(
+						mapFeedbackStateString[FeedbackState.OPEN],
+				  )
 				: false,
 		},
 		{
 			name: FeedbackState.APPROVED,
 			label: "Hyväksytty",
 			type: "checkbox",
-			checked: searchFilters.feedbackState
-				? searchFilters.feedbackState.includes(FeedbackState.APPROVED)
+			checked: searchFilters.tila
+				? searchFilters.tila.includes(
+						mapFeedbackStateString[FeedbackState.APPROVED],
+				  )
 				: false,
 		},
 		{
 			name: FeedbackState.REJECTED,
 			label: "Hylätty",
 			type: "checkbox",
-			checked: searchFilters.feedbackState
-				? searchFilters.feedbackState.includes(FeedbackState.REJECTED)
+			checked: searchFilters.tila
+				? searchFilters.tila.includes(
+						mapFeedbackStateString[FeedbackState.REJECTED],
+				  )
 				: false,
 		},
 	];
 
 	useEffect(() => {
 		const filterResults: OpenFeedback[] = results.filter(result => {
-			if (searchFilters.feedbackState) {
-				return searchFilters.feedbackState.includes(result.state);
+			if (searchFilters.tila) {
+				return searchFilters.tila.includes(
+					mapFeedbackStateString[result.state],
+				);
 			}
 
 			return result;
@@ -189,34 +217,36 @@ const PageOpenFeedbackResults: FC = () => {
 			label="Palautteen tila"
 			prefix="state"
 			value={
-				searchFilters.feedbackState !== undefined
-					? searchFilters.feedbackState.length <= 2
-						? searchFilters.feedbackState.join(", ")
-						: `(${searchFilters.feedbackState.length} $valintaa`
+				searchFilters.tila
+					? searchFilters.tila.length <= 2
+						? searchFilters.tila.join(", ")
+						: `${searchFilters.tila.length} valintaa`
 					: null
 			}
 			values={optionState}
 			ariaLabel="Valitse palautteen tila"
-			disabled={false}
+			disabled={!results}
 			onChange={({ newValue, name }) => {
 				const newSearchFilters = { ...searchFilters };
-				let newStateFilters = newSearchFilters["feedbackState"];
+				let newStateFilters = newSearchFilters["tila"];
 
 				if (!newStateFilters) {
 					newStateFilters = [];
 				}
 
 				if (newValue) {
-					if (!newStateFilters.includes(name as FeedbackState)) {
-						newStateFilters.push(name as FeedbackState);
+					if (
+						!newStateFilters.includes(mapFeedbackStateString[name])
+					) {
+						newStateFilters.push(mapFeedbackStateString[name]);
 					}
 				} else {
 					newStateFilters = newStateFilters.filter(
-						stateItem => stateItem !== name,
+						stateItem => stateItem !== mapFeedbackStateString[name],
 					);
 				}
 
-				newSearchFilters["feedbackState"] = newStateFilters;
+				newSearchFilters["tila"] = newStateFilters;
 
 				const stringfield = queryString.stringify(newSearchFilters);
 				history.push("/valvonta/avoin-palaute?" + stringfield);
@@ -224,7 +254,7 @@ const PageOpenFeedbackResults: FC = () => {
 			onReset={(): void => {
 				const newSearchFilters = {
 					...searchFilters,
-					feedbackState: undefined,
+					tila: undefined,
 				};
 				const stringfield = queryString.stringify(newSearchFilters);
 				history.push("/valvonta/avoin-palaute?" + stringfield);
