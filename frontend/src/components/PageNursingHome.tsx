@@ -252,7 +252,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<MapSmall nursingHome={nursingHome} />
 					</a>
 
-					<dl className="nursingHome-info-list nursingHome-info-list--contact">
+					<dl className="nursinghome-info-list nursinghome-info-list--contact">
 						<dt>{contactInfo}</dt>
 						<dd>
 							{nursingHome.address}, {nursingHome.postal_code}{" "}
@@ -272,7 +272,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						</dd>
 					</dl>
 
-					<dl className="nursingHome-info-list nursingHome-info-list--directions">
+					<dl className="nursinghome-info-list nursinghome-info-list--directions">
 						<dt>{directions}</dt>
 						<dd>{nursingHome.arrival_guide_public_transit}</dd>
 						<dd>{nursingHome.arrival_guide_car}</dd>
