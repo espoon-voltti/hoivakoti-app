@@ -1242,4 +1242,40 @@ export const translations = {
 		"fi-FI": "Edellinen",
 		"sv-FI": "Edellinen",
 	},
+	filterOpen: {
+		"fi-FI": "Avoin",
+		"sv-FI": "Avoin",
+	},
+	filterApproved: {
+		"fi-FI": "Hyväksytty",
+		"sv-FI": "Hyväksytty",
+	},
+	filterRejected: {
+		"fi-FI": "Hylätty",
+		"sv-FI": "Hylätty",
+	},
+	labelFeedbackState: {
+		"fi-FI": "Palautteen tila",
+		"sv-FI": "Palautteen tila",
+	},
+	ariaFeedbackState: {
+		"fi-FI": "Valitse palautteen tila",
+		"sv-FI": "Valitse palautteen tila",
+	},
+	headingOpenFeedback: {
+		"fi-FI": "Avoimet palautteet",
+		"sv-FI": "Avoimet palautteet",
+	},
+	approveAllOpenFeedback: {
+		"fi-FI": "Hyväksy kaikki avoimet",
+		"sv-FI": "Hyväksy kaikki avoimet",
+	},
+	approve: {
+		"fi-FI": "Hyväksy",
+		"sv-FI": "Hyväksy",
+	},
+	reject: {
+		"fi-FI": "Hylkää",
+		"sv-FI": "Hylkää",
+	},
 };

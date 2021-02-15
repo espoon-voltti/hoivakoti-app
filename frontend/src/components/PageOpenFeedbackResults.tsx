@@ -4,6 +4,7 @@ import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
 
 import "../styles/PageOpenFeedbackResults.scss";
+import { useT } from "../i18n";
 
 enum FeedbackState {
 	OPEN = "open",
@@ -81,10 +82,24 @@ const PageOpenFeedbackResults: FC = () => {
 		setHasOpenCases(openCases.length > 0);
 	}, []);
 
+	const filterOpen = useT("filterOpen");
+	const filterApproved = useT("filterApproved");
+	const filterRejected = useT("filterRejected");
+	const labelFeedbackState = useT("labelFeedbackState");
+	const ariaFeedbackState = useT("ariaFeedbackState");
+	const filterLabel = useT("filterLabel");
+	const headingOpenFeedback = useT("headingOpenFeedback");
+	const approveAllOpenFeedback = useT("approveAllOpenFeedback");
+	const approve = useT("approve");
+	const reject = useT("reject");
+	const btnSave = useT("btnSave");
+	const cancel = useT("cancel");
+	const filterSelections = useT("filterSelections");
+
 	const mapFeedbackStateString: KeyToString = {
-		[FeedbackState.OPEN]: "Avoin",
-		[FeedbackState.APPROVED]: "Hyväksytty",
-		[FeedbackState.REJECTED]: "Hylätty",
+		[FeedbackState.OPEN]: filterOpen,
+		[FeedbackState.APPROVED]: filterApproved,
+		[FeedbackState.REJECTED]: filterRejected,
 	};
 
 	const parsed = queryString.parse(search);
@@ -102,7 +117,7 @@ const PageOpenFeedbackResults: FC = () => {
 	const optionState: FilterOption[] = [
 		{
 			name: FeedbackState.OPEN,
-			label: "Avoin",
+			label: filterOpen,
 			type: "checkbox",
 			checked: searchFilters.tila
 				? searchFilters.tila.includes(
@@ -112,7 +127,7 @@ const PageOpenFeedbackResults: FC = () => {
 		},
 		{
 			name: FeedbackState.APPROVED,
-			label: "Hyväksytty",
+			label: filterApproved,
 			type: "checkbox",
 			checked: searchFilters.tila
 				? searchFilters.tila.includes(
@@ -122,7 +137,7 @@ const PageOpenFeedbackResults: FC = () => {
 		},
 		{
 			name: FeedbackState.REJECTED,
-			label: "Hylätty",
+			label: filterRejected,
 			type: "checkbox",
 			checked: searchFilters.tila
 				? searchFilters.tila.includes(
@@ -214,17 +229,17 @@ const PageOpenFeedbackResults: FC = () => {
 
 	const filterElements = (
 		<FilterItem
-			label="Palautteen tila"
+			label={labelFeedbackState}
 			prefix="state"
 			value={
 				searchFilters.tila
 					? searchFilters.tila.length <= 2
 						? searchFilters.tila.join(", ")
-						: `${searchFilters.tila.length} valintaa`
+						: `${searchFilters.tila.length} ${filterSelections}`
 					: null
 			}
 			values={optionState}
-			ariaLabel="Valitse palautteen tila"
+			ariaLabel={ariaFeedbackState}
 			disabled={!results}
 			onChange={({ newValue, name }) => {
 				const newSearchFilters = { ...searchFilters };
@@ -265,19 +280,19 @@ const PageOpenFeedbackResults: FC = () => {
 	return (
 		<div>
 			<div className="filters">
-				<div className="filters-text">Rajaa tuloksia</div>
+				<div className="filters-text">{filterLabel}</div>
 				{filterElements}
 			</div>
 			{results ? (
 				<div className="page-open-feedback-results">
 					<h1 className="feedback-results-heading">
-						Avoimet palautteet
+						{headingOpenFeedback}
 					</h1>
 					<button
 						className="btn check-all-results"
 						onClick={markAllOpenAsApproved}
 					>
-						Hyväksy kaikki avoimet
+						{approveAllOpenFeedback}
 					</button>
 					<form onSubmit={submitForm}>
 						<ul className="feedback-results-list">
@@ -316,7 +331,7 @@ const PageOpenFeedbackResults: FC = () => {
 													markAsApproved(result.id);
 												}}
 											>
-												Hyväksy
+												{approve}
 											</button>
 											<button
 												type="button"
@@ -330,7 +345,7 @@ const PageOpenFeedbackResults: FC = () => {
 													markAsRejected(result.id);
 												}}
 											>
-												Hylkää
+												{reject}
 											</button>
 										</div>
 									</li>
@@ -347,10 +362,10 @@ const PageOpenFeedbackResults: FC = () => {
 									history.push("/valvonta");
 								}}
 							>
-								Peruuta
+								{cancel}
 							</button>
 							<button type="submit" className="btn submit">
-								Tallenna
+								{btnSave}
 							</button>
 						</div>
 					</form>
