@@ -813,6 +813,10 @@ export const translations = {
 		"fi-FI": "Omaisten antamat arviot",
 		"sv-FI": "Anhörigas bedömningar",
 	},
+	fromRelatives: {
+		"fi-FI": "Omaisilta",
+		"sv-FI": "Omaisilta",
+	},
 	customerReviewsBy: {
 		"fi-FI": "Asiakkaiden antamat arviot",
 		"sv-FI": "Asiakkaiden antamat arviot",

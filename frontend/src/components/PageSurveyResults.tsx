@@ -66,6 +66,7 @@ const PageSurveyResults: FC = () => {
 	const linkBackToBasicInfo = useT("linkBackToBasicInfo");
 	const relativeReviewsBy = useT("relativeReviewsBy");
 	const customerReviewsBy = useT("customerReviewsBy");
+	const fromRelatives = useT("fromRelatives");
 	const nReviews = useT("nReviews");
 	const averageReviewScore = useT("averageReviewScore");
 	const reviewFooterHeader = useT("reviewFooterHeader");
@@ -248,7 +249,7 @@ const PageSurveyResults: FC = () => {
 							</p>
 							<div className="page-survey-results-answer-container">
 								<div className="page-survey-results-answer-header">
-									Omaisilta
+									{fromRelatives}
 								</div>
 								<div className="page-survey-results-answer-content">
 									{answers(textResults)}
