@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState, Fragment, useCallback } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
@@ -129,6 +129,7 @@ const PageUpdate: FC = () => {
 
 	if (!id || !key) throw new Error("Invalid URL!");
 
+	const history = useHistory();
 	const location = useLocation();
 
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
@@ -891,6 +892,8 @@ const PageUpdate: FC = () => {
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
 		window.location.href = window.location.pathname + "/peruuta";
+
+		history.push({ pathname: `${location.pathname}/peruuta` });
 	};
 
 	const validateField = <T extends NursingHome, K extends keyof T>(
@@ -1320,9 +1323,6 @@ const PageUpdate: FC = () => {
 									className="btn update-images-button"
 									to={{
 										pathname: `/hoivakodit/${id}/paivita/${key}/kuvat`,
-										state: {
-											from: location.pathname,
-										},
 									}}
 								>
 									{labelAddImages}

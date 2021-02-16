@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory, Link, useLocation } from "react-router-dom";
 import { useT } from "../i18n";
 import axios from "axios";
 import config from "./config";
@@ -27,19 +27,22 @@ const requestImagesUpdate = async (
 	}
 };
 
-interface Props {
-	location: any;
-}
-
-const PageUpdateImages: FC<Props> = ({ location }) => {
+const PageUpdateImages: FC = () => {
 	const { id, key } = useParams<NursingHomeRouteParams>();
-	const history = useHistory();
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [popupState, setPopupState] = useState<null | "saving" | "saved">(
 		null,
 	);
 
 	if (!id || !key) throw new Error("Invalid URL!");
+
+	const history = useHistory();
+	const location = useLocation();
+
+	const parentUpdatePage = location.pathname.substring(
+		0,
+		location.pathname.lastIndexOf("/"),
+	);
 
 	useEffect(() => {
 		axios
@@ -108,7 +111,7 @@ const PageUpdateImages: FC<Props> = ({ location }) => {
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
 
-		history.push(location.state.from);
+		history.push(parentUpdatePage);
 	};
 
 	const handleSubmit = async (
@@ -137,7 +140,7 @@ const PageUpdateImages: FC<Props> = ({ location }) => {
 						<div className="page-update-section nursinghome-logo-upload">
 							<Link
 								to={{
-									pathname: location.state.from,
+									pathname: parentUpdatePage,
 								}}
 								className="nursinghome-back-link"
 							>
