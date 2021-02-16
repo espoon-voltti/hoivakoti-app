@@ -5,18 +5,13 @@ import queryString from "query-string";
 
 import "../styles/PageOpenFeedbackResults.scss";
 import { useT } from "../i18n";
+import axios from "axios";
+import config from "./config";
 
 enum FeedbackState {
 	OPEN = "open",
 	APPROVED = "approved",
 	REJECTED = "rejected",
-}
-
-interface OpenFeedback {
-	id: string;
-	nursinghome_id: string;
-	answer: string;
-	state: FeedbackState;
 }
 
 interface SearchFilters {
@@ -28,58 +23,67 @@ interface KeyToString {
 	[key: string]: string;
 }
 
+interface OpenFeedback {
+	id: string;
+	nursinghome_id: string;
+	answer_text: string;
+	feedback_state: FeedbackState;
+}
+
+interface FeedbackResponse {
+	data: OpenFeedback[];
+}
+
+const requestFeedbackStateUpdate = async (
+	answerId: string,
+	newState: FeedbackState,
+): Promise<void> => {
+	try {
+		await axios.post(`${config.API_URL}/survey/text-results/${answerId}`, {
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			feedback_state: newState,
+		});
+	} catch (error) {
+		console.error(error);
+
+		throw error;
+	}
+};
+
 const PageOpenFeedbackResults: FC = () => {
 	const [results, setResults] = useState<OpenFeedback[]>([]);
 	const [filteredResults, setFilteredResults] = useState<OpenFeedback[]>([]);
-	const [, setHasOpenCases] = useState(false);
 
 	const history = useHistory();
 	const { search } = useLocation();
 
 	useEffect(() => {
-		const resultsStatic: OpenFeedback[] = [
-			{
-				id: "result-1",
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				nursinghome_id: "967731a488",
-				answer:
-					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam hendrerit dui quis ligula elementum maximus. Donec quis posuere nisi. Duis eu euismod turpis. Nam libero erat, laoreet quis tincidunt quis, lobortis in lacus. Ut scelerisque orci sit amet ante finibus, sit amet tempor arcu dapibus. Aliquam vitae lectus felis. Mauris commodo vel dolor at molestie. Etiam non eros orci. Pellentesque a dolor augue. Integer nec nulla in enim sodales blandit. Vivamus suscipit est sagittis tellus aliquam, sit amet dapibus sem commodo. Aliquam commodo luctus augue non lacinia. Fusce varius ut lacus quis egestas. Phasellus dolor quam, bibendum pellentesque nisi at, venenatis tempor ante.",
-				state: FeedbackState.REJECTED,
-			},
-			{
-				id: "result-2",
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				nursinghome_id: "967731a488",
-				answer:
-					"Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam eleifend posuere tellus, id feugiat nisi faucibus ut. Donec condimentum enim nulla, sit amet convallis ante lacinia ac. Proin dapibus quis massa ut volutpat. Integer a lacus mollis, aliquam ligula eu, pharetra nibh. Suspendisse fringilla sagittis ligula vel rutrum. Vivamus eget sapien suscipit, molestie quam eu, facilisis tellus. Sed dapibus tempor tortor, non tristique nisl maximus id. Etiam consequat euismod felis, efficitur hendrerit turpis viverra id. Ut tellus arcu, egestas ut velit ut, sagittis mattis lacus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-				state: FeedbackState.OPEN,
-			},
-			{
-				id: "result-3",
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				nursinghome_id: "967731a488",
-				answer:
-					"Curabitur fringilla lobortis odio, et ultrices lectus efficitur ac. Donec quis lacus vehicula, posuere lorem a, semper diam. Nunc vitae blandit odio. Nulla facilisi. Quisque tincidunt ex a purus placerat, vel dignissim dolor porta. Curabitur ullamcorper porta nisl. Donec augue metus, egestas et molestie ut, laoreet nec justo. Praesent tristique lectus tincidunt arcu facilisis pellentesque. Cras vitae molestie nisl, ac volutpat velit. Nam elit tellus, vulputate in nisl in, rhoncus cursus ex. Nulla pulvinar leo orci, non hendrerit libero varius eu. Nulla viverra arcu at mauris convallis, vitae iaculis tortor luctus. Nunc eros elit, ultrices sed feugiat lacinia, congue a arcu. Nam dolor neque, rhoncus nec eros eget, ultrices iaculis arcu. Vestibulum quis efficitur massa.",
-				state: FeedbackState.APPROVED,
-			},
-		];
+		axios
+			.get(`${config.API_URL}/survey/text-results/all`)
+			.then((res: FeedbackResponse) => {
+				const openCases = res.data.filter(
+					(result: OpenFeedback) =>
+						result.feedback_state === FeedbackState.OPEN,
+				);
 
-		const openCases = resultsStatic.filter(
-			result => result.state === FeedbackState.OPEN,
-		);
+				const approvedCases = res.data.filter(
+					(result: OpenFeedback) =>
+						result.feedback_state === FeedbackState.APPROVED,
+				);
 
-		const approvedCases = resultsStatic.filter(
-			result => result.state === FeedbackState.APPROVED,
-		);
+				const rejectedCases = res.data.filter(
+					(result: OpenFeedback) =>
+						result.feedback_state === FeedbackState.REJECTED,
+				);
 
-		const rejectedCases = resultsStatic.filter(
-			result => result.state === FeedbackState.REJECTED,
-		);
+				const sortResults = [
+					...openCases,
+					...approvedCases,
+					...rejectedCases,
+				];
 
-		const sortResults = [...openCases, ...approvedCases, ...rejectedCases];
-
-		setResults(sortResults);
-		setHasOpenCases(openCases.length > 0);
+				setResults(sortResults);
+			});
 	}, []);
 
 	const filterOpen = useT("filterOpen");
@@ -92,8 +96,6 @@ const PageOpenFeedbackResults: FC = () => {
 	const approveAllOpenFeedback = useT("approveAllOpenFeedback");
 	const approve = useT("approve");
 	const reject = useT("reject");
-	const btnSave = useT("btnSave");
-	const cancel = useT("cancel");
 	const filterSelections = useT("filterSelections");
 
 	const mapFeedbackStateString: KeyToString = {
@@ -151,7 +153,7 @@ const PageOpenFeedbackResults: FC = () => {
 		const filterResults: OpenFeedback[] = results.filter(result => {
 			if (searchFilters.tila) {
 				return searchFilters.tila.includes(
-					mapFeedbackStateString[result.state],
+					mapFeedbackStateString[result.feedback_state],
 				);
 			}
 
@@ -162,27 +164,14 @@ const PageOpenFeedbackResults: FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [search, history, results]);
 
-	const markAsApproved = (id: string): void => {
-		const feedbackItem = results.find(result => result.id === id);
+	const markAsApproved = async (id: string): Promise<void> => {
+		try {
+			await requestFeedbackStateUpdate(id, FeedbackState.APPROVED);
 
-		if (feedbackItem) {
-			feedbackItem.state = FeedbackState.APPROVED;
-
-			const newResults = [...results];
-
-			const itemIndex = newResults.findIndex(result => result.id === id);
-
-			newResults[itemIndex] = feedbackItem as OpenFeedback;
-
-			setResults(newResults);
-		}
-	};
-	const markAsRejected = (id: string): void => {
-		if (results) {
 			const feedbackItem = results.find(result => result.id === id);
 
 			if (feedbackItem) {
-				feedbackItem.state = FeedbackState.REJECTED;
+				feedbackItem["feedback_state"] = FeedbackState.APPROVED;
 
 				const newResults = [...results];
 
@@ -194,36 +183,64 @@ const PageOpenFeedbackResults: FC = () => {
 
 				setResults(newResults);
 			}
+		} catch (error) {
+			console.error(error);
+
+			throw error;
+		}
+	};
+	const markAsRejected = async (id: string): Promise<void> => {
+		try {
+			await requestFeedbackStateUpdate(id, FeedbackState.REJECTED);
+
+			const feedbackItem = results.find(result => result.id === id);
+
+			if (feedbackItem) {
+				feedbackItem["feedback_state"] = FeedbackState.REJECTED;
+
+				const newResults = [...results];
+
+				const itemIndex = newResults.findIndex(
+					result => result.id === id,
+				);
+
+				newResults[itemIndex] = feedbackItem as OpenFeedback;
+
+				setResults(newResults);
+			}
+		} catch (error) {
+			console.error(error);
+
+			throw error;
 		}
 	};
 
-	const markAllOpenAsApproved = (): void => {
-		const newResults = [...results].map(result => {
-			if (result.state === FeedbackState.OPEN) {
-				return {
-					...result,
-					state: FeedbackState.APPROVED,
-				};
+	const markAllOpenAsApproved = async (): Promise<void> => {
+		try {
+			const newResults = [...results].map(result => {
+				if (result["feedback_state"] === FeedbackState.OPEN) {
+					return {
+						...result,
+						// eslint-disable-next-line @typescript-eslint/camelcase
+						feedback_state: FeedbackState.APPROVED,
+					};
+				}
+
+				return result;
+			});
+
+			for (const result of newResults) {
+				await requestFeedbackStateUpdate(
+					result.id,
+					result.feedback_state,
+				);
 			}
 
-			return result;
-		});
+			setResults(newResults);
+		} catch (error) {
+			console.error(error);
 
-		setResults(newResults);
-	};
-
-	const submitForm = (event: React.FormEvent<HTMLFormElement>): void => {
-		event.preventDefault();
-
-		const openCases = results.some(
-			result => result.state === FeedbackState.OPEN,
-		);
-
-		if (openCases) {
-			console.log("ERROR");
-		} else {
-			setHasOpenCases(openCases);
-			console.log(results);
+			throw error;
 		}
 	};
 
@@ -294,81 +311,63 @@ const PageOpenFeedbackResults: FC = () => {
 					>
 						{approveAllOpenFeedback}
 					</button>
-					<form onSubmit={submitForm}>
-						<ul className="feedback-results-list">
-							{filteredResults.map(result => {
-								return (
-									<li
-										className="feedback-results-list-item"
-										key={result.id}
-									>
-										<div className="feedback-result-answer">
-											<textarea
-												className={
-													result.state ===
-													FeedbackState.APPROVED
-														? "approved"
-														: result.state ===
-														  FeedbackState.REJECTED
-														? "rejected"
-														: ""
-												}
-												rows={7}
-												value={result.answer}
-												readOnly={true}
-											></textarea>
-										</div>
-										<div className="feedback-result-actions">
-											<button
-												type="button"
-												className={
-													result.state ===
-													FeedbackState.APPROVED
-														? "btn checked"
-														: "btn"
-												}
-												onClick={() => {
-													markAsApproved(result.id);
-												}}
-											>
-												{approve}
-											</button>
-											<button
-												type="button"
-												className={
-													result.state ===
-													FeedbackState.REJECTED
-														? "btn checked"
-														: "btn"
-												}
-												onClick={() => {
-													markAsRejected(result.id);
-												}}
-											>
-												{reject}
-											</button>
-										</div>
-									</li>
-								);
-							})}
-						</ul>
-						<div className="nav-save">
-							<button
-								type="button"
-								className="cancel"
-								onClick={event => {
-									event.preventDefault();
-
-									history.push("/valvonta");
-								}}
-							>
-								{cancel}
-							</button>
-							<button type="submit" className="btn submit">
-								{btnSave}
-							</button>
-						</div>
-					</form>
+					<ul className="feedback-results-list">
+						{filteredResults.map(result => {
+							return (
+								<li
+									className="feedback-results-list-item"
+									key={result.id}
+								>
+									<div className="feedback-result-answer">
+										<textarea
+											className={
+												result.feedback_state ===
+												FeedbackState.APPROVED
+													? "approved"
+													: result.feedback_state ===
+													  FeedbackState.REJECTED
+													? "rejected"
+													: ""
+											}
+											rows={7}
+											value={result.answer_text}
+											readOnly={true}
+										></textarea>
+									</div>
+									<div className="feedback-result-actions">
+										<button
+											type="button"
+											className={
+												result.feedback_state ===
+												FeedbackState.APPROVED
+													? "btn checked"
+													: "btn"
+											}
+											onClick={() => {
+												markAsApproved(result.id);
+											}}
+										>
+											{approve}
+										</button>
+										<button
+											type="button"
+											className={
+												result.feedback_state ===
+												FeedbackState.REJECTED
+													? "btn checked"
+													: "btn"
+											}
+											onClick={() => {
+												markAsRejected(result.id);
+											}}
+										>
+											{reject}
+										</button>
+									</div>
+								</li>
+							);
+						})}
+					</ul>
 				</div>
 			) : null}
 		</div>

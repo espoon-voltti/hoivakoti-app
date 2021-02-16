@@ -555,7 +555,7 @@ export async function GetSurveyTextResults(
 	return results;
 }
 
-export async function GetAllSurveyTextResults(surveyId: string): Promise<any> {
+export async function GetAllSurveyTextResults(): Promise<any> {
 	const results = await knex
 		.table("NursingHomeSurveyTextAnswers")
 		.join(
@@ -563,10 +563,29 @@ export async function GetAllSurveyTextResults(surveyId: string): Promise<any> {
 			"NursingHomeSurveyAnswers.answer",
 			"NursingHomeSurveyTextAnswers.id",
 		)
-		.select("answer_text", "feedback_state", "nursinghome_id")
-		.where({ survey_id: surveyId });
+		.select(
+			"NursingHomeSurveyAnswers.nursinghome_id",
+			"NursingHomeSurveyTextAnswers.id",
+			"NursingHomeSurveyTextAnswers.answer_text",
+			"NursingHomeSurveyTextAnswers.feedback_state",
+		);
 
 	return results;
+}
+
+export async function UpdateSurveyTextState(
+	answerId: string,
+	newState: FeedbackState,
+): Promise<boolean> {
+	let count = await knex("NursingHomeSurveyTextAnswers")
+		.where({ id: answerId })
+		.update({
+			feedback_state: newState,
+		});
+
+	if (count !== 1) return false;
+
+	return true;
 }
 
 export async function SubmitSurveyData( //USE ONLY WHEN AUTHENTICATED

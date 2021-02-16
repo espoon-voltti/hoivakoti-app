@@ -40,6 +40,7 @@ import {
 	UpdateNursingHomeVacancyStatus,
 	UpdateNursingHomeCustomerCommunes,
 	GetAllSurveyTextResults,
+	UpdateSurveyTextState,
 } from "./controllers";
 import config from "./config";
 
@@ -260,11 +261,15 @@ router.get("/api/survey/:id/text-results/:survey", async ctx => {
 });
 
 router.get("/api/survey/text-results/:survey", async ctx => {
-	const res = await GetAllSurveyTextResults(ctx);
-
-	console.log("Näi");
+	const res = await GetAllSurveyTextResults();
 
 	ctx.body = res;
+});
+
+router.post("/api/survey/text-results/:answerId", async ctx => {
+	const res = await UpdateSurveyTextState(ctx);
+
+	ctx.body = { success: res };
 });
 
 const routes = router.routes();
