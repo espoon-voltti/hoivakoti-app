@@ -77,21 +77,7 @@ const PageNursingHomes: FC = () => {
 		axios
 			.get(config.API_URL + "/nursing-homes")
 			.then(async (response: { data: NursingHome[] }) => {
-				const nursingHomesTempData: NursingHome[] = [];
-
-				for (const item of response.data) {
-					const communesRequest = await axios.get(
-						`${config.API_URL}/nursing-homes/${item.id}/communes`,
-					);
-
-					const updateNursingHome = { ...item };
-					updateNursingHome["customer_commune"] =
-						communesRequest.data;
-
-					nursingHomesTempData.push(updateNursingHome);
-				}
-
-				setNursingHomes(nursingHomesTempData);
+				setNursingHomes(response.data);
 			})
 			.catch((error: Error) => {
 				console.error(error.message);

@@ -38,7 +38,6 @@ import {
 	CheckLogin,
 	CheckSurveyKey,
 	UpdateNursingHomeVacancyStatus,
-	GetNursingHomeCustomerCommunes,
 	UpdateNursingHomeCustomerCommunes,
 } from "./controllers";
 import config from "./config";
@@ -170,12 +169,6 @@ router.post("/api/nursing-homes/:id/report-status", async ctx => {
 	} else {
 		ctx.body = { success };
 	}
-});
-
-router.get("/api/nursing-homes/:id/communes", async ctx => {
-	const res = await GetNursingHomeCustomerCommunes(ctx);
-
-	ctx.body = res;
 });
 
 router.post("/api/nursing-homes/:id/communes", async ctx => {

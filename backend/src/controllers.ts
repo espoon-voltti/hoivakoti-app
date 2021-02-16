@@ -75,46 +75,62 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 	const report_status = await GetAllNursingHomeStatus();
 	const ratings = await GetAllNursingHomeRatings();
 
-	nursing_homes.map((nursinghome: any) => {
-		nursinghome.pic_digests = {};
-		nursinghome.pics = [];
-		pic_digests.map((digests: any) => {
-			if (digests.nursinghome_id === nursinghome.id) {
-				nursinghome.pic_digests = digests;
+	await Promise.all(
+		nursing_homes.map(async (nursinghome: any) => {
+			nursinghome.pic_digests = {};
+			nursinghome.pics = [];
+			pic_digests.map((digests: any) => {
+				if (digests.nursinghome_id === nursinghome.id) {
+					nursinghome.pic_digests = digests;
 
-				const available_pics = Object.keys(digests)
-					.filter((item: any) =>
-						digests[item] != null ? true : false,
-					)
-					.map((item: any) => item.replace("_hash", ""));
-				nursinghome.pics = available_pics;
+					const available_pics = Object.keys(digests)
+						.filter((item: any) =>
+							digests[item] != null ? true : false,
+						)
+						.map((item: any) => item.replace("_hash", ""));
+					nursinghome.pics = available_pics;
+				}
+			});
+
+			nursinghome.report_status = [];
+			report_status.map((status: any) => {
+				if (status.nursinghome_id === nursinghome.id) {
+					nursinghome.report_status = [status];
+				}
+			});
+
+			nursinghome.rating = {};
+			nursinghome.rating.average_relatives = null;
+			nursinghome.rating.average_customers = null;
+			nursinghome.rating.answers_relatives = 0;
+			nursinghome.rating.answers_customers = 0;
+			ratings.map((rating: any) => {
+				if (rating.nursinghome_id === nursinghome.id) {
+					nursinghome.rating.average_relatives =
+						rating.average_relatives;
+					nursinghome.rating.answers_relatives =
+						rating.answers_relatives;
+					nursinghome.rating.average_customers =
+						rating.average_customers;
+					nursinghome.rating.answers_customers =
+						rating.answers_customers;
+				}
+			});
+
+			nursinghome.customer_commune = [];
+
+			const communes = await GetCustomerCommunesForNursingHome(
+				nursinghome.id,
+			);
+
+			if (communes.length && communes[0]["customer_commune"]) {
+				nursinghome.customer_commune = communes[0]["customer_commune"];
 			}
-		});
 
-		nursinghome.report_status = [];
-		report_status.map((status: any) => {
-			if (status.nursinghome_id === nursinghome.id) {
-				nursinghome.report_status = [status];
-			}
-		});
-
-		nursinghome.rating = {};
-		nursinghome.rating.average_relatives = null;
-		nursinghome.rating.average_customers = null;
-		nursinghome.rating.answers_relatives = 0;
-		nursinghome.rating.answers_customers = 0;
-		ratings.map((rating: any) => {
-			if (rating.nursinghome_id === nursinghome.id) {
-				nursinghome.rating.average_relatives = rating.average_relatives;
-				nursinghome.rating.answers_relatives = rating.answers_relatives;
-				nursinghome.rating.average_customers = rating.average_customers;
-				nursinghome.rating.answers_customers = rating.answers_customers;
-			}
-		});
-
-		delete nursinghome.vacancy_last_updated_at;
-		delete nursinghome.basic_update_key;
-	});
+			delete nursinghome.vacancy_last_updated_at;
+			delete nursinghome.basic_update_key;
+		}),
+	);
 
 	return nursing_homes;
 }
@@ -141,6 +157,17 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	nursing_home_data["report_status"] =
 		nursing_home_status.length > 0 ? nursing_home_status : null;
 	nursing_home_data["rating"] = rating;
+
+	nursing_home_data.customer_commune = [];
+
+	const communes = await GetCustomerCommunesForNursingHome(
+		nursing_home_data.id,
+	);
+
+	if (communes.length && communes[0]["customer_commune"]) {
+		nursing_home_data.customer_commune = communes[0]["customer_commune"];
+	}
+
 	return nursing_home_data;
 }
 
@@ -246,7 +273,9 @@ export async function DropAndRecreateSurveyTotalScoreTable(
 	return result;
 }
 
-export async function DropAndRecreateSurveyTables(ctx: any): Promise<void | null> {
+export async function DropAndRecreateSurveyTables(
+	ctx: any,
+): Promise<void | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
@@ -523,10 +552,8 @@ export async function AddNursingHomeSurveyKeys(
 	return res;
 }
 
-export async function SubmitSurveyData(
-	ctx: Context
-):Promise<string | null>{
-	const loggedIn = await GetHasLogin(ctx.get('authentication') as string);
+export async function SubmitSurveyData(ctx: Context): Promise<string | null> {
+	const loggedIn = await GetHasLogin(ctx.get("authentication") as string);
 
 	if (loggedIn) {
 		const { id } = ctx.params;
@@ -581,15 +608,9 @@ export async function GetSurveyTextResults(
 	return await GetSurveyTextResultsDB(nursingHomeId);
 }
 
-export async function GetNursingHomeCustomerCommunes(ctx: Context): Promise<any> {
-	const { id } = ctx.params;
-
-	const result = await GetCustomerCommunesForNursingHome(id);
-
-	return result[0] ? result[0]["customer_commune"] : [];
-}
-
-export async function UpdateNursingHomeCustomerCommunes(ctx: Context): Promise<any> {
+export async function UpdateNursingHomeCustomerCommunes(
+	ctx: Context,
+): Promise<any> {
 	const { id } = ctx.params;
 	const communes = ctx.request.body["customer_commune"];
 

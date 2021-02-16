@@ -134,7 +134,6 @@ const PageUpdate: FC = () => {
 		null,
 	);
 	const [hasVacancy, setHasVacancy] = useState<boolean>(false);
-	const [communes, setCommunes] = useState<Commune[] | null>(null);
 
 	const [popupState, setPopupState] = useState<
 		null | "saving" | "saved" | "invalid"
@@ -211,7 +210,6 @@ const PageUpdate: FC = () => {
 	const helperStaffSatisfaction = useT("helperStaffSatisfaction");
 	const helperOtherServices = useT("helperOtherServices");
 	const helperUrl = useT("helperUrl");
-	const helperCommune = useT("helperCommune");
 
 	const title = useT("updateNursingHomeTitle");
 	const freeApartmentsStatus = useT("freeApartmentsStatus");
@@ -816,28 +814,12 @@ const PageUpdate: FC = () => {
 	}, [id, key, popupState, vacancyStatus]);
 
 	useEffect(() => {
-		if (!communes) {
-			axios
-				.get(`${config.API_URL}/nursing-homes/${id}/communes`)
-				.then(res => {
-					setCommunes(res.data);
-				})
-				.catch(err => {
-					console.error(err);
-					throw err;
-				});
-		}
-	}, [communes, id]);
-
-	useEffect(() => {
 		prepopulateFields({
 			...nursingHome,
 			// eslint-disable-next-line @typescript-eslint/camelcase
 			has_vacancy: hasVacancy,
-			// eslint-disable-next-line @typescript-eslint/camelcase
-			customer_commune: communes,
 		});
-	}, [nursingHome, communes, prepopulateFields, hasVacancy]);
+	}, [nursingHome, prepopulateFields, hasVacancy]);
 
 	const handleSubmit = async (
 		event: React.FormEvent<HTMLFormElement>,
