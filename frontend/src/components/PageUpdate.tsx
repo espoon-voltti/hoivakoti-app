@@ -891,7 +891,6 @@ const PageUpdate: FC = () => {
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
-		window.location.href = window.location.pathname + "/peruuta";
 
 		history.push({ pathname: `${location.pathname}/peruuta` });
 	};
