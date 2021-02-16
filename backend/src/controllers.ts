@@ -44,6 +44,7 @@ import {
 	GetSurvey as GetSurveyDB,
 	GetCustomerCommunesForNursingHome,
 	UpdateCustomerCommunesForNursingHome,
+	GetSurveyTextResults as GetSurveyTextResultsDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -571,7 +572,13 @@ export async function GetSurveyWithNursingHomeResults(
 		});
 	});
 
-	return survey;
+	return survey.filter(question => question.question_type == "rating");
+}
+
+export async function GetSurveyTextResults(
+	nursingHomeId: string,
+): Promise<any> {
+	return await GetSurveyTextResultsDB(nursingHomeId);
 }
 
 export async function GetNursingHomeCustomerCommunes(ctx: Context): Promise<any> {

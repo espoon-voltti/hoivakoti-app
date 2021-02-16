@@ -813,6 +813,10 @@ export const translations = {
 		"fi-FI": "Omaisten antamat arviot",
 		"sv-FI": "Anhörigas bedömningar",
 	},
+	fromRelatives: {
+		"fi-FI": "Omaisilta",
+		"sv-FI": "Omaisilta",
+	},
 	customerReviewsBy: {
 		"fi-FI": "Asiakkaiden antamat arviot",
 		"sv-FI": "Asiakkaiden antamat arviot",
@@ -1217,5 +1221,21 @@ export const translations = {
 			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
 		"sv-FI":
 			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
+	},
+	charactersLeft: {
+		"fi-FI": "merkkiä jäljellä",
+		"sv-FI": "merkkiä jäljellä",
+	},
+	openFeedbackPlaceholder: {
+		"fi-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
+		"sv-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
+	},
+	next: {
+		"fi-FI": "Seuraava",
+		"sv-FI": "Seuraava",
+	},
+	previous: {
+		"fi-FI": "Edellinen",
+		"sv-FI": "Edellinen",
 	},
 };

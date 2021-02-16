@@ -101,6 +101,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const webpage = useT("webpage");
 	const visitingInfo = useT("visitingInfo");
 	const openReport = useT("openReport");
+	const latestVisit = useT("latestVisit");
 	const reportScoreHeader = useT("reportScoreLong");
 	const giveReview = useT("giveReview");
 	const readMore = useT("readMore");
@@ -284,17 +285,17 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							<p>
 								<span className="report_info_minor_header">
 									{nursingHome.rating &&
-									nursingHome.rating.average_relatives
+									nursingHome.rating.answers_customers
 										? ratingToString(
 												nursingHome.rating
-													.average_relatives,
+													.average_customers,
 										  )
 										: feedbackNoReviews}
 								</span>
 
 								{nursingHome.rating &&
-								nursingHome.rating.average_relatives
-									? `${nursingHome.rating.average_relatives.toPrecision(
+								nursingHome.rating.average_customers
+									? `${nursingHome.rating.average_customers.toPrecision(
 											2,
 									  )} / 5`
 									: ""}
@@ -325,7 +326,8 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							to={`/hoivakodit/${nursingHome.id}/arviot`}
 							className={
 								nursingHome.rating &&
-								nursingHome.rating.average_relatives
+								(nursingHome.rating.average_relatives ||
+									nursingHome.rating.average_customers)
 									? ""
 									: "hidden"
 							}
