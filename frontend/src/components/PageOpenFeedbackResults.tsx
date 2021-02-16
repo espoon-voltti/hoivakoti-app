@@ -1,5 +1,5 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
 

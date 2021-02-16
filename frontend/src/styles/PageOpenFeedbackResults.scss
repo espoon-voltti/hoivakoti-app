@@ -30,6 +30,10 @@ $green: #c6db00;
 		&-item {
 			border-bottom: solid 1px $border-color;
 			padding: 1rem 0;
+
+			&:last-of-type {
+				border-bottom: none;
+			}
 		}
 	}
 }
