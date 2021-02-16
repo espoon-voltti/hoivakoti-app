@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
 
@@ -7,6 +7,7 @@ import "../styles/PageOpenFeedbackResults.scss";
 import { useT } from "../i18n";
 import axios from "axios";
 import config from "./config";
+import { NursingHome } from "./types";
 
 enum FeedbackState {
 	OPEN = "open",
@@ -53,6 +54,7 @@ const requestFeedbackStateUpdate = async (
 const PageOpenFeedbackResults: FC = () => {
 	const [results, setResults] = useState<OpenFeedback[]>([]);
 	const [filteredResults, setFilteredResults] = useState<OpenFeedback[]>([]);
+	const [nursingHomes, setNursingHomes] = useState<NursingHome[]>([]);
 
 	const history = useHistory();
 	const { search } = useLocation();
@@ -83,6 +85,16 @@ const PageOpenFeedbackResults: FC = () => {
 				];
 
 				setResults(sortResults);
+			});
+
+		axios
+			.get(config.API_URL + "/nursing-homes")
+			.then(async (response: { data: NursingHome[] }) => {
+				setNursingHomes(response.data);
+			})
+			.catch((error: Error) => {
+				console.error(error.message);
+				throw error;
 			});
 	}, []);
 
@@ -294,9 +306,15 @@ const PageOpenFeedbackResults: FC = () => {
 		/>
 	);
 
+	const nursingHomeName = (id: string): string => {
+		const nursingHome = nursingHomes.find(item => item.id === id);
+
+		return nursingHome ? nursingHome.name : "";
+	};
+
 	return (
 		<div>
-			<div className="filters">
+			<div className="filters feedback-filters">
 				<div className="filters-text">{filterLabel}</div>
 				{filterElements}
 			</div>
@@ -319,6 +337,17 @@ const PageOpenFeedbackResults: FC = () => {
 									key={result.id}
 								>
 									<div className="feedback-result-answer">
+										<Link
+											className="feedback-result-link"
+											to={{
+												pathname: `/hoivakodit/${result.nursinghome_id}`,
+											}}
+										>
+											Hoivakoti:{" "}
+											{nursingHomeName(
+												result.nursinghome_id,
+											)}
+										</Link>
 										<textarea
 											className={
 												result.feedback_state ===

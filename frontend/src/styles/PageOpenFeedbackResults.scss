@@ -2,7 +2,7 @@
 
 $green: #c6db00;
 
-.filters {
+.feedback-filters {
 	margin-top: 5rem;
 }
 
@@ -66,6 +66,14 @@ $green: #c6db00;
 		}
 	}
 
+	&-link {
+		display: block;
+		font-size: 1rem;
+		font-weight: 600;
+		line-height: 1.5;
+		margin-bottom: 0.6rem;
+	}
+
 	&-actions {
 		display: flex;
 		justify-content: flex-end;
@@ -80,35 +88,6 @@ $green: #c6db00;
 			&.checked {
 				background-color: #044090;
 			}
-		}
-	}
-}
-
-.nav-save {
-	.cancel {
-		border-width: 1px;
-		cursor: pointer;
-		justify-content: center;
-		padding-bottom: calc(0.375em - 1px);
-		padding-left: 0.75em;
-		padding-right: 0.75em;
-		padding-top: calc(0.375em - 1px);
-		text-align: center;
-		white-space: nowrap;
-		text-transform: uppercase;
-		font-size: 14px;
-		font-weight: 600;
-		min-width: 7em;
-		height: 3em;
-		color: $headline-color;
-		border: 1px solid $light-gray;
-		border-radius: $border-radius;
-	}
-
-	.submit {
-		&:disabled {
-			cursor: default;
-			opacity: 0.5;
 		}
 	}
 }
