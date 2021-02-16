@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useT } from "../i18n";
 import axios from "axios";
 import config from "./config";
@@ -27,7 +27,11 @@ const requestImagesUpdate = async (
 	}
 };
 
-const PageUpdateImages: FC = () => {
+interface Props {
+	location: any;
+}
+
+const PageUpdateImages: FC<Props> = ({ location }) => {
 	const { id, key } = useParams<NursingHomeRouteParams>();
 	const history = useHistory();
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
@@ -57,6 +61,7 @@ const PageUpdateImages: FC = () => {
 	const updatePopupSaved = useT("saved");
 	const updatePopupSaving = useT("saving");
 	const loadingText = useT("loadingText");
+	const linkBackToBasicInfo = useT("linkBackToBasicInfo");
 
 	const imageState = [
 		{ name: "overview_outside", remove: false, value: "", text: "" },
@@ -103,7 +108,7 @@ const PageUpdateImages: FC = () => {
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
 
-		history.goBack();
+		history.push(location.state.from);
 	};
 
 	const handleSubmit = async (
@@ -130,6 +135,14 @@ const PageUpdateImages: FC = () => {
 				) : (
 					<form onSubmit={handleSubmit}>
 						<div className="page-update-section nursinghome-logo-upload">
+							<Link
+								to={{
+									pathname: location.state.from,
+								}}
+								className="nursinghome-back-link"
+							>
+								{linkBackToBasicInfo}
+							</Link>
 							<h1 className="page-update-minor-title">
 								{organizationLogo}
 							</h1>

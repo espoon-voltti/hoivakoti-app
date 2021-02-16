@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState, Fragment, useCallback } from "react";
 import { useT } from "../i18n";
 import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
@@ -128,6 +128,8 @@ const PageUpdate: FC = () => {
 	const { id, key } = useParams<NursingHomeRouteParams>();
 
 	if (!id || !key) throw new Error("Invalid URL!");
+
+	const location = useLocation();
 
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [vacancyStatus, setVacancyStatus] = useState<VacancyStatus | null>(
@@ -1316,7 +1318,12 @@ const PageUpdate: FC = () => {
 
 								<Link
 									className="btn update-images-button"
-									to={`/hoivakodit/${id}/paivita/${key}/kuvat`}
+									to={{
+										pathname: `/hoivakodit/${id}/paivita/${key}/kuvat`,
+										state: {
+											from: location.pathname,
+										},
+									}}
 								>
 									{labelAddImages}
 								</Link>
