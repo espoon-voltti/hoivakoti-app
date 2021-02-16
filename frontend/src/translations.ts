@@ -313,6 +313,10 @@ export const translations = {
 		"fi-FI": "Takaisin hoivakotilistaukseen",
 		"sv-FI": "tillbaka till listan över vårdhem",
 	},
+	linkBacktoListShort: {
+		"fi-FI": "Takaisin listaukseen",
+		"sv-FI": "Tillbaka till listan",
+	},
 	anchorDetailsBox: {
 		"fi-FI": ">> Hoivakodin yhteystiedot",
 		"sv-FI": ">> Kontaktuppgifter",
@@ -335,6 +339,10 @@ export const translations = {
 			"I bostaden finns en ställbar, elektrisk säng, madrass, klädskåp, låsbart förvaringsutrymme och taklampa. Klienten kan ta med sig egna möbler och saker till bostaden.",
 	},
 	rent: { "fi-FI": "Vuokran määrä", "sv-FI": "Hyra" },
+	checkRentWithNursingHome: {
+		"fi-FI": "Tarkista vuokran määrä hoivakodista. Vuokran määrä on noin",
+		"sv-FI": "Tarkista vuokran määrä hoivakodista. Vuokran määrä on noin",
+	},
 	LAHapartments: {
 		"fi-FI": "Lyhytaikaisen asumisen asuntoja",
 		"sv-FI": "Bostäder för kortvarigt boende",
@@ -638,6 +646,18 @@ export const translations = {
 		"fi-FI": "Vihti",
 		"sv-FI": "Vichtis",
 	},
+	inkoo: {
+		"fi-FI": "Inkoo",
+		"sv-FI": "Ingå",
+	},
+	kauniainen: {
+		"fi-FI": "Kauniainen",
+		"sv-FI": "Grankulla",
+	},
+	karviainen: {
+		"fi-FI": "Karviainen",
+		"sv-FI": "Karviainen",
+	},
 	imageCarouselNextTitle: {
 		"fi-FI": "Seuraava (oikea nuoli)",
 		"sv-FI": "Nästa (högerpil)",
@@ -789,13 +809,17 @@ export const translations = {
 		"fi-FI": "Lue lisää",
 		"sv-FI": "Läs mer",
 	},
-	clientReviews: {
-		"fi-FI": "Omaisten arvio",
-		"sv-FI": "Anhörigas bedömning",
-	},
-	clientReviewsBy: {
+	relativeReviewsBy: {
 		"fi-FI": "Omaisten antamat arviot",
 		"sv-FI": "Anhörigas bedömningar",
+	},
+	fromRelatives: {
+		"fi-FI": "Omaisilta",
+		"sv-FI": "Omaisilta",
+	},
+	customerReviewsBy: {
+		"fi-FI": "Asiakkaiden antamat arviot",
+		"sv-FI": "Asiakkaiden antamat arviot",
 	},
 	nursingHomeReviews: {
 		"fi-FI": "Arviot hoivakodista",
@@ -888,9 +912,13 @@ export const translations = {
 		"fi-FI": "Palaa palvelun etusivulle",
 		"sv-FI": "Gå tillbaka till tjänstens första sida",
 	},
-	feedbackRelationReview: {
+	feedbackRelativeReview: {
 		"fi-FI": "Omaisten arvio",
 		"sv-FI": "Anhörigas bedömning",
+	},
+	feedbackCustomerReview: {
+		"fi-FI": "Asiakkaiden arvio",
+		"sv-FI": "Asiakkaiden arvio",
 	},
 	feedbackNoReviews: {
 		"fi-FI": "Ei annettuja arvioita",
@@ -1135,5 +1163,79 @@ export const translations = {
 	helperUrl: {
 		"fi-FI": "Esim. https://www.example.com.",
 		"sv-FI": "Esim. https://www.example.com.",
+	},
+	manualSurveyEntryHelpText: {
+		"fi-FI":
+			"Syötä vastaukset numerona välillä 1-5. Käytä tarvittaessa desimaalierottimena pistettä.",
+		"sv-FI":
+			"Syötä vastaukset numerona välillä 1-5. Käytä tarvittaessa desimaalierottimena pistettä.",
+	},
+	manualSurveyEntryTitle: {
+		"fi-FI": "Syötä asiakaskyselyn vastaukset",
+		"sv-FI": "Syötä asiakaskyselyn vastaukset",
+	},
+	surveyAnswersTotal: {
+		"fi-FI": "Kyselyyn vastaajia yhteensä",
+		"sv-FI": "Kyselyyn vastaajia yhteensä",
+	},
+	numberOfShort: {
+		"fi-FI": "Kpl",
+		"sv-FI": "Stycken",
+	},
+	filterNursingHomeArea: {
+		"fi-FI": "Valitse hoivakodin alue",
+		"sv-FI": "Valitse hoivakodin alue",
+	},
+	customerCommune: {
+		"fi-FI": "Asiakkaan kotikunta",
+		"sv-FI": "Asiakkaan kotikunta",
+	},
+	labelCustomerCommune: {
+		"fi-FI":
+			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palvelun hankinnassa",
+		"sv-FI":
+			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palvelun hankinnassa",
+	},
+	helperCommune: {
+		"fi-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
+		"sv-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
+	},
+	filterCommune: {
+		"fi-FI": "Valitse kotikunta",
+		"sv-FI": "Valitse kotikunta",
+	},
+	filterLanguage: {
+		"fi-FI": "Valitse hoivakodin kieli",
+		"sv-FI": "Valitse hoivakodin kieli",
+	},
+	filterShowARA: {
+		"fi-FI": "Valitse, näytetäänkö vain Ara-kohteet",
+		"sv-FI": "Valitse, näytetäänkö vain Ara-kohteet",
+	},
+	filterShowLah: {
+		"fi-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
+		"sv-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
+	},
+	selectCommuneLabel: {
+		"fi-FI":
+			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
+		"sv-FI":
+			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
+	},
+	charactersLeft: {
+		"fi-FI": "merkkiä jäljellä",
+		"sv-FI": "merkkiä jäljellä",
+	},
+	openFeedbackPlaceholder: {
+		"fi-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
+		"sv-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
+	},
+	next: {
+		"fi-FI": "Seuraava",
+		"sv-FI": "Seuraava",
+	},
+	previous: {
+		"fi-FI": "Edellinen",
+		"sv-FI": "Edellinen",
 	},
 };

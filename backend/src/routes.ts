@@ -12,6 +12,7 @@ import {
 	DropAndRecreateTables,
 	DropAndRecreateSurveyAnswerTables,
 	DropAndRecreateSurveyTables,
+	DropAndRecreateSurveyTotalScoreTable,
 	DropAndRecreateReportsTables,
 	UploadPics,
 	GetAllPicsAndDescriptions,
@@ -27,14 +28,18 @@ import {
 	AdminRevealSecrets,
 	AddNursingHomeSurveyQuestion,
 	UpdateNursingHomeSurveyQuestion,
+	SubmitSurveyData,
 	SubmitSurveyResponse,
 	GetSurveyWithNursingHomeResults,
+	GetSurveyTextResults,
 	AddNursingHomeSurveyKeys,
 	GetSurvey,
 	AdminLogin,
 	CheckLogin,
 	CheckSurveyKey,
 	UpdateNursingHomeVacancyStatus,
+	GetNursingHomeCustomerCommunes,
+	UpdateNursingHomeCustomerCommunes,
 } from "./controllers";
 import config from "./config";
 
@@ -75,6 +80,10 @@ router.post("/api/nursing-homes/drop-table", async ctx => {
 
 router.post("/api/nursing-homes/drop-survey-answers", async ctx => {
 	ctx.body = await DropAndRecreateSurveyAnswerTables(ctx);
+});
+
+router.post("/api/nursing-homes/recalculate-survey-total-scores", async ctx => {
+	ctx.body = await DropAndRecreateSurveyTotalScoreTable(ctx);
 });
 
 router.post("/api/nursing-homes/drop-surveys", async ctx => {
@@ -140,7 +149,7 @@ router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 });
 
 router.get("/api/nursing-homes/:id/raportti/:key/:file", async ctx => {
-  ctx.body = await GetPdf(ctx);
+	ctx.body = await GetPdf(ctx);
 });
 
 router.post("/api/nursing-homes/:id/update-image/:key", async ctx => {
@@ -161,6 +170,18 @@ router.post("/api/nursing-homes/:id/report-status", async ctx => {
 	} else {
 		ctx.body = { success };
 	}
+});
+
+router.get("/api/nursing-homes/:id/communes", async ctx => {
+	const res = await GetNursingHomeCustomerCommunes(ctx);
+
+	ctx.body = res;
+});
+
+router.post("/api/nursing-homes/:id/communes", async ctx => {
+	const res = await UpdateNursingHomeCustomerCommunes(ctx);
+
+	ctx.body = { success: res };
 });
 
 router.get("/api/health", async ctx => {
@@ -209,6 +230,11 @@ router.post("/api/survey/check-key", async ctx => {
 	ctx.body = res;
 });
 
+router.post("/api/survey/:id/manual-entry", async ctx => {
+	const res = await SubmitSurveyData(ctx);
+	ctx.body = res;
+});
+
 router.get("/api/survey/:key", async ctx => {
 	const survey = await GetSurvey(ctx.params.key);
 	ctx.body = survey;
@@ -231,6 +257,11 @@ router.get("/api/survey/:id/results/:survey", async ctx => {
 		ctx.params.survey,
 		ctx.params.id,
 	);
+	ctx.body = res;
+});
+
+router.get("/api/survey/:id/text-results/:survey", async ctx => {
+	const res = await GetSurveyTextResults(ctx.params.id);
 	ctx.body = res;
 });
 

@@ -5,7 +5,7 @@ import Radio from "./Radio";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
-import { GetNursingHomeResponse } from "./PageNursingHome";
+import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
 
@@ -46,7 +46,7 @@ const requestReportStatusUpdate = async (
 const PageUploadReport: FC = () => {
 	const sessionCookies = new Cookies();
 
-	const { id } = useParams();
+	const { id } = useParams() as any;
 	const key = sessionCookies.get("hoivakoti_session");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [popupState, setPopupState] = useState<

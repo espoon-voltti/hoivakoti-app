@@ -1,3 +1,15 @@
+export enum Commune {
+	EPO = "EPO",
+	HNK = "HNK",
+	KRN = "KRN",
+	LHJ = "LHJ",
+	RPO = "RPO",
+	STO = "STO",
+	INK = "INK",
+	KAU = "KAU",
+	PKA = "PKA",
+}
+
 // This interface declaration is duplicated in frontend and backend. Please
 // modify both at the same time to keep them in sync
 export interface NursingHome {
@@ -14,6 +26,7 @@ export interface NursingHome {
 	summary?: string;
 	postal_code: string;
 	city: string;
+	customer_commune?: Commune[];
 	arrival_guide_public_transit?: string;
 	arrival_guide_car?: string;
 	construction_year?: number;

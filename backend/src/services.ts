@@ -49,8 +49,8 @@ async function NursingHomesFromCSV(csv: string): Promise<string> {
 			else if (info.type === "boolean")
 				nursing_home[info.sql] = record[info.csv]
 					? record[info.csv] === "True" ||
-						record[info.csv].includes("kyllä") ||
-						record[info.csv].includes("Kyllä")
+					  record[info.csv].includes("kyllä") ||
+					  record[info.csv].includes("Kyllä")
 						? true
 						: false
 					: false;
@@ -79,7 +79,9 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 				await GetNursingHomeIDFromName(record["Hoivakodin nimi"])
 			)[0].id;
 
-			const existing_pics = await GetPicturesAndDescriptions(nursing_home_id);
+			const existing_pics = await GetPicturesAndDescriptions(
+				nursing_home_id,
+			);
 			for (const field_info of nursing_home_pictures_columns_info) {
 				if (field_info.sql.includes("_caption"))
 					nursinghome_pics[field_info.sql] = record[field_info.csv];
@@ -94,8 +96,7 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 					if (!fs.existsSync(name)) {
 						await DownloadAndSaveFile(pic_id);
 						new_images++;
-					}
-					else {
+					} else {
 						old_images++;
 					}
 
@@ -103,11 +104,13 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 					let hash: any;
 					// If drive ID is same as for the pic that previously saved,
 					// use the old pic data from DB.
-					if (existing_pics[(field_info.sql + "_drive_id") as any] === pic_id) {
+					if (
+						existing_pics[(field_info.sql + "_drive_id") as any] ===
+						pic_id
+					) {
 						file = existing_pics[field_info.sql];
 						hash = existing_pics[(field_info.sql + "_hash") as any];
-					}
-					else {
+					} else {
 						file = await fs.promises.readFile(name);
 						//nursinghome_pics[field_info.sql] = '\\x' + file;
 						hash = checksum(file);
@@ -124,12 +127,29 @@ export async function FetchAndSaveImagesFromCSV(csv: string): Promise<string> {
 				nursinghome_pics,
 			);
 		}
-	}
-	catch {
-		return "Error. Tried to process " + records.length + " nursing homes and got " + new_images + " from Google Drive " + " and " + old_images + " from local file cache.";
+	} catch {
+		return (
+			"Error. Tried to process " +
+			records.length +
+			" nursing homes and got " +
+			new_images +
+			" from Google Drive " +
+			" and " +
+			old_images +
+			" from local file cache."
+		);
 	}
 
-	return "Processed " + records.length + " nursing homes and got " + new_images + " from Google Drive " + " and " + old_images + " from local file cache.";
+	return (
+		"Processed " +
+		records.length +
+		" nursing homes and got " +
+		new_images +
+		" from Google Drive " +
+		" and " +
+		old_images +
+		" from local file cache."
+	);
 }
 
 async function DownloadAndSaveFile(id: string): Promise<any> {
@@ -220,7 +240,7 @@ export function hashWithSalt(data: string, salt: string): string {
 }
 
 export function validNumericSurveyScore(data: number): boolean {
-	return (!isNaN(data) && data >= 1 && data <= 5);
+	return !isNaN(data) && data >= 1 && data <= 5;
 }
 
 export { NursingHomesFromCSV };

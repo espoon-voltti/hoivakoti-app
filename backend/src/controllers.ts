@@ -39,8 +39,12 @@ import {
 	DeleteNursingHomePics,
 	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
 	UpdateNursingHomeSurveyQuestion as UpdateNursingHomeSurveyQuestionDB,
+	SubmitSurveyData as SubmitSurveyDataDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
 	GetSurvey as GetSurveyDB,
+	GetCustomerCommunesForNursingHome,
+	UpdateCustomerCommunesForNursingHome,
+	GetSurveyTextResults as GetSurveyTextResultsDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -95,12 +99,16 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 		});
 
 		nursinghome.rating = {};
-		nursinghome.rating.average = null;
-		nursinghome.rating.answers = 0;
+		nursinghome.rating.average_relatives = null;
+		nursinghome.rating.average_customers = null;
+		nursinghome.rating.answers_relatives = 0;
+		nursinghome.rating.answers_customers = 0;
 		ratings.map((rating: any) => {
 			if (rating.nursinghome_id === nursinghome.id) {
-				nursinghome.rating.average = rating.average;
-				nursinghome.rating.answers = rating.answers;
+				nursinghome.rating.average_relatives = rating.average_relatives;
+				nursinghome.rating.answers_relatives = rating.answers_relatives;
+				nursinghome.rating.average_customers = rating.average_customers;
+				nursinghome.rating.answers_customers = rating.answers_customers;
 			}
 		});
 
@@ -130,7 +138,8 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	nursing_home_data["pic_digests"] = pic_digests;
 	nursing_home_data["pics"] = available_pics;
 	nursing_home_data["pic_captions"] = pic_captions;
-	nursing_home_data["report_status"] = nursing_home_status.length > 0 ? nursing_home_status : null;
+	nursing_home_data["report_status"] =
+		nursing_home_status.length > 0 ? nursing_home_status : null;
 	nursing_home_data["rating"] = rating;
 	return nursing_home_data;
 }
@@ -223,9 +232,21 @@ export async function DropAndRecreateSurveyAnswerTables(
 	return result1;
 }
 
-export async function DropAndRecreateSurveyTables(
+export async function DropAndRecreateSurveyTotalScoreTable(
 	ctx: any,
 ): Promise<void | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+	const result = await DropAndRecreateNursingHomeSurveyTotalScoresTable();
+	return result;
+}
+
+export async function DropAndRecreateSurveyTables(ctx: any): Promise<void | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
@@ -502,6 +523,20 @@ export async function AddNursingHomeSurveyKeys(
 	return res;
 }
 
+export async function SubmitSurveyData(
+	ctx: Context
+):Promise<string | null>{
+	const loggedIn = await GetHasLogin(ctx.get('authentication') as string);
+
+	if (loggedIn) {
+		const { id } = ctx.params;
+		const surveyData = ctx.request.body.survey;
+
+		return await SubmitSurveyDataDB(id, surveyData);
+	}
+	return null;
+}
+
 export async function SubmitSurveyResponse(
 	ctx: Context,
 ): Promise<string | null> {
@@ -537,5 +572,28 @@ export async function GetSurveyWithNursingHomeResults(
 		});
 	});
 
-	return survey;
+	return survey.filter(question => question.question_type == "rating");
+}
+
+export async function GetSurveyTextResults(
+	nursingHomeId: string,
+): Promise<any> {
+	return await GetSurveyTextResultsDB(nursingHomeId);
+}
+
+export async function GetNursingHomeCustomerCommunes(ctx: Context): Promise<any> {
+	const { id } = ctx.params;
+
+	const result = await GetCustomerCommunesForNursingHome(id);
+
+	return result[0] ? result[0]["customer_commune"] : [];
+}
+
+export async function UpdateNursingHomeCustomerCommunes(ctx: Context): Promise<any> {
+	const { id } = ctx.params;
+	const communes = ctx.request.body["customer_commune"];
+
+	const result = await UpdateCustomerCommunesForNursingHome(id, communes);
+
+	return result;
 }
