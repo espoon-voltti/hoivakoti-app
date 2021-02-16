@@ -61,7 +61,7 @@ const PageOpenFeedbackResults: FC = () => {
 
 	useEffect(() => {
 		axios
-			.get(`${config.API_URL}/survey/text-results/all`)
+			.get(`${config.API_URL}/survey/text-results/omaiskysely`)
 			.then((res: FeedbackResponse) => {
 				const openCases = res.data.filter(
 					(result: OpenFeedback) =>
