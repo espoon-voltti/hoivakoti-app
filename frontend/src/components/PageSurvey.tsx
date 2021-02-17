@@ -230,7 +230,7 @@ const PageSurvey: FC = () => {
 				<h4>{reviewHelpPart3}</h4>
 				<form onSubmit={handleLogin}>
 					<div>
-						<span>{code}</span>
+						<span className="login-input-label">{code}</span>
 						<input
 							type="text"
 							value={password}
