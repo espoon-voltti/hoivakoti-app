@@ -1230,6 +1230,10 @@ export const translations = {
 		"fi-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
 		"sv-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
 	},
+	noRelativesOpenTextAnswers: {
+		"fi-FI": "Ei vielä omaisten antamaa vapaata palautetta.",
+		"sv-FI": "Ei vielä omaisten antamaa vapaata palautetta.",
+	},
 	next: {
 		"fi-FI": "Seuraava",
 		"sv-FI": "Seuraava",

@@ -7,6 +7,7 @@ import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
+import { JsxEmit } from "typescript";
 
 const PageSurveyResults: FC = () => {
 	const { id } = useParams() as any;
@@ -76,6 +77,7 @@ const PageSurveyResults: FC = () => {
 	const reviewFooterPart4 = useT("reviewFooterPart4");
 	const reviewFooterLink = useT("reviewFooterLink");
 	const urlReviewFooterLink = useT("urlReviewFooterLink");
+	const noRelativesOpenTextAnswers = useT("noRelativesOpenTextAnswers");
 
 	const optionText1 = useT("surveyOption1");
 	const optionText2 = useT("surveyOption2");
@@ -162,13 +164,19 @@ const PageSurveyResults: FC = () => {
 			</div>
 		));
 
-	const answers = (answers: any): JSX.Element[] | null =>
-		answers &&
-		answers.map((answer: any, index: number) => (
-			<p className="answer" key={index}>
-				&quot;{answer.answer_text}&quot;
-			</p>
-		));
+	const answers = (answers: any): JSX.Element[] | JSX.Element | null => {
+		let answerList = <p>{noRelativesOpenTextAnswers}</p>;
+
+		if (answers && answers.length > 0) {
+			answerList = answers.map((answer: any, index: number) => (
+				<p className="answer" key={index}>
+					&quot;{answer.answer_text}&quot;
+				</p>
+			));
+		}
+
+		return answerList;
+	};
 
 	return (
 		<div className="page-survey-results">
