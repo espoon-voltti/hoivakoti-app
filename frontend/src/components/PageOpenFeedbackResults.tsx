@@ -7,14 +7,9 @@ import axios from "axios";
 import config from "./config";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
+import { FeedbackState } from "./feedback-state";
 
 import "../styles/PageOpenFeedbackResults.scss";
-
-enum FeedbackState {
-	OPEN = "open",
-	APPROVED = "approved",
-	REJECTED = "rejected",
-}
 
 interface SearchFilters {
 	readonly tila?: string[];
