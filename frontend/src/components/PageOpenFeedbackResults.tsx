@@ -332,9 +332,9 @@ const PageOpenFeedbackResults: FC = () => {
 	};
 
 	return (
-		<div>
+		<Fragment>
 			{loggedIn ? (
-				<Fragment>
+				<div>
 					<div className="filters feedback-filters">
 						<div className="filters-text">{filterLabel}</div>
 						{filterElements}
@@ -429,11 +429,11 @@ const PageOpenFeedbackResults: FC = () => {
 							</Fragment>
 						) : null}
 					</div>
-				</Fragment>
+				</div>
 			) : (
 				<h1>{loadingText}</h1>
 			)}
-		</div>
+		</Fragment>
 	);
 };
 
