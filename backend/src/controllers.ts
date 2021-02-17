@@ -47,7 +47,7 @@ import {
 	GetSurveyTextResults as GetSurveyTextResultsDB,
 	GetAllSurveyTextResults as GetAllSurveyTextResultsDB,
 	UpdateSurveyTextState as UpdateSurveyTextStateDB,
-	DeleteExpiredSurveyTextResults as DeleteExpiredSurveyTextResultsDB,
+	DeleteRejectedSurveyTextResults as DeleteRejectedSurveyTextResultsDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -626,8 +626,8 @@ export async function UpdateSurveyTextState(ctx: Context): Promise<any> {
 	return result;
 }
 
-export async function DeleteExpiredSurveyTextResults(): Promise<boolean> {
-	const result = await DeleteExpiredSurveyTextResultsDB();
+export async function DeleteRejectedSurveyTextResults(): Promise<boolean> {
+	const result = await DeleteRejectedSurveyTextResultsDB();
 
 	return result;
 }

@@ -41,7 +41,7 @@ import {
 	UpdateNursingHomeCustomerCommunes,
 	GetAllSurveyTextResults,
 	UpdateSurveyTextState,
-	DeleteExpiredSurveyTextResults,
+	DeleteRejectedSurveyTextResults,
 } from "./controllers";
 import config from "./config";
 
@@ -274,7 +274,7 @@ router.post("/api/survey/text-results/:answerId", async ctx => {
 });
 
 router.delete("/api/survey/text-results/:survey", async ctx => {
-	const res = await DeleteExpiredSurveyTextResults();
+	const res = await DeleteRejectedSurveyTextResults();
 
 	ctx.body = { success: res };
 });
