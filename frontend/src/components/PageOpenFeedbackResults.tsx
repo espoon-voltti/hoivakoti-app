@@ -378,11 +378,11 @@ const PageOpenFeedbackResults: FC = () => {
 													className={
 														result.feedback_state ===
 														FeedbackState.APPROVED
-															? "approved"
+															? "input approved"
 															: result.feedback_state ===
 															  FeedbackState.REJECTED
-															? "rejected"
-															: ""
+															? "input rejected"
+															: "input"
 													}
 													rows={7}
 													value={result.answer_text}
