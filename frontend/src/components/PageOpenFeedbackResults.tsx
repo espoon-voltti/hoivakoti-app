@@ -83,7 +83,7 @@ const PageOpenFeedbackResults: FC = () => {
 	useEffect(() => {
 		if (loggedIn) {
 			axios
-				.get(`${config.API_URL}/survey/text-results/omaiskysely`)
+				.get(`${config.API_URL}/survey/text-results`)
 				.then((res: FeedbackResponse) => {
 					const data = res.data;
 
@@ -129,7 +129,7 @@ const PageOpenFeedbackResults: FC = () => {
 	const labelFeedbackState = useT("labelFeedbackState");
 	const ariaFeedbackState = useT("ariaFeedbackState");
 	const filterLabel = useT("filterLabel");
-	const headingOpenFeedback = useT("headingOpenFeedback");
+	const headingFeedback = useT("headingFeedback");
 	const approveAllOpenFeedback = useT("approveAllOpenFeedback");
 	const approve = useT("approve");
 	const reject = useT("reject");
@@ -317,7 +317,7 @@ const PageOpenFeedbackResults: FC = () => {
 				newSearchFilters["tila"] = newStateFilters;
 
 				const stringfield = queryString.stringify(newSearchFilters);
-				history.push("/valvonta/avoin-palaute?" + stringfield);
+				history.push("/valvonta/palaute?" + stringfield);
 			}}
 			onReset={(): void => {
 				const newSearchFilters = {
@@ -325,7 +325,7 @@ const PageOpenFeedbackResults: FC = () => {
 					tila: undefined,
 				};
 				const stringfield = queryString.stringify(newSearchFilters);
-				history.push("/valvonta/avoin-palaute?" + stringfield);
+				history.push("/valvonta/palaute?" + stringfield);
 			}}
 		/>
 	);
@@ -344,91 +344,96 @@ const PageOpenFeedbackResults: FC = () => {
 						<div className="filters-text">{filterLabel}</div>
 						{filterElements}
 					</div>
-					{results ? (
-						<div className="page-open-feedback-results">
-							<h1 className="feedback-results-heading">
-								{headingOpenFeedback}
-							</h1>
-							<button
-								className="btn check-all-results"
-								onClick={markAllOpenAsApproved}
-							>
-								{approveAllOpenFeedback}
-							</button>
-							<ul className="feedback-results-list">
-								{filteredResults.map(result => {
-									return (
-										<li
-											className="feedback-results-list-item"
-											key={result.id}
-										>
-											<div className="feedback-result-answer">
-												<Link
-													className="feedback-result-link"
-													to={{
-														pathname: `/hoivakodit/${result.nursinghome_id}`,
-													}}
-												>
-													{labelNursingHome}:{" "}
-													{nursingHomeName(
-														result.nursinghome_id,
-													)}
-												</Link>
-												<textarea
-													className={
-														result.feedback_state ===
-														FeedbackState.APPROVED
-															? "input approved"
-															: result.feedback_state ===
-															  FeedbackState.REJECTED
-															? "input rejected"
-															: "input"
-													}
-													rows={7}
-													value={result.answer_text}
-													readOnly={true}
-												></textarea>
-											</div>
-											<div className="feedback-result-actions">
-												<button
-													type="button"
-													className={
-														result.feedback_state ===
-														FeedbackState.APPROVED
-															? "btn checked"
-															: "btn"
-													}
-													onClick={() => {
-														markAsApproved(
-															result.id,
-														);
-													}}
-												>
-													{approve}
-												</button>
-												<button
-													type="button"
-													className={
-														result.feedback_state ===
-														FeedbackState.REJECTED
-															? "btn checked"
-															: "btn"
-													}
-													onClick={() => {
-														markAsRejected(
-															result.id,
-														);
-													}}
-												>
-													{reject}
-												</button>
-											</div>
-										</li>
-									);
-								})}
-							</ul>
-						</div>
-					) : null}
+
+					<div className="page-open-feedback-results">
+						<h1 className="feedback-results-heading">
+							{headingFeedback}
+						</h1>
+						{results.length ? (
+							<Fragment>
+								<button
+									className="btn check-all-results"
+									onClick={markAllOpenAsApproved}
+								>
+									{approveAllOpenFeedback}
+								</button>
+								<ul className="feedback-results-list">
+									{filteredResults.map(result => {
+										return (
+											<li
+												className="feedback-results-list-item"
+												key={result.id}
+											>
+												<div className="feedback-result-answer">
+													<Link
+														className="feedback-result-link"
+														to={{
+															pathname: `/hoivakodit/${result.nursinghome_id}`,
+														}}
+													>
+														{labelNursingHome}:{" "}
+														{nursingHomeName(
+															result.nursinghome_id,
+														)}
+													</Link>
+													<textarea
+														className={
+															result.feedback_state ===
+															FeedbackState.APPROVED
+																? "input approved"
+																: result.feedback_state ===
+																  FeedbackState.REJECTED
+																? "input rejected"
+																: "input"
+														}
+														rows={7}
+														value={
+															result.answer_text
+														}
+														readOnly={true}
+													></textarea>
+												</div>
+												<div className="feedback-result-actions">
+													<button
+														type="button"
+														className={
+															result.feedback_state ===
+															FeedbackState.APPROVED
+																? "btn checked"
+																: "btn"
+														}
+														onClick={() => {
+															markAsApproved(
+																result.id,
+															);
+														}}
+													>
+														{approve}
+													</button>
+													<button
+														type="button"
+														className={
+															result.feedback_state ===
+															FeedbackState.REJECTED
+																? "btn checked"
+																: "btn"
+														}
+														onClick={() => {
+															markAsRejected(
+																result.id,
+															);
+														}}
+													>
+														{reject}
+													</button>
+												</div>
+											</li>
+										);
+									})}
+								</ul>
+							</Fragment>
+						) : null}
+					</div>
 				</Fragment>
 			) : (
 				<h1>{loadingText}</h1>

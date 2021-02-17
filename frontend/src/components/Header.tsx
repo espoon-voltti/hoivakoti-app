@@ -20,6 +20,7 @@ const Header: FC = () => {
 
 	const navHome = useT("navHome");
 	const navNursingHomes = useT("navNursingHomes");
+	const headingFeedback = useT("headingFeedback");
 
 	const updatePage =
 		location.pathname.indexOf("paivita") == -1 &&
@@ -82,10 +83,10 @@ const Header: FC = () => {
 					<li role="menuitem">
 						<NavLink
 							activeClassName="selected"
-							to="/valvonta/avoin-palaute"
+							to="/valvonta/palaute"
 							onClick={() => setIsMobileMenuOpen(false)}
 						>
-							Palaute
+							{headingFeedback}
 						</NavLink>
 					</li>
 				</ul>

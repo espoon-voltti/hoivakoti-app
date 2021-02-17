@@ -588,7 +588,7 @@ export async function UpdateSurveyTextState(
 	return true;
 }
 
-export async function DeleteRejectedSurveyTextResults(): Promise<any> {
+export async function DeleteRejectedSurveyTextResults(): Promise<boolean> {
 	const results = await GetAllSurveyTextResults();
 
 	const expiredResults: string[] = results

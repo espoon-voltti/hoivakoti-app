@@ -1262,9 +1262,9 @@ export const translations = {
 		"fi-FI": "Valitse palautteen tila",
 		"sv-FI": "Valitse palautteen tila",
 	},
-	headingOpenFeedback: {
-		"fi-FI": "Avoimet palautteet",
-		"sv-FI": "Avoimet palautteet",
+	headingFeedback: {
+		"fi-FI": "Palaute",
+		"sv-FI": "Palaute",
 	},
 	approveAllOpenFeedback: {
 		"fi-FI": "Hyväksy kaikki avoimet",

@@ -105,7 +105,7 @@ const App: React.FC = () => {
 							/>
 							<Route
 								exact
-								path="/valvonta/avoin-palaute"
+								path="/valvonta/palaute"
 								component={PageOpenFeedbackResults}
 							/>
 							<Route

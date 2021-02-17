@@ -226,6 +226,24 @@ router.post("/api/survey/check-key", async ctx => {
 	ctx.body = res;
 });
 
+router.delete("/api/survey/text-results", async ctx => {
+	const res = await DeleteRejectedSurveyTextResults();
+
+	ctx.body = { success: res };
+});
+
+router.post("/api/survey/text-results/:answerId", async ctx => {
+	const res = await UpdateSurveyTextState(ctx);
+
+	ctx.body = { success: res };
+});
+
+router.get("/api/survey/text-results", async ctx => {
+	const res = await GetAllSurveyTextResults();
+
+	ctx.body = res;
+});
+
 router.post("/api/survey/:id/manual-entry", async ctx => {
 	const res = await SubmitSurveyData(ctx);
 	ctx.body = res;
@@ -259,24 +277,6 @@ router.get("/api/survey/:id/results/:survey", async ctx => {
 router.get("/api/survey/:id/text-results/:survey", async ctx => {
 	const res = await GetSurveyTextResults(ctx.params.id);
 	ctx.body = res;
-});
-
-router.get("/api/survey/text-results/:survey", async ctx => {
-	const res = await GetAllSurveyTextResults();
-
-	ctx.body = res;
-});
-
-router.post("/api/survey/text-results/:answerId", async ctx => {
-	const res = await UpdateSurveyTextState(ctx);
-
-	ctx.body = { success: res };
-});
-
-router.delete("/api/survey/text-results/:survey", async ctx => {
-	const res = await DeleteRejectedSurveyTextResults();
-
-	ctx.body = { success: res };
 });
 
 const routes = router.routes();
