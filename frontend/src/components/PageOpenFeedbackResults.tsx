@@ -31,14 +31,19 @@ interface FeedbackResponse {
 }
 
 const requestFeedbackStateUpdate = async (
+	key: string,
 	answerId: string,
 	newState: FeedbackState,
 ): Promise<void> => {
 	try {
-		await axios.post(`${config.API_URL}/survey/text-results/${answerId}`, {
-			// eslint-disable-next-line @typescript-eslint/camelcase
-			feedback_state: newState,
-		});
+		await axios.post(
+			`${config.API_URL}/survey/text-results/${answerId}`,
+			{
+				// eslint-disable-next-line @typescript-eslint/camelcase
+				feedback_state: newState,
+			},
+			{ headers: { Authentication: key } },
+		);
 	} catch (error) {
 		console.error(error);
 
@@ -54,6 +59,8 @@ const PageOpenFeedbackResults: FC = () => {
 	const [sessionCookies] = useState<Cookies>(new Cookies());
 	const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
+	const key = sessionCookies.get("hoivakoti_session");
+
 	const history = useHistory();
 	const { search } = useLocation();
 
@@ -61,9 +68,7 @@ const PageOpenFeedbackResults: FC = () => {
 		axios
 			.get(config.API_URL + "/admin/login", {
 				headers: {
-					Authentication: `${sessionCookies.get(
-						"hoivakoti_session",
-					)}`,
+					Authentication: key,
 				},
 			})
 			.then(() => setLoggedIn(true))
@@ -73,12 +78,16 @@ const PageOpenFeedbackResults: FC = () => {
 
 				history.push({ pathname: "/valvonta" });
 			});
-	}, [history, sessionCookies]);
+	}, [history, key]);
 
 	useEffect(() => {
 		if (loggedIn) {
 			axios
-				.get(`${config.API_URL}/survey/text-results`)
+				.get(`${config.API_URL}/survey/text-results`, {
+					headers: {
+						Authentication: key,
+					},
+				})
 				.then((res: FeedbackResponse) => {
 					const data = res.data;
 
@@ -116,7 +125,7 @@ const PageOpenFeedbackResults: FC = () => {
 					throw error;
 				});
 		}
-	}, [loggedIn]);
+	}, [key, loggedIn]);
 
 	const filterOpen = useT("filterOpen");
 	const filterApproved = useT("filterApproved");
@@ -212,7 +221,11 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
-				await requestFeedbackStateUpdate(id, FeedbackState.APPROVED);
+				await requestFeedbackStateUpdate(
+					key,
+					id,
+					FeedbackState.APPROVED,
+				);
 				setResults(newResults);
 			}
 		} catch (error) {
@@ -236,7 +249,11 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
-				await requestFeedbackStateUpdate(id, FeedbackState.REJECTED);
+				await requestFeedbackStateUpdate(
+					key,
+					id,
+					FeedbackState.REJECTED,
+				);
 				setResults(newResults);
 			}
 		} catch (error) {
@@ -262,6 +279,7 @@ const PageOpenFeedbackResults: FC = () => {
 
 			for (const result of newResults) {
 				await requestFeedbackStateUpdate(
+					key,
 					result.id,
 					result.feedback_state,
 				);
