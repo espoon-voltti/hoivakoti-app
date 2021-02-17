@@ -17,7 +17,6 @@ enum FeedbackState {
 }
 
 interface SearchFilters {
-	readonly name?: string;
 	readonly tila?: string[];
 }
 
@@ -72,9 +71,7 @@ const PageOpenFeedbackResults: FC = () => {
 					)}`,
 				},
 			})
-			.then(function() {
-				setLoggedIn(true);
-			})
+			.then(() => setLoggedIn(true))
 			.catch((error: Error) => {
 				console.error(error.message);
 				setLoggedIn(false);
@@ -88,17 +85,19 @@ const PageOpenFeedbackResults: FC = () => {
 			axios
 				.get(`${config.API_URL}/survey/text-results/omaiskysely`)
 				.then((res: FeedbackResponse) => {
-					const openCases = res.data.filter(
+					const data = res.data;
+
+					const openCases = data.filter(
 						(result: OpenFeedback) =>
 							result.feedback_state === FeedbackState.OPEN,
 					);
 
-					const approvedCases = res.data.filter(
+					const approvedCases = data.filter(
 						(result: OpenFeedback) =>
 							result.feedback_state === FeedbackState.APPROVED,
 					);
 
-					const rejectedCases = res.data.filter(
+					const rejectedCases = data.filter(
 						(result: OpenFeedback) =>
 							result.feedback_state === FeedbackState.REJECTED,
 					);
@@ -136,6 +135,7 @@ const PageOpenFeedbackResults: FC = () => {
 	const reject = useT("reject");
 	const filterSelections = useT("filterSelections");
 	const loadingText = useT("loadingText");
+	const labelNursingHome = useT("nursingHome");
 
 	const mapFeedbackStateString: KeyToString = {
 		[FeedbackState.OPEN]: filterOpen,
@@ -152,7 +152,6 @@ const PageOpenFeedbackResults: FC = () => {
 
 	const searchFilters: SearchFilters = {
 		tila: parsedFeedbackState as string[],
-		name: parsed.name as string,
 	};
 
 	const optionState: FilterOption[] = [
@@ -205,8 +204,6 @@ const PageOpenFeedbackResults: FC = () => {
 
 	const markAsApproved = async (id: string): Promise<void> => {
 		try {
-			await requestFeedbackStateUpdate(id, FeedbackState.APPROVED);
-
 			const feedbackItem = results.find(result => result.id === id);
 
 			if (feedbackItem) {
@@ -220,6 +217,7 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
+				await requestFeedbackStateUpdate(id, FeedbackState.APPROVED);
 				setResults(newResults);
 			}
 		} catch (error) {
@@ -230,8 +228,6 @@ const PageOpenFeedbackResults: FC = () => {
 	};
 	const markAsRejected = async (id: string): Promise<void> => {
 		try {
-			await requestFeedbackStateUpdate(id, FeedbackState.REJECTED);
-
 			const feedbackItem = results.find(result => result.id === id);
 
 			if (feedbackItem) {
@@ -245,6 +241,7 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
+				await requestFeedbackStateUpdate(id, FeedbackState.REJECTED);
 				setResults(newResults);
 			}
 		} catch (error) {
@@ -256,7 +253,7 @@ const PageOpenFeedbackResults: FC = () => {
 
 	const markAllOpenAsApproved = async (): Promise<void> => {
 		try {
-			const newResults = [...results].map(result => {
+			const newResults: OpenFeedback[] = [...results].map(result => {
 				if (result["feedback_state"] === FeedbackState.OPEN) {
 					return {
 						...result,
@@ -372,7 +369,7 @@ const PageOpenFeedbackResults: FC = () => {
 														pathname: `/hoivakodit/${result.nursinghome_id}`,
 													}}
 												>
-													Hoivakoti:{" "}
+													{labelNursingHome}:{" "}
 													{nursingHomeName(
 														result.nursinghome_id,
 													)}
