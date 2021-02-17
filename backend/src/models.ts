@@ -218,6 +218,7 @@ async function CreateNursingHomeSurveyTextAnswersTable(): Promise<void> {
 			table.string("id", 16);
 			table.string("answer_text", 1000);
 			table.enu("feedback_state", [...Object.values(FeedbackState)]);
+			table.string("expiry_date");
 		},
 	);
 }
@@ -568,6 +569,7 @@ export async function GetAllSurveyTextResults(): Promise<any> {
 			"NursingHomeSurveyTextAnswers.id",
 			"NursingHomeSurveyTextAnswers.answer_text",
 			"NursingHomeSurveyTextAnswers.feedback_state",
+			"NursingHomeSurveyTextAnswers.expiry_date",
 		);
 
 	return results;
@@ -577,11 +579,43 @@ export async function UpdateSurveyTextState(
 	answerId: string,
 	newState: FeedbackState,
 ): Promise<boolean> {
+	let expiryDate;
+
+	if (newState === FeedbackState.REJECTED) {
+		const oneYearFromNow = new Date();
+		oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+
+		expiryDate = oneYearFromNow.getTime();
+	}
+
 	let count = await knex("NursingHomeSurveyTextAnswers")
 		.where({ id: answerId })
 		.update({
 			feedback_state: newState,
+			expiry_date: expiryDate ? expiryDate.toString() : null,
 		});
+
+	if (count !== 1) return false;
+
+	return true;
+}
+
+export async function DeleteExpiredSurveyTextResults(): Promise<any> {
+	const results = await GetAllSurveyTextResults();
+
+	const expiredResults: string[] = results
+		.filter((result: any) => {
+			const expiryDate = new Date(parseInt(result["expiry_date"]));
+			const now = new Date();
+
+			return now > expiryDate;
+		})
+		.map((expResult: any) => expResult.id);
+
+	const count = await knex
+		.table("NursingHomeSurveyTextAnswers")
+		.whereIn("id", expiredResults)
+		.del();
 
 	if (count !== 1) return false;
 
