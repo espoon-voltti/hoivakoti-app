@@ -2,13 +2,13 @@ import React, { FC, Fragment, useEffect, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
-
-import "../styles/PageOpenFeedbackResults.scss";
 import { useT } from "../i18n";
 import axios from "axios";
 import config from "./config";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
+
+import "../styles/PageOpenFeedbackResults.scss";
 
 enum FeedbackState {
 	OPEN = "open",
