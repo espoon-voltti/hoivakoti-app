@@ -579,20 +579,20 @@ export async function UpdateSurveyTextState(
 	answerId: string,
 	newState: FeedbackState,
 ): Promise<boolean> {
-	let expiryDate;
+	let expiryDate = null;
 
 	if (newState === FeedbackState.REJECTED) {
 		const oneYearFromNow = new Date();
 		oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
 
-		expiryDate = oneYearFromNow.getTime();
+		expiryDate = oneYearFromNow.getTime().toString();
 	}
 
 	let count = await knex("NursingHomeSurveyTextAnswers")
 		.where({ id: answerId })
 		.update({
 			feedback_state: newState,
-			expiry_date: expiryDate ? expiryDate.toString() : null,
+			expiry_date: expiryDate,
 		});
 
 	if (count !== 1) return false;
