@@ -591,15 +591,15 @@ export async function UpdateSurveyTextState(
 export async function DeleteRejectedSurveyTextResults(): Promise<boolean> {
 	const results = await GetAllSurveyTextResults();
 
-	const expiredResults: string[] = results
+	const rejectedResults: string[] = results
 		.filter(
 			(result: any) => result.feedback_state === FeedbackState.REJECTED,
 		)
-		.map((expResult: any) => expResult.id);
+		.map((rejected: any) => rejected.id);
 
 	const count = await knex
 		.table("NursingHomeSurveyTextAnswers")
-		.whereIn("id", expiredResults)
+		.whereIn("id", rejectedResults)
 		.del();
 
 	if (count !== 1) return false;
