@@ -7,7 +7,7 @@ aliases:
   - &workspace_root ~/repo
   - &repo_cache_key v1-repo-{{ .Branch }}-{{ .Revision }}
   - &build_image circleci/node:12-browsers
-  - &builder_image_version f546a5c4eaa0762a5ab7bac3936939e2a49a2128
+  - &builder_image_version 18.04-d7214c52ce3670639a5b6868607198bde918cbcb
 
   # Version of remote Docker engine used with setup_remote_docker (not including machine executors)
   - &remote_docker_version '19.03.13'
