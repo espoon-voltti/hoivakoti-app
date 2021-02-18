@@ -593,7 +593,7 @@ export async function UpdateSurveyTextState(
 			});
 	}
 
-	if (count && count < 1) return false;
+	if (count < 1) return false;
 
 	return true;
 }
