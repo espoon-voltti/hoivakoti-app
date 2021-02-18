@@ -32,15 +32,16 @@ interface FeedbackResponse {
 
 const requestFeedbackStateUpdate = async (
 	key: string,
-	answerId: string,
+	answerId: string | string[],
 	newState: FeedbackState,
 ): Promise<void> => {
 	try {
 		await axios.post(
-			`${config.API_URL}/survey/text-results/${answerId}`,
+			`${config.API_URL}/survey/text-results`,
 			{
 				// eslint-disable-next-line @typescript-eslint/camelcase
 				feedback_state: newState,
+				answerId: answerId,
 			},
 			{ headers: { Authentication: key } },
 		);
@@ -265,27 +266,31 @@ const PageOpenFeedbackResults: FC = () => {
 
 	const markAllOpenAsApproved = async (): Promise<void> => {
 		try {
-			const newResults: OpenFeedback[] = [...results].map(result => {
-				if (result["feedback_state"] === FeedbackState.OPEN) {
+			const newResults: OpenFeedback[] = [...results]
+				.filter(result => {
+					return result["feedback_state"] === FeedbackState.OPEN;
+				})
+				.map(result => {
 					return {
 						...result,
 						// eslint-disable-next-line @typescript-eslint/camelcase
 						feedback_state: FeedbackState.APPROVED,
 					};
-				}
+				});
 
-				return result;
-			});
+			if (newResults.length) {
+				const newResultIds: string[] = newResults.map(
+					result => result.id,
+				);
 
-			for (const result of newResults) {
 				await requestFeedbackStateUpdate(
 					key,
-					result.id,
-					result.feedback_state,
+					newResultIds,
+					FeedbackState.APPROVED,
 				);
-			}
 
-			setResults(newResults);
+				setResults(newResults);
+			}
 		} catch (error) {
 			console.error(error);
 
@@ -350,9 +355,9 @@ const PageOpenFeedbackResults: FC = () => {
 	};
 
 	return (
-		<Fragment>
+		<div>
 			{loggedIn ? (
-				<div>
+				<Fragment>
 					<div className="filters feedback-filters">
 						<div className="filters-text">{filterLabel}</div>
 						{filterElements}
@@ -447,11 +452,11 @@ const PageOpenFeedbackResults: FC = () => {
 							</Fragment>
 						) : null}
 					</div>
-				</div>
+				</Fragment>
 			) : (
 				<h1>{loadingText}</h1>
 			)}
-		</Fragment>
+		</div>
 	);
 };
 

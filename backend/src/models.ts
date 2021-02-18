@@ -549,7 +549,11 @@ export async function GetSurveyTextResults(
 			"NursingHomeSurveyAnswers.answer",
 			"NursingHomeSurveyTextAnswers.id",
 		)
-		.select("answer_text", "feedback_state")
+		.select(
+			"NursingHomeSurveyAnswers.answer",
+			"NursingHomeSurveyTextAnswers.answer_text",
+			"NursingHomeSurveyTextAnswers.feedback_state",
+		)
 		.where({ nursinghome_id: nursingHomeId });
 
 	return results;
@@ -574,16 +578,26 @@ export async function GetAllSurveyTextResults(): Promise<any> {
 }
 
 export async function UpdateSurveyTextState(
-	answerId: string,
+	answerId: string | string[],
 	newState: FeedbackState,
 ): Promise<boolean> {
-	let count = await knex("NursingHomeSurveyTextAnswers")
-		.where({ id: answerId })
-		.update({
-			feedback_state: newState,
-		});
+	let count;
 
-	if (count !== 1) return false;
+	if (Array.isArray(answerId)) {
+		count = await knex("NursingHomeSurveyTextAnswers")
+			.whereIn("id", answerId)
+			.update({
+				feedback_state: newState,
+			});
+	} else {
+		count = await knex("NursingHomeSurveyTextAnswers")
+			.where({ id: answerId })
+			.update({
+				feedback_state: newState,
+			});
+	}
+
+	if (count && count < 1) return false;
 
 	return true;
 }
@@ -597,12 +611,19 @@ export async function DeleteRejectedSurveyTextResults(): Promise<boolean> {
 		)
 		.map((rejected: any) => rejected.id);
 
-	const count = await knex
+	const textAnswersCount = await knex
 		.table("NursingHomeSurveyTextAnswers")
 		.whereIn("id", rejectedResults)
 		.del();
 
-	if (count !== 1) return false;
+	if (textAnswersCount && textAnswersCount < 1) return false;
+
+	const answersCount = await knex
+		.table("NursingHomeSurveyAnswers")
+		.whereIn("answer", rejectedResults)
+		.update({ answer: "" });
+
+	if (answersCount && answersCount < 1) return false;
 
 	return true;
 }

@@ -627,8 +627,7 @@ export async function UpdateSurveyTextState(ctx: Context): Promise<any> {
 	const loggedIn = await GetHasLogin(ctx.get("authentication") as string);
 
 	if (loggedIn) {
-		const { answerId } = ctx.params;
-		const { feedback_state } = ctx.request.body;
+		const { answerId, feedback_state } = ctx.request.body;
 
 		const result = await UpdateSurveyTextStateDB(answerId, feedback_state);
 

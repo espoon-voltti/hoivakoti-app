@@ -226,6 +226,17 @@ router.post("/api/survey/check-key", async ctx => {
 	ctx.body = res;
 });
 
+router.get("/api/survey/text-results", async ctx => {
+	const success = await GetAllSurveyTextResults(ctx);
+
+	if (!success) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or session key" };
+	} else {
+		ctx.body = success;
+	}
+});
+
 router.delete("/api/survey/text-results", async ctx => {
 	const res = await DeleteRejectedSurveyTextResults(ctx);
 
@@ -237,7 +248,7 @@ router.delete("/api/survey/text-results", async ctx => {
 	}
 });
 
-router.post("/api/survey/text-results/:answerId", async ctx => {
+router.post("/api/survey/text-results", async ctx => {
 	const success = await UpdateSurveyTextState(ctx);
 
 	if (!success) {
@@ -245,17 +256,6 @@ router.post("/api/survey/text-results/:answerId", async ctx => {
 		ctx.body = { error: "Forbidden: invalid ID or session key" };
 	} else {
 		ctx.body = { success };
-	}
-});
-
-router.get("/api/survey/text-results", async ctx => {
-	const success = await GetAllSurveyTextResults(ctx);
-
-	if (!success) {
-		ctx.response.status = 403;
-		ctx.body = { error: "Forbidden: invalid ID or session key" };
-	} else {
-		ctx.body = success;
 	}
 });
 
