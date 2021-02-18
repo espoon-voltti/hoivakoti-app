@@ -549,11 +549,7 @@ export async function GetSurveyTextResults(
 			"NursingHomeSurveyAnswers.answer",
 			"NursingHomeSurveyTextAnswers.id",
 		)
-		.select(
-			"NursingHomeSurveyAnswers.answer",
-			"NursingHomeSurveyTextAnswers.answer_text",
-			"NursingHomeSurveyTextAnswers.feedback_state",
-		)
+		.select("answer_text", "feedback_state")
 		.where({ nursinghome_id: nursingHomeId });
 
 	return results;
