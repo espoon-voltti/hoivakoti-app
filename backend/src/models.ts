@@ -616,14 +616,14 @@ export async function DeleteRejectedSurveyTextResults(): Promise<boolean> {
 		.whereIn("id", rejectedResults)
 		.del();
 
-	if (textAnswersCount && textAnswersCount < 1) return false;
+	if (textAnswersCount < 1) return false;
 
 	const answersCount = await knex
 		.table("NursingHomeSurveyAnswers")
 		.whereIn("answer", rejectedResults)
 		.update({ answer: "" });
 
-	if (answersCount && answersCount < 1) return false;
+	if (answersCount < 1) return false;
 
 	return true;
 }
