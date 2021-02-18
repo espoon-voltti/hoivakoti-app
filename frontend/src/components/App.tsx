@@ -27,6 +27,7 @@ import PageSurvey from "./PageSurvey";
 import PageSurveyResults from "./PageSurveyResults";
 import PageManualSurveyEntry from "./PageManualSurveyEntry";
 import PageAdmin from "./PageAdmin";
+import PageOpenFeedbackResults from "./PageOpenFeedbackResults";
 import config from "./config";
 
 const App: React.FC = () => {
@@ -101,6 +102,11 @@ const App: React.FC = () => {
 								exact
 								path="/valvonta"
 								component={PageReportsAdmin}
+							/>
+							<Route
+								exact
+								path="/valvonta/palaute"
+								component={PageOpenFeedbackResults}
 							/>
 							<Route
 								exact

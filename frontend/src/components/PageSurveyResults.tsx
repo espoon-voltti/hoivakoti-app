@@ -7,7 +7,8 @@ import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
-import { JsxEmit } from "typescript";
+
+import { FeedbackState } from "./feedback-state";
 
 const PageSurveyResults: FC = () => {
 	const { id } = useParams() as any;
@@ -42,7 +43,13 @@ const PageSurveyResults: FC = () => {
 		axios
 			.get(`${config.API_URL}/survey/${id}/text-results/omaiskysely`)
 			.then((response: { data: any[] }) => {
-				setTextResults(response.data);
+				const approvedResults = response.data.filter(
+					result =>
+						result.feedback_state === FeedbackState.OPEN ||
+						result.feedback_state === FeedbackState.APPROVED,
+				);
+
+				setTextResults(approvedResults);
 			})
 			.catch(e => {
 				console.error(e);

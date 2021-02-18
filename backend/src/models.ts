@@ -1,3 +1,4 @@
+import { FeedbackState } from "./nursinghome-typings";
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import Knex, { CreateTableBuilder } from "knex";
 import uuidv4 from "uuid/v4";
@@ -216,6 +217,7 @@ async function CreateNursingHomeSurveyTextAnswersTable(): Promise<void> {
 		(table: any) => {
 			table.string("id", 16);
 			table.string("answer_text", 1000);
+			table.enu("feedback_state", [...Object.values(FeedbackState)]);
 		},
 	);
 }
@@ -547,10 +549,79 @@ export async function GetSurveyTextResults(
 			"NursingHomeSurveyAnswers.answer",
 			"NursingHomeSurveyTextAnswers.id",
 		)
-		.select("answer_text")
+		.select("answer_text", "feedback_state")
 		.where({ nursinghome_id: nursingHomeId });
 
 	return results;
+}
+
+export async function GetAllSurveyTextResults(): Promise<any> {
+	const results = await knex
+		.table("NursingHomeSurveyTextAnswers")
+		.join(
+			"NursingHomeSurveyAnswers",
+			"NursingHomeSurveyAnswers.answer",
+			"NursingHomeSurveyTextAnswers.id",
+		)
+		.select(
+			"NursingHomeSurveyAnswers.nursinghome_id",
+			"NursingHomeSurveyTextAnswers.id",
+			"NursingHomeSurveyTextAnswers.answer_text",
+			"NursingHomeSurveyTextAnswers.feedback_state",
+		);
+
+	return results;
+}
+
+export async function UpdateSurveyTextState(
+	answerId: string | string[],
+	newState: FeedbackState,
+): Promise<boolean> {
+	let count;
+
+	if (Array.isArray(answerId)) {
+		count = await knex("NursingHomeSurveyTextAnswers")
+			.whereIn("id", answerId)
+			.update({
+				feedback_state: newState,
+			});
+	} else {
+		count = await knex("NursingHomeSurveyTextAnswers")
+			.where({ id: answerId })
+			.update({
+				feedback_state: newState,
+			});
+	}
+
+	if (count < 1) return false;
+
+	return true;
+}
+
+export async function DeleteRejectedSurveyTextResults(): Promise<boolean> {
+	const results = await GetAllSurveyTextResults();
+
+	const rejectedResults: string[] = results
+		.filter(
+			(result: any) => result.feedback_state === FeedbackState.REJECTED,
+		)
+		.map((rejected: any) => rejected.id);
+
+	const textAnswersCount = await knex
+		.table("NursingHomeSurveyTextAnswers")
+		.whereIn("id", rejectedResults)
+		.del();
+
+	if (textAnswersCount < 1) return false;
+
+	const answersCount = await knex
+		.table("NursingHomeSurveyAnswers")
+		.whereIn("answer", rejectedResults)
+		.update({ answer: "" });
+
+	if (answersCount < 1) return false;
+
+	return true;
 }
 
 export async function SubmitSurveyData( //USE ONLY WHEN AUTHENTICATED
@@ -786,6 +857,7 @@ export async function SubmitSurveyResponse(
 				await knex.table("NursingHomeSurveyTextAnswers").insert({
 					id: sqlJoinKey,
 					answer_text: question.value.slice(0, 1000),
+					feedback_state: FeedbackState.OPEN,
 				});
 			}
 		}
