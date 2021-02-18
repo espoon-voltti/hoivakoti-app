@@ -23,14 +23,16 @@
 
 	&-list {
 		margin-top: 2rem;
+
 		border-top: solid 1px $border-color;
 
 		&-item {
 			border-bottom: solid 1px $border-color;
-			padding: 1rem 0;
+			padding: 3rem 0 1rem 0;
 
 			&:last-of-type {
 				border-bottom: none;
+				margin-bottom: 0;
 			}
 		}
 	}

@@ -645,8 +645,6 @@ export async function DeleteRejectedSurveyTextResults(
 	if (loggedIn) {
 		const success = await DeleteRejectedSurveyTextResultsDB();
 
-		console.log(success);
-
 		return { success: success, authenticated: loggedIn };
 	}
 
