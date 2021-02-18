@@ -266,28 +266,36 @@ const PageOpenFeedbackResults: FC = () => {
 
 	const markAllOpenAsApproved = async (): Promise<void> => {
 		try {
-			const newResults: OpenFeedback[] = [...results]
-				.filter(result => {
-					return result["feedback_state"] === FeedbackState.OPEN;
-				})
-				.map(result => {
-					return {
-						...result,
-						// eslint-disable-next-line @typescript-eslint/camelcase
-						feedback_state: FeedbackState.APPROVED,
-					};
-				});
+			const openResults: OpenFeedback[] = [...results].filter(result => {
+				return result["feedback_state"] === FeedbackState.OPEN;
+			});
 
-			if (newResults.length) {
-				const newResultIds: string[] = newResults.map(
+			if (openResults.length) {
+				const openResultsIDs: string[] = openResults.map(
 					result => result.id,
 				);
 
 				await requestFeedbackStateUpdate(
 					key,
-					newResultIds,
+					openResultsIDs,
 					FeedbackState.APPROVED,
 				);
+
+				const newResults: OpenFeedback[] = [...results];
+
+				for (const id of openResultsIDs) {
+					const answer = newResults.find(item => item.id === id);
+
+					if (answer) {
+						answer["feedback_state"] = FeedbackState.APPROVED;
+
+						const answerIndex = newResults.findIndex(
+							item => item.id === id,
+						);
+
+						newResults[answerIndex] = answer;
+					}
+				}
 
 				setResults(newResults);
 			}
