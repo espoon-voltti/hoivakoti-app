@@ -81,6 +81,18 @@
 			&.checked {
 				background-color: #044090;
 			}
+
+			&.unchecked {
+				border-radius: $border-radius;
+				background-color: transparent;
+				border-color: $link-color;
+				color: $link-color;
+
+				&:hover {
+					background-color: $primary-blue;
+					color: #fff;
+				}
+			}
 		}
 	}
 }
