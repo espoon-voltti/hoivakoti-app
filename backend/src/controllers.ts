@@ -623,7 +623,7 @@ export async function GetAllSurveyTextResults(ctx: Context): Promise<any> {
 	return false;
 }
 
-export async function UpdateSurveyTextState(ctx: Context): Promise<any> {
+export async function UpdateSurveyTextState(ctx: Context): Promise<boolean> {
 	const loggedIn = await GetHasLogin(ctx.get("authentication") as string);
 
 	if (loggedIn) {
@@ -646,7 +646,6 @@ export async function DeleteRejectedSurveyTextResults(
 		const success = await DeleteRejectedSurveyTextResultsDB();
 
 		console.log(success);
-		
 
 		return { success: success, authenticated: loggedIn };
 	}
