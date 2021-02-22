@@ -10,6 +10,8 @@ import { useT } from "../i18n";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
 
+import { KeycloakProvider } from "./Keycloak";
+
 type Language = string;
 
 interface SearchFilters {
@@ -533,8 +535,8 @@ const PageReportsAdmin: FC = () => {
 			});
 	};
 
-	if (loggedIn) {
-		return (
+	return (
+		<KeycloakProvider>
 			<div>
 				<div className="filters">
 					<div className="filters-text">{filterLabel}</div>
@@ -572,29 +574,29 @@ const PageReportsAdmin: FC = () => {
 					</div>
 				</div>
 			</div>
-		);
-	} else {
-		return (
-			<div className="login-container">
-				<h2>Kirjaudu valvontatiimin työkaluun</h2>
-				<div>
-					<span>Salasana</span>
-					<input
-						type="password"
-						value={password}
-						onChange={e => {
-							setPassword(e.target.value);
-						}}
-					></input>
-				</div>
-				<div>
-					<button className="btn" onClick={handleLogin}>
-						Kirjaudu sisään
-					</button>
-				</div>
-			</div>
-		);
-	}
+		</KeycloakProvider>
+	);
+
+	// return (
+	// 	<div className="login-container">
+	// 		<h2>Kirjaudu valvontatiimin työkaluun</h2>
+	// 		<div>
+	// 			<span>Salasana</span>
+	// 			<input
+	// 				type="password"
+	// 				value={password}
+	// 				onChange={e => {
+	// 					setPassword(e.target.value);
+	// 				}}
+	// 			></input>
+	// 		</div>
+	// 		<div>
+	// 			<button className="btn" onClick={handleLogin}>
+	// 				Kirjaudu sisään
+	// 			</button>
+	// 		</div>
+	// 	</div>
+	// );
 };
 
 export default PageReportsAdmin;
