@@ -1,5 +1,14 @@
 import React, { FC, useEffect, useState } from "react";
-import keycloak from "../keycloak";
+
+import Keycloak, { KeycloakConfig } from "keycloak-js";
+
+const config: KeycloakConfig = {
+	realm: "hoivakodit",
+	url: "http://localhost:8080/auth/",
+	clientId: "valvonta",
+};
+
+const keycloak = Keycloak(config);
 
 const KeycloakContext = React.createContext({});
 
