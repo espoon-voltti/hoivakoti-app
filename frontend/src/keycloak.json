@@ -4,6 +4,5 @@
 	"ssl-required": "external",
 	"resource": "valvonta",
 	"public-client": true,
-	"confidential-port": 0,
-	"clientId": "valvonta"
+	"confidential-port": 0
 }

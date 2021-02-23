@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import Keycloak from "keycloak-js";
+import Keycloak, { KeycloakConfig } from "keycloak-js";
 import keycloakJson from "../keycloak.json";
 
 const refreshRate = 30;
