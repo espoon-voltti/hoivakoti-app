@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, useContext, Fragment } from "react";
+import React, { useState, useEffect, FC, Fragment } from "react";
 import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation, Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import axios from "axios";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
+
 import withAuthentication from "../hoc/withAuthentication";
 
 type Language = string;
@@ -247,6 +248,8 @@ const PageReportsAdmin: FC<Props> = ({ isAuthenticated }) => {
 	const filterLocation = useT("filterLocation");
 
 	const filterSelections = useT("filterSelections");
+
+	const loadingText = useT("loadingText");
 
 	const optionsAra: FilterOption[] = [
 		{
@@ -543,9 +546,7 @@ const PageReportsAdmin: FC<Props> = ({ isAuthenticated }) => {
 					</div>
 				</Fragment>
 			) : (
-				<div className="login-container">
-					<h2>Ladataan...</h2>
-				</div>
+				<h1>{loadingText}</h1>
 			)}
 		</div>
 	);

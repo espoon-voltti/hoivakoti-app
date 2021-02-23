@@ -10,6 +10,7 @@ import Cookies from "universal-cookie";
 import { FeedbackState } from "./feedback-state";
 
 import "../styles/PageOpenFeedbackResults.scss";
+import withAuthentication from "../hoc/withAuthentication";
 
 interface SearchFilters {
 	readonly tila?: string[];
@@ -30,21 +31,20 @@ interface FeedbackResponse {
 	data: OpenFeedback[];
 }
 
+interface Props {
+	isAuthenticated: boolean;
+}
+
 const requestFeedbackStateUpdate = async (
-	key: string,
 	answerId: string | string[],
 	newState: FeedbackState,
 ): Promise<void> => {
 	try {
-		await axios.post(
-			`${config.API_URL}/survey/text-results`,
-			{
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				feedback_state: newState,
-				answerId: answerId,
-			},
-			{ headers: { Authentication: key } },
-		);
+		await axios.post(`${config.API_URL}/survey/text-results`, {
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			feedback_state: newState,
+			answerId: answerId,
+		});
 	} catch (error) {
 		console.error(error);
 
@@ -52,81 +52,58 @@ const requestFeedbackStateUpdate = async (
 	}
 };
 
-const PageOpenFeedbackResults: FC = () => {
+const PageOpenFeedbackResults: FC<Props> = ({ isAuthenticated }) => {
 	const [results, setResults] = useState<OpenFeedback[]>([]);
 	const [filteredResults, setFilteredResults] = useState<OpenFeedback[]>([]);
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[]>([]);
-
-	const [sessionCookies] = useState<Cookies>(new Cookies());
-	const [loggedIn, setLoggedIn] = useState<boolean>(false);
-
-	const key = sessionCookies.get("hoivakoti_session");
 
 	const history = useHistory();
 	const { search } = useLocation();
 
 	useEffect(() => {
+		// axios
+		// 	.get(`${config.API_URL}/survey/text-results`, {
+		// 		headers: {
+		// 			Authentication: key,
+		// 		},
+		// 	})
+		// 	.then((res: FeedbackResponse) => {
+		// 		const data = res.data;
+
+		// 		const openCases = data.filter(
+		// 			(result: OpenFeedback) =>
+		// 				result.feedback_state === FeedbackState.OPEN,
+		// 		);
+
+		// 		const approvedCases = data.filter(
+		// 			(result: OpenFeedback) =>
+		// 				result.feedback_state === FeedbackState.APPROVED,
+		// 		);
+
+		// 		const rejectedCases = data.filter(
+		// 			(result: OpenFeedback) =>
+		// 				result.feedback_state === FeedbackState.REJECTED,
+		// 		);
+
+		// 		const sortResults = [
+		// 			...openCases,
+		// 			...approvedCases,
+		// 			...rejectedCases,
+		// 		];
+
+		// 		setResults(sortResults);
+		// 	});
+
 		axios
-			.get(config.API_URL + "/admin/login", {
-				headers: {
-					Authentication: key,
-				},
+			.get(config.API_URL + "/nursing-homes")
+			.then(async (response: { data: NursingHome[] }) => {
+				setNursingHomes(response.data);
 			})
-			.then(() => setLoggedIn(true))
 			.catch((error: Error) => {
 				console.error(error.message);
-				setLoggedIn(false);
-
-				history.push({ pathname: "/valvonta" });
+				throw error;
 			});
-	}, [history, key]);
-
-	useEffect(() => {
-		if (loggedIn) {
-			axios
-				.get(`${config.API_URL}/survey/text-results`, {
-					headers: {
-						Authentication: key,
-					},
-				})
-				.then((res: FeedbackResponse) => {
-					const data = res.data;
-
-					const openCases = data.filter(
-						(result: OpenFeedback) =>
-							result.feedback_state === FeedbackState.OPEN,
-					);
-
-					const approvedCases = data.filter(
-						(result: OpenFeedback) =>
-							result.feedback_state === FeedbackState.APPROVED,
-					);
-
-					const rejectedCases = data.filter(
-						(result: OpenFeedback) =>
-							result.feedback_state === FeedbackState.REJECTED,
-					);
-
-					const sortResults = [
-						...openCases,
-						...approvedCases,
-						...rejectedCases,
-					];
-
-					setResults(sortResults);
-				});
-
-			axios
-				.get(config.API_URL + "/nursing-homes")
-				.then(async (response: { data: NursingHome[] }) => {
-					setNursingHomes(response.data);
-				})
-				.catch((error: Error) => {
-					console.error(error.message);
-					throw error;
-				});
-		}
-	}, [key, loggedIn]);
+	}, []);
 
 	const filterOpen = useT("filterOpen");
 	const filterApproved = useT("filterApproved");
@@ -222,11 +199,7 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
-				await requestFeedbackStateUpdate(
-					key,
-					id,
-					FeedbackState.APPROVED,
-				);
+				await requestFeedbackStateUpdate(id, FeedbackState.APPROVED);
 				setResults(newResults);
 			}
 		} catch (error) {
@@ -250,11 +223,7 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
-				await requestFeedbackStateUpdate(
-					key,
-					id,
-					FeedbackState.REJECTED,
-				);
+				await requestFeedbackStateUpdate(id, FeedbackState.REJECTED);
 				setResults(newResults);
 			}
 		} catch (error) {
@@ -276,7 +245,6 @@ const PageOpenFeedbackResults: FC = () => {
 				);
 
 				await requestFeedbackStateUpdate(
-					key,
 					openResultsIDs,
 					FeedbackState.APPROVED,
 				);
@@ -364,7 +332,7 @@ const PageOpenFeedbackResults: FC = () => {
 
 	return (
 		<div>
-			{loggedIn ? (
+			{isAuthenticated ? (
 				<Fragment>
 					<div className="filters">
 						<div className="filters-text">{filterLabel}</div>
@@ -474,4 +442,4 @@ const PageOpenFeedbackResults: FC = () => {
 	);
 };
 
-export default PageOpenFeedbackResults;
+export default withAuthentication(PageOpenFeedbackResults);

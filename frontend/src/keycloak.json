@@ -1,8 +1,9 @@
 {
-  "realm": "Hoivakodit",
-  "auth-server-url": "http://localhost:8080/auth/",
-  "ssl-required": "external",
-  "resource": "valvonta",
-  "public-client": true,
-  "confidential-port": 0
+	"realm": "hoivakodit",
+	"auth-server-url": "http://localhost:8080/auth/",
+	"ssl-required": "external",
+	"resource": "valvonta",
+	"public-client": true,
+	"confidential-port": 0,
+	"clientId": "valvonta"
 }
