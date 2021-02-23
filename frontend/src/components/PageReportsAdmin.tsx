@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, useContext, Fragment } from "react";
 import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation, Link } from "react-router-dom";
@@ -9,8 +9,7 @@ import axios from "axios";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
-
-import { KeycloakProvider } from "./Keycloak";
+import withAuthentication from "../hoc/withAuthentication";
 
 type Language = string;
 
@@ -22,11 +21,12 @@ interface SearchFilters {
 	readonly name?: string;
 }
 
-const PageReportsAdmin: FC = () => {
-	const [sessionCookies] = useState<Cookies>(new Cookies());
+interface Props {
+	isAuthenticated: boolean;
+}
 
-	const [loggedIn, setLoggedIn] = useState<boolean>(false);
-	const [password, setPassword] = useState<string>("");
+const PageReportsAdmin: FC<Props> = ({ isAuthenticated }) => {
+	const [sessionCookies] = useState<Cookies>(new Cookies());
 
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
@@ -100,22 +100,6 @@ const PageReportsAdmin: FC = () => {
 	};
 
 	useEffect(() => {
-		axios
-			.get(config.API_URL + "/admin/login", {
-				headers: {
-					Authentication: `${sessionCookies.get(
-						"hoivakoti_session",
-					)}`,
-				},
-			})
-			.then(function() {
-				setLoggedIn(true);
-			})
-			.catch((error: Error) => {
-				console.error(error.message);
-				setLoggedIn(false);
-			});
-
 		axios
 			.get(config.API_URL + "/nursing-homes")
 			.then(function(response: { data: NursingHome[] }) {
@@ -516,87 +500,55 @@ const PageReportsAdmin: FC = () => {
 		history.push("/valvonta?" + stringfield);
 	};
 
-	const handleLogin = async (
-		event: React.MouseEvent<HTMLButtonElement>,
-	): Promise<void> => {
-		const login = await axios
-			.post(`${config.API_URL}/admin/login`, {
-				adminPassword: password,
-			})
-			.then(function(response: { data: string }) {
-				sessionCookies.set("hoivakoti_session", response.data, {
-					path: "/",
-					maxAge: 36000,
-				});
-				setLoggedIn(true);
-			})
-			.catch((error: Error) => {
-				console.error(error.message);
-			});
-	};
-
 	return (
-		<KeycloakProvider>
-			<div>
-				<div className="filters">
-					<div className="filters-text">{filterLabel}</div>
-					{filterElements}
-				</div>
-				<div className="card-list-container">
-					<div className="card-list">
-						<div className="card-list-searchfield-container">
-							<input
-								className="card-list-searchfield"
-								value={searchField}
-								type="text"
-								placeholder="Etsi hoivakotia nimellä..."
-								onChange={e => {
-									setSearchField(e.target.value);
-									const newSearchFilters = {
-										...searchFilters,
-										name:
-											e.target.value != ""
-												? e.target.value
-												: undefined,
-									};
-									const stringfield = queryString.stringify(
-										newSearchFilters,
-									);
-									history.push("/valvonta?" + stringfield);
-								}}
-							></input>
-							<button
-								className="card-list-searchfield-btn"
-								onClick={clearSearchfield}
-							></button>
-						</div>
-						<div className="card-container">{cards}</div>
+		<div>
+			{isAuthenticated ? (
+				<Fragment>
+					<div className="filters filters-admin">
+						<div className="filters-text">{filterLabel}</div>
+						{filterElements}
 					</div>
+					<div className="card-list-container">
+						<div className="card-list">
+							<div className="card-list-searchfield-container">
+								<input
+									className="card-list-searchfield"
+									value={searchField}
+									type="text"
+									placeholder="Etsi hoivakotia nimellä..."
+									onChange={e => {
+										setSearchField(e.target.value);
+										const newSearchFilters = {
+											...searchFilters,
+											name:
+												e.target.value != ""
+													? e.target.value
+													: undefined,
+										};
+										const stringfield = queryString.stringify(
+											newSearchFilters,
+										);
+										history.push(
+											"/valvonta?" + stringfield,
+										);
+									}}
+								></input>
+								<button
+									className="card-list-searchfield-btn"
+									onClick={clearSearchfield}
+								></button>
+							</div>
+							<div className="card-container">{cards}</div>
+						</div>
+					</div>
+				</Fragment>
+			) : (
+				<div className="login-container">
+					<h2>Ladataan...</h2>
 				</div>
-			</div>
-		</KeycloakProvider>
+			)}
+		</div>
 	);
-
-	// return (
-	// 	<div className="login-container">
-	// 		<h2>Kirjaudu valvontatiimin työkaluun</h2>
-	// 		<div>
-	// 			<span>Salasana</span>
-	// 			<input
-	// 				type="password"
-	// 				value={password}
-	// 				onChange={e => {
-	// 					setPassword(e.target.value);
-	// 				}}
-	// 			></input>
-	// 		</div>
-	// 		<div>
-	// 			<button className="btn" onClick={handleLogin}>
-	// 				Kirjaudu sisään
-	// 			</button>
-	// 		</div>
-	// 	</div>
-	// );
 };
 
-export default PageReportsAdmin;
+export default withAuthentication(PageReportsAdmin);

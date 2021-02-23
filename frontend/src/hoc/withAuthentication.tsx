@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Keycloak, { KeycloakConfig } from "keycloak-js";
 
@@ -10,9 +10,9 @@ const config: KeycloakConfig = {
 
 const keycloak = Keycloak(config);
 
-const KeycloakContext = React.createContext({});
-
-export const KeycloakProvider: FC = ({ children }) => {
+const withAuthentication = <P extends object>(
+	WrappedComponent: React.ComponentType<P>,
+) => ({ ...props }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 
 	useEffect(() => {
@@ -22,10 +22,8 @@ export const KeycloakProvider: FC = ({ children }) => {
 	}, []);
 
 	return (
-		<KeycloakContext.Provider value={isAuthenticated}>
-			{children}
-		</KeycloakContext.Provider>
+		<WrappedComponent {...(props as P)} isAuthenticated={isAuthenticated} />
 	);
 };
 
-export default KeycloakContext;
+export default withAuthentication;
