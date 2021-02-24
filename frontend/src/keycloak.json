@@ -1,11 +1,11 @@
 {
 	"realm": "hoivakodit",
-	"auth-server-url": "http://localhost:8000/auth/",
+	"auth-server-url": "http://localhost:8000/auth",
 	"ssl-required": "external",
 	"resource": "valvonta",
 	"verify-token-audience": true,
 	"credentials": {
-	  "secret": "b86524fa-b721-4ec7-813f-3d034aaa3023"
+	  "secret": "**********"
 	},
 	"confidential-port": 0,
 	"policy-enforcer": {}
