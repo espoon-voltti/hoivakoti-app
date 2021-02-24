@@ -1,6 +1,6 @@
 {
 	"realm": "hoivakodit",
-	"auth-server-url": "http://localhost:8000/auth",
+	"auth-server-url": "http://localhost:4000/auth",
 	"ssl-required": "external",
 	"resource": "valvonta",
 	"verify-token-audience": true,

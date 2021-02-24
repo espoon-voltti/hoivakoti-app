@@ -2,7 +2,7 @@
 const NODE_ENV: "development" | "production" | "test" = process.env.NODE_ENV;
 
 // URL to images in the public directory
-const publicFilesPortString = NODE_ENV === "development" ? ":8000" : "";
+const publicFilesPortString = NODE_ENV === "development" ? ":4000" : "";
 const PUBLIC_FILES_URL =
 	window.location.protocol +
 	"//" +
