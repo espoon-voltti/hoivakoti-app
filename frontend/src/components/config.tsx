@@ -9,7 +9,7 @@ const PUBLIC_FILES_URL =
 	window.location.hostname +
 	publicFilesPortString;
 
-const apiPortString = NODE_ENV === "development" ? ":3000" : "";
+const apiPortString = NODE_ENV === "development" ? ":8000" : "";
 const API_URL =
 	window.location.protocol +
 	"//" +
