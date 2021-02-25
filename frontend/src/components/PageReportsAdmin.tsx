@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, Fragment } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation, Link } from "react-router-dom";
@@ -11,6 +11,7 @@ import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
 
 import withAuthentication from "../hoc/withAuthentication";
+import { AuthTypes } from "./authTypes";
 
 type Language = string;
 
@@ -22,11 +23,7 @@ interface SearchFilters {
 	readonly name?: string;
 }
 
-interface Props {
-	isAuthenticated: boolean;
-}
-
-const PageReportsAdmin: FC<Props> = ({ isAuthenticated }) => {
+const PageReportsAdmin: FC = () => {
 	const [sessionCookies] = useState<Cookies>(new Cookies());
 
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
@@ -248,8 +245,6 @@ const PageReportsAdmin: FC<Props> = ({ isAuthenticated }) => {
 	const filterLocation = useT("filterLocation");
 
 	const filterSelections = useT("filterSelections");
-
-	const loadingText = useT("loadingText");
 
 	const optionsAra: FilterOption[] = [
 		{
@@ -505,51 +500,43 @@ const PageReportsAdmin: FC<Props> = ({ isAuthenticated }) => {
 
 	return (
 		<div>
-			{isAuthenticated ? (
-				<Fragment>
-					<div className="filters filters-admin">
-						<div className="filters-text">{filterLabel}</div>
-						{filterElements}
+			<div className="filters filters-admin">
+				<div className="filters-text">{filterLabel}</div>
+				{filterElements}
+			</div>
+			<div className="card-list-container">
+				<div className="card-list">
+					<div className="card-list-searchfield-container">
+						<input
+							className="card-list-searchfield"
+							value={searchField}
+							type="text"
+							placeholder="Etsi hoivakotia nimellä..."
+							onChange={e => {
+								setSearchField(e.target.value);
+								const newSearchFilters = {
+									...searchFilters,
+									name:
+										e.target.value != ""
+											? e.target.value
+											: undefined,
+								};
+								const stringfield = queryString.stringify(
+									newSearchFilters,
+								);
+								history.push("/valvonta?" + stringfield);
+							}}
+						></input>
+						<button
+							className="card-list-searchfield-btn"
+							onClick={clearSearchfield}
+						></button>
 					</div>
-					<div className="card-list-container">
-						<div className="card-list">
-							<div className="card-list-searchfield-container">
-								<input
-									className="card-list-searchfield"
-									value={searchField}
-									type="text"
-									placeholder="Etsi hoivakotia nimellä..."
-									onChange={e => {
-										setSearchField(e.target.value);
-										const newSearchFilters = {
-											...searchFilters,
-											name:
-												e.target.value != ""
-													? e.target.value
-													: undefined,
-										};
-										const stringfield = queryString.stringify(
-											newSearchFilters,
-										);
-										history.push(
-											"/valvonta?" + stringfield,
-										);
-									}}
-								></input>
-								<button
-									className="card-list-searchfield-btn"
-									onClick={clearSearchfield}
-								></button>
-							</div>
-							<div className="card-container">{cards}</div>
-						</div>
-					</div>
-				</Fragment>
-			) : (
-				<h1>{loadingText}</h1>
-			)}
+					<div className="card-container">{cards}</div>
+				</div>
+			</div>
 		</div>
 	);
 };
 
-export default withAuthentication(PageReportsAdmin);
+export default withAuthentication(PageReportsAdmin, AuthTypes.VALVONTA);

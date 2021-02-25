@@ -5,8 +5,8 @@
 	"resource": "valvonta",
 	"verify-token-audience": true,
 	"credentials": {
-	  "secret": "**********"
+		"secret": "653b1c98-0ba1-4e2f-ae77-2e32c1b5dfab"
 	},
 	"confidential-port": 0,
 	"policy-enforcer": {}
-  }
+}

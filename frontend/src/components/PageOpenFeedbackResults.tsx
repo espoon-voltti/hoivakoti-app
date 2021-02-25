@@ -11,6 +11,7 @@ import { FeedbackState } from "./feedback-state";
 
 import "../styles/PageOpenFeedbackResults.scss";
 import withAuthentication from "../hoc/withAuthentication";
+import { AuthTypes } from "./authTypes";
 
 interface SearchFilters {
 	readonly tila?: string[];
@@ -31,10 +32,6 @@ interface FeedbackResponse {
 	data: OpenFeedback[];
 }
 
-interface Props {
-	isAuthenticated: boolean;
-}
-
 const requestFeedbackStateUpdate = async (
 	answerId: string | string[],
 	newState: FeedbackState,
@@ -52,7 +49,7 @@ const requestFeedbackStateUpdate = async (
 	}
 };
 
-const PageOpenFeedbackResults: FC<Props> = ({ isAuthenticated }) => {
+const PageOpenFeedbackResults: FC = () => {
 	const [results, setResults] = useState<OpenFeedback[]>([]);
 	const [filteredResults, setFilteredResults] = useState<OpenFeedback[]>([]);
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[]>([]);
@@ -116,7 +113,7 @@ const PageOpenFeedbackResults: FC<Props> = ({ isAuthenticated }) => {
 	const approve = useT("approve");
 	const reject = useT("reject");
 	const filterSelections = useT("filterSelections");
-	const loadingText = useT("loadingText");
+
 	const labelNursingHome = useT("nursingHome");
 
 	const mapFeedbackStateString: KeyToString = {
@@ -332,6 +329,7 @@ const PageOpenFeedbackResults: FC<Props> = ({ isAuthenticated }) => {
 
 	return (
 		<div>
+<<<<<<< HEAD
 			{isAuthenticated ? (
 				<Fragment>
 					<div className="filters">
@@ -357,89 +355,102 @@ const PageOpenFeedbackResults: FC<Props> = ({ isAuthenticated }) => {
 											<li
 												className="feedback-results-list-item"
 												key={result.id}
+=======
+			<div className="filters feedback-filters">
+				<div className="filters-text">{filterLabel}</div>
+				{filterElements}
+			</div>
+
+			<div className="page-open-feedback-results">
+				<h1 className="feedback-results-heading">{headingFeedback}</h1>
+				{results.length ? (
+					<Fragment>
+						<button
+							className="btn check-all-results"
+							onClick={markAllOpenAsApproved}
+						>
+							{approveAllOpenFeedback}
+						</button>
+						<ul className="feedback-results-list">
+							{filteredResults.map(result => {
+								return (
+									<li
+										className="feedback-results-list-item"
+										key={result.id}
+									>
+										<div className="feedback-result-answer">
+											<Link
+												className="feedback-result-link"
+												to={{
+													pathname: `/hoivakodit/${result.nursinghome_id}`,
+												}}
 											>
-												<div className="feedback-result-answer">
-													<Link
-														className="feedback-result-link"
-														to={{
-															pathname: `/hoivakodit/${result.nursinghome_id}`,
-														}}
-													>
-														{labelNursingHome}:{" "}
-														{nursingHomeName(
-															result.nursinghome_id,
-														)}
-													</Link>
-													<textarea
-														className={
-															result.feedback_state ===
-															FeedbackState.APPROVED
-																? "input approved"
-																: result.feedback_state ===
-																  FeedbackState.REJECTED
-																? "input rejected"
-																: "input"
-														}
-														rows={7}
-														value={
-															result.answer_text
-														}
-														readOnly={true}
-													></textarea>
-												</div>
-												<div className="feedback-result-actions">
-													<button
-														type="button"
-														className={
-															result.feedback_state ===
-															FeedbackState.APPROVED
-																? "btn checked"
-																: result.feedback_state ===
-																  FeedbackState.REJECTED
-																? "btn unchecked"
-																: "btn"
-														}
-														onClick={() => {
-															markAsApproved(
-																result.id,
-															);
-														}}
-													>
-														{approve}
-													</button>
-													<button
-														type="button"
-														className={
-															result.feedback_state ===
-															FeedbackState.REJECTED
-																? "btn checked"
-																: result.feedback_state ===
-																  FeedbackState.APPROVED
-																? "btn unchecked"
-																: "btn"
-														}
-														onClick={() => {
-															markAsRejected(
-																result.id,
-															);
-														}}
-													>
-														{reject}
-													</button>
-												</div>
-											</li>
-										);
-									})}
-								</ul>
-							</Fragment>
-						) : null}
-					</div>
-				</Fragment>
-			) : (
-				<h1>{loadingText}</h1>
-			)}
+												{labelNursingHome}:{" "}
+												{nursingHomeName(
+													result.nursinghome_id,
+												)}
+											</Link>
+											<textarea
+												className={
+													result.feedback_state ===
+													FeedbackState.APPROVED
+														? "input approved"
+														: result.feedback_state ===
+														  FeedbackState.REJECTED
+														? "input rejected"
+														: "input"
+												}
+												rows={7}
+												value={result.answer_text}
+												readOnly={true}
+											></textarea>
+										</div>
+										<div className="feedback-result-actions">
+											<button
+												type="button"
+												className={
+													result.feedback_state ===
+													FeedbackState.APPROVED
+														? "btn checked"
+														: result.feedback_state ===
+														  FeedbackState.REJECTED
+														? "btn unchecked"
+														: "btn"
+												}
+												onClick={() => {
+													markAsApproved(result.id);
+												}}
+											>
+												{approve}
+											</button>
+											<button
+												type="button"
+												className={
+													result.feedback_state ===
+													FeedbackState.REJECTED
+														? "btn checked"
+														: result.feedback_state ===
+														  FeedbackState.APPROVED
+														? "btn unchecked"
+														: "btn"
+												}
+												onClick={() => {
+													markAsRejected(result.id);
+												}}
+>>>>>>> Login, refresh token
+											>
+												{reject}
+											</button>
+										</div>
+									</li>
+								);
+							})}
+						</ul>
+					</Fragment>
+				) : null}
+			</div>
 		</div>
 	);
 };
 
-export default withAuthentication(PageOpenFeedbackResults);
+export default withAuthentication(PageOpenFeedbackResults, AuthTypes.VALVONTA);
