@@ -1,19 +1,42 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import keycloakConfig from "../keycloak.json";
+import keycloak from "../config/keycloak";
 
 import axios from "axios";
-import config from "../components/config";
+import config from "../config";
 
 import queryString from "querystring";
 import Cookies from "universal-cookie";
 import { AuthTypes } from "../components/authTypes";
 import { useT } from "../i18n";
 
+import "../styles/Auth.scss";
+
 interface KeycloakAuthResponse {
 	access_token: string;
 	refresh_token: string;
 }
+
+const requestTokenIntrospect = async (
+	secret: string | undefined,
+	clientId: string,
+	username: string,
+	token: string,
+): Promise<boolean> => {
+	const res = await axios.post(
+		`${config.PUBLIC_FILES_URL}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+		queryString.stringify({
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			client_secret: secret,
+			// eslint-disable-next-line @typescript-eslint/camelcase
+			client_id: clientId,
+			username,
+			token,
+		}),
+	);
+
+	return res.data && res.data.roles.includes("valvonta-access");
+};
 
 const requestToken = async (
 	username: string,
@@ -27,18 +50,36 @@ const requestToken = async (
 			// eslint-disable-next-line @typescript-eslint/camelcase
 			grant_type: "password",
 			// eslint-disable-next-line @typescript-eslint/camelcase
-			client_secret: keycloakConfig.credentials.secret,
+			client_secret: keycloak.credentials.secret,
 			scope: "openid",
-			username: username,
-			password: password,
+			username,
+			password,
 		};
 
-		const res = await axios.post(
+		const token = await axios.post(
 			`${config.PUBLIC_FILES_URL}/auth/realms/hoivakodit/protocol/openid-connect/token`,
 			queryString.stringify(data),
 		);
 
-		return res.data;
+		const tokenData = token.data;
+
+		const hasAccess = await requestTokenIntrospect(
+			keycloak.credentials.secret,
+			type,
+			username,
+			tokenData.access_token,
+		);
+
+		if (hasAccess) {
+			return {
+				// eslint-disable-next-line @typescript-eslint/camelcase
+				access_token: tokenData.access_token,
+				// eslint-disable-next-line @typescript-eslint/camelcase
+				refresh_token: tokenData.refresh_token,
+			};
+		}
+
+		throw new Error("User is not allowed to access client!");
 	} catch (error) {
 		console.error(error);
 	}
@@ -70,7 +111,7 @@ const withAuthentication = <P extends object>(
 				// eslint-disable-next-line @typescript-eslint/camelcase
 				refresh_token: refreshToken,
 				// eslint-disable-next-line @typescript-eslint/camelcase
-				client_secret: keycloakConfig.credentials.secret,
+				client_secret: keycloak.credentials.secret,
 			};
 
 			axios
@@ -90,16 +131,14 @@ const withAuthentication = <P extends object>(
 						);
 
 						setIsAuthenticated(true);
-						setIsLoading(false);
 					}
 				})
 				.catch(err => {
 					console.error(err);
-					setIsLoading(false);
 				});
-		} else {
-			setIsLoading(false);
 		}
+
+		setIsLoading(false);
 	}, [sessionCookies]);
 
 	const handleLogin = async (
@@ -128,9 +167,9 @@ const withAuthentication = <P extends object>(
 					isAuthenticated={isAuthenticated}
 				/>
 			) : (
-				<form className="login-container" onSubmit={handleLogin}>
+				<form className="login-form" onSubmit={handleLogin}>
 					<h2>Kirjaudu työkaluun</h2>
-					<div>
+					<div className="input-container">
 						<label className="label" htmlFor="username">
 							Käyttäjänimi
 						</label>
@@ -145,7 +184,7 @@ const withAuthentication = <P extends object>(
 							}}
 						></input>
 					</div>
-					<div>
+					<div className="input-container">
 						<label className="label" htmlFor="password">
 							Salasana
 						</label>
@@ -160,7 +199,7 @@ const withAuthentication = <P extends object>(
 							}}
 						></input>
 					</div>
-					<div>
+					<div className="button-container">
 						<button className="btn" type="submit">
 							Kirjaudu sisään
 						</button>
@@ -171,15 +210,9 @@ const withAuthentication = <P extends object>(
 	);
 
 	return (
-		<Fragment>
-			{loading ? (
-				<div className="login-container">
-					<h1>{loadingText}</h1>
-				</div>
-			) : (
-				auth
-			)}
-		</Fragment>
+		<div className="auth-container">
+			{loading ? <h2>{loadingText}</h2> : auth}
+		</div>
 	);
 };
 

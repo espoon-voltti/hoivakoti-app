@@ -3,7 +3,7 @@ import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import "../styles/PageReportsAdmin.scss";
-import config from "./config";
+import config from "../config";
 import queryString from "query-string";
 import axios from "axios";
 import { useT } from "../i18n";

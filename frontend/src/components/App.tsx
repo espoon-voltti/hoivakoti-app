@@ -30,7 +30,6 @@ import PageManualSurveyEntry from "./PageManualSurveyEntry";
 import PageAdmin from "./PageAdmin";
 import PageOpenFeedbackResults from "./PageOpenFeedbackResults";
 import PageRespondFeedback from "./PageRespondFeedback";
-import config from "./config";
 
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, FC } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import "../styles/PageNursingHome.scss";
-import config from "./config";
+import config from "../config";
 import axios from "axios";
 import {
 	GetNursingHomeResponse,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useT } from "../i18n";
-import config from "./config";
+import config from "../config";
 import { NursingHome, NursingHomeImageName } from "./types";
 
 import "../styles/ImageUpload.scss";

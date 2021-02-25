@@ -4,7 +4,7 @@ import "../styles/PageUpdate.scss";
 import Radio from "./Radio";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
-import config from "./config";
+import config from "../config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";

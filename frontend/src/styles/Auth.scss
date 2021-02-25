@@ -1,0 +1,20 @@
+.auth-container {
+	padding: 3rem 2rem 0 2rem;
+	max-width: 42.5rem;
+	margin: 5rem auto 0 auto;
+
+	h2 {
+		margin-bottom: 2.5rem;
+	}
+
+	.login-form {
+		.input-container {
+			margin-bottom: 1rem;
+		}
+
+		.button-container {
+			padding-top: 1rem;
+			float: right;
+		}
+	}
+}

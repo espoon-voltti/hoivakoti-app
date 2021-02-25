@@ -4,7 +4,7 @@ import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
 import { useT } from "../i18n";
 import axios from "axios";
-import config from "./config";
+import config from "../config";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
 import { FeedbackState } from "./feedback-state";
