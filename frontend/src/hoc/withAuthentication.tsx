@@ -97,6 +97,8 @@ const withAuthentication = <P extends object>(
 					console.error(err);
 					setIsLoading(false);
 				});
+		} else {
+			setIsLoading(false);
 		}
 	}, [sessionCookies]);
 
