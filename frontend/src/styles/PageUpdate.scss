@@ -96,7 +96,6 @@
 }
 
 .page-update-popup {
-	position: fixed;
 	margin-top: 12px;
 	margin-left: 20px;
 	color: $primary-blue;
@@ -125,11 +124,8 @@
 }
 
 .nav-save {
-	position: fixed;
-	top: 18px;
-	width: 450px;
-	right: 250px;
-	z-index: 9999;
+	display: flex;
+	justify-content: flex-end;
 
 	* {
 		margin-right: 8px;

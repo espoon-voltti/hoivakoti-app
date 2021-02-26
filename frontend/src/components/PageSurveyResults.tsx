@@ -85,6 +85,7 @@ const PageSurveyResults: FC = () => {
 	const reviewFooterLink = useT("reviewFooterLink");
 	const urlReviewFooterLink = useT("urlReviewFooterLink");
 	const noRelativesOpenTextAnswers = useT("noRelativesOpenTextAnswers");
+	const feedbackResponseHeader = useT("feedbackResponseHeader");
 
 	const optionText1 = useT("surveyOption1");
 	const optionText2 = useT("surveyOption2");
@@ -176,9 +177,13 @@ const PageSurveyResults: FC = () => {
 
 		if (answers && answers.length > 0) {
 			answerList = answers.map((answer: any, index: number) => (
-				<p className="answer" key={index}>
-					&quot;{answer.answer_text}&quot;
-				</p>
+				<>
+					<div className="answer">
+						<p key={index}>&quot;{answer.answer_text}&quot;</p>
+						<p className="response-header">{feedbackResponseHeader}</p>
+						<p className="response">{answer.response_text}</p>
+					</div>
+				</>
 			));
 		}
 

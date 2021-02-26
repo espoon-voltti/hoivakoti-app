@@ -41,6 +41,7 @@ import {
 	UpdateNursingHomeSurveyQuestion as UpdateNursingHomeSurveyQuestionDB,
 	SubmitSurveyData as SubmitSurveyDataDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
+	SubmitFeedbackResponse as SubmitFeedbackResponseDB,
 	GetSurvey as GetSurveyDB,
 	GetCustomerCommunesForNursingHome,
 	UpdateCustomerCommunesForNursingHome,
@@ -256,10 +257,9 @@ export async function DropAndRecreateSurveyAnswerTables(
 		requestPw === adminPw;
 	if (!isPwValid) return null;
 
-	const result1 = await DropAndRecreateNursingHomeSurveyAnswersTable();
-	const result2 = await DropAndRecreateNursingHomeSurveyScoresTable();
-	const result3 = await DropAndRecreateNursingHomeSurveyTotalScoresTable();
-	return result1;
+	await DropAndRecreateNursingHomeSurveyAnswersTable();
+	await DropAndRecreateNursingHomeSurveyScoresTable();
+	await DropAndRecreateNursingHomeSurveyTotalScoresTable();
 }
 
 export async function DropAndRecreateSurveyTotalScoreTable(
@@ -577,6 +577,16 @@ export async function SubmitSurveyResponse(
 		ctx.request.body.surveyKey,
 	);
 	return "";
+}
+
+export async function SubmitFeedbackResponse(
+	ctx: Context,
+): Promise<void | null> {
+	const { id } = ctx.params;
+	await SubmitFeedbackResponseDB(
+		ctx.request.body.response,
+		ctx.request.body.id,
+	);
 }
 
 export async function GetSurvey(surveyId: string): Promise<any> {
