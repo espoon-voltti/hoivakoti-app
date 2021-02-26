@@ -43,7 +43,12 @@ import {
 	GetAllSurveyTextResults,
 	UpdateSurveyTextState,
 	DeleteRejectedSurveyTextResults,
+<<<<<<< HEAD
 	GetSurveyApprovedResults,
+	GetKeycloakAccessToken,
+=======
+	GetKeycloakAccessToken,
+>>>>>>> Move fetch token to backend
 } from "./controllers";
 import config from "./config";
 
@@ -304,6 +309,12 @@ router.get("/api/survey/:id/approved-results/:survey", async ctx => {
 router.post("/api/feedback/response", async ctx => {
 	const res = "";
 	await SubmitFeedbackResponse(ctx);
+	ctx.body = res;
+});
+
+router.post("/api/auth/get-token", async ctx => {
+	const res = await GetKeycloakAccessToken(ctx);
+
 	ctx.body = res;
 });
 

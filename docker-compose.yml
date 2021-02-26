@@ -6,9 +6,9 @@ services:
         image: hoivakoti/service:v1
         depends_on:
             - postgres
-        ports:
-            - "3000:3000"
-            - "9229:9229"
+        # ports:
+        #     - "3000:3000"
+        #     - "9229:9229"
         volumes:
             - ./backend:/usr/app/
             - /usr/app/node_modules
@@ -23,8 +23,8 @@ services:
         image: tzaeru/hoivakoti-portaali-frontend:v1
         depends_on:
             - postgres
-        # ports:
-        #     - "4000:4000"
+        ports:
+            - "4000:4000"
         volumes:
             - ./frontend:/usr/app/
             - /usr/app/node_modules

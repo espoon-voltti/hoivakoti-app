@@ -12,7 +12,7 @@ import { useT } from "../i18n";
 
 import "../styles/Auth.scss";
 
-interface KeycloakAuthResponse {
+interface AuthResponse {
 	access_token: string;
 	refresh_token: string;
 }
@@ -42,44 +42,17 @@ const requestToken = async (
 	username: string,
 	password: string,
 	type: string,
-): Promise<KeycloakAuthResponse | undefined> => {
+): Promise<AuthResponse | undefined> => {
 	try {
-		const data = {
-			// eslint-disable-next-line @typescript-eslint/camelcase
-			client_id: type,
-			// eslint-disable-next-line @typescript-eslint/camelcase
-			grant_type: "password",
-			// eslint-disable-next-line @typescript-eslint/camelcase
-			client_secret: keycloak.credentials.secret,
-			scope: "openid",
+		const res = await axios.post(`${config.API_URL}/auth/get-token`, {
 			username,
 			password,
-		};
-
-		const token = await axios.post(
-			`${config.PUBLIC_FILES_URL}/auth/realms/hoivakodit/protocol/openid-connect/token`,
-			queryString.stringify(data),
-		);
-
-		const tokenData = token.data;
-
-		const hasAccess = await requestTokenIntrospect(
-			keycloak.credentials.secret,
 			type,
-			username,
-			tokenData.access_token,
-		);
+		});
 
-		if (hasAccess) {
-			return {
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				access_token: tokenData.access_token,
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				refresh_token: tokenData.refresh_token,
-			};
-		}
+		console.log(res);
 
-		throw new Error("User is not allowed to access client!");
+		return res.data;
 	} catch (error) {
 		console.error(error);
 	}
@@ -116,10 +89,10 @@ const withAuthentication = <P extends object>(
 
 			axios
 				.post(
-					`${config.PUBLIC_FILES_URL}/auth/realms/hoivakodit/protocol/openid-connect/token`,
+					`${config.API_URL}/auth/realms/hoivakodit/protocol/openid-connect/token`,
 					queryString.stringify(refreshTokenData),
 				)
-				.then((res: { data: KeycloakAuthResponse }) => {
+				.then((res: { data: AuthResponse }) => {
 					if (res.data) {
 						const token = res.data["access_token"];
 						const refreshToken = res.data["refresh_token"];

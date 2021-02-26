@@ -50,6 +50,7 @@ import {
 	GetAllSurveyTextResults as GetAllSurveyTextResultsDB,
 	UpdateSurveyTextState as UpdateSurveyTextStateDB,
 	DeleteRejectedSurveyTextResults as DeleteRejectedSurveyTextResultsDB,
+	GetAccessToken,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -674,6 +675,14 @@ export async function UpdateNursingHomeCustomerCommunes(
 	const communes = ctx.request.body["customer_commune"];
 
 	const result = await UpdateCustomerCommunesForNursingHome(id, communes);
+
+	return result;
+}
+
+export async function GetKeycloakAccessToken(ctx: Context): Promise<any> {
+	const { username, password, type } = ctx.request.body;
+
+	const result = await GetAccessToken(username, password, type);
 
 	return result;
 }

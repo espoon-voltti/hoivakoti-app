@@ -1,3 +1,5 @@
+import queryString from "querystring";
+import axios from "axios";
 import { FeedbackState } from "./nursinghome-typings";
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import Knex, { CreateTableBuilder } from "knex";
@@ -1443,6 +1445,59 @@ export async function UpdateCustomerCommunesForNursingHome(
 	}
 
 	return false;
+}
+
+const userIsEntitledToToken = async (
+	clientId: string,
+	username: string,
+	token: string,
+): Promise<boolean> => {
+	const reqData = {
+		client_id: clientId,
+		client_secret: "653b1c98-0ba1-4e2f-ae77-2e32c1b5dfab",
+		username,
+		token,
+	};
+
+	const res = await axios.post(
+		`http://localhost:3000/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+		queryString.stringify(reqData),
+	);
+
+	return res.data && res.data.roles.includes("valvonta-access");
+};
+
+export async function GetAccessToken(
+	username: string,
+	password: string,
+	type: string,
+) {
+	try {
+		const reqData = queryString.stringify({
+			client_id: type,
+			grant_type: "password",
+			client_secret: "653b1c98-0ba1-4e2f-ae77-2e32c1b5dfab",
+			username: username,
+			password: password,
+		});
+
+		const res = await axios.post(
+			"http://localhost:3000/auth/realms/hoivakodit/protocol/openid-connect/token",
+			reqData,
+			{
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+			},
+		);
+
+		console.log(res);
+		console.log(JSON.stringify(res.data));
+
+		return res.data;
+	} catch (error) {
+		return error;
+	}
 }
 
 //DUMMY DATA FOR TESTING
