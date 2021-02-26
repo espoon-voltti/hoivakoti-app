@@ -58,6 +58,7 @@ const PageRespondFeedback: FC = () => {
 
 	const feedbackResponseInfo = useT("feedbackResponseInfo");
 	const feedbackForNursingHome = useT("feedbackForNursingHome");
+	const noFeedbackYet = useT("noFeedbackYet");
 
 	return (
 		<div>
@@ -91,7 +92,11 @@ const PageRespondFeedback: FC = () => {
 								})}
 							</ul>
 						</Fragment>
-					) : null}
+					) : (
+						<Fragment>
+							<p>{noFeedbackYet}</p>
+						</Fragment>
+					)}
 				</div>
 			</Fragment>
 		</div>

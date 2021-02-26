@@ -180,8 +180,20 @@ const PageSurveyResults: FC = () => {
 				<>
 					<div className="answer">
 						<p key={index}>&quot;{answer.answer_text}&quot;</p>
-						<p className="response-header">{feedbackResponseHeader}</p>
-						<p className="response">{answer.response_text}</p>
+						<p
+							className={`response-header ${
+								answer.response_text ? "" : "hidden"
+							}`}
+						>
+							{feedbackResponseHeader}
+						</p>
+						<p
+							className={`response ${
+								answer.response_text ? "" : "hidden"
+							}`}
+						>
+							{answer.response_text}
+						</p>
 					</div>
 				</>
 			));

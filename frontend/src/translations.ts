@@ -1293,4 +1293,8 @@ export const translations = {
 		"fi-FI": "Asumisyksikön vastine:",
 		"sv-FI": "Asumisyksikön vastine:",
 	},
+	noFeedbackYet: {
+		"fi-FI": "Ei vielä palautteita.",
+		"sv-FI": "Ei vielä palautteita.",
+	},
 };
