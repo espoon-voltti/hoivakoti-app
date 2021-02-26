@@ -1,6 +1,6 @@
 export default {
 	credentials: {
 		// eslint-disable-next-line no-undef
-		secret: "653b1c98-0ba1-4e2f-ae77-2e32c1b5dfab",
+		secret: "ec5bc83f-0211-483c-8482-8aa5a78e4a8b",
 	},
 };

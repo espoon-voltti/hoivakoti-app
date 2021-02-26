@@ -6,9 +6,9 @@ services:
         image: hoivakoti/service:v1
         depends_on:
             - postgres
-        # ports:
-        #     - "3000:3000"
-        #     - "9229:9229"
+        ports:
+            - "3000:3000"
+            - "9229:9229"
         volumes:
             - ./backend:/usr/app/
             - /usr/app/node_modules
@@ -17,6 +17,8 @@ services:
         environment:
             NODE_ENV: development
         command: sh -c "yarn install && yarn run watch-server"
+        networks:
+            - hoivakodit-network
 
     frontend:
         build: ./frontend
@@ -39,3 +41,9 @@ services:
             POSTGRES_PASSWORD: postgres
             POSTGRES_USER: postgres
             POSTGRES_DB: postgres
+        networks:
+            - hoivakodit-network
+
+networks:
+    hoivakodit-network:
+        driver: bridge

@@ -12,7 +12,7 @@ import { useT } from "../i18n";
 
 import "../styles/Auth.scss";
 
-interface AuthResponse {
+interface KeycloakAuthResponse {
 	access_token: string;
 	refresh_token: string;
 }
@@ -24,7 +24,7 @@ const requestTokenIntrospect = async (
 	token: string,
 ): Promise<boolean> => {
 	const res = await axios.post(
-		`${config.PUBLIC_FILES_URL}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+		`${config.API_URL}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
 		queryString.stringify({
 			// eslint-disable-next-line @typescript-eslint/camelcase
 			client_secret: secret,
@@ -35,22 +35,22 @@ const requestTokenIntrospect = async (
 		}),
 	);
 
-	return res.data && res.data.roles.includes("valvonta-access");
+	return (
+		res.data && res.data["realm_access"].roles.includes("valvonta-access")
+	);
 };
 
 const requestToken = async (
 	username: string,
 	password: string,
 	type: string,
-): Promise<AuthResponse | undefined> => {
+): Promise<KeycloakAuthResponse | undefined> => {
 	try {
 		const res = await axios.post(`${config.API_URL}/auth/get-token`, {
 			username,
 			password,
 			type,
 		});
-
-		console.log(res);
 
 		return res.data;
 	} catch (error) {
@@ -92,7 +92,7 @@ const withAuthentication = <P extends object>(
 					`${config.API_URL}/auth/realms/hoivakodit/protocol/openid-connect/token`,
 					queryString.stringify(refreshTokenData),
 				)
-				.then((res: { data: AuthResponse }) => {
+				.then((res: { data: KeycloakAuthResponse }) => {
 					if (res.data) {
 						const token = res.data["access_token"];
 						const refreshToken = res.data["refresh_token"];
@@ -140,53 +140,51 @@ const withAuthentication = <P extends object>(
 					isAuthenticated={isAuthenticated}
 				/>
 			) : (
-				<form className="login-form" onSubmit={handleLogin}>
-					<h2>Kirjaudu työkaluun</h2>
-					<div className="input-container">
-						<label className="label" htmlFor="username">
-							Käyttäjänimi
-						</label>
-						<input
-							className="input"
-							type="text"
-							name="username"
-							id="username"
-							value={username}
-							onChange={event => {
-								setUsername(event.target.value);
-							}}
-						></input>
-					</div>
-					<div className="input-container">
-						<label className="label" htmlFor="password">
-							Salasana
-						</label>
-						<input
-							className="input"
-							type="password"
-							name="password"
-							id="password"
-							value={password}
-							onChange={event => {
-								setPassword(event.target.value);
-							}}
-						></input>
-					</div>
-					<div className="button-container">
-						<button className="btn" type="submit">
-							Kirjaudu sisään
-						</button>
-					</div>
-				</form>
+				<div className="auth-container">
+					<form className="login-form" onSubmit={handleLogin}>
+						<h2>Kirjaudu työkaluun</h2>
+						<div className="input-container">
+							<label className="label" htmlFor="username">
+								Käyttäjänimi
+							</label>
+							<input
+								className="input"
+								type="text"
+								name="username"
+								id="username"
+								value={username}
+								onChange={event => {
+									setUsername(event.target.value);
+								}}
+							></input>
+						</div>
+						<div className="input-container">
+							<label className="label" htmlFor="password">
+								Salasana
+							</label>
+							<input
+								className="input"
+								type="password"
+								name="password"
+								id="password"
+								value={password}
+								onChange={event => {
+									setPassword(event.target.value);
+								}}
+							></input>
+						</div>
+						<div className="button-container">
+							<button className="btn" type="submit">
+								Kirjaudu sisään
+							</button>
+						</div>
+					</form>
+				</div>
 			)}
 		</Fragment>
 	);
 
-	return (
-		<div className="auth-container">
-			{loading ? <h2>{loadingText}</h2> : auth}
-		</div>
-	);
+	return <Fragment>{loading ? <h2>{loadingText}</h2> : auth}</Fragment>;
 };
 
 export default withAuthentication;

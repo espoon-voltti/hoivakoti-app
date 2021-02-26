@@ -1452,19 +1452,25 @@ const userIsEntitledToToken = async (
 	username: string,
 	token: string,
 ): Promise<boolean> => {
-	const reqData = {
+	const reqData = queryString.stringify({
 		client_id: clientId,
-		client_secret: "653b1c98-0ba1-4e2f-ae77-2e32c1b5dfab",
+		client_secret: "c5a0c771-d997-461f-b41e-25c05c6f217d",
 		username,
 		token,
-	};
+	});
 
 	const res = await axios.post(
-		`http://localhost:3000/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
-		queryString.stringify(reqData),
+		`http://auth-proxy:5000/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+		reqData,
 	);
 
-	return res.data && res.data.roles.includes("valvonta-access");
+	console.log(res.data);
+
+	return (
+		res.data &&
+		res.data.realm_access.roles &&
+		res.data.realm_access.roles.includes("valvonta-access")
+	);
 };
 
 export async function GetAccessToken(
@@ -1476,27 +1482,34 @@ export async function GetAccessToken(
 		const reqData = queryString.stringify({
 			client_id: type,
 			grant_type: "password",
-			client_secret: "653b1c98-0ba1-4e2f-ae77-2e32c1b5dfab",
-			username: username,
-			password: password,
+			client_secret: "c5a0c771-d997-461f-b41e-25c05c6f217d",
+			username,
+			password,
 		});
 
 		const res = await axios.post(
-			"http://localhost:3000/auth/realms/hoivakodit/protocol/openid-connect/token",
+			"http://auth-proxy:5000/auth/realms/hoivakodit/protocol/openid-connect/token",
 			reqData,
-			{
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-				},
-			},
 		);
 
-		console.log(res);
-		console.log(JSON.stringify(res.data));
+		const userIsAllowed = await userIsEntitledToToken(
+			type,
+			username,
+			res.data["access_token"],
+		);
 
-		return res.data;
+		if (userIsAllowed) {
+			return {
+				access_token: res.data["access_token"],
+				refresh_token: res.data["refresh_token"],
+			};
+		}
+
+		return false;
 	} catch (error) {
-		return error;
+		console.log(error);
+
+		return false;
 	}
 }
 
