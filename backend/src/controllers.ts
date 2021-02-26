@@ -571,7 +571,7 @@ export async function SubmitSurveyResponse(
 	ctx: Context,
 ): Promise<string | null> {
 	const { id } = ctx.params;
-	const res = await SubmitSurveyResponseDB(
+	await SubmitSurveyResponseDB(
 		ctx.request.body.survey,
 		id,
 		ctx.request.body.surveyKey,
@@ -582,7 +582,6 @@ export async function SubmitSurveyResponse(
 export async function SubmitFeedbackResponse(
 	ctx: Context,
 ): Promise<void | null> {
-	const { id } = ctx.params;
 	await SubmitFeedbackResponseDB(
 		ctx.request.body.response,
 		ctx.request.body.id,
