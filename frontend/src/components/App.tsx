@@ -30,7 +30,6 @@ import PageManualSurveyEntry from "./PageManualSurveyEntry";
 import PageAdmin from "./PageAdmin";
 import PageOpenFeedbackResults from "./PageOpenFeedbackResults";
 import PageRespondFeedback from "./PageRespondFeedback";
-
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
 	const currentPath = window.location.pathname;

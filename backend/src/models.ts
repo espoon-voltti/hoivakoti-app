@@ -1452,37 +1452,43 @@ const userIsEntitledToToken = async (
 	username: string,
 	token: string,
 ): Promise<boolean> => {
-	const reqData = queryString.stringify({
-		client_id: clientId,
-		client_secret: "c5a0c771-d997-461f-b41e-25c05c6f217d",
-		username,
-		token,
-	});
+	try {
+		const reqData = queryString.stringify({
+			client_id: clientId,
+			client_secret: process.env.KEYCLOAK_SECRET,
+			username,
+			token,
+		});
 
-	const res = await axios.post(
-		`http://auth-proxy:5000/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
-		reqData,
-	);
+		const res = await axios.post(
+			`http://auth-proxy:5000/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+			reqData,
+		);
 
-	console.log(res.data);
+		console.log(res.data);
 
-	return (
-		res.data &&
-		res.data.realm_access.roles &&
-		res.data.realm_access.roles.includes("valvonta-access")
-	);
+		return (
+			res.data &&
+			res.data.realm_access.roles &&
+			res.data.realm_access.roles.includes("valvonta-access")
+		);
+	} catch (error) {
+		console.log(error);
+
+		throw error;
+	}
 };
 
 export async function GetAccessToken(
 	username: string,
 	password: string,
 	type: string,
-) {
+): Promise<any> {
 	try {
 		const reqData = queryString.stringify({
 			client_id: type,
 			grant_type: "password",
-			client_secret: "c5a0c771-d997-461f-b41e-25c05c6f217d",
+			client_secret: process.env.KEYCLOAK_SECRET,
 			username,
 			password,
 		});
@@ -1499,6 +1505,35 @@ export async function GetAccessToken(
 		);
 
 		if (userIsAllowed) {
+			return {
+				access_token: res.data["access_token"],
+				refresh_token: res.data["refresh_token"],
+			};
+		}
+
+		return false;
+	} catch (error) {
+		console.log(error);
+
+		return false;
+	}
+}
+
+export async function RefreshToken(token: string, type: string): Promise<any> {
+	try {
+		const reqData = queryString.stringify({
+			client_id: type,
+			grant_type: "refresh_token",
+			client_secret: process.env.KEYCLOAK_SECRET,
+			refresh_token: token,
+		});
+
+		const res = await axios.post(
+			"http://auth-proxy:5000/auth/realms/hoivakodit/protocol/openid-connect/token",
+			reqData,
+		);
+
+		if (res.data) {
 			return {
 				access_token: res.data["access_token"],
 				refresh_token: res.data["refresh_token"],

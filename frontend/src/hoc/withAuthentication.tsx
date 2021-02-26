@@ -1,11 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-
-import keycloak from "../config/keycloak";
-
 import axios from "axios";
-import config from "../config";
-
-import queryString from "querystring";
+import config from "../components/config";
 import Cookies from "universal-cookie";
 import { AuthTypes } from "../components/authTypes";
 import { useT } from "../i18n";
@@ -16,29 +11,6 @@ interface KeycloakAuthResponse {
 	access_token: string;
 	refresh_token: string;
 }
-
-const requestTokenIntrospect = async (
-	secret: string | undefined,
-	clientId: string,
-	username: string,
-	token: string,
-): Promise<boolean> => {
-	const res = await axios.post(
-		`${config.API_URL}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
-		queryString.stringify({
-			// eslint-disable-next-line @typescript-eslint/camelcase
-			client_secret: secret,
-			// eslint-disable-next-line @typescript-eslint/camelcase
-			client_id: clientId,
-			username,
-			token,
-		}),
-	);
-
-	return (
-		res.data && res.data["realm_access"].roles.includes("valvonta-access")
-	);
-};
 
 const requestToken = async (
 	username: string,
@@ -76,22 +48,11 @@ const withAuthentication = <P extends object>(
 		const refreshToken = sessionCookies.get("keycloak-refresh-token");
 
 		if (token && refreshToken) {
-			const refreshTokenData = {
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				client_id: type,
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				grant_type: "refresh_token",
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				refresh_token: refreshToken,
-				// eslint-disable-next-line @typescript-eslint/camelcase
-				client_secret: keycloak.credentials.secret,
-			};
-
 			axios
-				.post(
-					`${config.API_URL}/auth/realms/hoivakodit/protocol/openid-connect/token`,
-					queryString.stringify(refreshTokenData),
-				)
+				.post(`${config.API_URL}/auth/refresh-token`, {
+					token: refreshToken,
+					type,
+				})
 				.then((res: { data: KeycloakAuthResponse }) => {
 					if (res.data) {
 						const token = res.data["access_token"];

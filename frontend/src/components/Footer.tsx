@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import config from "../config";
+import config from "./config";
 import { Link } from "react-router-dom";
 import { useT, useCurrentLanguage } from "../i18n";
 

@@ -3,7 +3,7 @@ import { useT } from "../i18n";
 import "../styles/PageManualSurveyEntry.scss";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import config from "../config";
+import config from "./config";
 
 import { NursingHome, GetNursingHomeResponse } from "./types";
 import Cookies from "universal-cookie";

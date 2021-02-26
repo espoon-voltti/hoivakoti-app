@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import config from "../config";
+import config from "./config";
 import { useT } from "../i18n";
 import "../styles/PageCancel.scss";
 

@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import axios from "axios";
-import config from "../config";
+import config from "./config";
 import { NursingHomeConsumer } from "./nursinghomes-context";
 
 const uploadNursingHomesCSV = async (

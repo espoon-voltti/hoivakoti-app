@@ -51,6 +51,7 @@ import {
 	UpdateSurveyTextState as UpdateSurveyTextStateDB,
 	DeleteRejectedSurveyTextResults as DeleteRejectedSurveyTextResultsDB,
 	GetAccessToken,
+	RefreshToken,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -683,6 +684,14 @@ export async function GetKeycloakAccessToken(ctx: Context): Promise<any> {
 	const { username, password, type } = ctx.request.body;
 
 	const result = await GetAccessToken(username, password, type);
+
+	return result;
+}
+
+export async function RefreshKeycloakAccessToken(ctx: Context): Promise<any> {
+	const { token, type } = ctx.request.body;
+
+	const result = await RefreshToken(token, type);
 
 	return result;
 }

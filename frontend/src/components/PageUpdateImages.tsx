@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { useParams, useHistory, Link, useLocation } from "react-router-dom";
 import { useT } from "../i18n";
 import axios from "axios";
-import config from "../config";
+import config from "./config";
 import ImageUpload from "./ImageUpload";
 import { NursingHome, NursingHomeImageName } from "./types";
 import { GetNursingHomeResponse } from "./types";

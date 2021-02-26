@@ -5,7 +5,7 @@ import "../styles/PageSurvey.scss";
 import Radio from "./Radio";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import config from "../config";
+import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome, NursingHomeImageName } from "./types";
 import { stringify } from "querystring";

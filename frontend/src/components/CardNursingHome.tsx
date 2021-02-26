@@ -3,7 +3,7 @@ import "../styles/CardNursingHome.scss";
 import { NursingHome } from "./types";
 import { Link, useLocation } from "react-router-dom";
 import { useT } from "../i18n";
-import config from "../config";
+import config from "./config";
 import VacancyStatusBadge from "./VacancyStatusBadge";
 
 type NursingHomeSmallProps = {
