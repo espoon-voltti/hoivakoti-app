@@ -13,12 +13,8 @@ services:
             KEYCLOAK_USER: admin
             KEYCLOAK_PASSWORD: "${ADMIN_PASSWORD}"
             PROXY_ADDRESS_FORWARDING: "true"
-            KEYCLOAK_IMPORT: "/keycloak/hoivakodit.json -Dkeycloak.profile.feature.upload_scripts=enabled"
-        volumes:
-            - ./keycloak/hoivakodit.json:/keycloak/hoivakodit.json
         depends_on:
             - postgres
-            - backend
         networks:
             - hoivakodit-network
 
@@ -28,8 +24,5 @@ services:
             - 5000:8080
         volumes:
             - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf
-        depends_on:
-            - backend
-            - keycloak
         networks:
             - hoivakodit-network
