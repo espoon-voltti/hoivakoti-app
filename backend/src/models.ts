@@ -1465,16 +1465,12 @@ const userIsEntitledToToken = async (
 			reqData,
 		);
 
-		console.log(res.data);
-
 		return (
 			res.data &&
 			res.data.realm_access.roles &&
 			res.data.realm_access.roles.includes("valvonta-access")
 		);
 	} catch (error) {
-		console.log(error);
-
 		throw error;
 	}
 };
@@ -1511,11 +1507,9 @@ export async function GetAccessToken(
 			};
 		}
 
-		return false;
+		return { status: "Could not retrieve token." };
 	} catch (error) {
-		console.log(error);
-
-		return false;
+		return error;
 	}
 }
 
@@ -1540,11 +1534,9 @@ export async function RefreshToken(token: string, type: string): Promise<any> {
 			};
 		}
 
-		return false;
+		return { status: "Could not refresh token." };
 	} catch (error) {
-		console.log(error);
-
-		return false;
+		return error;
 	}
 }
 
