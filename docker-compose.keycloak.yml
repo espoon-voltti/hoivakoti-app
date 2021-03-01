@@ -1,7 +1,7 @@
 version: "3"
 services:
     keycloak:
-        image: quay.io/keycloak/keycloak:latest
+        image: quay.io/keycloak/keycloak:11.0.3
         environment:
             DB_VENDOR: POSTGRES
             DB_ADDR: postgres
@@ -13,9 +13,9 @@ services:
             KEYCLOAK_USER: admin
             KEYCLOAK_PASSWORD: "${ADMIN_PASSWORD}"
             PROXY_ADDRESS_FORWARDING: "true"
-            KEYCLOAK_IMPORT: /configuration/hoivakodit.json
+            KEYCLOAK_IMPORT: "/keycloak/hoivakodit.json -Dkeycloak.profile.feature.upload_scripts=enabled"
         volumes:
-            - ./keycloak:/configuration
+            - ./keycloak/hoivakodit.json:/keycloak/hoivakodit.json
         depends_on:
             - postgres
             - backend

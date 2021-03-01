@@ -686,10 +686,14 @@ export async function GetKeycloakAccessToken(ctx: Context): Promise<any> {
 	const result = await GetAccessToken(username, password, type);
 
 	if (!result.access_token && !result.refresh_token) {
-		ctx.response.status = result.response ? result.response.status : 400;
+		const requestResponse = result.response;
+
+		ctx.response.status = requestResponse ? requestResponse.status : 400;
 
 		return {
-			status: result.statusMessage || "Something went wrong",
+			status: requestResponse
+				? requestResponse.data.error_description
+				: result.statusMessage || "Something went wrong",
 		};
 	}
 
@@ -702,10 +706,14 @@ export async function RefreshKeycloakAccessToken(ctx: Context): Promise<any> {
 	const result = await RefreshToken(token, hash, type);
 
 	if (!result.access_token && !result.refresh_token) {
-		ctx.response.status = result.response ? result.response.status : 400;
+		const requestResponse = result.response;
+
+		ctx.response.status = requestResponse ? requestResponse.status : 400;
 
 		return {
-			status: result.statusMessage || "Something went wrong",
+			status: requestResponse
+				? requestResponse.data.error_description
+				: result.statusMessage || "Something went wrong",
 		};
 	}
 
