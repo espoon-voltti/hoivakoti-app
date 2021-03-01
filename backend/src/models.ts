@@ -1468,7 +1468,7 @@ const userIsEntitledToToken = async (
 		return (
 			res.data &&
 			res.data.realm_access.roles &&
-			res.data.realm_access.roles.includes("valvonta-access")
+			res.data.realm_access.roles.includes(`${clientId}-access`)
 		);
 	} catch (error) {
 		throw error;
@@ -1501,20 +1501,38 @@ export async function GetAccessToken(
 		);
 
 		if (userIsAllowed) {
+			const hash = hashWithSalt(uuidv4(), res.data["refresh_token"]);
+			const timestamp = Date.now();
+
+			await knex("AdminSessions").insert({ hash: hash, date: timestamp });
+
 			return {
 				access_token: res.data["access_token"],
 				refresh_token: res.data["refresh_token"],
+				hash,
 			};
 		}
 
-		return { status: "Could not retrieve token." };
+		return { statusMessage: "Could not retrieve token." };
 	} catch (error) {
 		return error;
 	}
 }
 
-export async function RefreshToken(token: string, type: string): Promise<any> {
+export async function RefreshToken(
+	token: string,
+	hash: string,
+	type: string,
+): Promise<any> {
 	try {
+		const sessions = await knex("AdminSessions")
+			.select("date")
+			.where({ hash });
+
+		if (sessions.length !== 1) {
+			throw new Error("Session invalid.");
+		}
+
 		const reqData = queryString.stringify({
 			client_id: type,
 			grant_type: "refresh_token",
@@ -1531,10 +1549,11 @@ export async function RefreshToken(token: string, type: string): Promise<any> {
 			return {
 				access_token: res.data["access_token"],
 				refresh_token: res.data["refresh_token"],
+				hash,
 			};
 		}
 
-		return { status: "Could not refresh token." };
+		return { statusMessage: "Could not refresh token." };
 	} catch (error) {
 		return error;
 	}

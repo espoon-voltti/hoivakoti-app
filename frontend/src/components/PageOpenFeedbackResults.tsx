@@ -33,15 +33,20 @@ interface FeedbackResponse {
 }
 
 const requestFeedbackStateUpdate = async (
+	key: string,
 	answerId: string | string[],
 	newState: FeedbackState,
 ): Promise<void> => {
 	try {
-		await axios.post(`${config.API_URL}/survey/text-results`, {
-			// eslint-disable-next-line @typescript-eslint/camelcase
-			feedback_state: newState,
-			answerId: answerId,
-		});
+		await axios.post(
+			`${config.API_URL}/survey/text-results`,
+			{
+				// eslint-disable-next-line @typescript-eslint/camelcase
+				feedback_state: newState,
+				answerId: answerId,
+			},
+			{ headers: { Authentication: key } },
+		);
 	} catch (error) {
 		console.error(error);
 
@@ -53,43 +58,46 @@ const PageOpenFeedbackResults: FC = () => {
 	const [results, setResults] = useState<OpenFeedback[]>([]);
 	const [filteredResults, setFilteredResults] = useState<OpenFeedback[]>([]);
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[]>([]);
+	const [sessionCookies] = useState<Cookies>(new Cookies());
 
 	const history = useHistory();
 	const { search } = useLocation();
 
 	useEffect(() => {
-		// axios
-		// 	.get(`${config.API_URL}/survey/text-results`, {
-		// 		headers: {
-		// 			Authentication: key,
-		// 		},
-		// 	})
-		// 	.then((res: FeedbackResponse) => {
-		// 		const data = res.data;
+		const key = sessionCookies.get("hoivakoti_session");
 
-		// 		const openCases = data.filter(
-		// 			(result: OpenFeedback) =>
-		// 				result.feedback_state === FeedbackState.OPEN,
-		// 		);
+		axios
+			.get(`${config.API_URL}/survey/text-results`, {
+				headers: {
+					Authentication: key,
+				},
+			})
+			.then((res: FeedbackResponse) => {
+				const data = res.data;
 
-		// 		const approvedCases = data.filter(
-		// 			(result: OpenFeedback) =>
-		// 				result.feedback_state === FeedbackState.APPROVED,
-		// 		);
+				const openCases = data.filter(
+					(result: OpenFeedback) =>
+						result.feedback_state === FeedbackState.OPEN,
+				);
 
-		// 		const rejectedCases = data.filter(
-		// 			(result: OpenFeedback) =>
-		// 				result.feedback_state === FeedbackState.REJECTED,
-		// 		);
+				const approvedCases = data.filter(
+					(result: OpenFeedback) =>
+						result.feedback_state === FeedbackState.APPROVED,
+				);
 
-		// 		const sortResults = [
-		// 			...openCases,
-		// 			...approvedCases,
-		// 			...rejectedCases,
-		// 		];
+				const rejectedCases = data.filter(
+					(result: OpenFeedback) =>
+						result.feedback_state === FeedbackState.REJECTED,
+				);
 
-		// 		setResults(sortResults);
-		// 	});
+				const sortResults = [
+					...openCases,
+					...approvedCases,
+					...rejectedCases,
+				];
+
+				setResults(sortResults);
+			});
 
 		axios
 			.get(config.API_URL + "/nursing-homes")
@@ -100,7 +108,7 @@ const PageOpenFeedbackResults: FC = () => {
 				console.error(error.message);
 				throw error;
 			});
-	}, []);
+	}, [sessionCookies]);
 
 	const filterOpen = useT("filterOpen");
 	const filterApproved = useT("filterApproved");
@@ -196,7 +204,13 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
-				await requestFeedbackStateUpdate(id, FeedbackState.APPROVED);
+				const key = sessionCookies.get("hoivakoti_session");
+
+				await requestFeedbackStateUpdate(
+					key,
+					id,
+					FeedbackState.APPROVED,
+				);
 				setResults(newResults);
 			}
 		} catch (error) {
@@ -220,7 +234,13 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
-				await requestFeedbackStateUpdate(id, FeedbackState.REJECTED);
+				const key = sessionCookies.get("hoivakoti_session");
+
+				await requestFeedbackStateUpdate(
+					key,
+					id,
+					FeedbackState.REJECTED,
+				);
 				setResults(newResults);
 			}
 		} catch (error) {
@@ -241,7 +261,10 @@ const PageOpenFeedbackResults: FC = () => {
 					result => result.id,
 				);
 
+				const key = sessionCookies.get("hoivakoti_session");
+
 				await requestFeedbackStateUpdate(
+					key,
 					openResultsIDs,
 					FeedbackState.APPROVED,
 				);

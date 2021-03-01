@@ -11,6 +11,7 @@ import { InputTypes } from "../shared/types/input-types";
 interface KeycloakAuthResponse {
 	access_token: string;
 	refresh_token: string;
+	hash: string;
 }
 
 interface InputField {
@@ -83,11 +84,13 @@ const withAuthentication = <P extends object>(
 	useEffect(() => {
 		const token = sessionCookies.get("keycloak-token");
 		const refreshToken = sessionCookies.get("keycloak-refresh-token");
+		const hash = sessionCookies.get("hoivakoti_session");
 
-		if (token && refreshToken) {
+		if (token && refreshToken && hash) {
 			axios
 				.post(`${config.API_URL}/auth/refresh-token`, {
 					token: refreshToken,
+					hash,
 					type,
 				})
 				.then((res: { data: KeycloakAuthResponse }) => {
@@ -95,11 +98,23 @@ const withAuthentication = <P extends object>(
 						const token = res.data["access_token"];
 						const refreshToken = res.data["refresh_token"];
 
-						sessionCookies.set("keycloak-token", token);
+						sessionCookies.set("keycloak-token", token, {
+							path: "/",
+							maxAge: 36000,
+						});
 						sessionCookies.set(
 							"keycloak-refresh-token",
 							refreshToken,
+							{
+								path: "/",
+								maxAge: 36000,
+							},
 						);
+
+						sessionCookies.set("hoivakoti_session", hash, {
+							path: "/",
+							maxAge: 36000,
+						});
 
 						setIsAuthenticated(true);
 					}
@@ -128,9 +143,21 @@ const withAuthentication = <P extends object>(
 		if (credentials) {
 			const token = credentials["access_token"];
 			const refreshToken = credentials["refresh_token"];
+			const hash = credentials["hash"];
 
-			sessionCookies.set("keycloak-token", token);
-			sessionCookies.set("keycloak-refresh-token", refreshToken);
+			sessionCookies.set("keycloak-token", token, {
+				path: "/",
+				maxAge: 36000,
+			});
+			sessionCookies.set("keycloak-refresh-token", refreshToken, {
+				path: "/",
+				maxAge: 36000,
+			});
+
+			sessionCookies.set("hoivakoti_session", hash, {
+				path: "/",
+				maxAge: 36000,
+			});
 
 			setIsAuthenticated(true);
 		}

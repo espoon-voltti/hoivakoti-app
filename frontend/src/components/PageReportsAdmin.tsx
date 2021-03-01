@@ -1,14 +1,13 @@
 import React, { useState, useEffect, FC } from "react";
 import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
-import { useHistory, useLocation, Link } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import "../styles/PageReportsAdmin.scss";
 import config from "./config";
 import queryString from "query-string";
 import axios from "axios";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
-import Cookies from "universal-cookie";
 
 import withAuthentication from "../hoc/withAuthentication";
 import { AuthTypes } from "../shared/types/auth-types";
@@ -24,8 +23,6 @@ interface SearchFilters {
 }
 
 const PageReportsAdmin: FC = () => {
-	const [sessionCookies] = useState<Cookies>(new Cookies());
-
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
 	);
@@ -100,14 +97,14 @@ const PageReportsAdmin: FC = () => {
 	useEffect(() => {
 		axios
 			.get(config.API_URL + "/nursing-homes")
-			.then(function(response: { data: NursingHome[] }) {
+			.then((response: { data: NursingHome[] }) => {
 				setNursingHomes(response.data);
 			})
 			.catch((error: Error) => {
 				console.error(error.message);
 				throw error;
 			});
-	}, [sessionCookies]);
+	}, []);
 
 	const parsed = queryString.parse(search);
 	const alue = parsed.alue
@@ -168,7 +165,6 @@ const PageReportsAdmin: FC = () => {
 		}),
 	];
 
-	//const filtersCityTranslatedInclude = nursinghome.language.includes(useTFI(searchFilters.language));
 	useEffect(() => {
 		const filteredNHs: NursingHome[] | null =
 			nursingHomes &&
@@ -497,7 +493,6 @@ const PageReportsAdmin: FC = () => {
 		const stringfield = queryString.stringify(newSearchFilters);
 		history.push("/valvonta?" + stringfield);
 	};
-
 	return (
 		<div>
 			<div className="filters filters-admin">
