@@ -11,7 +11,7 @@ import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
 
 import withAuthentication from "../hoc/withAuthentication";
-import { AuthTypes } from "./authTypes";
+import { AuthTypes } from "../shared/types/auth-types";
 
 type Language = string;
 

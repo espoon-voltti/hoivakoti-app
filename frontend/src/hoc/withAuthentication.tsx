@@ -2,22 +2,11 @@ import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import config from "../components/config";
 import Cookies from "universal-cookie";
-import { AuthTypes } from "../components/authTypes";
+import { AuthTypes } from "../shared/types/auth-types";
 import { useT } from "../i18n";
 
 import "../styles/Auth.scss";
-
-enum InputTypes {
-	text = "text",
-	textarea = "textarea",
-	number = "number",
-	checkbox = "checkbox",
-	email = "email",
-	url = "url",
-	tel = "tel",
-	radio = "radio",
-	password = "password",
-}
+import { InputTypes } from "../shared/types/input-types";
 
 interface KeycloakAuthResponse {
 	access_token: string;

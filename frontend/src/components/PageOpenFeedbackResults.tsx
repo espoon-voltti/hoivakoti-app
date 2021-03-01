@@ -7,11 +7,11 @@ import axios from "axios";
 import config from "./config";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
-import { FeedbackState } from "./feedback-state";
+import { FeedbackState } from "../shared/types/feedback-state";
 
 import "../styles/PageOpenFeedbackResults.scss";
 import withAuthentication from "../hoc/withAuthentication";
-import { AuthTypes } from "./authTypes";
+import { AuthTypes } from "../shared/types/auth-types";
 
 interface SearchFilters {
 	readonly tila?: string[];

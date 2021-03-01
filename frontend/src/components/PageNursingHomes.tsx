@@ -9,7 +9,7 @@ import axios from "axios";
 import Map from "./Map";
 import i18next, { TranslationKey, useCurrentLanguage, useT } from "../i18n";
 import { NursingHome } from "./types";
-import { Commune } from "./commune";
+import { Commune } from "../shared/types/commune";
 
 type Language = string;
 

@@ -1,4 +1,4 @@
-import { Commune } from "./commune";
+import { Commune } from "../shared/types/commune";
 
 export type NursingHomeImageName =
 	| "apartment"
