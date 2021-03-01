@@ -7,17 +7,45 @@ import { useT } from "../i18n";
 
 import "../styles/Auth.scss";
 
+enum InputTypes {
+	text = "text",
+	textarea = "textarea",
+	number = "number",
+	checkbox = "checkbox",
+	email = "email",
+	url = "url",
+	tel = "tel",
+	radio = "radio",
+	password = "password",
+}
+
 interface KeycloakAuthResponse {
 	access_token: string;
 	refresh_token: string;
 }
 
+interface InputField {
+	label: string;
+	type: InputTypes;
+	name: string;
+	required: boolean;
+	valid: boolean;
+	touched: boolean;
+	value: string;
+}
+
+interface LoginFormData {
+	username: string;
+	password: string;
+}
+
 const requestToken = async (
-	username: string,
-	password: string,
+	data: LoginFormData,
 	type: string,
 ): Promise<KeycloakAuthResponse | undefined> => {
 	try {
+		const { username, password } = data;
+
 		const res = await axios.post(`${config.API_URL}/auth/get-token`, {
 			username,
 			password,
@@ -35,11 +63,31 @@ const withAuthentication = <P extends object>(
 	type: AuthTypes,
 ) => ({ ...props }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-	const [username, setUsername] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
 	const [loading, setIsLoading] = useState<boolean>(true);
-
 	const [sessionCookies] = useState<Cookies>(new Cookies());
+
+	const [form, setForm] = useState<InputField[]>([
+		{
+			label: "Käyttäjänimi",
+			type: InputTypes.text,
+			name: "username",
+			required: true,
+			valid: false,
+			touched: false,
+			value: "",
+		},
+		{
+			label: "Salasana",
+			type: InputTypes.password,
+			name: "password",
+			required: true,
+			valid: false,
+			touched: false,
+			value: "",
+		},
+	]);
+
+	const [formIsValid, setFormIsValid] = useState(false);
 
 	const loadingText = useT("loadingText");
 
@@ -80,7 +128,13 @@ const withAuthentication = <P extends object>(
 	): Promise<void> => {
 		event.preventDefault();
 
-		const credentials = await requestToken(username, password, type);
+		const formData: any = {};
+
+		for (const field of form) {
+			formData[field.name] = field.value;
+		}
+
+		const credentials = await requestToken(formData, type);
 
 		if (credentials) {
 			const token = credentials["access_token"];
@@ -91,6 +145,40 @@ const withAuthentication = <P extends object>(
 
 			setIsAuthenticated(true);
 		}
+	};
+
+	const validateForm = (): void => {
+		let validForm = true;
+
+		const validatedForm = [...form];
+
+		for (const input of validatedForm) {
+			const validField = input.value !== "";
+
+			if (!validField) {
+				validForm = false;
+			}
+		}
+
+		setFormIsValid(validForm);
+	};
+
+	const handleInputChange = (input: InputField, newValue: string): void => {
+		const { name } = input;
+
+		const newInput = { ...input };
+
+		newInput.valid = newValue !== "";
+		newInput.touched = true;
+
+		newInput.value = newValue;
+
+		const updateForm = [...form];
+		const index = updateForm.findIndex(field => field.name === name);
+
+		updateForm[index] = newInput;
+
+		setForm(updateForm);
 	};
 
 	const auth: JSX.Element | null = (
@@ -104,38 +192,63 @@ const withAuthentication = <P extends object>(
 				<div className="auth-container">
 					<form className="login-form" onSubmit={handleLogin}>
 						<h2>Kirjaudu työkaluun</h2>
-						<div className="input-container">
-							<label className="label" htmlFor="username">
-								Käyttäjänimi
-							</label>
-							<input
-								className="input"
-								type="text"
-								name="username"
-								id="username"
-								value={username}
-								onChange={event => {
-									setUsername(event.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-container">
-							<label className="label" htmlFor="password">
-								Salasana
-							</label>
-							<input
-								className="input"
-								type="password"
-								name="password"
-								id="password"
-								value={password}
-								onChange={event => {
-									setPassword(event.target.value);
-								}}
-							></input>
-						</div>
+						{form.map((input: InputField, index: number) => {
+							const inputInvalid =
+								input.required && input.touched && !input.valid;
+
+							return (
+								<div
+									className="field"
+									key={`${input.name}_${index}`}
+								>
+									<label
+										className="label"
+										htmlFor={input.type}
+									>
+										{input.label}
+										<span
+											className="asterisk"
+											aria-hidden="true"
+										>
+											{" "}
+											*
+										</span>
+									</label>
+									<div className="control">
+										<input
+											className="input"
+											type={input.type}
+											name={input.name}
+											id={input.name}
+											value={input.value}
+											required={input.required}
+											aria-required={input.required}
+											onChange={event => {
+												handleInputChange(
+													input,
+													event.target.value,
+												);
+											}}
+											onBlur={validateForm}
+										></input>
+										{inputInvalid ? (
+											<span className="icon"></span>
+										) : null}
+									</div>
+									{inputInvalid ? (
+										<p className="help">
+											Kenttä on pakollinen
+										</p>
+									) : null}
+								</div>
+							);
+						})}
 						<div className="button-container">
-							<button className="btn" type="submit">
+							<button
+								className="btn"
+								type="submit"
+								disabled={!formIsValid}
+							>
 								Kirjaudu sisään
 							</button>
 						</div>

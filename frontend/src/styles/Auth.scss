@@ -8,13 +8,16 @@
 	}
 
 	.login-form {
-		.input-container {
-			margin-bottom: 1rem;
-		}
-
 		.button-container {
 			padding-top: 1rem;
 			float: right;
+
+			.btn {
+				&:disabled {
+					cursor: default;
+					opacity: 0.5;
+				}
+			}
 		}
 	}
 }
