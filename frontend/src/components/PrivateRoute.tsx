@@ -6,15 +6,7 @@ import { AuthContext } from "./auth-context";
 import InputTypes from "../shared/types/input-types";
 
 import "../styles/Auth.scss";
-import Cookies from "universal-cookie";
-import axios from "axios";
-import config from "./config";
-
-interface KeycloakAuthResponse {
-	access_token: string;
-	refresh_token: string;
-	hash: string;
-}
+import AuthTypes from "../shared/types/auth-types";
 
 interface InputField {
 	label: string;
@@ -34,9 +26,7 @@ interface ProtectedRouteProps extends RouteProps {
 const PrivateRoute: FC<ProtectedRouteProps> = props => {
 	const { component: Component, authType, ...rest } = props;
 
-	const { isAuthenticated, setIsAuthenticated, login } = useContext(
-		AuthContext,
-	);
+	const { isAuthenticated, login, refreshToken } = useContext(AuthContext);
 
 	const [formIsValid, setFormIsValid] = useState(false);
 	const [form, setForm] = useState<InputField[]>([
@@ -59,51 +49,10 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 			value: "",
 		},
 	]);
-	const [sessionCookies] = useState<Cookies>(new Cookies());
 
 	useEffect(() => {
-		const token = sessionCookies.get("keycloak-token");
-		const refreshToken = sessionCookies.get("keycloak-refresh-token");
-		const hash = sessionCookies.get("hoivakoti_session");
-
-		if (token && refreshToken && hash) {
-			axios
-				.post(`${config.API_URL}/auth/refresh-token`, {
-					token: refreshToken,
-					hash,
-					authType,
-				})
-				.then((res: { data: KeycloakAuthResponse }) => {
-					if (res.data) {
-						const token = res.data["access_token"];
-						const refreshToken = res.data["refresh_token"];
-
-						sessionCookies.set("keycloak-token", token, {
-							path: "/",
-							maxAge: 36000,
-						});
-						sessionCookies.set(
-							"keycloak-refresh-token",
-							refreshToken,
-							{
-								path: "/",
-								maxAge: 36000,
-							},
-						);
-
-						sessionCookies.set("hoivakoti_session", hash, {
-							path: "/",
-							maxAge: 36000,
-						});
-
-						setIsAuthenticated(true);
-					}
-				})
-				.catch(err => {
-					console.error(err);
-				});
-		}
-	}, [sessionCookies, setIsAuthenticated, authType]);
+		refreshToken(authType);
+	}, [authType, refreshToken]);
 
 	const handleLogin = async (
 		event: React.FormEvent<HTMLFormElement>,
@@ -116,7 +65,7 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 			formData[field.name] = field.value;
 		}
 
-		await login(formData, authType);
+		login(formData, authType as AuthTypes);
 	};
 
 	const validateForm = (): void => {

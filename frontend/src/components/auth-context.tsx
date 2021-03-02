@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { createContext, FC, useState } from "react";
 import Cookies from "universal-cookie";
+import AuthTypes from "../shared/types/auth-types";
 import config from "./config";
 
 interface KeycloakAuthResponse {
@@ -14,13 +15,21 @@ interface LoginRequestData {
 	password: string;
 }
 
-export const AuthContext = createContext({
-	isAuthenticated: false,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	setIsAuthenticated: (isAutenticated: boolean): void => {},
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	login: (data: LoginRequestData, type: string) => {},
-});
+interface LogoutRequestData {
+	token: string;
+	hash: string;
+}
+
+interface AuthContextState {
+	isAuthenticated: boolean;
+	login: (data: LoginRequestData, type: AuthTypes) => Promise<void>;
+	logout: (data: LogoutRequestData, type: AuthTypes) => Promise<void>;
+	refreshToken: (type: string) => Promise<void>;
+}
+
+export const AuthContext = createContext<AuthContextState>(
+	{} as AuthContextState,
+);
 
 const AuthContextProvider: FC = ({ children }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -28,7 +37,7 @@ const AuthContextProvider: FC = ({ children }) => {
 
 	const login = async (
 		data: LoginRequestData,
-		type: string,
+		type: AuthTypes,
 	): Promise<void> => {
 		try {
 			const { username, password } = data;
@@ -39,7 +48,7 @@ const AuthContextProvider: FC = ({ children }) => {
 				type,
 			});
 
-			const credentials = res.data;
+			const credentials = res.data as KeycloakAuthResponse;
 
 			if (credentials) {
 				const token = credentials["access_token"];
@@ -67,9 +76,70 @@ const AuthContextProvider: FC = ({ children }) => {
 		}
 	};
 
+	const logout = async (
+		data: LogoutRequestData,
+		type: AuthTypes,
+	): Promise<void> => {
+		try {
+			const { token, hash } = data;
+
+			await axios.post(`${config.API_URL}/auth/logout-token`, {
+				token,
+				hash,
+				type,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const refreshToken = async (type: string): Promise<void> => {
+		const token = sessionCookies.get("keycloak-token");
+		const refreshToken = sessionCookies.get("keycloak-refresh-token");
+		const hash = sessionCookies.get("hoivakoti_session");
+
+		if (token && refreshToken && hash) {
+			axios
+				.post(`${config.API_URL}/auth/refresh-token`, {
+					token: refreshToken,
+					hash,
+					type,
+				})
+				.then((res: { data: KeycloakAuthResponse }) => {
+					if (res.data) {
+						const token = res.data["access_token"];
+						const refreshToken = res.data["refresh_token"];
+
+						sessionCookies.set("keycloak-token", token, {
+							path: "/",
+							maxAge: 36000,
+						});
+						sessionCookies.set(
+							"keycloak-refresh-token",
+							refreshToken,
+							{
+								path: "/",
+								maxAge: 36000,
+							},
+						);
+
+						sessionCookies.set("hoivakoti_session", hash, {
+							path: "/",
+							maxAge: 36000,
+						});
+
+						setIsAuthenticated(true);
+					}
+				})
+				.catch(err => {
+					console.error(err);
+				});
+		}
+	};
+
 	return (
 		<AuthContext.Provider
-			value={{ isAuthenticated, setIsAuthenticated, login }}
+			value={{ isAuthenticated, login, logout, refreshToken }}
 		>
 			{children}
 		</AuthContext.Provider>

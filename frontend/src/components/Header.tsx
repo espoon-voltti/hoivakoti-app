@@ -3,30 +3,13 @@ import { NavLink, Link, useLocation, useHistory } from "react-router-dom";
 import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../i18n";
 import i18next from "i18next";
-import axios from "axios";
+
 import Cookies from "universal-cookie";
 import AuthTypes from "../shared/types/auth-types";
 import { AuthContext } from "./auth-context";
 
 const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
-};
-
-const requestSurveillanceLogout = async (
-	data: any,
-	type: string,
-): Promise<void> => {
-	try {
-		const { token, hash } = data;
-
-		await axios.post(`${config.API_URL}/auth/logout-token`, {
-			token,
-			hash,
-			type,
-		});
-	} catch (error) {
-		console.error(error);
-	}
 };
 
 const Header: FC = () => {
@@ -37,7 +20,7 @@ const Header: FC = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [sessionCookies] = useState<Cookies>(new Cookies());
 
-	const { isAuthenticated } = useContext(AuthContext);
+	const { isAuthenticated, logout } = useContext(AuthContext);
 
 	useEffect(() => {
 		setIsMobileMenuOpen(false);
@@ -60,10 +43,7 @@ const Header: FC = () => {
 		const hash = sessionCookies.get("hoivakoti_session");
 
 		if (token && refreshToken && hash) {
-			await requestSurveillanceLogout(
-				{ token: refreshToken, hash },
-				AuthTypes.VALVONTA,
-			);
+			await logout({ token: refreshToken, hash }, AuthTypes.VALVONTA);
 
 			sessionCookies.remove("keycloak-token");
 			sessionCookies.remove("keycloak-refresh-token");
