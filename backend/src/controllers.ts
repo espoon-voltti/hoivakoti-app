@@ -726,7 +726,7 @@ export async function LogoutKeycloakAccessToken(ctx: Context): Promise<any> {
 
 	const result = await LogoutAccessToken(token, hash, type);
 
-	if (!result) {
+	if (!result.success) {
 		const requestResponse = result.response;
 
 		ctx.response.status = requestResponse ? requestResponse.status : 400;
