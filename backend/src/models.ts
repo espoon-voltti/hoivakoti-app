@@ -1467,8 +1467,8 @@ const userIsEntitledToToken = async (
 
 		return (
 			res.data &&
-			res.data.realm_access.roles &&
-			res.data.realm_access.roles.includes(`${clientId}-access`)
+			res.data["realm_access"].roles &&
+			res.data["realm_access"].roles.includes(`${clientId}-access`)
 		);
 	} catch (error) {
 		throw error;

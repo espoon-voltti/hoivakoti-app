@@ -692,7 +692,7 @@ export async function GetKeycloakAccessToken(ctx: Context): Promise<any> {
 
 		return {
 			status: requestResponse
-				? requestResponse.data.error_description
+				? requestResponse.data["error_description"]
 				: result.statusMessage || "Something went wrong",
 		};
 	}
@@ -712,7 +712,7 @@ export async function RefreshKeycloakAccessToken(ctx: Context): Promise<any> {
 
 		return {
 			status: requestResponse
-				? requestResponse.data.error_description
+				? requestResponse.data["error_description"]
 				: result.statusMessage || "Something went wrong",
 		};
 	}
