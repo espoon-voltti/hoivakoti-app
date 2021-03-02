@@ -9,8 +9,8 @@ import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
 import Checkbox from "./Checkbox";
 
-import { Commune } from "../shared/types/commune";
-import { InputTypes } from "../shared/types/input-types";
+import Commune from "../shared/types/commune";
+import InputTypes from "../shared/types/input-types";
 
 type NursingHomeKey = keyof NursingHome;
 type InputFieldValue = string | number | boolean | Commune[] | null;

@@ -1,4 +1,4 @@
-export enum InputTypes {
+enum InputTypes {
 	text = "text",
 	textarea = "textarea",
 	number = "number",
@@ -9,3 +9,5 @@ export enum InputTypes {
 	radio = "radio",
 	password = "password",
 }
+
+export default InputTypes;

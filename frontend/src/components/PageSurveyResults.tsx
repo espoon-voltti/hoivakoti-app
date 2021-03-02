@@ -8,7 +8,7 @@ import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
 
-import { FeedbackState } from "../shared/types/feedback-state";
+import FeedbackState from "../shared/types/feedback-state";
 
 const PageSurveyResults: FC = () => {
 	const { id } = useParams() as any;

@@ -1530,7 +1530,7 @@ export async function RefreshToken(
 			.where({ hash });
 
 		if (sessions.length !== 1) {
-			throw new Error("Session invalid.");
+			return { statusMessage: "Session invalid." };
 		}
 
 		const reqData = queryString.stringify({

@@ -2,11 +2,12 @@ import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import config from "../components/config";
 import Cookies from "universal-cookie";
-import { AuthTypes } from "../shared/types/auth-types";
 import { useT } from "../i18n";
 
+import InputTypes from "../shared/types/input-types";
+import AuthTypes from "../shared/types/auth-types";
+
 import "../styles/Auth.scss";
-import { InputTypes } from "../shared/types/input-types";
 
 interface KeycloakAuthResponse {
 	access_token: string;

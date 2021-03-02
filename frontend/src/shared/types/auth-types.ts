@@ -1,3 +1,5 @@
-export enum AuthTypes {
+enum AuthTypes {
 	VALVONTA = "valvonta",
 }
+
+export default AuthTypes;
