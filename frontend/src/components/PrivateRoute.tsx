@@ -32,7 +32,7 @@ interface ProtectedRouteProps extends RouteProps {
 }
 
 const PrivateRoute: FC<ProtectedRouteProps> = props => {
-	const { component: Component, ...rest } = props;
+	const { component: Component, authType, ...rest } = props;
 
 	const { isAuthenticated, setIsAuthenticated, login } = useContext(
 		AuthContext,
@@ -61,8 +61,6 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 	]);
 	const [sessionCookies] = useState<Cookies>(new Cookies());
 
-	const type = props.authType;
-
 	useEffect(() => {
 		const token = sessionCookies.get("keycloak-token");
 		const refreshToken = sessionCookies.get("keycloak-refresh-token");
@@ -73,7 +71,7 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 				.post(`${config.API_URL}/auth/refresh-token`, {
 					token: refreshToken,
 					hash,
-					type,
+					authType,
 				})
 				.then((res: { data: KeycloakAuthResponse }) => {
 					if (res.data) {
@@ -105,7 +103,7 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 					console.error(err);
 				});
 		}
-	}, [sessionCookies, setIsAuthenticated, type]);
+	}, [sessionCookies, setIsAuthenticated, authType]);
 
 	const handleLogin = async (
 		event: React.FormEvent<HTMLFormElement>,
@@ -118,7 +116,7 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 			formData[field.name] = field.value;
 		}
 
-		login(formData, props.authType);
+		login(formData, authType);
 	};
 
 	const validateForm = (): void => {
