@@ -14,19 +14,15 @@ const setLanguage = (lng: Language): void => {
 const requestSurveillanceLogout = async (
 	data: any,
 	type: string,
-): Promise<any> => {
+): Promise<void> => {
 	try {
 		const { token, hash } = data;
 
-		const res = await axios.post(`${config.API_URL}/auth/logout-token`, {
+		await axios.post(`${config.API_URL}/auth/logout-token`, {
 			token,
 			hash,
 			type,
 		});
-
-		console.log(res);
-
-		return res.data;
 	} catch (error) {
 		console.error(error);
 	}
