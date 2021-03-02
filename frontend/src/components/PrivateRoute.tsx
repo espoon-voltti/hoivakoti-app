@@ -116,7 +116,7 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 			formData[field.name] = field.value;
 		}
 
-		login(formData, authType);
+		await login(formData, authType);
 	};
 
 	const validateForm = (): void => {
