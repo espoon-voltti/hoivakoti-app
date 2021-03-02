@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import { NavLink, Link, useLocation, useHistory } from "react-router-dom";
 import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../i18n";
@@ -6,6 +6,7 @@ import i18next from "i18next";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import AuthTypes from "../shared/types/auth-types";
+import { AuthContext } from "./auth-context";
 
 const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
@@ -35,6 +36,8 @@ const Header: FC = () => {
 	const history = useHistory();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [sessionCookies] = useState<Cookies>(new Cookies());
+
+	const { isAuthenticated } = useContext(AuthContext);
 
 	useEffect(() => {
 		setIsMobileMenuOpen(false);
@@ -129,9 +132,11 @@ const Header: FC = () => {
 						</NavLink>
 					</li>
 				</ul>
-				<button className="btn" onClick={surveillanceLogout}>
-					Kirjaudu ulos
-				</button>
+				{isAuthenticated ? (
+					<button className="btn" onClick={surveillanceLogout}>
+						Kirjaudu ulos
+					</button>
+				) : null}
 			</div>
 		);
 	}

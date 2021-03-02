@@ -8,8 +8,6 @@ import config from "./config";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
 import FeedbackState from "../shared/types/feedback-state";
-import AuthTypes from "../shared/types/auth-types";
-import withAuthentication from "../hoc/withAuthentication";
 
 import "../styles/PageOpenFeedbackResults.scss";
 
@@ -476,4 +474,4 @@ const PageOpenFeedbackResults: FC = () => {
 	);
 };
 
-export default withAuthentication(PageOpenFeedbackResults, AuthTypes.VALVONTA);
+export default PageOpenFeedbackResults;

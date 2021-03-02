@@ -8,9 +8,6 @@ import queryString from "query-string";
 import axios from "axios";
 import { useT } from "../i18n";
 import { NursingHome } from "./types";
-import AuthTypes from "../shared/types/auth-types";
-
-import withAuthentication from "../hoc/withAuthentication";
 
 type Language = string;
 
@@ -534,4 +531,4 @@ const PageReportsAdmin: FC = () => {
 	);
 };
 
-export default withAuthentication(PageReportsAdmin, AuthTypes.VALVONTA);
+export default PageReportsAdmin;
