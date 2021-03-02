@@ -26,12 +26,14 @@ services:
         depends_on:
             - postgres
         ports:
-            - "4000:4000"
+            - "4001:4000"
         volumes:
             - ./frontend:/usr/app/
             - /usr/app/node_modules
         working_dir: /usr/app/
         command: sh -c "yarn install && yarn run start"
+        networks:
+            - hoivakodit-network
 
     postgres:
         ports:

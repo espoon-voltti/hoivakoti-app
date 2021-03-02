@@ -29,7 +29,7 @@
 		"universal-cookie": "4.0.3"
 	},
 	"scripts": {
-		"start": "PORT=4000 react-scripts start",
+		"start": "PORT=4001 react-scripts start",
 		"build": "CI=false react-scripts build",
 		"test": "npx nightwatch --test e2e-tests/test.js --env chrome",
 		"lint": "eslint . --ext .tsx,.ts",
