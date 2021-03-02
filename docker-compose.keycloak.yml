@@ -13,6 +13,9 @@ services:
             KEYCLOAK_USER: admin
             KEYCLOAK_PASSWORD: "${ADMIN_PASSWORD}"
             PROXY_ADDRESS_FORWARDING: "true"
+            KEYCLOAK_IMPORT: "/keycloak/hoivakodit-realm.json -Dkeycloak.profile.feature.upload_scripts=enabled"
+        volumes:
+            - ./keycloak/hoivakodit-realm.json:/keycloak/hoivakodit-realm.json
         depends_on:
             - postgres
         networks:
