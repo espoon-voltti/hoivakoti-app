@@ -1559,6 +1559,43 @@ export async function RefreshToken(
 	}
 }
 
+export async function LogoutAccessToken(
+	token: string,
+	hash: string,
+	type: string,
+): Promise<any> {
+	try {
+		const removeSession = await knex("AdminSessions")
+			.where({ hash })
+			.del();
+
+		if (removeSession !== 1) {
+			return { statusMessage: "Could not find session." };
+		}
+
+		const reqData = queryString.stringify({
+			client_id: type,
+			client_secret: process.env.KEYCLOAK_SECRET,
+			refresh_token: token,
+		});
+
+		const res = await axios.post(
+			"http://auth-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/logout",
+			reqData,
+		);
+
+		if (res && res.status) {
+			if (res.status === 200 || res.status === 204) {
+				return { success: true };
+			}
+		}
+
+		return { statusMessage: "Could not logout token." };
+	} catch (error) {
+		return error;
+	}
+}
+
 //DUMMY DATA FOR TESTING
 
 export async function addDummyNursingHome(): Promise<string> {

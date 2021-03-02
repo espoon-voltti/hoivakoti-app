@@ -52,6 +52,7 @@ import {
 	DeleteRejectedSurveyTextResults as DeleteRejectedSurveyTextResultsDB,
 	GetAccessToken,
 	RefreshToken,
+	LogoutAccessToken,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -706,6 +707,26 @@ export async function RefreshKeycloakAccessToken(ctx: Context): Promise<any> {
 	const result = await RefreshToken(token, hash, type);
 
 	if (!result["access_token"] && !result["refresh_token"]) {
+		const requestResponse = result.response;
+
+		ctx.response.status = requestResponse ? requestResponse.status : 400;
+
+		return {
+			status: requestResponse
+				? requestResponse.data["error_description"]
+				: result.statusMessage || "Something went wrong",
+		};
+	}
+
+	return result;
+}
+
+export async function LogoutKeycloakAccessToken(ctx: Context): Promise<any> {
+	const { token, hash, type } = ctx.request.body;
+
+	const result = await LogoutAccessToken(token, hash, type);
+
+	if (!result) {
 		const requestResponse = result.response;
 
 		ctx.response.status = requestResponse ? requestResponse.status : 400;

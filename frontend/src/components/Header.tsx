@@ -1,18 +1,44 @@
 import React, { FC, useState, useEffect } from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation, useHistory } from "react-router-dom";
 import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../i18n";
 import i18next from "i18next";
+import axios from "axios";
+import Cookies from "universal-cookie";
+import AuthTypes from "../shared/types/auth-types";
 
 const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
+};
+
+const requestSurveillanceLogout = async (
+	data: any,
+	type: string,
+): Promise<any> => {
+	try {
+		const { token, hash } = data;
+
+		const res = await axios.post(`${config.API_URL}/auth/logout-token`, {
+			token,
+			hash,
+			type,
+		});
+
+		console.log(res);
+
+		return res.data;
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 const Header: FC = () => {
 	const linkJumpToContent = useT("linkJumpToContent");
 	const currentLanguage = useCurrentLanguage();
 	const location = useLocation();
+	const history = useHistory();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [sessionCookies] = useState<Cookies>(new Cookies());
 
 	useEffect(() => {
 		setIsMobileMenuOpen(false);
@@ -28,6 +54,25 @@ const Header: FC = () => {
 
 	const surveillancePage =
 		location.pathname.indexOf("valvonta") == -1 ? false : true;
+
+	const surveillanceLogout = async (): Promise<void> => {
+		const token = sessionCookies.get("keycloak-token");
+		const refreshToken = sessionCookies.get("keycloak-refresh-token");
+		const hash = sessionCookies.get("hoivakoti_session");
+
+		if (token && refreshToken && hash) {
+			await requestSurveillanceLogout(
+				{ token: refreshToken, hash },
+				AuthTypes.VALVONTA,
+			);
+
+			sessionCookies.remove("keycloak-token");
+			sessionCookies.remove("keycloak-refresh-token");
+			sessionCookies.remove("hoivakoti_session");
+
+			history.go(0);
+		}
+	};
 
 	let minorHeader: JSX.Element | null = null;
 	let navItems: JSX.Element | null = <div className="nav-menus"></div>;
@@ -88,6 +133,9 @@ const Header: FC = () => {
 						</NavLink>
 					</li>
 				</ul>
+				<button className="btn" onClick={surveillanceLogout}>
+					Kirjaudu ulos
+				</button>
 			</div>
 		);
 	}

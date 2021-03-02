@@ -46,6 +46,7 @@ import {
 	GetSurveyApprovedResults,
 	GetKeycloakAccessToken,
 	RefreshKeycloakAccessToken,
+	LogoutKeycloakAccessToken,
 } from "./controllers";
 import config from "./config";
 
@@ -319,6 +320,12 @@ router.post("/api/auth/refresh-token", async ctx => {
 	const res = await RefreshKeycloakAccessToken(ctx);
 
 	ctx.body = res;
+});
+
+router.post("/api/auth/logout-token", async ctx => {
+	const res = await LogoutKeycloakAccessToken(ctx);
+
+	ctx.body = { ...res };
 });
 
 const routes = router.routes();
