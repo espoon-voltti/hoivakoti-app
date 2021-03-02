@@ -685,7 +685,7 @@ export async function GetKeycloakAccessToken(ctx: Context): Promise<any> {
 
 	const result = await GetAccessToken(username, password, type);
 
-	if (!result.access_token && !result.refresh_token) {
+	if (!result["access_token"] && !result["refresh_token"]) {
 		const requestResponse = result.response;
 
 		ctx.response.status = requestResponse ? requestResponse.status : 400;
@@ -705,7 +705,7 @@ export async function RefreshKeycloakAccessToken(ctx: Context): Promise<any> {
 
 	const result = await RefreshToken(token, hash, type);
 
-	if (!result.access_token && !result.refresh_token) {
+	if (!result["access_token"] && !result["refresh_token"]) {
 		const requestResponse = result.response;
 
 		ctx.response.status = requestResponse ? requestResponse.status : 400;
