@@ -366,7 +366,7 @@ const PageOpenFeedbackResults: FC = () => {
 		<div>
 			{loggedIn ? (
 				<Fragment>
-					<div className="filters feedback-filters">
+					<div className="filters">
 						<div className="filters-text">{filterLabel}</div>
 						{filterElements}
 					</div>

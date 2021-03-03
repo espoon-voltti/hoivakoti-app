@@ -24,10 +24,7 @@ const Header: FC = () => {
 	const headingFeedback = useT("headingFeedback");
 
 	const updatePage =
-		location.pathname.indexOf("paivita") == -1 &&
-		location.pathname.indexOf("valvonta") == -1
-			? false
-			: true;
+		location.pathname.indexOf("paivita") == -1 ? false : true;
 
 	const surveillancePage =
 		location.pathname.indexOf("valvonta") == -1 ? false : true;
