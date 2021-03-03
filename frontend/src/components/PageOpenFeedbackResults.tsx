@@ -350,34 +350,7 @@ const PageOpenFeedbackResults: FC = () => {
 
 	return (
 		<div>
-<<<<<<< HEAD
-			{isAuthenticated ? (
-				<Fragment>
-					<div className="filters">
-						<div className="filters-text">{filterLabel}</div>
-						{filterElements}
-					</div>
-
-					<div className="page-open-feedback-results">
-						<h1 className="feedback-results-heading">
-							{headingFeedback}
-						</h1>
-						{results.length ? (
-							<Fragment>
-								<button
-									className="btn check-all-results"
-									onClick={markAllOpenAsApproved}
-								>
-									{approveAllOpenFeedback}
-								</button>
-								<ul className="feedback-results-list">
-									{filteredResults.map(result => {
-										return (
-											<li
-												className="feedback-results-list-item"
-												key={result.id}
-=======
-			<div className="filters feedback-filters">
+			<div className="filters">
 				<div className="filters-text">{filterLabel}</div>
 				{filterElements}
 			</div>
@@ -458,7 +431,6 @@ const PageOpenFeedbackResults: FC = () => {
 												onClick={() => {
 													markAsRejected(result.id);
 												}}
->>>>>>> Login, refresh token
 											>
 												{reject}
 											</button>

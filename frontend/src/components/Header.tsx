@@ -83,7 +83,7 @@ const Header: FC = () => {
 		);
 	}
 
-	if (surveillancePage) {
+	if (surveillancePage && isAuthenticated) {
 		minorHeader = (
 			<div className="minor-header">Valvontatiimin työkalu</div>
 		);
@@ -111,11 +111,9 @@ const Header: FC = () => {
 						</NavLink>
 					</li>
 				</ul>
-				{isAuthenticated ? (
-					<button className="btn" onClick={surveillanceLogout}>
-						Kirjaudu ulos
-					</button>
-				) : null}
+				<button className="btn" onClick={surveillanceLogout}>
+					Kirjaudu ulos
+				</button>
 			</div>
 		);
 	}

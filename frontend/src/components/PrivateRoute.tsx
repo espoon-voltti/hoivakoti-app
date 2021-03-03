@@ -7,7 +7,7 @@ import InputTypes from "../shared/types/input-types";
 
 import "../styles/Auth.scss";
 import AuthTypes from "../shared/types/auth-types";
-import { threadId } from "worker_threads";
+
 import { useT } from "../i18n";
 
 interface InputField {

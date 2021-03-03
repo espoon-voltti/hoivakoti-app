@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useT } from "../i18n";
 import axios from "axios";
 import config from "./config";
-import { FeedbackState } from "./feedback-state";
+import FeedbackState from "../shared/types/feedback-state";
 
 import "../styles/PageRespondFeedback.scss";
 
