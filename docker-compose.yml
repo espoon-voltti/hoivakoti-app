@@ -26,7 +26,7 @@ services:
         depends_on:
             - postgres
         ports:
-            - "4001:4000"
+            - "4000"
         volumes:
             - ./frontend:/usr/app/
             - /usr/app/node_modules
@@ -58,7 +58,7 @@ services:
             - hoivakodit-network
 
 volumes:
-  postgres_data:
+    postgres_data:
 
 networks:
     hoivakodit-network:
