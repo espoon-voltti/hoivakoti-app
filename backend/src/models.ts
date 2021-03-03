@@ -1461,7 +1461,7 @@ const userIsEntitledToToken = async (
 		});
 
 		const res = await axios.post(
-			`http://auth-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+			`http://hoivakodit-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
 			reqData,
 		);
 
@@ -1490,7 +1490,7 @@ export async function GetAccessToken(
 		});
 
 		const res = await axios.post(
-			"http://auth-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/token",
+			"http://hoivakodit-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/token",
 			reqData,
 		);
 
@@ -1541,7 +1541,7 @@ export async function RefreshToken(
 		});
 
 		const res = await axios.post(
-			"http://auth-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/token",
+			"http://hoivakodit-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/token",
 			reqData,
 		);
 
@@ -1580,7 +1580,7 @@ export async function LogoutAccessToken(
 		});
 
 		const res = await axios.post(
-			"http://auth-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/logout",
+			"http://hoivakodit-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/logout",
 			reqData,
 		);
 

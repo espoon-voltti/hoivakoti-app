@@ -48,10 +48,17 @@ services:
         networks:
             - hoivakodit-network
 
+    hoivakodit-proxy:
+        image: nginx:1.19-alpine
+        ports:
+            - 4000:8080
+        volumes:
+            - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - hoivakodit-network
+
 volumes:
   postgres_data:
-      driver: local
-
 
 networks:
     hoivakodit-network:
