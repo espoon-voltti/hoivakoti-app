@@ -19,6 +19,16 @@ const PageSurveyResults: FC = () => {
 
 	if (!id) throw new Error("Invalid URL!");
 
+	const formatDate = (dateStr: string | null): string => {
+		if (!dateStr) return "";
+		console.log(dateStr);
+		const date = new Date(dateStr);
+		const YYYY = String(date.getUTCFullYear());
+		const MM = String(date.getUTCMonth() + 1);
+		const DD = String(date.getUTCDate());
+		return `${DD}.${MM}.${YYYY}`;
+	};
+
 	useEffect(() => {
 		axios
 			.get(`${config.API_URL}/survey/${id}/results/asiakaskysely`)
@@ -179,13 +189,17 @@ const PageSurveyResults: FC = () => {
 			answerList = answers.map((answer: any, index: number) => (
 				<>
 					<div className="answer">
+						<p className="answer-date">
+							{formatDate(answer.created_date)}
+						</p>
 						<p key={index}>&quot;{answer.answer_text}&quot;</p>
 						<p
 							className={`response-header ${
 								answer.response_text ? "" : "hidden"
 							}`}
 						>
-							{feedbackResponseHeader}
+							{feedbackResponseHeader}{" "}
+							{formatDate(answer.response_date)}:
 						</p>
 						<p
 							className={`response ${

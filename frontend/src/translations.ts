@@ -1290,8 +1290,8 @@ export const translations = {
 		"sv-FI": "Hoivakodin saama palaute",
 	},
 	feedbackResponseHeader: {
-		"fi-FI": "Asumisyksikön vastine:",
-		"sv-FI": "Asumisyksikön vastine:",
+		"fi-FI": "Asumisyksikön vastine",
+		"sv-FI": "Asumisyksikön vastine",
 	},
 	noFeedbackYet: {
 		"fi-FI": "Ei vielä palautteita.",

@@ -235,7 +235,7 @@ async function CreateNursingHomeSurveyTextAnswersTable(): Promise<void> {
 			table.string("id", 16);
 			table.string("answer_text", 1000);
 			table.string("response_text", 1000);
-			table.date("response_date");
+			table.dateTime("response_date");
 			table.enu("feedback_state", [...Object.values(FeedbackState)]);
 		},
 	);
@@ -578,6 +578,7 @@ export async function GetSurveyTextResults(
 			"created_date",
 			"feedback_state",
 			"response_text",
+			"response_date",
 		)
 		.where({ nursinghome_id: nursingHomeId })
 		.where("created_date", ">", getDateDaysAgo(config.feedbackExpires));
