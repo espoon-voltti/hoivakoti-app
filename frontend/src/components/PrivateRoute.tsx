@@ -78,9 +78,7 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 	const validateForm = (): void => {
 		let validForm = true;
 
-		const validatedForm = [...form];
-
-		for (const input of validatedForm) {
+		for (const input of form) {
 			const validField = input.value !== "";
 
 			if (!validField) {
