@@ -110,6 +110,20 @@
 			padding-bottom: 30px;
 			width: 100%;
 			border-bottom: solid 1px $input-border;
+
+			.answer-date {
+				margin-bottom: 0;
+			}
+
+			.response-header {
+				padding-left: 40px;
+				margin-bottom: 0;
+				font-weight: 600;
+			}
+
+			.response {
+				padding-left: 40px;
+			}
 		}
 	}
 }

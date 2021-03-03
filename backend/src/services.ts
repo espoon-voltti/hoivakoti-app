@@ -243,4 +243,8 @@ export function validNumericSurveyScore(data: number): boolean {
 	return !isNaN(data) && data >= 1 && data <= 5;
 }
 
+export function getDateDaysAgo(feedbackExpires: number): Date {
+	return new Date(new Date().getTime() - 86400000 * feedbackExpires);
+}
+
 export { NursingHomesFromCSV };

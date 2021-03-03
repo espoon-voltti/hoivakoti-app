@@ -17,6 +17,7 @@ import {
 	NursingHomesFromCSV,
 	validNumericSurveyScore,
 	createSurveyKey,
+	getDateDaysAgo,
 } from "./services";
 import sharp from "sharp";
 
@@ -72,7 +73,22 @@ knex.schema
 knex.schema
 	.hasTable("NursingHomeSurveyAnswers")
 	.then(async (exists: boolean) => {
-		if (exists) return;
+		if (exists) {
+			knex.schema
+				.hasColumn("NursingHomeSurveyAnswers", "created_date")
+				.then(async (exists: boolean) => {
+					if (exists) return;
+					await knex.schema.table(
+						"NursingHomeSurveyAnswers",
+						table => {
+							table
+								.dateTime("created_date")
+								.defaultTo(new Date().toISOString());
+						},
+					);
+				});
+			return;
+		}
 
 		await CreateNursingHomeSurveyAnswersTable();
 	});
@@ -208,6 +224,7 @@ async function CreateNursingHomeSurveyAnswersTable(): Promise<void> {
 		table.string("answer");
 		table.string("key");
 		table.boolean("replaced");
+		table.dateTime("created_date").defaultTo(new Date().toISOString());
 	});
 }
 
@@ -217,6 +234,8 @@ async function CreateNursingHomeSurveyTextAnswersTable(): Promise<void> {
 		(table: any) => {
 			table.string("id", 16);
 			table.string("answer_text", 1000);
+			table.string("response_text", 1000);
+			table.dateTime("response_date");
 			table.enu("feedback_state", [...Object.values(FeedbackState)]);
 		},
 	);
@@ -321,10 +340,14 @@ export async function DropAndRecreateNursingHomePicturesTable(): Promise<void> {
 export async function DropAndRecreateNursingHomeSurveyAnswersTable(): Promise<
 	void
 > {
-	const exists = await knex.schema.hasTable("NursingHomeSurveyAnswers");
+	let exists = await knex.schema.hasTable("NursingHomeSurveyAnswers");
 	if (exists) await knex.schema.dropTable("NursingHomeSurveyAnswers");
-	const result = await CreateNursingHomeSurveyAnswersTable();
-	return result;
+
+	exists = await knex.schema.hasTable("NursingHomeSurveyTextAnswers");
+	if (exists) await knex.schema.dropTable("NursingHomeSurveyTextAnswers");
+
+	await CreateNursingHomeSurveyAnswersTable();
+	await CreateNursingHomeSurveyTextAnswersTable();
 }
 
 export async function DropAndRecreateNursingHomeSurveyScoresTable(): Promise<
@@ -549,8 +572,16 @@ export async function GetSurveyTextResults(
 			"NursingHomeSurveyAnswers.answer",
 			"NursingHomeSurveyTextAnswers.id",
 		)
-		.select("answer_text", "feedback_state")
-		.where({ nursinghome_id: nursingHomeId });
+		.select(
+			"NursingHomeSurveyTextAnswers.id",
+			"answer_text",
+			"created_date",
+			"feedback_state",
+			"response_text",
+			"response_date",
+		)
+		.where({ nursinghome_id: nursingHomeId })
+		.where("created_date", ">", getDateDaysAgo(config.feedbackExpires));
 
 	return results;
 }
@@ -568,7 +599,8 @@ export async function GetAllSurveyTextResults(): Promise<any> {
 			"NursingHomeSurveyTextAnswers.id",
 			"NursingHomeSurveyTextAnswers.answer_text",
 			"NursingHomeSurveyTextAnswers.feedback_state",
-		);
+		)
+		.where("created_date", ">", getDateDaysAgo(config.feedbackExpires));
 
 	return results;
 }
@@ -775,6 +807,8 @@ export async function SubmitSurveyResponse(
 			});
 
 		//store new values
+		const today = new Date();
+
 		for (const question of survey) {
 			if (question.question_type == "rating") {
 				const currentScores = await knex
@@ -832,6 +866,7 @@ export async function SubmitSurveyResponse(
 							answer: question.value,
 							key: key,
 							replaced: false,
+							created_date: today.toISOString(),
 						});
 
 						totalScore += newAvg;
@@ -852,6 +887,7 @@ export async function SubmitSurveyResponse(
 					answer: sqlJoinKey,
 					key: key,
 					replaced: false,
+					created_date: today.toISOString(),
 				});
 
 				await knex.table("NursingHomeSurveyTextAnswers").insert({
@@ -905,6 +941,19 @@ export async function SubmitSurveyResponse(
 			}
 		}
 	}
+}
+
+export async function SubmitFeedbackResponse(
+	response: string,
+	textAnswerId: string,
+): Promise<void> {
+	await knex
+		.table("NursingHomeSurveyTextAnswers")
+		.where({ id: textAnswerId })
+		.update({
+			response_text: response,
+			response_date: new Date().toISOString(),
+		});
 }
 
 export async function GetNursingHomeIDFromName(name: string): Promise<any[]> {

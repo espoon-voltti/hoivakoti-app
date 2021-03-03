@@ -20,6 +20,7 @@ const Header: FC = () => {
 
 	const navHome = useT("navHome");
 	const navNursingHomes = useT("navNursingHomes");
+	const navInformation = useT("navInformation");
 	const headingFeedback = useT("headingFeedback");
 
 	const updatePage =
@@ -84,6 +85,34 @@ const Header: FC = () => {
 						<NavLink
 							activeClassName="selected"
 							to="/valvonta/palaute"
+							onClick={() => setIsMobileMenuOpen(false)}
+						>
+							{headingFeedback}
+						</NavLink>
+					</li>
+				</ul>
+			</div>
+		);
+	}
+
+	if (updatePage) {
+		navItems = (
+			<div className="nav-menus">
+				<ul className="nav-menu" role="menu">
+					<li role="menuitem">
+						<NavLink
+							activeClassName="selected"
+							exact
+							to="./tiedot"
+							onClick={() => setIsMobileMenuOpen(false)}
+						>
+							{navInformation}
+						</NavLink>
+					</li>
+					<li role="menuitem">
+						<NavLink
+							activeClassName="selected"
+							to="./palaute"
 							onClick={() => setIsMobileMenuOpen(false)}
 						>
 							{headingFeedback}
