@@ -1,0 +1,98 @@
+@import "./variables.scss";
+
+.feedback-filters {
+	margin-top: 5rem;
+}
+
+.page-open-feedback-results {
+	display: flex;
+	flex-direction: column;
+	max-width: 63.5rem;
+	margin: 5rem auto 0 auto;
+	padding: 0 1rem 1rem 1rem;
+}
+
+.check-all-results {
+	align-self: flex-end;
+}
+
+.feedback-results {
+	&-heading {
+		margin-bottom: 1rem;
+	}
+
+	&-list {
+		margin-top: 2rem;
+
+		border-top: solid 1px $border-color;
+
+		&-item {
+			border-bottom: solid 1px $border-color;
+			padding: 3rem 0 1rem 0;
+
+			&:last-of-type {
+				border-bottom: none;
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+.feedback-result {
+	&-answer {
+		width: 100%;
+		margin: 0 1rem 1rem 0;
+
+		textarea {
+			margin: 0;
+
+			&.approved {
+				background-color: rgba(198, 219, 0, 0.1);
+				border-bottom: solid 2px $green;
+			}
+
+			&.rejected {
+				opacity: 0.6;
+				background-color: rgba(110, 110, 110, 0.1);
+				border-bottom: solid 2px $border-color;
+			}
+		}
+	}
+
+	&-link {
+		display: block;
+		font-size: 1rem;
+		font-weight: 600;
+		line-height: 1.5;
+		margin-bottom: 0.6rem;
+	}
+
+	&-actions {
+		display: flex;
+		justify-content: flex-end;
+
+		button {
+			margin-right: 0.5rem;
+
+			&:last-of-type {
+				margin-right: 0;
+			}
+
+			&.checked {
+				background-color: #044090;
+			}
+
+			&.unchecked {
+				border-radius: $border-radius;
+				background-color: transparent;
+				border-color: $link-color;
+				color: $link-color;
+
+				&:hover {
+					background-color: $primary-blue;
+					color: #fff;
+				}
+			}
+		}
+	}
+}

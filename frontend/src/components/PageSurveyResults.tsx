@@ -7,7 +7,8 @@ import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
-import { JsxEmit } from "typescript";
+
+import { FeedbackState } from "./feedback-state";
 
 const PageSurveyResults: FC = () => {
 	const { id } = useParams() as any;
@@ -17,6 +18,16 @@ const PageSurveyResults: FC = () => {
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 
 	if (!id) throw new Error("Invalid URL!");
+
+	const formatDate = (dateStr: string | null): string => {
+		if (!dateStr) return "";
+		console.log(dateStr);
+		const date = new Date(dateStr);
+		const YYYY = String(date.getUTCFullYear());
+		const MM = String(date.getUTCMonth() + 1);
+		const DD = String(date.getUTCDate());
+		return `${DD}.${MM}.${YYYY}`;
+	};
 
 	useEffect(() => {
 		axios
@@ -42,7 +53,13 @@ const PageSurveyResults: FC = () => {
 		axios
 			.get(`${config.API_URL}/survey/${id}/text-results/omaiskysely`)
 			.then((response: { data: any[] }) => {
-				setTextResults(response.data);
+				const approvedResults = response.data.filter(
+					result =>
+						result.feedback_state === FeedbackState.OPEN ||
+						result.feedback_state === FeedbackState.APPROVED,
+				);
+
+				setTextResults(approvedResults);
 			})
 			.catch(e => {
 				console.error(e);
@@ -78,6 +95,7 @@ const PageSurveyResults: FC = () => {
 	const reviewFooterLink = useT("reviewFooterLink");
 	const urlReviewFooterLink = useT("urlReviewFooterLink");
 	const noRelativesOpenTextAnswers = useT("noRelativesOpenTextAnswers");
+	const feedbackResponseHeader = useT("feedbackResponseHeader");
 
 	const optionText1 = useT("surveyOption1");
 	const optionText2 = useT("surveyOption2");
@@ -169,9 +187,29 @@ const PageSurveyResults: FC = () => {
 
 		if (answers && answers.length > 0) {
 			answerList = answers.map((answer: any, index: number) => (
-				<p className="answer" key={index}>
-					&quot;{answer.answer_text}&quot;
-				</p>
+				<>
+					<div className="answer">
+						<p className="answer-date">
+							{formatDate(answer.created_date)}
+						</p>
+						<p key={index}>&quot;{answer.answer_text}&quot;</p>
+						<p
+							className={`response-header ${
+								answer.response_text ? "" : "hidden"
+							}`}
+						>
+							{feedbackResponseHeader}{" "}
+							{formatDate(answer.response_date)}:
+						</p>
+						<p
+							className={`response ${
+								answer.response_text ? "" : "hidden"
+							}`}
+						>
+							{answer.response_text}
+						</p>
+					</div>
+				</>
 			));
 		}
 

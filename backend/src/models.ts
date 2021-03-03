@@ -1,3 +1,4 @@
+import { FeedbackState } from "./nursinghome-typings";
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import Knex, { CreateTableBuilder } from "knex";
 import uuidv4 from "uuid/v4";
@@ -16,6 +17,7 @@ import {
 	NursingHomesFromCSV,
 	validNumericSurveyScore,
 	createSurveyKey,
+	getDateDaysAgo,
 } from "./services";
 import sharp from "sharp";
 
@@ -71,7 +73,22 @@ knex.schema
 knex.schema
 	.hasTable("NursingHomeSurveyAnswers")
 	.then(async (exists: boolean) => {
-		if (exists) return;
+		if (exists) {
+			knex.schema
+				.hasColumn("NursingHomeSurveyAnswers", "created_date")
+				.then(async (exists: boolean) => {
+					if (exists) return;
+					await knex.schema.table(
+						"NursingHomeSurveyAnswers",
+						table => {
+							table
+								.dateTime("created_date")
+								.defaultTo(new Date().toISOString());
+						},
+					);
+				});
+			return;
+		}
 
 		await CreateNursingHomeSurveyAnswersTable();
 	});
@@ -207,6 +224,7 @@ async function CreateNursingHomeSurveyAnswersTable(): Promise<void> {
 		table.string("answer");
 		table.string("key");
 		table.boolean("replaced");
+		table.dateTime("created_date").defaultTo(new Date().toISOString());
 	});
 }
 
@@ -216,6 +234,9 @@ async function CreateNursingHomeSurveyTextAnswersTable(): Promise<void> {
 		(table: any) => {
 			table.string("id", 16);
 			table.string("answer_text", 1000);
+			table.string("response_text", 1000);
+			table.dateTime("response_date");
+			table.enu("feedback_state", [...Object.values(FeedbackState)]);
 		},
 	);
 }
@@ -319,10 +340,14 @@ export async function DropAndRecreateNursingHomePicturesTable(): Promise<void> {
 export async function DropAndRecreateNursingHomeSurveyAnswersTable(): Promise<
 	void
 > {
-	const exists = await knex.schema.hasTable("NursingHomeSurveyAnswers");
+	let exists = await knex.schema.hasTable("NursingHomeSurveyAnswers");
 	if (exists) await knex.schema.dropTable("NursingHomeSurveyAnswers");
-	const result = await CreateNursingHomeSurveyAnswersTable();
-	return result;
+
+	exists = await knex.schema.hasTable("NursingHomeSurveyTextAnswers");
+	if (exists) await knex.schema.dropTable("NursingHomeSurveyTextAnswers");
+
+	await CreateNursingHomeSurveyAnswersTable();
+	await CreateNursingHomeSurveyTextAnswersTable();
 }
 
 export async function DropAndRecreateNursingHomeSurveyScoresTable(): Promise<
@@ -547,10 +572,88 @@ export async function GetSurveyTextResults(
 			"NursingHomeSurveyAnswers.answer",
 			"NursingHomeSurveyTextAnswers.id",
 		)
-		.select("answer_text")
-		.where({ nursinghome_id: nursingHomeId });
+		.select(
+			"NursingHomeSurveyTextAnswers.id",
+			"answer_text",
+			"created_date",
+			"feedback_state",
+			"response_text",
+			"response_date",
+		)
+		.where({ nursinghome_id: nursingHomeId })
+		.where("created_date", ">", getDateDaysAgo(config.feedbackExpires));
 
 	return results;
+}
+
+export async function GetAllSurveyTextResults(): Promise<any> {
+	const results = await knex
+		.table("NursingHomeSurveyTextAnswers")
+		.join(
+			"NursingHomeSurveyAnswers",
+			"NursingHomeSurveyAnswers.answer",
+			"NursingHomeSurveyTextAnswers.id",
+		)
+		.select(
+			"NursingHomeSurveyAnswers.nursinghome_id",
+			"NursingHomeSurveyTextAnswers.id",
+			"NursingHomeSurveyTextAnswers.answer_text",
+			"NursingHomeSurveyTextAnswers.feedback_state",
+		)
+		.where("created_date", ">", getDateDaysAgo(config.feedbackExpires));
+
+	return results;
+}
+
+export async function UpdateSurveyTextState(
+	answerId: string | string[],
+	newState: FeedbackState,
+): Promise<boolean> {
+	let count;
+
+	if (Array.isArray(answerId)) {
+		count = await knex("NursingHomeSurveyTextAnswers")
+			.whereIn("id", answerId)
+			.update({
+				feedback_state: newState,
+			});
+	} else {
+		count = await knex("NursingHomeSurveyTextAnswers")
+			.where({ id: answerId })
+			.update({
+				feedback_state: newState,
+			});
+	}
+
+	if (count < 1) return false;
+
+	return true;
+}
+
+export async function DeleteRejectedSurveyTextResults(): Promise<boolean> {
+	const results = await GetAllSurveyTextResults();
+
+	const rejectedResults: string[] = results
+		.filter(
+			(result: any) => result.feedback_state === FeedbackState.REJECTED,
+		)
+		.map((rejected: any) => rejected.id);
+
+	const textAnswersCount = await knex
+		.table("NursingHomeSurveyTextAnswers")
+		.whereIn("id", rejectedResults)
+		.del();
+
+	if (textAnswersCount < 1) return false;
+
+	const answersCount = await knex
+		.table("NursingHomeSurveyAnswers")
+		.whereIn("answer", rejectedResults)
+		.update({ answer: "" });
+
+	if (answersCount < 1) return false;
+
+	return true;
 }
 
 export async function SubmitSurveyData( //USE ONLY WHEN AUTHENTICATED
@@ -704,6 +807,8 @@ export async function SubmitSurveyResponse(
 			});
 
 		//store new values
+		const today = new Date();
+
 		for (const question of survey) {
 			if (question.question_type == "rating") {
 				const currentScores = await knex
@@ -761,6 +866,7 @@ export async function SubmitSurveyResponse(
 							answer: question.value,
 							key: key,
 							replaced: false,
+							created_date: today.toISOString(),
 						});
 
 						totalScore += newAvg;
@@ -781,11 +887,13 @@ export async function SubmitSurveyResponse(
 					answer: sqlJoinKey,
 					key: key,
 					replaced: false,
+					created_date: today.toISOString(),
 				});
 
 				await knex.table("NursingHomeSurveyTextAnswers").insert({
 					id: sqlJoinKey,
 					answer_text: question.value.slice(0, 1000),
+					feedback_state: FeedbackState.OPEN,
 				});
 			}
 		}
@@ -833,6 +941,19 @@ export async function SubmitSurveyResponse(
 			}
 		}
 	}
+}
+
+export async function SubmitFeedbackResponse(
+	response: string,
+	textAnswerId: string,
+): Promise<void> {
+	await knex
+		.table("NursingHomeSurveyTextAnswers")
+		.where({ id: textAnswerId })
+		.update({
+			response_text: response,
+			response_date: new Date().toISOString(),
+		});
 }
 
 export async function GetNursingHomeIDFromName(name: string): Promise<any[]> {

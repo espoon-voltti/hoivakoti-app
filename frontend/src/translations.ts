@@ -6,6 +6,7 @@ export const translations = {
 	},
 	navHome: { "fi-FI": "Etusivu", "sv-FI": "Förstasidan" },
 	navNursingHomes: { "fi-FI": "Hoivakodit", "sv-FI": "Vårdhem" },
+	navInformation: { "fi-FI": "Tiedot", "sv-FI": "Information" },
 	menu: { "fi-FI": "valikko", "sv-FI": "meny" },
 	linkBacktoTop: {
 		"fi-FI": "Sivun alkuun ↑",
@@ -1241,5 +1242,59 @@ export const translations = {
 	previous: {
 		"fi-FI": "Edellinen",
 		"sv-FI": "Edellinen",
+	},
+	filterOpen: {
+		"fi-FI": "Avoin",
+		"sv-FI": "Avoin",
+	},
+	filterApproved: {
+		"fi-FI": "Hyväksytty",
+		"sv-FI": "Hyväksytty",
+	},
+	filterRejected: {
+		"fi-FI": "Hylätty",
+		"sv-FI": "Hylätty",
+	},
+	labelFeedbackState: {
+		"fi-FI": "Palautteen tila",
+		"sv-FI": "Palautteen tila",
+	},
+	ariaFeedbackState: {
+		"fi-FI": "Valitse palautteen tila",
+		"sv-FI": "Valitse palautteen tila",
+	},
+	headingFeedback: {
+		"fi-FI": "Palaute",
+		"sv-FI": "Palaute",
+	},
+	approveAllOpenFeedback: {
+		"fi-FI": "Hyväksy kaikki avoimet",
+		"sv-FI": "Hyväksy kaikki avoimet",
+	},
+	approve: {
+		"fi-FI": "Hyväksy",
+		"sv-FI": "Hyväksy",
+	},
+	reject: {
+		"fi-FI": "Hylkää",
+		"sv-FI": "Hylkää",
+	},
+	feedbackResponseInfo: {
+		"fi-FI":
+			"Tällä sivulla voit vastata omaisten palautteisiin. Muista tallentaa vastauksesi. Voit myös muokata jo annettuja palautteita muokkamalla tekstiä ja tallentamalla uudelleen.",
+		"sv-FI":
+			"Tällä sivulla voit vastata omaisten palautteisiin. Muista tallentaa vastauksesi. Voit myös muokata jo annettuja palautteita muokkamalla tekstiä ja tallentamalla uudelleen.",
+	},
+	feedbackForNursingHome: {
+		"fi-FI": "Hoivakodin saama palaute",
+		"sv-FI": "Hoivakodin saama palaute",
+	},
+	feedbackResponseHeader: {
+		"fi-FI": "Asumisyksikön vastine",
+		"sv-FI": "Asumisyksikön vastine",
+	},
+	noFeedbackYet: {
+		"fi-FI": "Ei vielä palautteita.",
+		"sv-FI": "Ei vielä palautteita.",
 	},
 };

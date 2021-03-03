@@ -41,10 +41,14 @@ import {
 	UpdateNursingHomeSurveyQuestion as UpdateNursingHomeSurveyQuestionDB,
 	SubmitSurveyData as SubmitSurveyDataDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
+	SubmitFeedbackResponse as SubmitFeedbackResponseDB,
 	GetSurvey as GetSurveyDB,
 	GetCustomerCommunesForNursingHome,
 	UpdateCustomerCommunesForNursingHome,
 	GetSurveyTextResults as GetSurveyTextResultsDB,
+	GetAllSurveyTextResults as GetAllSurveyTextResultsDB,
+	UpdateSurveyTextState as UpdateSurveyTextStateDB,
+	DeleteRejectedSurveyTextResults as DeleteRejectedSurveyTextResultsDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -253,10 +257,9 @@ export async function DropAndRecreateSurveyAnswerTables(
 		requestPw === adminPw;
 	if (!isPwValid) return null;
 
-	const result1 = await DropAndRecreateNursingHomeSurveyAnswersTable();
-	const result2 = await DropAndRecreateNursingHomeSurveyScoresTable();
-	const result3 = await DropAndRecreateNursingHomeSurveyTotalScoresTable();
-	return result1;
+	await DropAndRecreateNursingHomeSurveyAnswersTable();
+	await DropAndRecreateNursingHomeSurveyScoresTable();
+	await DropAndRecreateNursingHomeSurveyTotalScoresTable();
 }
 
 export async function DropAndRecreateSurveyTotalScoreTable(
@@ -568,12 +571,21 @@ export async function SubmitSurveyResponse(
 	ctx: Context,
 ): Promise<string | null> {
 	const { id } = ctx.params;
-	const res = await SubmitSurveyResponseDB(
+	await SubmitSurveyResponseDB(
 		ctx.request.body.survey,
 		id,
 		ctx.request.body.surveyKey,
 	);
 	return "";
+}
+
+export async function SubmitFeedbackResponse(
+	ctx: Context,
+): Promise<void | null> {
+	await SubmitFeedbackResponseDB(
+		ctx.request.body.response,
+		ctx.request.body.id,
+	);
 }
 
 export async function GetSurvey(surveyId: string): Promise<any> {
@@ -606,6 +618,46 @@ export async function GetSurveyTextResults(
 	nursingHomeId: string,
 ): Promise<any> {
 	return await GetSurveyTextResultsDB(nursingHomeId);
+}
+
+export async function GetAllSurveyTextResults(ctx: Context): Promise<any> {
+	const loggedIn = await GetHasLogin(ctx.get("authentication") as string);
+
+	if (loggedIn) {
+		const result = await GetAllSurveyTextResultsDB();
+
+		return result;
+	}
+
+	return false;
+}
+
+export async function UpdateSurveyTextState(ctx: Context): Promise<boolean> {
+	const loggedIn = await GetHasLogin(ctx.get("authentication") as string);
+
+	if (loggedIn) {
+		const { answerId, feedback_state } = ctx.request.body;
+
+		const result = await UpdateSurveyTextStateDB(answerId, feedback_state);
+
+		return result;
+	}
+
+	return false;
+}
+
+export async function DeleteRejectedSurveyTextResults(
+	ctx: Context,
+): Promise<any> {
+	const loggedIn = await GetHasLogin(ctx.get("authentication") as string);
+
+	if (loggedIn) {
+		const success = await DeleteRejectedSurveyTextResultsDB();
+
+		return { success: success, authenticated: loggedIn };
+	}
+
+	return { authenticated: loggedIn };
 }
 
 export async function UpdateNursingHomeCustomerCommunes(

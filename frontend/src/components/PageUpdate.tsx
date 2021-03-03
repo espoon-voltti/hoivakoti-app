@@ -1300,11 +1300,41 @@ const PageUpdate: FC = () => {
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
-						<h1 className="page-update-title">{title}</h1>
 						<form
 							className="page-update-controls"
 							onSubmit={handleSubmit}
 						>
+							<div className="nav-save">
+								{popupState && (
+									<span
+										className={
+											popupState === "invalid"
+												? "page-update-popup error"
+												: "page-update-popup"
+										}
+									>
+										{popupState === "saving"
+											? updatePopupSaving
+											: popupState === "invalid"
+											? formIsInvalid
+											: updatePopupSaved}
+									</span>
+								)}
+								<button
+									className="page-update-cancel"
+									onClick={cancelEdit}
+								>
+									{cancel}
+								</button>
+								<button
+									type="submit"
+									className="btn page-update-submit"
+									disabled={!formIsValid}
+								>
+									{btnSave}
+								</button>
+							</div>
+							<h1 className="page-update-title">{title}</h1>
 							<p className="page-update-info" aria-hidden="true">
 								{fieldsWithAsteriskAreMandatory}
 							</p>
@@ -1441,20 +1471,6 @@ const PageUpdate: FC = () => {
 								)}
 							</div>
 							<div className="nav-save">
-								<button
-									className="page-update-cancel"
-									onClick={cancelEdit}
-								>
-									{cancel}
-								</button>
-								<button
-									type="submit"
-									className="btn page-update-submit"
-									disabled={!formIsValid}
-								>
-									{btnSave}
-								</button>
-
 								{popupState && (
 									<span
 										className={
@@ -1470,6 +1486,19 @@ const PageUpdate: FC = () => {
 											: updatePopupSaved}
 									</span>
 								)}
+								<button
+									className="page-update-cancel"
+									onClick={cancelEdit}
+								>
+									{cancel}
+								</button>
+								<button
+									type="submit"
+									className="btn page-update-submit"
+									disabled={!formIsValid}
+								>
+									{btnSave}
+								</button>
 							</div>
 						</form>
 					</>

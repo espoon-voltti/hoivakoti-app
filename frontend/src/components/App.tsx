@@ -7,6 +7,7 @@ import PageLanding from "./PageLanding";
 import {
 	BrowserRouter as Router,
 	Route,
+	Redirect,
 	Switch,
 	useLocation,
 } from "react-router-dom";
@@ -27,6 +28,8 @@ import PageSurvey from "./PageSurvey";
 import PageSurveyResults from "./PageSurveyResults";
 import PageManualSurveyEntry from "./PageManualSurveyEntry";
 import PageAdmin from "./PageAdmin";
+import PageOpenFeedbackResults from "./PageOpenFeedbackResults";
+import PageRespondFeedback from "./PageRespondFeedback";
 import config from "./config";
 
 const App: React.FC = () => {
@@ -64,13 +67,22 @@ const App: React.FC = () => {
 							/>
 							<Route
 								exact
-								path="/hoivakodit/:id/paivita/:key"
+								path="/hoivakodit/:id/paivita/:key/tiedot"
 								component={PageUpdate}
+							/>
+							<Route
+								exact
+								path="/hoivakodit/:id/paivita/:key/palaute"
+								component={PageRespondFeedback}
 							/>
 							<Route
 								exact
 								path="/hoivakodit/:id/paivita/:key/kuvat"
 								component={PageUpdateImages}
+							/>
+							<Redirect
+								from="/hoivakodit/:id/paivita/:key"
+								to="/hoivakodit/:id/paivita/:key/tiedot"
 							/>
 							<Route
 								exact
@@ -101,6 +113,11 @@ const App: React.FC = () => {
 								exact
 								path="/valvonta"
 								component={PageReportsAdmin}
+							/>
+							<Route
+								exact
+								path="/valvonta/palaute"
+								component={PageOpenFeedbackResults}
 							/>
 							<Route
 								exact
