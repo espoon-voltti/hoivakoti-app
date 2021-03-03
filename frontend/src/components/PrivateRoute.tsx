@@ -7,6 +7,8 @@ import InputTypes from "../shared/types/input-types";
 
 import "../styles/Auth.scss";
 import AuthTypes from "../shared/types/auth-types";
+import { threadId } from "worker_threads";
+import { useT } from "../i18n";
 
 interface InputField {
 	label: string;
@@ -28,7 +30,8 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 
 	const { isAuthenticated, login, refreshToken } = useContext(AuthContext);
 
-	const [formIsValid, setFormIsValid] = useState(false);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [formIsValid, setFormIsValid] = useState<boolean>(false);
 	const [form, setForm] = useState<InputField[]>([
 		{
 			label: "Käyttäjänimi",
@@ -51,8 +54,12 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 	]);
 
 	useEffect(() => {
-		refreshToken(authType);
+		refreshToken(authType).then(() => {
+			setIsLoading(false);
+		});
 	}, [authType, refreshToken]);
+
+	const loadingText = useT("loadingText");
 
 	const handleLogin = async (
 		event: React.FormEvent<HTMLFormElement>,
@@ -65,7 +72,7 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 			formData[field.name] = field.value;
 		}
 
-		login(formData, authType as AuthTypes);
+		await login(formData, authType as AuthTypes);
 	};
 
 	const validateForm = (): void => {
@@ -102,7 +109,7 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 		setForm(updateForm);
 	};
 
-	return isAuthenticated ? (
+	const auth: JSX.Element | null = isAuthenticated ? (
 		<Route {...rest} render={routeProps => <Component {...routeProps} />} />
 	) : (
 		<div className="auth-container">
@@ -159,6 +166,14 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 				</div>
 			</form>
 		</div>
+	);
+
+	return isLoading ? (
+		<div className="auth-container">
+			<h2>{loadingText}</h2>
+		</div>
+	) : (
+		auth
 	);
 };
 

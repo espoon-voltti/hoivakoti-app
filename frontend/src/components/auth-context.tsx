@@ -7,7 +7,7 @@ import config from "./config";
 interface KeycloakAuthResponse {
 	access_token: string;
 	refresh_token: string;
-	hash: string;
+	hash?: string;
 }
 
 interface LoginRequestData {
@@ -94,46 +94,46 @@ const AuthContextProvider: FC = ({ children }) => {
 	};
 
 	const refreshToken = async (type: string): Promise<void> => {
-		const token = sessionCookies.get("keycloak-token");
-		const refreshToken = sessionCookies.get("keycloak-refresh-token");
-		const hash = sessionCookies.get("hoivakoti_session");
+		try {
+			const token = sessionCookies.get("keycloak-token");
+			const refreshToken = sessionCookies.get("keycloak-refresh-token");
+			const hash = sessionCookies.get("hoivakoti_session");
 
-		if (token && refreshToken && hash) {
-			axios
-				.post(`${config.API_URL}/auth/refresh-token`, {
-					token: refreshToken,
-					hash,
-					type,
-				})
-				.then((res: { data: KeycloakAuthResponse }) => {
-					if (res.data) {
-						const token = res.data["access_token"];
-						const refreshToken = res.data["refresh_token"];
+			if (token && refreshToken && hash) {
+				const res = await axios.post(
+					`${config.API_URL}/auth/refresh-token`,
+					{
+						token: refreshToken,
+						hash,
+						type,
+					},
+				);
 
-						sessionCookies.set("keycloak-token", token, {
-							path: "/",
-							maxAge: 36000,
-						});
-						sessionCookies.set(
-							"keycloak-refresh-token",
-							refreshToken,
-							{
-								path: "/",
-								maxAge: 36000,
-							},
-						);
+				const credentials = res.data as KeycloakAuthResponse;
 
-						sessionCookies.set("hoivakoti_session", hash, {
-							path: "/",
-							maxAge: 36000,
-						});
+				if (credentials) {
+					const token = credentials["access_token"];
+					const refreshToken = credentials["refresh_token"];
 
-						setIsAuthenticated(true);
-					}
-				})
-				.catch(err => {
-					console.error(err);
-				});
+					sessionCookies.set("keycloak-token", token, {
+						path: "/",
+						maxAge: 36000,
+					});
+					sessionCookies.set("keycloak-refresh-token", refreshToken, {
+						path: "/",
+						maxAge: 36000,
+					});
+
+					sessionCookies.set("hoivakoti_session", hash, {
+						path: "/",
+						maxAge: 36000,
+					});
+
+					setIsAuthenticated(true);
+				}
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
