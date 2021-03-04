@@ -38,17 +38,23 @@ const Header: FC = () => {
 		location.pathname.indexOf("valvonta") == -1 ? false : true;
 
 	const surveillanceLogout = async (): Promise<void> => {
-		if (isAuthenticated) {
-			const refreshToken = sessionCookies.get("keycloak-refresh-token");
-			const hash = sessionCookies.get("hoivakoti_session");
+		try {
+			if (isAuthenticated) {
+				const refreshToken = sessionCookies.get(
+					"keycloak-refresh-token",
+				);
+				const hash = sessionCookies.get("hoivakoti_session");
 
-			await logout({ token: refreshToken, hash }, AuthTypes.VALVONTA);
+				await logout({ token: refreshToken, hash }, AuthTypes.VALVONTA);
 
-			sessionCookies.remove("keycloak-token");
-			sessionCookies.remove("keycloak-refresh-token");
-			sessionCookies.remove("hoivakoti_session");
+				sessionCookies.remove("keycloak-token");
+				sessionCookies.remove("keycloak-refresh-token");
+				sessionCookies.remove("hoivakoti_session");
 
-			history.go(0);
+				history.go(0);
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
