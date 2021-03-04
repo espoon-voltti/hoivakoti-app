@@ -90,11 +90,6 @@ const App: React.FC = () => {
 								/>
 								<Route
 									exact
-									path="/hoivakodit/:id/valvonta"
-									component={PageUploadReport}
-								/>
-								<Route
-									exact
 									path="/hoivakodit/:id/paivita/:key/peruuta"
 									component={PageCancel}
 								/>
@@ -115,16 +110,22 @@ const App: React.FC = () => {
 									component={PageReportsAdmin}
 								/>
 								<PrivateRoute
-									path="/valvonta/asiakaskyselyn-vastaukset/:id"
-									exact
-									authType={AuthTypes.VALVONTA}
-									component={PageManualSurveyEntry}
-								/>
-								<PrivateRoute
 									path="/valvonta/palaute"
 									exact
 									authType={AuthTypes.VALVONTA}
 									component={PageOpenFeedbackResults}
+								/>
+								<PrivateRoute
+									exact
+									path="/valvonta/:id"
+									authType={AuthTypes.VALVONTA}
+									component={PageUploadReport}
+								/>
+								<PrivateRoute
+									path="/valvonta/asiakaskyselyn-vastaukset/:id"
+									exact
+									authType={AuthTypes.VALVONTA}
+									component={PageManualSurveyEntry}
 								/>
 								<Route
 									exact
