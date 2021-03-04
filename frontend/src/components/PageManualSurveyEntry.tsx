@@ -49,8 +49,10 @@ const PageManualSurveyEntry: FC = () => {
 			.get(`${config.API_URL}/survey/${id}/results/asiakaskysely`)
 			.then((response: { data: any[] }) => {
 				resultState = response.data;
-				setCount(response.data[0].answers);
-				setResults(response.data);
+				if (response.data && response.data.length) {
+					setCount(response.data[0].answers);
+					setResults(response.data);
+				}
 			})
 			.catch(e => {
 				console.error(e);
