@@ -84,16 +84,7 @@ const App: React.FC = () => {
 								from="/hoivakodit/:id/paivita/:key"
 								to="/hoivakodit/:id/paivita/:key/tiedot"
 							/>
-							<Route
-								exact
-								path="/hoivakodit/:id/valvonta"
-								component={PageUploadReport}
-							/>
-							<Route
-								exact
-								path="/hoivakodit/:id/asikaskyselyn-vastaukset"
-								component={PageManualSurveyEntry}
-							/>
+
 							<Route
 								exact
 								path="/hoivakodit/:id/paivita/:key/peruuta"
@@ -118,6 +109,16 @@ const App: React.FC = () => {
 								exact
 								path="/valvonta/palaute"
 								component={PageOpenFeedbackResults}
+							/>
+							<Route
+								exact
+								path="/valvonta/:id"
+								component={PageUploadReport}
+							/>
+							<Route
+								exact
+								path="/valvonta/asiakaskyselyn-vastaukset/:id"
+								component={PageManualSurveyEntry}
 							/>
 							<Route
 								exact

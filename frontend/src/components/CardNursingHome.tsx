@@ -237,10 +237,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					<button
 						className={type == "admin" ? "btn" : "hidden"}
 						onClick={e => {
-							openBtnLink(
-								e,
-								`/hoivakodit/${nursinghome.id}/valvonta/`,
-							);
+							openBtnLink(e, `/valvonta/${nursinghome.id}`);
 						}}
 					>
 						Lisää uusi käynti
@@ -250,7 +247,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						onClick={e => {
 							openBtnLink(
 								e,
-								`/hoivakodit/${nursinghome.id}/asikaskyselyn-vastaukset/`,
+								`/valvonta/asiakaskyselyn-vastaukset/${nursinghome.id}`,
 							);
 						}}
 					>

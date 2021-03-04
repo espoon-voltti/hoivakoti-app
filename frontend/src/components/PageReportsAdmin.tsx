@@ -536,7 +536,7 @@ const PageReportsAdmin: FC = () => {
 	if (loggedIn) {
 		return (
 			<div>
-				<div className="filters filters-admin">
+				<div className="filters">
 					<div className="filters-text">{filterLabel}</div>
 					{filterElements}
 				</div>
