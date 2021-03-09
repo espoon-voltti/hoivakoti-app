@@ -54,9 +54,7 @@ const PageSurveyResults: FC = () => {
 			.get(`${config.API_URL}/survey/${id}/text-results/omaiskysely`)
 			.then((response: { data: any[] }) => {
 				const approvedResults = response.data.filter(
-					result =>
-						result.feedback_state === FeedbackState.OPEN ||
-						result.feedback_state === FeedbackState.APPROVED,
+					result => result.feedback_state === FeedbackState.APPROVED,
 				);
 
 				setTextResults(approvedResults);
