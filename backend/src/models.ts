@@ -586,6 +586,31 @@ export async function GetSurveyTextResults(
 	return results;
 }
 
+export async function GetSurveyApprovedResults(
+	nursingHomeId: string,
+): Promise<any[]> {
+	const results = await knex
+		.table("NursingHomeSurveyTextAnswers")
+		.join(
+			"NursingHomeSurveyAnswers",
+			"NursingHomeSurveyAnswers.answer",
+			"NursingHomeSurveyTextAnswers.id",
+		)
+		.select(
+			"NursingHomeSurveyTextAnswers.id",
+			"answer_text",
+			"created_date",
+			"feedback_state",
+			"response_text",
+			"response_date",
+		)
+		.where({ nursinghome_id: nursingHomeId })
+		.where("created_date", ">", getDateDaysAgo(config.feedbackExpires))
+		.where("feedback_state", FeedbackState.APPROVED);
+
+	return results;
+}
+
 export async function GetAllSurveyTextResults(): Promise<any> {
 	const results = await knex
 		.table("NursingHomeSurveyTextAnswers")

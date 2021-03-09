@@ -20,16 +20,8 @@ const PageRespondFeedback: FC = () => {
 
 	useEffect(() => {
 		axios
-			.get(`${config.API_URL}/survey/${id}/text-results/omaiskysely`)
-			.then((response: { data: any[] }) => {
-				const approvedResults = response.data.filter(
-					result =>
-						result.feedback_state === FeedbackState.OPEN ||
-						result.feedback_state === FeedbackState.APPROVED,
-				);
-
-				setResults(approvedResults);
-			})
+			.get(`${config.API_URL}/survey/${id}/approved-results/omaiskysely`)
+			.then((response: { data: any[] }) => setResults(response.data))
 			.catch(e => {
 				console.error(e);
 				throw e;
