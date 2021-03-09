@@ -46,6 +46,7 @@ import {
 	GetCustomerCommunesForNursingHome,
 	UpdateCustomerCommunesForNursingHome,
 	GetSurveyTextResults as GetSurveyTextResultsDB,
+	GetSurveyApprovedResults as GetSurveyApprovedResultsDB,
 	GetAllSurveyTextResults as GetAllSurveyTextResultsDB,
 	UpdateSurveyTextState as UpdateSurveyTextStateDB,
 	DeleteRejectedSurveyTextResults as DeleteRejectedSurveyTextResultsDB,
@@ -618,6 +619,12 @@ export async function GetSurveyTextResults(
 	nursingHomeId: string,
 ): Promise<any> {
 	return await GetSurveyTextResultsDB(nursingHomeId);
+}
+
+export async function GetSurveyApprovedResults(
+	nursingHomeId: string,
+): Promise<any> {
+	return await GetSurveyApprovedResultsDB(nursingHomeId);
 }
 
 export async function GetAllSurveyTextResults(ctx: Context): Promise<any> {
