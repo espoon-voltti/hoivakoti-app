@@ -50,9 +50,9 @@ import {
 	GetAllSurveyTextResults as GetAllSurveyTextResultsDB,
 	UpdateSurveyTextState as UpdateSurveyTextStateDB,
 	DeleteRejectedSurveyTextResults as DeleteRejectedSurveyTextResultsDB,
-	GetAccessToken,
-	RefreshToken,
-	LogoutAccessToken,
+	GetAccessToken as GetAccessTokenDB,
+	RefreshToken as RefreshTokenDB,
+	LogoutAccessToken as LogoutAccessTokenDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -684,7 +684,7 @@ export async function UpdateNursingHomeCustomerCommunes(
 export async function GetKeycloakAccessToken(ctx: Context): Promise<any> {
 	const { username, password, type } = ctx.request.body;
 
-	const result = await GetAccessToken(username, password, type);
+	const result = await GetAccessTokenDB(username, password, type);
 
 	if (!result["access_token"] && !result["refresh_token"]) {
 		const requestResponse = result.response;
@@ -704,7 +704,7 @@ export async function GetKeycloakAccessToken(ctx: Context): Promise<any> {
 export async function RefreshKeycloakAccessToken(ctx: Context): Promise<any> {
 	const { token, type, hash } = ctx.request.body;
 
-	const result = await RefreshToken(token, hash, type);
+	const result = await RefreshTokenDB(token, hash, type);
 
 	if (!result["access_token"] && !result["refresh_token"]) {
 		const requestResponse = result.response;
@@ -724,7 +724,7 @@ export async function RefreshKeycloakAccessToken(ctx: Context): Promise<any> {
 export async function LogoutKeycloakAccessToken(ctx: Context): Promise<any> {
 	const { token, hash, type } = ctx.request.body;
 
-	const result = await LogoutAccessToken(token, hash, type);
+	const result = await LogoutAccessTokenDB(token, hash, type);
 
 	if (!result.success) {
 		const requestResponse = result.response;
