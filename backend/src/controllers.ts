@@ -624,8 +624,6 @@ export async function GetSurveyTextResults(
 export async function GetSurveyApprovedResults(
 	nursingHomeId: string,
 ): Promise<any> {
-	console.log("Näi");
-
 	return await GetSurveyApprovedResultsDB(nursingHomeId);
 }
 
