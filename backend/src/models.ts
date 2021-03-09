@@ -1580,7 +1580,7 @@ export async function LogoutAccessToken(
 		});
 
 		const res = await axios.post(
-			"http://hoivakoti-proxy:8080/auth/realms/hoivakodit/protocol/openid-connect/logout",
+			`${config.serviceProxyUrl}/auth/realms/hoivakodit/protocol/openid-connect/logout`,
 			reqData,
 		);
 
