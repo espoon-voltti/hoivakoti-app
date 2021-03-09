@@ -48,7 +48,7 @@ services:
         networks:
             - hoivakodit-network
 
-    hoivakodit-proxy:
+    hoivakoti-proxy:
         image: nginx:1.19-alpine
         ports:
             - 4000:8080

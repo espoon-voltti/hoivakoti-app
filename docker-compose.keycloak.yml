@@ -1,19 +1,14 @@
 version: "3"
 services:
     keycloak:
-        image: quay.io/keycloak/keycloak:11.0.3
+        build: ./keycloak
+        image: hoivakoti/keycloak:v1
         environment:
-            DB_VENDOR: POSTGRES
-            DB_ADDR: postgres
-            DB_DATABASE: postgres
-            DB_USER: postgres
-            DB_SCHEMA: public
-            DB_PASSWORD: postgres
-            REALM: hoivakodit
-            KEYCLOAK_USER: admin
+            KEYCLOAK_USER: "admin"
+            DB_PASSWORD: "postgres"
+            DB_ADDR: "postgres"
             KEYCLOAK_PASSWORD: "${ADMIN_PASSWORD}"
-            PROXY_ADDRESS_FORWARDING: "true"
-            KEYCLOAK_IMPORT: "/keycloak/hoivakodit-realm.json -Dkeycloak.profile.feature.upload_scripts=enabled"
+            KEYCLOAK_IMPORT: "/keycloak/hoivakodit-realm.json"
         volumes:
             - ./keycloak/hoivakodit-realm.json:/keycloak/hoivakodit-realm.json
         depends_on:
