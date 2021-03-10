@@ -1,18 +1,32 @@
-import React, { FC, useState, useEffect } from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import React, { FC, useState, useEffect, useContext } from "react";
+import { NavLink, Link, useLocation, useHistory } from "react-router-dom";
 import config from "./config";
 import { useT, Language, useCurrentLanguage } from "../i18n";
 import i18next from "i18next";
+
+import Cookies from "universal-cookie";
+import AuthTypes from "../shared/types/auth-types";
+import { AuthContext } from "./auth-context";
 
 const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
 };
 
+interface KeycloakSession {
+	token: string;
+	refreshToken: string;
+	username: string;
+}
+
 const Header: FC = () => {
 	const linkJumpToContent = useT("linkJumpToContent");
 	const currentLanguage = useCurrentLanguage();
 	const location = useLocation();
+	const history = useHistory();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [sessionCookies] = useState<Cookies>(new Cookies());
+
+	const { isAuthenticated, logout } = useContext(AuthContext);
 
 	useEffect(() => {
 		setIsMobileMenuOpen(false);
@@ -28,6 +42,29 @@ const Header: FC = () => {
 
 	const surveillancePage =
 		location.pathname.indexOf("valvonta") == -1 ? false : true;
+
+	const surveillanceLogout = async (): Promise<void> => {
+		try {
+			if (isAuthenticated) {
+				const keycloakSession: KeycloakSession = sessionCookies.get(
+					"keycloak_session",
+				);
+
+				const refreshToken = keycloakSession.refreshToken;
+
+				const hash = sessionCookies.get("hoivakoti_session");
+
+				await logout({ token: refreshToken, hash }, AuthTypes.VALVONTA);
+
+				sessionCookies.remove("keycloak_session");
+				sessionCookies.remove("hoivakoti_session");
+
+				history.go(0);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	let minorHeader: JSX.Element | null = null;
 	let navItems: JSX.Element | null = <div className="nav-menus"></div>;
@@ -60,7 +97,7 @@ const Header: FC = () => {
 		);
 	}
 
-	if (surveillancePage) {
+	if (surveillancePage && isAuthenticated) {
 		minorHeader = (
 			<div className="minor-header">Valvontatiimin työkalu</div>
 		);
@@ -88,6 +125,9 @@ const Header: FC = () => {
 						</NavLink>
 					</li>
 				</ul>
+				<button className="btn" onClick={surveillanceLogout}>
+					Kirjaudu ulos
+				</button>
 			</div>
 		);
 	}
@@ -167,12 +207,7 @@ const Header: FC = () => {
 	}
 
 	return (
-		<header
-			className={
-				"header " +
-				(updatePage || surveillancePage ? "header-shadow" : "")
-			}
-		>
+		<header className={"header " + (updatePage ? "header-fixed" : "")}>
 			<a className="jump-to-content" href="#content">
 				{linkJumpToContent}
 			</a>

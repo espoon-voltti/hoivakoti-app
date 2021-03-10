@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from "react";
+import React, { useEffect } from "react";
 import "../styles/global.scss";
 import "../styles/App.scss";
 import PageNursingHomes from "./PageNursingHomes";
@@ -6,10 +6,9 @@ import PageNursingHome from "./PageNursingHome";
 import PageLanding from "./PageLanding";
 import {
 	BrowserRouter as Router,
-	Route,
 	Redirect,
+	Route,
 	Switch,
-	useLocation,
 } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -30,11 +29,15 @@ import PageManualSurveyEntry from "./PageManualSurveyEntry";
 import PageAdmin from "./PageAdmin";
 import PageOpenFeedbackResults from "./PageOpenFeedbackResults";
 import PageRespondFeedback from "./PageRespondFeedback";
-import config from "./config";
+import PrivateRoute from "./PrivateRoute";
+
+import AuthContextProvider from "./auth-context";
+import AuthTypes from "../shared/types/auth-types";
 
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
 	const currentPath = window.location.pathname;
+
 	useEffect(() => {
 		if (
 			window.location.hostname.includes("hoivakodit.net") ||
@@ -51,86 +54,95 @@ const App: React.FC = () => {
 				<Router basename={`/${currentLanguage}`}>
 					<ScrollToTop />
 					<Title />
-					<Header />
-					<main id="content">
-						<Switch>
-							<Route exact path="/" component={PageLanding} />
-							<Route
-								exact
-								path="/hoivakodit"
-								component={PageNursingHomes}
-							/>
-							<Route
-								exact
-								path="/hoivakodit/:id"
-								component={PageNursingHome}
-							/>
-							<Route
-								exact
-								path="/hoivakodit/:id/paivita/:key/tiedot"
-								component={PageUpdate}
-							/>
-							<Route
-								exact
-								path="/hoivakodit/:id/paivita/:key/palaute"
-								component={PageRespondFeedback}
-							/>
-							<Route
-								exact
-								path="/hoivakodit/:id/paivita/:key/kuvat"
-								component={PageUpdateImages}
-							/>
-							<Redirect
-								from="/hoivakodit/:id/paivita/:key"
-								to="/hoivakodit/:id/paivita/:key/tiedot"
-							/>
-
-							<Route
-								exact
-								path="/hoivakodit/:id/paivita/:key/peruuta"
-								component={PageCancel}
-							/>
-							<Route
-								exact
-								path="/hoivakodit/:id/anna-arvio"
-								component={PageSurvey}
-							/>
-							<Route
-								exact
-								path="/hoivakodit/:id/arviot"
-								component={PageSurveyResults}
-							/>
-							<Route
-								exact
-								path="/valvonta"
-								component={PageReportsAdmin}
-							/>
-							<Route
-								exact
-								path="/valvonta/palaute"
-								component={PageOpenFeedbackResults}
-							/>
-							<Route
-								exact
-								path="/valvonta/:id"
-								component={PageUploadReport}
-							/>
-							<Route
-								exact
-								path="/valvonta/asiakaskyselyn-vastaukset/:id"
-								component={PageManualSurveyEntry}
-							/>
-							<Route
-								exact
-								path="/saavutettavuus"
-								component={PageAccessibility}
-							/>
-							<Route exact path="/admin" component={PageAdmin} />
-							<Route
-								component={() => <PageError error="404" />}
-							/>
-						</Switch>
-					</main>
+					<AuthContextProvider>
+						<Header />
+						<main id="content">
+							<Switch>
+								<Route exact path="/" component={PageLanding} />
+								<Route
+									exact
+									path="/hoivakodit"
+									component={PageNursingHomes}
+								/>
+								<Route
+									exact
+									path="/hoivakodit/:id"
+									component={PageNursingHome}
+								/>
+								<Route
+									exact
+									path="/hoivakodit/:id/paivita/:key/tiedot"
+									component={PageUpdate}
+								/>
+								<Route
+									exact
+									path="/hoivakodit/:id/paivita/:key/palaute"
+									component={PageRespondFeedback}
+								/>
+								<Route
+									exact
+									path="/hoivakodit/:id/paivita/:key/kuvat"
+									component={PageUpdateImages}
+								/>
+								<Redirect
+									from="/hoivakodit/:id/paivita/:key"
+									to="/hoivakodit/:id/paivita/:key/tiedot"
+								/>
+								<Route
+									exact
+									path="/hoivakodit/:id/paivita/:key/peruuta"
+									component={PageCancel}
+								/>
+								<Route
+									exact
+									path="/hoivakodit/:id/anna-arvio"
+									component={PageSurvey}
+								/>
+								<Route
+									exact
+									path="/hoivakodit/:id/arviot"
+									component={PageSurveyResults}
+								/>
+								<PrivateRoute
+									path="/valvonta"
+									exact
+									authType={AuthTypes.VALVONTA}
+									component={PageReportsAdmin}
+								/>
+								<PrivateRoute
+									path="/valvonta/palaute"
+									exact
+									authType={AuthTypes.VALVONTA}
+									component={PageOpenFeedbackResults}
+								/>
+								<PrivateRoute
+									exact
+									path="/valvonta/:id"
+									authType={AuthTypes.VALVONTA}
+									component={PageUploadReport}
+								/>
+								<PrivateRoute
+									path="/valvonta/asiakaskyselyn-vastaukset/:id"
+									exact
+									authType={AuthTypes.VALVONTA}
+									component={PageManualSurveyEntry}
+								/>
+								<Route
+									exact
+									path="/saavutettavuus"
+									component={PageAccessibility}
+								/>
+								<Route
+									exact
+									path="/admin"
+									component={PageAdmin}
+								/>
+								<Route
+									component={() => <PageError error="404" />}
+								/>
+							</Switch>
+						</main>
+					</AuthContextProvider>
 					<Footer />
 				</Router>
 			</div>

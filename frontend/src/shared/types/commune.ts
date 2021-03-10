@@ -1,4 +1,4 @@
-export enum Commune {
+enum Commune {
 	EPO = "EPO",
 	HNK = "HNK",
 	KRN = "KRN",
@@ -9,3 +9,5 @@ export enum Commune {
 	KAU = "KAU",
 	PKA = "PKA",
 }
+
+export default Commune;

@@ -50,6 +50,9 @@ import {
 	GetAllSurveyTextResults as GetAllSurveyTextResultsDB,
 	UpdateSurveyTextState as UpdateSurveyTextStateDB,
 	DeleteRejectedSurveyTextResults as DeleteRejectedSurveyTextResultsDB,
+	GetAccessToken as GetAccessTokenDB,
+	RefreshToken as RefreshTokenDB,
+	LogoutAccessToken as LogoutAccessTokenDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -674,6 +677,66 @@ export async function UpdateNursingHomeCustomerCommunes(
 	const communes = ctx.request.body["customer_commune"];
 
 	const result = await UpdateCustomerCommunesForNursingHome(id, communes);
+
+	return result;
+}
+
+export async function GetKeycloakAccessToken(ctx: Context): Promise<any> {
+	const { username, password, type } = ctx.request.body;
+
+	const result = await GetAccessTokenDB(username, password, type);
+
+	if (!result["access_token"] && !result["refresh_token"]) {
+		const requestResponse = result.response;
+
+		ctx.response.status = requestResponse ? requestResponse.status : 400;
+
+		return {
+			status: requestResponse
+				? requestResponse.data["error_description"]
+				: result.statusMessage || "Something went wrong",
+		};
+	}
+
+	return result;
+}
+
+export async function RefreshKeycloakAccessToken(ctx: Context): Promise<any> {
+	const { token, type, hash, username } = ctx.request.body;
+
+	const result = await RefreshTokenDB(token, username, hash, type);
+
+	if (!result["access_token"] && !result["refresh_token"]) {
+		const requestResponse = result.response;
+
+		ctx.response.status = requestResponse ? requestResponse.status : 400;
+
+		return {
+			status: requestResponse
+				? requestResponse.data["error_description"]
+				: result.statusMessage || "Something went wrong",
+		};
+	}
+
+	return result;
+}
+
+export async function LogoutKeycloakAccessToken(ctx: Context): Promise<any> {
+	const { token, hash, type } = ctx.request.body;
+
+	const result = await LogoutAccessTokenDB(token, hash, type);
+
+	if (!result.success) {
+		const requestResponse = result.response;
+
+		ctx.response.status = requestResponse ? requestResponse.status : 400;
+
+		return {
+			status: requestResponse
+				? requestResponse.data["error_description"]
+				: result.statusMessage || "Something went wrong",
+		};
+	}
 
 	return result;
 }
