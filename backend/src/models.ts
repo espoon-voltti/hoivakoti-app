@@ -1461,7 +1461,7 @@ const userIsEntitledToToken = async (
 		});
 
 		const res = await axios.post(
-			`${config.serviceProxyUrl}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
 			reqData,
 		);
 
@@ -1490,7 +1490,7 @@ export async function GetAccessToken(
 		});
 
 		const res = await axios.post(
-			`${config.serviceProxyUrl}/auth/realms/hoivakodit/protocol/openid-connect/token`,
+			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token`,
 			reqData,
 		);
 
@@ -1541,7 +1541,7 @@ export async function RefreshToken(
 		});
 
 		const res = await axios.post(
-			`${config.serviceProxyUrl}/auth/realms/hoivakodit/protocol/openid-connect/token`,
+			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token`,
 			reqData,
 		);
 
@@ -1580,7 +1580,7 @@ export async function LogoutAccessToken(
 		});
 
 		const res = await axios.post(
-			`${config.serviceProxyUrl}/auth/realms/hoivakodit/protocol/openid-connect/logout`,
+			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/logout`,
 			reqData,
 		);
 

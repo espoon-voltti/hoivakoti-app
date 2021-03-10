@@ -16,8 +16,6 @@ const pgDatabaseName = process.env.DB_NAME ? process.env.DB_NAME : "postgres";
 
 const feedbackExpires = 730; // days
 
-const serviceProxyUrl = process.env.SERVICE_PROXY_ENTRYPOINT;
-
 export default {
 	nodeEnv,
 	port,
@@ -26,5 +24,4 @@ export default {
 	pgHost,
 	pgDatabaseName,
 	feedbackExpires,
-	serviceProxyUrl,
 };
