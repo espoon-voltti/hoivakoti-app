@@ -5,6 +5,7 @@ services:
         image: hoivakoti/keycloak:latest
         environment:
             KEYCLOAK_USER: "admin"
+            DB_USER: "postgres"
             DB_PASSWORD: "postgres"
             DB_ADDR: "postgres"
             KEYCLOAK_PASSWORD: "${ADMIN_PASSWORD}"
