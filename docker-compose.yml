@@ -1,39 +1,65 @@
 # docker-compose.yml
 version: "3"
 services:
-  backend:
-    build: ./backend
-    image: hoivakoti/service:v1
-    depends_on:
-      - postgres
-    ports:
-      - "3000:3000"
-      - "9229:9229"
-    volumes:
-      - ./backend:/usr/app/
-      - /usr/app/node_modules
-    working_dir: /usr/app/
-    user: root
-    command: sh -c "yarn install && yarn run watch-server"
+    backend:
+        build: ./backend
+        image: hoivakoti/service:v1
+        depends_on:
+            - postgres
+        ports:
+            - "3000:3000"
+            - "9229:9229"
+        volumes:
+            - ./backend:/usr/app/
+            - /usr/app/node_modules
+        working_dir: /usr/app/
+        user: root
+        environment:
+            NODE_ENV: development
+        command: sh -c "yarn install && yarn run watch-server"
+        networks:
+            - hoivakodit-network
 
-  frontend:
-    build: ./frontend
-    image: tzaeru/hoivakoti-portaali-frontend:v1
-    depends_on:
-      - postgres
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./frontend:/usr/app/
-      - /usr/app/node_modules
-    working_dir: /usr/app/
-    command: sh -c "yarn install && yarn run start"
+    frontend:
+        build: ./frontend
+        image: tzaeru/hoivakoti-portaali-frontend:v1
+        depends_on:
+            - postgres
+        ports:
+            - "4000"
+        volumes:
+            - ./frontend:/usr/app/
+            - /usr/app/node_modules
+        working_dir: /usr/app/
+        command: sh -c "yarn install && yarn run start"
+        networks:
+            - hoivakodit-network
 
-  postgres:
-    ports:
-      - 5432:5432
-    image: postgres:12-alpine
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
+    postgres:
+        ports:
+            - "5432"
+        image: postgres:12-alpine
+        environment:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_DB: postgres
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - hoivakodit-network
+
+    hoivakoti-proxy:
+        image: nginx:1.19-alpine
+        ports:
+            - 4000:8080
+        volumes:
+            - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - hoivakodit-network
+
+volumes:
+    postgres_data:
+
+networks:
+    hoivakodit-network:
+        driver: bridge

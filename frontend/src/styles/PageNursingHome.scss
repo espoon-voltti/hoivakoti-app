@@ -7,31 +7,31 @@
 	margin-bottom: 80px;
 }
 
-.nursingHome-info-list dt {
+.nursinghome-info-list dt {
 	line-height: 24px;
 	font-weight: 600;
 }
-.nursingHome-info-list dd {
+.nursinghome-info-list dd {
 	line-height: 24px;
 	margin-bottom: 1em;
 	white-space: pre-line;
 }
 
-.nursingHome-info-list--contact,
-.nursingHome-info-list--directions {
+.nursinghome-info-list--contact,
+.nursinghome-info-list--directions {
 	margin-top: 10px;
 }
 
-.nursingHome-info-list--contact dd,
-.nursingHome-info-list--directions dd {
+.nursinghome-info-list--contact dd,
+.nursinghome-info-list--directions dd {
 	line-height: 24px;
 	margin-bottom: 0;
 }
-.nursingHome-info-list--directions dd {
+.nursinghome-info-list--directions dd {
 	margin-bottom: 1em;
 }
 
-.nursingHome-info-list--directions dd:last-child {
+.nursinghome-info-list--directions dd:last-child {
 	margin-bottom: 0;
 }
 
@@ -286,10 +286,14 @@ $hero-border: 5px solid white;
 .report_info_container {
 	margin-top: 15px;
 	text-align: center;
+
+	div:first-of-type {
+		margin-bottom: 25px;
+	}
 }
 
 .report_info_container .report_info_item {
-	margin-bottom: 25px;
+	margin: 35px 0 35px 0;
 }
 
 .report_info_container .report_hidden {

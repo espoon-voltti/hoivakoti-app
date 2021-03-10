@@ -1,73 +1,68 @@
 @import "./variables.scss";
 
-.filters-admin {
-    margin-top: 80px;
-}
-
 .card-list-container {
-    max-width: 900px;
-    margin: auto;
+	max-width: 1000px;
+	margin: auto;
 }
 
 .card-list-searchfield-container {
-    width: 80%;
-    margin: 40px 0 40px 0;
+	width: 80%;
+	margin: 40px 0 40px 0;
 }
 
 .card-list-searchfield {
-    width: 100%;
-    font-size: 16px;
-    font-style: italic;
-    line-height: 25px;
-    border: none;
-    border-bottom: solid 1px $border-color;
+	width: 100%;
+	font-size: 16px;
+	font-style: italic;
+	line-height: 25px;
+	border: none;
+	border-bottom: solid 1px $border-color;
 }
 
 .card-list-searchfield-btn {
-   float: right;
-   position: relative;
-   top: -28px;
-   left: -10px;
-   width: 50px;
-   height: 25px;
-   border: none;
-   background-image: url('/icons/icon-searchfield.svg');
-   background-size: contain;
-   background-repeat: no-repeat;
-   opacity: 0.6;
-   cursor: pointer;
+	float: right;
+	position: relative;
+	top: -28px;
+	left: -10px;
+	width: 50px;
+	height: 25px;
+	border: none;
+	background-image: url("/icons/icon-searchfield.svg");
+	background-size: contain;
+	background-repeat: no-repeat;
+	opacity: 0.6;
+	cursor: pointer;
 }
 
 .login-container {
-    margin-top: 20vh;
-    margin-bottom: 150px;
-    margin-left: 15vw;
+	margin-top: 20vh;
+	margin-bottom: 150px;
+	margin-left: 15vw;
 
-    h2 {
-        margin-bottom: 60px;
-    }
+	h2 {
+		margin-bottom: 60px;
+	}
 
-    div {
-        margin-top: 40px;
-        margin-bottom: -10px;
-        width: 350px;
-        //text-align: right;
-    }
+	div {
+		margin-top: 40px;
+		margin-bottom: -10px;
+		width: 350px;
+		//text-align: right;
+	}
 
-    input {
-        border: none;
-        border-bottom: solid 1px $border-color;
-        font-size: 25px;
-        line-height: 35px;
-    }
+	input {
+		border: none;
+		border-bottom: solid 1px $border-color;
+		font-size: 25px;
+		line-height: 35px;
+	}
 
-    .align-right{
-        text-align: right;
-    }
+	.align-right {
+		text-align: right;
+	}
 
-    span {
-        //margin-left: 20px;
-        margin-right: 40px;
-    }
-
+	span {
+		//margin-left: 20px;
+		margin-right: 40px;
+	}
 }

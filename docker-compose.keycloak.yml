@@ -1,0 +1,17 @@
+version: "3"
+services:
+    keycloak:
+        build: ./keycloak
+        image: hoivakoti/keycloak:latest
+        environment:
+            KEYCLOAK_USER: "admin"
+            DB_PASSWORD: "postgres"
+            DB_ADDR: "postgres"
+            KEYCLOAK_PASSWORD: "${ADMIN_PASSWORD}"
+            KEYCLOAK_IMPORT: "/keycloak/hoivakodit-realm.json"
+        volumes:
+            - ./keycloak/hoivakodit-realm.json:/keycloak/hoivakodit-realm.json
+        depends_on:
+            - postgres
+        networks:
+            - hoivakodit-network

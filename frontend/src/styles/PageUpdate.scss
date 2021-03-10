@@ -1,6 +1,7 @@
 @import "variables.scss";
 
 .page-update {
+	position: relative;
 	padding: 80px 20px 20px 20px;
 }
 
@@ -12,187 +13,30 @@
 }
 
 .page-update-section {
-	width: 680px;
-	padding: 50px 0 50px 0;
+	max-width: 680px;
 	border-bottom: 1px solid $border-color;
+	padding: 2rem 0 3rem 0;
+	margin-bottom: 1rem;
+
+	&-last {
+		margin-bottom: 0;
+		border: none;
+	}
+
+	.nursinghome-back-link {
+		margin: 1rem 0 3rem 0;
+	}
 }
 
 .nursinghome-logo-upload {
-
 	.nursinghome-upload-img {
 		width: 320px;
 		margin: auto;
 	}
 }
 
-.nursinghome-upload-container {
-	margin: 10px 0px 45px 0;
-	height: 285px;
-}
-
-.nursinghome-upload-container:nth-of-type(odd) {
-	margin: 10px 40px 45px 0;
-}
-
-.flex-container {
-	display: flex;
-	flex-wrap: wrap;
-	width: 100%;
-}
-
-.nursinghome-upload-img {
-	width: 320px;
-	height: 200px;
-	padding: 5px;
-	border: 2px dashed $border-color;
-}
-
-.nursinghome-upload-img-hover {
-	position: relative;
-	top: -6px;
-	left: -6px;
-	width: 320px;
-	height: 200px;
-	opacity: 0;
-	background-color: rgba(0,0,0,0.75);
-}
-
-.nursinghome-upload-img-inner {
-	width: 100%;
-	height: 100%;
-	background-position: center;
-	background-size: contain;
-	background-repeat: no-repeat;
-
-	&:hover {
-		.nursinghome-upload-img-hover{
-			opacity: .9;
-		}
-	}
-}
-
-.nursinghome-upload-placeholder > .nursinghome-upload-img-inner {
-	background: #fff url("/icons/icon-file-upload.svg") 50% 35%/15% no-repeat;
-
-	.input-hidden{
-		position: relative;
-		opacity: 1;
-		top: -20px;
-		left: 0px;
-		width: 100%;
-		height: 100%;
-		opacity: 0;
-		cursor: pointer;
-	}
-}
-
-.nursinghome-upload-img-inner-text {
-	position: relative;
-	top: 130px;
-}
-
-.nursinghome-upload-img-change-text, .nursinghome-upload-img-remove-text {
-	position: relative;
-	top: 65px;
-}
-
-.nursinghome-upload-img {
-	text-align: center;
-
-	.btn {
-		margin: 30px 0 0 0;
-		width: 250px;
-	}
-
-	.nursinghome-upload-hidden-remove{
-		position: relative;
-		opacity: 1;
-		top: -50px;
-		left: 170px;
-		width: 100px;
-		height: 100px;
-		border: 1px solid rgba(0,0,0,0);
-		background: rgba(0,0,0,0) url("/icons/icon-trashcan.svg") 50% 30%/35% no-repeat;
-		color: #fff;
-		font-size: 10px;
-		cursor: pointer;
-
-		&:hover{
-			border-color: $border-color;
-		}
-	}
-
-	.nursinghome-upload-button-remove{
-		position: relative;
-		opacity: 1;
-		top: 5px;
-		left: 115px;
-		width: 100px;
-		height: 100px;
-		border: 1px solid rgba(0,0,0,0);
-		background: rgba(0,0,0,0) url("/icons/icon-trashcan.svg") 50% 30%/35% no-repeat;
-		color: #fff;
-		font-size: 10px;
-		cursor: pointer;
-
-		&:hover{
-			border-color: $border-color;
-		}
-	}
-	
-	.input-hidden{
-		position: relative;
-		opacity: 1;
-		top: 50px;
-		left: 50px;
-		width: 100px;
-		height: 100px;
-		border: 1px solid rgba(0,0,0,0);
-		background: rgba(0,0,0,0) url("/icons/icon-edit-pen.svg") 50% 30%/35% no-repeat;
-		color: #fff;
-		font-size: 10px;
-
-		&:hover {
-			border-color: $border-color;
-		}
-
-		input {
-			opacity: 0;
-			width: 100%;
-			height: 100%;
-			cursor: pointer;
-		}
-	}
-
-	.input-button{
-		position: relative;
-		opacity: 0;
-		top: 200px;
-		width: 250px;
-		height: 42px;
-		cursor: pointer;
-
-		input {
-			position: relative;
-			left: 40px;
-			opacity: 0;
-			width: 100%;
-			height: 100%;
-			cursor: pointer;
-		}
-	}
-}
-
 .upload-button-hidden {
 	display: none;
-}
-
-.nursinghome-upload-caption {
-	width: 313px;
-	height: 90px;
-	margin: 10px 0 10px 0;
-	font-size: 14px;
-	border: 1px solid $border-color;
 }
 
 .textarea-hidden {
@@ -203,23 +47,18 @@
 	margin-top: 1em;
 }
 
-.page-update-minor-title {
-	margin-bottom: 40px;
+.page-update-info {
+	margin: 1.5rem 0 0.5rem 0;
+	font-size: 0.8rem;
 }
 
-.page-update-data {
-	margin-bottom: 0.5em;
-	padding: 0 0 0 30px;
-}
-
-.page-update-intro {
-	margin: 1.5em 0 3em 0;
-	padding: 0 0 0 30px;
+.page-update-status {
+	width: 100%;
+	text-align: right;
+	margin: 1rem auto 0 auto;
 }
 
 .page-update-controls {
-	max-width: 100%;
-	width: 360px;
 	margin: 0;
 	padding: 0 0 0 0;
 
@@ -231,41 +70,139 @@
 
 .page-update-cancel {
 	border-width: 1px;
-    cursor: pointer;
-    justify-content: center;
-    padding-bottom: calc(0.375em - 1px);
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-    padding-top: calc(0.375em - 1px);
-    text-align: center;
-    white-space: nowrap;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 600;
-    min-width: 7em;
-    height: 3em;
-    color: $headline-color;
+	cursor: pointer;
+	justify-content: center;
+	padding-bottom: calc(0.375em - 1px);
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+	padding-top: calc(0.375em - 1px);
+	text-align: center;
+	white-space: nowrap;
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: 600;
+	min-width: 7em;
+	height: 3em;
+	color: $headline-color;
 	border: 1px solid $light-gray;
 	border-radius: $border-radius;
+}
 
+.page-update-submit {
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
 }
 
 .page-update-popup {
-	position: fixed;
 	margin-top: 12px;
 	margin-left: 20px;
 	color: $primary-blue;
 	font-weight: bold;
+
+	&.error {
+		color: $error-color;
+	}
+}
+
+.page-update-columns {
+	@media (min-width: 800px) {
+		display: flex;
+		flex-wrap: wrap;
+
+		.field {
+			flex: 1 1 47%;
+			margin-right: 3%;
+
+			&:nth-child(2n),
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
 }
 
 .nav-save {
-	position: fixed;
-	top: 18px;
-	width: 450px;
-	right: 250px;
-	z-index: 9999;
+	display: flex;
+	justify-content: flex-end;
 
-	*{
+	* {
 		margin-right: 8px;
+	}
+}
+
+.update-images-button {
+	display: inline-flex;
+	align-items: center;
+	min-width: 18.75rem;
+}
+
+.checkbox-columns {
+	.control {
+		display: flex;
+		flex-wrap: wrap;
+
+		.checkbox-container {
+			min-width: auto;
+			flex: none;
+			flex-grow: 1;
+			width: 31%;
+			margin-right: 2%;
+
+			&:nth-child(3n) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+.field {
+	position: relative;
+	padding-bottom: 1.5rem;
+
+	&:not(:last-child) {
+		margin-bottom: 0.75rem;
+	}
+
+	.input {
+		&-description {
+			display: inline-block;
+			line-height: 1.5;
+			font-style: italic;
+			font-size: 0.85rem;
+			color: $headline-color;
+			margin-bottom: 0.6rem;
+		}
+	}
+
+	.control {
+		box-sizing: border-box;
+		clear: both;
+		font-size: 1rem;
+		position: relative;
+		text-align: left;
+
+		.icon {
+			position: absolute;
+			bottom: -1.56rem;
+			right: 0;
+			background: url("/icons/icon-exclamation-circle.svg");
+			width: 1.125rem;
+			height: 1.125rem;
+		}
+	}
+
+	.help {
+		display: block;
+		position: absolute;
+		left: 0;
+		right: 1.2rem;
+		font-size: 0.75rem;
+		margin-top: 0.4rem;
+		padding-left: 0.5rem;
+		line-height: 1.125rem;
+		min-height: 1.125rem;
+		color: $input-border;
 	}
 }

@@ -14,6 +14,8 @@ const pgPassword = process.env.DB_PASSWORD
 const pgHost = process.env.DB_URL ? process.env.DB_URL : "postgres";
 const pgDatabaseName = process.env.DB_NAME ? process.env.DB_NAME : "postgres";
 
+const feedbackExpires = 730; // days
+
 export default {
 	nodeEnv,
 	port,
@@ -21,4 +23,5 @@ export default {
 	pgPassword,
 	pgHost,
 	pgDatabaseName,
+	feedbackExpires,
 };

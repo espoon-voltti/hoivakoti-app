@@ -12,6 +12,7 @@ import {
 	DropAndRecreateTables,
 	DropAndRecreateSurveyAnswerTables,
 	DropAndRecreateSurveyTables,
+	DropAndRecreateSurveyTotalScoreTable,
 	DropAndRecreateReportsTables,
 	UploadPics,
 	GetAllPicsAndDescriptions,
@@ -22,19 +23,30 @@ import {
 	GetCities,
 	GetNursingHomeVacancyStatus,
 	UpdateNursingHomeInformation,
-	UpdateNursingHomeName,
 	UpdateNursingHomeImage,
 	UploadNursingHomeReport,
 	AdminRevealSecrets,
 	AddNursingHomeSurveyQuestion,
 	UpdateNursingHomeSurveyQuestion,
+	SubmitSurveyData,
 	SubmitSurveyResponse,
+	SubmitFeedbackResponse,
 	GetSurveyWithNursingHomeResults,
+	GetSurveyTextResults,
 	AddNursingHomeSurveyKeys,
 	GetSurvey,
 	AdminLogin,
 	CheckLogin,
-	CheckSurveyKey
+	CheckSurveyKey,
+	UpdateNursingHomeVacancyStatus,
+	UpdateNursingHomeCustomerCommunes,
+	GetAllSurveyTextResults,
+	UpdateSurveyTextState,
+	DeleteRejectedSurveyTextResults,
+	GetSurveyApprovedResults,
+	GetKeycloakAccessToken,
+	RefreshKeycloakAccessToken,
+	LogoutKeycloakAccessToken,
 } from "./controllers";
 import config from "./config";
 
@@ -77,6 +89,10 @@ router.post("/api/nursing-homes/drop-survey-answers", async ctx => {
 	ctx.body = await DropAndRecreateSurveyAnswerTables(ctx);
 });
 
+router.post("/api/nursing-homes/recalculate-survey-total-scores", async ctx => {
+	ctx.body = await DropAndRecreateSurveyTotalScoreTable(ctx);
+});
+
 router.post("/api/nursing-homes/drop-surveys", async ctx => {
 	ctx.body = await DropAndRecreateSurveyTables(ctx);
 });
@@ -95,6 +111,16 @@ router.get("/api/nursing-homes/:id", async ctx => {
 
 router.del("/api/nursing-homes/:id", async ctx => {
 	ctx.body = await DeleteNursingHome(ctx);
+});
+
+router.post("/api/nursing-homes/:id/update/:key", async ctx => {
+	const success = await UpdateNursingHomeInformation(ctx);
+	if (!success) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or key" };
+	} else {
+		ctx.body = { success };
+	}
 });
 
 router.get("/api/nursing-homes/:id/pics", async ctx => {
@@ -119,18 +145,8 @@ router.get("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 	}
 });
 
-router.post("/api/nursing-homes/:id/update-name/:key", async ctx => {
-	const success = await UpdateNursingHomeName(ctx);
-	if (!success) {
-		ctx.response.status = 403;
-		ctx.body = { error: "Forbidden: invalid ID or key" };
-	} else {
-		ctx.body = { success };
-	}
-});
-
 router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
-	const success = await UpdateNursingHomeInformation(ctx);
+	const success = await UpdateNursingHomeVacancyStatus(ctx);
 	if (!success) {
 		ctx.response.status = 403;
 		ctx.body = { error: "Forbidden: invalid ID or key" };
@@ -139,8 +155,8 @@ router.post("/api/nursing-homes/:id/vacancy-status/:key", async ctx => {
 	}
 });
 
-router.get("/api/nursing-homes/:id/raportti/:key", async ctx => {
-  ctx.body = await GetPdf(ctx);
+router.get("/api/nursing-homes/:id/raportti/:key/:file", async ctx => {
+	ctx.body = await GetPdf(ctx);
 });
 
 router.post("/api/nursing-homes/:id/update-image/:key", async ctx => {
@@ -161,6 +177,12 @@ router.post("/api/nursing-homes/:id/report-status", async ctx => {
 	} else {
 		ctx.body = { success };
 	}
+});
+
+router.post("/api/nursing-homes/:id/communes", async ctx => {
+	const res = await UpdateNursingHomeCustomerCommunes(ctx);
+
+	ctx.body = { success: res };
 });
 
 router.get("/api/health", async ctx => {
@@ -209,24 +231,101 @@ router.post("/api/survey/check-key", async ctx => {
 	ctx.body = res;
 });
 
+router.get("/api/survey/text-results", async ctx => {
+	const success = await GetAllSurveyTextResults(ctx);
+
+	if (!success) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or session key" };
+	} else {
+		ctx.body = success;
+	}
+});
+
+router.delete("/api/survey/text-results", async ctx => {
+	const res = await DeleteRejectedSurveyTextResults(ctx);
+
+	if (!res.authenticated) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or session key" };
+	} else {
+		ctx.body = { success: res.success };
+	}
+});
+
+router.post("/api/survey/text-results", async ctx => {
+	const success = await UpdateSurveyTextState(ctx);
+
+	if (!success) {
+		ctx.response.status = 403;
+		ctx.body = { error: "Forbidden: invalid ID or session key" };
+	} else {
+		ctx.body = { success };
+	}
+});
+
+router.post("/api/survey/:id/manual-entry", async ctx => {
+	const res = await SubmitSurveyData(ctx);
+	ctx.body = res;
+});
+
 router.get("/api/survey/:key", async ctx => {
 	const survey = await GetSurvey(ctx.params.key);
 	ctx.body = survey;
 });
 
 router.post("/api/survey/:id/responses", async ctx => {
-	const res = ""; await SubmitSurveyResponse(ctx);
+	const res = "";
+	await SubmitSurveyResponse(ctx);
 	ctx.body = res;
 });
 
 router.post("/api/survey/:id/answers/:key", async ctx => {
-	const res = ""; await AddNursingHomeSurveyQuestion(ctx);
+	const res = "";
+	await AddNursingHomeSurveyQuestion(ctx);
 	ctx.body = res;
 });
 
 router.get("/api/survey/:id/results/:survey", async ctx => {
-	const res = await GetSurveyWithNursingHomeResults(ctx.params.survey, ctx.params.id);
+	const res = await GetSurveyWithNursingHomeResults(
+		ctx.params.survey,
+		ctx.params.id,
+	);
 	ctx.body = res;
+});
+
+router.get("/api/survey/:id/text-results/:survey", async ctx => {
+	const res = await GetSurveyTextResults(ctx.params.id);
+	ctx.body = res;
+});
+
+router.get("/api/survey/:id/approved-results/:survey", async ctx => {
+	const res = await GetSurveyApprovedResults(ctx.params.id);
+	ctx.body = res;
+});
+
+router.post("/api/feedback/response", async ctx => {
+	const res = "";
+	await SubmitFeedbackResponse(ctx);
+	ctx.body = res;
+});
+
+router.post("/api/auth/get-token", async ctx => {
+	const res = await GetKeycloakAccessToken(ctx);
+
+	ctx.body = res;
+});
+
+router.post("/api/auth/refresh-token", async ctx => {
+	const res = await RefreshKeycloakAccessToken(ctx);
+
+	ctx.body = res;
+});
+
+router.post("/api/auth/logout-token", async ctx => {
+	const res = await LogoutKeycloakAccessToken(ctx);
+
+	ctx.body = { ...res };
 });
 
 const routes = router.routes();

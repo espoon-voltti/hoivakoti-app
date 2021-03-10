@@ -1,0 +1,60 @@
+@import "./variables.scss";
+
+.page-respond-feedback {
+	display: flex;
+	flex-direction: column;
+	max-width: 63.5rem;
+	margin: 5rem auto 0 auto;
+	padding: 0 1rem 1rem 1rem;
+
+	h2 {
+		margin-top: 50px;
+	}
+}
+
+.check-all-results {
+	align-self: flex-end;
+}
+
+.feedback-results {
+	&-heading {
+		margin-bottom: 1rem;
+	}
+
+	&-list {
+		margin-top: 2rem;
+
+		border-top: solid 1px $border-color;
+
+		&-item {
+			border-bottom: solid 1px $border-color;
+			padding: 3rem 0 1rem 0;
+
+			&:last-of-type {
+				border-bottom: none;
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+.feedback-response {
+	textarea {
+		margin: 50px 0 10px 0;
+	}
+
+	&-actions {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 50px;
+
+		.feedback-response-saved {
+			margin-right: 25px;
+			color: $primary-blue;
+		}
+
+		.disabled {
+			background-color: #ddd;
+		}
+	}
+}
