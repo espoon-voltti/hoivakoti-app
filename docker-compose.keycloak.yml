@@ -2,7 +2,7 @@ version: "3"
 services:
     keycloak:
         build: ./keycloak
-        image: hoivakoti/keycloak:v1
+        image: hoivakoti/keycloak:latest
         environment:
             KEYCLOAK_USER: "admin"
             DB_PASSWORD: "postgres"

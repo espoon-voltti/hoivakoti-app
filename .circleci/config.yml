@@ -176,6 +176,33 @@ jobs:
           name: Tag and push docker image
           command: ecr-push "$DOCKER_IMAGE_NAME"
 
+    build_and_publish_keycloak:
+      executor: dist_build_executor
+      environment:
+        DOCKER_IMAGE_NAME: hoivakoti/keycloak
+      steps:
+        - attach_root_workspace
+        - restore_repo
+        - setup_remote_docker:
+            version: *remote_docker_version
+            docker_layer_caching: true
+        - run:
+            name: Docker login to ECR
+            command: ecr-login
+        - run:
+            name: Build docker image
+            working_directory: keycloak
+            command: |
+              docker build \
+              -f Dockerfile \
+              -t "$DOCKER_IMAGE_NAME" \
+              --build-arg build="$CIRCLE_BUILD_NUM" \
+              --build-arg commit="$CIRCLE_SHA1" \
+              .
+        - run:
+            name: Tag and push docker image
+            command: ecr-push "$DOCKER_IMAGE_NAME"
+
   build_frontend:
     executor: build_executor
     steps:
