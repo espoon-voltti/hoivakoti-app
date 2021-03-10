@@ -26,6 +26,7 @@ import {
 	GetDistinctCities,
 	GetNursingHomeVacancyStatus as GetNursingHomeVacancyStatusDB,
 	UpdateNursingHomeInformation as UpdateNursingHomeInformationDB,
+	UpdateNursingHomeName as UpdateNursingHomeNameDB,
 	UploadNursingHomeReport as UploadNursingHomeReportDB,
 	UpdateNursingHomeImage as UpdateNursingHomeImageDB,
 	GetAllBasicUpdateKeys,
@@ -339,6 +340,15 @@ export async function UpdateNursingHomeInformation(
 		throw new Error("Invalid value in field 'has_vacancy'!");
 
 	return await UpdateNursingHomeInformationDB(id, key, has_vacancy);
+}
+
+export async function UpdateNursingHomeName(
+	ctx: Context,
+): Promise<boolean> {
+	const { id, key } = ctx.params;
+	const name: string = ctx.request.body.name;
+
+	return await UpdateNursingHomeNameDB(id, key, name);
 }
 
 export async function UpdateNursingHomeImage(
