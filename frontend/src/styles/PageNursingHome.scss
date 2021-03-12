@@ -152,6 +152,16 @@ $hero-border: 5px solid white;
 	}
 }
 
+.nursinghome-forward-link {
+	display: block;
+	margin-bottom: 32px;
+
+	&::after {
+		content: "→";
+		margin-right: 8px;
+	}
+}
+
 .nursinghomeDistrict-container {
 	display: flex;
 	flex-wrap: wrap;
