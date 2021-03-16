@@ -32,68 +32,68 @@ interface Translation {
 
 export const cityTranslations: Translation = {
 	EPO: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "espoo"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "espoo"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "espoo"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "espoo"),
 	},
 	HNK: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "hanko"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "hanko"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "hanko"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "hanko"),
 	},
 	HEL: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "helsinki"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "helsinki"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "helsinki"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "helsinki"),
 	},
 	HVK: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "hyvinkää"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "hyvinkää"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "hyvinkää"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "hyvinkää"),
 	},
 	JVP: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "järvenpää"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "järvenpää"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "järvenpää"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "järvenpää"),
 	},
 	KRL: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "karkkila"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "karkkila"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "karkkila"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "karkkila"),
 	},
 	KRV: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "kerava"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "kerava"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "kerava"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "kerava"),
 	},
 	KRN: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "kirkkonummi"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "kirkkonummi"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "kirkkonummi"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "kirkkonummi"),
 	},
 	LHJ: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "lohja"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "lohja"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "lohja"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "lohja"),
 	},
 	NRJ: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "nurmijärvi"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "nurmijärvi"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "nurmijärvi"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "nurmijärvi"),
 	},
 	RPO: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "raasepori"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "raasepori"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "raasepori"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "raasepori"),
 	},
 	SPO: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "sipoo"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "sipoo"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "sipoo"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "sipoo"),
 	},
 	STO: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "siuntio"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "siuntio"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "siuntio"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "siuntio"),
 	},
 	TSL: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "tuusula"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "tuusula"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "tuusula"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "tuusula"),
 	},
 	VTA: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "vantaa"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "vantaa"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "vantaa"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "vantaa"),
 	},
 	VHT: {
-		["fi-FI"]: getTranslationByLanguage("fi-FI", "vihti"),
-		["sv-FI"]: getTranslationByLanguage("sv-FI", "vihti"),
+		"fi-FI": getTranslationByLanguage("fi-FI", "vihti"),
+		"sv-FI": getTranslationByLanguage("sv-FI", "vihti"),
 	},
 };
 
