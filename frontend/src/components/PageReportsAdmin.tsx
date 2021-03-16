@@ -141,7 +141,7 @@ const PageReportsAdmin: FC = () => {
 				});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [userRoles, isAdmin]);
 
 	const parsed = queryString.parse(search);
 	const alue = parsed.alue
