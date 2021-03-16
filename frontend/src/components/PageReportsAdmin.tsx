@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, useContext } from "react";
 import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation } from "react-router-dom";
@@ -6,8 +6,10 @@ import "../styles/PageReportsAdmin.scss";
 import config from "./config";
 import queryString from "query-string";
 import axios from "axios";
-import { useT } from "../i18n";
+import { useCurrentLanguage, useT } from "../i18n";
 import { NursingHome } from "./types";
+import { AuthContext } from "./auth-context";
+import City, { cityTranslations } from "../shared/types/city";
 
 type Language = string;
 
@@ -20,11 +22,16 @@ interface SearchFilters {
 }
 
 const PageReportsAdmin: FC = () => {
+	const { userRoles } = useContext(AuthContext);
+	const currentLanguage = useCurrentLanguage();
+
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
 	);
 
 	const [searchField, setSearchField] = useState<string>();
+
+	const [preselected, setPreselected] = useState<Array<string>>([]);
 
 	const history = useHistory();
 	const { search } = useLocation();
@@ -39,7 +46,9 @@ const PageReportsAdmin: FC = () => {
 		useT("matinkylä"),
 		useT("tapiola"),
 	];
+
 	const espoo = useT("espoo");
+
 	const otherCities = [
 		useT("hanko"),
 		useT("helsinki"),
@@ -101,7 +110,21 @@ const PageReportsAdmin: FC = () => {
 				console.error(error.message);
 				throw error;
 			});
-	}, []);
+
+		if (userRoles) {
+			const preselected = Object.keys(City)
+				.filter(city => {
+					return userRoles.some(roleName => {
+						return roleName.includes(city);
+					});
+				})
+				.map(key => {
+					return cityTranslations[key][currentLanguage];
+				});
+
+			setPreselected(preselected);
+		}
+	}, [currentLanguage, userRoles]);
 
 	const parsed = queryString.parse(search);
 	const alue = parsed.alue
@@ -121,36 +144,34 @@ const PageReportsAdmin: FC = () => {
 
 	const locationPickerLabel = useT("locationPickerLabel");
 
-	const espooChecked = searchFilters.alue
-		? searchFilters.alue.includes("Espoo")
-		: false;
+	const espooChecked = preselected ? preselected.includes("Espoo") : false;
+
 	const espooCheckboxItem: FilterOption = {
-		name: "Espoo",
+		name: espoo,
 		label: espoo,
 		type: "checkbox",
 		checked: espooChecked,
 		bold: true,
+		readonly: true,
 	};
 
 	const optionsArea: FilterOption[] = [
 		{ text: locationPickerLabel, type: "header" },
 		espooCheckboxItem,
 		...espooAreas.map<FilterOption>((value: string) => {
-			const checked = searchFilters.alue
-				? searchFilters.alue.includes(value)
-				: false;
+			const checked = preselected ? preselected.includes(value) : false;
 			return {
 				name: value,
 				label: value,
 				type: "checkbox",
 				checked: checked,
 				withMargin: true,
+				readonly: true,
 			};
 		}),
 		...otherCities.map<FilterOption>((value: string) => {
-			const checked = searchFilters.alue
-				? searchFilters.alue.includes(value)
-				: false;
+			const checked = preselected ? preselected.includes(value) : false;
+
 			return {
 				name: value,
 				label: value,
@@ -158,6 +179,7 @@ const PageReportsAdmin: FC = () => {
 				checked: checked,
 				bold: true,
 				alignment: "right",
+				readonly: true,
 			};
 		}),
 	];
@@ -167,14 +189,14 @@ const PageReportsAdmin: FC = () => {
 			nursingHomes &&
 			nursingHomes.filter(nursinghome => {
 				if (
-					searchFilters.alue &&
-					searchFilters.alue.length > 0 &&
-					(!searchFilters.alue.includes(nursinghome.district) &&
-						!searchFilters.alue.includes(nursinghome.city)) &&
-					!searchFilters.alue.includes(
+					preselected &&
+					preselected.length > 0 &&
+					(!preselected.includes(nursinghome.district) &&
+						!preselected.includes(nursinghome.city)) &&
+					!preselected.includes(
 						(citiesAndDistrictsToFinnish as any)[nursinghome.city],
 					) &&
-					!searchFilters.alue.includes(
+					!preselected.includes(
 						(citiesAndDistrictsToSwedish as any)[
 							nursinghome.district
 						],
@@ -288,72 +310,16 @@ const PageReportsAdmin: FC = () => {
 				label={filterLocation}
 				prefix="location"
 				value={
-					searchFilters.alue !== undefined
-						? searchFilters.alue.length <= 2
-							? searchFilters.alue.join(", ")
-							: `(${searchFilters.alue.length} ${filterSelections})`
+					preselected !== undefined
+						? preselected.length <= 2
+							? preselected.join(", ")
+							: `(${preselected.length} ${filterSelections})`
 						: null
 				}
 				values={optionsArea}
 				ariaLabel="Valitse hoivakodin alue"
 				disabled={isFilterDisabled}
-				onChange={({ newValue, name }) => {
-					const newSearchFilters = { ...searchFilters };
-					if (!newSearchFilters.alue) newSearchFilters.alue = [];
-					// If the district/city was unchecked
-					if (!newValue) {
-						// Normal flow: Remove district/city to search filters if
-						// present
-						newSearchFilters.alue = newSearchFilters.alue.filter(
-							(value: string) => {
-								return value !== name;
-							},
-						);
-
-						// Weird flow to accommodate the Espoo special selection
-						if (name === "Espoo")
-							newSearchFilters.alue = newSearchFilters.alue.filter(
-								(value: string) => {
-									if (espooAreas.includes(value))
-										return false;
-									return true;
-								},
-							);
-						else if (espooAreas.includes(name))
-							newSearchFilters.alue = newSearchFilters.alue.filter(
-								(value: string) => {
-									return value !== "Espoo";
-								},
-							);
-						// If the district/city was checked
-					} else {
-						// Normal flow: Add district/city to search filters if
-						// not already added
-						if (!newSearchFilters.alue.includes(name))
-							newSearchFilters.alue.push(name);
-
-						// Weird flow to accommodate the Espoo special selection
-						if (name === "Espoo")
-							for (let i = 0; i < espooAreas.length; i++) {
-								const district = espooAreas[i];
-								if (!newSearchFilters.alue.includes(district))
-									newSearchFilters.alue.push(district);
-							}
-						else if (espooAreas.includes(name)) {
-							let included = 0;
-							for (let i = 0; i < espooAreas.length; i++) {
-								const district = espooAreas[i];
-								if (newSearchFilters.alue.includes(district))
-									included++;
-							}
-							if (included === espooAreas.length) {
-								newSearchFilters.alue.push("Espoo");
-							}
-						}
-					}
-					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/valvonta?" + stringfield);
-				}}
+				onChange={() => {}}
 				onReset={(): void => {
 					const newSearchFilters = {
 						...searchFilters,

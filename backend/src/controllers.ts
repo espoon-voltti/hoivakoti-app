@@ -702,9 +702,9 @@ export async function GetKeycloakAccessToken(ctx: Context): Promise<any> {
 }
 
 export async function RefreshKeycloakAccessToken(ctx: Context): Promise<any> {
-	const { token, type, hash } = ctx.request.body;
+	const { token, type, hash, username } = ctx.request.body;
 
-	const result = await RefreshTokenDB(token, hash, type);
+	const result = await RefreshTokenDB(token, username, hash, type);
 
 	if (!result["access_token"] && !result["refresh_token"]) {
 		const requestResponse = result.response;

@@ -7,6 +7,7 @@ interface Props {
 	isChecked: boolean;
 	onChange: (checked: boolean) => void;
 	onBlur?: () => void;
+	readonly?: boolean;
 }
 
 const Checkbox: React.FunctionComponent<Props> = ({
@@ -16,6 +17,7 @@ const Checkbox: React.FunctionComponent<Props> = ({
 	onBlur,
 	children,
 	isChecked,
+	readonly,
 }) => {
 	return (
 		<div className="checkbox-container">
@@ -29,6 +31,7 @@ const Checkbox: React.FunctionComponent<Props> = ({
 				id={id}
 				className="checkbox-button"
 				onBlur={onBlur}
+				readOnly={readonly as boolean}
 			/>
 			<label htmlFor={id} className="checkbox-label">
 				<span

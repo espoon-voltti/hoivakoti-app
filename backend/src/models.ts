@@ -1348,7 +1348,7 @@ export async function UpdateNursingHomeName(
 		.update({
 			name: name,
 		});
-	
+
 	if (count !== 1) return false;
 
 	return true;
@@ -1447,11 +1447,11 @@ export async function UpdateCustomerCommunesForNursingHome(
 	return false;
 }
 
-const userIsEntitledToToken = async (
+const GetUserAccessRoles = async (
 	clientId: string,
 	username: string,
 	token: string,
-): Promise<boolean> => {
+): Promise<any> => {
 	try {
 		const reqData = queryString.stringify({
 			client_id: clientId,
@@ -1465,11 +1465,15 @@ const userIsEntitledToToken = async (
 			reqData,
 		);
 
-		return (
+		if (
 			res.data &&
 			res.data["realm_access"].roles &&
 			res.data["realm_access"].roles.includes(`${clientId}-access`)
-		);
+		) {
+			return res.data["realm_access"].roles;
+		}
+
+		return false;
 	} catch (error) {
 		throw error;
 	}
@@ -1494,11 +1498,13 @@ export async function GetAccessToken(
 			reqData,
 		);
 
-		const userIsAllowed = await userIsEntitledToToken(
+		const userAccessRoles = await GetUserAccessRoles(
 			type,
 			username,
 			res.data["access_token"],
 		);
+
+		const userIsAllowed = userAccessRoles.length;
 
 		if (userIsAllowed) {
 			const hash = hashWithSalt(uuidv4(), res.data["refresh_token"]);
@@ -1510,10 +1516,11 @@ export async function GetAccessToken(
 				access_token: res.data["access_token"],
 				refresh_token: res.data["refresh_token"],
 				hash,
+				roles: userAccessRoles,
 			};
 		}
 
-		return { statusMessage: "Could not retrieve token." };
+		return { statusMessage: "Could not retrieve access token." };
 	} catch (error) {
 		return error;
 	}
@@ -1521,6 +1528,7 @@ export async function GetAccessToken(
 
 export async function RefreshToken(
 	token: string,
+	username: string,
 	hash: string,
 	type: string,
 ): Promise<any> {
@@ -1545,11 +1553,20 @@ export async function RefreshToken(
 			reqData,
 		);
 
-		if (res.data) {
+		const userAccessRoles = await GetUserAccessRoles(
+			type,
+			username,
+			res.data["access_token"],
+		);
+
+		const userIsAllowed = userAccessRoles.length;
+
+		if (userIsAllowed) {
 			return {
 				access_token: res.data["access_token"],
 				refresh_token: res.data["refresh_token"],
 				hash,
+				roles: userAccessRoles,
 			};
 		}
 
