@@ -30,6 +30,7 @@ interface KeycloakSession {
 interface AuthContextState {
 	isAuthenticated: boolean;
 	userRoles: string[];
+	isAdmin: boolean;
 	login: (data: LoginRequestData, type: AuthTypes) => Promise<void>;
 	logout: (data: LogoutRequestData, type: AuthTypes) => Promise<void>;
 	refreshToken: (type: string) => Promise<void>;
@@ -43,6 +44,7 @@ const AuthContextProvider: FC = ({ children }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 	const [sessionCookies] = useState<Cookies>(new Cookies());
 	const [userRoles, setUserRoles] = useState<Array<string>>([]);
+	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
 	const login = async (
 		data: LoginRequestData,
@@ -86,7 +88,12 @@ const AuthContextProvider: FC = ({ children }) => {
 				});
 
 				setIsAuthenticated(true);
-				setUserRoles(roles);
+
+				if (roles.includes("administrator")) {
+					setIsAdmin(true);
+				} else {
+					setUserRoles(roles);
+				}
 			}
 		} catch (error) {
 			console.error(error);
@@ -161,7 +168,12 @@ const AuthContextProvider: FC = ({ children }) => {
 					});
 
 					setIsAuthenticated(true);
-					setUserRoles(roles);
+
+					if (roles.includes("administrator")) {
+						setIsAdmin(true);
+					} else {
+						setUserRoles(roles);
+					}
 				}
 			}
 		} catch (error) {
@@ -171,7 +183,14 @@ const AuthContextProvider: FC = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ isAuthenticated, userRoles, login, logout, refreshToken }}
+			value={{
+				isAuthenticated,
+				userRoles,
+				isAdmin,
+				login,
+				logout,
+				refreshToken,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>
