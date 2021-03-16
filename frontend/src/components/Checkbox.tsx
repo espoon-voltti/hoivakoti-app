@@ -7,7 +7,7 @@ interface Props {
 	isChecked: boolean;
 	onChange: (checked: boolean) => void;
 	onBlur?: () => void;
-	readonly?: boolean;
+	disabled?: boolean;
 }
 
 const Checkbox: React.FunctionComponent<Props> = ({
@@ -17,10 +17,14 @@ const Checkbox: React.FunctionComponent<Props> = ({
 	onBlur,
 	children,
 	isChecked,
-	readonly,
+	disabled,
 }) => {
 	return (
-		<div className="checkbox-container">
+		<div
+			className={
+				disabled ? "checkbox-container disabled" : "checkbox-container"
+			}
+		>
 			<input
 				checked={isChecked}
 				onChange={event => {
@@ -31,7 +35,7 @@ const Checkbox: React.FunctionComponent<Props> = ({
 				id={id}
 				className="checkbox-button"
 				onBlur={onBlur}
-				readOnly={readonly as boolean}
+				disabled={disabled as boolean}
 			/>
 			<label htmlFor={id} className="checkbox-label">
 				<span

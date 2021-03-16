@@ -6,6 +6,31 @@
 	align-items: center;
 	margin-bottom: 10px;
 	min-width: 180px;
+
+	&.disabled {
+		.checkbox-label {
+			color: $input-border;
+
+			.checkbox-box-selected {
+				background: $input-border url("/icons/icon-checkmark.svg") 50%
+					50% no-repeat;
+				border-color: $input-border;
+			}
+
+			&:hover {
+				background-color: transparent;
+
+				.checkbox-box {
+					background: none;
+				}
+
+				.checkbox-box-selected {
+					background: $input-border url("/icons/icon-checkmark.svg")
+						50% 50% no-repeat;
+				}
+			}
+		}
+	}
 }
 
 .checkbox-button {
@@ -58,7 +83,8 @@
 }
 
 .checkbox-label:hover .checkbox-box {
-	background: transparent url("/icons/icon-checkmark-hover.svg") 50% 50% no-repeat;
+	background: transparent url("/icons/icon-checkmark-hover.svg") 50% 50%
+		no-repeat;
 }
 
 .checkbox-label:hover .checkbox-box-selected {

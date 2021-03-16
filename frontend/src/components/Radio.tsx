@@ -9,7 +9,6 @@ interface Props {
 	onBlur?: () => void;
 	tag?: string;
 	value?: string | boolean;
-	readonly?: boolean;
 }
 
 const Radio: React.FunctionComponent<Props> = ({
@@ -21,7 +20,6 @@ const Radio: React.FunctionComponent<Props> = ({
 	isSelected,
 	tag,
 	value,
-	readonly,
 }) => {
 	return (
 		<div className="radio-container">
@@ -36,7 +34,6 @@ const Radio: React.FunctionComponent<Props> = ({
 				className="radio-button"
 				value={value as string}
 				onBlur={onBlur}
-				readOnly={readonly as boolean}
 			/>
 			<label
 				htmlFor={id}

@@ -152,7 +152,7 @@ const PageReportsAdmin: FC = () => {
 		type: "checkbox",
 		checked: espooChecked,
 		bold: true,
-		readonly: true,
+		disabled: true,
 	};
 
 	const optionsArea: FilterOption[] = [
@@ -166,7 +166,7 @@ const PageReportsAdmin: FC = () => {
 				type: "checkbox",
 				checked: checked,
 				withMargin: true,
-				readonly: true,
+				disabled: true,
 			};
 		}),
 		...otherCities.map<FilterOption>((value: string) => {
@@ -179,7 +179,7 @@ const PageReportsAdmin: FC = () => {
 				checked: checked,
 				bold: true,
 				alignment: "right",
-				readonly: true,
+				disabled: true,
 			};
 		}),
 	];

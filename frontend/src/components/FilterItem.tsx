@@ -16,7 +16,6 @@ export type FilterOption =
 			label: string;
 			subLabel?: string;
 			checked: boolean;
-			readonly?: boolean;
 	  }
 	| {
 			type: "checkbox";
@@ -27,7 +26,7 @@ export type FilterOption =
 			withMargin?: boolean;
 			bold?: boolean;
 			alignment?: Alignment;
-			readonly?: boolean;
+			disabled?: boolean;
 	  };
 
 export type Props = {
@@ -68,7 +67,7 @@ function CreateFilterItems(
 										name: option.name,
 									})
 								}
-								readonly={option.readonly as boolean}
+								disabled={option.disabled as boolean}
 							>
 								<div
 									className={`option-header ${
@@ -100,7 +99,6 @@ function CreateFilterItems(
 										name: option.name,
 									})
 								}
-								readonly={option.readonly as boolean}
 							>
 								<div
 									className={`option-header ${
