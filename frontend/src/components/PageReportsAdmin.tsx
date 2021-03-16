@@ -491,14 +491,14 @@ const PageReportsAdmin: FC = () => {
 						language: name,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 				onReset={(): void => {
 					const stringfield = queryString.stringify({
 						...searchFilters,
 						language: undefined,
 					});
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 			/>
 			<FilterItem
@@ -520,7 +520,7 @@ const PageReportsAdmin: FC = () => {
 						ara: name === "ARA-kohde" ? true : false,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 				onReset={(): void => {
 					const newSearchFilters = {
@@ -528,7 +528,7 @@ const PageReportsAdmin: FC = () => {
 						ara: undefined,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 			/>
 
@@ -559,7 +559,7 @@ const PageReportsAdmin: FC = () => {
 						lah: newValue === true ? true : undefined,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 				onReset={(): void => {
 					const newSearchFilters = {
@@ -567,7 +567,7 @@ const PageReportsAdmin: FC = () => {
 						lah: undefined,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 			/>
 		</>
