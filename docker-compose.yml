@@ -16,6 +16,7 @@ services:
         user: root
         environment:
             NODE_ENV: development
+            SERVICE_PROXY_ENTRYPOINT: http://hoivakoti-proxy:8080
         command: sh -c "yarn install && yarn run watch-server"
         networks:
             - hoivakodit-network
