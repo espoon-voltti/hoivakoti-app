@@ -140,7 +140,8 @@ const PageReportsAdmin: FC = () => {
 					throw error;
 				});
 		}
-	}, [currentLanguage, espoo, espooAreas, isAdmin, userRoles]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const parsed = queryString.parse(search);
 	const alue = parsed.alue
