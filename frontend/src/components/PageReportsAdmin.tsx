@@ -102,7 +102,7 @@ const PageReportsAdmin: FC = () => {
 
 	useEffect(() => {
 		if (!isAdmin) {
-			const preselected = Object.keys(City)
+			let preselected = Object.keys(City)
 				.filter(city => {
 					return userRoles.some(roleName => {
 						return roleName.includes(city);
@@ -111,6 +111,10 @@ const PageReportsAdmin: FC = () => {
 				.map(key => {
 					return cityTranslations[key][currentLanguage];
 				});
+
+			if (preselected.includes(espoo)) {
+				preselected = preselected.concat(espooAreas);
+			}
 
 			if (preselected.length) {
 				axios
@@ -136,7 +140,7 @@ const PageReportsAdmin: FC = () => {
 					throw error;
 				});
 		}
-	}, [currentLanguage, isAdmin, userRoles]);
+	}, [currentLanguage, espoo, espooAreas, isAdmin, userRoles]);
 
 	const parsed = queryString.parse(search);
 	const alue = parsed.alue
