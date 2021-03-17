@@ -7,6 +7,7 @@ import config from "./config";
 interface KeycloakAuthResponse {
 	access_token: string;
 	refresh_token: string;
+	roles: string[];
 	hash?: string;
 }
 
@@ -20,8 +21,16 @@ interface LogoutRequestData {
 	hash: string;
 }
 
+interface KeycloakSession {
+	token: string;
+	refreshToken: string;
+	username: string;
+}
+
 interface AuthContextState {
 	isAuthenticated: boolean;
+	userRoles: string[];
+	isAdmin: boolean;
 	login: (data: LoginRequestData, type: AuthTypes) => Promise<void>;
 	logout: (data: LogoutRequestData, type: AuthTypes) => Promise<void>;
 	refreshToken: (type: string) => Promise<void>;
@@ -34,6 +43,8 @@ export const AuthContext = createContext<AuthContextState>(
 const AuthContextProvider: FC = ({ children }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 	const [sessionCookies] = useState<Cookies>(new Cookies());
+	const [userRoles, setUserRoles] = useState<Array<string>>([]);
+	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
 	const login = async (
 		data: LoginRequestData,
@@ -54,15 +65,22 @@ const AuthContextProvider: FC = ({ children }) => {
 				const token = credentials["access_token"];
 				const refreshToken = credentials["refresh_token"];
 				const hash = credentials["hash"];
+				const roles = credentials.roles;
 
-				sessionCookies.set("keycloak-token", token, {
-					path: "/",
-					maxAge: 36000,
-				});
-				sessionCookies.set("keycloak-refresh-token", refreshToken, {
-					path: "/",
-					maxAge: 36000,
-				});
+				const sessionData: KeycloakSession = {
+					token,
+					refreshToken,
+					username,
+				};
+
+				sessionCookies.set(
+					"keycloak_session",
+					JSON.stringify(sessionData),
+					{
+						path: "/",
+						maxAge: 36000,
+					},
+				);
 
 				sessionCookies.set("hoivakoti_session", hash, {
 					path: "/",
@@ -70,6 +88,12 @@ const AuthContextProvider: FC = ({ children }) => {
 				});
 
 				setIsAuthenticated(true);
+
+				if (roles.includes("administrator")) {
+					setIsAdmin(true);
+				} else {
+					setUserRoles(roles);
+				}
 			}
 		} catch (error) {
 			console.error(error);
@@ -95,17 +119,24 @@ const AuthContextProvider: FC = ({ children }) => {
 
 	const refreshToken = async (type: string): Promise<void> => {
 		try {
-			const token = sessionCookies.get("keycloak-token");
-			const refreshToken = sessionCookies.get("keycloak-refresh-token");
+			const keycloakSession: KeycloakSession = sessionCookies.get(
+				"keycloak_session",
+			);
+
+			const token = keycloakSession.token;
+			const refreshToken = keycloakSession.refreshToken;
+			const username = keycloakSession.username;
+
 			const hash = sessionCookies.get("hoivakoti_session");
 
-			if (token && refreshToken && hash) {
+			if (token && refreshToken && username && hash) {
 				const res = await axios.post(
 					`${config.API_URL}/auth/refresh-token`,
 					{
 						token: refreshToken,
 						hash,
 						type,
+						username,
 					},
 				);
 
@@ -114,15 +145,22 @@ const AuthContextProvider: FC = ({ children }) => {
 				if (credentials) {
 					const token = credentials["access_token"];
 					const refreshToken = credentials["refresh_token"];
+					const roles = credentials.roles;
 
-					sessionCookies.set("keycloak-token", token, {
-						path: "/",
-						maxAge: 36000,
-					});
-					sessionCookies.set("keycloak-refresh-token", refreshToken, {
-						path: "/",
-						maxAge: 36000,
-					});
+					const sessionData: KeycloakSession = {
+						token,
+						refreshToken,
+						username,
+					};
+
+					sessionCookies.set(
+						"keycloak_session",
+						JSON.stringify(sessionData),
+						{
+							path: "/",
+							maxAge: 36000,
+						},
+					);
 
 					sessionCookies.set("hoivakoti_session", hash, {
 						path: "/",
@@ -130,6 +168,12 @@ const AuthContextProvider: FC = ({ children }) => {
 					});
 
 					setIsAuthenticated(true);
+
+					if (roles.includes("administrator")) {
+						setIsAdmin(true);
+					} else {
+						setUserRoles(roles);
+					}
 				}
 			}
 		} catch (error) {
@@ -139,7 +183,14 @@ const AuthContextProvider: FC = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ isAuthenticated, login, logout, refreshToken }}
+			value={{
+				isAuthenticated,
+				userRoles,
+				isAdmin,
+				login,
+				logout,
+				refreshToken,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>

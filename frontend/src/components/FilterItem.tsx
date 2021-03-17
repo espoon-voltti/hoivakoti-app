@@ -26,6 +26,7 @@ export type FilterOption =
 			withMargin?: boolean;
 			bold?: boolean;
 			alignment?: Alignment;
+			disabled?: boolean;
 	  };
 
 export type Props = {
@@ -66,6 +67,7 @@ function CreateFilterItems(
 										name: option.name,
 									})
 								}
+								disabled={option.disabled as boolean}
 							>
 								<div
 									className={`option-header ${

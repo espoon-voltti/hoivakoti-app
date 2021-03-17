@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, useContext } from "react";
 import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation } from "react-router-dom";
@@ -6,8 +6,10 @@ import "../styles/PageReportsAdmin.scss";
 import config from "./config";
 import queryString from "query-string";
 import axios from "axios";
-import { useT } from "../i18n";
+import { useCurrentLanguage, useT } from "../i18n";
 import { NursingHome } from "./types";
+import { AuthContext } from "./auth-context";
+import City, { cityTranslations } from "../shared/types/city";
 
 type Language = string;
 
@@ -20,11 +22,16 @@ interface SearchFilters {
 }
 
 const PageReportsAdmin: FC = () => {
+	const { userRoles, isAdmin } = useContext(AuthContext);
+	const currentLanguage = useCurrentLanguage();
+
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[] | null>(
 		null,
 	);
 
 	const [searchField, setSearchField] = useState<string>();
+
+	const [preselected, setPreselected] = useState<Array<string>>([]);
 
 	const history = useHistory();
 	const { search } = useLocation();
@@ -39,7 +46,9 @@ const PageReportsAdmin: FC = () => {
 		useT("matinkylä"),
 		useT("tapiola"),
 	];
+
 	const espoo = useT("espoo");
+
 	const otherCities = [
 		useT("hanko"),
 		useT("helsinki"),
@@ -92,16 +101,47 @@ const PageReportsAdmin: FC = () => {
 	};
 
 	useEffect(() => {
-		axios
-			.get(config.API_URL + "/nursing-homes")
-			.then((response: { data: NursingHome[] }) => {
-				setNursingHomes(response.data);
-			})
-			.catch((error: Error) => {
-				console.error(error.message);
-				throw error;
-			});
-	}, []);
+		if (!isAdmin) {
+			let preselected = Object.keys(City)
+				.filter(city => {
+					return userRoles.some(roleName => {
+						return roleName.includes(city);
+					});
+				})
+				.map(key => {
+					return cityTranslations[key][currentLanguage];
+				});
+
+			if (preselected.includes(espoo)) {
+				preselected = preselected.concat(espooAreas);
+			}
+
+			if (preselected.length) {
+				axios
+					.get(config.API_URL + "/nursing-homes")
+					.then((response: { data: NursingHome[] }) => {
+						setNursingHomes(response.data);
+					})
+					.catch((error: Error) => {
+						console.error(error.message);
+						throw error;
+					});
+
+				setPreselected(preselected);
+			}
+		} else {
+			axios
+				.get(config.API_URL + "/nursing-homes")
+				.then((response: { data: NursingHome[] }) => {
+					setNursingHomes(response.data);
+				})
+				.catch((error: Error) => {
+					console.error(error.message);
+					throw error;
+				});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [userRoles, isAdmin]);
 
 	const parsed = queryString.parse(search);
 	const alue = parsed.alue
@@ -121,36 +161,59 @@ const PageReportsAdmin: FC = () => {
 
 	const locationPickerLabel = useT("locationPickerLabel");
 
-	const espooChecked = searchFilters.alue
-		? searchFilters.alue.includes("Espoo")
-		: false;
+	let espooChecked;
+
+	if (isAdmin) {
+		espooChecked = searchFilters.alue
+			? searchFilters.alue.includes("Espoo")
+			: false;
+	} else {
+		espooChecked = preselected ? preselected.includes("Espoo") : false;
+	}
+
 	const espooCheckboxItem: FilterOption = {
-		name: "Espoo",
+		name: espoo,
 		label: espoo,
 		type: "checkbox",
 		checked: espooChecked,
 		bold: true,
+		disabled: !isAdmin,
 	};
 
 	const optionsArea: FilterOption[] = [
 		{ text: locationPickerLabel, type: "header" },
 		espooCheckboxItem,
 		...espooAreas.map<FilterOption>((value: string) => {
-			const checked = searchFilters.alue
-				? searchFilters.alue.includes(value)
-				: false;
+			let checked;
+
+			if (isAdmin) {
+				checked = searchFilters.alue
+					? searchFilters.alue.includes(value)
+					: false;
+			} else {
+				checked = preselected ? preselected.includes(value) : false;
+			}
+
 			return {
 				name: value,
 				label: value,
 				type: "checkbox",
 				checked: checked,
 				withMargin: true,
+				disabled: !isAdmin,
 			};
 		}),
 		...otherCities.map<FilterOption>((value: string) => {
-			const checked = searchFilters.alue
-				? searchFilters.alue.includes(value)
-				: false;
+			let checked;
+
+			if (isAdmin) {
+				checked = searchFilters.alue
+					? searchFilters.alue.includes(value)
+					: false;
+			} else {
+				checked = preselected ? preselected.includes(value) : false;
+			}
+
 			return {
 				name: value,
 				label: value,
@@ -158,6 +221,7 @@ const PageReportsAdmin: FC = () => {
 				checked: checked,
 				bold: true,
 				alignment: "right",
+				disabled: !isAdmin,
 			};
 		}),
 	];
@@ -166,21 +230,44 @@ const PageReportsAdmin: FC = () => {
 		const filteredNHs: NursingHome[] | null =
 			nursingHomes &&
 			nursingHomes.filter(nursinghome => {
-				if (
-					searchFilters.alue &&
-					searchFilters.alue.length > 0 &&
-					(!searchFilters.alue.includes(nursinghome.district) &&
-						!searchFilters.alue.includes(nursinghome.city)) &&
-					!searchFilters.alue.includes(
-						(citiesAndDistrictsToFinnish as any)[nursinghome.city],
-					) &&
-					!searchFilters.alue.includes(
-						(citiesAndDistrictsToSwedish as any)[
-							nursinghome.district
-						],
-					)
-				) {
-					return false;
+				if (isAdmin) {
+					if (
+						searchFilters.alue &&
+						searchFilters.alue.length > 0 &&
+						(!searchFilters.alue.includes(nursinghome.district) &&
+							!searchFilters.alue.includes(nursinghome.city)) &&
+						!searchFilters.alue.includes(
+							(citiesAndDistrictsToFinnish as any)[
+								nursinghome.city
+							],
+						) &&
+						!searchFilters.alue.includes(
+							(citiesAndDistrictsToSwedish as any)[
+								nursinghome.district
+							],
+						)
+					) {
+						return false;
+					}
+				} else {
+					if (
+						preselected &&
+						preselected.length > 0 &&
+						(!preselected.includes(nursinghome.district) &&
+							!preselected.includes(nursinghome.city)) &&
+						!preselected.includes(
+							(citiesAndDistrictsToFinnish as any)[
+								nursinghome.city
+							],
+						) &&
+						!preselected.includes(
+							(citiesAndDistrictsToSwedish as any)[
+								nursinghome.district
+							],
+						)
+					) {
+						return false;
+					}
 				}
 
 				if (
@@ -282,77 +369,99 @@ const PageReportsAdmin: FC = () => {
 
 	const isFilterDisabled = nursingHomes === null;
 
+	let locationFiltersValue;
+
+	if (isAdmin) {
+		locationFiltersValue =
+			searchFilters.alue !== undefined
+				? searchFilters.alue.length <= 2
+					? searchFilters.alue.join(", ")
+					: `(${searchFilters.alue.length} ${filterSelections})`
+				: null;
+	} else {
+		locationFiltersValue =
+			preselected !== undefined
+				? preselected.length <= 2
+					? preselected.join(", ")
+					: `(${preselected.length} ${filterSelections})`
+				: null;
+	}
+
 	const filterElements = (
 		<>
 			<FilterItem
 				label={filterLocation}
 				prefix="location"
-				value={
-					searchFilters.alue !== undefined
-						? searchFilters.alue.length <= 2
-							? searchFilters.alue.join(", ")
-							: `(${searchFilters.alue.length} ${filterSelections})`
-						: null
-				}
+				value={locationFiltersValue}
 				values={optionsArea}
 				ariaLabel="Valitse hoivakodin alue"
 				disabled={isFilterDisabled}
 				onChange={({ newValue, name }) => {
-					const newSearchFilters = { ...searchFilters };
-					if (!newSearchFilters.alue) newSearchFilters.alue = [];
-					// If the district/city was unchecked
-					if (!newValue) {
-						// Normal flow: Remove district/city to search filters if
-						// present
-						newSearchFilters.alue = newSearchFilters.alue.filter(
-							(value: string) => {
-								return value !== name;
-							},
-						);
-
-						// Weird flow to accommodate the Espoo special selection
-						if (name === "Espoo")
+					if (isAdmin) {
+						const newSearchFilters = { ...searchFilters };
+						if (!newSearchFilters.alue) newSearchFilters.alue = [];
+						// If the district/city was unchecked
+						if (!newValue) {
+							// Normal flow: Remove district/city to search filters if
+							// present
 							newSearchFilters.alue = newSearchFilters.alue.filter(
 								(value: string) => {
-									if (espooAreas.includes(value))
-										return false;
-									return true;
+									return value !== name;
 								},
 							);
-						else if (espooAreas.includes(name))
-							newSearchFilters.alue = newSearchFilters.alue.filter(
-								(value: string) => {
-									return value !== "Espoo";
-								},
-							);
-						// If the district/city was checked
-					} else {
-						// Normal flow: Add district/city to search filters if
-						// not already added
-						if (!newSearchFilters.alue.includes(name))
-							newSearchFilters.alue.push(name);
 
-						// Weird flow to accommodate the Espoo special selection
-						if (name === "Espoo")
-							for (let i = 0; i < espooAreas.length; i++) {
-								const district = espooAreas[i];
-								if (!newSearchFilters.alue.includes(district))
-									newSearchFilters.alue.push(district);
-							}
-						else if (espooAreas.includes(name)) {
-							let included = 0;
-							for (let i = 0; i < espooAreas.length; i++) {
-								const district = espooAreas[i];
-								if (newSearchFilters.alue.includes(district))
-									included++;
-							}
-							if (included === espooAreas.length) {
-								newSearchFilters.alue.push("Espoo");
+							// Weird flow to accommodate the Espoo special selection
+							if (name === "Espoo")
+								newSearchFilters.alue = newSearchFilters.alue.filter(
+									(value: string) => {
+										if (espooAreas.includes(value))
+											return false;
+										return true;
+									},
+								);
+							else if (espooAreas.includes(name))
+								newSearchFilters.alue = newSearchFilters.alue.filter(
+									(value: string) => {
+										return value !== "Espoo";
+									},
+								);
+							// If the district/city was checked
+						} else {
+							// Normal flow: Add district/city to search filters if
+							// not already added
+							if (!newSearchFilters.alue.includes(name))
+								newSearchFilters.alue.push(name);
+
+							// Weird flow to accommodate the Espoo special selection
+							if (name === "Espoo")
+								for (let i = 0; i < espooAreas.length; i++) {
+									const district = espooAreas[i];
+									if (
+										!newSearchFilters.alue.includes(
+											district,
+										)
+									)
+										newSearchFilters.alue.push(district);
+								}
+							else if (espooAreas.includes(name)) {
+								let included = 0;
+								for (let i = 0; i < espooAreas.length; i++) {
+									const district = espooAreas[i];
+									if (
+										newSearchFilters.alue.includes(district)
+									)
+										included++;
+								}
+								if (included === espooAreas.length) {
+									newSearchFilters.alue.push("Espoo");
+								}
 							}
 						}
+						const stringfield = queryString.stringify(
+							newSearchFilters,
+						);
+						history.push("/valvonta?" + stringfield);
 					}
-					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/valvonta?" + stringfield);
 				}}
 				onReset={(): void => {
 					const newSearchFilters = {
@@ -382,14 +491,14 @@ const PageReportsAdmin: FC = () => {
 						language: name,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 				onReset={(): void => {
 					const stringfield = queryString.stringify({
 						...searchFilters,
 						language: undefined,
 					});
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 			/>
 			<FilterItem
@@ -411,7 +520,7 @@ const PageReportsAdmin: FC = () => {
 						ara: name === "ARA-kohde" ? true : false,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 				onReset={(): void => {
 					const newSearchFilters = {
@@ -419,7 +528,7 @@ const PageReportsAdmin: FC = () => {
 						ara: undefined,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 			/>
 
@@ -450,7 +559,7 @@ const PageReportsAdmin: FC = () => {
 						lah: newValue === true ? true : undefined,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 				onReset={(): void => {
 					const newSearchFilters = {
@@ -458,7 +567,7 @@ const PageReportsAdmin: FC = () => {
 						lah: undefined,
 					};
 					const stringfield = queryString.stringify(newSearchFilters);
-					history.push("/hoivakodit?" + stringfield);
+					history.push("/valvonta?" + stringfield);
 				}}
 			/>
 		</>

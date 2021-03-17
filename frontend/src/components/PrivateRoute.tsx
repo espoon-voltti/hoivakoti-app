@@ -57,7 +57,8 @@ const PrivateRoute: FC<ProtectedRouteProps> = props => {
 		refreshToken(authType).then(() => {
 			setIsLoading(false);
 		});
-	}, [authType, refreshToken]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const loadingText = useT("loadingText");
 
