@@ -132,38 +132,38 @@ const PageManualSurveyEntry: FC = () => {
 					<h1>{loadingText}</h1>
 				) : (
 					<>
+						<div className="nav-save">
+							<button
+								className="page-update-cancel"
+								onClick={cancelEdit}
+							>
+								{linkBacktoListShort}
+							</button>
+							<button type="submit" className="btn">
+								{btnSave}
+							</button>
+
+							{popupState && (
+								<span
+									className={
+										popupState === "failed"
+											? "page-update-popup-failed"
+											: "page-update-popup"
+									}
+								>
+									{popupState === "saving"
+										? updatePopupSaving
+										: popupState === "failed"
+										? updatePopupFailed
+										: updatePopupSaved}
+								</span>
+							)}
+						</div>
 						<h1 className="page-update-title">{title}</h1>
 						<form
 							className="page-update-controls"
 							onSubmit={handleSubmit}
 						>
-							<div className="nav-save">
-								<button
-									className="page-update-cancel"
-									onClick={cancelEdit}
-								>
-									{linkBacktoListShort}
-								</button>
-								<button type="submit" className="btn">
-									{btnSave}
-								</button>
-
-								{popupState && (
-									<span
-										className={
-											popupState === "failed"
-												? "page-update-popup-failed"
-												: "page-update-popup"
-										}
-									>
-										{popupState === "saving"
-											? updatePopupSaving
-											: popupState === "failed"
-											? updatePopupFailed
-											: updatePopupSaved}
-									</span>
-								)}
-							</div>
 							<div className="page-update-section">
 								<h3 className="page-update-data page-update-data-nursing-home-name">
 									{nursingHome.name}

@@ -207,7 +207,12 @@ const Header: FC = () => {
 	}
 
 	return (
-		<header className={"header " + (updatePage ? "header-fixed" : "")}>
+		<header
+			className={
+				"header " +
+				(updatePage || surveillancePage ? "header-shadow" : "")
+			}
+		>
 			<a className="jump-to-content" href="#content">
 				{linkJumpToContent}
 			</a>
