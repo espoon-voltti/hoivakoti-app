@@ -7,7 +7,7 @@ import axios from "axios";
 import config from "./config";
 import { NursingHome } from "./types";
 import Cookies from "universal-cookie";
-import { FeedbackState } from "./feedback-state";
+import FeedbackState from "../shared/types/feedback-state";
 
 import "../styles/PageOpenFeedbackResults.scss";
 
@@ -56,77 +56,57 @@ const PageOpenFeedbackResults: FC = () => {
 	const [results, setResults] = useState<OpenFeedback[]>([]);
 	const [filteredResults, setFilteredResults] = useState<OpenFeedback[]>([]);
 	const [nursingHomes, setNursingHomes] = useState<NursingHome[]>([]);
-
 	const [sessionCookies] = useState<Cookies>(new Cookies());
-	const [loggedIn, setLoggedIn] = useState<boolean>(false);
-
-	const key = sessionCookies.get("hoivakoti_session");
 
 	const history = useHistory();
 	const { search } = useLocation();
 
 	useEffect(() => {
+		const key = sessionCookies.get("hoivakoti_session");
+
 		axios
-			.get(config.API_URL + "/admin/login", {
+			.get(`${config.API_URL}/survey/text-results`, {
 				headers: {
 					Authentication: key,
 				},
 			})
-			.then(() => setLoggedIn(true))
+			.then((res: FeedbackResponse) => {
+				const data = res.data;
+
+				const openCases = data.filter(
+					(result: OpenFeedback) =>
+						result.feedback_state === FeedbackState.OPEN,
+				);
+
+				const approvedCases = data.filter(
+					(result: OpenFeedback) =>
+						result.feedback_state === FeedbackState.APPROVED,
+				);
+
+				const rejectedCases = data.filter(
+					(result: OpenFeedback) =>
+						result.feedback_state === FeedbackState.REJECTED,
+				);
+
+				const sortResults = [
+					...openCases,
+					...approvedCases,
+					...rejectedCases,
+				];
+
+				setResults(sortResults);
+			});
+
+		axios
+			.get(config.API_URL + "/nursing-homes")
+			.then(async (response: { data: NursingHome[] }) => {
+				setNursingHomes(response.data);
+			})
 			.catch((error: Error) => {
 				console.error(error.message);
-				setLoggedIn(false);
-
-				history.push({ pathname: "/valvonta" });
+				throw error;
 			});
-	}, [history, key]);
-
-	useEffect(() => {
-		if (loggedIn) {
-			axios
-				.get(`${config.API_URL}/survey/text-results`, {
-					headers: {
-						Authentication: key,
-					},
-				})
-				.then((res: FeedbackResponse) => {
-					const data = res.data;
-
-					const openCases = data.filter(
-						(result: OpenFeedback) =>
-							result.feedback_state === FeedbackState.OPEN,
-					);
-
-					const approvedCases = data.filter(
-						(result: OpenFeedback) =>
-							result.feedback_state === FeedbackState.APPROVED,
-					);
-
-					const rejectedCases = data.filter(
-						(result: OpenFeedback) =>
-							result.feedback_state === FeedbackState.REJECTED,
-					);
-
-					const sortResults = [
-						...openCases,
-						...approvedCases,
-						...rejectedCases,
-					];
-
-					setResults(sortResults);
-				});
-
-			axios
-				.get(config.API_URL + "/nursing-homes")
-				.then(async (response: { data: NursingHome[] }) => {
-					setNursingHomes(response.data);
-				})
-				.catch((error: Error) => {
-					console.error(error.message);
-					throw error;
-				});
-		}
-	}, [key, loggedIn]);
+	}, [sessionCookies]);
 
 	const filterOpen = useT("filterOpen");
 	const filterApproved = useT("filterApproved");
@@ -139,7 +119,7 @@ const PageOpenFeedbackResults: FC = () => {
 	const approve = useT("approve");
 	const reject = useT("reject");
 	const filterSelections = useT("filterSelections");
-	const loadingText = useT("loadingText");
+
 	const labelNursingHome = useT("nursingHome");
 
 	const mapFeedbackStateString: KeyToString = {
@@ -222,6 +202,8 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
+				const key = sessionCookies.get("hoivakoti_session");
+
 				await requestFeedbackStateUpdate(
 					key,
 					id,
@@ -250,6 +232,8 @@ const PageOpenFeedbackResults: FC = () => {
 
 				newResults[itemIndex] = feedbackItem as OpenFeedback;
 
+				const key = sessionCookies.get("hoivakoti_session");
+
 				await requestFeedbackStateUpdate(
 					key,
 					id,
@@ -274,6 +258,8 @@ const PageOpenFeedbackResults: FC = () => {
 				const openResultsIDs: string[] = openResults.map(
 					result => result.id,
 				);
+
+				const key = sessionCookies.get("hoivakoti_session");
 
 				await requestFeedbackStateUpdate(
 					key,
@@ -364,112 +350,98 @@ const PageOpenFeedbackResults: FC = () => {
 
 	return (
 		<div>
-			{loggedIn ? (
-				<Fragment>
-					<div className="filters">
-						<div className="filters-text">{filterLabel}</div>
-						{filterElements}
-					</div>
+			<div className="filters">
+				<div className="filters-text">{filterLabel}</div>
+				{filterElements}
+			</div>
 
-					<div className="page-open-feedback-results">
-						<h1 className="feedback-results-heading">
-							{headingFeedback}
-						</h1>
-						{results.length ? (
-							<Fragment>
-								<button
-									className="btn check-all-results"
-									onClick={markAllOpenAsApproved}
-								>
-									{approveAllOpenFeedback}
-								</button>
-								<ul className="feedback-results-list">
-									{filteredResults.map(result => {
-										return (
-											<li
-												className="feedback-results-list-item"
-												key={result.id}
+			<div className="page-open-feedback-results">
+				<h1 className="feedback-results-heading">{headingFeedback}</h1>
+				{results.length ? (
+					<Fragment>
+						<button
+							className="btn check-all-results"
+							onClick={markAllOpenAsApproved}
+						>
+							{approveAllOpenFeedback}
+						</button>
+						<ul className="feedback-results-list">
+							{filteredResults.map(result => {
+								return (
+									<li
+										className="feedback-results-list-item"
+										key={result.id}
+									>
+										<div className="feedback-result-answer">
+											<Link
+												className="feedback-result-link"
+												to={{
+													pathname: `/hoivakodit/${result.nursinghome_id}`,
+												}}
 											>
-												<div className="feedback-result-answer">
-													<Link
-														className="feedback-result-link"
-														to={{
-															pathname: `/hoivakodit/${result.nursinghome_id}`,
-														}}
-													>
-														{labelNursingHome}:{" "}
-														{nursingHomeName(
-															result.nursinghome_id,
-														)}
-													</Link>
-													<textarea
-														className={
-															result.feedback_state ===
-															FeedbackState.APPROVED
-																? "input approved"
-																: result.feedback_state ===
-																  FeedbackState.REJECTED
-																? "input rejected"
-																: "input"
-														}
-														rows={7}
-														value={
-															result.answer_text
-														}
-														readOnly={true}
-													></textarea>
-												</div>
-												<div className="feedback-result-actions">
-													<button
-														type="button"
-														className={
-															result.feedback_state ===
-															FeedbackState.APPROVED
-																? "btn checked"
-																: result.feedback_state ===
-																  FeedbackState.REJECTED
-																? "btn unchecked"
-																: "btn"
-														}
-														onClick={() => {
-															markAsApproved(
-																result.id,
-															);
-														}}
-													>
-														{approve}
-													</button>
-													<button
-														type="button"
-														className={
-															result.feedback_state ===
-															FeedbackState.REJECTED
-																? "btn checked"
-																: result.feedback_state ===
-																  FeedbackState.APPROVED
-																? "btn unchecked"
-																: "btn"
-														}
-														onClick={() => {
-															markAsRejected(
-																result.id,
-															);
-														}}
-													>
-														{reject}
-													</button>
-												</div>
-											</li>
-										);
-									})}
-								</ul>
-							</Fragment>
-						) : null}
-					</div>
-				</Fragment>
-			) : (
-				<h1>{loadingText}</h1>
-			)}
+												{labelNursingHome}:{" "}
+												{nursingHomeName(
+													result.nursinghome_id,
+												)}
+											</Link>
+											<textarea
+												className={
+													result.feedback_state ===
+													FeedbackState.APPROVED
+														? "input approved"
+														: result.feedback_state ===
+														  FeedbackState.REJECTED
+														? "input rejected"
+														: "input"
+												}
+												rows={7}
+												value={result.answer_text}
+												readOnly={true}
+											></textarea>
+										</div>
+										<div className="feedback-result-actions">
+											<button
+												type="button"
+												className={
+													result.feedback_state ===
+													FeedbackState.APPROVED
+														? "btn checked"
+														: result.feedback_state ===
+														  FeedbackState.REJECTED
+														? "btn unchecked"
+														: "btn"
+												}
+												onClick={() => {
+													markAsApproved(result.id);
+												}}
+											>
+												{approve}
+											</button>
+											<button
+												type="button"
+												className={
+													result.feedback_state ===
+													FeedbackState.REJECTED
+														? "btn checked"
+														: result.feedback_state ===
+														  FeedbackState.APPROVED
+														? "btn unchecked"
+														: "btn"
+												}
+												onClick={() => {
+													markAsRejected(result.id);
+												}}
+											>
+												{reject}
+											</button>
+										</div>
+									</li>
+								);
+							})}
+						</ul>
+					</Fragment>
+				) : null}
+			</div>
 		</div>
 	);
 };

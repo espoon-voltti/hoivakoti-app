@@ -1,12 +1,12 @@
 @import "variables.scss";
 
-.page-survey-results{
+.page-survey-results {
 	width: 800px;
 	margin: auto;
 	padding: 0 30px 0 30px;
 }
 
-.page-survey-results-set{
+.page-survey-results-set {
 	margin-bottom: 100px;
 }
 
@@ -20,7 +20,7 @@
 	color: $text-color;
 }
 
-.page-survey-results-result{
+.page-survey-results-result {
 	height: 60px;
 	font-size: 18px;
 }
@@ -34,22 +34,22 @@
 	font-weight: 600;
 }
 
-.page-survey-results-result-question{
+.page-survey-results-result-question {
 	display: inline-block;
 	width: 240px;
 }
 
-.page-survey-results-result-score{
+.page-survey-results-result-score {
 	display: inline-block;
 }
 
-.page-survey-results-result-value{
+.page-survey-results-result-value {
 	display: inline-block;
 	width: 75px;
 	text-align: center;
 }
 
-.page-survey-results-result-image{
+.page-survey-results-result-image {
 	display: inline-block;
 	position: relative;
 	top: 8px;
@@ -57,7 +57,7 @@
 	height: 35px;
 	margin-left: 5px;
 	background-position: bottom;
-   	background-size: contain;
+	background-size: contain;
 	background-repeat: no-repeat;
 	z-index: 10;
 }
@@ -71,18 +71,18 @@
 }
 
 .star-full {
-	background-image: url('/icons/star-full.svg');
+	background-image: url("/icons/star-full.svg");
 }
 
 .star-half {
-	background-image: url('/icons/star-half.svg');
+	background-image: url("/icons/star-half.svg");
 }
 
 .star-none {
-	background-image: url('/icons/star-none.svg');
+	background-image: url("/icons/star-none.svg");
 }
 
-.page-survey-results-footer{
+.page-survey-results-footer {
 	margin-top: 100px;
 }
 
@@ -91,12 +91,12 @@
 	margin-top: 60px;
 
 	.page-survey-results-answer-header {
-		color:#fff;
+		color: #fff;
 		background-color: $link-color;
 		font-size: 18px;
 		padding: 15px;
 	}
-	
+
 	.page-survey-results-answer-content {
 		max-width: 100%;
 		padding: 15px;

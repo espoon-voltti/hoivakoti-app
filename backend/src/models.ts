@@ -1,3 +1,5 @@
+import queryString from "querystring";
+import axios from "axios";
 import { FeedbackState } from "./nursinghome-typings";
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import Knex, { CreateTableBuilder } from "knex";
@@ -1425,6 +1427,172 @@ export async function UpdateCustomerCommunesForNursingHome(
 	}
 
 	return false;
+}
+
+const GetUserAccessRoles = async (
+	clientId: string,
+	username: string,
+	token: string,
+): Promise<any> => {
+	try {
+		const reqData = queryString.stringify({
+			client_id: clientId,
+			client_secret: process.env.KEYCLOAK_SECRET,
+			username,
+			token,
+		});
+
+		const res = await axios.post(
+			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+			reqData,
+		);
+
+		if (
+			res.data &&
+			res.data["realm_access"].roles &&
+			res.data["realm_access"].roles.includes(`${clientId}-access`)
+		) {
+			return res.data["realm_access"].roles;
+		}
+
+		return false;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export async function GetAccessToken(
+	username: string,
+	password: string,
+	type: string,
+): Promise<any> {
+	try {
+		const reqData = queryString.stringify({
+			client_id: type,
+			grant_type: "password",
+			client_secret: process.env.KEYCLOAK_SECRET,
+			username,
+			password,
+		});
+
+		const res = await axios.post(
+			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token`,
+			reqData,
+		);
+
+		const userAccessRoles = await GetUserAccessRoles(
+			type,
+			username,
+			res.data["access_token"],
+		);
+
+		const userIsAllowed = userAccessRoles.length;
+
+		if (userIsAllowed) {
+			const hash = hashWithSalt(uuidv4(), res.data["refresh_token"]);
+			const timestamp = Date.now();
+
+			await knex("AdminSessions").insert({ hash: hash, date: timestamp });
+
+			return {
+				access_token: res.data["access_token"],
+				refresh_token: res.data["refresh_token"],
+				hash,
+				roles: userAccessRoles,
+			};
+		}
+
+		return { statusMessage: "Could not retrieve access token." };
+	} catch (error) {
+		return error;
+	}
+}
+
+export async function RefreshToken(
+	token: string,
+	username: string,
+	hash: string,
+	type: string,
+): Promise<any> {
+	try {
+		const sessions = await knex("AdminSessions")
+			.select("date")
+			.where({ hash });
+
+		if (sessions.length !== 1) {
+			return { statusMessage: "Session invalid." };
+		}
+
+		const reqData = queryString.stringify({
+			client_id: type,
+			grant_type: "refresh_token",
+			client_secret: process.env.KEYCLOAK_SECRET,
+			refresh_token: token,
+		});
+
+		const res = await axios.post(
+			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token`,
+			reqData,
+		);
+
+		const userAccessRoles = await GetUserAccessRoles(
+			type,
+			username,
+			res.data["access_token"],
+		);
+
+		const userIsAllowed = userAccessRoles.length;
+
+		if (userIsAllowed) {
+			return {
+				access_token: res.data["access_token"],
+				refresh_token: res.data["refresh_token"],
+				hash,
+				roles: userAccessRoles,
+			};
+		}
+
+		return { statusMessage: "Could not refresh token." };
+	} catch (error) {
+		return error;
+	}
+}
+
+export async function LogoutAccessToken(
+	token: string,
+	hash: string,
+	type: string,
+): Promise<any> {
+	try {
+		const removeSession = await knex("AdminSessions")
+			.where({ hash })
+			.del();
+
+		if (removeSession !== 1) {
+			return { statusMessage: "Could not find session." };
+		}
+
+		const reqData = queryString.stringify({
+			client_id: type,
+			client_secret: process.env.KEYCLOAK_SECRET,
+			refresh_token: token,
+		});
+
+		const res = await axios.post(
+			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/logout`,
+			reqData,
+		);
+
+		if (res && res.status) {
+			if (res.status === 200 || res.status === 204) {
+				return { success: true };
+			}
+		}
+
+		return { statusMessage: "Could not logout token." };
+	} catch (error) {
+		return error;
+	}
 }
 
 //DUMMY DATA FOR TESTING

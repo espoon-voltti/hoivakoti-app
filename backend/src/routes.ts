@@ -44,6 +44,9 @@ import {
 	UpdateSurveyTextState,
 	DeleteRejectedSurveyTextResults,
 	GetSurveyApprovedResults,
+	GetKeycloakAccessToken,
+	RefreshKeycloakAccessToken,
+	LogoutKeycloakAccessToken,
 } from "./controllers";
 import config from "./config";
 
@@ -305,6 +308,24 @@ router.post("/api/feedback/response", async ctx => {
 	const res = "";
 	await SubmitFeedbackResponse(ctx);
 	ctx.body = res;
+});
+
+router.post("/api/auth/get-token", async ctx => {
+	const res = await GetKeycloakAccessToken(ctx);
+
+	ctx.body = res;
+});
+
+router.post("/api/auth/refresh-token", async ctx => {
+	const res = await RefreshKeycloakAccessToken(ctx);
+
+	ctx.body = res;
+});
+
+router.post("/api/auth/logout-token", async ctx => {
+	const res = await LogoutKeycloakAccessToken(ctx);
+
+	ctx.body = { ...res };
 });
 
 const routes = router.routes();
