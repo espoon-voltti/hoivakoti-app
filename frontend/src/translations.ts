@@ -318,6 +318,10 @@ export const translations = {
 		"fi-FI": "Takaisin listaukseen",
 		"sv-FI": "Tillbaka till listan",
 	},
+	linkToPublicPage: {
+		"fi-FI": "Siirry hoivakodin sivulle",
+		"sv-FI": "Siirry hoivakodin sivulle",
+	},
 	anchorDetailsBox: {
 		"fi-FI": ">> Hoivakodin yhteystiedot",
 		"sv-FI": ">> Kontaktuppgifter",

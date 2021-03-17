@@ -2,7 +2,7 @@
 
 .page-update {
 	position: relative;
-	padding: 80px 20px 20px 20px;
+	padding: 40px 20px 20px 20px;
 }
 
 .page-update-content {
@@ -126,6 +126,7 @@
 .nav-save {
 	display: flex;
 	justify-content: flex-end;
+	margin-bottom: 24px;
 
 	* {
 		margin-right: 8px;

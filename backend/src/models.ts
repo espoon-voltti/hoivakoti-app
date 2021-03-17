@@ -1336,24 +1336,6 @@ export async function UpdateNursingHomeVacancyStatus(
 	return true;
 }
 
-export async function UpdateNursingHomeName(
-	id: string,
-	basicUdpateKey: string,
-	name: string,
-): Promise<boolean> {
-	const now = new Date().toISOString();
-
-	let count = await knex("NursingHomes")
-		.where({ id, basic_update_key: basicUdpateKey })
-		.update({
-			name: name,
-		});
-
-	if (count !== 1) return false;
-
-	return true;
-}
-
 export interface BasicUpdateKeyEntry {
 	id: string;
 	basic_update_key: string;

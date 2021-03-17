@@ -12,6 +12,12 @@ const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
 };
 
+interface KeycloakSession {
+	token: string;
+	refreshToken: string;
+	username: string;
+}
+
 const Header: FC = () => {
 	const linkJumpToContent = useT("linkJumpToContent");
 	const currentLanguage = useCurrentLanguage();
@@ -40,15 +46,17 @@ const Header: FC = () => {
 	const surveillanceLogout = async (): Promise<void> => {
 		try {
 			if (isAuthenticated) {
-				const refreshToken = sessionCookies.get(
-					"keycloak-refresh-token",
+				const keycloakSession: KeycloakSession = sessionCookies.get(
+					"keycloak_session",
 				);
+
+				const refreshToken = keycloakSession.refreshToken;
+
 				const hash = sessionCookies.get("hoivakoti_session");
 
 				await logout({ token: refreshToken, hash }, AuthTypes.VALVONTA);
 
-				sessionCookies.remove("keycloak-token");
-				sessionCookies.remove("keycloak-refresh-token");
+				sessionCookies.remove("keycloak_session");
 				sessionCookies.remove("hoivakoti_session");
 
 				history.go(0);

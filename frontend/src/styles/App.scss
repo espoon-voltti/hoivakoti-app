@@ -21,28 +21,28 @@ $header-height: 80px;
 
 .jump-to-content {
 	position: absolute;
-	top:5px;
+	top: 5px;
 	padding: 10px;
 	background-color: #fff;
-    left: -99999px;
-    min-height: 0;
-    height: 1px;
-    margin-top: -1px;
-    line-height: 35px;
-    -webkit-transition: top 1s ease-out,background 1s linear;
-    transition: top 1s ease-out,background 1s linear;
-    z-index: 100;
-    border-radius: $border-radius;
+	left: -99999px;
+	min-height: 0;
+	height: 1px;
+	margin-top: -1px;
+	line-height: 35px;
+	-webkit-transition: top 1s ease-out, background 1s linear;
+	transition: top 1s ease-out, background 1s linear;
+	z-index: 100;
+	border-radius: $border-radius;
 }
 .jump-to-content:focus {
 	top: 5px;
-    left: 5px;
-    background: $primary-blue;
-    color: #fff;
-    -webkit-transition: top .1s ease-in,background .5s linear;
-    transition: top .1s ease-in,background .5s linear;
-    height: auto;
-    text-decoration: underline;
+	left: 5px;
+	background: $primary-blue;
+	color: #fff;
+	-webkit-transition: top 0.1s ease-in, background 0.5s linear;
+	transition: top 0.1s ease-in, background 0.5s linear;
+	height: auto;
+	text-decoration: underline;
 }
 
 .header {
@@ -58,15 +58,15 @@ $header-height: 80px;
 	}
 }
 
-.header-fixed{
+.header-fixed {
 	position: fixed;
 	width: 100%;
 	padding: 0;
 	background-color: #fff;
 	z-index: 999;
-	-webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
-	box-shadow: 0px 1px 20px 0px rgba(0,0,0,0.15);
+	-webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.15);
 }
 
 .footer {
@@ -76,8 +76,8 @@ $header-height: 80px;
 	height: auto;
 	min-height: $header-height;
 	display: flex;
-    align-items: center;
-    justify-content: space-between;
+	align-items: center;
+	justify-content: space-between;
 	@media (min-width: 1024px) {
 		flex-direction: row;
 	}
@@ -334,7 +334,7 @@ $header-height: 80px;
 	}
 	#page-nav ul.nav-menu li a.selected {
 		background-color: $border-color;
-		color:$text-color;
+		color: $text-color;
 	}
 
 	#page-nav ul.nav-menu {
@@ -421,9 +421,9 @@ $header-height: 80px;
 	}
 	.logo {
 		margin-right: 10px;
-		margin-left:0;
+		margin-left: 0;
 	}
 	.nav-menu--language li.separator {
-	padding: 0 5px;
-}
+		padding: 0 5px;
+	}
 }

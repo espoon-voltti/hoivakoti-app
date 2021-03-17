@@ -1,5 +1,5 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useT } from "../i18n";
 import axios from "axios";
 import config from "./config";
@@ -51,11 +51,20 @@ const PageRespondFeedback: FC = () => {
 	const feedbackResponseInfo = useT("feedbackResponseInfo");
 	const feedbackForNursingHome = useT("feedbackForNursingHome");
 	const noFeedbackYet = useT("noFeedbackYet");
+	const linkToPublicPage = useT("linkToPublicPage");
 
 	return (
 		<div>
 			<Fragment>
 				<div className="page-respond-feedback">
+					<Link
+						to={{
+							pathname: `/hoivakodit/${id}`,
+						}}
+						className="nursinghome-forward-link"
+					>
+						{linkToPublicPage}
+					</Link>
 					<h2>{feedbackForNursingHome}</h2>
 					<p>{feedbackResponseInfo}</p>
 					{results.length ? (
@@ -126,7 +135,7 @@ export const ResponseField: FC<ResponseFieldProps> = ({ feedback, submit }) => {
 							setSaved(false);
 						}
 					}}
-					rows={7}
+					rows={4}
 					value={response}
 				></textarea>
 				<span>
