@@ -80,9 +80,10 @@ const PageManualSurveyEntry: FC = () => {
 	};
 
 	const handleSubmit = async (
-		e: React.FormEvent<HTMLFormElement>,
+		e: React.FormEvent<HTMLButtonElement>,
 	): Promise<void> => {
 		e.preventDefault();
+
 		setPopupState("saving");
 		await axios
 			.post(
@@ -133,21 +134,11 @@ const PageManualSurveyEntry: FC = () => {
 				) : (
 					<>
 						<div className="nav-save">
-							<button
-								className="page-update-cancel"
-								onClick={cancelEdit}
-							>
-								{linkBacktoListShort}
-							</button>
-							<button type="submit" className="btn">
-								{btnSave}
-							</button>
-
 							{popupState && (
 								<span
 									className={
 										popupState === "failed"
-											? "page-update-popup-failed"
+											? "page-update-popup error"
 											: "page-update-popup"
 									}
 								>
@@ -158,12 +149,18 @@ const PageManualSurveyEntry: FC = () => {
 										: updatePopupSaved}
 								</span>
 							)}
+							<button
+								className="page-update-cancel"
+								onClick={cancelEdit}
+							>
+								{linkBacktoListShort}
+							</button>
+							<button className="btn" onClick={handleSubmit}>
+								{btnSave}
+							</button>
 						</div>
 						<h1 className="page-update-title">{title}</h1>
-						<form
-							className="page-update-controls"
-							onSubmit={handleSubmit}
-						>
+						<form className="page-update-controls">
 							<div className="page-update-section">
 								<h3 className="page-update-data page-update-data-nursing-home-name">
 									{nursingHome.name}

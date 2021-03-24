@@ -137,6 +137,25 @@ const PageUpdateImages: FC = () => {
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<form onSubmit={handleSubmit}>
+						<div className="nav-save">
+							{popupState && (
+								<span className="page-update-popup">
+									{popupState === "saving"
+										? updatePopupSaving
+										: updatePopupSaved}
+								</span>
+							)}
+							<button
+								className="page-update-cancel"
+								onClick={cancelEdit}
+							>
+								{cancel}
+							</button>
+							<button type="submit" className="btn">
+								{btnSave}
+							</button>
+						</div>
+
 						<div className="page-update-section nursinghome-logo-upload">
 							<Link
 								to={{
@@ -197,25 +216,6 @@ const PageUpdateImages: FC = () => {
 									),
 								)}
 							</div>
-						</div>
-						<div className="nav-save">
-							<button
-								className="page-update-cancel"
-								onClick={cancelEdit}
-							>
-								{cancel}
-							</button>
-							<button type="submit" className="btn">
-								{btnSave}
-							</button>
-
-							{popupState && (
-								<span className="page-update-popup">
-									{popupState === "saving"
-										? updatePopupSaving
-										: updatePopupSaved}
-								</span>
-							)}
 						</div>
 					</form>
 				)}
