@@ -1460,6 +1460,36 @@ const PageUpdate: FC = () => {
 									),
 								)}
 							</div>
+							<div className="nav-save">
+								{popupState && (
+									<span
+										className={
+											popupState === "invalid"
+												? "page-update-popup error"
+												: "page-update-popup"
+										}
+									>
+										{popupState === "saving"
+											? updatePopupSaving
+											: popupState === "invalid"
+											? formIsInvalid
+											: updatePopupSaved}
+									</span>
+								)}
+								<button
+									className="page-update-cancel"
+									onClick={cancelEdit}
+								>
+									{cancel}
+								</button>
+								<button
+									type="submit"
+									className="btn page-update-submit"
+									disabled={!formIsValid}
+								>
+									{btnSave}
+								</button>
+							</div>
 						</form>
 					</>
 				)}
