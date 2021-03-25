@@ -222,6 +222,8 @@ const PageUpdate: FC = () => {
 		"fieldsWithAsteriskAreMandatory",
 	);
 
+	const monthShort = useT("monthShort");
+
 	const LUCommunes: Translation = {
 		[Commune.EPO]: useT("espoo"),
 		[Commune.HNK]: useT("hanko"),
@@ -473,7 +475,7 @@ const PageUpdate: FC = () => {
 				value: false,
 			},
 			{
-				label: labelRent + " (€ / kk)",
+				label: `${labelRent} (€/${monthShort})`,
 				type: InputTypes.text,
 				name: "rent",
 				description: helperRent,

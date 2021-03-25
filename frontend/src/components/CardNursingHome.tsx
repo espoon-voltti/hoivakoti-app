@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import "../styles/CardNursingHome.scss";
 import { NursingHome } from "./types";
 import { Link, useLocation } from "react-router-dom";
-import { useT } from "../i18n";
+import { useCurrentLanguage, useT } from "../i18n";
 import config from "./config";
 import VacancyStatusBadge from "./VacancyStatusBadge";
 
@@ -17,6 +17,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	type,
 	className,
 }) => {
+	const currentLanguage = useCurrentLanguage();
 	const { search } = useLocation();
 	const serviceLanguage = useT("serviceLanguage");
 	const numApartments = useT("numApartments");
@@ -50,6 +51,10 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const feedbackOk = useT("feedbackOk");
 	const feedbackBad = useT("feedbackBad");
 	const feedbackVeryBad = useT("feedbackVeryBad");
+
+	const latestVisit = useT("latestVisit");
+	const status = useT("status");
+	const addNewReport = useT("pageUploadReportTitle");
 
 	const getStatusTranslation = (statusStr: string): string => {
 		if (nursinghome && nursinghome.report_status[0]) {
@@ -198,7 +203,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					</div>
 					<div className={type == "admin" ? "" : "hidden"}>
 						<div className="card-nursing-home-status">
-							<span>Tilanne: </span>
+							<span>{status}: </span>
 							{nursinghome.report_status[0]
 								? getStatusTranslation(
 										nursinghome.report_status[0].status,
@@ -206,7 +211,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 								: getStatusTranslation("")}
 						</div>
 						<div className="card-nursing-home-status">
-							<span>Viimeisin käynti: </span>
+							<span>{latestVisit}: </span>
 							{nursinghome.report_status[0]
 								? formatDate(nursinghome.report_status[0].date)
 								: "-"}
@@ -237,17 +242,20 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					<button
 						className={type == "admin" ? "btn" : "hidden"}
 						onClick={e => {
-							openBtnLink(e, `/valvonta/${nursinghome.id}`);
+							openBtnLink(
+								e,
+								`/${currentLanguage}/valvonta/${nursinghome.id}`,
+							);
 						}}
 					>
-						Lisää uusi käynti
+						{addNewReport}
 					</button>
 					<button
 						className={type == "admin" ? "btn" : "hidden"}
 						onClick={e => {
 							openBtnLink(
 								e,
-								`/valvonta/asiakaskyselyn-vastaukset/${nursinghome.id}`,
+								`/${currentLanguage}/valvonta/asiakaskyselyn-vastaukset/${nursinghome.id}`,
 							);
 						}}
 					>

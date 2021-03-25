@@ -116,8 +116,8 @@ const App: React.FC = () => {
 									component={PageOpenFeedbackResults}
 								/>
 								<PrivateRoute
-									exact
 									path="/valvonta/:id"
+									exact
 									authType={AuthTypes.VALVONTA}
 									component={PageUploadReport}
 								/>

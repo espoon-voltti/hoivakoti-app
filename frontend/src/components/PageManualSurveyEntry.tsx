@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useT } from "../i18n";
+import { useCurrentLanguage, useT } from "../i18n";
 import "../styles/PageManualSurveyEntry.scss";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -14,6 +14,7 @@ const PageManualSurveyEntry: FC = () => {
 	const sessionCookies = new Cookies();
 
 	const { id } = useParams() as any;
+	const currentLanguage = useCurrentLanguage();
 	const key = sessionCookies.get("hoivakoti_session");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [popupState, setPopupState] = useState<
@@ -106,7 +107,7 @@ const PageManualSurveyEntry: FC = () => {
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
-		window.location.href = "/valvonta";
+		window.location.href = `/${currentLanguage}/valvonta`;
 	};
 
 	const questions: JSX.Element[] | null =
