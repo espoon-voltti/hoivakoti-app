@@ -346,7 +346,7 @@ export const translations = {
 	rent: { "fi-FI": "Vuokran määrä", "sv-FI": "Hyra" },
 	checkRentWithNursingHome: {
 		"fi-FI": "Tarkista vuokran määrä hoivakodista. Vuokran määrä on noin",
-		"sv-FI": "Tarkista vuokran määrä hoivakodista. Vuokran määrä on noin",
+		"sv-FI": "Kontrollera hyran hos vårdhemmet. Hyran uppgår till ca",
 	},
 	LAHapartments: {
 		"fi-FI": "Lyhytaikaisen asumisen asuntoja",
@@ -505,31 +505,31 @@ export const translations = {
 	},
 	pageUploadReportTitle: {
 		"fi-FI": "Lisää uusi käynti",
-		"sv-FI": "Lisää uusi käynti",
+		"sv-FI": "Lägg till ett nytt besök",
 	},
 	reportTypeAnnounced: {
 		"fi-FI": "Ennalta ilmoitettu käynti",
-		"sv-FI": "Ennalta ilmoitettu käynti",
+		"sv-FI": "Förhandsanmält besök",
 	},
 	reportTypeUnannounced: {
 		"fi-FI": "Ennalta ilmoittamaton käynti",
-		"sv-FI": "Ennalta ilmoittamaton käynti",
+		"sv-FI": "Oanmält besök",
 	},
 	reportTypeAudit: {
 		"fi-FI": "Auditointikäynti",
 		"sv-FI": "Auditointikäynti",
 	},
 	reportTypeConcern: {
-		"fi-FI": "Huolikäynti",
-		"sv-FI": "Huolikäynti",
+		"fi-FI": "Palautteen perusteella tehty käynti",
+		"sv-FI": "Besök på basis av respons",
 	},
 	selectFile: {
 		"fi-FI": "Valitse tiedosto",
-		"sv-FI": "Valitse tiedosto",
+		"sv-FI": "Välj fil",
 	},
 	reportFailed: {
 		"fi-FI": "Täytä kaikki kentät ja yritä uudelleen",
-		"sv-FI": "Täytä kaikki kentät ja yritä uudelleen",
+		"sv-FI": "Skriv i alla fält och försök på nytt",
 	},
 	surveyOption1: {
 		"fi-FI": "Erittäin huono",
@@ -820,11 +820,11 @@ export const translations = {
 	},
 	fromRelatives: {
 		"fi-FI": "Omaisilta",
-		"sv-FI": "Omaisilta",
+		"sv-FI": "Respons av anhöriga",
 	},
 	customerReviewsBy: {
 		"fi-FI": "Asiakkaiden antamat arviot",
-		"sv-FI": "Asiakkaiden antamat arviot",
+		"sv-FI": "Bedömningar av klienter",
 	},
 	nursingHomeReviews: {
 		"fi-FI": "Arviot hoivakodista",
@@ -923,7 +923,7 @@ export const translations = {
 	},
 	feedbackCustomerReview: {
 		"fi-FI": "Asiakkaiden arvio",
-		"sv-FI": "Asiakkaiden arvio",
+		"sv-FI": "Bedömning av klienter",
 	},
 	feedbackNoReviews: {
 		"fi-FI": "Ei annettuja arvioita",
@@ -959,27 +959,27 @@ export const translations = {
 	},
 	nursingHomeSummary: {
 		"fi-FI": "Lyhyt kuvaus hoivakodista",
-		"sv-FI": "Lyhyt kuvaus hoivakodista",
+		"sv-FI": "Kort beskrivning av vårdhemmet",
 	},
 	buildingInfo: {
 		"fi-FI": "Lisätietoja rakennuksesta",
-		"sv-FI": "Lisätietoja rakennuksesta",
+		"sv-FI": "Mer information om byggnaden",
 	},
 	apartmentCountInfo: {
 		"fi-FI": "Lisätietoja asuntojen määrästä",
-		"sv-FI": "Lisätietoja asuntojen määrästä",
+		"sv-FI": "Mer information om antalet bostäder",
 	},
 	apartmentsHaveBathroom: {
 		"fi-FI": "Kaikissa asunnoissa on oma kylpyhuone",
-		"sv-FI": "Kaikissa asunnoissa on oma kylpyhuone",
+		"sv-FI": "Alla bostäder har ett eget badrum",
 	},
 	rentInfo: {
 		"fi-FI": "Lisätietoja vuokrasta",
-		"sv-FI": "Lisätietoja vuokrasta",
+		"sv-FI": "Mer information om hyran",
 	},
 	languageInfo: {
 		"fi-FI": "Lisätietoja palvelukielestä",
-		"sv-FI": "Lisätietoja palvelukielestä",
+		"sv-FI": "Mer information om servicespråket",
 	},
 	address: {
 		"fi-FI": "Katuosoite",
@@ -999,189 +999,183 @@ export const translations = {
 	},
 	arrivalPublicTransit: {
 		"fi-FI": "Saapuminen julkisilla kulkuyhteyksillä",
-		"sv-FI": "Saapuminen julkisilla kulkuyhteyksillä",
+		"sv-FI": "Ankomst med kollektivtrafik",
 	},
 	arrivalCar: {
 		"fi-FI": "Saapuminen autolla",
-		"sv-FI": "Saapuminen autolla",
+		"sv-FI": "Ankomst med bil",
 	},
 	contactName: {
 		"fi-FI": "Yhteyshenkilön nimi",
-		"sv-FI": "Yhteyshenkilön nimi",
+		"sv-FI": "Kontaktpersonens namn",
 	},
 	contactTitle: {
 		"fi-FI": "Yhteyshenkilön titteli",
-		"sv-FI": "Yhteyshenkilön titteli",
+		"sv-FI": "Kontaktpersonens titel",
 	},
 	contactPhone: {
 		"fi-FI": "Yhteyshenkilön puhelinnumero",
-		"sv-FI": "Yhteyshenkilön puhelinnumero",
+		"sv-FI": "Kontaktpersonens telefonnummer",
 	},
 	contactEmail: {
 		"fi-FI": "Yhteyshenkilön sähköposti",
-		"sv-FI": "Yhteyshenkilön sähköposti",
+		"sv-FI": "Kontaktpersonens e-post",
 	},
 	contactPhoneInfo: {
 		"fi-FI": "Lisätietoja yhteyshenkilön puhelinnumerosta",
-		"sv-FI": "Lisätietoja yhteyshenkilön puhelinnumerosta",
+		"sv-FI": "Mer information om kontaktpersonens telefonnummer",
 	},
 	fieldIsRequired: {
 		"fi-FI": "Kenttä on pakollinen",
-		"sv-FI": "Kenttä on pakollinen",
+		"sv-FI": "Fältet är obligatoriskt",
 	},
 	formIsInvalid: {
 		"fi-FI": "Lomakkeessa on virheitä!",
-		"sv-FI": "Lomakkeessa on virheitä!",
+		"sv-FI": "Det finns fel i formuläret!",
 	},
 	contactDescription: {
 		"fi-FI": "Yhteydenottoihin liittyvä kuvaus",
-		"sv-FI": "Yhteydenottoihin liittyvä kuvaus",
+		"sv-FI": "Beskrivning av kontakterna",
 	},
 	hasLAHapartments: {
 		"fi-FI": "Hoivakodissa on lyhytaikaisen asumisen asuntoja",
-		"sv-FI": "Hoivakodissa on lyhytaikaisen asumisen asuntoja",
+		"sv-FI": "Vårdhemmet har bostäder för kortvarigt boende",
 	},
 	updateNursingHomeTitle: {
 		"fi-FI": "Hoivakodin tietojen muokkaaminen",
-		"sv-FI": "Hoivakodin tietojen muokkaaminen",
+		"sv-FI": "Redigering av uppgifterna om vårdhemmet",
 	},
 	ownerOrganisation: {
 		"fi-FI": "Organisaatio joka omistaa hoivakodin",
-		"sv-FI": "Organisaatio joka omistaa hoivakodin",
+		"sv-FI": "Organisation som äger vårdhemmet",
 	},
 	numTotalApartments: {
 		"fi-FI": "Hoivakodin asuntojen kokonaismäärä",
-		"sv-FI": "Hoivakodin asuntojen kokonaismäärä",
-	},
-	tourInfoPlaceholder: {
-		"fi-FI":
-			"Etukäteen sopimalla voit tulla tutustumaan toimintaamme paikan päälle",
-		"sv-FI":
-			"Etukäteen sopimalla voit tulla tutustumaan toimintaamme paikan päälle",
+		"sv-FI": "Det totala antalet bostäder på vårdhemmet",
 	},
 	accessibilityInfo: {
 		"fi-FI": "Tietoja esteettömyydestä",
-		"sv-FI": "Tietoja esteettömyydestä",
+		"sv-FI": "Information om tillgänglighet",
 	},
 	nursingHomeName: {
 		"fi-FI": "Hoivakodin nimi",
-		"sv-FI": "Hoivakodin nimi",
+		"sv-FI": "Vårdhemmets namn",
 	},
 	helperSummary: {
 		"fi-FI": "Hoivakodin palvelulupaus.",
-		"sv-FI": "Hoivakodin palvelulupaus.",
+		"sv-FI": "Vårdhemmets servicelöfte.",
 	},
 	partlyARADestination: {
 		"fi-FI": "Osa paikoista ARA-talossa",
-		"sv-FI": "Osa paikoista ARA-talossa",
+		"sv-FI": "En del av platserna i ett ARA-hus",
 	},
 	helperBuildingInfo: {
 		"fi-FI":
 			"Tässä voit kertoa mahdollisista tehdyistä tai tulossa olevista peruskorjauksista, laajennuksista jne.",
 		"sv-FI":
-			"Tässä voit kertoa mahdollisista tehdyistä tai tulossa olevista peruskorjauksista, laajennuksista jne.",
+			"Här kan du berätta om eventuella utförda eller kommande ombyggnader, utvidgningar osv.",
 	},
 	helperApartmentCountInfo: {
 		"fi-FI":
 			"Tässä voit kertoa esim. minkä kokoisiin ryhmäkoteihin hoivakoti jakaantuu ja kuinka monta asuntoa on per kerros.",
 		"sv-FI":
-			"Tässä voit kertoa esim. minkä kokoisiin ryhmäkoteihin hoivakoti jakaantuu ja kuinka monta asuntoa on per kerros.",
+			"Här kan du berätta t.ex. i hur stora grupphem vårdhemmet delas in och hur många bostäder det finns per våning.",
 	},
 	helperApartmentSize: {
 		"fi-FI": "Esim. 18-25.",
-		"sv-FI": "Esim. 18-25.",
+		"sv-FI": "T.ex. 18–25.",
 	},
 	helperRent: {
 		"fi-FI": "Esim. 700-800.",
-		"sv-FI": "Esim. 700-800.",
+		"sv-FI": "T.ex. 700–800.",
 	},
 	helperRentInfo: {
 		"fi-FI": "Mitä yhteisiä tiloja asiakkaan vuokraan sisältyy.",
-		"sv-FI": "Mitä yhteisiä tiloja asiakkaan vuokraan sisältyy.",
+		"sv-FI": "Vilka gemensamma lokaler ingår i klientens hyra?",
 	},
 	helperLanguage: {
 		"fi-FI": "Esim. lisätietoa henkilökunnan muusta kielitaidosta.",
-		"sv-FI": "Esim. lisätietoa henkilökunnan muusta kielitaidosta.",
+		"sv-FI": "T.ex. mer information om personalens övriga språkkunskaper.",
 	},
 	foodOwnKitchen: {
 		"fi-FI": "Oma valmistuskeittiö",
-		"sv-FI": "Oma valmistuskeittiö",
+		"sv-FI": "Eget tillredningskök",
 	},
 	foodDelivered: {
 		"fi-FI": "Ruoka toimitetaan muualta (valmiina tai puolivalmiina)",
-		"sv-FI": "Ruoka toimitetaan muualta (valmiina tai puolivalmiina)",
+		"sv-FI": "Maten levereras utifrån (färdig eller halvfärdig)",
 	},
 	activitiesInfo: {
 		"fi-FI": "Kuvaus hoivakodissa järjestettävästä toiminnasta",
-		"sv-FI": "Kuvaus hoivakodissa järjestettävästä toiminnasta",
+		"sv-FI": "Beskrivning av aktiviteter som ordnas på vårdhemmet",
 	},
 	helperActivitiesLink: {
 		"fi-FI":
 			"Jos hoivakodin sivuilla on esim. ulkoilukalenteri, laita sen linkki tähän.",
 		"sv-FI":
-			"Jos hoivakodin sivuilla on esim. ulkoilukalenteri, laita sen linkki tähän.",
+			"Om det på vårdhemmets webbplats finns t.ex. en kalender för utevistelse, lägg dess länk här.",
 	},
 	helperOutdoorActivities: {
 		"fi-FI":
 			"Kuvaa hoivakodin ulkoilumahdollisuuksia. Kuvaile esim. miten ulkoilua järjestetään ja miten asiakkaat ulkoilevat.",
 		"sv-FI":
-			"Kuvaa hoivakodin ulkoilumahdollisuuksia. Kuvaile esim. miten ulkoilua järjestetään ja miten asiakkaat ulkoilevat.",
+			"Beskriv vårdhemmets friluftsmöjligheter Beskriv t.ex. hur utomhusvistelse ordnas och hur klienterna vistas utomhus.",
 	},
 	helperAccessibilityInfo: {
 		"fi-FI":
 			"Tähän voit tarvittaessa kirjoittaa esteettömyyttä koskevia lisätietoja.",
 		"sv-FI":
-			"Tähän voit tarvittaessa kirjoittaa esteettömyyttä koskevia lisätietoja.",
+			"Här kan du vid behov skriva mer information om tillgängligheten.",
 	},
 	staffInfo: {
 		"fi-FI":
 			"Kerro halutessasi henkilöstöstä, sen rakenteesta ja erityisosaamisesta",
 		"sv-FI":
-			"Kerro halutessasi henkilöstöstä, sen rakenteesta ja erityisosaamisesta",
+			"Berätta, om du vill, om personalen, dess struktur och specialkompetens",
 	},
 	helperStaffSatisfaction: {
 		"fi-FI":
 			"Lisää linkki jos hoivakodin sivuilla on tietoa henkilöstön tyytyväisyydestä (kyselyn tulokset tms.).",
 		"sv-FI":
-			"Lisää linkki jos hoivakodin sivuilla on tietoa henkilöstön tyytyväisyydestä (kyselyn tulokset tms.).",
+			"Lägg till en länk om det på vårdhemmets webbplats finns information om hur nöjd personalen är (enkätresultat osv.).",
 	},
 	helperOtherServices: {
 		"fi-FI":
 			"Kuvaa tähän mitä muita palvelukonseptiin kuulumattomia palveluita hoivakodissa on saatavilla. Kerro myös mistä niiden hinnat löytyvät.",
 		"sv-FI":
-			"Kuvaa tähän mitä muita palvelukonseptiin kuulumattomia palveluita hoivakodissa on saatavilla. Kerro myös mistä niiden hinnat löytyvät.",
+			"Beskriv här vilka andra tjänster man kan få på vårdhemmet som inte ingår i servicekonceptet. Berätta också var man hittar priserna för dem.",
 	},
 	labelNearbyServices: {
 		"fi-FI":
 			"Hoivakodin läheltä löytyvät palvelut esim. kauppa, kirjasto, ravintola jne.",
 		"sv-FI":
-			"Hoivakodin läheltä löytyvät palvelut esim. kauppa, kirjasto, ravintola jne.",
+			"Tjänster som ligger i närheten av vårdhemmet, t.ex. butik, bibliotek, restaurang osv.",
 	},
 	labelAddImages: {
 		"fi-FI": "Lisää kuvia",
-		"sv-FI": "Lisää kuvia",
+		"sv-FI": "Lägg till bilder",
 	},
 	fieldsWithAsteriskAreMandatory: {
 		"fi-FI": "Tähdellä * merkityt kentät ovat pakollisia",
-		"sv-FI": "Tähdellä * merkityt kentät ovat pakollisia",
+		"sv-FI": "Fälten med asterisk * är obligatoriska",
 	},
 	helperUrl: {
 		"fi-FI": "Esim. https://www.example.com.",
-		"sv-FI": "Esim. https://www.example.com.",
+		"sv-FI": "T.ex. https://www.example.com.",
 	},
 	manualSurveyEntryHelpText: {
 		"fi-FI":
 			"Syötä vastaukset numerona välillä 1-5. Käytä tarvittaessa desimaalierottimena pistettä.",
 		"sv-FI":
-			"Syötä vastaukset numerona välillä 1-5. Käytä tarvittaessa desimaalierottimena pistettä.",
+			"Mata in varje svar som ett nummer mellan 1 och 5. Använd vid behov en punkt som decimalavskiljare.",
 	},
 	manualSurveyEntryTitle: {
 		"fi-FI": "Syötä asiakaskyselyn vastaukset",
-		"sv-FI": "Syötä asiakaskyselyn vastaukset",
+		"sv-FI": "Infoga svaren från en klientenkät",
 	},
 	surveyAnswersTotal: {
 		"fi-FI": "Kyselyyn vastaajia yhteensä",
-		"sv-FI": "Kyselyyn vastaajia yhteensä",
+		"sv-FI": "Antal enkätsvar sammanlagt",
 	},
 	numberOfShort: {
 		"fi-FI": "Kpl",
@@ -1189,116 +1183,112 @@ export const translations = {
 	},
 	filterNursingHomeArea: {
 		"fi-FI": "Valitse hoivakodin alue",
-		"sv-FI": "Valitse hoivakodin alue",
+		"sv-FI": "Välj vårdhemmets område",
 	},
 	customerCommune: {
 		"fi-FI": "Asiakkaan kotikunta",
-		"sv-FI": "Asiakkaan kotikunta",
+		"sv-FI": "Klientens hemkommun",
 	},
 	labelCustomerCommune: {
 		"fi-FI":
 			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palvelun hankinnassa",
 		"sv-FI":
-			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palvelun hankinnassa",
-	},
-	helperCommune: {
-		"fi-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
-		"sv-FI": "Määrittele missä kunnissa hoivakoti tuottaa palvelua.",
+			"Kommuner hos vilka tjänsteproducenten har anmält sig vid upphandling av heldygnsomsorg för äldre",
 	},
 	filterCommune: {
 		"fi-FI": "Valitse kotikunta",
-		"sv-FI": "Valitse kotikunta",
+		"sv-FI": "Välj hemkommun",
 	},
 	filterLanguage: {
 		"fi-FI": "Valitse hoivakodin kieli",
-		"sv-FI": "Valitse hoivakodin kieli",
+		"sv-FI": "Välj vårdhemmets språk",
 	},
 	filterShowARA: {
 		"fi-FI": "Valitse, näytetäänkö vain Ara-kohteet",
-		"sv-FI": "Valitse, näytetäänkö vain Ara-kohteet",
+		"sv-FI": "Välj om endast ARA-objekten ska visas",
 	},
 	filterShowLah: {
 		"fi-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
-		"sv-FI": "Valitse, näytetäänkö vain lyhyen ajan asumisen kohteet.",
+		"sv-FI": "Välj om endast objekten för kortvarigt boende ska visas.",
 	},
 	selectCommuneLabel: {
 		"fi-FI":
 			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
 		"sv-FI":
-			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
+			"Sökningen visar de enheter för serviceboende med heldygnsomsorg som erbjuder tjänster för invånarna i din hemkommun",
 	},
 	charactersLeft: {
 		"fi-FI": "merkkiä jäljellä",
-		"sv-FI": "merkkiä jäljellä",
+		"sv-FI": "tecken kvar",
 	},
 	openFeedbackPlaceholder: {
 		"fi-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
-		"sv-FI": "Voit jättää vapaata palautetta kirjoittamalla tähän...",
+		"sv-FI": "Du kan skriva fritt formulerad respons här...",
 	},
 	noRelativesOpenTextAnswers: {
 		"fi-FI": "Ei vielä omaisten antamaa vapaata palautetta.",
-		"sv-FI": "Ei vielä omaisten antamaa vapaata palautetta.",
+		"sv-FI": "Ännu ingen fritt formulerad respons av anhöriga.",
 	},
 	next: {
 		"fi-FI": "Seuraava",
-		"sv-FI": "Seuraava",
+		"sv-FI": "Nästa",
 	},
 	previous: {
 		"fi-FI": "Edellinen",
-		"sv-FI": "Edellinen",
+		"sv-FI": "Föregående",
 	},
 	filterOpen: {
 		"fi-FI": "Avoin",
-		"sv-FI": "Avoin",
+		"sv-FI": "Öppen",
 	},
 	filterApproved: {
 		"fi-FI": "Hyväksytty",
-		"sv-FI": "Hyväksytty",
+		"sv-FI": "Godkänd",
 	},
 	filterRejected: {
 		"fi-FI": "Hylätty",
-		"sv-FI": "Hylätty",
+		"sv-FI": "Avslagen",
 	},
 	labelFeedbackState: {
 		"fi-FI": "Palautteen tila",
-		"sv-FI": "Palautteen tila",
+		"sv-FI": "Responsens status",
 	},
 	ariaFeedbackState: {
 		"fi-FI": "Valitse palautteen tila",
-		"sv-FI": "Valitse palautteen tila",
+		"sv-FI": "Välj responsens status",
 	},
 	headingFeedback: {
 		"fi-FI": "Palaute",
-		"sv-FI": "Palaute",
+		"sv-FI": "Respons",
 	},
 	approveAllOpenFeedback: {
 		"fi-FI": "Hyväksy kaikki avoimet",
-		"sv-FI": "Hyväksy kaikki avoimet",
+		"sv-FI": "Godkänn alla öppna",
 	},
 	approve: {
 		"fi-FI": "Hyväksy",
-		"sv-FI": "Hyväksy",
+		"sv-FI": "Godkänn",
 	},
 	reject: {
 		"fi-FI": "Hylkää",
-		"sv-FI": "Hylkää",
+		"sv-FI": "Avslå",
 	},
 	feedbackResponseInfo: {
 		"fi-FI":
 			"Tällä sivulla voit vastata omaisten palautteisiin. Muista tallentaa vastauksesi. Voit myös muokata jo annettuja palautteita muokkamalla tekstiä ja tallentamalla uudelleen.",
 		"sv-FI":
-			"Tällä sivulla voit vastata omaisten palautteisiin. Muista tallentaa vastauksesi. Voit myös muokata jo annettuja palautteita muokkamalla tekstiä ja tallentamalla uudelleen.",
+			"På denna sida kan du svara på respons av anhöriga. Kom ihåg att spara ditt svar. Du kan också redigera respons som redan getts genom att redigera texten och spara den på nytt.",
 	},
 	feedbackForNursingHome: {
 		"fi-FI": "Hoivakodin saama palaute",
-		"sv-FI": "Hoivakodin saama palaute",
+		"sv-FI": "Respons på vårdhemmet",
 	},
 	feedbackResponseHeader: {
 		"fi-FI": "Asumisyksikön vastine",
-		"sv-FI": "Asumisyksikön vastine",
+		"sv-FI": "Boendeenhetens svar på responsen",
 	},
 	noFeedbackYet: {
 		"fi-FI": "Ei vielä palautteita.",
-		"sv-FI": "Ei vielä palautteita.",
+		"sv-FI": "Ingen respons än.",
 	},
 };
