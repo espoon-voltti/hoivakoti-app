@@ -1091,7 +1091,7 @@ export const translations = {
 	},
 	helperRentInfo: {
 		"fi-FI": "Mitä yhteisiä tiloja asiakkaan vuokraan sisältyy.",
-		"sv-FI": "Vilka gemensamma lokaler ingår i klientens hyra?",
+		"sv-FI": "Vilka gemensamma lokaler ingår i klientens hyra.",
 	},
 	helperLanguage: {
 		"fi-FI": "Esim. lisätietoa henkilökunnan muusta kielitaidosta.",
