@@ -186,7 +186,7 @@ const PageUploadReport: FC = () => {
 	const reportStatusNoInfo = useT("status_no_info");
 	const reportStatusWaiting = useT("status_waiting");
 	const reportTypeAnnounced = useT("reportTypeAnnounced");
-	const reportTypeAudit = useT("reportTypeAudit");
+	const reportTypeUnannounced = useT("reportTypeUnannounced");
 	const reportTypeConcern = useT("reportTypeConcern");
 	const backToListing = useT("linkBacktoListShort");
 
@@ -400,7 +400,7 @@ const PageUploadReport: FC = () => {
 										if (isChecked) setReportType("audit");
 									}}
 								>
-									{reportTypeAudit}
+									{reportTypeUnannounced}
 								</Radio>
 								<Radio
 									id="nursinghome-report-type-concern"

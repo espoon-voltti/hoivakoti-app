@@ -515,10 +515,6 @@ export const translations = {
 		"fi-FI": "Ennalta ilmoittamaton käynti",
 		"sv-FI": "Oanmält besök",
 	},
-	reportTypeAudit: {
-		"fi-FI": "Auditointikäynti",
-		"sv-FI": "Auditointikäynti",
-	},
 	reportTypeConcern: {
 		"fi-FI": "Palautteen perusteella tehty käynti",
 		"sv-FI": "Besök på basis av respons",
