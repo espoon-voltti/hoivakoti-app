@@ -101,7 +101,6 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const webpage = useT("webpage");
 	const visitingInfo = useT("visitingInfo");
 	const openReport = useT("openReport");
-	const latestVisit = useT("latestVisit");
 	const reportScoreHeader = useT("reportScoreLong");
 	const giveReview = useT("giveReview");
 	const readMore = useT("readMore");

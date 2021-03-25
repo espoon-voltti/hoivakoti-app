@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useT } from "../i18n";
+import { useCurrentLanguage, useT } from "../i18n";
 import "../styles/PageUploadReport.scss";
 import Radio from "./Radio";
 import { useParams } from "react-router-dom";
@@ -47,6 +47,7 @@ const PageUploadReport: FC = () => {
 	const sessionCookies = new Cookies();
 
 	const { id } = useParams() as any;
+	const currentLanguage = useCurrentLanguage();
 	const key = sessionCookies.get("hoivakoti_session");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 	const [popupState, setPopupState] = useState<
@@ -90,6 +91,8 @@ const PageUploadReport: FC = () => {
 	const updatePopupSaved = useT("saved");
 	const updatePopupFailed = useT("reportFailed");
 	const updatePopupSaving = useT("saving");
+
+	const address = useT("address");
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLButtonElement>,
@@ -152,7 +155,7 @@ const PageUploadReport: FC = () => {
 
 	const cancelEdit = (e: React.FormEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
-		window.location.href = "/valvonta";
+		window.location.href = `/${currentLanguage}/valvonta`;
 	};
 
 	const [reportFileName, setReportFileName] = useState<string>(
@@ -185,6 +188,7 @@ const PageUploadReport: FC = () => {
 	const reportTypeAnnounced = useT("reportTypeAnnounced");
 	const reportTypeAudit = useT("reportTypeAudit");
 	const reportTypeConcern = useT("reportTypeConcern");
+	const backToListing = useT("linkBacktoListShort");
 
 	let reportStatus = reportStatusWaiting;
 
@@ -238,7 +242,7 @@ const PageUploadReport: FC = () => {
 								className="page-update-cancel"
 								onClick={cancelEdit}
 							>
-								Takaisin listaukseen
+								{backToListing}
 							</button>
 							<button className="btn" onClick={handleSubmit}>
 								{btnSave}
@@ -254,7 +258,7 @@ const PageUploadReport: FC = () => {
 									{nursingHome.owner}
 								</h4>
 								<p className="page-update-data">
-									<strong>Osoite: </strong>
+									<strong>{address}: </strong>
 									{nursingHome.address}
 								</p>
 								<p className="page-update-data">
