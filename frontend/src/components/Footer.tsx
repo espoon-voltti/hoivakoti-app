@@ -17,15 +17,14 @@ const Footer: FC = () => {
 			: "https://easiointi.espoo.fi/eFeedback/fi/Home";
 
 	return (
-		<footer
-			className="footer"
-			style={{ borderTop: "1px solid #e8e8e8" }}
-		>
+		<footer className="footer" style={{ borderTop: "1px solid #e8e8e8" }}>
 			<div className="logo-container">
 				<a href="/">
 					<img
 						className="logo"
-						src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"}
+						src={
+							config.PUBLIC_FILES_URL + "/logo-lu-sote-black.svg"
+						}
 						alt="Espoo logo"
 					/>
 				</a>
