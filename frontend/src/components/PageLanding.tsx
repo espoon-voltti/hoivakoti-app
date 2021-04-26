@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import "../styles/landing.scss";
 import { useT } from "../i18n";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
 import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
@@ -77,8 +77,10 @@ const PageLanding: FC = () => {
 	const faq6Content = useT("faq6Content");
 	const faq7Title = useT("faq7Title");
 	const faq7Content = useT("faq7Content");
-	const faq8Title = useT("faq7Title");
-	const faq8Content = useT("faq7Content");
+	const faq8Title = useT("faq8Title");
+	const faq8Content = useT("faq8Content");
+	const faq9Title = useT("faq9Title");
+	const faq9Content = useT("faq9Content");
 
 	const espooChecked = selectedAreas
 		? selectedAreas.includes("Espoo")
@@ -355,13 +357,9 @@ const PageLanding: FC = () => {
 						<dd>
 							<p>{faq8Content}</p>
 						</dd>
-						<dt>Voivatko läheiset ja omaiset yöpyä luonani?</dt>
+						<dt>{faq9Title}</dt>
 						<dd>
-							<p>
-								Läheiset ja omaiset voivat tilapäisesti yöpyä
-								luonasi. Sovithan yöpymisestä etukäteen
-								hoivakodin kanssa.
-							</p>
+							<p>{faq9Content}</p>
 						</dd>
 					</dl>
 				</section>
