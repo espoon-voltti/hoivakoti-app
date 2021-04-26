@@ -215,7 +215,9 @@ const Header: FC = () => {
 				<Link to="/">
 					<img
 						className="logo"
-						src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"}
+						src={
+							config.PUBLIC_FILES_URL + "/logo-lu-sote-black.svg"
+						}
 						alt="Espoo – Esbo"
 					/>
 					<h1 className="title">{useT("appTitle")}</h1>

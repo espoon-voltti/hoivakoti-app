@@ -1330,6 +1330,7 @@ export const translations = {
 	siuntioFeedbackLink: {
 		"fi-FI": "https://www.siuntio.fi/palaute",
 		"sv-FI": "https://www.sjundea.fi/feedback",
+	},
 	homepageHeading: {
 		"fi-FI": "Hoivakotiportaali",
 		"sv-FI": "Hoivakotiportaali",
