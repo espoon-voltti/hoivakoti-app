@@ -84,6 +84,21 @@
 
 .page-survey-results-footer {
 	margin-top: 100px;
+
+	ul {
+		list-style: disc;
+		line-height: 26px;
+		padding-inline-start: 2rem;
+		margin-bottom: 1.5em;
+
+		li {
+			margin-bottom: 0.5rem;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
 }
 
 .page-survey-results-answer-container {
