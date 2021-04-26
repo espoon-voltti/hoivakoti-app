@@ -1,7 +1,10 @@
 export const translations = {
-	appTitle: { "fi-FI": "Espoon hoivakodit", "sv-FI": "Vårdhemmen i Esbo" },
+	appTitle: {
+		"fi-FI": "Länsi-Uudenmaan hoivakodit",
+		"sv-FI": "Vårdhemmen i Esbo",
+	},
 	titleTemplate: {
-		"fi-FI": "%s | Espoon hoivakodit",
+		"fi-FI": "%s | Länsi-Uudenmaan hoivakodit",
 		"sv-FI": "%s | Vårdhemmen i Esbo",
 	},
 	navHome: { "fi-FI": "Etusivu", "sv-FI": "Förstasidan" },
@@ -791,8 +794,8 @@ export const translations = {
 		"sv-FI": "Slutrapport över tillsynsbesöket",
 	},
 	reportScoreLong: {
-		"fi-FI": "Espoon kaupungin valvontakäynnin loppuarvio",
-		"sv-FI": "Slutrapport över tillsynsbesöket",
+		"fi-FI": "Viimeisimmän valvontakäynnin loppuarvio",
+		"sv-FI": "Viimeisimmän valvontakäynnin loppuarvio",
 	},
 	latestVisit: {
 		"fi-FI": "Viimeisin valvontakäynti",
@@ -815,8 +818,8 @@ export const translations = {
 		"sv-FI": "Anhörigas bedömningar",
 	},
 	fromRelatives: {
-		"fi-FI": "Omaisilta",
-		"sv-FI": "Respons av anhöriga",
+		"fi-FI": "Palautetta omaisilta",
+		"sv-FI": "Palautetta omaisilta",
 	},
 	customerReviewsBy: {
 		"fi-FI": "Asiakkaiden antamat arviot",
@@ -844,9 +847,9 @@ export const translations = {
 	},
 	reviewFooterPart1: {
 		"fi-FI":
-			"Omainen voi tehdä arvioinnin Espoon kaupungin antamalla tunnuksella. Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja. Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo.",
+			"Omainen voi tehdä arvioinnin kotikunnan antamalla tunnuksella. Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja. Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo sekä antamalla vapaata palautetta.",
 		"sv-FI":
-			"En anhörig kan göra en bedömning med hjälp av en kod som Esbo stad gett. Personuppgifter om den som gör bedömningen lagras inte i portalen. Bedömningen görs genom att man väljer ett siffervärde som beskriver tillfredsställelsen.",
+			"Omainen voi tehdä arvioinnin kotikunnan antamalla tunnuksella. Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja. Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo sekä antamalla vapaata palautetta.",
 	},
 	reviewFooterPart2: {
 		"fi-FI":
@@ -861,19 +864,13 @@ export const translations = {
 	},
 	reviewFooterPart4: {
 		"fi-FI":
-			"Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista)",
+			"Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) kotikunnan palautepalvelun kautta:",
 		"sv-FI":
-			"Klienten och/eller den anhöriga kan ge respons på vårdhemmets verksamhet (till exempel på enskilda situationer)",
+			"Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) kotikunnan palautepalvelun kautta:",
 	},
 	reviewFooterLink: {
 		"fi-FI": "Espoon kaupungin palautepalvelun kautta.",
 		"sv-FI": "via Esbo stads responstjänst",
-	},
-	urlReviewFooterLink: {
-		"fi-FI":
-			"https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut",
-		"sv-FI":
-			"https://easiointi.espoo.fi/eFeedback/sv/Feedback/21-Senioripalvelut",
 	},
 	aboutToGiveReview: {
 		"fi-FI": "Olet antamassa arviota hoivakodista",
@@ -1187,9 +1184,9 @@ export const translations = {
 	},
 	labelCustomerCommune: {
 		"fi-FI":
-			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palvelun hankinnassa",
+			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palveluasumisen hankinnassa",
 		"sv-FI":
-			"Kommuner hos vilka tjänsteproducenten har anmält sig vid upphandling av heldygnsomsorg för äldre",
+			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palveluasumisen hankinnassa",
 	},
 	filterCommune: {
 		"fi-FI": "Valitse kotikunta",
@@ -1280,11 +1277,58 @@ export const translations = {
 		"sv-FI": "Respons på vårdhemmet",
 	},
 	feedbackResponseHeader: {
-		"fi-FI": "Asumisyksikön vastine",
-		"sv-FI": "Boendeenhetens svar på responsen",
+		"fi-FI": "Hoivakodin vastaus",
+		"sv-FI": "Hoivakodin vastaus",
 	},
 	noFeedbackYet: {
 		"fi-FI": "Ei vielä palautteita.",
 		"sv-FI": "Ingen respons än.",
+	},
+	espooFeedbackLink: {
+		"fi-FI":
+			"https://easiointi.espoo.fi/eFeedback/fi/Feedback/21-Senioripalvelut",
+		"sv-FI":
+			"https://easiointi.espoo.fi/eFeedback/sv/Feedback/21-Senioripalvelut",
+	},
+	kirkkonummiFeedbackLink: {
+		"fi-FI":
+			"https://www.kirkkonummi.fi/anna-palautetta-kunnan-palveluista",
+		"sv-FI": "https://www.kyrkslatt.fi/ge-respons-om-kommunens-service",
+	},
+	kauniainenFeedbackLink: {
+		"fi-FI":
+			"https://www.kauniainen.fi/sosiaali-_ja_terveyspalvelut/ajankohtaista_tietoa/palaute",
+		"sv-FI":
+			"https://www.kauniainen.fi/sv/social-_och_halsovard/aktuell_information/respons",
+	},
+	lohjaFeedbackLink: {
+		"fi-FI":
+			"https://www.lohja.fi/kaupunki-ja-hallinto/asioi-ja-vaikuta/palaute/sosiaali-ja-terveyspalvelut/",
+		"sv-FI":
+			"https://www.lohja.fi/sv/social-och-halsovardsservice/halso-och-sjukvardstjanster/administration-och-feedback/",
+	},
+	raaseporiFeedbackLink: {
+		"fi-FI":
+			"https://player.myzef.com/raasepori/ajax/?eud=162-b6e9dfdk&qsid=882&quid=4874&language=fi&s=tbrl67325lrmgqi1n399qe9tu1&info=%22Note:_This_is_your_personal_link._Sharing_this_link_shares_your_answers_too%22 ",
+		"sv-FI":
+			"https://player.myzef.com/raasepori/ajax/?eud=162-4fd7d2z3&qsid=882&quid=4874&language=sv&s=tbrl67325lrmgqi1n399qe9tu1&info=%22Note:_This_is_your_personal_link._Sharing_this_link_shares_your_answers_too%22",
+	},
+	hankoFeedbackLink: {
+		"fi-FI":
+			"https://www.hanko.fi/kaupunki_ja_paatoksenteko/osallistu_ja_vaikuta/palaute",
+		"sv-FI":
+			"https://www.hanko.fi/sv/staden_och_beslutsfattande/delta_och_paverka/respons",
+	},
+	karviainenFeedbackLink: {
+		"fi-FI": "https://karviainen.fi/asiointi/palaute/",
+		"sv-FI": "https://karviainen.fi/asiointi/palaute/",
+	},
+	inkooFeedbackLink: {
+		"fi-FI": "https://www.inkoo.fi/asiointi_ja_lomakkeet/palaute",
+		"sv-FI": "https://www.inga.fi/sv/tjanster_och_blanketter/respons",
+	},
+	siuntioFeedbackLink: {
+		"fi-FI": "https://www.siuntio.fi/palaute",
+		"sv-FI": "https://www.sjundea.fi/feedback",
 	},
 };
