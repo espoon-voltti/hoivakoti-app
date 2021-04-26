@@ -71,7 +71,7 @@ export const translations = {
 	},
 	whatisNursinghomeText: {
 		"fi-FI":
-			"Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa, eivätkä voi enää asua omassa kodissaan. Tehostetun palveluasumisen hoivakodissa asiakas saa tarpeidensa mukaista hoivaa ja huolenpitoa elämänsä loppuun saakka.  Sosiaali- ja terveydenhuollon ammattilaisia on paikalla hoivakodissa jatkuvasti. Osa hoivakodeista on Espoon kaupungin omia ja osa yksityisten ja kolmannen sektorin toimijoiden omistamia. Asiakas maksaa asumisesta ja palvelusta. Asiakkaan maksut määräytyvät tulojen mukaan ja maksu on sama kaikissa tällä sivustolla esillä olevissa hoivakodeissa.",
+			"Tehostettu palveluasuminen on tarkoitettu ikääntyneille, jotka tarvitsevat ympärivuorokautisesti hoivaa ja huolenpitoa, eivätkä voi enää asua omassa kodissaan. Tehostetun palveluasumisen hoivakodissa asiakas saa tarpeidensa mukaista hoivaa ja huolenpitoa elämänsä loppuun saakka. Sosiaali- ja terveydenhuollon ammattilaisia on paikalla hoivakodissa jatkuvasti. Osa hoivakodeista on Espoon kaupungin omia ja osa yksityisten ja kolmannen sektorin toimijoiden omistamia. Asiakas maksaa asumisesta ja palvelusta. Asiakkaan maksut määräytyvät tulojen mukaan ja maksu on sama kaikissa tällä sivustolla esillä olevissa hoivakodeissa.",
 		"sv-FI":
 			"Serviceboende med heldygnsomsorg är avsett för äldre som behöver vård och omsorg dygnet runt och som inte längre kan bo kvar i sitt eget hem. På vårdhemmet som erbjuder serviceboende med heldygnsomsorg får klienten vård och omsorg efter sina behov till slutet av sitt liv.  I vårdhemmet finns det ständigt yrkesutbildade personer inom social- och hälsovården på plats. En del av vårdhemmen drivs av Esbo stad och en del av privata aktörer och aktörer inom den tredje sektorn. Klienten betalar för boende och service. Klientens avgifter bestäms enligt inkomsterna och avgiften är densamma i alla vårdhem som finns på denna webbplats.",
 	},
@@ -159,7 +159,7 @@ export const translations = {
 	},
 	faqItem1Text: {
 		"fi-FI":
-			"<0>Asiakkaalla on yhden hengen asunto.  Asunnossa tai sen välittömässä läheisyydessä on wc ja kylpyhuone. Joissakin hoivakodeissa voi olla yhteisiä wc- ja suihkutiloja.</0><1>Osassa hoivakodeissa on kahden hengen asuntoja. Hoivakotien kahden hengen asunnot on tarkoitettu erityisesti yhdessä asuville puolisoille. Puolisot voivat asua yhdessä myös silloin, jos toinen puolisoista ei ole tehostetun palveluasumisen asiakas. Puolison asumisesta ja siihen liittyvistä maksuista sovitaan suoraan hoivakodin kanssa.</1>",
+			"<0>Asiakkaalla on yhden hengen asunto. Asunnossa tai sen välittömässä läheisyydessä on wc ja kylpyhuone. Joissakin hoivakodeissa voi olla yhteisiä wc- ja suihkutiloja.</0><1>Osassa hoivakodeissa on kahden hengen asuntoja. Hoivakotien kahden hengen asunnot on tarkoitettu erityisesti yhdessä asuville puolisoille. Puolisot voivat asua yhdessä myös silloin, jos toinen puolisoista ei ole tehostetun palveluasumisen asiakas. Puolison asumisesta ja siihen liittyvistä maksuista sovitaan suoraan hoivakodin kanssa.</1>",
 		"sv-FI":
 			"<0>Bostaden är för en person. I bostaden eller i dess omedelbara närhet finns toalett och badrum. En del vårdhem kan ha gemensamma toaletter och duschrum.</0><1>I en del vårdhem finns bostäder för två personer. Bostäderna för två personer är särskilt avsedda för partner som bor tillsammans. Partnerna kan bo tillsammans också om den ena partnern inte är klient i serviceboende med heldygnsomsorg. Om partnerns boende och avgifter avtalas direkt med vårdhemmet.</1>",
 	},
@@ -200,7 +200,7 @@ export const translations = {
 	},
 	faqItem5Text: {
 		"fi-FI":
-			"Asiakas käyttää omia vaatteitaan.  Hoivakoti huolehtii asiakkaan vaatteiden pesusta. Asiakas vastaa itse erikoispesuja vaativien vaatteiden ja tekstiilien pesettämisestä ja kustannuksista.",
+			"Asiakas käyttää omia vaatteitaan. Hoivakoti huolehtii asiakkaan vaatteiden pesusta. Asiakas vastaa itse erikoispesuja vaativien vaatteiden ja tekstiilien pesettämisestä ja kustannuksista.",
 		"sv-FI":
 			"Klienten använder egna kläder. Vårdhemmet sköter tvätten av klientens kläder. Klienten ansvarar själv för tvätten av och tvättkostnaderna för kläder och textilier som kräver specialtvätt.",
 	},
@@ -220,7 +220,7 @@ export const translations = {
 	},
 	faqItem7Text: {
 		"fi-FI":
-			"Henkilökohtaiset apuvälineet asiakas voi lainata maksutta HUS Apuvälinekeskuksesta, joka sijaitsee Espoon sairaalassa.  Hoivakoti auttaa asiakasta tarvittaessa apuvälineiden noutamisessa. Mahdolliset apuvälineiden noutokustannukset asiakas maksaa itse. Lisäksi hoivakodissa on muita apuvälineitä. Näitä ovat esimerkiksi nostolaitteet, tukikaiteet, ulkoilupyörätuoli sekä asentohoitoon soveltuvat tyynyt.",
+			"Henkilökohtaiset apuvälineet asiakas voi lainata maksutta HUS Apuvälinekeskuksesta, joka sijaitsee Espoon sairaalassa. Hoivakoti auttaa asiakasta tarvittaessa apuvälineiden noutamisessa. Mahdolliset apuvälineiden noutokustannukset asiakas maksaa itse. Lisäksi hoivakodissa on muita apuvälineitä. Näitä ovat esimerkiksi nostolaitteet, tukikaiteet, ulkoilupyörätuoli sekä asentohoitoon soveltuvat tyynyt.",
 		"sv-FI":
 			"Klienten kan avgiftsfritt låna personliga hjälpmedel från HUS hjälpmedelscentral, som är belägen på Esbo sjukhus. Vårdhemmet hjälper klienten vid behov med att hämta hjälpmedlen. Klienten betalar själv eventuella kostnader för hämtning av hjälpmedel. Dessutom finns det hjälpmedel på vårdhemmet. Sådana är till exempel lyftanordningar, stödräcken, rullstol för utomhusbruk samt kuddar som lämpar sig för positionsbehandling.",
 	},
@@ -230,7 +230,7 @@ export const translations = {
 	},
 	faqItem8Text: {
 		"fi-FI":
-			"Asiakas saa hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Asiakas saa yöpalan tarvittaessa.  Erityisruokavaliot ja lääkäriin määräämät täydennysravintovalmisteet kuuluvat palveluun ja niistä asiakas ei maksa erikseen.",
+			"Asiakas saa hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Asiakas saa yöpalan tarvittaessa. Erityisruokavaliot ja lääkäriin määräämät täydennysravintovalmisteet kuuluvat palveluun ja niistä asiakas ei maksa erikseen.",
 		"sv-FI":
 			"På vårdhemmet får klienten frukost, lunch, eftermiddagskaffe/mellanmål, middag och kvällsmål. Lunchen och middagen är varma måltider. Klienten får nattmat vid behov. Specialkost och kompletterande näringspreparat som ordinerats av läkaren ingår i tjänsten och klienten betalar inte separat för dem.",
 	},
@@ -240,7 +240,7 @@ export const translations = {
 	},
 	faqItem9Text: {
 		"fi-FI":
-			"Läheiset ja omaiset voivat yöpyä tilapäisesti asiakkaan luona.  Yöpymisestä on sovittava hoivakodin kanssa.",
+			"Läheiset ja omaiset voivat yöpyä tilapäisesti asiakkaan luona. Yöpymisestä on sovittava hoivakodin kanssa.",
 		"sv-FI":
 			"Närstående och anhöriga kan tillfälligt övernatta hos klienten. Man måste komma överens om övernattningen med vårdhemmet.",
 	},
@@ -410,9 +410,9 @@ export const translations = {
 	},
 	pageAccessibilityBody: {
 		"fi-FI":
-			"\n\t\t<p>\n\t\t\tTämä saavutettavuusseloste koskee hoivakodit.espoo.fi -sivusto ja on laadittu 9.12.2019. Tämän digipalvelun saavutettavuuden on arvioinut palvelun kehitystiimi.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\tDigipalvelun saavutettavuuden tila\n\t\t</strong>\n\t\t\t: Täyttää kriittiset saavutettavuusvaatimukset\n\t\t</p>\n\t\t<p>\n\t\t\tVerkkosivusto ei ole vielä kaikilta osin vaatimusten mukainen.\n\t\t</p>\n\t\t<h3>\n\t\t\tSaavutettavuusvaatimukset jotka eivät täyty\n\t\t</h3>\n\t\t<p>\n\t\t\t2.1.2 Ei näppäimistöansaa – Näppäimistöllä navigoitaessa rajauskomponentti ei toimi kaikkien hyvien käytäntöjen mukaisesti ja fokus ei siirry takaisin lähtöpaikkaan rajausta tallennettaessa.\n\t\t</p>\n\t\t<p>\n\t\t\t3.1.2 Osien kieli – Hoivakotien esittelytekstit ovat pääsääntöisesti vain yhdellä kielellä\n\t\t</p>\n\t\t<h3>\n\t\t\tHuomasitko saavutettavuuspuutteen digipalvelussamme?\n\t\t</h3>\n\t\t<p>\n\t\t\tKerro se meille ja teemme parhaamme puutteen korjaamiseksi.\n\t\t</p>\n\t\t<p>\n\t\t<a href='https://easiointi.espoo.fi/eFeedback/fi/Home' target='_blank' rel='nofollow'>Anna saavutettavuuspalautetta verkkolomakkeella</a> \n\t\t</p>\n\t\t<h3>\n\t\t\tValvontaviranomainen\n\t\t</h3>\n\t\t<p>\n\t\t\tJos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href='https://www.saavutettavuusvaatimukset.fi/oikeutesi/' target='_blank' rel='noopener noreferrer external'>voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon</a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.\n\t\t</p>\n\t\t<h4>Valvontaviranomaisen yhteystiedot\n\t\t</h4>\n\t\t<p>\n\t\t\tEtelä-Suomen aluehallintovirasto<br>Saavutettavuuden valvonnan yksikkö<br><a href='https://www.saavutettavuusvaatimukset.fi' target='_blank' rel='noopener noreferrer external'>www.saavutettavuusvaatimukset.fi</a><br><a href='mailto:saavutettavuus@avi.fi'>saavutettavuus@avi.fi</a><br>puhelinnumero vaihde 0295 016 000<br>  \n\t\t</p>",
+			"\n\t\t<p>\n\t\t\tTämä saavutettavuusseloste koskee hoivakodit.espoo.fi -sivusto ja on laadittu 9.12.2019. Tämän digipalvelun saavutettavuuden on arvioinut palvelun kehitystiimi.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\tDigipalvelun saavutettavuuden tila\n\t\t</strong>\n\t\t\t: Täyttää kriittiset saavutettavuusvaatimukset\n\t\t</p>\n\t\t<p>\n\t\t\tVerkkosivusto ei ole vielä kaikilta osin vaatimusten mukainen.\n\t\t</p>\n\t\t<h3>\n\t\t\tSaavutettavuusvaatimukset jotka eivät täyty\n\t\t</h3>\n\t\t<p>\n\t\t\t2.1.2 Ei näppäimistöansaa – Näppäimistöllä navigoitaessa rajauskomponentti ei toimi kaikkien hyvien käytäntöjen mukaisesti ja fokus ei siirry takaisin lähtöpaikkaan rajausta tallennettaessa.\n\t\t</p>\n\t\t<p>\n\t\t\t3.1.2 Osien kieli – Hoivakotien esittelytekstit ovat pääsääntöisesti vain yhdellä kielellä\n\t\t</p>\n\t\t<h3>\n\t\t\tHuomasitko saavutettavuuspuutteen digipalvelussamme?\n\t\t</h3>\n\t\t<p>\n\t\t\tKerro se meille ja teemme parhaamme puutteen korjaamiseksi.\n\t\t</p>\n\t\t<p>\n\t\t<a href='https://easiointi.espoo.fi/eFeedback/fi/Home' target='_blank' rel='nofollow'>Anna saavutettavuuspalautetta verkkolomakkeella</a> \n\t\t</p>\n\t\t<h3>\n\t\t\tValvontaviranomainen\n\t\t</h3>\n\t\t<p>\n\t\t\tJos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href='https://www.saavutettavuusvaatimukset.fi/oikeutesi/' target='_blank' rel='noopener noreferrer external'>voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon</a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.\n\t\t</p>\n\t\t<h4>Valvontaviranomaisen yhteystiedot\n\t\t</h4>\n\t\t<p>\n\t\t\tEtelä-Suomen aluehallintovirasto<br>Saavutettavuuden valvonnan yksikkö<br><a href='https://www.saavutettavuusvaatimukset.fi' target='_blank' rel='noopener noreferrer external'>www.saavutettavuusvaatimukset.fi</a><br><a href='mailto:saavutettavuus@avi.fi'>saavutettavuus@avi.fi</a><br>puhelinnumero vaihde 0295 016 000<br> \n\t\t</p>",
 		"sv-FI":
-			"\n\t\t<p>\n\t\t\tDetta tillgänglighetsutlåtande gäller webbplatsen hoivakodit.espoo.fi och har upprättats 9.12.2019. Teamet som utvecklat denna digitala tjänst har utvärderat dess tillgänglighet.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\tTillgänglighetsstatus för den digitala tjänsten:\n\t\t</strong>\n\t\t\t: Uppfyller de kritiska tillgänglighetskraven\n\t\t</p>\n\t\t<p>\n\t\t\tWebbplatsen uppfyller ännu inte alla krav.\n\t\t</p>\n\t\t<h3>\n\t\t\tTillgänglighetskrav som inte uppfylls\n\t\t</h3>\n\t\t<p>\n\t\t\t2.1.2 Ingen tangentbordsfälla – Vid navigering med ett tangentbord fungerar inte avgränsningskomponenten enligt all god praxis och fokus överförs inte tillbaka till startplatsen när avgränsningen sparas.\n\t\t</p>\n\t\t<p>\n\t\t\t3.1.2 Språk för del av sida – Presentationerna av vårdhemmen finns i regel endast på ett språk\n\t\t</p>\n\t\t<h3>\n\t\t\tUpptäckte du en tillgänglighetsbrist i vår digitala tjänst?\n\t\t</h3>\n\t\t<p>\n\t\t\tBeskriv den för oss och vi ska göra vårt bästa för att åtgärda den.\n\t\t</p>\n\t\t<p>\n\t\t<a href='https://easiointi.espoo.fi/eFeedback/sv/Home' target='_blank' rel='nofollow'>Ge tillgänglighetsrespons på detta webbformulär</a> \n\t\t</p>\n\t\t<h3>\n\t\t\tTillsynsmyndighet\n\t\t</h3>\n\t\t<p>\n\t\t\tOm du upptäcker problem i tillgängligheten på webbplatsen, ge först respons till oss som ansvarar för webbplatsen. Det kan ta 14 dagar innan du får ett svar. Om du inte är nöjd med det svar du har fått eller inte får något svar alls inom två veckor kan du, <a href='https://www.tillgänglighetskrav.fi/dina-rattigheter/' target='_blank' rel='noopener noreferrer external'>lämna in en anmälan till Regionförvaltningsverket i Södra Finland</a>. På regionförvaltningsverkets webbplats beskrivs det noggrant hur du kan lämna in en anmälan och hur ärendet behandlas.\n\t\t</p>\n\t\t<h4>Tillsynsmyndighetens kontaktuppgifter\n\t\t</h4>\n\t\t<p>\n\t\t\tRegionförvaltningsverket i Södra Finland<br>Enheten för tillgänglighetstillsyn<br><a href='www.tillgänglighetskrav.fi' target='_blank' rel='noopener noreferrer external'>www.tillgänglighetskrav.fi</a><br><a href='mailto:webbtillganglighet@rfv.fi'>webbtillganglighet@rfv.fi</a><br>telefonnummer: växeln 0295 016 000<br>  \n\t\t</p>",
+			"\n\t\t<p>\n\t\t\tDetta tillgänglighetsutlåtande gäller webbplatsen hoivakodit.espoo.fi och har upprättats 9.12.2019. Teamet som utvecklat denna digitala tjänst har utvärderat dess tillgänglighet.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\tTillgänglighetsstatus för den digitala tjänsten:\n\t\t</strong>\n\t\t\t: Uppfyller de kritiska tillgänglighetskraven\n\t\t</p>\n\t\t<p>\n\t\t\tWebbplatsen uppfyller ännu inte alla krav.\n\t\t</p>\n\t\t<h3>\n\t\t\tTillgänglighetskrav som inte uppfylls\n\t\t</h3>\n\t\t<p>\n\t\t\t2.1.2 Ingen tangentbordsfälla – Vid navigering med ett tangentbord fungerar inte avgränsningskomponenten enligt all god praxis och fokus överförs inte tillbaka till startplatsen när avgränsningen sparas.\n\t\t</p>\n\t\t<p>\n\t\t\t3.1.2 Språk för del av sida – Presentationerna av vårdhemmen finns i regel endast på ett språk\n\t\t</p>\n\t\t<h3>\n\t\t\tUpptäckte du en tillgänglighetsbrist i vår digitala tjänst?\n\t\t</h3>\n\t\t<p>\n\t\t\tBeskriv den för oss och vi ska göra vårt bästa för att åtgärda den.\n\t\t</p>\n\t\t<p>\n\t\t<a href='https://easiointi.espoo.fi/eFeedback/sv/Home' target='_blank' rel='nofollow'>Ge tillgänglighetsrespons på detta webbformulär</a> \n\t\t</p>\n\t\t<h3>\n\t\t\tTillsynsmyndighet\n\t\t</h3>\n\t\t<p>\n\t\t\tOm du upptäcker problem i tillgängligheten på webbplatsen, ge först respons till oss som ansvarar för webbplatsen. Det kan ta 14 dagar innan du får ett svar. Om du inte är nöjd med det svar du har fått eller inte får något svar alls inom två veckor kan du, <a href='https://www.tillgänglighetskrav.fi/dina-rattigheter/' target='_blank' rel='noopener noreferrer external'>lämna in en anmälan till Regionförvaltningsverket i Södra Finland</a>. På regionförvaltningsverkets webbplats beskrivs det noggrant hur du kan lämna in en anmälan och hur ärendet behandlas.\n\t\t</p>\n\t\t<h4>Tillsynsmyndighetens kontaktuppgifter\n\t\t</h4>\n\t\t<p>\n\t\t\tRegionförvaltningsverket i Södra Finland<br>Enheten för tillgänglighetstillsyn<br><a href='www.tillgänglighetskrav.fi' target='_blank' rel='noopener noreferrer external'>www.tillgänglighetskrav.fi</a><br><a href='mailto:webbtillganglighet@rfv.fi'>webbtillganglighet@rfv.fi</a><br>telefonnummer: växeln 0295 016 000<br> \n\t\t</p>",
 	},
 	footerLinkPrivacy: {
 		"fi-FI": "Tietosuojaseloste",
@@ -1330,5 +1330,228 @@ export const translations = {
 	siuntioFeedbackLink: {
 		"fi-FI": "https://www.siuntio.fi/palaute",
 		"sv-FI": "https://www.sjundea.fi/feedback",
+	homepageHeading: {
+		"fi-FI": "Hoivakotiportaali",
+		"sv-FI": "Hoivakotiportaali",
+	},
+	homepageIngress: {
+		"fi-FI":
+			"Tervetuloa hoivakotiportaaliin! Täällä voit tutustua ikääntyneiden hoivakoteihin Länsi-Uudellamaalla. Mukana ovat kaikki Länsi-Uudenmaan kuntien omistamat hoivakodit sekä kuntien kilpailuttamat yksityiset ja järjestöjen hoivakodit.",
+		"sv-FI":
+			"Tervetuloa hoivakotiportaaliin! Täällä voit tutustua ikääntyneiden hoivakoteihin Länsi-Uudellamaalla. Mukana ovat kaikki Länsi-Uudenmaan kuntien omistamat hoivakodit sekä kuntien kilpailuttamat yksityiset ja järjestöjen hoivakodit.",
+	},
+	homepageAnchor1: {
+		"fi-FI": "Kuntien yhteystiedot",
+		"sv-FI": "Kuntien yhteystiedot",
+	},
+	homepageAnchor2: {
+		"fi-FI": "Mitä palveluun sisältyy?",
+		"sv-FI": "Mitä palveluun sisältyy?",
+	},
+	homepageAnchor3: {
+		"fi-FI": "Usein kysytyt kysymykset",
+		"sv-FI": "Usein kysytyt kysymykset",
+	},
+	whoAreServicesForTitle: {
+		"fi-FI": "Kenelle hoivakotien palvelut on tarkoitettu?",
+		"sv-FI": "Kenelle hoivakotien palvelut on tarkoitettu?",
+	},
+	whoAreServicesForContent: {
+		"fi-FI":
+			"<0>Hoivakoti on sinulle mahdollinen vaihtoehto silloin, kun tarvitset hoitoa ja huolenpitoa ympäri vuorokauden etkä voi enää asua omassa kodissasi. Hoivakodissa voit asua turvallisesti elämäsi loppuun saakka.</0><1>Viralliselta nimeltään hoivakodeissa tarjottava palvelu on tehostettua palveluasumista.</1>",
+		"sv-FI":
+			"<0>Hoivakoti on sinulle mahdollinen vaihtoehto silloin, kun tarvitset hoitoa ja huolenpitoa ympäri vuorokauden etkä voi enää asua omassa kodissasi. Hoivakodissa voit asua turvallisesti elämäsi loppuun saakka.</0><1>Viralliselta nimeltään hoivakodeissa tarjottava palvelu on tehostettua palveluasumista.</1>",
+	},
+	howToApplyTitle: {
+		"fi-FI":
+			"Näin haet hoivakotipaikkaa: ota ensin yhteyttä kotikuntasi palveluihin",
+		"sv-FI":
+			"Näin haet hoivakotipaikkaa: ota ensin yhteyttä kotikuntasi palveluihin",
+	},
+	howToApplyDesc: {
+		"fi-FI":
+			"Kun elämässäsi tulee vaihe, ettet voi enää asua omassa kodissasi:",
+		"sv-FI":
+			"Kun elämässäsi tulee vaihe, ettet voi enää asua omassa kodissasi:",
+	},
+	howToApplySteps: {
+		"fi-FI":
+			"<0>Ota yhteyttä kotikuntaasi (yhteystietomme löydät alta)</0><1>Selvitämme yhdessä sinun ja läheistesi kanssa, millaista palvelua tarvitset.</1><2>Saat meiltä kirjallisen päätöksen palveluista, jotka sinulle on myönnetty.</2>",
+		"sv-FI":
+			"<0>Ota yhteyttä kotikuntaasi (yhteystietomme löydät alta)</0><1>Selvitämme yhdessä sinun ja läheistesi kanssa, millaista palvelua tarvitset.</1><2>Saat meiltä kirjallisen päätöksen palveluista, jotka sinulle on myönnetty.</2>",
+	},
+	contactDesc: {
+		"fi-FI": "Yhteystietomme:",
+		"sv-FI": "Yhteystietomme:",
+	},
+	contactSteps: {
+		"fi-FI":
+			"<0>Espoo: Seniorineuvonta Nestori arkisin klo 9–15, p. 09 816 33 333</0><1>Kirkkonummi: Seniorilinja arkisin klo 8–15, p. 040 126 9900</1><2>Kauniainen: palveluneuvonta arkisin klo 8–16, p. 050 411 9268</2><3>Lohja: Ikähelppi arkisin klo 9–12, p. 044 369 2444</3><4>Hanko: palveluohjaaja arkisin klo 8–10, p. 019 220 3489</4><5> Perusturvakuntayhtymä Karviainen: palveluohjaus arkisin klo 9–15, p. 09 4258 2933</5><6>Inkoo: Seniorineuvonta ma, ti ja ke klo 8–9</6><7>Raasepori: Seniorilinja arkisin klo 8–12 ja 13–15, p. 019 289 3133</7><8> Siuntio: sosiaaliohjaaja ma-ke klo 12–13, p. 09 2606 1201 ja Ikä Info to klo 15–16, p. 044 386 1299.</8>",
+		"sv-FI":
+			"<0>Espoo: Seniorineuvonta Nestori arkisin klo 9–15, p. 09 816 33 333</0><1>Kirkkonummi: Seniorilinja arkisin klo 8–15, p. 040 126 9900</1><2>Kauniainen: palveluneuvonta arkisin klo 8–16, p. 050 411 9268</2><3>Lohja: Ikähelppi arkisin klo 9–12, p. 044 369 2444</3><4>Hanko: palveluohjaaja arkisin klo 8–10, p. 019 220 3489</4><5> Perusturvakuntayhtymä Karviainen: palveluohjaus arkisin klo 9–15, p. 09 4258 2933</5><6>Inkoo: Seniorineuvonta ma, ti ja ke klo 8–9</6><7>Raasepori: Seniorilinja arkisin klo 8–12 ja 13–15, p. 019 289 3133</7><8> Siuntio: sosiaaliohjaaja ma-ke klo 12–13, p. 09 2606 1201 ja Ikä Info to klo 15–16, p. 044 386 1299.</8>",
+	},
+	howToPickTitle: {
+		"fi-FI": "Näin valitset mieleisesi hoivakodin",
+		"sv-FI": "Näin valitset mieleisesi hoivakodin",
+	},
+	howToPickContent1: {
+		"fi-FI":
+			"Kun sinulle on myönnetty hoivakotipaikka, voit etsiä täältä Hoivakotiportaalista mieleisesi hoivakodin. Saat meiltä apua hoivakodin etsimisessä ja valitsemisessa, jos niin toivot. Voit myös käydä tutustumassa hoivakotiin paikan päällä, ennen kuin teet päätöksesi.",
+		"sv-FI":
+			"Kun sinulle on myönnetty hoivakotipaikka, voit etsiä täältä Hoivakotiportaalista mieleisesi hoivakodin. Saat meiltä apua hoivakodin etsimisessä ja valitsemisessa, jos niin toivot. Voit myös käydä tutustumassa hoivakotiin paikan päällä, ennen kuin teet päätöksesi.",
+	},
+	howToPickContent2: {
+		"fi-FI":
+			"Voit valita hoivakodin, jossa on vapaita asuntoja. Kun olet löytänyt mieleisen hoivakodin, ota uudelleen yhteyttä kotikuntasi yhteyshenkilöön tai palveluohjaukseen ja kerro valinnastasi.",
+		"sv-FI":
+			"Voit valita hoivakodin, jossa on vapaita asuntoja. Kun olet löytänyt mieleisen hoivakodin, ota uudelleen yhteyttä kotikuntasi yhteyshenkilöön tai palveluohjaukseen ja kerro valinnastasi.",
+	},
+	howToPickContent3: {
+		"fi-FI":
+			"Jos sinulle mieluisin hoivakoti on täynnä, voit ilmoittautua jonoon. Jonotusajaksi voit valita asunnon toisesta hoivakodista. Kun sinulle mieluisimmasta hoivakodista vapautuu paikka, voit muuttaa sinne tai jäädä hoivakotiin, jossa olet asunut jonotusaikana – valinta on sinun.",
+		"sv-FI":
+			"Jos sinulle mieluisin hoivakoti on täynnä, voit ilmoittautua jonoon. Jonotusajaksi voit valita asunnon toisesta hoivakodista. Kun sinulle mieluisimmasta hoivakodista vapautuu paikka, voit muuttaa sinne tai jäädä hoivakotiin, jossa olet asunut jonotusaikana – valinta on sinun.",
+	},
+	howToPickContent4: {
+		"fi-FI":
+			"Osa hoivakodeista saa on valtion tukea. Tällaiset hoivakodit olemme merkinneet ARA-kohteiksi. Jos haluat hoivakotipaikan ARA-kohteesta, varallisuutesi ei saa ylittää määrättyjä rajoja. Muissa hoivakodeissa ei ole varallisuutta koskevia rajoituksia. <a href='https://www.ara.fi/asukasvalinta'>Lisätietoja asukasvalinnasta ARA-vuokra-asuntoihin</a>.",
+		"sv-FI":
+			"Osa hoivakodeista saa on valtion tukea. Tällaiset hoivakodit olemme merkinneet ARA-kohteiksi. Jos haluat hoivakotipaikan ARA-kohteesta, varallisuutesi ei saa ylittää määrättyjä rajoja. Muissa hoivakodeissa ei ole varallisuutta koskevia rajoituksia. <a href='https://www.ara.fi/sv-FI/ARAbostadbestand/Bostadsrattsbostader/Valjandet_av_invanare'>Lisätietoja asukasvalinnasta ARA-vuokra-asuntoihin</a>.",
+	},
+	whatServicesIncludesTitle: {
+		"fi-FI": "Mitä hoivakotien palveluun sisältyy?",
+		"sv-FI": "Mitä hoivakotien palveluun sisältyy?",
+	},
+	whatServicesIncludesContent1: {
+		"fi-FI":
+			"Kaikki Hoivakotiportaalissa esiteltävät hoivakodit noudattavat Länsi-Uudenmaankuntien yhteisiä periaatteita palvelun sisällöstä ja laadusta. <a href=''>Lue lisää palvelukonseptista</a> (pdf).",
+		"sv-FI":
+			"Kaikki Hoivakotiportaalissa esiteltävät hoivakodit noudattavat Länsi-Uudenmaankuntien yhteisiä periaatteita palvelun sisällöstä ja laadusta. <a href=''>Lue lisää palvelukonseptista</a> (pdf).",
+	},
+	whatServicesIncludesContent2: {
+		"fi-FI":
+			"Hoivakodissa on jatkuvasti paikalla henkilökuntaa, joka antaa tarvitsemasi avun ja varmistaa, että saat tarvittavan terveyden- ja sairaanhoidon.",
+		"sv-FI":
+			"Hoivakodissa on jatkuvasti paikalla henkilökuntaa, joka antaa tarvitsemasi avun ja varmistaa, että saat tarvittavan terveyden- ja sairaanhoidon.",
+	},
+	whatServicesIncludesContent3: {
+		"fi-FI":
+			"Henkilökunta varmistaa, että voit elää aktiivista elämää omien toiveidesi ja tottumustesi mukaisesti. Sinulla on mahdollisuus esimerkiksi ulkoiluun, liikkumiseen, kulttuuriin ja harrastamiseen.",
+		"sv-FI":
+			"Henkilökunta varmistaa, että voit elää aktiivista elämää omien toiveidesi ja tottumustesi mukaisesti. Sinulla on mahdollisuus esimerkiksi ulkoiluun, liikkumiseen, kulttuuriin ja harrastamiseen.",
+	},
+	whatServicesIncludesContent4: {
+		"fi-FI":
+			"Hoivakodissa asut vuokraamassasi asunnossa. Ateriat sisältyvät palveluun.",
+		"sv-FI":
+			"Hoivakodissa asut vuokraamassasi asunnossa. Ateriat sisältyvät palveluun.",
+	},
+	whatServicesIncludesContent5: {
+		"fi-FI": "Voit asua hoivakodissa elämäsi loppuun saakka.",
+		"sv-FI": "Voit asua hoivakodissa elämäsi loppuun saakka.",
+	},
+	paymentsTitle: {
+		"fi-FI": "Maksut",
+		"sv-FI": "Maksut",
+	},
+	paymentsContent: {
+		"fi-FI":
+			"Maksut määräytyvät tulojesi mukaan. Maksut ovat samat kaikissa Hoivakotiportaalista löytyvissä hoivakodeissa.",
+		"sv-FI":
+			"Maksut määräytyvät tulojesi mukaan. Maksut ovat samat kaikissa Hoivakotiportaalista löytyvissä hoivakodeissa.",
+	},
+	homepageFaqTitle: {
+		"fi-FI": "Usein kysyttyjä kysymyksiä",
+		"sv-FI": "Usein kysyttyjä kysymyksiä",
+	},
+	faq1Title: {
+		"fi-FI": "Millaisia hoivakotien asunnot ovat?",
+		"sv-FI": "Millaisia hoivakotien asunnot ovat?",
+	},
+	faq1Content: {
+		"fi-FI":
+			"<0>Suurin osa asunnoista on yhden hengen asuntoja. Asunnossa tai sen välittömässäläheisyydessä on wc ja kylpyhuone.</0><1>Jokaisessa asunnossa on sähköisesti säädettävä sänky, patja, vaatekaappi,lukittava säilytystila ja kattovalaisin. Voit tuoda asuntoon omia kalusteitasija tavaroitasi.</1><2>Lisäksi hoivakodeissa on kodikkaita ja esteettömiä yhteisiä tiloja, joissa voioleskella ja ruokailla.</2>",
+		"sv-FI":
+			"<0>Suurin osa asunnoista on yhden hengen asuntoja. Asunnossa tai sen välittömässäläheisyydessä on wc ja kylpyhuone.</0><1>Jokaisessa asunnossa on sähköisesti säädettävä sänky, patja, vaatekaappi,lukittava säilytystila ja kattovalaisin. Voit tuoda asuntoon omia kalusteitasija tavaroitasi.</1><2>Lisäksi hoivakodeissa on kodikkaita ja esteettömiä yhteisiä tiloja, joissa voioleskella ja ruokailla.</2>",
+	},
+	faq2Title: {
+		"fi-FI": "Voinko asua yhdessä puolisoni kanssa?",
+		"sv-FI": "Voinko asua yhdessä puolisoni kanssa?",
+	},
+	faq2Content: {
+		"fi-FI":
+			"Joissain hoivakodeissa on kahden hengen asuntoja, jotka on tarkoitettu yhdessä asuville puolisoille. Voit asua yhdessä puolisosi kanssa, vaikka vain toinen teistä olisi hoivakodin asiakas. Puolison kanssa asumisesta ja siihen liittyvistä maksuista voit sopia suoraan hoivakodin kanssa.",
+		"sv-FI":
+			"Joissain hoivakodeissa on kahden hengen asuntoja, jotka on tarkoitettu yhdessä asuville puolisoille. Voit asua yhdessä puolisosi kanssa, vaikka vain toinen teistä olisi hoivakodin asiakas. Puolison kanssa asumisesta ja siihen liittyvistä maksuista voit sopia suoraan hoivakodin kanssa.",
+	},
+	faq3Title: {
+		"fi-FI": "Saanko tyynyt, peitot, ja liinavaatteet hoivakodista?",
+		"sv-FI": "Saanko tyynyt, peitot, ja liinavaatteet hoivakodista?",
+	},
+	faq3Content: {
+		"fi-FI":
+			"Tyynyjä, peittoja ja liinavaatteita ei yleensä saa hoivakodista, vaan sinun on tuotava ne itse mukanasi. Voit kysyä tarkempia tietoja suoraan hoivakodista.",
+		"sv-FI":
+			"Tyynyjä, peittoja ja liinavaatteita ei yleensä saa hoivakodista, vaan sinun on tuotava ne itse mukanasi. Voit kysyä tarkempia tietoja suoraan hoivakodista.",
+	},
+	faq4Title: {
+		"fi-FI": "Kuka siivoaa asuntoni?",
+		"sv-FI": "Kuka siivoaa asuntoni?",
+	},
+	faq4Content: {
+		"fi-FI":
+			"Hoivakoti huolehtii asuntosi viikoittaisesta siivouksesta ja asunnon päivittäisestä siistimisestä. Voit halutessasi osallistua näihin tehtäviin.",
+		"sv-FI":
+			"Hoivakoti huolehtii asuntosi viikoittaisesta siivouksesta ja asunnon päivittäisestä siistimisestä. Voit halutessasi osallistua näihin tehtäviin.",
+	},
+	faq5Title: {
+		"fi-FI": "Kuka huolehtii vaatteistani?",
+		"sv-FI": "Kuka huolehtii vaatteistani?",
+	},
+	faq5Content: {
+		"fi-FI":
+			"Hoivakodissa jokainen käyttää omia vaatteitaan. Hoivakoti huolehtii vaatteidesi pesemisestä. Jos sinulla on erikoispesuja vaativia vaatteita ja tekstiilejä, vastaat itse niiden pesettämisestä ja kustannuksista.",
+		"sv-FI":
+			"Hoivakodissa jokainen käyttää omia vaatteitaan. Hoivakoti huolehtii vaatteidesi pesemisestä. Jos sinulla on erikoispesuja vaativia vaatteita ja tekstiilejä, vastaat itse niiden pesettämisestä ja kustannuksista.",
+	},
+	faq6Title: {
+		"fi-FI": "Mistä saa lääkkeeni?",
+		"sv-FI": "Mistä saa lääkkeeni?",
+	},
+	faq6Content: {
+		"fi-FI":
+			"Jokainen maksaa itse omat lääkkeensä. Apteekki toimittaa lääkkeesi hoivakotiin ja hoivakodin henkilökunta antaa lääkkeet sinulle.",
+		"sv-FI":
+			"Jokainen maksaa itse omat lääkkeensä. Apteekki toimittaa lääkkeesi hoivakotiin ja hoivakodin henkilökunta antaa lääkkeet sinulle.",
+	},
+	faq7Title: {
+		"fi-FI": "Saanko tarvitsemani apuvälineet hoivakodista?",
+		"sv-FI": "Saanko tarvitsemani apuvälineet hoivakodista?",
+	},
+	faq7Content: {
+		"fi-FI":
+			"Hoivakodeissa on nostolaitteet, tukikaiteet, ulkoilupyörätuoli sekä asentohoitoon soveltuvat tyynyt. Muut tarvitsemasi apuvälineet saat maksutta lainaksi kotikuntasi apuvälinekeskuksesta. Hoivakodin henkilökunta auttaa sinua apuvälineiden hankkimisessa. Jos apuvälineiden noutamisesta koituu kustannuksia, hoivakoti laskuttaa ne sinulta.",
+		"sv-FI":
+			"Hoivakodeissa on nostolaitteet, tukikaiteet, ulkoilupyörätuoli sekä asentohoitoon soveltuvat tyynyt. Muut tarvitsemasi apuvälineet saat maksutta lainaksi kotikuntasi apuvälinekeskuksesta. Hoivakodin henkilökunta auttaa sinua apuvälineiden hankkimisessa. Jos apuvälineiden noutamisesta koituu kustannuksia, hoivakoti laskuttaa ne sinulta.",
+	},
+	faq8Title: {
+		"fi-FI": "Mitä ruokailuja palveluun kuuluu?",
+		"sv-FI": "Mitä ruokailuja palveluun kuuluu?",
+	},
+	faq8Content: {
+		"fi-FI":
+			"Saat hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Saat tarvittaessa myös yöpalan. Erityisruokavaliot ja lääkärin määräämät täydennysravintovalmisteet kuuluvat palveluun, niistä sinun ei tarvitse maksaa erikseen.",
+		"sv-FI":
+			"Saat hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Saat tarvittaessa myös yöpalan. Erityisruokavaliot ja lääkärin määräämät täydennysravintovalmisteet kuuluvat palveluun, niistä sinun ei tarvitse maksaa erikseen.",
+	},
+	faq9Title: {
+		"fi-FI": "Voivatko läheiset ja omaiset yöpyä luonani?",
+		"sv-FI": "Voivatko läheiset ja omaiset yöpyä luonani?",
+	},
+	faq9Content: {
+		"fi-FI":
+			"Läheiset ja omaiset voivat tilapäisesti yöpyä luonasi. Sovithan yöpymisestä etukäteen hoivakodin kanssa.",
+		"sv-FI":
+			"Läheiset ja omaiset voivat tilapäisesti yöpyä luonasi. Sovithan yöpymisestä etukäteen hoivakodin kanssa.",
 	},
 };
