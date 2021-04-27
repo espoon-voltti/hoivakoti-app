@@ -139,7 +139,8 @@ $header-height: 80px;
 	margin-left: 15px;
 	width: 250px;
 	font-size: 16px;
-	font-weight: 600;
+	// font-weight: 600;
+	font-weight: 500;
 }
 
 .title {
@@ -214,7 +215,8 @@ $header-height: 80px;
 }
 
 .nav-menu li a.selected {
-	font-weight: bold;
+	// font-weight: bold;
+	font-weight: 700;
 }
 
 .nav-menu li a.selected {
@@ -227,7 +229,8 @@ $header-height: 80px;
 }
 
 .nav-menu--language li.selected {
-	font-weight: bold;
+	// font-weight: bold;
+	font-weight: 700;
 	padding: 0 10px;
 }
 
@@ -272,7 +275,8 @@ $header-height: 80px;
 }
 
 .lang-link.active {
-	font-weight: bold;
+	// font-weight: bold;
+	font-weight: 700;
 }
 
 .lang-link-short {

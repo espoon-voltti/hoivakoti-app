@@ -164,7 +164,8 @@
 
 .card-list-item__header {
 	font-size: 19px;
-	font-weight: 600;
+	// font-weight: 600;
+	font-weight: 500;
 	// font-family: "Open sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	color: $text-color;
@@ -235,7 +236,8 @@
 	font-size: 16px;
 
 	span {
-		font-weight: 600;
+		// font-weight: 600;
+		font-weight: 500;
 	}
 }
 
@@ -268,7 +270,8 @@
 
 	.card-nursing-home-public-status-header {
 		font-size: 16px;
-		font-weight: 600;
+		// font-weight: 600;
+		font-weight: 500;
 	}
 }
 
@@ -304,7 +307,8 @@
 	position: relative;
 	top: -16px;
 	left: 15px;
-	font-weight: 600;
+	// font-weight: 600;
+	font-weight: 500;
 }
 
 .card-nursing-home-alert {
