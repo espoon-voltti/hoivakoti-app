@@ -841,6 +841,10 @@ export const translations = {
 		"fi-FI": "Arvioiden keskiarvo",
 		"sv-FI": "Medelvärde av bedömningarna",
 	},
+	average: {
+		"fi-FI": "Keskiarvo",
+		"sv-FI": "Keskiarvo",
+	},
 	reviewFooterHeader: {
 		"fi-FI": "Miten arviointeja kerätään?",
 		"sv-FI": "Hur samlas bedömningar in?",

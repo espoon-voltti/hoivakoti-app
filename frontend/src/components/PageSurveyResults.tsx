@@ -41,6 +41,8 @@ const PageSurveyResults: FC = () => {
 		axios
 			.get(`${config.API_URL}/survey/${id}/results/omaiskysely`)
 			.then((response: { data: any[] }) => {
+				console.log(response.data);
+
 				setRelativeSurvey(response.data);
 			})
 			.catch(e => {
@@ -111,6 +113,8 @@ const PageSurveyResults: FC = () => {
 	const inkooFeedbackLink = useT("inkooFeedbackLink");
 	const siuntioFeedbackLink = useT("siuntioFeedbackLink");
 
+	const average = useT("average");
+
 	const ratingToString = (rating: number | null): string => {
 		let str = "-";
 
@@ -137,9 +141,14 @@ const PageSurveyResults: FC = () => {
 			<div key={index}>
 				<div className={"page-survey-results-result"}>
 					<div className="page-survey-results-result-question">
-						{i18n.language == "sv-FI"
-							? question.question_sv
-							: question.question_fi}
+						<span>
+							{i18n.language == "sv-FI"
+								? question.question_sv
+								: question.question_fi}
+						</span>
+						<span className="hide-visually">
+							. {average}: {question.average}.
+						</span>
 					</div>
 					<div className="page-survey-results-result-score">
 						<div
