@@ -106,8 +106,10 @@
 	margin-top: 60px;
 
 	.page-survey-results-answer-header {
-		color: #fff;
-		background-color: $link-color;
+		// color: #fff;
+		// background-color: $link-color;
+		color: $text-color;
+		background-color: $primary-purple;
 		font-size: 18px;
 		padding: 15px;
 	}

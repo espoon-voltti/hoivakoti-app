@@ -9,7 +9,8 @@
 	border-radius: $border-radius;
 	color: $text-color;
 	word-wrap: break-all;
-	font-family: "Open sans", sans-serif;
+	// font-family: "Open sans", sans-serif;
+	font-family: Verdana, "Open sans", sans-serif;
 	font-size: 14px;
 
 	&,
@@ -18,11 +19,11 @@
 	}
 
 	@media print {
-			flex-direction: row;
+		flex-direction: row;
 	}
 }
 
-@media(min-width:1130px){
+@media (min-width: 1130px) {
 	.card-list-item-container {
 		display: flex;
 	}
@@ -92,8 +93,6 @@
 	}
 }
 
-
-
 .card-list-item__image-container {
 	width: 100%;
 	border-top-left-radius: $border-radius;
@@ -143,11 +142,11 @@
 	}
 }
 
-.card-list-item__buttons{
+.card-list-item__buttons {
 	text-align: right;
 	max-width: 240px;
 
-	& > *{
+	& > * {
 		margin-bottom: 10px;
 	}
 }
@@ -166,7 +165,8 @@
 .card-list-item__header {
 	font-size: 19px;
 	font-weight: 600;
-	font-family: "Open sans", sans-serif;
+	// font-family: "Open sans", sans-serif;
+	font-family: Verdana, "Open sans", sans-serif;
 	color: $text-color;
 	line-height: 26px;
 	margin: 3px 0 3px 0;
@@ -210,10 +210,12 @@
 	font-weight: normal;
 	border: none;
 	background: none;
-	font-family: "Open sans", sans-serif;
+	// font-family: "Open sans", sans-serif;
+	font-family: Verdana, "Open sans", sans-serif;
 	font-size: 14px;
 	padding: 0;
-	color: $primary-blue;
+	// color: $primary-blue;
+	color: $primary-purple;
 }
 
 .card-list-item__visiting-info {
@@ -222,13 +224,13 @@
 	@media print {
 		display: block;
 		padding: 20px;
-		border-left: 1px solid $border-color;;
+		border-left: 1px solid $border-color;
 		max-width: 350px;
 		min-width: 350px;
 	}
 }
 
-.card-nursing-home-status{
+.card-nursing-home-status {
 	margin-top: 10px;
 	font-size: 16px;
 
@@ -237,18 +239,18 @@
 	}
 }
 
-@media(min-width:1130px){
+@media (min-width: 1130px) {
 	.card-nursing-home-boxes {
 		display: flex;
 	}
 }
 
-.card-nursing-home-public-status{
+.card-nursing-home-public-status {
 	padding: 5px 25px 5px 25px;
 	border-left: solid 1px $border-color;
 	margin-bottom: 15px;
 
-	@media(min-width:1130px){
+	@media (min-width: 1130px) {
 		width: 33%;
 		text-align: center;
 		height: 105px;
@@ -280,11 +282,11 @@
 
 .card-list-item-alert-tag {
 	position: relative;
-	left:-320px;
+	left: -320px;
 	width: 240px;
 	height: 40px;
 	margin-right: -240px;
-	background-color: rgba(255, 255, 255, 1.0);
+	background-color: rgba(255, 255, 255, 1);
 	opacity: 0.8;
 
 	div {
@@ -314,7 +316,7 @@
 	height: 25px;
 	margin: auto;
 	margin-bottom: 5px;
-	background-image: url('/icons/icon-exclamation-circle.svg');
+	background-image: url("/icons/icon-exclamation-circle.svg");
 	background-size: contain;
 	background-repeat: no-repeat;
 }
