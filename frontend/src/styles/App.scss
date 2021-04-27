@@ -316,7 +316,7 @@ $header-height: 80px;
 	#page-nav ul.nav-menu li {
 		border-top: 1px solid $border-color;
 		display: block;
-		background-color: #fff;
+		background-color: $border-color;
 		height: auto;
 		line-height: 60px;
 		text-align: center;
@@ -331,11 +331,11 @@ $header-height: 80px;
 	}
 
 	#page-nav ul.nav-menu li a:hover {
-		background-color: $primary-purple;
 		color: $text-color;
+		text-decoration: underline;
 	}
 	#page-nav ul.nav-menu li a.selected {
-		background-color: $border-color;
+		background-color: $yellow;
 		color: $text-color;
 	}
 
