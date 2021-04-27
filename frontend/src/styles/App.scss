@@ -123,6 +123,7 @@ $header-height: 80px;
 
 .logo-container {
 	margin-right: 20px;
+	width: 100%;
 }
 
 .logo-container a:hover {
@@ -147,10 +148,8 @@ $header-height: 80px;
 	text-decoration: none;
 	margin-top: 5px;
 	font-size: 1rem;
-
-	@media screen and (min-width: 800px) {
-		font-size: 1.1rem;
-	}
+	white-space: normal;
+	line-height: 1.2;
 }
 
 #page-nav {
@@ -188,24 +187,23 @@ $header-height: 80px;
 }
 
 .nav-menu a {
-	color: $headline-color;
+	// color: $headline-color;
+	color: $text-color;
 	font-family: Montserrat;
 	font-size: 15px;
 	font-weight: normal;
 	letter-spacing: 1px;
 	text-align: center;
 	vertical-align: middle;
-	margin: 0 25px;
+	// margin: 0 25px;
+	margin: 0;
 	line-height: 86px;
 	height: $header-height;
-	padding: 0 10px;
+	padding: 0 1.4rem;
 	display: inline-block;
 	text-decoration: none;
 	text-transform: uppercase;
 	border-bottom: 5px solid transparent;
-}
-
-.nav-menu a {
 }
 
 .nav-menu a:hover {
@@ -220,7 +218,11 @@ $header-height: 80px;
 
 .nav-menu li a.selected {
 	// border-bottom: 3px solid $primary-blue;
-	border-bottom: 3px solid $primary-purple;
+	background-color: $yellow;
+
+	&:hover {
+		border-bottom: none;
+	}
 }
 
 .nav-menu--language li.selected {
