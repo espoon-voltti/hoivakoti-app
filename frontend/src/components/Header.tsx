@@ -223,7 +223,7 @@ const Header: FC = () => {
 						src={
 							config.PUBLIC_FILES_URL + "/logo-lu-sote-black.svg"
 						}
-						alt="Espoo – Esbo"
+						alt="Länsi-Uudenmaa sote logo"
 					/>
 					<h1 className="title">{useT("appTitle")}</h1>
 				</Link>

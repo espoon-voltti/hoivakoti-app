@@ -37,9 +37,7 @@ $header-height: 80px;
 .jump-to-content:focus {
 	top: 5px;
 	left: 5px;
-	// background: $primary-blue;
 	background: $primary-purple;
-	// color: #fff;
 	color: $text-color;
 	-webkit-transition: top 0.1s ease-in, background 0.5s linear;
 	transition: top 0.1s ease-in, background 0.5s linear;
@@ -139,12 +137,10 @@ $header-height: 80px;
 	margin-left: 15px;
 	width: 250px;
 	font-size: 16px;
-	// font-weight: 600;
 	font-weight: 700;
 }
 
 .title {
-	// font-family: Montserrat, sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	text-decoration: none;
 	margin-top: 5px;
@@ -188,16 +184,13 @@ $header-height: 80px;
 }
 
 .nav-menu a {
-	// color: $headline-color;
 	color: $text-color;
-	// font-family: Montserrat;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 15px;
 	font-weight: normal;
 	letter-spacing: 1px;
 	text-align: center;
 	vertical-align: middle;
-	// margin: 0 25px;
 	margin: 0;
 	line-height: 86px;
 	height: $header-height;
@@ -209,18 +202,15 @@ $header-height: 80px;
 }
 
 .nav-menu a:hover {
-	// border-bottom: 3px solid $primary-blue;
 	border-bottom: 3px solid $primary-purple;
 	text-decoration: none;
 }
 
 .nav-menu li a.selected {
-	// font-weight: bold;
 	font-weight: 700;
 }
 
 .nav-menu li a.selected {
-	// border-bottom: 3px solid $primary-blue;
 	background-color: $yellow;
 
 	&:hover {
@@ -229,7 +219,6 @@ $header-height: 80px;
 }
 
 .nav-menu--language li.selected {
-	// font-weight: bold;
 	font-weight: 700;
 	padding: 0 10px;
 }
@@ -245,9 +234,7 @@ $header-height: 80px;
 .nav-menu--language li {
 	text-transform: none;
 	margin: 0;
-	// color: $headline-color;
 	color: $text-color;
-	// font-family: Montserrat;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 15px;
 	font-weight: normal;
@@ -260,7 +247,6 @@ $header-height: 80px;
 }
 
 .nav-menu--language a {
-	// color: $headline-color;
 	color: $text-color;
 	text-decoration: none;
 	display: inline-block;
@@ -271,13 +257,11 @@ $header-height: 80px;
 }
 
 .nav-menu--language a:hover {
-	// border-bottom: 3px solid $primary-blue;
 	border-bottom: 3px solid $primary-purple;
 	text-decoration: none;
 }
 
 .lang-link.active {
-	// font-weight: bold;
 	font-weight: 700;
 }
 
@@ -307,7 +291,6 @@ $header-height: 80px;
 
 	#page-nav label.menu-btn {
 		display: inline-block;
-		// color: $headline-color;
 		color: $text-color;
 		background: #fff;
 		font-style: normal;
@@ -344,9 +327,7 @@ $header-height: 80px;
 	}
 
 	#page-nav ul.nav-menu li a:hover {
-		// background-color: $primary-blue;
 		background-color: $primary-purple;
-		// color: #fff;
 		color: $text-color;
 	}
 	#page-nav ul.nav-menu li a.selected {

@@ -2,7 +2,6 @@
 
 .vacancy-status-badge {
 	font-size: 14px;
-	// font-family: "Open Sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	color: $text-color;
 }
@@ -18,6 +17,5 @@
 }
 
 .vacancy-status-badge-true::before {
-	// background-color: #b1c400;
 	background-color: $green;
 }

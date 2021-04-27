@@ -80,11 +80,9 @@
 	white-space: nowrap;
 	text-transform: uppercase;
 	font-size: 14px;
-	// font-weight: 600;
 	font-weight: 700;
 	min-width: 7em;
 	height: 3em;
-	// color: $headline-color;
 	color: $text-color;
 	border: 1px solid $light-gray;
 	border-radius: $border-radius;
@@ -100,9 +98,7 @@
 .page-update-popup {
 	margin-top: 12px;
 	margin-left: 20px;
-	// color: $primary-blue;
 	color: $primary-purple;
-	// font-weight: bold;
 	font-weight: 700;
 
 	&.error {
@@ -175,7 +171,6 @@
 			display: inline-block;
 			line-height: 1.5;
 			font-size: 0.85rem;
-			// color: $headline-color;
 			color: $text-color;
 			margin-bottom: 0.6rem;
 		}

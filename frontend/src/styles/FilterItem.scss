@@ -22,7 +22,6 @@
 	font-weight: normal;
 	border: none;
 	background: none;
-	// font-family: "Open sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 16px;
 	padding: 0;
@@ -33,12 +32,10 @@
 }
 
 .menu-empty-button:not(:disabled):hover {
-	// color: $primary-blue;
 	color: $primary-purple;
 }
 
 .header-item {
-	// font-weight: 600;
 	font-weight: 500;
 	margin-bottom: 25px;
 	line-height: 1.5;
@@ -50,9 +47,7 @@
 }
 
 .option-text-has-subtext {
-	// font-weight: 600;
 	font-weight: 500;
-	// font-family: "Open sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	line-height: 22px;
 }
@@ -66,7 +61,6 @@
 }
 
 .with-bold {
-	// font-weight: bold;
 	font-weight: 700;
 }
 
