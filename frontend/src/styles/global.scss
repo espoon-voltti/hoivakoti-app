@@ -138,13 +138,13 @@ html {
 }
 
 body {
-	font-family: "Open sans", sans-serif;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 16px;
 	color: $text-color;
 }
 
 p {
-	font-family: "Open sans", sans-serif;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 16px;
 	line-height: 26px;
 	margin-bottom: 1.5em;
@@ -152,18 +152,18 @@ p {
 }
 
 h1 {
-	color: $headline-color;
+	color: $text-color;
 	font-size: 36px;
-	font-family: Montserrat, sans-serif;
-	font-weight: 300;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
+	font-weight: 800;
 	line-height: 44px;
 }
 
 h2 {
-	color: $headline-color;
+	color: $text-color;
 	font-size: 36px;
-	font-family: Montserrat, sans-serif;
-	font-weight: 300;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
+	font-weight: 800;
 	line-height: 44px;
 	margin-bottom: 20px;
 	@media screen and (max-width: 640px) {
@@ -174,10 +174,10 @@ h2 {
 }
 
 h3 {
-	color: $headline-color;
+	color: $text-color;
 	font-size: 22px;
-	font-family: Montserrat, sans-serif;
-	font-weight: 300;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
+	font-weight: 800;
 	line-height: 27px;
 	margin-bottom: 20px;
 	@media screen and (max-width: 640px) {
@@ -186,10 +186,10 @@ h3 {
 }
 
 h4 {
-	color: $headline-color;
+	color: $text-color;
 	font-size: 19px;
-	font-family: Montserrat, sans-serif;
-	font-weight: 300;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
+	font-weight: 800;
 	line-height: 27px;
 	margin-bottom: 15px;
 	@media screen and (max-width: 640px) {
@@ -217,7 +217,7 @@ a.mapLink {
 }
 
 strong {
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .nowrap {
@@ -236,20 +236,20 @@ strong {
 	white-space: nowrap;
 	text-transform: uppercase;
 	font-size: 14px;
-	font-weight: 600;
+	font-weight: 700;
 	min-width: 7em;
 	height: 3em;
 	border-radius: $border-radius;
-	background-color: $link-color;
+	background-color: $primary-purple;
 	border-color: transparent;
-	color: #fff;
+	color: $text-color;
 }
 
 .btn-secondary {
 	border-radius: $border-radius;
 	background-color: transparent;
-	border-color: $link-color;
-	color: $link-color;
+	border-color: $orange;
+	color: $text-color;
 }
 
 .btn-secondary-link {
@@ -264,16 +264,17 @@ strong {
 }
 
 .btn:hover {
-	background-color: $primary-blue;
+	background-color: darken($primary-purple, 5%);
 }
 
 .btn-secondary:hover {
-	background-color: $primary-blue;
-	color: #fff;
+	background-color: darken($primary-purple, 5%);
+	border-color: transparent;
 }
 
 .btn:active {
-	background-color: #044090;
+	background-color: darken($primary-purple, 5%);
+	border-color: transparent;
 }
 
 .no-wrap {
@@ -307,7 +308,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .label {
 	display: block;
 	font-size: 1rem;
-	font-weight: 600;
+	font-weight: 700;
 	line-height: 1.5;
 	margin-bottom: 0.6rem;
 

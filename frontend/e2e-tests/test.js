@@ -20,10 +20,10 @@ module.exports = {
 			.assert.containsText(".title", "Vårdhemmen i Esbo")
 			.click("a[lang=fi-FI]")
 			.pause(300)
-			.assert.containsText(".title", "Espoon hoivakodit")
+			.assert.containsText(".title", "Länsi-Uudenmaan hoivakodit")
 			.click("a[lang=fi-FI]")
 			.pause(300)
-			.assert.containsText(".title", "Espoon hoivakodit")
+			.assert.containsText(".title", "Länsi-Uudenmaan hoivakodit")
 			.end();
 	},
 	"Show nursinghomes button and selection is working": function(browser) {

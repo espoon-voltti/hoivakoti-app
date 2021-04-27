@@ -58,7 +58,7 @@
 	&-link {
 		display: block;
 		font-size: 1rem;
-		font-weight: 600;
+		font-weight: 400;
 		line-height: 1.5;
 		margin-bottom: 0.6rem;
 	}
@@ -75,18 +75,19 @@
 			}
 
 			&.checked {
-				background-color: #044090;
+				background-color: darken($primary-purple, 5%);
 			}
 
 			&.unchecked {
 				border-radius: $border-radius;
 				background-color: transparent;
-				border-color: $link-color;
-				color: $link-color;
+				border-color: $orange;
+				color: $text-color;
 
 				&:hover {
-					background-color: $primary-blue;
-					color: #fff;
+					background-color: $primary-purple;
+					color: $text-color;
+					border-color: transparent;
 				}
 			}
 		}

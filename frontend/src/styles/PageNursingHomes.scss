@@ -30,7 +30,7 @@
 	@media screen {
 		display: flex;
 		flex-direction: row;
-		flex-wrap: wrap;	
+		flex-wrap: wrap;
 	}
 
 	& > * {
@@ -63,8 +63,8 @@
 }
 
 .filters > .filters-text {
-	color: $headline-color;
-	font-weight: bold;
+	color: $text-color;
+	font-weight: 700;
 	margin-left: 10px;
 	@media print {
 		display: none;
@@ -78,7 +78,7 @@
 
 .results-summary {
 	font-size: 22px;
-	font-family: Montserrat, sans-serif;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	line-height: 41px;
 	margin: 12px 0 12px 10px;
 }
@@ -91,10 +91,10 @@
 	cursor: pointer;
 	text-align: left;
 	font-size: 14px;
-	font-family: "Open Sans", sans-serif;
-	font-weight: bold;
-	color: $headline-color;
-	background: #fff url('/icons/icon-x.svg') 10px 50% no-repeat;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
+	font-weight: 700;
+	color: $text-color;
+	background: #fff url("/icons/icon-x.svg") 10px 50% no-repeat;
 	padding: 10px 10px 10px 30px;
 	border: 1px solid $light-gray;
 	border-radius: $border-radius;
