@@ -41,8 +41,6 @@ const PageSurveyResults: FC = () => {
 		axios
 			.get(`${config.API_URL}/survey/${id}/results/omaiskysely`)
 			.then((response: { data: any[] }) => {
-				console.log(response.data);
-
 				setRelativeSurvey(response.data);
 			})
 			.catch(e => {
