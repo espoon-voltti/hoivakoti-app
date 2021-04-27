@@ -257,9 +257,12 @@ strong {
 	margin: auto;
 	padding: 12px !important;
 	background: none !important;
-	border-color: $orange;
 	color: $text-color;
-	border: solid 1px;
+	border: solid 1px $orange;
+
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 .btn:hover {
