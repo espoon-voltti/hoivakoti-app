@@ -9,7 +9,6 @@
 	border-radius: $border-radius;
 	color: $text-color;
 	word-wrap: break-all;
-	// font-family: "Open sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 14px;
 
@@ -164,9 +163,7 @@
 
 .card-list-item__header {
 	font-size: 19px;
-	// font-weight: 600;
 	font-weight: 700;
-	// font-family: "Open sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	color: $text-color;
 	line-height: 26px;
@@ -211,11 +208,9 @@
 	font-weight: normal;
 	border: none;
 	background: none;
-	// font-family: "Open sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 14px;
 	padding: 0;
-	// color: $primary-blue;
 	color: $primary-purple;
 }
 
@@ -236,7 +231,6 @@
 	font-size: 16px;
 
 	span {
-		// font-weight: 600;
 		font-weight: 500;
 	}
 }
@@ -270,7 +264,6 @@
 
 	.card-nursing-home-public-status-header {
 		font-size: 16px;
-		// font-weight: 600;
 		font-weight: 500;
 	}
 }
@@ -307,7 +300,6 @@
 	position: relative;
 	top: -16px;
 	left: 15px;
-	// font-weight: 600;
 	font-weight: 500;
 }
 

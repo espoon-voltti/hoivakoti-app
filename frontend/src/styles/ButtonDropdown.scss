@@ -21,11 +21,8 @@
 	cursor: pointer;
 	text-align: left;
 	font-size: 14px;
-	// font-family: "Open Sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
-	// font-weight: bold;
 	font-weight: 500;
-	// color: $headline-color;
 	color: $text-color;
 	background: none;
 	padding: 10px;
@@ -45,13 +42,10 @@
 }
 
 .button-dropdown-variant-primary .button-dropdown-active {
-	// background-color: $link-color;
-	// color: white;
 	background-color: $primary-purple;
 	color: $text-color;
 
 	.button-dropdown-caret {
-		// stroke: white;
 		stroke: $text-color;
 	}
 }
@@ -68,8 +62,7 @@
 
 .button-dropdown-caret {
 	margin-left: 10px;
-	// stroke: $headline-color;
-	color: $text-color;
+	stroke: $text-color;
 }
 
 .button-dropdown-container[aria-expanded="true"] {
@@ -85,7 +78,6 @@
 	left: 0;
 	justify-content: center;
 
-	//color: #ff0000;
 	padding: 25px 15px 20px 20px;
 	background-color: white;
 	display: flex;
