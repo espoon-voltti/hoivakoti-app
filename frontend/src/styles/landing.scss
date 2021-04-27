@@ -17,7 +17,8 @@ $column-width: 1024px;
 
 .jumbotron__header {
 	color: #fff;
-	font-weight: bold;
+	// font-weight: bold;
+	font-weight: 700;
 	font-size: 48px;
 	max-width: 680px;
 	width: 680px;
@@ -47,7 +48,8 @@ $column-width: 1024px;
 }
 
 .location-picker-label {
-	font-weight: 600;
+	// font-weight: 600;
+	font-weight: 500;
 }
 
 .location-picker-select {
@@ -155,7 +157,8 @@ p.content-block-paragraph {
 }
 
 .faq-list dt {
-	font-weight: 600;
+	// font-weight: 600;
+	font-weight: 500;
 	margin-top: 20px;
 	line-height: 26px;
 }

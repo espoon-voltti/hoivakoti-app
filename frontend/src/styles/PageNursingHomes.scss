@@ -64,7 +64,8 @@
 
 .filters > .filters-text {
 	color: $headline-color;
-	font-weight: bold;
+	// font-weight: bold;
+	font-weight: 700;
 	margin-left: 10px;
 	@media print {
 		display: none;
@@ -94,7 +95,8 @@
 	font-size: 14px;
 	// font-family: "Open Sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
-	font-weight: bold;
+	// font-weight: bold;
+	font-weight: 700;
 	color: $headline-color;
 	background: #fff url("/icons/icon-x.svg") 10px 50% no-repeat;
 	padding: 10px 10px 10px 30px;
