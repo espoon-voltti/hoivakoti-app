@@ -16,7 +16,8 @@
 	padding: 15px 20px 15px 20px;
 	margin: 0 0 20px 0;
 	border: 2px solid $border-color;
-	color: $headline-color;
+	// color: $headline-color;
+	color: $text-color;
 }
 
 .page-report-file-drop {
@@ -25,7 +26,8 @@
 	padding-top: 60px;
 	text-align: center;
 	border: 2px dashed $border-color;
-	color: $headline-color;
+	// color: $headline-color;
+	color: $text-color;
 }
 
 .page-report-input-hidden {

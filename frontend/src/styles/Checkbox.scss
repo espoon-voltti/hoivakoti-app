@@ -9,7 +9,8 @@
 
 	&.disabled {
 		.checkbox-label {
-			color: $input-border;
+			// color: $input-border;
+			color: $text-color;
 
 			.checkbox-box-selected {
 				background: $input-border url("/icons/icon-checkmark.svg") 50%
