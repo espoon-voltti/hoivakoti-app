@@ -46,7 +46,18 @@ const PageLanding: FC = () => {
 	const whoAreServicesForTitle = useT("whoAreServicesForTitle");
 	const howToApplyTitle = useT("howToApplyTitle");
 	const howToApplyDesc = useT("howToApplyDesc");
+
 	const contactDesc = useT("contactDesc");
+	const contactItemEspoo = useT("contactItemEspoo");
+	const contactItemKirkkonummi = useT("contactItemKirkkonummi");
+	const contactItemKauniainen = useT("contactItemKauniainen");
+	const contactItemLohja = useT("contactItemLohja");
+	const contactItemHanko = useT("contactItemHanko");
+	const contactItemKarviainen = useT("contactItemKarviainen");
+	const contactItemInkoo = useT("contactItemInkoo");
+	const contactItemRaasepori = useT("contactItemRaasepori");
+	const contactItemSiuntio = useT("contactItemSiuntio");
+
 	const howToPickTitle = useT("howToPickTitle");
 	const howToPickContent1 = useT("howToPickContent1");
 	const howToPickContent2 = useT("howToPickContent2");
@@ -81,6 +92,18 @@ const PageLanding: FC = () => {
 	const faq8Content = useT("faq8Content");
 	const faq9Title = useT("faq9Title");
 	const faq9Content = useT("faq9Content");
+
+	const contactItems = [
+		contactItemEspoo,
+		contactItemKirkkonummi,
+		contactItemKauniainen,
+		contactItemLohja,
+		contactItemHanko,
+		contactItemKarviainen,
+		contactItemInkoo,
+		contactItemRaasepori,
+		contactItemSiuntio,
+	];
 
 	const espooChecked = selectedAreas
 		? selectedAreas.includes("Espoo")
@@ -280,17 +303,12 @@ const PageLanding: FC = () => {
 					</ol>
 					<p>{contactDesc}</p>
 					<ul>
-						<Trans i18nKey="defaultNamespace:contactSteps">
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li>
-						</Trans>
+						{contactItems.map((item, index) => (
+							<li
+								key={`contact-item-${index}`}
+								dangerouslySetInnerHTML={{ __html: item }}
+							></li>
+						))}
 					</ul>
 				</section>
 				<section className="content-block">

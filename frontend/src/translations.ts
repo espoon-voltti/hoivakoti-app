@@ -1309,9 +1309,9 @@ export const translations = {
 	},
 	raaseporiFeedbackLink: {
 		"fi-FI":
-			"https://player.myzef.com/raasepori/ajax/?eud=162-b6e9dfdk&qsid=882&quid=4874&language=fi&s=tbrl67325lrmgqi1n399qe9tu1&info=%22Note:_This_is_your_personal_link._Sharing_this_link_shares_your_answers_too%22 ",
+			"https://player.myzef.com/raasepori/ajax/?eud=162-b6e9dfdk&qsid=882&quid=4874&language=fi&s=tbrl67325lrmgqi1n399qe9tu1",
 		"sv-FI":
-			"https://player.myzef.com/raasepori/ajax/?eud=162-4fd7d2z3&qsid=882&quid=4874&language=sv&s=tbrl67325lrmgqi1n399qe9tu1&info=%22Note:_This_is_your_personal_link._Sharing_this_link_shares_your_answers_too%22",
+			"https://player.myzef.com/raasepori/ajax/?eud=162-4fd7d2z3&qsid=882&quid=4874&language=sv&s=tbrl67325lrmgqi1n399qe9tu1",
 	},
 	hankoFeedbackLink: {
 		"fi-FI":
@@ -1385,11 +1385,57 @@ export const translations = {
 		"fi-FI": "Yhteystietomme:",
 		"sv-FI": "Yhteystietomme:",
 	},
-	contactSteps: {
+	contactItemEspoo: {
 		"fi-FI":
-			"<0>Espoo: Seniorineuvonta Nestori arkisin klo 9–15, p. 09 816 33 333</0><1>Kirkkonummi: Seniorilinja arkisin klo 8–15, p. 040 126 9900</1><2>Kauniainen: palveluneuvonta arkisin klo 8–16, p. 050 411 9268</2><3>Lohja: Ikähelppi arkisin klo 9–12, p. 044 369 2444</3><4>Hanko: palveluohjaaja arkisin klo 8–10, p. 019 220 3489</4><5> Perusturvakuntayhtymä Karviainen: palveluohjaus arkisin klo 9–15, p. 09 4258 2933</5><6>Inkoo: Seniorineuvonta ma, ti ja ke klo 8–9</6><7>Raasepori: Seniorilinja arkisin klo 8–12 ja 13–15, p. 019 289 3133</7><8> Siuntio: sosiaaliohjaaja ma-ke klo 12–13, p. 09 2606 1201 ja Ikä Info to klo 15–16, p. 044 386 1299.</8>",
+			"Espoo: Seniorineuvonta Nestori arkisin klo 9–15, <a href='tel:0981633333'>p. 09 816 33 333",
 		"sv-FI":
-			"<0>Espoo: Seniorineuvonta Nestori arkisin klo 9–15, p. 09 816 33 333</0><1>Kirkkonummi: Seniorilinja arkisin klo 8–15, p. 040 126 9900</1><2>Kauniainen: palveluneuvonta arkisin klo 8–16, p. 050 411 9268</2><3>Lohja: Ikähelppi arkisin klo 9–12, p. 044 369 2444</3><4>Hanko: palveluohjaaja arkisin klo 8–10, p. 019 220 3489</4><5> Perusturvakuntayhtymä Karviainen: palveluohjaus arkisin klo 9–15, p. 09 4258 2933</5><6>Inkoo: Seniorineuvonta ma, ti ja ke klo 8–9</6><7>Raasepori: Seniorilinja arkisin klo 8–12 ja 13–15, p. 019 289 3133</7><8> Siuntio: sosiaaliohjaaja ma-ke klo 12–13, p. 09 2606 1201 ja Ikä Info to klo 15–16, p. 044 386 1299.</8>",
+			"Espoo: Seniorineuvonta Nestori arkisin klo 9–15, <a href='tel:0981633333'>p. 09 816 33 333",
+	},
+	contactItemKirkkonummi: {
+		"fi-FI":
+			"Kirkkonummi: Seniorilinja arkisin klo 8–15, <a href='tel:0401269900'>p. 040 126 9900",
+		"sv-FI":
+			"Kirkkonummi: Seniorilinja arkisin klo 8–15, <a href='tel:0401269900'>p. 040 126 9900",
+	},
+	contactItemKauniainen: {
+		"fi-FI":
+			"Kauniainen: palveluneuvonta arkisin klo 8–16, <a href='tel:0504119268'>p. 050 411 9268</a>",
+		"sv-FI":
+			"Kauniainen: palveluneuvonta arkisin klo 8–16, <a href='tel:0504119268'>p. 050 411 9268</a>",
+	},
+	contactItemLohja: {
+		"fi-FI":
+			"Lohja: Ikähelppi arkisin klo 9–12, <a href='tel:0443692444'>p. 044 369 2444</a>",
+		"sv-FI":
+			"Lohja: Ikähelppi arkisin klo 9–12, <a href='tel:0443692444'>p. 044 369 2444</a>",
+	},
+	contactItemHanko: {
+		"fi-FI":
+			"Hanko: palveluohjaaja arkisin klo 8–10, <a href='tel:0192203489'>p. 019 220 3489</a>",
+		"sv-FI":
+			"Hanko: palveluohjaaja arkisin klo 8–10, <a href='tel:0192203489'>p. 019 220 3489</a>",
+	},
+	contactItemKarviainen: {
+		"fi-FI":
+			"Perusturvakuntayhtymä Karviainen: palveluohjaus arkisin klo 9–15, <a href='tel:0942582933'>p. 09 4258 2933</a>",
+		"sv-FI":
+			"Perusturvakuntayhtymä Karviainen: palveluohjaus arkisin klo 9–15, <a href='tel:0942582933'>p. 09 4258 2933</a>",
+	},
+	contactItemInkoo: {
+		"fi-FI": "Inkoo: Seniorineuvonta ma, ti ja ke klo 8–9",
+		"sv-FI": "Inkoo: Seniorineuvonta ma, ti ja ke klo 8–9",
+	},
+	contactItemRaasepori: {
+		"fi-FI":
+			"Raasepori: Seniorilinja arkisin klo 8–12 ja 13–15, <a href='tel:0192893133'>p. 019 289 3133</a>",
+		"sv-FI":
+			"Raasepori: Seniorilinja arkisin klo 8–12 ja 13–15, <a href='tel:0192893133'>p. 019 289 3133</a>",
+	},
+	contactItemSiuntio: {
+		"fi-FI":
+			"Siuntio: sosiaaliohjaaja ma-ke klo 12–13, <a href='tel:0926061201'>p. 09 2606 1201</a> ja Ikä Info to klo 15–16, <a href='tel:0443861299'>p. 044 386 1299</a>.",
+		"sv-FI":
+			"Siuntio: sosiaaliohjaaja ma-ke klo 12–13, <a href='tel:0926061201'>p. 09 2606 1201</a> ja Ikä Info to klo 15–16, <a href='tel:0443861299'>p. 044 386 1299</a>.",
 	},
 	howToPickTitle: {
 		"fi-FI": "Näin valitset mieleisesi hoivakodin",
