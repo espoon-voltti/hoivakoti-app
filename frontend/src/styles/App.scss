@@ -140,7 +140,7 @@ $header-height: 80px;
 	width: 250px;
 	font-size: 16px;
 	// font-weight: 600;
-	font-weight: 500;
+	font-weight: 700;
 }
 
 .title {
@@ -245,7 +245,8 @@ $header-height: 80px;
 .nav-menu--language li {
 	text-transform: none;
 	margin: 0;
-	color: $headline-color;
+	// color: $headline-color;
+	color: $text-color;
 	// font-family: Montserrat;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 15px;
@@ -259,7 +260,8 @@ $header-height: 80px;
 }
 
 .nav-menu--language a {
-	color: $headline-color;
+	// color: $headline-color;
+	color: $text-color;
 	text-decoration: none;
 	display: inline-block;
 	padding: 0 10px;
@@ -305,7 +307,8 @@ $header-height: 80px;
 
 	#page-nav label.menu-btn {
 		display: inline-block;
-		color: $headline-color;
+		// color: $headline-color;
+		color: $text-color;
 		background: #fff;
 		font-style: normal;
 		font-size: 15px;

@@ -23,8 +23,10 @@
 	font-size: 14px;
 	// font-family: "Open Sans", sans-serif;
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
-	font-weight: bold;
-	color: $headline-color;
+	// font-weight: bold;
+	font-weight: 500;
+	// color: $headline-color;
+	color: $text-color;
 	background: none;
 	padding: 10px;
 	border: 1px solid $light-gray;
@@ -66,7 +68,8 @@
 
 .button-dropdown-caret {
 	margin-left: 10px;
-	stroke: $headline-color;
+	// stroke: $headline-color;
+	color: $text-color;
 }
 
 .button-dropdown-container[aria-expanded="true"] {
