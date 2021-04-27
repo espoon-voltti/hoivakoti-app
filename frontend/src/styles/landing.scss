@@ -7,25 +7,23 @@ $column-width: 1024px;
 	max-height: calc(100vh - 80px - 200px);
 	min-height: 400px;
 	height: 100vh;
-	background: $primary-blue url('/hero-image.jpg') 50% 50% no-repeat;
+	background: $primary-purple url("/hero-image.jpg") 50% 50% no-repeat;
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
-	
-
 }
 
 .jumbotron__header {
 	color: #fff;
-	font-weight: bold;
+	font-weight: 800;
 	font-size: 48px;
 	max-width: 680px;
 	width: 680px;
 	margin: 0 auto 50px auto;
 	display: block;
 	line-height: 52px;
-	text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+	text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
 	@media screen and (max-height: 800px) {
 		margin-bottom: 40px;
 	}
@@ -48,7 +46,7 @@ $column-width: 1024px;
 }
 
 .location-picker-label {
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .location-picker-select {
@@ -64,9 +62,9 @@ $column-width: 1024px;
 		height: 45px;
 		padding: 4px 5px 0 10px;
 		width: 100%;
-		font-weight: normal;
+		font-weight: 400;
 		text-transform: none;
-		font-family: "Open-sans", sans-serif;
+		font-family: filson-pro, Verdana, "Open sans", sans-serif;
 		font-size: 16px;
 		color: $text-color;
 	}
@@ -97,6 +95,29 @@ $column-width: 1024px;
 .content-block {
 	max-width: 680px;
 	margin: 0 auto 70px auto;
+
+	ol,
+	ul {
+		line-height: 26px;
+		padding-inline-start: 2rem;
+		margin-bottom: 1.5em;
+
+		li {
+			margin-bottom: 0.5rem;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	ol {
+		list-style: decimal;
+	}
+
+	ul {
+		list-style: disc;
+	}
 }
 .content-block--wide {
 	max-width: 1024px;
@@ -132,7 +153,7 @@ p.content-block-paragraph {
 }
 
 .faq-list dt {
-	font-weight: 600;
+	font-weight: 700;
 	margin-top: 20px;
 	line-height: 26px;
 }
@@ -184,5 +205,36 @@ p.content-block-paragraph {
 		width: 100%;
 		max-width: 100%;
 		margin: 0;
+	}
+}
+
+.anchor {
+	&-list {
+		@media screen and (min-width: 640px) {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+
+	&-link {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		margin-bottom: 1rem;
+		white-space: pre-wrap;
+
+		&:hover {
+			text-decoration: none;
+		}
+
+		@media screen and (min-width: 640px) {
+			width: 32%;
+			margin-right: 1%;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
 	}
 }

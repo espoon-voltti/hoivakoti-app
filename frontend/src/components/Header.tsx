@@ -125,7 +125,7 @@ const Header: FC = () => {
 						</NavLink>
 					</li>
 				</ul>
-				<button className="btn" onClick={surveillanceLogout}>
+				<button className="btn btn-logout" onClick={surveillanceLogout}>
 					Kirjaudu ulos
 				</button>
 			</div>
@@ -220,8 +220,10 @@ const Header: FC = () => {
 				<Link to="/">
 					<img
 						className="logo"
-						src={config.PUBLIC_FILES_URL + "/logo-espoo.svg"}
-						alt="Espoo – Esbo"
+						src={
+							config.PUBLIC_FILES_URL + "/logo-lu-sote-black.svg"
+						}
+						alt="Länsi-Uudenmaa sote logo"
 					/>
 					<h1 className="title">{useT("appTitle")}</h1>
 				</Link>

@@ -8,8 +8,6 @@ import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
 
-import FeedbackState from "../shared/types/feedback-state";
-
 const PageSurveyResults: FC = () => {
 	const { id } = useParams() as any;
 	const [relativeSurvey, setRelativeSurvey] = useState<any[] | null>(null);
@@ -82,10 +80,8 @@ const PageSurveyResults: FC = () => {
 	const reviewFooterHeader = useT("reviewFooterHeader");
 	const reviewFooterPart1 = useT("reviewFooterPart1");
 	const reviewFooterPart2 = useT("reviewFooterPart2");
-	const reviewFooterPart3 = useT("reviewFooterPart3");
 	const reviewFooterPart4 = useT("reviewFooterPart4");
-	const reviewFooterLink = useT("reviewFooterLink");
-	const urlReviewFooterLink = useT("urlReviewFooterLink");
+
 	const noRelativesOpenTextAnswers = useT("noRelativesOpenTextAnswers");
 	const feedbackResponseHeader = useT("feedbackResponseHeader");
 
@@ -94,6 +90,26 @@ const PageSurveyResults: FC = () => {
 	const optionText3 = useT("surveyOption3");
 	const optionText4 = useT("surveyOption4");
 	const optionText5 = useT("surveyOption5");
+
+	const espoo = useT("espoo");
+	const kirkkonummi = useT("kirkkonummi");
+	const kauniainen = useT("kauniainen");
+	const lohja = useT("lohja");
+	const raasepori = useT("raasepori");
+	const hanko = useT("hanko");
+	const karviainen = useT("karviainen");
+	const inkoo = useT("inkoo");
+	const siuntio = useT("siuntio");
+
+	const espooFeedbackLink = useT("espooFeedbackLink");
+	const kirkkonummiFeedbackLink = useT("kirkkonummiFeedbackLink");
+	const kauniainenFeedbackLink = useT("kauniainenFeedbackLink");
+	const lohjaFeedbackLink = useT("lohjaFeedbackLink");
+	const raaseporiFeedbackLink = useT("raaseporiFeedbackLink");
+	const hankoFeedbackLink = useT("hankoFeedbackLink");
+	const karviainenFeedbackLink = useT("karviainenFeedbackLink");
+	const inkooFeedbackLink = useT("inkooFeedbackLink");
+	const siuntioFeedbackLink = useT("siuntioFeedbackLink");
 
 	const ratingToString = (rating: number | null): string => {
 		let str = "-";
@@ -301,17 +317,91 @@ const PageSurveyResults: FC = () => {
 				<p className="page-survey-results-bold">{reviewFooterHeader}</p>
 				<p>{reviewFooterPart1}</p>
 				<p>{reviewFooterPart2}</p>
-				<p>{reviewFooterPart3}</p>
-				<p>
-					{reviewFooterPart4}{" "}
-					<a
-						href={urlReviewFooterLink}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						{reviewFooterLink}
-					</a>
-				</p>
+
+				<p>{reviewFooterPart4}</p>
+				<ul>
+					<li>
+						<a
+							href={espooFeedbackLink}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{espoo}
+						</a>
+					</li>
+					<li>
+						<a
+							href={kirkkonummiFeedbackLink}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{kirkkonummi}
+						</a>
+					</li>
+					<li>
+						<a
+							href={kauniainenFeedbackLink}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{kauniainen}
+						</a>
+					</li>
+					<li>
+						<a
+							href={lohjaFeedbackLink}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{lohja}
+						</a>
+					</li>
+					<li>
+						<a
+							href={raaseporiFeedbackLink}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{raasepori}
+						</a>
+					</li>
+					<li>
+						<a
+							href={hankoFeedbackLink}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{hanko}
+						</a>
+					</li>
+					<li>
+						<a
+							href={karviainenFeedbackLink}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{karviainen}
+						</a>
+					</li>
+					<li>
+						<a
+							href={inkooFeedbackLink}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{inkoo}
+						</a>
+					</li>
+					<li>
+						<a
+							href={siuntioFeedbackLink}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{siuntio}
+						</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 	);

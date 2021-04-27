@@ -53,6 +53,7 @@ interface InputField {
 	touched?: boolean;
 	change?: (...arg: any) => InputFieldValue;
 	maxlength?: number;
+	readonly?: boolean;
 	value: InputFieldValue;
 }
 
@@ -563,27 +564,7 @@ const PageUpdate: FC = () => {
 					}),
 				],
 				value: null,
-				change: (current: Commune[], value: string) => {
-					let newList: Commune[];
-
-					if (!current) {
-						newList = [];
-					} else {
-						newList = [...current];
-					}
-
-					const commune = value as Commune;
-
-					if (newList.includes(commune)) {
-						const index = newList.indexOf(commune);
-
-						newList.splice(index, 1);
-					} else {
-						newList.push(commune);
-					}
-
-					return newList;
-				},
+				readonly: true,
 			},
 		],
 		foodFields: [
@@ -1096,23 +1077,30 @@ const PageUpdate: FC = () => {
 												key={`${field.name}-${button.value}`}
 												id={`${field.name}-${button.value}`}
 												name={field.name}
+												disabled={field.readonly}
 												onChange={() => {
-													let newValue = button.value as InputFieldValue;
+													if (!field.readonly) {
+														let newValue = button.value as InputFieldValue;
 
-													if (field.change) {
-														newValue = field.change(
-															field.value,
-															button.value as string,
+														if (field.change) {
+															newValue = field.change(
+																field.value,
+																button.value as string,
+															);
+														}
+
+														handleInputChange(
+															field,
+															section,
+															newValue,
 														);
 													}
-
-													handleInputChange(
-														field,
-														section,
-														newValue,
-													);
 												}}
-												onBlur={validateForm}
+												onBlur={() => {
+													if (!field.readonly) {
+														validateForm();
+													}
+												}}
 												isChecked={
 													button.checked || false
 												}

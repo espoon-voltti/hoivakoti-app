@@ -37,6 +37,74 @@ const PageLanding: FC = () => {
 		useT("vihti"),
 	];
 
+	// LU translation
+	const homepageHeading = useT("homepageHeading");
+	const homepageIngress = useT("homepageIngress");
+	const homepageAnchor1 = useT("homepageAnchor1");
+	const homepageAnchor2 = useT("homepageAnchor2");
+	const homepageAnchor3 = useT("homepageAnchor3");
+	const whoAreServicesForTitle = useT("whoAreServicesForTitle");
+	const howToApplyTitle = useT("howToApplyTitle");
+	const howToApplyDesc = useT("howToApplyDesc");
+
+	const contactDesc = useT("contactDesc");
+	const contactItemEspoo = useT("contactItemEspoo");
+	const contactItemKirkkonummi = useT("contactItemKirkkonummi");
+	const contactItemKauniainen = useT("contactItemKauniainen");
+	const contactItemLohja = useT("contactItemLohja");
+	const contactItemHanko = useT("contactItemHanko");
+	const contactItemKarviainen = useT("contactItemKarviainen");
+	const contactItemInkoo = useT("contactItemInkoo");
+	const contactItemRaasepori = useT("contactItemRaasepori");
+	const contactItemSiuntio = useT("contactItemSiuntio");
+
+	const howToPickTitle = useT("howToPickTitle");
+	const howToPickContent1 = useT("howToPickContent1");
+	const howToPickContent2 = useT("howToPickContent2");
+	const howToPickContent3 = useT("howToPickContent3");
+	const howToPickContent4 = useT("howToPickContent4");
+
+	const whatServicesIncludesTitle = useT("whatServicesIncludesTitle");
+	const whatServicesIncludesContent1 = useT("whatServicesIncludesContent1");
+	const whatServicesIncludesContent2 = useT("whatServicesIncludesContent2");
+	const whatServicesIncludesContent3 = useT("whatServicesIncludesContent3");
+	const whatServicesIncludesContent4 = useT("whatServicesIncludesContent4");
+	const whatServicesIncludesContent5 = useT("whatServicesIncludesContent5");
+
+	const paymentsTitle = useT("paymentsTitle");
+	const paymentsContent = useT("paymentsContent");
+
+	const homepageFaqTitle = useT("homepageFaqTitle");
+	const faq1Title = useT("faq1Title");
+	const faq2Title = useT("faq2Title");
+	const faq2Content = useT("faq2Content");
+	const faq3Title = useT("faq3Title");
+	const faq3Content = useT("faq3Content");
+	const faq4Title = useT("faq4Title");
+	const faq4Content = useT("faq4Content");
+	const faq5Title = useT("faq5Title");
+	const faq5Content = useT("faq5Content");
+	const faq6Title = useT("faq6Title");
+	const faq6Content = useT("faq6Content");
+	const faq7Title = useT("faq7Title");
+	const faq7Content = useT("faq7Content");
+	const faq8Title = useT("faq8Title");
+	const faq8Content = useT("faq8Content");
+	const faq9Title = useT("faq9Title");
+	const faq9Content = useT("faq9Content");
+
+	const contactItems = [
+		contactItemEspoo,
+		contactItemKirkkonummi,
+		contactItemKauniainen,
+		contactItemLohja,
+		contactItemHanko,
+		contactItemKarviainen,
+		contactItemInkoo,
+		contactItemRaasepori,
+		contactItemSiuntio,
+	];
+
 	const espooChecked = selectedAreas
 		? selectedAreas.includes("Espoo")
 		: false;
@@ -200,126 +268,117 @@ const PageLanding: FC = () => {
 
 			<div className="content-column">
 				<section className="content-block">
-					<p className="ingress">
-						<Trans i18nKey="defaultNamespace:landingIngress1">
-							<strong></strong>
-							<strong></strong>
-						</Trans>
-					</p>
+					<h2>{homepageHeading}</h2>
+					<p className="ingress">{homepageIngress}</p>
 				</section>
-
 				<section className="content-block">
-					<h2>{useT("whatisNursinghomeHeadline")}</h2>
-					<p>{useT("whatisNursinghomeText")}</p>
-
-					<p>
-						{useT("landingServiceVoucher1")}{" "}
-						<a
-							href={useT("urlServiceVoucher")}
-							target="_blank"
-							rel="noopener noreferrer external"
-						>
-							{useT("linkServiceVoucher")}
+					<div className="anchor-list">
+						<a href="#contact-list" className="btn anchor-link">
+							{homepageAnchor1}
 						</a>
-						? {useT("landingServiceVoucher2")}{" "}
-						<a
-							href={useT("urlParastapalvelua")}
-							target="_blank"
-							rel="noopener noreferrer external"
-						>
-							parastapalvelua.fi
+						<a href="#about-service" className="btn anchor-link">
+							{homepageAnchor2}
 						</a>
-						.
-					</p>
-					<p>{useT("landingOwnMoney")}</p>
-				</section>
-
-				<section className="content-block content-block--wide">
-					<h2>{useT("decisionStepsHeadline")}</h2>
-					<div className="process-diagram">
-						<div className="process-diagram__item">
-							<div className="process-diagram__item__img">
-								<img src="/icons/icon-contact.svg" alt="" />
-							</div>
-							<h3>{useT("decisionStep1Headline")}</h3>
-							<p>
-								{/* {useT("decisionStep1Text")} */}
-								<Trans i18nKey="defaultNamespace:decisionStep1Text">
-									<span className="no-wrap"></span>
-								</Trans>
-							</p>
-						</div>
-						<div className="process-diagram__item">
-							<div className="process-diagram__item__img">
-								<img src="/icons/icon-meeting.svg" alt="" />
-							</div>
-							<h3>{useT("decisionStep2Headline")}</h3>
-							<p>{useT("decisionStep2Text")}</p>
-						</div>
-						<div className="process-diagram__item">
-							<div className="process-diagram__item__img">
-								<img src="/icons/icon-decision.svg" alt="" />
-							</div>
-							<h3>{useT("decisionStep3Headline")}</h3>
-							<p>{useT("decisionStep3Text")}</p>
-						</div>
+						<a href="#faq" className="btn anchor-link">
+							{homepageAnchor3}
+						</a>
 					</div>
-
-					<p className="content-block-paragraph">
-						<a
-							href={useT("urlDecisionMoreInfo")}
-							target="_blank"
-							rel="noopener noreferrer external"
-						>
-							{useT("decisionMoreInfo")}
-						</a>
-					</p>
 				</section>
-
 				<section className="content-block">
-					<h2>{useT("selectingHeadline")}</h2>
-					<Trans i18nKey="defaultNamespace:selectingText">
+					<h2>{whoAreServicesForTitle}</h2>
+					<Trans i18nKey="defaultNamespace:whoAreServicesForContent">
 						<p></p>
 						<p></p>
 					</Trans>
 				</section>
-
+				<section className="content-block" id="contact-list">
+					<h2>{howToApplyTitle}</h2>
+					<p>{howToApplyDesc}</p>
+					<ol>
+						<Trans i18nKey="defaultNamespace:howToApplySteps">
+							<li></li>
+							<li></li>
+							<li></li>
+						</Trans>
+					</ol>
+					<p>{contactDesc}</p>
+					<ul>
+						{contactItems.map((item, index) => (
+							<li
+								key={`contact-item-${index}`}
+								dangerouslySetInnerHTML={{ __html: item }}
+							></li>
+						))}
+					</ul>
+				</section>
 				<section className="content-block">
-					<h2>{useT("serviceDescriptionHeadline")}</h2>
-					<Trans i18nKey="defaultNamespace:serviceDescriptionText">
-						<p></p>
-						<p></p>
-					</Trans>
-
-					<h3 className="faqHeadline">
-						{useT("faqSectionHeadline")}
-					</h3>
+					<h2>{howToPickTitle}</h2>
+					<p>{howToPickContent1}</p>
+					<p>{howToPickContent2}</p>
+					<p>{howToPickContent3}</p>
+					<p
+						dangerouslySetInnerHTML={{ __html: howToPickContent4 }}
+					></p>
+				</section>
+				<section className="content-block" id="about-service">
+					<h2>{whatServicesIncludesTitle}</h2>
+					<p
+						dangerouslySetInnerHTML={{
+							__html: whatServicesIncludesContent1,
+						}}
+					></p>
+					<p>{whatServicesIncludesContent2}</p>
+					<p>{whatServicesIncludesContent3}</p>
+					<p>{whatServicesIncludesContent4}</p>
+					<p>{whatServicesIncludesContent5}</p>
+				</section>
+				<section className="content-block">
+					<h2>{paymentsTitle}</h2>
+					<p>{paymentsContent}</p>
+				</section>
+				<section className="content-block" id="faq">
+					<h3>{homepageFaqTitle}</h3>
 					<dl className="faq-list">
-						<dt>{useT("faqItem1Headline")}</dt>
+						<dt>{faq1Title}</dt>
 						<dd>
-							<Trans i18nKey="defaultNamespace:faqItem1Text">
+							<Trans i18nKey="defaultNamespace:faq1Content">
+								<p></p>
 								<p></p>
 								<p></p>
 							</Trans>
 						</dd>
-						<dt>{useT("faqItem2Headline")}</dt>
-						<dd>{useT("faqItem2Text")}</dd>
-						<dt>{useT("faqItem3Headline")}</dt>
-						<dd>{useT("faqItem3Text")}</dd>
-						<dt>{useT("faqItem4Headline")}</dt>
-						<dd>{useT("faqItem4Text")}</dd>
-						<dt>{useT("faqItem5Headline")}</dt>
-						<dd>{useT("faqItem5Text")}</dd>
-						<dt>{useT("faqItem6Headline")}</dt>
-						<dd>{useT("faqItem6Text")}</dd>
-						<dt>{useT("faqItem7Headline")}</dt>
-						<dd>{useT("faqItem7Text")}</dd>
-						<dt>{useT("faqItem8Headline")}</dt>
-						<dd>{useT("faqItem8Text")}</dd>
-						<dt>{useT("faqItem9Headline")}</dt>
-						<dd>{useT("faqItem9Text")}</dd>
-						<dt>{useT("faqItem10Headline")}</dt>
-						<dd>{useT("faqItem10Text")}</dd>
+						<dt>{faq2Title}</dt>
+						<dd>
+							<p>{faq2Content}</p>
+						</dd>
+						<dt>{faq3Title}</dt>
+						<dd>
+							<p>{faq3Content}</p>
+						</dd>
+						<dt>{faq4Title}</dt>
+						<dd>
+							<p>{faq4Content}</p>
+						</dd>
+						<dt>{faq5Title}</dt>
+						<dd>
+							<p>{faq5Content}</p>
+						</dd>
+						<dt>{faq6Title}</dt>
+						<dd>
+							<p>{faq6Content}</p>
+						</dd>
+						<dt>{faq7Title}</dt>
+						<dd>
+							<p>{faq7Content}</p>
+						</dd>
+						<dt>{faq8Title}</dt>
+						<dd>
+							<p>{faq8Content}</p>
+						</dd>
+						<dt>{faq9Title}</dt>
+						<dd>
+							<p>{faq9Content}</p>
+						</dd>
 					</dl>
 				</section>
 				<a className="backToTopLink" href="#pageTop">

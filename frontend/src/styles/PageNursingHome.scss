@@ -9,7 +9,7 @@
 
 .nursinghome-info-list dt {
 	line-height: 24px;
-	font-weight: 600;
+	font-weight: 700;
 }
 .nursinghome-info-list dd {
 	line-height: 24px;
@@ -58,9 +58,9 @@
 	border-radius: 2px;
 	border: none;
 	font-size: 16px;
-	font-family: "Open sans", sans-serif;
-	font-weight: 500;
-	color: $headline-color;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
+	font-weight: 700;
+	color: $text-color;
 	text-transform: uppercase;
 	cursor: pointer;
 
@@ -80,7 +80,7 @@
 		@media (min-width: 1024px) {
 			height: 640px;
 			max-height: calc(100vh - 280px);
-    		min-height: 350px;
+			min-height: 350px;
 		}
 	}
 }
@@ -97,7 +97,7 @@
 
 	.nursinghome-img-inner:hover {
 		cursor: pointer;
-		transform: scale(1.030);
+		transform: scale(1.03);
 		transition: all 0.3s ease-in-out;
 	}
 }
@@ -137,7 +137,7 @@ $hero-border: 5px solid white;
 }
 
 .nursinghome-hero-placeholder {
-	background-color: $primary-blue;
+	background-color: $primary-purple;
 	height: 480px;
 	display: none;
 }
@@ -199,11 +199,11 @@ $hero-border: 5px solid white;
 }
 
 .nursinghome-title {
-	font-family: Montserrat, sans-serif;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 48px;
 	line-height: 1.1em;
-	font-weight: 300;
-	color: $headline-color;
+	font-weight: 800;
+	color: $text-color;
 	margin-bottom: 10px;
 	@media (max-width: 640px) {
 		font-size: 36px;
@@ -220,15 +220,15 @@ $hero-border: 5px solid white;
 
 .nursinghome-info h3 {
 	font-size: 36px;
-	color: $headline-color;
+	color: $text-color;
 	margin-bottom: 32px;
-	font-weight: 300;
+	font-weight: 800;
 	margin-top: 64px;
 	line-height: 40px;
 	@media (max-width: 640px) {
 		font-size: 32px;
 		line-height: 1.1em;
-		margin-bottom:25px;
+		margin-bottom: 25px;
 	}
 }
 
@@ -238,7 +238,7 @@ $hero-border: 5px solid white;
 }
 
 .nursinghome-info-paragraph-title {
-	font-weight: 600;
+	font-weight: 700;
 	margin-bottom: 8px !important;
 }
 
@@ -259,12 +259,12 @@ $hero-border: 5px solid white;
 	margin-bottom: 20px;
 	border: 1px solid $light-gray;
 	border-radius: $border-radius;
-}	
+}
 
 .nursinghome-details-box h3 {
 	color: inherit;
 	font-size: 16px;
-	font-weight: bold;
+	font-weight: 800;
 	margin-bottom: 8px;
 
 	&:not(:first-child) {
@@ -288,7 +288,7 @@ $hero-border: 5px solid white;
 
 .nursinghome-details-name {
 	font-size: 19px;
-	font-weight: 600;
+	font-weight: 700;
 	line-height: 24px;
 	margin-bottom: 5px;
 }
@@ -312,13 +312,13 @@ $hero-border: 5px solid white;
 
 .report_info_header {
 	font-size: 16px;
-	font-weight: 600;
+	font-weight: 700;
 	text-transform: uppercase;
 }
 
 .report_info_minor_header {
 	font-size: 16px;
-	font-weight: 600;
+	font-weight: 500;
 }
 
 .report_info_btn {
