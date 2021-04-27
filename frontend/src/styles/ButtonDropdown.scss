@@ -26,9 +26,8 @@
 	color: $text-color;
 	background: none;
 	padding: 10px;
-	border: 1px solid $light-gray;
+	border: 1px solid $orange;
 	border-radius: $border-radius;
-	text-transform: uppercase;
 	white-space: nowrap;
 	user-select: none;
 
@@ -42,7 +41,6 @@
 }
 
 .button-dropdown-variant-primary .button-dropdown-active {
-	background-color: $primary-purple;
 	color: $text-color;
 
 	.button-dropdown-caret {
