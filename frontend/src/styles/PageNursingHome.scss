@@ -59,7 +59,7 @@
 	border: none;
 	font-size: 16px;
 	// font-family: "Open sans", sans-serif;
-	font-family: Verdana, "Open sans", sans-serif;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-weight: 500;
 	color: $headline-color;
 	text-transform: uppercase;
@@ -201,7 +201,8 @@ $hero-border: 5px solid white;
 }
 
 .nursinghome-title {
-	font-family: Montserrat, sans-serif;
+	// font-family: Montserrat, sans-serif;
+	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 48px;
 	line-height: 1.1em;
 	font-weight: 300;
