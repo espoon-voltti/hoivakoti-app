@@ -1,6 +1,5 @@
 @import "variables.scss";
 
-
 .page-survey-container {
 	width: 100%;
 }
@@ -30,9 +29,8 @@
 
 		img {
 			width: 150px;
-			height:150px;
+			height: 150px;
 			opacity: 0.25;
-			
 		}
 	}
 
@@ -40,13 +38,14 @@
 		width: 100%;
 		height: 300px;
 		font-size: 18px;
-		font-family: 'Open Sans';
+		// font-family: "Open Sans";
+		font-family: Verdana, "Open sans", sans-serif;
 		padding: 5px;
 	}
 }
 
-@media (max-width: 1149px){
-	.survey-icon{
+@media (max-width: 1149px) {
+	.survey-icon {
 		display: none;
 	}
 }
@@ -99,7 +98,6 @@
 }
 
 .survey-card--inputs {
-
 	.radio-container {
 		display: inline-flex;
 		padding: 25px 0 0 0;
@@ -152,14 +150,14 @@
 	margin: 30px 0 20px 150px;
 	font-size: 16px;
 
-	span{
+	span {
 		font-weight: 600;
 	}
 }
 
 .survey-login-error {
 	margin-top: 5px;
-	color: #e00;
+	color: $error-color;
 }
 
 .login-input-label {

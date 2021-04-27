@@ -22,7 +22,8 @@
 	font-weight: normal;
 	border: none;
 	background: none;
-	font-family: "Open sans", sans-serif;
+	// font-family: "Open sans", sans-serif;
+	font-family: Verdana, "Open sans", sans-serif;
 	font-size: 16px;
 	padding: 0;
 
@@ -32,7 +33,8 @@
 }
 
 .menu-empty-button:not(:disabled):hover {
-	color: $primary-blue;
+	// color: $primary-blue;
+	color: $primary-purple;
 }
 
 .header-item {
@@ -48,7 +50,8 @@
 
 .option-text-has-subtext {
 	font-weight: 600;
-	font-family: "Open sans", sans-serif;
+	// font-family: "Open sans", sans-serif;
+	font-family: Verdana, "Open sans", sans-serif;
 	line-height: 22px;
 }
 

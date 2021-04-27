@@ -21,7 +21,8 @@
 	cursor: pointer;
 	text-align: left;
 	font-size: 14px;
-	font-family: "Open Sans", sans-serif;
+	// font-family: "Open Sans", sans-serif;
+	font-family: Verdana, "Open sans", sans-serif;
 	font-weight: bold;
 	color: $headline-color;
 	background: none;
@@ -42,11 +43,14 @@
 }
 
 .button-dropdown-variant-primary .button-dropdown-active {
-	background-color: $link-color;
-	color: white;
+	// background-color: $link-color;
+	// color: white;
+	background-color: $primary-purple;
+	color: $text-color;
 
 	.button-dropdown-caret {
-		stroke: white;
+		// stroke: white;
+		stroke: $text-color;
 	}
 }
 

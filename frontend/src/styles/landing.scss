@@ -7,7 +7,8 @@ $column-width: 1024px;
 	max-height: calc(100vh - 80px - 200px);
 	min-height: 400px;
 	height: 100vh;
-	background: $primary-blue url("/hero-image.jpg") 50% 50% no-repeat;
+	// background: $primary-blue url("/hero-image.jpg") 50% 50% no-repeat;
+	background: $primary-purple url("/hero-image.jpg") 50% 50% no-repeat;
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
@@ -64,7 +65,8 @@ $column-width: 1024px;
 		width: 100%;
 		font-weight: normal;
 		text-transform: none;
-		font-family: "Open-sans", sans-serif;
+		// font-family: "Open-sans", sans-serif;
+		font-family: Verdana, "Open sans", sans-serif;
 		font-size: 16px;
 		color: $text-color;
 	}
@@ -223,6 +225,10 @@ p.content-block-paragraph {
 		width: 100%;
 		margin-bottom: 1rem;
 		white-space: pre-wrap;
+
+		&:hover {
+			text-decoration: none;
+		}
 
 		@media screen and (min-width: 640px) {
 			width: 32%;

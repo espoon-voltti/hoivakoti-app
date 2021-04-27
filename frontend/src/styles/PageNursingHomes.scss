@@ -30,7 +30,7 @@
 	@media screen {
 		display: flex;
 		flex-direction: row;
-		flex-wrap: wrap;	
+		flex-wrap: wrap;
 	}
 
 	& > * {
@@ -91,10 +91,11 @@
 	cursor: pointer;
 	text-align: left;
 	font-size: 14px;
-	font-family: "Open Sans", sans-serif;
+	// font-family: "Open Sans", sans-serif;
+	font-family: Verdana, "Open sans", sans-serif;
 	font-weight: bold;
 	color: $headline-color;
-	background: #fff url('/icons/icon-x.svg') 10px 50% no-repeat;
+	background: #fff url("/icons/icon-x.svg") 10px 50% no-repeat;
 	padding: 10px 10px 10px 30px;
 	border: 1px solid $light-gray;
 	border-radius: $border-radius;
