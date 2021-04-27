@@ -125,7 +125,7 @@ const Header: FC = () => {
 						</NavLink>
 					</li>
 				</ul>
-				<button className="btn" onClick={surveillanceLogout}>
+				<button className="btn btn-logout" onClick={surveillanceLogout}>
 					Kirjaudu ulos
 				</button>
 			</div>

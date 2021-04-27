@@ -172,6 +172,10 @@ $header-height: 80px;
 	align-items: center;
 	width: 100%;
 	justify-content: center;
+
+	.btn-logout {
+		margin-left: 1rem;
+	}
 }
 
 .nav-hidden {
