@@ -308,7 +308,6 @@ export const translations = {
 	},
 	btnClear: { "fi-FI": "Tyhjennä", "sv-FI": "Rensa" },
 	btnSave: { "fi-FI": "Tallenna", "sv-FI": "Spara" },
-	btnSelect: { "fi-FI": "Valitse", "sv-FI": "Valitse" },
 	btnSend: { "fi-FI": "Lähetä", "sv-FI": "Skicka" },
 	summaryLabel: { "fi-FI": "hoivakotia", "sv-FI": "vårdhem" },
 	loadingText: { "fi-FI": "Ladataan...", "sv-FI": "Laddar..." },
@@ -1211,9 +1210,9 @@ export const translations = {
 	},
 	selectCommuneLabel: {
 		"fi-FI":
-			"Haku näyttää kotikuntasi asukkaille palveluita tarjoavat hoivakodit",
+			"Haku näyttää kotikuntasi asukkaile palveluita tarjoavat tehostetun palveluasumisen yksiköt",
 		"sv-FI":
-			"Haku näyttää kotikuntasi asukkaille palveluita tarjoavat hoivakodit",
+			"Sökningen visar de enheter för serviceboende med heldygnsomsorg som erbjuder tjänster för invånarna i din hemkommun",
 	},
 	charactersLeft: {
 		"fi-FI": "merkkiä jäljellä",
