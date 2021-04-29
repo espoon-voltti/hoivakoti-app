@@ -159,7 +159,7 @@ const FilterItem: FC<Props> = ({
 	};
 
 	const btnClear = useT("btnClear");
-	const btnSave = useT("btnSave");
+	const btnSelect = useT("btnSelect");
 
 	const header = values.filter((option: FilterOption) => {
 		if (option.type === "header") return true;
@@ -215,7 +215,7 @@ const FilterItem: FC<Props> = ({
 					onClick={() => setIsDropdownExpanded(false)}
 					className="btn"
 				>
-					{btnSave}
+					{btnSelect}
 				</button>
 
 				<button
