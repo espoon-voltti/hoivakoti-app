@@ -13,7 +13,7 @@ const PageLanding: FC = () => {
 	const locationPickerLabel = useT("locationPickerLabel");
 	const locationPickerPlaceholder = useT("locationPickerPlaceholder");
 	const linkBacktoTop = useT("linkBacktoTop");
-	const [selectedCommune, setSelectedCommune] = useState<string>("");
+	const [selectedCommune, setSelectedCommune] = useState<string | null>(null);
 
 	// LU translation
 	const homepageHeading = useT("homepageHeading");
@@ -142,16 +142,21 @@ const PageLanding: FC = () => {
 								setSelectedCommune(name);
 							}}
 							onReset={(): void => {
-								setSelectedCommune("");
+								setSelectedCommune(null);
 							}}
 						/>
 					</div>
 					<button
 						className="btn landing-cta"
 						onClick={(): void => {
-							const query = queryString.stringify({
-								kotikunta: selectedCommune,
-							});
+							let query = "";
+
+							if (selectedCommune) {
+								query = queryString.stringify({
+									kotikunta: selectedCommune,
+								});
+							}
+
 							const url = `/hoivakodit?${query}`;
 							history.push(url);
 						}}

@@ -308,14 +308,16 @@ const PageSurveyResults: FC = () => {
 									: ""}{" "}
 								/ 5
 							</p>
-							<div className="page-survey-results-answer-container">
-								<div className="page-survey-results-answer-header">
-									{fromRelatives}
+							{textResults && textResults.length >= 5 ? (
+								<div className="page-survey-results-answer-container">
+									<div className="page-survey-results-answer-header">
+										{fromRelatives}
+									</div>
+									<div className="page-survey-results-answer-content">
+										{answers(textResults)}
+									</div>
 								</div>
-								<div className="page-survey-results-answer-content">
-									{answers(textResults)}
-								</div>
-							</div>
+							) : null}
 						</div>
 					</>
 				)}
