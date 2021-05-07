@@ -1434,31 +1434,27 @@ const GetUserAccessRoles = async (
 	username: string,
 	token: string,
 ): Promise<any> => {
-	try {
-		const reqData = queryString.stringify({
-			client_id: clientId,
-			client_secret: process.env.KEYCLOAK_SECRET,
-			username,
-			token,
-		});
+	const reqData = queryString.stringify({
+		client_id: clientId,
+		client_secret: process.env.KEYCLOAK_SECRET,
+		username,
+		token,
+	});
 
-		const res = await axios.post(
-			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
-			reqData,
-		);
+	const res = await axios.post(
+		`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+		reqData,
+	);
 
-		if (
-			res.data &&
-			res.data["realm_access"].roles &&
-			res.data["realm_access"].roles.includes(`${clientId}-access`)
-		) {
-			return res.data["realm_access"].roles;
-		}
-
-		return false;
-	} catch (error) {
-		throw error;
+	if (
+		res.data &&
+		res.data["realm_access"].roles &&
+		res.data["realm_access"].roles.includes(`${clientId}-access`)
+	) {
+		return res.data["realm_access"].roles;
 	}
+
+	return false;
 };
 
 export async function GetAccessToken(
