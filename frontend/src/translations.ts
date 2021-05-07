@@ -1606,4 +1606,8 @@ export const translations = {
 		"sv-FI":
 			"Läheiset ja omaiset voivat tilapäisesti yöpyä luonasi. Sovithan yöpymisestä etukäteen hoivakodin kanssa.",
 	},
+	changeNursingHomeCommunes: {
+		"fi-FI": "Muokkaa hoivakodin kotikuntia",
+		"sv-FI": "Muokkaa hoivakodin kotikuntia",
+	},
 };

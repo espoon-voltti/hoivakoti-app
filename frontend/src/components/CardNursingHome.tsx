@@ -55,6 +55,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const latestVisit = useT("latestVisit");
 	const status = useT("status");
 	const addNewReport = useT("pageUploadReportTitle");
+	const changeNursingHomeCommunes = useT("changeNursingHomeCommunes");
 
 	const getStatusTranslation = (statusStr: string): string => {
 		if (nursinghome && nursinghome.report_status[0]) {
@@ -238,9 +239,13 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						<dd>{nursinghome.contact_phone_info}</dd>
 					</dl>
 				</div>
-				<div className="card-list-item__buttons">
+				<div
+					className={
+						type === "admin" ? "card-list-item__buttons" : "hidden"
+					}
+				>
 					<button
-						className={type == "admin" ? "btn" : "hidden"}
+						className="btn"
 						onClick={e => {
 							openBtnLink(
 								e,
@@ -251,7 +256,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						{addNewReport}
 					</button>
 					<button
-						className={type == "admin" ? "btn" : "hidden"}
+						className="btn"
 						onClick={e => {
 							openBtnLink(
 								e,
@@ -260,6 +265,17 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						}}
 					>
 						Lisää kyselyn tulokset
+					</button>
+					<button
+						className="btn"
+						onClick={event => {
+							openBtnLink(
+								event,
+								`/${currentLanguage}/valvonta/kotikunnat/${nursinghome.id}`,
+							);
+						}}
+					>
+						{changeNursingHomeCommunes}
 					</button>
 				</div>
 			</div>
