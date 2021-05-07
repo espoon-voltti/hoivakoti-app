@@ -142,11 +142,19 @@
 }
 
 .card-list-item__buttons {
-	text-align: right;
-	max-width: 240px;
+	display: flex;
+	flex-direction: column;
+	padding: 0 1rem;
 
 	& > * {
 		margin-bottom: 10px;
+	}
+
+	@media (min-width: 800px) {
+		display: inline-block;
+		max-width: 240px;
+		text-align: right;
+		padding: 0;
 	}
 }
 
