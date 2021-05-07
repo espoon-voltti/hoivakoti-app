@@ -5,37 +5,15 @@ import { useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
 import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
+import { Translation } from "../shared/types/translation";
+import Commune from "../shared/types/commune";
 
 const PageLanding: FC = () => {
 	const history = useHistory();
 	const locationPickerLabel = useT("locationPickerLabel");
 	const locationPickerPlaceholder = useT("locationPickerPlaceholder");
 	const linkBacktoTop = useT("linkBacktoTop");
-	const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
-
-	const espooAreas = [
-		useT("espoon keskus"),
-		useT("espoonlahti"),
-		useT("leppävaara"),
-		useT("matinkylä"),
-		useT("tapiola"),
-	];
-	const otherCities = [
-		useT("helsinki"),
-		useT("hyvinkää"),
-		useT("järvenpää"),
-		useT("karkkila"),
-		useT("kerava"),
-		useT("kirkkonummi"),
-		useT("lohja"),
-		useT("nurmijärvi"),
-		useT("raasepori"),
-		useT("siuntio"),
-		useT("sipoo"),
-		useT("tuusula"),
-		useT("vantaa"),
-		useT("vihti"),
-	];
+	const [selectedCommune, setSelectedCommune] = useState<string>("");
 
 	// LU translation
 	const homepageHeading = useT("homepageHeading");
@@ -93,6 +71,9 @@ const PageLanding: FC = () => {
 	const faq9Title = useT("faq9Title");
 	const faq9Content = useT("faq9Content");
 
+	const selectCommuneLabel = useT("selectCommuneLabel");
+	const filterCommune = useT("filterCommune");
+
 	const contactItems = [
 		contactItemEspoo,
 		contactItemKirkkonummi,
@@ -105,55 +86,38 @@ const PageLanding: FC = () => {
 		contactItemSiuntio,
 	];
 
-	const espooChecked = selectedAreas
-		? selectedAreas.includes("Espoo")
-		: false;
-	const espooCheckboxItem: FilterOption = {
-		name: "Espoo",
-		label: "Espoo",
-		type: "checkbox",
-		checked: espooChecked,
-		bold: true,
+	const LUCommunes: Translation = {
+		[Commune.EPO]: useT("espoo"),
+		[Commune.HNK]: useT("hanko"),
+		[Commune.INK]: useT("inkoo"),
+		[Commune.KAU]: useT("kauniainen"),
+		[Commune.PKA]: useT("karviainen"),
+		[Commune.KRN]: useT("kirkkonummi"),
+		[Commune.LHJ]: useT("lohja"),
+		[Commune.RPO]: useT("raasepori"),
+		[Commune.STO]: useT("siuntio"),
 	};
 
-	const optionsArea: FilterOption[] = [
-		{ text: locationPickerLabel, type: "header" },
-		espooCheckboxItem,
-		...espooAreas.map<FilterOption>((value: string) => {
-			const checked = selectedAreas
-				? selectedAreas.includes(value)
+	const optionsCustomerCommune: FilterOption[] = [
+		{ text: selectCommuneLabel, type: "header" },
+		...Object.keys(LUCommunes).map<FilterOption>(key => {
+			const value = LUCommunes[key];
+
+			const checked = selectedCommune
+				? selectedCommune.includes(value)
 				: false;
+
 			return {
 				name: value,
 				label: value,
-				type: "checkbox",
+				type: "radio",
 				checked: checked,
-				withMargin: true,
-			};
-		}),
-		...otherCities.map<FilterOption>((value: string) => {
-			const checked = selectedAreas
-				? selectedAreas.includes(value)
-				: false;
-			return {
-				name: value,
-				label: value,
-				type: "checkbox",
-				checked: checked,
-				bold: true,
-				alignment: "right",
 			};
 		}),
 	];
 
-	const filterSelections = useT("filterSelections");
-
-	const filterText: string | null =
-		selectedAreas.length !== 0
-			? selectedAreas.length <= 2
-				? selectedAreas.join(", ")
-				: `${selectedAreas.length} ${filterSelections}`
-			: locationPickerPlaceholder;
+	const filterText =
+		selectedCommune !== "" ? selectedCommune : locationPickerPlaceholder;
 
 	return (
 		<div id="landing">
@@ -168,86 +132,17 @@ const PageLanding: FC = () => {
 					</div>
 					<div className="location-picker-select">
 						<FilterItem
-							prefix="location"
+							prefix="commune"
 							label=""
 							value={filterText}
-							values={optionsArea}
-							ariaLabel="Valitse hoivakodin alue"
+							values={optionsCustomerCommune}
+							ariaLabel={filterCommune}
 							dropdownVariant="subtle"
-							onChange={({ newValue, name }) => {
-								let newSelectedAreas = selectedAreas
-									? [...selectedAreas]
-									: [];
-								if (!newValue) {
-									// Normal flow: Remove district/city to search filters if
-									// present
-									newSelectedAreas = newSelectedAreas.filter(
-										(value: string) => {
-											return value !== name;
-										},
-									);
-
-									// Weird flow to accommodate the Espoo special selection
-									if (name === "Espoo")
-										newSelectedAreas = newSelectedAreas.filter(
-											(value: string) => {
-												if (espooAreas.includes(value))
-													return false;
-												return true;
-											},
-										);
-									else if (espooAreas.includes(name))
-										newSelectedAreas = newSelectedAreas.filter(
-											(value: string) => {
-												return value !== "Espoo";
-											},
-										);
-									// If the district/city was checked
-								} else {
-									// Normal flow: Add district/city to search filters if
-									// not already added
-									if (!newSelectedAreas.includes(name))
-										newSelectedAreas.push(name);
-
-									// Weird flow to accommodate the Espoo special selection
-									if (name === "Espoo")
-										for (
-											let i = 0;
-											i < espooAreas.length;
-											i++
-										) {
-											const district = espooAreas[i];
-											if (
-												!newSelectedAreas.includes(
-													district,
-												)
-											)
-												newSelectedAreas.push(district);
-										}
-									else if (espooAreas.includes(name)) {
-										let included = 0;
-										for (
-											let i = 0;
-											i < espooAreas.length;
-											i++
-										) {
-											const district = espooAreas[i];
-											if (
-												newSelectedAreas.includes(
-													district,
-												)
-											)
-												included++;
-										}
-										if (included === espooAreas.length) {
-											newSelectedAreas.push("Espoo");
-										}
-									}
-								}
-								setSelectedAreas(newSelectedAreas);
+							onChange={({ name }) => {
+								setSelectedCommune(name);
 							}}
 							onReset={(): void => {
-								setSelectedAreas([]);
+								setSelectedCommune("");
 							}}
 						/>
 					</div>
@@ -255,7 +150,7 @@ const PageLanding: FC = () => {
 						className="btn landing-cta"
 						onClick={(): void => {
 							const query = queryString.stringify({
-								alue: selectedAreas,
+								kotikunta: selectedCommune,
 							});
 							const url = `/hoivakodit?${query}`;
 							history.push(url);
