@@ -135,6 +135,7 @@ export const ResponseField: FC<ResponseFieldProps> = ({ feedback, submit }) => {
 							setSaved(false);
 						}
 					}}
+					maxLength={1000}
 					rows={4}
 					value={response}
 				></textarea>

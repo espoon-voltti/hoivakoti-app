@@ -7,8 +7,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
-import { NursingHome, NursingHomeImageName } from "./types";
-import { stringify } from "querystring";
+import { NursingHome } from "./types";
 
 let surveyState: any[] = [];
 
@@ -99,11 +98,11 @@ const PageSurvey: FC = () => {
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
-		const login = await axios
+		await axios
 			.post(`${config.API_URL}/survey/check-key`, {
 				surveyKey: password,
 			})
-			.then(function(response: { data: string }) {
+			.then(function() {
 				setLoggedIn(true);
 			})
 			.catch((error: Error) => {
@@ -414,6 +413,7 @@ export const TextQuestion: FC<QuestionProps> = ({ question, onChange }) => {
 					<textarea
 						value={questionState}
 						placeholder={openFeedbackPlaceholder}
+						maxLength={1000}
 						onChange={(
 							event: React.ChangeEvent<HTMLTextAreaElement>,
 						): void => {
