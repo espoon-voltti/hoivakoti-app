@@ -55,15 +55,21 @@ export const Image: FC<ImageProps> = ({
 	variant = "img",
 	onClick,
 }) => {
-	if (!imageName || !nursingHome || !nursingHome.pic_digests)
+	if (!imageName || !nursingHome || !nursingHome.pic_digests) {
 		return placeholder;
+	}
 
 	const digest: string = (nursingHome.pic_digests as any)[
 		`${imageName}_hash`
 	];
-	if (!digest) return placeholder;
+
+	if (!digest) {
+		return placeholder;
+	}
+
 	const srcUrl = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`;
-	if (variant === "img")
+
+	if (variant === "img") {
 		return (
 			<img
 				src={srcUrl}
@@ -72,7 +78,7 @@ export const Image: FC<ImageProps> = ({
 				onClick={onClick}
 			/>
 		);
-	else
+	} else {
 		return (
 			<div className={className} onClick={onClick}>
 				<div
@@ -83,6 +89,7 @@ export const Image: FC<ImageProps> = ({
 				/>
 			</div>
 		);
+	}
 };
 
 interface NursingHomeDetailsBoxProps {
@@ -129,7 +136,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 
 	const formatDate = (dateStr: string | null): string => {
 		if (!dateStr) return "";
-		console.log(dateStr);
+
 		const date = new Date(dateStr);
 		const YYYY = String(date.getUTCFullYear());
 		const MM = String(date.getUTCMonth() + 1);
@@ -353,7 +360,9 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	);
 };
 
-function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
+const getAvailablePics = (
+	nursingHome: NursingHome,
+): [string, string][] | null => {
 	const { pic_digests = [] }: { pic_digests: any } = nursingHome;
 
 	const availablePicHashes =
@@ -363,16 +372,20 @@ function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
 			.filter(name => pic_digests[name] !== null)
 			.filter(hashName => hashName !== "owner_logo_hash");
 
-	if (!availablePicHashes || availablePicHashes.length === 0) return null;
+	if (!availablePicHashes || availablePicHashes.length === 0) {
+		return null;
+	}
 
 	const availablePics = availablePicHashes.map<[string, string]>(hashName => {
 		const imageName = hashName.replace("_hash", "");
-		const digest: string = pic_digests[imageName];
+
+		const digest: string = pic_digests[hashName];
+
 		return [imageName, digest];
 	});
 
 	return availablePics;
-}
+};
 
 interface NursingHomeRouteParams {
 	id: string;
@@ -486,9 +499,17 @@ const PageNursingHome: FC = () => {
 		: 0;
 
 	const heroPics =
+		nursingHome &&
+		picCaptions &&
 		availablePics &&
 		availablePics.length &&
-		availablePics.slice(0, numPics);
+		availablePics.slice(0, numPics).map(([name]) => {
+			return {
+				name: name,
+				caption:
+					(picCaptions && picCaptions[`${name}_caption`]) || null,
+			};
+		});
 
 	return (
 		<div className="nursinghome-page-container">
@@ -505,13 +526,14 @@ const PageNursingHome: FC = () => {
 					className={`nursinghome-hero nursinghome-hero-n${numPics}`}
 				>
 					{heroPics ? (
-						heroPics.map(([imageName], idx) => (
+						heroPics.map((image, idx) => (
 							<Image
-								key={imageName}
+								key={image.name}
 								nursingHome={nursingHome}
-								imageName={imageName as NursingHomeImageName}
+								imageName={image.name as NursingHomeImageName}
 								className="nursinghome-hero-img"
-								variant="background"
+								variant="img"
+								alt={(image.caption as string) || ""}
 								placeholder={
 									<div
 										className={
