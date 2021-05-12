@@ -312,18 +312,9 @@ const PageSurveyResults: FC = () => {
 								<div className="page-survey-results-answer-header">
 									{fromRelatives}
 								</div>
-								{textResults && textResults.length >= 5 ? (
-									<div className="page-survey-results-answer-content">
-										{answers(textResults)}
-									</div>
-								) : (
-									<div className="page-survey-results-answer-content">
-										<p>
-											Annettuja arvioita ei näytetä, koska
-											niitä on alle 5.
-										</p>
-									</div>
-								)}
+								<div className="page-survey-results-answer-content">
+									{answers(textResults)}
+								</div>
 							</div>
 						</div>
 					</>
