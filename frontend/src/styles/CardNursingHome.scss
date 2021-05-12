@@ -253,16 +253,20 @@
 	padding: 5px 25px 5px 25px;
 	border-left: solid 1px $border-color;
 	margin-bottom: 15px;
+	min-height: 105px;
 
 	@media (min-width: 1130px) {
-		width: 33%;
-		text-align: center;
-		height: 105px;
-		margin-top: 25px;
-		margin-bottom: 0px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		width: 33%;
+		text-align: center;
+		margin-top: 25px;
+		margin-bottom: 0px;
+	}
+
+	& > div {
+		height: 100%;
 	}
 
 	p {
