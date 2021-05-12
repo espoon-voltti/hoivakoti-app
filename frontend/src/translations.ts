@@ -32,6 +32,10 @@ export const translations = {
 		"fi-FI": "Kaikki alueet",
 		"sv-FI": "Alla områden",
 	},
+	communePickerLabel: {
+		"fi-FI": "Mikä on kotikuntasi?",
+		"sv-FI": "Mikä on kotikuntasi?",
+	},
 	landingIngress1: {
 		"fi-FI":
 			"Tältä sivustolta löydät Espoon kaupungin hyväksymät <0>tehostetun palveluasumisen</0> hoivakodit <1>ikäihmisille</1>. Saadaksesi hoivakotipaikan tarvitset Seniorineuvonta Nestorin tekemän myönteisen päätöksen tehostetusta palveluasumisesta.",

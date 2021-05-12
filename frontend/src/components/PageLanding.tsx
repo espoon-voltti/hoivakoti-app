@@ -73,6 +73,7 @@ const PageLanding: FC = () => {
 
 	const selectCommuneLabel = useT("selectCommuneLabel");
 	const filterCommune = useT("filterCommune");
+	const communePickerLabel = useT("communePickerLabel");
 
 	const contactItems = [
 		contactItemEspoo,
@@ -128,7 +129,7 @@ const PageLanding: FC = () => {
 
 				<div className="location-picker">
 					<div className="location-picker-label">
-						{locationPickerLabel}
+						{communePickerLabel}
 					</div>
 					<div className="location-picker-select">
 						<FilterItem
