@@ -125,6 +125,8 @@ const PageSurveyResults: FC = () => {
 		rating: number | null,
 	): string => {
 		if (rating && answers) {
+			console.log(answers);
+
 			if (answers >= 5) {
 				if (rating > 4.5) {
 					return optionText5;
@@ -332,7 +334,7 @@ const PageSurveyResults: FC = () => {
 								<span className="page-survey-results-bold">
 									{" "}
 									{ratingToString(
-										nursingHomeRating.average_relatives,
+										nursingHomeRating.answers_relatives,
 										nursingHomeRating.average_relatives,
 									)}
 								</span>{" "}

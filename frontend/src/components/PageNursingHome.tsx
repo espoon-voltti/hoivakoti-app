@@ -321,8 +321,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 												nursingHomeRating.average_customers,
 										  )
 										: feedbackNoReviews}
-								</span>
-
+								</span>{" "}
 								{enoughCustomerAnswers &&
 								nursingHomeRating.average_customers
 									? `${nursingHomeRating.average_customers.toPrecision(
@@ -342,8 +341,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 												nursingHomeRating.average_relatives,
 										  )
 										: feedbackNoReviews}
-								</span>
-
+								</span>{" "}
 								{enoughRelativesAnswers &&
 								nursingHomeRating.average_relatives
 									? `${nursingHomeRating.average_relatives.toPrecision(
