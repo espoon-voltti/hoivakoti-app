@@ -52,7 +52,7 @@ module.exports = {
 			.click(".location-picker-select button.button-dropdown")
 			.click(".location-picker button.btn.landing-cta")
 			.pause(200)
-			.assert.containsText(".results-summary-text", "0 hoivakotia") //ensure this matches the dummy data
+			.assert.containsText(".results-summary-text", "1 hoivakotia") //ensure this matches the dummy data
 			.end();
 	},
 	"Filtering nursinghomes based on language is working - part 1/2": function (
