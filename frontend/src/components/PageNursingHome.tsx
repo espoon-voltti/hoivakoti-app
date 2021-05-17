@@ -114,6 +114,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const feedbackCustomerReview = useT("feedbackCustomerReview");
 	const feedbackRelativeReview = useT("feedbackRelativeReview");
 	const feedbackNoReviews = useT("feedbackNoReviews");
+	const feedbackAverage = useT("feedbackAverage");
 
 	const surveyOption1 = useT("surveyOption1");
 	const surveyOption2 = useT("surveyOption2");
@@ -132,36 +133,46 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reportTypeConcern = useT("reportTypeConcern");
 
 	let reportStatus = useT("status_waiting");
+
 	let hasReport = false;
 
 	const formatDate = (dateStr: string | null): string => {
-		if (!dateStr) return "";
+		if (!dateStr) {
+			return "";
+		}
 
 		const date = new Date(dateStr);
+
 		const YYYY = String(date.getUTCFullYear());
 		const MM = String(date.getUTCMonth() + 1);
 		const DD = String(date.getUTCDate());
+
 		return `${DD}.${MM}.${YYYY}`;
 	};
 
-	const ratingToString = (rating: number | null): string => {
-		let str = "";
-
-		if (rating) {
-			if (rating > 4.5) {
-				str = surveyOption5;
-			} else if (rating > 3.5) {
-				str = surveyOption4;
-			} else if (rating > 2.5) {
-				str = surveyOption3;
-			} else if (rating > 1.5) {
-				str = surveyOption2;
-			} else if (rating > 0.5) {
-				str = surveyOption1;
+	const ratingToString = (
+		answers: number | null,
+		rating: number | null,
+	): string => {
+		if (rating && answers) {
+			if (answers >= 5) {
+				if (rating > 4.5) {
+					return surveyOption5;
+				} else if (rating > 3.5) {
+					return surveyOption4;
+				} else if (rating > 2.5) {
+					return surveyOption3;
+				} else if (rating > 1.5) {
+					return surveyOption2;
+				} else if (rating > 0.5) {
+					return surveyOption1;
+				}
 			}
+
+			return feedbackAverage;
 		}
 
-		return str + " ";
+		return " ";
 	};
 
 	const getTypeTranslation = (typeStr: string): string => {
@@ -222,6 +233,19 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 				</a>
 			</div>
 		));
+
+	const nursingHomeRating = nursingHome.rating;
+	const hasRating = !!nursingHomeRating;
+
+	const enoughCustomerAnswersForAverage =
+		hasRating &&
+		nursingHomeRating.answers_customers &&
+		nursingHomeRating.answers_customers >= 5;
+
+	const enoughRelativesAnswersForAverage =
+		hasRating &&
+		nursingHomeRating.answers_relatives &&
+		nursingHomeRating.answers_relatives >= 5;
 
 	return (
 		<>
@@ -290,18 +314,18 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							<p>{feedbackCustomerReview}</p>
 							<p>
 								<span className="report_info_minor_header">
-									{nursingHome.rating &&
-									nursingHome.rating.answers_customers
+									{nursingHomeRating &&
+									nursingHomeRating.answers_customers
 										? ratingToString(
-												nursingHome.rating
-													.average_customers,
+												nursingHomeRating.answers_customers,
+												nursingHomeRating.average_customers,
 										  )
 										: feedbackNoReviews}
 								</span>
 
-								{nursingHome.rating &&
-								nursingHome.rating.average_customers
-									? `${nursingHome.rating.average_customers.toPrecision(
+								{enoughCustomerAnswersForAverage &&
+								nursingHomeRating.average_customers
+									? `${nursingHomeRating.average_customers.toPrecision(
 											2,
 									  )} / 5`
 									: ""}
@@ -311,18 +335,18 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 							<p>{feedbackRelativeReview}</p>
 							<p>
 								<span className="report_info_minor_header">
-									{nursingHome.rating &&
-									nursingHome.rating.average_relatives
+									{nursingHomeRating &&
+									nursingHomeRating.average_relatives
 										? ratingToString(
-												nursingHome.rating
-													.average_relatives,
+												nursingHomeRating.answers_relatives,
+												nursingHomeRating.average_relatives,
 										  )
 										: feedbackNoReviews}
 								</span>
 
-								{nursingHome.rating &&
-								nursingHome.rating.average_relatives
-									? `${nursingHome.rating.average_relatives.toPrecision(
+								{enoughRelativesAnswersForAverage &&
+								nursingHomeRating.average_relatives
+									? `${nursingHomeRating.average_relatives.toPrecision(
 											2,
 									  )} / 5`
 									: ""}
@@ -331,9 +355,9 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<Link
 							to={`/hoivakodit/${nursingHome.id}/arviot`}
 							className={
-								nursingHome.rating &&
-								(nursingHome.rating.average_relatives ||
-									nursingHome.rating.average_customers)
+								nursingHomeRating &&
+								(nursingHomeRating.average_relatives ||
+									nursingHomeRating.average_customers)
 									? ""
 									: "hidden"
 							}
@@ -430,18 +454,13 @@ const PageNursingHome: FC = () => {
 	}, [id]);
 
 	const linkBacktoList = useT("linkBacktoList");
-
 	const anchorDetailsBox = useT("anchorDetailsBox");
-
 	const loadingText = useT("loadingText");
 	const filterAraLabel = useT("filterAraLabel");
 	const numApartments = useT("numApartments");
 	const serviceLanguage = useT("serviceLanguage");
-
 	const language = useT(nursingHome && (nursingHome.language as any));
-
 	const linkBacktoTop = useT("linkBacktoTop");
-
 	const basicInformation = useT("basicInformation");
 	const owner = useT("owner");
 	const yearofConst = useT("yearofConst");
@@ -453,7 +472,6 @@ const PageNursingHome: FC = () => {
 	const LAHapartments = useT("LAHapartments");
 	const foodHeader = useT("foodHeader");
 	const cookingMethod = useT("cookingMethod");
-
 	const foodMoreInfo = useT("foodMoreInfo");
 	const linkMenu = useT("linkMenu");
 	const activies = useT("activies");
@@ -465,11 +483,9 @@ const PageNursingHome: FC = () => {
 	const nearbyServices = useT("nearbyServices");
 	const monthShort = useT("monthShort");
 	const btnShowImages = useT("btnShowImages");
-
 	const linkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
 	const linkMoreInfoActivies = useT("linkMoreInfoActivies");
 	const linkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
-
 	const filterYes = useT("filterYes");
 	const filterNo = useT("filterNo");
 	const filterARABoth = useT("filterARABoth");

@@ -10,22 +10,13 @@ import { NursingHome } from "./types";
 
 const PageSurveyResults: FC = () => {
 	const { id } = useParams() as any;
+
+	if (!id) throw new Error("Invalid URL!");
+
 	const [relativeSurvey, setRelativeSurvey] = useState<any[] | null>(null);
 	const [textResults, setTextResults] = useState<any[] | null>(null);
 	const [customerSurvey, setCustomerSurvey] = useState<any[] | null>(null);
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
-
-	if (!id) throw new Error("Invalid URL!");
-
-	const formatDate = (dateStr: string | null): string => {
-		if (!dateStr) return "";
-		console.log(dateStr);
-		const date = new Date(dateStr);
-		const YYYY = String(date.getUTCFullYear());
-		const MM = String(date.getUTCMonth() + 1);
-		const DD = String(date.getUTCDate());
-		return `${DD}.${MM}.${YYYY}`;
-	};
 
 	useEffect(() => {
 		axios
@@ -80,6 +71,7 @@ const PageSurveyResults: FC = () => {
 	const reviewFooterHeader = useT("reviewFooterHeader");
 	const reviewFooterPart1 = useT("reviewFooterPart1");
 	const reviewFooterPart2 = useT("reviewFooterPart2");
+	const reviewFooterPart3 = useT("reviewFooterPart3");
 	const reviewFooterPart4 = useT("reviewFooterPart4");
 
 	const noRelativesOpenTextAnswers = useT("noRelativesOpenTextAnswers");
@@ -90,6 +82,7 @@ const PageSurveyResults: FC = () => {
 	const optionText3 = useT("surveyOption3");
 	const optionText4 = useT("surveyOption4");
 	const optionText5 = useT("surveyOption5");
+	const feedbackAverage = useT("feedbackAverage");
 
 	const espoo = useT("espoo");
 	const kirkkonummi = useT("kirkkonummi");
@@ -113,24 +106,43 @@ const PageSurveyResults: FC = () => {
 
 	const average = useT("average");
 
-	const ratingToString = (rating: number | null): string => {
-		let str = "-";
-
-		if (rating) {
-			if (rating > 4.5) {
-				str = optionText5;
-			} else if (rating > 3.5) {
-				str = optionText4;
-			} else if (rating > 2.5) {
-				str = optionText3;
-			} else if (rating > 1.5) {
-				str = optionText2;
-			} else if (rating > 0.5) {
-				str = optionText1;
-			}
+	const formatDate = (dateStr: string | null): string => {
+		if (!dateStr) {
+			return "";
 		}
 
-		return str;
+		const date = new Date(dateStr);
+
+		const YYYY = String(date.getUTCFullYear());
+		const MM = String(date.getUTCMonth() + 1);
+		const DD = String(date.getUTCDate());
+
+		return `${DD}.${MM}.${YYYY}`;
+	};
+
+	const ratingToString = (
+		answers: number | null,
+		rating: number | null,
+	): string => {
+		if (rating && answers) {
+			if (answers >= 5) {
+				if (rating > 4.5) {
+					return optionText5;
+				} else if (rating > 3.5) {
+					return optionText4;
+				} else if (rating > 2.5) {
+					return optionText3;
+				} else if (rating > 1.5) {
+					return optionText2;
+				} else if (rating > 0.5) {
+					return optionText1;
+				}
+			}
+
+			return feedbackAverage;
+		}
+
+		return "-";
 	};
 
 	const questions = (survey: any): JSX.Element[] | null =>
@@ -231,10 +243,25 @@ const PageSurveyResults: FC = () => {
 		return answerList;
 	};
 
+	const nursingHomeRating = nursingHome ? nursingHome.rating : null;
+
+	const enoughCustomerAnswersForAverage = nursingHomeRating
+		? nursingHomeRating.answers_customers &&
+		  nursingHomeRating.answers_customers >= 5
+		: null;
+
+	const enoughRelativesAnswersForAverage = nursingHomeRating
+		? nursingHomeRating.answers_relatives &&
+		  nursingHomeRating.answers_relatives >= 5
+		: null;
+
 	return (
 		<div className="page-survey-results">
 			<div>
-				{!relativeSurvey || !customerSurvey || !nursingHome ? (
+				{!relativeSurvey ||
+				!customerSurvey ||
+				!nursingHome ||
+				!nursingHomeRating ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
@@ -254,29 +281,33 @@ const PageSurveyResults: FC = () => {
 								{customerReviewsBy}
 							</h3>
 							<p className="page-survey-results-minor-title">
-								{nursingHome.rating.answers_customers
-									? nursingHome.rating.answers_customers
+								{nursingHomeRating.answers_customers
+									? nursingHomeRating.answers_customers
 									: "0"}{" "}
 								{nReviews}
 							</p>
-							<div className="page-survey-results-item">
-								{questions(customerSurvey)}
-							</div>
+
+							{enoughCustomerAnswersForAverage ? (
+								<div className="page-survey-results-item">
+									{questions(customerSurvey)}
+								</div>
+							) : null}
+
 							<p className="page-survey-results-minor-title">
 								{averageReviewScore}:
 								<span className="page-survey-results-bold">
 									{" "}
 									{ratingToString(
-										nursingHome.rating.average_customers,
+										nursingHomeRating.answers_customers,
+										nursingHomeRating.average_customers,
 									)}
 								</span>{" "}
-								{nursingHome.rating &&
-								nursingHome.rating.average_customers
-									? nursingHome.rating.average_customers.toPrecision(
+								{enoughCustomerAnswersForAverage &&
+								nursingHomeRating.average_customers
+									? nursingHomeRating.average_customers.toPrecision(
 											2,
-									  )
-									: ""}{" "}
-								/ 5
+									  ) + " / 5"
+									: ""}
 							</p>
 						</div>
 						<div className="page-survey-results-set">
@@ -284,29 +315,33 @@ const PageSurveyResults: FC = () => {
 								{relativeReviewsBy}
 							</h3>
 							<p className="page-survey-results-minor-title">
-								{nursingHome.rating.answers_relatives
-									? nursingHome.rating.answers_relatives
+								{nursingHomeRating.answers_relatives
+									? nursingHomeRating.answers_relatives
 									: "0"}{" "}
 								{nReviews}
 							</p>
-							<div className="page-survey-results-item">
-								{questions(relativeSurvey)}
-							</div>
+
+							{enoughRelativesAnswersForAverage ? (
+								<div className="page-survey-results-item">
+									{questions(relativeSurvey)}
+								</div>
+							) : null}
+
 							<p className="page-survey-results-minor-title">
 								{averageReviewScore}:
 								<span className="page-survey-results-bold">
 									{" "}
 									{ratingToString(
-										nursingHome.rating.average_relatives,
+										nursingHomeRating.average_relatives,
+										nursingHomeRating.average_relatives,
 									)}
 								</span>{" "}
-								{nursingHome.rating &&
-								nursingHome.rating.average_relatives
-									? nursingHome.rating.average_relatives.toPrecision(
+								{enoughRelativesAnswersForAverage &&
+								nursingHomeRating.average_relatives
+									? nursingHomeRating.average_relatives.toPrecision(
 											2,
-									  )
-									: ""}{" "}
-								/ 5
+									  ) + " / 5"
+									: ""}
 							</p>
 							<div className="page-survey-results-answer-container">
 								<div className="page-survey-results-answer-header">
@@ -324,7 +359,9 @@ const PageSurveyResults: FC = () => {
 				<p className="page-survey-results-bold">{reviewFooterHeader}</p>
 				<p>{reviewFooterPart1}</p>
 				<p>{reviewFooterPart2}</p>
-
+				<p>
+					<strong>{reviewFooterPart3}</strong>
+				</p>
 				<p>{reviewFooterPart4}</p>
 				<ul>
 					<li>

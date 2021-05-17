@@ -867,9 +867,9 @@ export const translations = {
 	},
 	reviewFooterPart3: {
 		"fi-FI":
-			"Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot on tarkoitus lisätä tähän portaaliin myöhemmin.",
+			"Tyytyväisyyskyselyn tulokset näytetään vasta kun tuloksia on vähintään viisi.",
 		"sv-FI":
-			"Det är meningen att en möjlighet till fritt formulerad respons och klienternas bedömningar ska läggas till i denna portal senare.",
+			"Tyytyväisyyskyselyn tulokset näytetään vasta kun tuloksia on vähintään viisi.",
 	},
 	reviewFooterPart4: {
 		"fi-FI":
