@@ -1603,6 +1603,7 @@ export async function addDummyNursingHome(): Promise<string> {
 		language: "Suomi",
 		tour_info:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem.",
+		customer_commune: [Commune.EPO],
 	};
 
 	await InsertNursingHomeToDB(nursinghome);
