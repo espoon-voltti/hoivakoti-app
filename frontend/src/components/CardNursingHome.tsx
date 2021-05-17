@@ -150,6 +150,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 			<div className="card-list-item-container">
 				<img
 					src={imageUrl ? imageUrl : undefined}
+					alt=""
 					className={`card-list-item__image-container ${
 						imageUrl ? "has-pic" : ""
 					}`}
