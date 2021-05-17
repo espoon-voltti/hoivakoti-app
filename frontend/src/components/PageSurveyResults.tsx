@@ -245,12 +245,12 @@ const PageSurveyResults: FC = () => {
 
 	const nursingHomeRating = nursingHome ? nursingHome.rating : null;
 
-	const enoughCustomerAnswersForAverage = nursingHomeRating
+	const enoughCustomerAnswers = nursingHomeRating
 		? nursingHomeRating.answers_customers &&
 		  nursingHomeRating.answers_customers >= 5
 		: null;
 
-	const enoughRelativesAnswersForAverage = nursingHomeRating
+	const enoughRelativesAnswers = nursingHomeRating
 		? nursingHomeRating.answers_relatives &&
 		  nursingHomeRating.answers_relatives >= 5
 		: null;
@@ -287,7 +287,7 @@ const PageSurveyResults: FC = () => {
 								{nReviews}
 							</p>
 
-							{enoughCustomerAnswersForAverage ? (
+							{enoughCustomerAnswers ? (
 								<div className="page-survey-results-item">
 									{questions(customerSurvey)}
 								</div>
@@ -302,7 +302,7 @@ const PageSurveyResults: FC = () => {
 										nursingHomeRating.average_customers,
 									)}
 								</span>{" "}
-								{enoughCustomerAnswersForAverage &&
+								{enoughCustomerAnswers &&
 								nursingHomeRating.average_customers
 									? nursingHomeRating.average_customers.toPrecision(
 											2,
@@ -321,7 +321,7 @@ const PageSurveyResults: FC = () => {
 								{nReviews}
 							</p>
 
-							{enoughRelativesAnswersForAverage ? (
+							{enoughRelativesAnswers ? (
 								<div className="page-survey-results-item">
 									{questions(relativeSurvey)}
 								</div>
@@ -336,7 +336,7 @@ const PageSurveyResults: FC = () => {
 										nursingHomeRating.average_relatives,
 									)}
 								</span>{" "}
-								{enoughRelativesAnswersForAverage &&
+								{enoughRelativesAnswers &&
 								nursingHomeRating.average_relatives
 									? nursingHomeRating.average_relatives.toPrecision(
 											2,

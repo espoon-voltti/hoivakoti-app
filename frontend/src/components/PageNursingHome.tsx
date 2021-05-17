@@ -237,12 +237,12 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const nursingHomeRating = nursingHome.rating;
 	const hasRating = !!nursingHomeRating;
 
-	const enoughCustomerAnswersForAverage =
+	const enoughCustomerAnswers =
 		hasRating &&
 		nursingHomeRating.answers_customers &&
 		nursingHomeRating.answers_customers >= 5;
 
-	const enoughRelativesAnswersForAverage =
+	const enoughRelativesAnswers =
 		hasRating &&
 		nursingHomeRating.answers_relatives &&
 		nursingHomeRating.answers_relatives >= 5;
@@ -323,7 +323,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 										: feedbackNoReviews}
 								</span>
 
-								{enoughCustomerAnswersForAverage &&
+								{enoughCustomerAnswers &&
 								nursingHomeRating.average_customers
 									? `${nursingHomeRating.average_customers.toPrecision(
 											2,
@@ -344,7 +344,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 										: feedbackNoReviews}
 								</span>
 
-								{enoughRelativesAnswersForAverage &&
+								{enoughRelativesAnswers &&
 								nursingHomeRating.average_relatives
 									? `${nursingHomeRating.average_relatives.toPrecision(
 											2,
