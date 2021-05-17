@@ -955,6 +955,10 @@ export const translations = {
 		"fi-FI": "Erittäin huono",
 		"sv-FI": "Mycket dålig",
 	},
+	feedbackAverage: {
+		"fi-FI": "Keskiarvo tulossa",
+		"sv-FI": "Keskiarvo tulossa",
+	},
 	"Suomi|Ruotsi": {
 		"fi-FI": "Suomi|Ruotsi",
 		"sv-FI": "Svenska/Finska",

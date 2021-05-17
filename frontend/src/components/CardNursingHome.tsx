@@ -51,6 +51,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 	const feedbackOk = useT("feedbackOk");
 	const feedbackBad = useT("feedbackBad");
 	const feedbackVeryBad = useT("feedbackVeryBad");
+	const feedbackAverage = useT("feedbackAverage");
 
 	const latestVisit = useT("latestVisit");
 	const status = useT("status");
@@ -89,24 +90,29 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 		return `${DD}.${MM}.${YYYY}`;
 	};
 
-	const ratingToString = (rating: number | null): string => {
-		let str = feedbackNoReviews;
-
-		if (rating) {
-			if (rating > 4.5) {
-				str = feedbackGreat;
-			} else if (rating > 3.5) {
-				str = feedbackGood;
-			} else if (rating > 2.5) {
-				str = feedbackOk;
-			} else if (rating > 1.5) {
-				str = feedbackBad;
-			} else if (rating > 0.5) {
-				str = feedbackVeryBad;
+	const ratingToString = (
+		answers: number | null,
+		rating: number | null,
+	): string => {
+		if (rating && answers) {
+			if (answers >= 5) {
+				if (rating > 4.5) {
+					return feedbackGreat;
+				} else if (rating > 3.5) {
+					return feedbackGood;
+				} else if (rating > 2.5) {
+					return feedbackOk;
+				} else if (rating > 1.5) {
+					return feedbackBad;
+				} else if (rating > 0.5) {
+					return feedbackVeryBad;
+				}
 			}
+
+			return feedbackAverage;
 		}
 
-		return str;
+		return feedbackNoReviews;
 	};
 
 	const openBtnLink = (
@@ -116,6 +122,17 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 		e.preventDefault();
 		window.location.href = link;
 	};
+
+	const nursingHomeReportStatus = nursinghome.report_status[0];
+	const nursingHomeRating = nursinghome.rating;
+
+	const enoughCustomerAnswersForAverage =
+		nursingHomeRating.answers_customers &&
+		nursingHomeRating.answers_customers >= 5;
+
+	const enoughRelativesAnswersForAverage =
+		nursingHomeRating.answers_relatives &&
+		nursingHomeRating.answers_relatives >= 5;
 
 	return (
 		<Link
@@ -137,8 +154,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 				<div
 					className={
 						type == "admin" &&
-						nursinghome.report_status[0] &&
-						nursinghome.report_status[0].status == "surveillance"
+						nursingHomeReportStatus &&
+						nursingHomeReportStatus.status == "surveillance"
 							? "card-list-item-alert-tag"
 							: "hidden"
 					}
@@ -205,16 +222,16 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					<div className={type == "admin" ? "" : "hidden"}>
 						<div className="card-nursing-home-status">
 							<span>{status}: </span>
-							{nursinghome.report_status[0]
+							{nursingHomeReportStatus
 								? getStatusTranslation(
-										nursinghome.report_status[0].status,
+										nursingHomeReportStatus.status,
 								  )
 								: getStatusTranslation("")}
 						</div>
 						<div className="card-nursing-home-status">
 							<span>{latestVisit}: </span>
-							{nursinghome.report_status[0]
-								? formatDate(nursinghome.report_status[0].date)
+							{nursingHomeReportStatus
+								? formatDate(nursingHomeReportStatus.date)
 								: "-"}
 						</div>
 					</div>
@@ -290,7 +307,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					<div>
 						<p
 							className={
-								nursinghome.rating.average_customers
+								nursingHomeRating.average_customers
 									? ""
 									: "hidden"
 							}
@@ -299,18 +316,23 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						</p>
 						<p className="card-nursing-home-public-status-header">
 							{ratingToString(
-								nursinghome.rating.average_customers,
+								nursingHomeRating.answers_customers,
+								nursingHomeRating.average_customers,
 							)}
 						</p>
+
+						{enoughCustomerAnswersForAverage ? (
+							<p>
+								{nursingHomeRating.average_customers
+									? nursingHomeRating.average_customers.toPrecision(
+											2,
+									  ) + " / 5"
+									: ""}
+							</p>
+						) : null}
+
 						<p>
-							{nursinghome.rating.average_customers
-								? nursinghome.rating.average_customers.toPrecision(
-										2,
-								  ) + " / 5"
-								: ""}
-						</p>
-						<p>
-							({nursinghome.rating.answers_customers}{" "}
+							({nursingHomeRating.answers_customers}{" "}
 							{feedbackReviews})
 						</p>
 					</div>
@@ -319,7 +341,7 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					<div>
 						<p
 							className={
-								nursinghome.rating.average_relatives
+								nursingHomeRating.average_relatives
 									? ""
 									: "hidden"
 							}
@@ -328,18 +350,21 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						</p>
 						<p className="card-nursing-home-public-status-header">
 							{ratingToString(
-								nursinghome.rating.average_relatives,
+								nursingHomeRating.answers_relatives,
+								nursingHomeRating.average_relatives,
 							)}
 						</p>
+						{enoughRelativesAnswersForAverage ? (
+							<p>
+								{nursingHomeRating.average_relatives
+									? nursingHomeRating.average_relatives.toPrecision(
+											2,
+									  ) + " / 5"
+									: ""}
+							</p>
+						) : null}
 						<p>
-							{nursinghome.rating.average_relatives
-								? nursinghome.rating.average_relatives.toPrecision(
-										2,
-								  ) + " / 5"
-								: ""}
-						</p>
-						<p>
-							({nursinghome.rating.answers_relatives}{" "}
+							({nursingHomeRating.answers_relatives}{" "}
 							{feedbackReviews})
 						</p>
 					</div>
@@ -348,9 +373,8 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 					<div>
 						<div
 							className={
-								nursinghome.report_status[0] &&
-								nursinghome.report_status[0].status ==
-									"surveillance"
+								nursingHomeReportStatus &&
+								nursingHomeReportStatus.status == "surveillance"
 									? "card-nursing-home-alert-sign"
 									: "hidden"
 							}
@@ -358,27 +382,27 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						<p
 							className={
 								"card-nursing-home-public-status-header" +
-								((nursinghome.report_status[0] &&
-									nursinghome.report_status[0].status) ==
+								((nursingHomeReportStatus &&
+									nursingHomeReportStatus.status) ==
 								"surveillance"
 									? " card-nursing-home-alert"
 									: "")
 							}
 						>
 							{`${
-								nursinghome.report_status[0]
+								nursingHomeReportStatus
 									? getStatusTranslation(
-											nursinghome.report_status[0].status,
+											nursingHomeReportStatus.status,
 									  )
 									: getStatusTranslation("")
 							}`}
 						</p>
 						<p
 							className={
-								!nursinghome.report_status[0] ||
-								(nursinghome.report_status[0] &&
+								!nursingHomeReportStatus ||
+								(nursingHomeReportStatus &&
 									["waiting", "no-info"].includes(
-										nursinghome.report_status[0].status,
+										nursingHomeReportStatus.status,
 									))
 									? "hidden"
 									: ""
