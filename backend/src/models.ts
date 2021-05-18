@@ -1603,10 +1603,13 @@ export async function addDummyNursingHome(): Promise<string> {
 		language: "Suomi",
 		tour_info:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem.",
-		customer_commune: [Commune.EPO],
 	};
 
-	await InsertNursingHomeToDB(nursinghome);
+	const testNursingHomeId = await InsertNursingHomeToDB(nursinghome);
+
+	await UpdateCustomerCommunesForNursingHome(testNursingHomeId, [
+		Commune.EPO,
+	]);
 
 	const nursinghome2: NursingHome = {
 		name: "Testi 2 Nursinghome with a very long name",
