@@ -216,8 +216,8 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reports: JSX.Element[] | null =
 		nursingHome.report_status &&
 		nursingHome.report_status.map((status, index) => (
-			<div className={hasReport ? "" : "report_hidden"} key={index}>
-				<p className={"report_info_item"}>
+			<div className={hasReport ? "" : "report-hidden"} key={index}>
+				<p className={"report-info-item"}>
 					{getTypeTranslation(status.type)} {formatDate(status.date)}
 				</p>
 
@@ -256,7 +256,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						to={`/hoivakodit/${nursingHome.id}/anna-arvio`}
 						className="nursinghome-details-box-survey-link"
 					>
-						<button className="btn report_info_btn">
+						<button className="btn report-info-btn">
 							{giveReview}
 						</button>
 					</Link>
@@ -268,7 +268,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						className="nursinghome-details-logo"
 						alt="Omistajan logo"
 					/>
-					<h4 className="nursinghome-details-name">
+					<h4 className="nursinghome-details-heading">
 						{nursingHome.name}
 					</h4>
 					<a
@@ -309,11 +309,11 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					</dl>
 				</div>
 				<div className="nursinghome-details-box-section">
-					<div className="report_info_container">
+					<div className="report-info-container">
 						<div>
 							<p>{feedbackCustomerReview}</p>
 							<p>
-								<span className="report_info_minor_header">
+								<span className="report-info-minor-header">
 									{nursingHomeRating &&
 									nursingHomeRating.answers_customers
 										? ratingToString(
@@ -333,7 +333,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<div>
 							<p>{feedbackRelativeReview}</p>
 							<p>
-								<span className="report_info_minor_header">
+								<span className="report-info-minor-header">
 									{nursingHomeRating &&
 									nursingHomeRating.average_relatives
 										? ratingToString(
@@ -360,18 +360,35 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 									: "hidden"
 							}
 						>
-							<button className="btn report_info_btn">
+							<button className="btn report-info-btn">
 								{readMore}
 							</button>
 						</Link>
 					</div>
 				</div>
 				<div className="nursinghome-details-box-section">
-					<div className="report_info_container">
-						<p className={hasReport ? "" : "hidden"}>
+					<div className="report-info-container">
+						<h4
+							className={
+								hasReport
+									? "nursinghome-details-heading"
+									: "hidden"
+							}
+						>
 							{reportScoreHeader}
+						</h4>
+						<p
+							className={
+								hasReport ? "report-info-description" : "hidden"
+							}
+						>
+							Valvontakäynnit ovat kunnan suorittamia
+							tarkistuksia, joilla kunta valvoo palvelun tasoa.
+							Valvontakäynnit voivat olla ennalta ilmoitettuja tai
+							ennalta ilmoittamattomia käyntejä tai
+							palautteen/ilmoituksen perusteella tehtyjä käyntejä.
 						</p>
-						<p className="report_info_minor_header">
+						<p className="report-info-minor-header">
 							{reportStatus}
 						</p>
 						{reports}

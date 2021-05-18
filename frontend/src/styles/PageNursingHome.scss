@@ -282,6 +282,10 @@ $hero-border: 5px solid white;
 	&:last-child {
 		margin-bottom: 0;
 	}
+
+	&.report-info-description {
+		margin-bottom: 2rem;
+	}
 }
 
 .nursinghome-details-logo {
@@ -290,42 +294,41 @@ $hero-border: 5px solid white;
 	margin: 0 auto 20px auto;
 }
 
-.nursinghome-details-name {
+.nursinghome-details-heading {
 	font-size: 19px;
 	font-weight: 700;
 	line-height: 24px;
-	margin-bottom: 5px;
 }
 
-.report_info_container {
+.report-info-container {
 	margin-top: 15px;
 	text-align: center;
 
 	div:first-of-type {
 		margin-bottom: 25px;
 	}
+
+	.report-info-item {
+		margin: 35px 0 35px 0;
+	}
+
+	.report-hidden {
+		display: none;
+	}
 }
 
-.report_info_container .report_info_item {
-	margin: 35px 0 35px 0;
-}
-
-.report_info_container .report_hidden {
-	display: none;
-}
-
-.report_info_header {
+.report-info-header {
 	font-size: 16px;
 	font-weight: 700;
 	text-transform: uppercase;
 }
 
-.report_info_minor_header {
+.report-info-minor-header {
 	font-size: 16px;
 	font-weight: 500;
 }
 
-.report_info_btn {
+.report-info-btn {
 	width: 100%;
 	margin: 20px 0 0 0;
 }

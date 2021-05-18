@@ -102,7 +102,7 @@ const PageUploadReport: FC = () => {
 			if (reportDate && reportFile && reportType) {
 				setPopupState("saving");
 				const dateObj = new Date(reportDate);
-				console.log(nursingHomeState);
+
 				await requestReportStatusUpdate(
 					id,
 					key,
@@ -126,7 +126,7 @@ const PageUploadReport: FC = () => {
 				nursingHomeState == "no-info"
 			) {
 				setPopupState("saving");
-				console.log(nursingHomeState);
+
 				await requestReportStatusUpdate(
 					id,
 					key,
