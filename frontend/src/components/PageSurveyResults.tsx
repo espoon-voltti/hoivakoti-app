@@ -7,6 +7,16 @@ import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
+import FeedbackState from "../shared/types/feedback-state";
+
+interface OpenAnswer {
+	answer_text: string;
+	created_date: string;
+	feedback_state: FeedbackState;
+	id: string;
+	response_date: string;
+	response_text: string;
+}
 
 const PageSurveyResults: FC = () => {
 	const { id } = useParams() as any;
@@ -223,35 +233,48 @@ const PageSurveyResults: FC = () => {
 			</div>
 		));
 
-	const answers = (answers: any): JSX.Element[] | JSX.Element | null => {
-		let answerList = <p>{noRelativesOpenTextAnswers}</p>;
+	const answers = (
+		answers: OpenAnswer[],
+	): JSX.Element[] | JSX.Element | null => {
+		let answerList: JSX.Element | JSX.Element[] = (
+			<p>{noRelativesOpenTextAnswers}</p>
+		);
 
 		if (answers && answers.length > 0) {
-			answerList = answers.map((answer: any, index: number) => (
-				<>
-					<div className="answer">
-						<p className="answer-date">
-							{formatDate(answer.created_date)}
-						</p>
-						<p key={index}>&quot;{answer.answer_text}&quot;</p>
-						<p
-							className={`response-header ${
-								answer.response_text ? "" : "hidden"
-							}`}
-						>
-							{feedbackResponseHeader}{" "}
-							{formatDate(answer.response_date)}:
-						</p>
-						<p
-							className={`response ${
-								answer.response_text ? "" : "hidden"
-							}`}
-						>
-							{answer.response_text}
-						</p>
-					</div>
-				</>
-			));
+			const sortedAnswers = answers.sort((a1, a2) => {
+				const date1 = new Date(a1.created_date);
+				const date2 = new Date(a2.created_date);
+
+				return date2.getTime() - date1.getTime();
+			});
+
+			answerList = sortedAnswers.map(
+				(answer: OpenAnswer, index: number) => (
+					<>
+						<div className="answer">
+							<p className="answer-date">
+								{formatDate(answer.created_date)}
+							</p>
+							<p key={index}>&quot;{answer.answer_text}&quot;</p>
+							<p
+								className={`response-header ${
+									answer.response_text ? "" : "hidden"
+								}`}
+							>
+								{feedbackResponseHeader}{" "}
+								{formatDate(answer.response_date)}:
+							</p>
+							<p
+								className={`response ${
+									answer.response_text ? "" : "hidden"
+								}`}
+							>
+								{answer.response_text}
+							</p>
+						</div>
+					</>
+				),
+			);
 		}
 
 		return answerList;
@@ -362,7 +385,7 @@ const PageSurveyResults: FC = () => {
 									{fromRelatives}
 								</div>
 								<div className="page-survey-results-answer-content">
-									{answers(textResults)}
+									{answers(textResults as OpenAnswer[])}
 								</div>
 							</div>
 						</div>

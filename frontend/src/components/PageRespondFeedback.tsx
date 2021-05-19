@@ -128,18 +128,18 @@ export const ResponseField: FC<ResponseFieldProps> = ({ feedback, submit }) => {
 					onChange={(
 						event: React.ChangeEvent<HTMLTextAreaElement>,
 					): void => {
-						if (event.target.value.length <= 1000) {
+						if (event.target.value.length <= 600) {
 							setResponse(event.target.value);
 							setChanged(true);
 							setSaved(false);
 						}
 					}}
-					maxLength={1000}
+					maxLength={600}
 					rows={4}
 					value={response}
 				></textarea>
 				<span>
-					{1000 - response.length}/1000 {charactersLeft}
+					{600 - response.length}/600 {charactersLeft}
 				</span>
 			</div>
 			<div className="feedback-response-actions">

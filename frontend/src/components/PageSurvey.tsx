@@ -440,18 +440,18 @@ export const TextQuestion: FC<QuestionProps> = ({
 					<textarea
 						value={questionState}
 						placeholder={openFeedbackPlaceholder}
-						maxLength={1000}
+						maxLength={600}
 						onChange={(
 							event: React.ChangeEvent<HTMLTextAreaElement>,
 						): void => {
-							if (event.target.value.length <= 1000) {
+							if (event.target.value.length <= 600) {
 								onChange(event.target.value);
 								setQuestionState(event.target.value);
 							}
 						}}
 					></textarea>
 					<p>
-						{1000 - questionState.length}/1000 {charactersLeft}
+						{600 - questionState.length}/600 {charactersLeft}
 					</p>
 				</div>
 			</div>
