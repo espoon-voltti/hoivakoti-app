@@ -1618,4 +1618,10 @@ export const translations = {
 		"fi-FI": "Muokkaa hoivakodin kotikuntia",
 		"sv-FI": "Muokkaa hoivakodin kotikuntia",
 	},
+	surveillanceDescription: {
+		"fi-FI":
+			"Valvontakäynnit ovat kunnan suorittamia tarkistuksia, joilla kunta valvoo palvelun tasoa. Valvontakäynnit voivat olla ennalta ilmoitettuja tai ennalta ilmoittamattomia käyntejä tai palautteen/ilmoituksen perusteella tehtyjä käyntejä.",
+		"sv-FI":
+			"Valvontakäynnit ovat kunnan suorittamia tarkistuksia, joilla kunta valvoo palvelun tasoa. Valvontakäynnit voivat olla ennalta ilmoitettuja tai ennalta ilmoittamattomia käyntejä tai palautteen/ilmoituksen perusteella tehtyjä käyntejä.",
+	},
 };

@@ -131,6 +131,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reportTypeAnnounced = useT("reportTypeAnnounced");
 	const reportTypeUnannounced = useT("reportTypeUnannounced");
 	const reportTypeConcern = useT("reportTypeConcern");
+	const surveillanceDescription = useT("surveillanceDescription");
 
 	let reportStatus = useT("status_waiting");
 
@@ -382,11 +383,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 								hasReport ? "report-info-description" : "hidden"
 							}
 						>
-							Valvontakäynnit ovat kunnan suorittamia
-							tarkistuksia, joilla kunta valvoo palvelun tasoa.
-							Valvontakäynnit voivat olla ennalta ilmoitettuja tai
-							ennalta ilmoittamattomia käyntejä tai
-							palautteen/ilmoituksen perusteella tehtyjä käyntejä.
+							{surveillanceDescription}
 						</p>
 						<p className="report-info-minor-header">
 							{reportStatus}
