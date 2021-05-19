@@ -251,7 +251,7 @@ const PageSurveyResults: FC = () => {
 			answerList = sortedAnswers.map(
 				(answer: OpenAnswer, index: number) => (
 					<>
-						<div className="answer">
+						<div className="answer" key={answer.id}>
 							<p className="answer-date">
 								{formatDate(answer.created_date)}
 							</p>
