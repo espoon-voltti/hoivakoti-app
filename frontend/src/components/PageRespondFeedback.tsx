@@ -32,7 +32,6 @@ const PageRespondFeedback: FC = () => {
 		response: string,
 		responseId: string,
 	): Promise<void> => {
-		console.log(responseId);
 		await axios
 			.post(
 				`${config.API_URL}/feedback/response`,

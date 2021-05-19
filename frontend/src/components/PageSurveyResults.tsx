@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { useT } from "../i18n";
 import i18n from "../i18n";
 import "../styles/PageSurveyResults.scss";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
@@ -17,6 +17,8 @@ const PageSurveyResults: FC = () => {
 	const [textResults, setTextResults] = useState<any[] | null>(null);
 	const [customerSurvey, setCustomerSurvey] = useState<any[] | null>(null);
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
+
+	const { hash } = useLocation();
 
 	useEffect(() => {
 		axios
@@ -59,6 +61,18 @@ const PageSurveyResults: FC = () => {
 				throw e;
 			});
 	}, [id]);
+
+	useEffect(() => {
+		if (hash) {
+			setTimeout(() => {
+				const hashElement = document.querySelector(hash) as HTMLElement;
+
+				if (hashElement) {
+					hashElement.scrollIntoView();
+				}
+			}, 250);
+		}
+	}, [hash]);
 
 	const loadingText = useT("loadingText");
 	const nursingHomeReviews = useT("nursingHomeReviews");
@@ -125,8 +139,6 @@ const PageSurveyResults: FC = () => {
 		rating: number | null,
 	): string => {
 		if (rating && answers) {
-			console.log(answers);
-
 			if (answers >= 5) {
 				if (rating > 4.5) {
 					return optionText5;
@@ -365,7 +377,7 @@ const PageSurveyResults: FC = () => {
 					<strong>{reviewFooterPart3}</strong>
 				</p>
 				<p>{reviewFooterPart4}</p>
-				<ul>
+				<ul id="contact-list">
 					<li>
 						<a
 							href={espooFeedbackLink}

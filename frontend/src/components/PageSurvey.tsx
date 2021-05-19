@@ -16,7 +16,9 @@ const PageSurvey: FC = () => {
 	const [logInFailed, setLogInFailed] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
+
 	const { id } = useParams() as any;
+
 	const [survey, setSurvey] = useState<any[] | null>(null);
 	const [surveyDone, setSurveyDone] = useState<boolean>(false);
 
@@ -111,6 +113,10 @@ const PageSurvey: FC = () => {
 			});
 	};
 
+	const replaceLocation = (link: string): void => {
+		window.location.href = link;
+	};
+
 	const raitingQuestions: JSX.Element[] | null =
 		survey &&
 		survey
@@ -126,6 +132,8 @@ const PageSurvey: FC = () => {
 				</section>
 			));
 
+	const textQuestionLink = `/hoivakodit/${id}/arviot`;
+
 	const textQuestions: JSX.Element[] | null =
 		survey &&
 		survey
@@ -134,6 +142,7 @@ const PageSurvey: FC = () => {
 				<section className={"page-survey-section"} key={index}>
 					<TextQuestion
 						question={question}
+						link={textQuestionLink}
 						onChange={value => {
 							updateAnswer(question.id, value);
 						}}
@@ -266,6 +275,7 @@ export default PageSurvey;
 
 interface QuestionProps {
 	question: any | null;
+	link?: string | null;
 	onChange: (value: any) => void;
 }
 
@@ -389,7 +399,11 @@ export const Question: FC<QuestionProps> = ({ question, onChange }) => {
 	);
 };
 
-export const TextQuestion: FC<QuestionProps> = ({ question, onChange }) => {
+export const TextQuestion: FC<QuestionProps> = ({
+	question,
+	link,
+	onChange,
+}) => {
 	const charactersLeft = useT("charactersLeft");
 	const openFeedbackPlaceholder = useT("openFeedbackPlaceholder");
 	const [questionState, setQuestionState] = useState<string>("");
@@ -404,11 +418,33 @@ export const TextQuestion: FC<QuestionProps> = ({ question, onChange }) => {
 								? question.question_sv
 								: question.question_fi}
 						</h3>
-						<h4 className="survey-card--desc">
+						<p>
+							Anna yleistä palautetta hoivakodin laadusta. Palaute
+							julkaistaan kun se on hyväksytty. Palautteen antajan
+							nimi pysyy piilossa. Tietoja joista voidaan
+							tunnistaa henkilö, ei voida julkaista.
+						</p>
+						<p>
+							Jos haluat antaa tietoja jostain tietystä henkilöstä
+							tai tilanteesta tai haluat palautteeseen
+							henkilökohtaisen vastauksen, anna palaute kunnan
+							oman{" "}
+							<Link
+								to={{
+									pathname: link as string,
+									hash: "#contact-list",
+								}}
+								replace={false}
+							>
+								palautekanavan
+							</Link>{" "}
+							kautta.
+						</p>
+						{/* <h4 className="survey-card--desc">
 							{i18n.language == "sv-FI"
 								? question.question_description_sv
 								: question.question_description_fi}
-						</h4>
+						</h4> */}
 					</div>
 					<textarea
 						value={questionState}
