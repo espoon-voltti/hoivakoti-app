@@ -422,21 +422,20 @@ export const TextQuestion: FC<QuestionProps> = ({
 								: question.question_fi}
 						</h3>
 						<p>{surveyOpenAnswerInstruction1}</p>
-
-						<Trans
-							i18nKey="defaultNamespace:surveyOpenAnswerInstruction2"
-							components={[
-								// eslint-disable-next-line react/jsx-key
-								<Link
-									to={{
-										pathname: link as string,
-										hash: "#contact-list",
-									}}
-								/>,
-							]}
-						>
-							<p></p>
-						</Trans>
+						<p>
+							<Trans
+								i18nKey="defaultNamespace:surveyOpenAnswerInstruction2"
+								components={[
+									// eslint-disable-next-line react/jsx-key
+									<Link
+										to={{
+											pathname: link as string,
+											hash: "#contact-list",
+										}}
+									/>,
+								]}
+							></Trans>
+						</p>
 					</div>
 					<textarea
 						value={questionState}
