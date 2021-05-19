@@ -8,6 +8,7 @@ import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
+import { Trans } from "react-i18next";
 
 let surveyState: any[] = [];
 
@@ -406,6 +407,8 @@ export const TextQuestion: FC<QuestionProps> = ({
 }) => {
 	const charactersLeft = useT("charactersLeft");
 	const openFeedbackPlaceholder = useT("openFeedbackPlaceholder");
+	const surveyOpenAnswerInstruction1 = useT("surveyOpenAnswerInstruction1");
+
 	const [questionState, setQuestionState] = useState<string>("");
 
 	return (
@@ -418,33 +421,22 @@ export const TextQuestion: FC<QuestionProps> = ({
 								? question.question_sv
 								: question.question_fi}
 						</h3>
-						<p>
-							Anna yleistä palautetta hoivakodin laadusta. Palaute
-							julkaistaan kun se on hyväksytty. Palautteen antajan
-							nimi pysyy piilossa. Tietoja joista voidaan
-							tunnistaa henkilö, ei voida julkaista.
-						</p>
-						<p>
-							Jos haluat antaa tietoja jostain tietystä henkilöstä
-							tai tilanteesta tai haluat palautteeseen
-							henkilökohtaisen vastauksen, anna palaute kunnan
-							oman{" "}
-							<Link
-								to={{
-									pathname: link as string,
-									hash: "#contact-list",
-								}}
-								replace={false}
-							>
-								palautekanavan
-							</Link>{" "}
-							kautta.
-						</p>
-						{/* <h4 className="survey-card--desc">
-							{i18n.language == "sv-FI"
-								? question.question_description_sv
-								: question.question_description_fi}
-						</h4> */}
+						<p>{surveyOpenAnswerInstruction1}</p>
+
+						<Trans
+							i18nKey="defaultNamespace:surveyOpenAnswerInstruction2"
+							components={[
+								// eslint-disable-next-line react/jsx-key
+								<Link
+									to={{
+										pathname: link as string,
+										hash: "#contact-list",
+									}}
+								/>,
+							]}
+						>
+							<p></p>
+						</Trans>
 					</div>
 					<textarea
 						value={questionState}

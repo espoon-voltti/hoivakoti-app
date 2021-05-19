@@ -1624,4 +1624,16 @@ export const translations = {
 		"sv-FI":
 			"Valvontakäynnit ovat kunnan suorittamia tarkistuksia, joilla kunta valvoo palvelun tasoa. Valvontakäynnit voivat olla ennalta ilmoitettuja tai ennalta ilmoittamattomia käyntejä tai palautteen/ilmoituksen perusteella tehtyjä käyntejä.",
 	},
+	surveyOpenAnswerInstruction1: {
+		"fi-FI":
+			"Anna yleistä palautetta hoivakodin laadusta. Palaute julkaistaan kun se on hyväksytty. Palautteen antajan nimi pysyy piilossa. Tietoja joista voidaan tunnistaa henkilö, ei voida julkaista.",
+		"sv-FI":
+			"Anna yleistä palautetta hoivakodin laadusta. Palaute julkaistaan kun se on hyväksytty. Palautteen antajan nimi pysyy piilossa. Tietoja joista voidaan tunnistaa henkilö, ei voida julkaista.",
+	},
+	surveyOpenAnswerInstruction2: {
+		"fi-FI":
+			"Jos haluat antaa tietoja jostain tietystä henkilöstä tai tilanteesta tai haluat palautteeseen henkilökohtaisen vastauksen, anna palaute kunnan oman <0>palautekanavan</0> kautta.",
+		"sv-FI":
+			"Jos haluat antaa tietoja jostain tietystä henkilöstä tai tilanteesta tai haluat palautteeseen henkilökohtaisen vastauksen, anna palaute kunnan oman <0>palautekanavan</0> kautta.",
+	},
 };
