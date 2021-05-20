@@ -39,7 +39,9 @@ import {
 	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
 	UpdateNursingHomeSurveyQuestion as UpdateNursingHomeSurveyQuestionDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
-	GetSurvey as GetSurveyDB
+	GetSurvey as GetSurveyDB,
+	UpdateCustomerCommunesForNursingHome,
+	GetCustomerCommunesForNursingHome,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -61,10 +63,8 @@ export async function AddNursingHome(ctx: any): Promise<string> {
 export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 	const nursing_homes = await GetAllNursingHomes();
 	nursing_homes.sort((a: NursingHome, b: NursingHome) => {
-		if (a.has_vacancy && !b.has_vacancy)
-			return -1;
-		if (!a.has_vacancy && b.has_vacancy)
-			return 1;
+		if (a.has_vacancy && !b.has_vacancy) return -1;
+		if (!a.has_vacancy && b.has_vacancy) return 1;
 		return a.name.localeCompare(b.name);
 	});
 
@@ -72,42 +72,54 @@ export async function ListNursingHomes(ctx: any): Promise<Knex.Table> {
 	const report_status = await GetAllNursingHomeStatus();
 	const ratings = await GetAllNursingHomeRatings();
 
-	nursing_homes.map((nursinghome: any) => {
-		nursinghome.pic_digests = {};
-		nursinghome.pics = [];
-		pic_digests.map((digests: any) => {
-			if (digests.nursinghome_id === nursinghome.id) {
-				nursinghome.pic_digests = digests;
+	await Promise.all(
+		nursing_homes.map(async (nursinghome: any) => {
+			nursinghome.pic_digests = {};
+			nursinghome.pics = [];
+			pic_digests.map((digests: any) => {
+				if (digests.nursinghome_id === nursinghome.id) {
+					nursinghome.pic_digests = digests;
 
-				const available_pics = Object.keys(digests)
-					.filter((item: any) =>
-						digests[item] != null ? true : false,
-					)
-					.map((item: any) => item.replace("_hash", ""));
-				nursinghome.pics = available_pics;
+					const available_pics = Object.keys(digests)
+						.filter((item: any) =>
+							digests[item] != null ? true : false,
+						)
+						.map((item: any) => item.replace("_hash", ""));
+					nursinghome.pics = available_pics;
+				}
+			});
+
+			nursinghome.report_status = {};
+			report_status.map((status: any) => {
+				if (status.nursinghome_id === nursinghome.id) {
+					nursinghome.report_status = status;
+				}
+			});
+
+			nursinghome.rating = {};
+			nursinghome.rating.average = null;
+			nursinghome.rating.answers = 0;
+			ratings.map((rating: any) => {
+				if (rating.nursinghome_id === nursinghome.id) {
+					nursinghome.rating.average = rating.average;
+					nursinghome.rating.answers = rating.answers;
+				}
+			});
+
+			nursinghome.customer_commune = [];
+
+			const communes = await GetCustomerCommunesForNursingHome(
+				nursinghome.id,
+			);
+
+			if (communes.length && communes[0]["customer_commune"]) {
+				nursinghome.customer_commune = communes[0]["customer_commune"];
 			}
-		});
 
-		nursinghome.report_status = {};
-		report_status.map((status: any) => {
-			if (status.nursinghome_id === nursinghome.id) {
-				nursinghome.report_status = status;
-			}
-		});
-
-		nursinghome.rating = {};
-		nursinghome.rating.average = null;
-		nursinghome.rating.answers = 0;
-		ratings.map((rating: any) => {
-			if (rating.nursinghome_id === nursinghome.id) {
-				nursinghome.rating.average = rating.average;
-				nursinghome.rating.answers = rating.answers;
-			}
-		});
-
-		delete nursinghome.vacancy_last_updated_at;
-		delete nursinghome.basic_update_key;
-	});
+			delete nursinghome.vacancy_last_updated_at;
+			delete nursinghome.basic_update_key;
+		}),
+	);
 
 	return nursing_homes;
 }
@@ -133,6 +145,17 @@ export async function GetNursingHome(ctx: any): Promise<any> {
 	nursing_home_data["pic_captions"] = pic_captions;
 	nursing_home_data["report_status"] = nursing_home_status;
 	nursing_home_data["rating"] = rating;
+
+	nursing_home_data.customer_commune = [];
+
+	const communes = await GetCustomerCommunesForNursingHome(
+		nursing_home_data.id,
+	);
+
+	if (communes.length && communes[0]["customer_commune"]) {
+		nursing_home_data.customer_commune = communes[0]["customer_commune"];
+	}
+
 	return nursing_home_data;
 }
 
@@ -197,7 +220,9 @@ export async function DropAndRecreateTables(ctx: any): Promise<void | null> {
 	return result1;
 }
 
-export async function DropAndRecreateSurveyAnswerTables(ctx: any): Promise<void | null> {
+export async function DropAndRecreateSurveyAnswerTables(
+	ctx: any,
+): Promise<void | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
@@ -208,11 +233,13 @@ export async function DropAndRecreateSurveyAnswerTables(ctx: any): Promise<void 
 
 	const result1 = await DropAndRecreateNursingHomeSurveyAnswersTable();
 	const result2 = await DropAndRecreateNursingHomeSurveyScoresTable();
-	const result3= await DropAndRecreateNursingHomeSurveyTotalScoresTable();
+	const result3 = await DropAndRecreateNursingHomeSurveyTotalScoresTable();
 	return result1;
 }
 
-export async function DropAndRecreateSurveyTables(ctx: any): Promise<void | null> {
+export async function DropAndRecreateSurveyTables(
+	ctx: any,
+): Promise<void | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
@@ -228,7 +255,9 @@ export async function DropAndRecreateSurveyTables(ctx: any): Promise<void | null
 	return result1;
 }
 
-export async function DropAndRecreateReportsTables(ctx: any): Promise<void | null> {
+export async function DropAndRecreateReportsTables(
+	ctx: any,
+): Promise<void | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
@@ -240,7 +269,6 @@ export async function DropAndRecreateReportsTables(ctx: any): Promise<void | nul
 	const result1 = await DropAndRecreateReportsTable();
 	return result1;
 }
-
 
 export async function UploadPics(ctx: any): Promise<string | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
@@ -300,7 +328,7 @@ export async function GetPdf(ctx: any): Promise<any> {
 	if (document) {
 		ctx.response.set("Content-Type", "application/pdf");
 		ctx.response.set("Content-Length", document.length);
-		
+
 		if (ctx.params.digest)
 			ctx.response.set(
 				"Cache-Control",
@@ -341,19 +369,15 @@ export async function UpdateNursingHomeInformation(
 	return await UpdateNursingHomeInformationDB(id, key, has_vacancy);
 }
 
-export async function UpdateNursingHomeImage(
-	ctx: Context,
-): Promise<boolean> {
+export async function UpdateNursingHomeImage(ctx: Context): Promise<boolean> {
 	const { id, key } = ctx.params;
 	const image: any = ctx.request.body.image;
 
 	return await UpdateNursingHomeImageDB(id, key, image);
 }
 
-export async function UploadNursingHomeReport(
-	ctx: Context,
-): Promise<boolean> {
-	const loggedIn = await GetHasLogin(ctx.get('authentication') as string);
+export async function UploadNursingHomeReport(ctx: Context): Promise<boolean> {
+	const loggedIn = await GetHasLogin(ctx.get("authentication") as string);
 
 	if (loggedIn) {
 		const { id } = ctx.params;
@@ -386,9 +410,7 @@ export async function AdminRevealSecrets(
 	};
 }
 
-export async function AdminLogin(
-	ctx: Context,
-): Promise<string | null> {
+export async function AdminLogin(ctx: Context): Promise<string | null> {
 	const adminPw = process.env.VALVONTA_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
@@ -405,35 +427,29 @@ export async function AdminLogin(
 	return hash;
 }
 
-export async function CheckLogin(
-	ctx: Context,
-): Promise<string | null> {
-	const loggedIn = await GetHasLogin(ctx.get('authentication') as string);
-	if(loggedIn){
+export async function CheckLogin(ctx: Context): Promise<string | null> {
+	const loggedIn = await GetHasLogin(ctx.get("authentication") as string);
+	if (loggedIn) {
 		return "OK";
-	}else{
+	} else {
 		ctx.response.status = 401;
 		return "";
 	}
-	
 }
 
-export async function CheckSurveyKey(
-	ctx: Context,
-): Promise<string | null> {
+export async function CheckSurveyKey(ctx: Context): Promise<string | null> {
 	const valid = await GetIsValidSurveyKey(ctx.request.body.surveyKey);
-	if(valid){
+	if (valid) {
 		return "OK";
-	}else{
+	} else {
 		ctx.response.status = 401;
 		return "";
 	}
-	
 }
 
 export async function AddNursingHomeSurveyQuestion(
-	ctx: Context
-):Promise<string | null> {
+	ctx: Context,
+): Promise<string | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
@@ -442,24 +458,25 @@ export async function AddNursingHomeSurveyQuestion(
 		requestPw === adminPw;
 	if (!isPwValid) return null;
 
-	for(const question of ctx.request.body.questions){
-		const res = await AddNursingHomeSurveyQuestionDB( 
-			question.survey_id, 
-			question.order, 
-			question.question_type, 
-			question.question_fi, 
-			question.question_sv, 
-			question.question_description_fi, 
+	for (const question of ctx.request.body.questions) {
+		const res = await AddNursingHomeSurveyQuestionDB(
+			question.survey_id,
+			question.order,
+			question.question_type,
+			question.question_fi,
+			question.question_sv,
+			question.question_description_fi,
 			question.question_description_sv,
 			question.question_icon,
-			question.active);
+			question.active,
+		);
 	}
-	return "inserted"
+	return "inserted";
 }
 
 export async function UpdateNursingHomeSurveyQuestion(
-	ctx: Context
-):Promise<string | null> {
+	ctx: Context,
+): Promise<string | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
@@ -468,25 +485,24 @@ export async function UpdateNursingHomeSurveyQuestion(
 		requestPw === adminPw;
 	if (!isPwValid) return null;
 
-	const res = await UpdateNursingHomeSurveyQuestionDB( 
+	const res = await UpdateNursingHomeSurveyQuestionDB(
 		ctx.request.body.id,
-		ctx.request.body.survey_id, 
-		ctx.request.body.order, 
-		ctx.request.body.question_type, 
-		ctx.request.body.question_fi, 
-		ctx.request.body.question_sv, 
-		ctx.request.body.question_description_fi, 
+		ctx.request.body.survey_id,
+		ctx.request.body.order,
+		ctx.request.body.question_type,
+		ctx.request.body.question_fi,
+		ctx.request.body.question_sv,
+		ctx.request.body.question_description_fi,
 		ctx.request.body.question_description_sv,
 		ctx.request.body.question_icon,
-		ctx.request.body.active);
-	return "updated"
+		ctx.request.body.active,
+	);
+	return "updated";
 }
 
-
-
 export async function AddNursingHomeSurveyKeys(
-	ctx: Context
-):Promise<any[] | null> {
+	ctx: Context,
+): Promise<any[] | null> {
 	const adminPw = process.env.ADMIN_PASSWORD;
 	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
 	const isPwValid =
@@ -495,40 +511,35 @@ export async function AddNursingHomeSurveyKeys(
 		requestPw === adminPw;
 	if (!isPwValid) return null;
 
-	const res = await AddNursingHomeSurveyKeysDB( 
-		ctx.request.body.amount
-	);
+	const res = await AddNursingHomeSurveyKeysDB(ctx.request.body.amount);
 	return res;
 }
 
 export async function SubmitSurveyResponse(
-	ctx: Context
-):Promise<string | null> {
+	ctx: Context,
+): Promise<string | null> {
 	const { id } = ctx.params;
-	const res = await SubmitSurveyResponseDB( 
-		ctx.request.body.survey, 
-		id, 
-		ctx.request.body.surveyKey
+	const res = await SubmitSurveyResponseDB(
+		ctx.request.body.survey,
+		id,
+		ctx.request.body.surveyKey,
 	);
-	return ""
+	return "";
 }
 
-export async function GetSurvey(
-	surveyId: string
-):Promise<any> {
+export async function GetSurvey(surveyId: string): Promise<any> {
 	const survey = await GetSurveyDB(surveyId);
 	return survey;
 }
 
 export async function GetSurveyWithNursingHomeResults(
 	surveyId: string,
-	nursingHomeId: string
-):Promise<any> {
+	nursingHomeId: string,
+): Promise<any> {
 	const survey = await GetSurveyDB(surveyId);
-	const results = await GetNursingHomeSurveyResults(nursingHomeId)
+	const results = await GetNursingHomeSurveyResults(nursingHomeId);
 
-
-	survey.map((question: any)=>{
+	survey.map((question: any) => {
 		question.average = 0;
 		question.answers = 0;
 		results.map((result: any) => {
@@ -540,4 +551,15 @@ export async function GetSurveyWithNursingHomeResults(
 	});
 
 	return survey;
+}
+
+export async function UpdateNursingHomeCustomerCommunes(
+	ctx: Context,
+): Promise<any> {
+	const { id } = ctx.params;
+	const communes = ctx.request.body["customer_commune"];
+
+	const result = await UpdateCustomerCommunesForNursingHome(id, communes);
+
+	return result;
 }
