@@ -798,9 +798,9 @@ export const translations = {
 		"fi-FI": "Valvontakäynnin loppuarvio",
 		"sv-FI": "Slutrapport över tillsynsbesöket",
 	},
-	reportScoreLong: {
-		"fi-FI": "Viimeisimmän valvontakäynnin loppuarvio",
-		"sv-FI": "Viimeisimmän valvontakäynnin loppuarvio",
+	reportScoreHeader: {
+		"fi-FI": "Valvontakäynnit",
+		"sv-FI": "Valvontakäynnit",
 	},
 	latestVisit: {
 		"fi-FI": "Viimeisin valvontakäynti",
@@ -1620,9 +1620,9 @@ export const translations = {
 	},
 	surveillanceDescription: {
 		"fi-FI":
-			"Valvontakäynnit ovat kunnan suorittamia tarkistuksia, joilla kunta valvoo palvelun tasoa. Valvontakäynnit voivat olla ennalta ilmoitettuja tai ennalta ilmoittamattomia käyntejä tai palautteen/ilmoituksen perusteella tehtyjä käyntejä.",
+			"Kunnat valvovat, että hoivakotien toiminta on sovittujen laatuvaatimusten ja muiden kriteerien mukaista. Siksi teemme hoivakoteihin valvontakäyntejä: osan valvontakäynneistä sovimme hoivakotien kanssa etukäteen ja osan käynneistä teemme ennalta ilmoittamatta. Teemme valvontakäynnin myös silloin, kun asukkaat, omaiset tai muut asianosaiset ilmoittavat hoivakotiin liittyvistä huolenaiheista.",
 		"sv-FI":
-			"Valvontakäynnit ovat kunnan suorittamia tarkistuksia, joilla kunta valvoo palvelun tasoa. Valvontakäynnit voivat olla ennalta ilmoitettuja tai ennalta ilmoittamattomia käyntejä tai palautteen/ilmoituksen perusteella tehtyjä käyntejä.",
+			"Kunnat valvovat, että hoivakotien toiminta on sovittujen laatuvaatimusten ja muiden kriteerien mukaista. Siksi teemme hoivakoteihin valvontakäyntejä: osan valvontakäynneistä sovimme hoivakotien kanssa etukäteen ja osan käynneistä teemme ennalta ilmoittamatta. Teemme valvontakäynnin myös silloin, kun asukkaat, omaiset tai muut asianosaiset ilmoittavat hoivakotiin liittyvistä huolenaiheista.",
 	},
 	surveyOpenAnswerInstruction1: {
 		"fi-FI":

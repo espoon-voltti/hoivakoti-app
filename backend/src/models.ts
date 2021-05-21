@@ -235,8 +235,8 @@ async function CreateNursingHomeSurveyTextAnswersTable(): Promise<void> {
 		"NursingHomeSurveyTextAnswers",
 		(table: any) => {
 			table.string("id", 16);
-			table.string("answer_text", 1000);
-			table.string("response_text", 1000);
+			table.string("answer_text", 600);
+			table.string("response_text", 600);
 			table.dateTime("response_date");
 			table.enu("feedback_state", [...Object.values(FeedbackState)]);
 		},
@@ -919,7 +919,7 @@ export async function SubmitSurveyResponse(
 
 				await knex.table("NursingHomeSurveyTextAnswers").insert({
 					id: sqlJoinKey,
-					answer_text: question.value.slice(0, 1000),
+					answer_text: question.value.slice(0, 600),
 					feedback_state: FeedbackState.OPEN,
 				});
 			}
