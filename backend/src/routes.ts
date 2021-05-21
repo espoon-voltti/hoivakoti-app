@@ -47,6 +47,7 @@ import {
 	GetKeycloakAccessToken,
 	RefreshKeycloakAccessToken,
 	LogoutKeycloakAccessToken,
+	UpdateCustomerCommunesBatch,
 } from "./controllers";
 import config from "./config";
 
@@ -183,6 +184,12 @@ router.post("/api/nursing-homes/:id/communes", async ctx => {
 	const res = await UpdateNursingHomeCustomerCommunes(ctx);
 
 	ctx.body = { success: res };
+});
+
+router.post("/api/nursing-homes/communes-batch", async ctx => {
+	const res = await UpdateCustomerCommunesBatch(ctx);
+
+	ctx.body = { ...res };
 });
 
 router.get("/api/health", async ctx => {
