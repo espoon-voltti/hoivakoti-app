@@ -10,6 +10,7 @@ import Map from "./Map";
 import i18next, { TranslationKey, useCurrentLanguage, useT } from "../i18n";
 import { NursingHome } from "./types";
 import Commune from "../shared/types/commune";
+import { Translation } from "../shared/types/translation";
 
 type Language = string;
 
@@ -21,10 +22,6 @@ const getTranslationByLanguage = (
 };
 
 const calculateMapVisible = (width: number): boolean => width >= 1130;
-
-interface Translation {
-	[key: string]: string;
-}
 
 const reverseObjectKeyValues = (obj: Translation): Translation => {
 	const reversedObject: Translation = {};

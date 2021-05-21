@@ -33,6 +33,7 @@ import PrivateRoute from "./PrivateRoute";
 
 import AuthContextProvider from "./auth-context";
 import AuthTypes from "../shared/types/auth-types";
+import PageNursingHomeCommunes from "./PageNursingHomeCommunes";
 
 const App: React.FC = () => {
 	const currentLanguage = useCurrentLanguage();
@@ -126,6 +127,12 @@ const App: React.FC = () => {
 									exact
 									authType={AuthTypes.VALVONTA}
 									component={PageManualSurveyEntry}
+								/>
+								<PrivateRoute
+									path="/valvonta/kotikunnat/:id"
+									exact
+									authType={AuthTypes.VALVONTA}
+									component={PageNursingHomeCommunes}
 								/>
 								<Route
 									exact

@@ -235,8 +235,8 @@ async function CreateNursingHomeSurveyTextAnswersTable(): Promise<void> {
 		"NursingHomeSurveyTextAnswers",
 		(table: any) => {
 			table.string("id", 16);
-			table.string("answer_text", 1000);
-			table.string("response_text", 1000);
+			table.string("answer_text", 600);
+			table.string("response_text", 600);
 			table.dateTime("response_date");
 			table.enu("feedback_state", [...Object.values(FeedbackState)]);
 		},
@@ -919,7 +919,7 @@ export async function SubmitSurveyResponse(
 
 				await knex.table("NursingHomeSurveyTextAnswers").insert({
 					id: sqlJoinKey,
-					answer_text: question.value.slice(0, 1000),
+					answer_text: question.value.slice(0, 600),
 					feedback_state: FeedbackState.OPEN,
 				});
 			}
@@ -1434,31 +1434,27 @@ const GetUserAccessRoles = async (
 	username: string,
 	token: string,
 ): Promise<any> => {
-	try {
-		const reqData = queryString.stringify({
-			client_id: clientId,
-			client_secret: process.env.KEYCLOAK_SECRET,
-			username,
-			token,
-		});
+	const reqData = queryString.stringify({
+		client_id: clientId,
+		client_secret: process.env.KEYCLOAK_SECRET,
+		username,
+		token,
+	});
 
-		const res = await axios.post(
-			`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
-			reqData,
-		);
+	const res = await axios.post(
+		`${process.env.SERVICE_PROXY_ENTRYPOINT}/auth/realms/hoivakodit/protocol/openid-connect/token/introspect`,
+		reqData,
+	);
 
-		if (
-			res.data &&
-			res.data["realm_access"].roles &&
-			res.data["realm_access"].roles.includes(`${clientId}-access`)
-		) {
-			return res.data["realm_access"].roles;
-		}
-
-		return false;
-	} catch (error) {
-		throw error;
+	if (
+		res.data &&
+		res.data["realm_access"].roles &&
+		res.data["realm_access"].roles.includes(`${clientId}-access`)
+	) {
+		return res.data["realm_access"].roles;
 	}
+
+	return false;
 };
 
 export async function GetAccessToken(
@@ -1609,7 +1605,11 @@ export async function addDummyNursingHome(): Promise<string> {
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem.",
 	};
 
-	await InsertNursingHomeToDB(nursinghome);
+	const testNursingHomeId = await InsertNursingHomeToDB(nursinghome);
+
+	await UpdateCustomerCommunesForNursingHome(testNursingHomeId, [
+		Commune.EPO,
+	]);
 
 	const nursinghome2: NursingHome = {
 		name: "Testi 2 Nursinghome with a very long name",

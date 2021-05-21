@@ -10,7 +10,7 @@ const Title: FC<Props> = ({ title }) => {
 	const defaultTitle = useT("appTitle");
 	const titleTemplate = useT("titleTemplate");
 	const currentLanguage = useCurrentLanguage();
-	console.log(currentLanguage);
+
 	return (
 		<Helmet
 			htmlAttributes={{ lang: currentLanguage }}

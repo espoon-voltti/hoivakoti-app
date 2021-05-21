@@ -55,15 +55,21 @@ export const Image: FC<ImageProps> = ({
 	variant = "img",
 	onClick,
 }) => {
-	if (!imageName || !nursingHome || !nursingHome.pic_digests)
+	if (!imageName || !nursingHome || !nursingHome.pic_digests) {
 		return placeholder;
+	}
 
 	const digest: string = (nursingHome.pic_digests as any)[
 		`${imageName}_hash`
 	];
-	if (!digest) return placeholder;
+
+	if (!digest) {
+		return placeholder;
+	}
+
 	const srcUrl = `${config.API_URL}/nursing-homes/${nursingHome.id}/pics/${imageName}/${digest}`;
-	if (variant === "img")
+
+	if (variant === "img") {
 		return (
 			<img
 				src={srcUrl}
@@ -72,7 +78,7 @@ export const Image: FC<ImageProps> = ({
 				onClick={onClick}
 			/>
 		);
-	else
+	} else {
 		return (
 			<div className={className} onClick={onClick}>
 				<div
@@ -83,6 +89,7 @@ export const Image: FC<ImageProps> = ({
 				/>
 			</div>
 		);
+	}
 };
 
 interface NursingHomeDetailsBoxProps {
@@ -101,12 +108,13 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const webpage = useT("webpage");
 	const visitingInfo = useT("visitingInfo");
 	const openReport = useT("openReport");
-	const reportScoreHeader = useT("reportScoreLong");
+	const reportScoreHeader = useT("reportScoreHeader");
 	const giveReview = useT("giveReview");
 	const readMore = useT("readMore");
 	const feedbackCustomerReview = useT("feedbackCustomerReview");
 	const feedbackRelativeReview = useT("feedbackRelativeReview");
 	const feedbackNoReviews = useT("feedbackNoReviews");
+	const feedbackAverage = useT("feedbackAverage");
 
 	const surveyOption1 = useT("surveyOption1");
 	const surveyOption2 = useT("surveyOption2");
@@ -123,38 +131,49 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reportTypeAnnounced = useT("reportTypeAnnounced");
 	const reportTypeUnannounced = useT("reportTypeUnannounced");
 	const reportTypeConcern = useT("reportTypeConcern");
+	const surveillanceDescription = useT("surveillanceDescription");
 
 	let reportStatus = useT("status_waiting");
+
 	let hasReport = false;
 
 	const formatDate = (dateStr: string | null): string => {
-		if (!dateStr) return "";
-		console.log(dateStr);
+		if (!dateStr) {
+			return "";
+		}
+
 		const date = new Date(dateStr);
+
 		const YYYY = String(date.getUTCFullYear());
 		const MM = String(date.getUTCMonth() + 1);
 		const DD = String(date.getUTCDate());
+
 		return `${DD}.${MM}.${YYYY}`;
 	};
 
-	const ratingToString = (rating: number | null): string => {
-		let str = "";
-
-		if (rating) {
-			if (rating > 4.5) {
-				str = surveyOption5;
-			} else if (rating > 3.5) {
-				str = surveyOption4;
-			} else if (rating > 2.5) {
-				str = surveyOption3;
-			} else if (rating > 1.5) {
-				str = surveyOption2;
-			} else if (rating > 0.5) {
-				str = surveyOption1;
+	const ratingToString = (
+		answers: number | null,
+		rating: number | null,
+	): string => {
+		if (rating && answers) {
+			if (answers >= 5) {
+				if (rating > 4.5) {
+					return surveyOption5;
+				} else if (rating > 3.5) {
+					return surveyOption4;
+				} else if (rating > 2.5) {
+					return surveyOption3;
+				} else if (rating > 1.5) {
+					return surveyOption2;
+				} else if (rating > 0.5) {
+					return surveyOption1;
+				}
 			}
+
+			return feedbackAverage;
 		}
 
-		return str + " ";
+		return " ";
 	};
 
 	const getTypeTranslation = (typeStr: string): string => {
@@ -198,8 +217,8 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reports: JSX.Element[] | null =
 		nursingHome.report_status &&
 		nursingHome.report_status.map((status, index) => (
-			<div className={hasReport ? "" : "report_hidden"} key={index}>
-				<p className={"report_info_item"}>
+			<div className={hasReport ? "" : "report-hidden"} key={index}>
+				<p className={"report-info-item"}>
 					{getTypeTranslation(status.type)} {formatDate(status.date)}
 				</p>
 
@@ -216,6 +235,19 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 			</div>
 		));
 
+	const nursingHomeRating = nursingHome.rating;
+	const hasRating = !!nursingHomeRating;
+
+	const enoughCustomerAnswers =
+		hasRating &&
+		nursingHomeRating.answers_customers &&
+		nursingHomeRating.answers_customers >= 5;
+
+	const enoughRelativesAnswers =
+		hasRating &&
+		nursingHomeRating.answers_relatives &&
+		nursingHomeRating.answers_relatives >= 5;
+
 	return (
 		<>
 			{id && <div id={id} />}
@@ -225,7 +257,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						to={`/hoivakodit/${nursingHome.id}/anna-arvio`}
 						className="nursinghome-details-box-survey-link"
 					>
-						<button className="btn report_info_btn">
+						<button className="btn report-info-btn">
 							{giveReview}
 						</button>
 					</Link>
@@ -237,7 +269,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						className="nursinghome-details-logo"
 						alt="Omistajan logo"
 					/>
-					<h4 className="nursinghome-details-name">
+					<h4 className="nursinghome-details-heading">
 						{nursingHome.name}
 					</h4>
 					<a
@@ -278,23 +310,22 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 					</dl>
 				</div>
 				<div className="nursinghome-details-box-section">
-					<div className="report_info_container">
+					<div className="report-info-container">
 						<div>
 							<p>{feedbackCustomerReview}</p>
 							<p>
-								<span className="report_info_minor_header">
-									{nursingHome.rating &&
-									nursingHome.rating.answers_customers
+								<span className="report-info-minor-header">
+									{nursingHomeRating &&
+									nursingHomeRating.answers_customers
 										? ratingToString(
-												nursingHome.rating
-													.average_customers,
+												nursingHomeRating.answers_customers,
+												nursingHomeRating.average_customers,
 										  )
 										: feedbackNoReviews}
-								</span>
-
-								{nursingHome.rating &&
-								nursingHome.rating.average_customers
-									? `${nursingHome.rating.average_customers.toPrecision(
+								</span>{" "}
+								{enoughCustomerAnswers &&
+								nursingHomeRating.average_customers
+									? `${nursingHomeRating.average_customers.toPrecision(
 											2,
 									  )} / 5`
 									: ""}
@@ -303,19 +334,18 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<div>
 							<p>{feedbackRelativeReview}</p>
 							<p>
-								<span className="report_info_minor_header">
-									{nursingHome.rating &&
-									nursingHome.rating.average_relatives
+								<span className="report-info-minor-header">
+									{nursingHomeRating &&
+									nursingHomeRating.average_relatives
 										? ratingToString(
-												nursingHome.rating
-													.average_relatives,
+												nursingHomeRating.answers_relatives,
+												nursingHomeRating.average_relatives,
 										  )
 										: feedbackNoReviews}
-								</span>
-
-								{nursingHome.rating &&
-								nursingHome.rating.average_relatives
-									? `${nursingHome.rating.average_relatives.toPrecision(
+								</span>{" "}
+								{enoughRelativesAnswers &&
+								nursingHomeRating.average_relatives
+									? `${nursingHomeRating.average_relatives.toPrecision(
 											2,
 									  )} / 5`
 									: ""}
@@ -324,25 +354,38 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						<Link
 							to={`/hoivakodit/${nursingHome.id}/arviot`}
 							className={
-								nursingHome.rating &&
-								(nursingHome.rating.average_relatives ||
-									nursingHome.rating.average_customers)
+								nursingHomeRating &&
+								(nursingHomeRating.average_relatives ||
+									nursingHomeRating.average_customers)
 									? ""
 									: "hidden"
 							}
 						>
-							<button className="btn report_info_btn">
+							<button className="btn report-info-btn">
 								{readMore}
 							</button>
 						</Link>
 					</div>
 				</div>
 				<div className="nursinghome-details-box-section">
-					<div className="report_info_container">
-						<p className={hasReport ? "" : "hidden"}>
+					<div className="report-info-container">
+						<h4
+							className={
+								hasReport
+									? "nursinghome-details-heading"
+									: "hidden"
+							}
+						>
 							{reportScoreHeader}
+						</h4>
+						<p
+							className={
+								hasReport ? "report-info-description" : "hidden"
+							}
+						>
+							{surveillanceDescription}
 						</p>
-						<p className="report_info_minor_header">
+						<p className="report-info-minor-header">
 							{reportStatus}
 						</p>
 						{reports}
@@ -353,7 +396,9 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	);
 };
 
-function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
+const getAvailablePics = (
+	nursingHome: NursingHome,
+): [string, string][] | null => {
 	const { pic_digests = [] }: { pic_digests: any } = nursingHome;
 
 	const availablePicHashes =
@@ -363,16 +408,20 @@ function getAvailablePics(nursingHome: NursingHome): [string, string][] | null {
 			.filter(name => pic_digests[name] !== null)
 			.filter(hashName => hashName !== "owner_logo_hash");
 
-	if (!availablePicHashes || availablePicHashes.length === 0) return null;
+	if (!availablePicHashes || availablePicHashes.length === 0) {
+		return null;
+	}
 
 	const availablePics = availablePicHashes.map<[string, string]>(hashName => {
 		const imageName = hashName.replace("_hash", "");
-		const digest: string = pic_digests[imageName];
+
+		const digest: string = pic_digests[hashName];
+
 		return [imageName, digest];
 	});
 
 	return availablePics;
-}
+};
 
 interface NursingHomeRouteParams {
 	id: string;
@@ -417,18 +466,13 @@ const PageNursingHome: FC = () => {
 	}, [id]);
 
 	const linkBacktoList = useT("linkBacktoList");
-
 	const anchorDetailsBox = useT("anchorDetailsBox");
-
 	const loadingText = useT("loadingText");
 	const filterAraLabel = useT("filterAraLabel");
 	const numApartments = useT("numApartments");
 	const serviceLanguage = useT("serviceLanguage");
-
 	const language = useT(nursingHome && (nursingHome.language as any));
-
 	const linkBacktoTop = useT("linkBacktoTop");
-
 	const basicInformation = useT("basicInformation");
 	const owner = useT("owner");
 	const yearofConst = useT("yearofConst");
@@ -440,7 +484,6 @@ const PageNursingHome: FC = () => {
 	const LAHapartments = useT("LAHapartments");
 	const foodHeader = useT("foodHeader");
 	const cookingMethod = useT("cookingMethod");
-
 	const foodMoreInfo = useT("foodMoreInfo");
 	const linkMenu = useT("linkMenu");
 	const activies = useT("activies");
@@ -452,11 +495,9 @@ const PageNursingHome: FC = () => {
 	const nearbyServices = useT("nearbyServices");
 	const monthShort = useT("monthShort");
 	const btnShowImages = useT("btnShowImages");
-
 	const linkMoreInfoOutdoor = useT("linkMoreInfoOutdoor");
 	const linkMoreInfoActivies = useT("linkMoreInfoActivies");
 	const linkMoreInfoPersonnel = useT("linkMoreInfoPersonnel");
-
 	const filterYes = useT("filterYes");
 	const filterNo = useT("filterNo");
 	const filterARABoth = useT("filterARABoth");
@@ -486,9 +527,17 @@ const PageNursingHome: FC = () => {
 		: 0;
 
 	const heroPics =
+		nursingHome &&
+		picCaptions &&
 		availablePics &&
 		availablePics.length &&
-		availablePics.slice(0, numPics);
+		availablePics.slice(0, numPics).map(([name]) => {
+			return {
+				name: name,
+				caption:
+					(picCaptions && picCaptions[`${name}_caption`]) || null,
+			};
+		});
 
 	return (
 		<div className="nursinghome-page-container">
@@ -505,13 +554,14 @@ const PageNursingHome: FC = () => {
 					className={`nursinghome-hero nursinghome-hero-n${numPics}`}
 				>
 					{heroPics ? (
-						heroPics.map(([imageName], idx) => (
+						heroPics.map((image, idx) => (
 							<Image
-								key={imageName}
+								key={image.name}
 								nursingHome={nursingHome}
-								imageName={imageName as NursingHomeImageName}
+								imageName={image.name as NursingHomeImageName}
 								className="nursinghome-hero-img"
-								variant="background"
+								variant="img"
+								alt={(image.caption as string) || ""}
 								placeholder={
 									<div
 										className={
