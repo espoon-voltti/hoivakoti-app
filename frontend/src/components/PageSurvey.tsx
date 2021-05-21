@@ -7,8 +7,8 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
-import { NursingHome, NursingHomeImageName } from "./types";
-import { stringify } from "querystring";
+import { NursingHome } from "./types";
+import { Trans } from "react-i18next";
 
 let surveyState: any[] = [];
 
@@ -17,7 +17,9 @@ const PageSurvey: FC = () => {
 	const [logInFailed, setLogInFailed] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
+
 	const { id } = useParams() as any;
+
 	const [survey, setSurvey] = useState<any[] | null>(null);
 	const [surveyDone, setSurveyDone] = useState<boolean>(false);
 
@@ -99,17 +101,21 @@ const PageSurvey: FC = () => {
 		e: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		e.preventDefault();
-		const login = await axios
+		await axios
 			.post(`${config.API_URL}/survey/check-key`, {
 				surveyKey: password,
 			})
-			.then(function(response: { data: string }) {
+			.then(function() {
 				setLoggedIn(true);
 			})
 			.catch((error: Error) => {
 				setLogInFailed(true);
 				console.error(error.message);
 			});
+	};
+
+	const replaceLocation = (link: string): void => {
+		window.location.href = link;
 	};
 
 	const raitingQuestions: JSX.Element[] | null =
@@ -127,6 +133,8 @@ const PageSurvey: FC = () => {
 				</section>
 			));
 
+	const textQuestionLink = `/hoivakodit/${id}/arviot`;
+
 	const textQuestions: JSX.Element[] | null =
 		survey &&
 		survey
@@ -135,6 +143,7 @@ const PageSurvey: FC = () => {
 				<section className={"page-survey-section"} key={index}>
 					<TextQuestion
 						question={question}
+						link={textQuestionLink}
 						onChange={value => {
 							updateAnswer(question.id, value);
 						}}
@@ -267,6 +276,7 @@ export default PageSurvey;
 
 interface QuestionProps {
 	question: any | null;
+	link?: string | null;
 	onChange: (value: any) => void;
 }
 
@@ -390,9 +400,15 @@ export const Question: FC<QuestionProps> = ({ question, onChange }) => {
 	);
 };
 
-export const TextQuestion: FC<QuestionProps> = ({ question, onChange }) => {
+export const TextQuestion: FC<QuestionProps> = ({
+	question,
+	link,
+	onChange,
+}) => {
 	const charactersLeft = useT("charactersLeft");
 	const openFeedbackPlaceholder = useT("openFeedbackPlaceholder");
+	const surveyOpenAnswerInstruction1 = useT("surveyOpenAnswerInstruction1");
+
 	const [questionState, setQuestionState] = useState<string>("");
 
 	return (
@@ -405,26 +421,37 @@ export const TextQuestion: FC<QuestionProps> = ({ question, onChange }) => {
 								? question.question_sv
 								: question.question_fi}
 						</h3>
-						<h4 className="survey-card--desc">
-							{i18n.language == "sv-FI"
-								? question.question_description_sv
-								: question.question_description_fi}
-						</h4>
+						<p>{surveyOpenAnswerInstruction1}</p>
+						<p>
+							<Trans
+								i18nKey="defaultNamespace:surveyOpenAnswerInstruction2"
+								components={[
+									// eslint-disable-next-line react/jsx-key
+									<Link
+										to={{
+											pathname: link as string,
+											hash: "#contact-list",
+										}}
+									/>,
+								]}
+							></Trans>
+						</p>
 					</div>
 					<textarea
 						value={questionState}
 						placeholder={openFeedbackPlaceholder}
+						maxLength={600}
 						onChange={(
 							event: React.ChangeEvent<HTMLTextAreaElement>,
 						): void => {
-							if (event.target.value.length <= 1000) {
+							if (event.target.value.length <= 600) {
 								onChange(event.target.value);
 								setQuestionState(event.target.value);
 							}
 						}}
 					></textarea>
 					<p>
-						{1000 - questionState.length}/1000 {charactersLeft}
+						{600 - questionState.length}/600 {charactersLeft}
 					</p>
 				</div>
 			</div>

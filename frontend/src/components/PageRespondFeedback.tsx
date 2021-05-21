@@ -32,7 +32,6 @@ const PageRespondFeedback: FC = () => {
 		response: string,
 		responseId: string,
 	): Promise<void> => {
-		console.log(responseId);
 		await axios
 			.post(
 				`${config.API_URL}/feedback/response`,
@@ -129,17 +128,18 @@ export const ResponseField: FC<ResponseFieldProps> = ({ feedback, submit }) => {
 					onChange={(
 						event: React.ChangeEvent<HTMLTextAreaElement>,
 					): void => {
-						if (event.target.value.length <= 1000) {
+						if (event.target.value.length <= 600) {
 							setResponse(event.target.value);
 							setChanged(true);
 							setSaved(false);
 						}
 					}}
+					maxLength={600}
 					rows={4}
 					value={response}
 				></textarea>
 				<span>
-					{1000 - response.length}/1000 {charactersLeft}
+					{600 - response.length}/600 {charactersLeft}
 				</span>
 			</div>
 			<div className="feedback-response-actions">

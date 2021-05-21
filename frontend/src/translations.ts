@@ -32,6 +32,10 @@ export const translations = {
 		"fi-FI": "Kaikki alueet",
 		"sv-FI": "Alla områden",
 	},
+	communePickerLabel: {
+		"fi-FI": "Mikä on kotikuntasi?",
+		"sv-FI": "Mikä on kotikuntasi?",
+	},
 	landingIngress1: {
 		"fi-FI":
 			"Tältä sivustolta löydät Espoon kaupungin hyväksymät <0>tehostetun palveluasumisen</0> hoivakodit <1>ikäihmisille</1>. Saadaksesi hoivakotipaikan tarvitset Seniorineuvonta Nestorin tekemän myönteisen päätöksen tehostetusta palveluasumisesta.",
@@ -794,9 +798,9 @@ export const translations = {
 		"fi-FI": "Valvontakäynnin loppuarvio",
 		"sv-FI": "Slutrapport över tillsynsbesöket",
 	},
-	reportScoreLong: {
-		"fi-FI": "Viimeisimmän valvontakäynnin loppuarvio",
-		"sv-FI": "Viimeisimmän valvontakäynnin loppuarvio",
+	reportScoreHeader: {
+		"fi-FI": "Valvontakäynnit",
+		"sv-FI": "Valvontakäynnit",
 	},
 	latestVisit: {
 		"fi-FI": "Viimeisin valvontakäynti",
@@ -863,9 +867,9 @@ export const translations = {
 	},
 	reviewFooterPart3: {
 		"fi-FI":
-			"Vapaan palautteen mahdollisuus sekä asiakkaiden antamat arviot on tarkoitus lisätä tähän portaaliin myöhemmin.",
+			"Tyytyväisyyskyselyn tulokset näytetään vasta kun tuloksia on vähintään viisi.",
 		"sv-FI":
-			"Det är meningen att en möjlighet till fritt formulerad respons och klienternas bedömningar ska läggas till i denna portal senare.",
+			"Tyytyväisyyskyselyn tulokset näytetään vasta kun tuloksia on vähintään viisi.",
 	},
 	reviewFooterPart4: {
 		"fi-FI":
@@ -950,6 +954,10 @@ export const translations = {
 	feedbackVeryBad: {
 		"fi-FI": "Erittäin huono",
 		"sv-FI": "Mycket dålig",
+	},
+	feedbackAverage: {
+		"fi-FI": "Keskiarvo tulossa",
+		"sv-FI": "Keskiarvo tulossa",
 	},
 	"Suomi|Ruotsi": {
 		"fi-FI": "Suomi|Ruotsi",
@@ -1605,5 +1613,27 @@ export const translations = {
 			"Läheiset ja omaiset voivat tilapäisesti yöpyä luonasi. Sovithan yöpymisestä etukäteen hoivakodin kanssa.",
 		"sv-FI":
 			"Läheiset ja omaiset voivat tilapäisesti yöpyä luonasi. Sovithan yöpymisestä etukäteen hoivakodin kanssa.",
+	},
+	changeNursingHomeCommunes: {
+		"fi-FI": "Muokkaa hoivakodin kotikuntia",
+		"sv-FI": "Muokkaa hoivakodin kotikuntia",
+	},
+	surveillanceDescription: {
+		"fi-FI":
+			"Kunnat valvovat, että hoivakotien toiminta on sovittujen laatuvaatimusten ja muiden kriteerien mukaista. Siksi teemme hoivakoteihin valvontakäyntejä: osan valvontakäynneistä sovimme hoivakotien kanssa etukäteen ja osan käynneistä teemme ennalta ilmoittamatta. Teemme valvontakäynnin myös silloin, kun asukkaat, omaiset tai muut asianosaiset ilmoittavat hoivakotiin liittyvistä huolenaiheista.",
+		"sv-FI":
+			"Kunnat valvovat, että hoivakotien toiminta on sovittujen laatuvaatimusten ja muiden kriteerien mukaista. Siksi teemme hoivakoteihin valvontakäyntejä: osan valvontakäynneistä sovimme hoivakotien kanssa etukäteen ja osan käynneistä teemme ennalta ilmoittamatta. Teemme valvontakäynnin myös silloin, kun asukkaat, omaiset tai muut asianosaiset ilmoittavat hoivakotiin liittyvistä huolenaiheista.",
+	},
+	surveyOpenAnswerInstruction1: {
+		"fi-FI":
+			"Anna yleistä palautetta hoivakodin laadusta. Palaute julkaistaan kun se on hyväksytty. Palautteen antajan nimi pysyy piilossa. Tietoja joista voidaan tunnistaa henkilö, ei voida julkaista.",
+		"sv-FI":
+			"Anna yleistä palautetta hoivakodin laadusta. Palaute julkaistaan kun se on hyväksytty. Palautteen antajan nimi pysyy piilossa. Tietoja joista voidaan tunnistaa henkilö, ei voida julkaista.",
+	},
+	surveyOpenAnswerInstruction2: {
+		"fi-FI":
+			"Jos haluat antaa tietoja jostain tietystä henkilöstä tai tilanteesta tai haluat palautteeseen henkilökohtaisen vastauksen, anna palaute kunnan oman <0>palautekanavan</0> kautta.",
+		"sv-FI":
+			"Jos haluat antaa tietoja jostain tietystä henkilöstä tai tilanteesta tai haluat palautteeseen henkilökohtaisen vastauksen, anna palaute kunnan oman <0>palautekanavan</0> kautta.",
 	},
 };

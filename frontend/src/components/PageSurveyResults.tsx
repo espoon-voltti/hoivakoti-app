@@ -2,30 +2,33 @@ import React, { FC, useEffect, useState } from "react";
 import { useT } from "../i18n";
 import i18n from "../i18n";
 import "../styles/PageSurveyResults.scss";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import config from "./config";
 import { GetNursingHomeResponse } from "./types";
 import { NursingHome } from "./types";
+import FeedbackState from "../shared/types/feedback-state";
+
+interface OpenAnswer {
+	answer_text: string;
+	created_date: string;
+	feedback_state: FeedbackState;
+	id: string;
+	response_date: string;
+	response_text: string;
+}
 
 const PageSurveyResults: FC = () => {
 	const { id } = useParams() as any;
+
+	if (!id) throw new Error("Invalid URL!");
+
 	const [relativeSurvey, setRelativeSurvey] = useState<any[] | null>(null);
 	const [textResults, setTextResults] = useState<any[] | null>(null);
 	const [customerSurvey, setCustomerSurvey] = useState<any[] | null>(null);
 	const [nursingHome, setNursingHome] = useState<NursingHome | null>(null);
 
-	if (!id) throw new Error("Invalid URL!");
-
-	const formatDate = (dateStr: string | null): string => {
-		if (!dateStr) return "";
-		console.log(dateStr);
-		const date = new Date(dateStr);
-		const YYYY = String(date.getUTCFullYear());
-		const MM = String(date.getUTCMonth() + 1);
-		const DD = String(date.getUTCDate());
-		return `${DD}.${MM}.${YYYY}`;
-	};
+	const { hash } = useLocation();
 
 	useEffect(() => {
 		axios
@@ -69,6 +72,18 @@ const PageSurveyResults: FC = () => {
 			});
 	}, [id]);
 
+	useEffect(() => {
+		if (hash) {
+			setTimeout(() => {
+				const hashElement = document.querySelector(hash) as HTMLElement;
+
+				if (hashElement) {
+					hashElement.scrollIntoView();
+				}
+			}, 250);
+		}
+	}, [hash]);
+
 	const loadingText = useT("loadingText");
 	const nursingHomeReviews = useT("nursingHomeReviews");
 	const linkBackToBasicInfo = useT("linkBackToBasicInfo");
@@ -80,6 +95,7 @@ const PageSurveyResults: FC = () => {
 	const reviewFooterHeader = useT("reviewFooterHeader");
 	const reviewFooterPart1 = useT("reviewFooterPart1");
 	const reviewFooterPart2 = useT("reviewFooterPart2");
+	const reviewFooterPart3 = useT("reviewFooterPart3");
 	const reviewFooterPart4 = useT("reviewFooterPart4");
 
 	const noRelativesOpenTextAnswers = useT("noRelativesOpenTextAnswers");
@@ -90,6 +106,7 @@ const PageSurveyResults: FC = () => {
 	const optionText3 = useT("surveyOption3");
 	const optionText4 = useT("surveyOption4");
 	const optionText5 = useT("surveyOption5");
+	const feedbackAverage = useT("feedbackAverage");
 
 	const espoo = useT("espoo");
 	const kirkkonummi = useT("kirkkonummi");
@@ -113,24 +130,43 @@ const PageSurveyResults: FC = () => {
 
 	const average = useT("average");
 
-	const ratingToString = (rating: number | null): string => {
-		let str = "-";
-
-		if (rating) {
-			if (rating > 4.5) {
-				str = optionText5;
-			} else if (rating > 3.5) {
-				str = optionText4;
-			} else if (rating > 2.5) {
-				str = optionText3;
-			} else if (rating > 1.5) {
-				str = optionText2;
-			} else if (rating > 0.5) {
-				str = optionText1;
-			}
+	const formatDate = (dateStr: string | null): string => {
+		if (!dateStr) {
+			return "";
 		}
 
-		return str;
+		const date = new Date(dateStr);
+
+		const YYYY = String(date.getUTCFullYear());
+		const MM = String(date.getUTCMonth() + 1);
+		const DD = String(date.getUTCDate());
+
+		return `${DD}.${MM}.${YYYY}`;
+	};
+
+	const ratingToString = (
+		answers: number | null,
+		rating: number | null,
+	): string => {
+		if (rating && answers) {
+			if (answers >= 5) {
+				if (rating > 4.5) {
+					return optionText5;
+				} else if (rating > 3.5) {
+					return optionText4;
+				} else if (rating > 2.5) {
+					return optionText3;
+				} else if (rating > 1.5) {
+					return optionText2;
+				} else if (rating > 0.5) {
+					return optionText1;
+				}
+			}
+
+			return feedbackAverage;
+		}
+
+		return "-";
 	};
 
 	const questions = (survey: any): JSX.Element[] | null =>
@@ -197,44 +233,72 @@ const PageSurveyResults: FC = () => {
 			</div>
 		));
 
-	const answers = (answers: any): JSX.Element[] | JSX.Element | null => {
-		let answerList = <p>{noRelativesOpenTextAnswers}</p>;
+	const answers = (
+		answers: OpenAnswer[],
+	): JSX.Element[] | JSX.Element | null => {
+		let answerList: JSX.Element | JSX.Element[] = (
+			<p>{noRelativesOpenTextAnswers}</p>
+		);
 
 		if (answers && answers.length > 0) {
-			answerList = answers.map((answer: any, index: number) => (
-				<>
-					<div className="answer">
-						<p className="answer-date">
-							{formatDate(answer.created_date)}
-						</p>
-						<p key={index}>&quot;{answer.answer_text}&quot;</p>
-						<p
-							className={`response-header ${
-								answer.response_text ? "" : "hidden"
-							}`}
-						>
-							{feedbackResponseHeader}{" "}
-							{formatDate(answer.response_date)}:
-						</p>
-						<p
-							className={`response ${
-								answer.response_text ? "" : "hidden"
-							}`}
-						>
-							{answer.response_text}
-						</p>
-					</div>
-				</>
-			));
+			const sortedAnswers = answers.sort((a1, a2) => {
+				const date1 = new Date(a1.created_date);
+				const date2 = new Date(a2.created_date);
+
+				return date2.getTime() - date1.getTime();
+			});
+
+			answerList = sortedAnswers.map(
+				(answer: OpenAnswer, index: number) => (
+					<>
+						<div className="answer" key={answer.id}>
+							<p className="answer-date">
+								{formatDate(answer.created_date)}
+							</p>
+							<p key={index}>&quot;{answer.answer_text}&quot;</p>
+							<p
+								className={`response-header ${
+									answer.response_text ? "" : "hidden"
+								}`}
+							>
+								{feedbackResponseHeader}{" "}
+								{formatDate(answer.response_date)}:
+							</p>
+							<p
+								className={`response ${
+									answer.response_text ? "" : "hidden"
+								}`}
+							>
+								{answer.response_text}
+							</p>
+						</div>
+					</>
+				),
+			);
 		}
 
 		return answerList;
 	};
 
+	const nursingHomeRating = nursingHome ? nursingHome.rating : null;
+
+	const enoughCustomerAnswers = nursingHomeRating
+		? nursingHomeRating.answers_customers &&
+		  nursingHomeRating.answers_customers >= 5
+		: null;
+
+	const enoughRelativesAnswers = nursingHomeRating
+		? nursingHomeRating.answers_relatives &&
+		  nursingHomeRating.answers_relatives >= 5
+		: null;
+
 	return (
 		<div className="page-survey-results">
 			<div>
-				{!relativeSurvey || !customerSurvey || !nursingHome ? (
+				{!relativeSurvey ||
+				!customerSurvey ||
+				!nursingHome ||
+				!nursingHomeRating ? (
 					<h1 className="page-update-title">{loadingText}</h1>
 				) : (
 					<>
@@ -254,29 +318,33 @@ const PageSurveyResults: FC = () => {
 								{customerReviewsBy}
 							</h3>
 							<p className="page-survey-results-minor-title">
-								{nursingHome.rating.answers_customers
-									? nursingHome.rating.answers_customers
+								{nursingHomeRating.answers_customers
+									? nursingHomeRating.answers_customers
 									: "0"}{" "}
 								{nReviews}
 							</p>
-							<div className="page-survey-results-item">
-								{questions(customerSurvey)}
-							</div>
+
+							{enoughCustomerAnswers ? (
+								<div className="page-survey-results-item">
+									{questions(customerSurvey)}
+								</div>
+							) : null}
+
 							<p className="page-survey-results-minor-title">
 								{averageReviewScore}:
 								<span className="page-survey-results-bold">
 									{" "}
 									{ratingToString(
-										nursingHome.rating.average_customers,
+										nursingHomeRating.answers_customers,
+										nursingHomeRating.average_customers,
 									)}
 								</span>{" "}
-								{nursingHome.rating &&
-								nursingHome.rating.average_customers
-									? nursingHome.rating.average_customers.toPrecision(
+								{enoughCustomerAnswers &&
+								nursingHomeRating.average_customers
+									? nursingHomeRating.average_customers.toPrecision(
 											2,
-									  )
-									: ""}{" "}
-								/ 5
+									  ) + " / 5"
+									: ""}
 							</p>
 						</div>
 						<div className="page-survey-results-set">
@@ -284,36 +352,40 @@ const PageSurveyResults: FC = () => {
 								{relativeReviewsBy}
 							</h3>
 							<p className="page-survey-results-minor-title">
-								{nursingHome.rating.answers_relatives
-									? nursingHome.rating.answers_relatives
+								{nursingHomeRating.answers_relatives
+									? nursingHomeRating.answers_relatives
 									: "0"}{" "}
 								{nReviews}
 							</p>
-							<div className="page-survey-results-item">
-								{questions(relativeSurvey)}
-							</div>
+
+							{enoughRelativesAnswers ? (
+								<div className="page-survey-results-item">
+									{questions(relativeSurvey)}
+								</div>
+							) : null}
+
 							<p className="page-survey-results-minor-title">
 								{averageReviewScore}:
 								<span className="page-survey-results-bold">
 									{" "}
 									{ratingToString(
-										nursingHome.rating.average_relatives,
+										nursingHomeRating.answers_relatives,
+										nursingHomeRating.average_relatives,
 									)}
 								</span>{" "}
-								{nursingHome.rating &&
-								nursingHome.rating.average_relatives
-									? nursingHome.rating.average_relatives.toPrecision(
+								{enoughRelativesAnswers &&
+								nursingHomeRating.average_relatives
+									? nursingHomeRating.average_relatives.toPrecision(
 											2,
-									  )
-									: ""}{" "}
-								/ 5
+									  ) + " / 5"
+									: ""}
 							</p>
 							<div className="page-survey-results-answer-container">
 								<div className="page-survey-results-answer-header">
 									{fromRelatives}
 								</div>
 								<div className="page-survey-results-answer-content">
-									{answers(textResults)}
+									{answers(textResults as OpenAnswer[])}
 								</div>
 							</div>
 						</div>
@@ -324,9 +396,11 @@ const PageSurveyResults: FC = () => {
 				<p className="page-survey-results-bold">{reviewFooterHeader}</p>
 				<p>{reviewFooterPart1}</p>
 				<p>{reviewFooterPart2}</p>
-
+				<p>
+					<strong>{reviewFooterPart3}</strong>
+				</p>
 				<p>{reviewFooterPart4}</p>
-				<ul>
+				<ul id="contact-list">
 					<li>
 						<a
 							href={espooFeedbackLink}

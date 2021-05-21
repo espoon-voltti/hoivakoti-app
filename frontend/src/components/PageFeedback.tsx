@@ -7,7 +7,6 @@ const PageFeedback: FC = () => {
 	useEffect(() => {}, []);
 
 	const handleSubmit = (event: FormEvent): void => {
-		console.log("Submitting");
 		event.preventDefault();
 	};
 	const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {

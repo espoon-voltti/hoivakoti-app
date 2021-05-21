@@ -11,6 +11,7 @@ import Checkbox from "./Checkbox";
 
 import Commune from "../shared/types/commune";
 import InputTypes from "../shared/types/input-types";
+import { Translation } from "../shared/types/translation";
 
 type NursingHomeKey = keyof NursingHome;
 type InputFieldValue = string | number | boolean | Commune[] | null;
@@ -36,10 +37,6 @@ interface VacancyStatus {
 interface NursingHomeRouteParams {
 	id: string;
 	key: string;
-}
-
-interface Translation {
-	[key: string]: string;
 }
 
 interface InputField {

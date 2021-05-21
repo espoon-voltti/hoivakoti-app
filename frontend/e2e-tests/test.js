@@ -1,17 +1,17 @@
 module.exports = {
-	"React is can display /hoivakodit template": function(browser) {
+	"React is can display /hoivakodit template": function (browser) {
 		browser
 			.url("http://localhost:4000/hoivakodit")
 			.waitForElementVisible(".results-summary")
 			.end();
 	},
-	"React can get and display content from backend": function(browser) {
+	"React can get and display content from backend": function (browser) {
 		browser
 			.url("http://localhost:4000/hoivakodit")
 			.waitForElementVisible(".card-container")
 			.end();
 	},
-	"Language selection is working": function(browser) {
+	"Language selection is working": function (browser) {
 		browser
 			.url("http://localhost:4000")
 			.waitForElementVisible("body")
@@ -26,7 +26,7 @@ module.exports = {
 			.assert.containsText(".title", "Länsi-Uudenmaan hoivakodit")
 			.end();
 	},
-	"Show nursinghomes button and selection is working": function(browser) {
+	"Show nursinghomes button and selection is working": function (browser) {
 		browser
 			.url("http://localhost:4000")
 			.waitForElementVisible("body")
@@ -40,7 +40,7 @@ module.exports = {
 			.assert.urlEquals("http://localhost:4000/fi-FI/hoivakodit")
 			.end();
 	},
-	"Fronpage nursinghome filter selection is working - part 1/2": function(
+	"Fronpage nursinghome filter selection is working": function (
 		browser,
 	) {
 		browser
@@ -48,29 +48,14 @@ module.exports = {
 			.waitForElementVisible("body")
 			.click(".location-picker-select button.button-dropdown")
 			.pause(200)
-			.click("input[name=Espoo]")
+			.click("input[name=commune-radio-group]#filter-1")
 			.click(".location-picker-select button.button-dropdown")
 			.click(".location-picker button.btn.landing-cta")
 			.pause(200)
-			.assert.containsText(".results-summary-text", "2 hoivakotia") //ensure this matches the dummy data
+			.assert.containsText(".results-summary-text", "1 hoivakotia") //ensure this matches the dummy data
 			.end();
 	},
-	"Fronpage nursinghome filter selection is working - part 2/2": function(
-		browser,
-	) {
-		browser
-			.url("http://localhost:4000")
-			.waitForElementVisible("body")
-			.click(".location-picker-select button.button-dropdown")
-			.pause(200)
-			.click("input[name=Hyvinkää]") //Make sure the checkbox is on screen when test attempts this.
-			.click(".location-picker-select button.button-dropdown")
-			.click(".location-picker button.btn.landing-cta")
-			.pause(200)
-			.assert.containsText(".results-summary-text", "0 hoivakotia") //ensure this matches the dummy data
-			.end();
-	},
-	"Filtering nursinghomes based on language is working - part 1/2": function(
+	"Filtering nursinghomes based on language is working - part 1/2": function (
 		browser,
 	) {
 		browser
@@ -87,7 +72,7 @@ module.exports = {
 			.assert.containsText(".results-summary-text", "4 hoivakotia") //ensure this matches the dummy data
 			.end();
 	},
-	"Filtering nursinghomes based on language is working - part 2/2": function(
+	"Filtering nursinghomes based on language is working - part 2/2": function (
 		browser,
 	) {
 		browser
