@@ -687,6 +687,16 @@ export async function BatchUpdateCustomerCommunes(ctx: Context): Promise<any> {
 
 	const { adminPassword, batch } = ctx.request.body;
 
+	const hasPassword = !!adminPassword;
+
+	if (!hasPassword) {
+		ctx.response.status = 403;
+
+		return {
+			error: "Credentials are required!",
+		};
+	}
+
 	const isValidPassword =
 		typeof adminPw === "string" &&
 		adminPw.length > 0 &&
