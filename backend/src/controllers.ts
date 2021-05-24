@@ -53,7 +53,7 @@ import {
 	GetAccessToken as GetAccessTokenDB,
 	RefreshToken as RefreshTokenDB,
 	LogoutAccessToken as LogoutAccessTokenDB,
-	BatchUpdateCustomerCommunes,
+	BatchUpdateCustomerCommunes as BatchUpdateCustomerCommunesDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -682,10 +682,10 @@ export async function UpdateNursingHomeCustomerCommunes(
 	return result;
 }
 
-export async function UpdateCustomerCommunesBatch(ctx: Context): Promise<any> {
+export async function BatchUpdateCustomerCommunes(ctx: Context): Promise<any> {
 	const batch = ctx.request.body;
 
-	const result = await BatchUpdateCustomerCommunes(batch);
+	const result = await BatchUpdateCustomerCommunesDB(batch);
 
 	return result;
 }

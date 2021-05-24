@@ -47,7 +47,7 @@ import {
 	GetKeycloakAccessToken,
 	RefreshKeycloakAccessToken,
 	LogoutKeycloakAccessToken,
-	UpdateCustomerCommunesBatch,
+	BatchUpdateCustomerCommunes,
 } from "./controllers";
 import config from "./config";
 
@@ -187,7 +187,7 @@ router.post("/api/nursing-homes/:id/communes", async ctx => {
 });
 
 router.post("/api/nursing-homes/communes-batch", async ctx => {
-	const res = await UpdateCustomerCommunesBatch(ctx);
+	const res = await BatchUpdateCustomerCommunes(ctx);
 
 	ctx.body = { ...res };
 });
