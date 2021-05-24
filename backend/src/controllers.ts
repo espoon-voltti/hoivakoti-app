@@ -53,6 +53,7 @@ import {
 	GetAccessToken as GetAccessTokenDB,
 	RefreshToken as RefreshTokenDB,
 	LogoutAccessToken as LogoutAccessTokenDB,
+	BatchUpdateCustomerCommunes as BatchUpdateCustomerCommunesDB,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
@@ -677,6 +678,39 @@ export async function UpdateNursingHomeCustomerCommunes(
 	const communes = ctx.request.body["customer_commune"];
 
 	const result = await UpdateCustomerCommunesForNursingHome(id, communes);
+
+	return result;
+}
+
+export async function BatchUpdateCustomerCommunes(ctx: Context): Promise<any> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+
+	const { adminPassword, batch } = ctx.request.body;
+
+	const hasPassword = !!adminPassword;
+
+	if (!hasPassword) {
+		ctx.response.status = 403;
+
+		return {
+			error: "Credentials are required!",
+		};
+	}
+
+	const isValidPassword =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		adminPassword === adminPw;
+
+	if (!isValidPassword) {
+		ctx.response.status = 401;
+
+		return {
+			error: "Invalid credentials!",
+		};
+	}
+
+	const result = await BatchUpdateCustomerCommunesDB(batch);
 
 	return result;
 }
