@@ -683,7 +683,22 @@ export async function UpdateNursingHomeCustomerCommunes(
 }
 
 export async function BatchUpdateCustomerCommunes(ctx: Context): Promise<any> {
-	const batch = ctx.request.body;
+	const adminPw = process.env.ADMIN_PASSWORD;
+
+	const { adminPassword, batch } = ctx.request.body;
+
+	const isValidPassword =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		adminPassword === adminPw;
+
+	if (!isValidPassword) {
+		ctx.response.status = 401;
+
+		return {
+			error: "Invalid credentials!",
+		};
+	}
 
 	const result = await BatchUpdateCustomerCommunesDB(batch);
 
