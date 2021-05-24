@@ -6,7 +6,6 @@ export default function ScrollToTop(): null {
 
 	useEffect(() => {
 		if (hash) {
-			console.log(hash);
 			setTimeout(() => {
 				const hashElement = document.querySelector(hash) as HTMLElement;
 
