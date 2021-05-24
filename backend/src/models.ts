@@ -1041,6 +1041,34 @@ export async function UpdateCustomerCommunesForNursingHome(
 	return false;
 }
 
+interface CustomerCommuneUpdateItem {
+	id: string;
+	communes: Commune[];
+}
+
+export async function BatchUpdateCustomerCommunes(
+	batch: CustomerCommuneUpdateItem[],
+): Promise<{ success: boolean; items?: string[] }> {
+	const updatedNursingHomes = await Promise.all(
+		batch.map(async batchItem => {
+			const success = await UpdateCustomerCommunesForNursingHome(
+				batchItem.id,
+				batchItem.communes,
+			);
+
+			if (success) {
+				return batchItem.id;
+			}
+		}),
+	);
+
+	if (updatedNursingHomes && updatedNursingHomes.length) {
+		return { success: true, items: updatedNursingHomes as string[] };
+	}
+
+	return { success: false };
+}
+
 //DUMMY DATA FOR TESTING
 
 export async function addDummyNursingHome(): Promise<string> {
