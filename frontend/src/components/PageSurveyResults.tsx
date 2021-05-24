@@ -72,18 +72,6 @@ const PageSurveyResults: FC = () => {
 			});
 	}, [id]);
 
-	useEffect(() => {
-		if (hash) {
-			setTimeout(() => {
-				const hashElement = document.querySelector(hash) as HTMLElement;
-
-				if (hashElement) {
-					hashElement.scrollIntoView();
-				}
-			}, 250);
-		}
-	}, [hash]);
-
 	const loadingText = useT("loadingText");
 	const nursingHomeReviews = useT("nursingHomeReviews");
 	const linkBackToBasicInfo = useT("linkBackToBasicInfo");

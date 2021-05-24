@@ -1520,6 +1520,10 @@ export const translations = {
 		"sv-FI":
 			"Maksut määräytyvät tulojesi mukaan. Maksut ovat samat kaikissa Hoivakotiportaalista löytyvissä hoivakodeissa.",
 	},
+	surveillanceTitle: {
+		"fi-FI": "Hoivakotien valvonta",
+		"sv-FI": "Hoivakotien valvonta",
+	},
 	homepageFaqTitle: {
 		"fi-FI": "Usein kysyttyjä kysymyksiä",
 		"sv-FI": "Usein kysyttyjä kysymyksiä",
@@ -1635,5 +1639,9 @@ export const translations = {
 			"Jos haluat antaa tietoja jostain tietystä henkilöstä tai tilanteesta tai haluat palautteeseen henkilökohtaisen vastauksen, anna palaute kunnan oman <0>palautekanavan</0> kautta.",
 		"sv-FI":
 			"Jos haluat antaa tietoja jostain tietystä henkilöstä tai tilanteesta tai haluat palautteeseen henkilökohtaisen vastauksen, anna palaute kunnan oman <0>palautekanavan</0> kautta.",
+	},
+	linkReadMoreSurveillance: {
+		"fi-FI": "Lue lisää valvonnasta",
+		"sv-FI": "Lue lisää valvonnasta",
 	},
 };
