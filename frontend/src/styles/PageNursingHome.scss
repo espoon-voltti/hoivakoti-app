@@ -304,8 +304,12 @@ $hero-border: 5px solid white;
 	margin-top: 15px;
 	text-align: center;
 
-	div:first-of-type {
+	div {
 		margin-bottom: 25px;
+
+		&:last-of-type {
+			margin-bottom: 0;
+		}
 	}
 
 	.report-info-item {
@@ -318,7 +322,7 @@ $hero-border: 5px solid white;
 
 	.read-more-link {
 		display: inline-block;
-		margin: 0.5rem 0;
+		margin: 1.5rem 0 0.5rem 0;
 	}
 }
 
