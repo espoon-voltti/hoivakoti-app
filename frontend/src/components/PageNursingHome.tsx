@@ -131,7 +131,7 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 	const reportTypeAnnounced = useT("reportTypeAnnounced");
 	const reportTypeUnannounced = useT("reportTypeUnannounced");
 	const reportTypeConcern = useT("reportTypeConcern");
-	const surveillanceDescription = useT("surveillanceDescription");
+	const linkReadMoreSurveillance = useT("linkReadMoreSurveillance");
 
 	let reportStatus = useT("status_waiting");
 
@@ -378,17 +378,13 @@ const NursingHomeDetailsBox: FC<NursingHomeDetailsBoxProps> = ({
 						>
 							{reportScoreHeader}
 						</h4>
-						<p
-							className={
-								hasReport ? "report-info-description" : "hidden"
-							}
-						>
-							{surveillanceDescription}
-						</p>
 						<p className="report-info-minor-header">
 							{reportStatus}
 						</p>
 						{reports}
+						<Link className="read-more-link" to="/#surveillance">
+							{linkReadMoreSurveillance}
+						</Link>
 					</div>
 				</div>
 			</div>

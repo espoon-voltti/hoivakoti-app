@@ -10,7 +10,7 @@ import Commune from "../shared/types/commune";
 
 const PageLanding: FC = () => {
 	const history = useHistory();
-	const locationPickerLabel = useT("locationPickerLabel");
+
 	const locationPickerPlaceholder = useT("locationPickerPlaceholder");
 	const linkBacktoTop = useT("linkBacktoTop");
 	const [selectedCommune, setSelectedCommune] = useState<string | null>(null);
@@ -51,6 +51,9 @@ const PageLanding: FC = () => {
 
 	const paymentsTitle = useT("paymentsTitle");
 	const paymentsContent = useT("paymentsContent");
+
+	const surveillanceTitle = useT("surveillanceTitle");
+	const surveillanceDescription = useT("surveillanceDescription");
 
 	const homepageFaqTitle = useT("homepageFaqTitle");
 	const faq1Title = useT("faq1Title");
@@ -236,6 +239,10 @@ const PageLanding: FC = () => {
 				<section className="content-block">
 					<h2>{paymentsTitle}</h2>
 					<p>{paymentsContent}</p>
+				</section>
+				<section className="content-block" id="surveillance">
+					<h2>{surveillanceTitle}</h2>
+					<p>{surveillanceDescription}</p>
 				</section>
 				<section className="content-block" id="faq">
 					<h3>{homepageFaqTitle}</h3>

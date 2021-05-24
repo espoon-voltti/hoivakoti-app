@@ -385,6 +385,19 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 						></div>
 						<p
 							className={
+								!nursingHomeReportStatus ||
+								(nursingHomeReportStatus &&
+									["waiting", "no-info"].includes(
+										nursingHomeReportStatus.status,
+									))
+									? "hidden"
+									: ""
+							}
+						>
+							{reportScore}
+						</p>
+						<p
+							className={
 								"card-nursing-home-public-status-header" +
 								((nursingHomeReportStatus &&
 									nursingHomeReportStatus.status) ==
@@ -400,19 +413,6 @@ const CardNursingHome: FC<NursingHomeSmallProps> = ({
 									  )
 									: getStatusTranslation("")
 							}`}
-						</p>
-						<p
-							className={
-								!nursingHomeReportStatus ||
-								(nursingHomeReportStatus &&
-									["waiting", "no-info"].includes(
-										nursingHomeReportStatus.status,
-									))
-									? "hidden"
-									: ""
-							}
-						>
-							{reportScore}
 						</p>
 					</div>
 				</div>
