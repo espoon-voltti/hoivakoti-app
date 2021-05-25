@@ -1346,179 +1346,180 @@ export const translations = {
 	},
 	homepageHeading: {
 		"fi-FI": "Hoivakotiportaali",
-		"sv-FI": "Hoivakotiportaali",
+		"sv-FI": "Vårdhemsportal",
 	},
 	homepageIngress: {
 		"fi-FI":
 			"Tervetuloa hoivakotiportaaliin! Täällä voit tutustua ikääntyneiden hoivakoteihin Länsi-Uudellamaalla. Mukana ovat kaikki Länsi-Uudenmaan kuntien omistamat hoivakodit sekä kuntien kilpailuttamat yksityiset ja järjestöjen hoivakodit.",
 		"sv-FI":
-			"Tervetuloa hoivakotiportaaliin! Täällä voit tutustua ikääntyneiden hoivakoteihin Länsi-Uudellamaalla. Mukana ovat kaikki Länsi-Uudenmaan kuntien omistamat hoivakodit sekä kuntien kilpailuttamat yksityiset ja järjestöjen hoivakodit.",
+			"Välkommen till vårdhemsportalen! Här kan du bekanta dig med vårdhem för äldre i Västra Nyland. Här presenteras alla vårdhem som ägs av Västra Nylands kommuner samt vårdhem som ägs av privata och organisationer och som upphandlas av kommunerna.",
 	},
 	homepageAnchor1: {
 		"fi-FI": "Kuntien yhteystiedot",
-		"sv-FI": "Kuntien yhteystiedot",
+		"sv-FI": "Kommunernas kontaktuppgifter",
 	},
 	homepageAnchor2: {
 		"fi-FI": "Mitä palveluun sisältyy?",
-		"sv-FI": "Mitä palveluun sisältyy?",
+		"sv-FI": "Vad ingår i servicen?",
 	},
 	homepageAnchor3: {
 		"fi-FI": "Usein kysytyt kysymykset",
-		"sv-FI": "Usein kysytyt kysymykset",
+		"sv-FI": "Frågor och svar",
 	},
 	whoAreServicesForTitle: {
 		"fi-FI": "Kenelle hoivakotien palvelut on tarkoitettu?",
-		"sv-FI": "Kenelle hoivakotien palvelut on tarkoitettu?",
+		"sv-FI": "För vem är vårdhemmen avsedda?",
 	},
 	whoAreServicesForContent: {
 		"fi-FI":
 			"<0>Hoivakoti on sinulle mahdollinen vaihtoehto silloin, kun tarvitset hoitoa ja huolenpitoa ympäri vuorokauden etkä voi enää asua omassa kodissasi. Hoivakodissa voit asua turvallisesti elämäsi loppuun saakka.</0><1>Viralliselta nimeltään hoivakodeissa tarjottava palvelu on tehostettua palveluasumista.</1>",
 		"sv-FI":
-			"<0>Hoivakoti on sinulle mahdollinen vaihtoehto silloin, kun tarvitset hoitoa ja huolenpitoa ympäri vuorokauden etkä voi enää asua omassa kodissasi. Hoivakodissa voit asua turvallisesti elämäsi loppuun saakka.</0><1>Viralliselta nimeltään hoivakodeissa tarjottava palvelu on tehostettua palveluasumista.</1>",
+			"<0>Ett vårdhem är ett möjligt alternativ för dig när du behöver vård och omsorg dygnet runt och inte längre kan bo i ett eget hem. I vårdhemmet kan du bo tryggt livet ut.</0><1>Servicen på vårdhemmen kallas officiellt för serviceboende med heldygnsomsorg.</1>",
 	},
 	howToApplyTitle: {
 		"fi-FI":
 			"Näin haet hoivakotipaikkaa: ota ensin yhteyttä kotikuntasi palveluihin",
 		"sv-FI":
-			"Näin haet hoivakotipaikkaa: ota ensin yhteyttä kotikuntasi palveluihin",
+			"Så här söker du en vårdhemsplats: kontakta först din hemkommun",
 	},
 	howToApplyDesc: {
 		"fi-FI":
 			"Kun elämässäsi tulee vaihe, ettet voi enää asua omassa kodissasi:",
-		"sv-FI":
-			"Kun elämässäsi tulee vaihe, ettet voi enää asua omassa kodissasi:",
+		"sv-FI": "När du inte längre kan bo i ett eget hem:",
 	},
 	howToApplySteps: {
 		"fi-FI":
 			"<0>Ota yhteyttä kotikuntaasi (yhteystietomme löydät alta)</0><1>Selvitämme yhdessä sinun ja läheistesi kanssa, millaista palvelua tarvitset.</1><2>Saat meiltä kirjallisen päätöksen palveluista, jotka sinulle on myönnetty.</2>",
 		"sv-FI":
-			"<0>Ota yhteyttä kotikuntaasi (yhteystietomme löydät alta)</0><1>Selvitämme yhdessä sinun ja läheistesi kanssa, millaista palvelua tarvitset.</1><2>Saat meiltä kirjallisen päätöksen palveluista, jotka sinulle on myönnetty.</2>",
+			"<0>Kontakta din hemkommun (våra kontaktuppgifter finns nedan)</0><1>Vi utreder tillsammans med dig och dina närstående hurdan service du behöver.</1><2>Vi ger dig ett skriftligt beslut om de tjänster som du har beviljats.</2>",
 	},
 	contactDesc: {
 		"fi-FI": "Yhteystietomme:",
-		"sv-FI": "Yhteystietomme:",
+		"sv-FI": "Våra kontaktuppgifter:",
 	},
 	contactItemEspoo: {
 		"fi-FI":
-			"Espoo: Seniorineuvonta Nestori arkisin klo 9–15, <a href='tel:0981633333'>p. 09 816 33 333",
+			"Espoo: Seniorineuvonta Nestori arkisin klo 9–15, <a href='tel:0981633333'>p. 09 816 33 333</a>",
 		"sv-FI":
-			"Espoo: Seniorineuvonta Nestori arkisin klo 9–15, <a href='tel:0981633333'>p. 09 816 33 333",
+			"Esbo: Seniorrådgivningen Nestor, vardagar kl. 9–15, <a href='tel:0981633333'>tfn 09 816 33 333</a>",
 	},
 	contactItemKirkkonummi: {
 		"fi-FI":
-			"Kirkkonummi: Seniorilinja arkisin klo 8–15, <a href='tel:0401269900'>p. 040 126 9900",
+			"Kirkkonummi: Seniorilinja arkisin klo 8–15, <a href='tel:0401269900'>p. 040 126 9900</a>",
 		"sv-FI":
-			"Kirkkonummi: Seniorilinja arkisin klo 8–15, <a href='tel:0401269900'>p. 040 126 9900",
+			"Kyrkslätt: Seniorlinjen, vardagar kl. 8–15, <a href='tel:0401269900'>tfn 040 126 9900</a>",
 	},
 	contactItemKauniainen: {
 		"fi-FI":
 			"Kauniainen: palveluneuvonta arkisin klo 8–16, <a href='tel:0504119268'>p. 050 411 9268</a>",
 		"sv-FI":
-			"Kauniainen: palveluneuvonta arkisin klo 8–16, <a href='tel:0504119268'>p. 050 411 9268</a>",
+			"Grankulla: servicerådgivningen, vardagar kl. 8–16, <a href='tel:0504119268'>tfn 050 411 9268</a>",
 	},
 	contactItemLohja: {
 		"fi-FI":
 			"Lohja: Ikähelppi arkisin klo 9–12, <a href='tel:0443692444'>p. 044 369 2444</a>",
 		"sv-FI":
-			"Lohja: Ikähelppi arkisin klo 9–12, <a href='tel:0443692444'>p. 044 369 2444</a>",
+			"Lojo: Äldrehjälpen, vardagar kl. 9–12, <a href='tel:0443692444'>tfn 044 369 2444</a>",
 	},
 	contactItemHanko: {
 		"fi-FI":
 			"Hanko: palveluohjaaja arkisin klo 8–10, <a href='tel:0192203489'>p. 019 220 3489</a>",
 		"sv-FI":
-			"Hanko: palveluohjaaja arkisin klo 8–10, <a href='tel:0192203489'>p. 019 220 3489</a>",
+			"Hangö: servicehandledare, vardagar kl. 8–10, <a href='tel:0192203489'>tfn 019 220 3489</a>",
 	},
 	contactItemKarviainen: {
 		"fi-FI":
 			"Perusturvakuntayhtymä Karviainen: palveluohjaus arkisin klo 9–15, <a href='tel:0942582933'>p. 09 4258 2933</a>",
 		"sv-FI":
-			"Perusturvakuntayhtymä Karviainen: palveluohjaus arkisin klo 9–15, <a href='tel:0942582933'>p. 09 4258 2933</a>",
+			"Vård- och omsorgssamkommunen Karviainen: servicehänvisning, vardagar kl. 9–15, <a href='tel:0942582933'>tfn 09 4258 2933</a>",
 	},
 	contactItemInkoo: {
-		"fi-FI": "Inkoo: Seniorineuvonta ma, ti ja ke klo 8–9",
-		"sv-FI": "Inkoo: Seniorineuvonta ma, ti ja ke klo 8–9",
+		"fi-FI":
+			"Inkoo: Seniorineuvonta ma, ti , ke klo 8-9, <a href='tel:0503148832'>p. 050 314 8832</a> ja ma-pe klo 12-15, <a href='tel:0503209107'>p. 050 320 9107</a>",
+		"sv-FI":
+			"Ingå: Seniorrådgivningen, mån, tis och ons kl. 8–9, <a href='tel:0503148832'>tfn 050 314 8832</a> och vardagar kl. 12-15, <a href='tel:0503209107'>tfn 050 320 9107</a>",
 	},
 	contactItemRaasepori: {
 		"fi-FI":
 			"Raasepori: Seniorilinja arkisin klo 8–12 ja 13–15, <a href='tel:0192893133'>p. 019 289 3133</a>",
 		"sv-FI":
-			"Raasepori: Seniorilinja arkisin klo 8–12 ja 13–15, <a href='tel:0192893133'>p. 019 289 3133</a>",
+			"Raseborg: Seniorlinjen, vardagar kl. 8–12 och 13–15, <a href='tel:0192893133'>tfn 019 289 3133</a>",
 	},
 	contactItemSiuntio: {
 		"fi-FI":
 			"Siuntio: sosiaaliohjaaja ma-ke klo 12–13, <a href='tel:0926061201'>p. 09 2606 1201</a> ja Ikä Info to klo 15–16, <a href='tel:0443861299'>p. 044 386 1299</a>.",
 		"sv-FI":
-			"Siuntio: sosiaaliohjaaja ma-ke klo 12–13, <a href='tel:0926061201'>p. 09 2606 1201</a> ja Ikä Info to klo 15–16, <a href='tel:0443861299'>p. 044 386 1299</a>.",
+			"Sjundeå: socialhandledare, mån–ons kl. 12–13, <a href='tel:0926061201'>tfn 09 2606 1201</a> och Senior Info tors kl. 15–16, <a href='tel:0443861299'>tfn 044 386 1299</a>.",
 	},
 	howToPickTitle: {
 		"fi-FI": "Näin valitset mieleisesi hoivakodin",
-		"sv-FI": "Näin valitset mieleisesi hoivakodin",
+		"sv-FI": "Så här väljer du vårdhem",
 	},
 	howToPickContent1: {
 		"fi-FI":
 			"Kun sinulle on myönnetty hoivakotipaikka, voit etsiä täältä Hoivakotiportaalista mieleisesi hoivakodin. Saat meiltä apua hoivakodin etsimisessä ja valitsemisessa, jos niin toivot. Voit myös käydä tutustumassa hoivakotiin paikan päällä, ennen kuin teet päätöksesi.",
 		"sv-FI":
-			"Kun sinulle on myönnetty hoivakotipaikka, voit etsiä täältä Hoivakotiportaalista mieleisesi hoivakodin. Saat meiltä apua hoivakodin etsimisessä ja valitsemisessa, jos niin toivot. Voit myös käydä tutustumassa hoivakotiin paikan päällä, ennen kuin teet päätöksesi.",
+			"När du har beviljats en vårdhemsplats kan du välja här i Vårdhemsportalen var du vill bo. Vi ger dig hjälp med att hitta och välja ett vårdhem, om du önskar det. Du kan också bekanta dig med vårdhemmet på plats innan du fattar beslut.",
 	},
 	howToPickContent2: {
 		"fi-FI":
 			"Voit valita hoivakodin, jossa on vapaita asuntoja. Kun olet löytänyt mieleisen hoivakodin, ota uudelleen yhteyttä kotikuntasi yhteyshenkilöön tai palveluohjaukseen ja kerro valinnastasi.",
 		"sv-FI":
-			"Voit valita hoivakodin, jossa on vapaita asuntoja. Kun olet löytänyt mieleisen hoivakodin, ota uudelleen yhteyttä kotikuntasi yhteyshenkilöön tai palveluohjaukseen ja kerro valinnastasi.",
+			"Du kan välja ett vårdhem där det finns lediga bostäder. När du har hittat ett vårdhem där du vill bo, kontakta din hemkommuns kontaktperson eller servicehänvisning på nytt och berätta om ditt val.",
 	},
 	howToPickContent3: {
 		"fi-FI":
 			"Jos sinulle mieluisin hoivakoti on täynnä, voit ilmoittautua jonoon. Jonotusajaksi voit valita asunnon toisesta hoivakodista. Kun sinulle mieluisimmasta hoivakodista vapautuu paikka, voit muuttaa sinne tai jäädä hoivakotiin, jossa olet asunut jonotusaikana – valinta on sinun.",
 		"sv-FI":
-			"Jos sinulle mieluisin hoivakoti on täynnä, voit ilmoittautua jonoon. Jonotusajaksi voit valita asunnon toisesta hoivakodista. Kun sinulle mieluisimmasta hoivakodista vapautuu paikka, voit muuttaa sinne tai jäädä hoivakotiin, jossa olet asunut jonotusaikana – valinta on sinun.",
+			"Om det vårdhem där du vill bo är fullt, kan du anmäla dig i kön. För den tid du köar kan du välja en bostad i ett annat vårdhem. När en plats blir ledig i det vårdhem du helst vill bo i kan du flytta dit eller stanna i det vårdhem där du har bott under kötiden – valet är ditt.",
 	},
 	howToPickContent4: {
 		"fi-FI":
 			"Osa hoivakodeista saa on valtion tukea. Tällaiset hoivakodit olemme merkinneet ARA-kohteiksi. Jos haluat hoivakotipaikan ARA-kohteesta, varallisuutesi ei saa ylittää määrättyjä rajoja. Muissa hoivakodeissa ei ole varallisuutta koskevia rajoituksia. <a href='https://www.ara.fi/asukasvalinta'>Lisätietoja asukasvalinnasta ARA-vuokra-asuntoihin</a>.",
 		"sv-FI":
-			"Osa hoivakodeista saa on valtion tukea. Tällaiset hoivakodit olemme merkinneet ARA-kohteiksi. Jos haluat hoivakotipaikan ARA-kohteesta, varallisuutesi ei saa ylittää määrättyjä rajoja. Muissa hoivakodeissa ei ole varallisuutta koskevia rajoituksia. <a href='https://www.ara.fi/sv-FI/ARAbostadbestand/Bostadsrattsbostader/Valjandet_av_invanare'>Lisätietoja asukasvalinnasta ARA-vuokra-asuntoihin</a>.",
+			"En del av vårdhemmen får statligt stöd. Sådana vårdhem har vi markerat som ARA-objekt. Om du vill ha en vårdhemsplats i ett ARA-objekt, får din förmögenhet inte överskrida fastställda gränser. I andra vårdhem finns inga begränsningar som gäller förmögenhet. <a href='https://www.ara.fi/sv-FI/ARAbostadbestand/Bostadsrattsbostader/Valjandet_av_invanare'>Mer information om val av boende till ARA-hyresbostäder</a>.",
 	},
 	whatServicesIncludesTitle: {
 		"fi-FI": "Mitä hoivakotien palveluun sisältyy?",
-		"sv-FI": "Mitä hoivakotien palveluun sisältyy?",
+		"sv-FI": "Vad ingår i vårdhemmens service?",
 	},
 	whatServicesIncludesContent1: {
 		"fi-FI":
 			"Kaikki Hoivakotiportaalissa esiteltävät hoivakodit noudattavat Länsi-Uudenmaankuntien yhteisiä periaatteita palvelun sisällöstä ja laadusta. <a href=''>Lue lisää palvelukonseptista</a> (pdf).",
 		"sv-FI":
-			"Kaikki Hoivakotiportaalissa esiteltävät hoivakodit noudattavat Länsi-Uudenmaankuntien yhteisiä periaatteita palvelun sisällöstä ja laadusta. <a href=''>Lue lisää palvelukonseptista</a> (pdf).",
+			"Alla vårdhem som presenteras i Vårdhemsportalen följer Västra Nylands kommuners gemensamma principer för servicens innehåll och kvalitet. <a href=''>Läs mer om servicekonceptet</a> (pdf).",
 	},
 	whatServicesIncludesContent2: {
 		"fi-FI":
 			"Hoivakodissa on jatkuvasti paikalla henkilökuntaa, joka antaa tarvitsemasi avun ja varmistaa, että saat tarvittavan terveyden- ja sairaanhoidon.",
 		"sv-FI":
-			"Hoivakodissa on jatkuvasti paikalla henkilökuntaa, joka antaa tarvitsemasi avun ja varmistaa, että saat tarvittavan terveyden- ja sairaanhoidon.",
+			"På vårdhemmet finns ständigt personal som ger den hjälp som du behöver och säkerställer att du får den hälso- och sjukvård som behövs.",
 	},
 	whatServicesIncludesContent3: {
 		"fi-FI":
 			"Henkilökunta varmistaa, että voit elää aktiivista elämää omien toiveidesi ja tottumustesi mukaisesti. Sinulla on mahdollisuus esimerkiksi ulkoiluun, liikkumiseen, kulttuuriin ja harrastamiseen.",
 		"sv-FI":
-			"Henkilökunta varmistaa, että voit elää aktiivista elämää omien toiveidesi ja tottumustesi mukaisesti. Sinulla on mahdollisuus esimerkiksi ulkoiluun, liikkumiseen, kulttuuriin ja harrastamiseen.",
+			"Personalen ser till att du kan leva ett aktivt liv enligt dina önskemål och vanor. Du har möjlighet till exempel till friluftsliv, motion, kultur och hobbyer.",
 	},
 	whatServicesIncludesContent4: {
 		"fi-FI":
 			"Hoivakodissa asut vuokraamassasi asunnossa. Ateriat sisältyvät palveluun.",
 		"sv-FI":
-			"Hoivakodissa asut vuokraamassasi asunnossa. Ateriat sisältyvät palveluun.",
+			"I vårdhemmet bor du i en bostad du hyr. Måltiderna ingår i servicen.",
 	},
 	whatServicesIncludesContent5: {
 		"fi-FI": "Voit asua hoivakodissa elämäsi loppuun saakka.",
-		"sv-FI": "Voit asua hoivakodissa elämäsi loppuun saakka.",
+		"sv-FI": "I vårdhemmet kan du bo livet ut.",
 	},
 	paymentsTitle: {
 		"fi-FI": "Maksut",
-		"sv-FI": "Maksut",
+		"sv-FI": "Avgifter",
 	},
 	paymentsContent: {
 		"fi-FI":
 			"Maksut määräytyvät tulojesi mukaan. Maksut ovat samat kaikissa Hoivakotiportaalista löytyvissä hoivakodeissa.",
 		"sv-FI":
-			"Maksut määräytyvät tulojesi mukaan. Maksut ovat samat kaikissa Hoivakotiportaalista löytyvissä hoivakodeissa.",
+			"Avgifternas storlek beror på dina inkomster. Avgifterna är desamma i alla vårdhem som finns i Vårdhemsportalen.",
 	},
 	surveillanceTitle: {
 		"fi-FI": "Hoivakotien valvonta",
@@ -1526,97 +1527,97 @@ export const translations = {
 	},
 	homepageFaqTitle: {
 		"fi-FI": "Usein kysyttyjä kysymyksiä",
-		"sv-FI": "Usein kysyttyjä kysymyksiä",
+		"sv-FI": "Frågor och svar",
 	},
 	faq1Title: {
 		"fi-FI": "Millaisia hoivakotien asunnot ovat?",
-		"sv-FI": "Millaisia hoivakotien asunnot ovat?",
+		"sv-FI": "Hurdana är vårdhemmens bostäder?",
 	},
 	faq1Content: {
 		"fi-FI":
 			"<0>Suurin osa asunnoista on yhden hengen asuntoja. Asunnossa tai sen välittömässäläheisyydessä on wc ja kylpyhuone.</0><1>Jokaisessa asunnossa on sähköisesti säädettävä sänky, patja, vaatekaappi,lukittava säilytystila ja kattovalaisin. Voit tuoda asuntoon omia kalusteitasija tavaroitasi.</1><2>Lisäksi hoivakodeissa on kodikkaita ja esteettömiä yhteisiä tiloja, joissa voioleskella ja ruokailla.</2>",
 		"sv-FI":
-			"<0>Suurin osa asunnoista on yhden hengen asuntoja. Asunnossa tai sen välittömässäläheisyydessä on wc ja kylpyhuone.</0><1>Jokaisessa asunnossa on sähköisesti säädettävä sänky, patja, vaatekaappi,lukittava säilytystila ja kattovalaisin. Voit tuoda asuntoon omia kalusteitasija tavaroitasi.</1><2>Lisäksi hoivakodeissa on kodikkaita ja esteettömiä yhteisiä tiloja, joissa voioleskella ja ruokailla.</2>",
+			"<0>Största delen av bostäderna är för en person. I bostaden eller i dess omedelbara närhet finns toalett och badrum.</0><1>I varje bostad finns en ställbar, elektrisk säng, madrass, klädskåp, låsbart förvaringsutrymme och taklampa. Du kan ta med dig egna möbler och saker till bostaden.</1><2>I vårdhemmen finns dessutom hemtrevliga och tillgänglighetsanpassade gemensamma lokaler där du kan vistas och äta.</2>",
 	},
 	faq2Title: {
 		"fi-FI": "Voinko asua yhdessä puolisoni kanssa?",
-		"sv-FI": "Voinko asua yhdessä puolisoni kanssa?",
+		"sv-FI": "Får jag bo tillsammans med min partner?",
 	},
 	faq2Content: {
 		"fi-FI":
 			"Joissain hoivakodeissa on kahden hengen asuntoja, jotka on tarkoitettu yhdessä asuville puolisoille. Voit asua yhdessä puolisosi kanssa, vaikka vain toinen teistä olisi hoivakodin asiakas. Puolison kanssa asumisesta ja siihen liittyvistä maksuista voit sopia suoraan hoivakodin kanssa.",
 		"sv-FI":
-			"Joissain hoivakodeissa on kahden hengen asuntoja, jotka on tarkoitettu yhdessä asuville puolisoille. Voit asua yhdessä puolisosi kanssa, vaikka vain toinen teistä olisi hoivakodin asiakas. Puolison kanssa asumisesta ja siihen liittyvistä maksuista voit sopia suoraan hoivakodin kanssa.",
+			"I vissa vårdhem finns bostäder för två personer. De är avsedda för partner som bor tillsammans. Du kan bo tillsammans med din partner, även om bara en av er är klient på vårdhemmet. Om att bo med partnern och därtill hörande avgifter kan du avtala direkt med vårdhemmet.",
 	},
 	faq3Title: {
 		"fi-FI": "Saanko tyynyt, peitot, ja liinavaatteet hoivakodista?",
-		"sv-FI": "Saanko tyynyt, peitot, ja liinavaatteet hoivakodista?",
+		"sv-FI": "Får jag kuddar, täcken och sängkläder av vårdhemmet?",
 	},
 	faq3Content: {
 		"fi-FI":
 			"Tyynyjä, peittoja ja liinavaatteita ei yleensä saa hoivakodista, vaan sinun on tuotava ne itse mukanasi. Voit kysyä tarkempia tietoja suoraan hoivakodista.",
 		"sv-FI":
-			"Tyynyjä, peittoja ja liinavaatteita ei yleensä saa hoivakodista, vaan sinun on tuotava ne itse mukanasi. Voit kysyä tarkempia tietoja suoraan hoivakodista.",
+			"Kuddar, täcken och sängkläder får du vanligen inte av vårdhemmet, utan du måste själv ta med dem. Du kan fråga på vårdhemmet om närmare information.",
 	},
 	faq4Title: {
 		"fi-FI": "Kuka siivoaa asuntoni?",
-		"sv-FI": "Kuka siivoaa asuntoni?",
+		"sv-FI": "Vem städar upp min bostad?",
 	},
 	faq4Content: {
 		"fi-FI":
 			"Hoivakoti huolehtii asuntosi viikoittaisesta siivouksesta ja asunnon päivittäisestä siistimisestä. Voit halutessasi osallistua näihin tehtäviin.",
 		"sv-FI":
-			"Hoivakoti huolehtii asuntosi viikoittaisesta siivouksesta ja asunnon päivittäisestä siistimisestä. Voit halutessasi osallistua näihin tehtäviin.",
+			"Vårdhemmet sköter veckostädningen och den dagliga städningen av din bostad. Du kan delta i dessa uppgifter om du vill.",
 	},
 	faq5Title: {
 		"fi-FI": "Kuka huolehtii vaatteistani?",
-		"sv-FI": "Kuka huolehtii vaatteistani?",
+		"sv-FI": "Vem sköter mina kläder?",
 	},
 	faq5Content: {
 		"fi-FI":
 			"Hoivakodissa jokainen käyttää omia vaatteitaan. Hoivakoti huolehtii vaatteidesi pesemisestä. Jos sinulla on erikoispesuja vaativia vaatteita ja tekstiilejä, vastaat itse niiden pesettämisestä ja kustannuksista.",
 		"sv-FI":
-			"Hoivakodissa jokainen käyttää omia vaatteitaan. Hoivakoti huolehtii vaatteidesi pesemisestä. Jos sinulla on erikoispesuja vaativia vaatteita ja tekstiilejä, vastaat itse niiden pesettämisestä ja kustannuksista.",
+			"I vårdhemmet använder var och en sina egna kläder. Vårdhemmet sköter tvätten av dina kläder. Om du har kläder och textilier som kräver specialtvätt, ansvarar du själv för tvätten av dem och kostnaderna.",
 	},
 	faq6Title: {
 		"fi-FI": "Mistä saa lääkkeeni?",
-		"sv-FI": "Mistä saa lääkkeeni?",
+		"sv-FI": "Varifrån får jag mina läkemedel?",
 	},
 	faq6Content: {
 		"fi-FI":
 			"Jokainen maksaa itse omat lääkkeensä. Apteekki toimittaa lääkkeesi hoivakotiin ja hoivakodin henkilökunta antaa lääkkeet sinulle.",
 		"sv-FI":
-			"Jokainen maksaa itse omat lääkkeensä. Apteekki toimittaa lääkkeesi hoivakotiin ja hoivakodin henkilökunta antaa lääkkeet sinulle.",
+			"Var och en betalar själv sina egna läkemedel. Apoteket levererar dina läkemedel till vårdhemmet och vårdhemmets personal ger dig läkemedlen.",
 	},
 	faq7Title: {
 		"fi-FI": "Saanko tarvitsemani apuvälineet hoivakodista?",
-		"sv-FI": "Saanko tarvitsemani apuvälineet hoivakodista?",
+		"sv-FI": "Får jag de hjälpmedel jag behöver av vårdhemmet?",
 	},
 	faq7Content: {
 		"fi-FI":
 			"Hoivakodeissa on nostolaitteet, tukikaiteet, ulkoilupyörätuoli sekä asentohoitoon soveltuvat tyynyt. Muut tarvitsemasi apuvälineet saat maksutta lainaksi kotikuntasi apuvälinekeskuksesta. Hoivakodin henkilökunta auttaa sinua apuvälineiden hankkimisessa. Jos apuvälineiden noutamisesta koituu kustannuksia, hoivakoti laskuttaa ne sinulta.",
 		"sv-FI":
-			"Hoivakodeissa on nostolaitteet, tukikaiteet, ulkoilupyörätuoli sekä asentohoitoon soveltuvat tyynyt. Muut tarvitsemasi apuvälineet saat maksutta lainaksi kotikuntasi apuvälinekeskuksesta. Hoivakodin henkilökunta auttaa sinua apuvälineiden hankkimisessa. Jos apuvälineiden noutamisesta koituu kustannuksia, hoivakoti laskuttaa ne sinulta.",
+			"Vårdhemmen har lyftanordningar, stödräcken, rullstol för utomhusbruk samt kuddar som lämpar sig för positionsbehandling. Övriga hjälpmedel du behöver kan du gratis låna i hjälpmedelscentralen i din hemkommun. Vårdhemmets personal hjälper dig att skaffa hjälpmedel. Om hämtningen av hjälpmedel medför kostnader, fakturerar vårdhemmet dig för dem.",
 	},
 	faq8Title: {
 		"fi-FI": "Mitä ruokailuja palveluun kuuluu?",
-		"sv-FI": "Mitä ruokailuja palveluun kuuluu?",
+		"sv-FI": "Vilka måltider ingår i servicen?",
 	},
 	faq8Content: {
 		"fi-FI":
 			"Saat hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Saat tarvittaessa myös yöpalan. Erityisruokavaliot ja lääkärin määräämät täydennysravintovalmisteet kuuluvat palveluun, niistä sinun ei tarvitse maksaa erikseen.",
 		"sv-FI":
-			"Saat hoivakodissa aamiaisen, lounaan, iltapäiväkahvin/välipalan, päivällisen ja iltapalan. Lounas ja päivällinen ovat lämpimiä aterioita. Saat tarvittaessa myös yöpalan. Erityisruokavaliot ja lääkärin määräämät täydennysravintovalmisteet kuuluvat palveluun, niistä sinun ei tarvitse maksaa erikseen.",
+			"På vårdhemmet får du frukost, lunch, eftermiddagskaffe/mellanmål, middag och kvällsmål. Lunchen och middagen är varma måltider. Du får också nattmat vid behov. Specialkost och läkarordinerade kompletterande näringspreparat ingår i servicen och du behöver inte betala separat för dem.",
 	},
 	faq9Title: {
 		"fi-FI": "Voivatko läheiset ja omaiset yöpyä luonani?",
-		"sv-FI": "Voivatko läheiset ja omaiset yöpyä luonani?",
+		"sv-FI": "Kan närstående och anhöriga övernatta hos mig?",
 	},
 	faq9Content: {
 		"fi-FI":
 			"Läheiset ja omaiset voivat tilapäisesti yöpyä luonasi. Sovithan yöpymisestä etukäteen hoivakodin kanssa.",
 		"sv-FI":
-			"Läheiset ja omaiset voivat tilapäisesti yöpyä luonasi. Sovithan yöpymisestä etukäteen hoivakodin kanssa.",
+			"Närstående och anhöriga kan tillfälligt övernatta hos dig. Kom överens om övernattningen på förhand med vårdhemmet.",
 	},
 	changeNursingHomeCommunes: {
 		"fi-FI": "Muokkaa hoivakodin kotikuntia",
