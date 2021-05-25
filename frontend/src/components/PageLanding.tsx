@@ -1,15 +1,17 @@
 import React, { FC, useState } from "react";
 import "../styles/landing.scss";
-import { useT } from "../i18n";
-import { useHistory } from "react-router-dom";
+import { useCurrentLanguage, useT } from "../i18n";
+import { Link, useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
 import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
 import { Translation } from "../shared/types/translation";
 import Commune from "../shared/types/commune";
+import config from "./config";
 
 const PageLanding: FC = () => {
 	const history = useHistory();
+	const currentLanguage = useCurrentLanguage();
 
 	const locationPickerPlaceholder = useT("locationPickerPlaceholder");
 	const linkBacktoTop = useT("linkBacktoTop");
@@ -48,6 +50,12 @@ const PageLanding: FC = () => {
 	const whatServicesIncludesContent3 = useT("whatServicesIncludesContent3");
 	const whatServicesIncludesContent4 = useT("whatServicesIncludesContent4");
 	const whatServicesIncludesContent5 = useT("whatServicesIncludesContent5");
+
+	const servicePromiseLink =
+		currentLanguage === "fi-FI"
+			? config.PUBLIC_FILES_URL + "/documents/palvelukonsepti-2021-fi.pdf"
+			: config.PUBLIC_FILES_URL +
+			  "/documents/palvelukonsepti-2021-sv.pdf";
 
 	const paymentsTitle = useT("paymentsTitle");
 	const paymentsContent = useT("paymentsContent");
@@ -226,11 +234,20 @@ const PageLanding: FC = () => {
 				</section>
 				<section className="content-block" id="about-service">
 					<h2>{whatServicesIncludesTitle}</h2>
-					<p
-						dangerouslySetInnerHTML={{
-							__html: whatServicesIncludesContent1,
-						}}
-					></p>
+					<p>
+						<Trans
+							i18nKey="defaultNamespace:whatServicesIncludesContent1"
+							components={[
+								// eslint-disable-next-line react/jsx-key
+								<a
+									href={servicePromiseLink}
+									target="_blank"
+									rel="noopener noreferrer"
+								/>,
+							]}
+						></Trans>
+					</p>
+
 					<p>{whatServicesIncludesContent2}</p>
 					<p>{whatServicesIncludesContent3}</p>
 					<p>{whatServicesIncludesContent4}</p>
