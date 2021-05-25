@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import "../styles/landing.scss";
 import { useCurrentLanguage, useT } from "../i18n";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
 import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
@@ -45,7 +45,6 @@ const PageLanding: FC = () => {
 	const howToPickContent4 = useT("howToPickContent4");
 
 	const whatServicesIncludesTitle = useT("whatServicesIncludesTitle");
-	const whatServicesIncludesContent1 = useT("whatServicesIncludesContent1");
 	const whatServicesIncludesContent2 = useT("whatServicesIncludesContent2");
 	const whatServicesIncludesContent3 = useT("whatServicesIncludesContent3");
 	const whatServicesIncludesContent4 = useT("whatServicesIncludesContent4");
