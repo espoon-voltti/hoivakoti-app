@@ -36,6 +36,7 @@ import {
 	CheckSurveyKey,
 	UpdateNursingHomeCustomerCommunes,
 	BatchUpdateCustomerCommunes,
+	DropAndRecreateSurveyTotalScoreTable,
 } from "./controllers";
 import config from "./config";
 
@@ -76,6 +77,10 @@ router.post("/api/nursing-homes/drop-table", async ctx => {
 
 router.post("/api/nursing-homes/drop-survey-answers", async ctx => {
 	ctx.body = await DropAndRecreateSurveyAnswerTables(ctx);
+});
+
+router.post("/api/nursing-homes/recalculate-survey-total-scores", async ctx => {
+	ctx.body = await DropAndRecreateSurveyTotalScoreTable(ctx);
 });
 
 router.post("/api/nursing-homes/drop-surveys", async ctx => {
