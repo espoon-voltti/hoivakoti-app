@@ -279,6 +279,4 @@ workflows:
                       - publish_frontend
                   filters:
                       branches:
-                          only:
-                              - master
-                              - prod
+                          only: master
