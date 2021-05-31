@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, useContext } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import "../styles/PageNursingHome.scss";
 import config from "./config";
@@ -16,6 +16,7 @@ import Title from "./Title";
 import VacancyStatusBadge from "./VacancyStatusBadge";
 import DefinitionItem from "./DefinitionItem";
 import ParagraphLink from "./ParagraphLink";
+import { HeaderContext, HeaderStyle } from "./header-context";
 
 interface ParagraphProps {
 	title?: string;
@@ -436,6 +437,16 @@ const PageNursingHome: FC = () => {
 	const [lightboxState, setLightboxState] = useState<"hidden" | number>(
 		"hidden",
 	);
+	const { setHeaderStyle } = useContext(HeaderContext);
+
+	useEffect(() => {
+		setHeaderStyle(HeaderStyle.BLUE);
+
+		return () => {
+			setHeaderStyle(null);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		axios

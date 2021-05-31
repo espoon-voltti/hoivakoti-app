@@ -7,7 +7,7 @@ $column-width: 1024px;
 	max-height: calc(100vh - 80px - 200px);
 	min-height: 400px;
 	height: 100vh;
-	background: $primary-purple url("/hero-image.jpg") 50% 50% no-repeat;
+	background: $primary-blue url("/hero-image-alt.jpg") 50% 50% no-repeat;
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
@@ -86,15 +86,16 @@ $column-width: 1024px;
 }
 
 .content-column {
-	max-width: $column-width;
+	// max-width: $column-width;
+	// padding: 20px;
 	margin: 0 auto;
-	padding: 20px;
-	margin-top: 60px;
+	padding: 0;
+	// margin-top: 60px;
 }
 
 .content-block {
 	max-width: 680px;
-	margin: 0 auto 70px auto;
+	margin: 2.25rem auto;
 
 	ol,
 	ul {
@@ -117,6 +118,18 @@ $column-width: 1024px;
 
 	ul {
 		list-style: disc;
+	}
+
+	&-container {
+		padding: 1.25rem;
+
+		&--vanilla {
+			background-color: $vanilla;
+		}
+
+		&--blue {
+			background-color: $sky-blue;
+		}
 	}
 }
 .content-block--wide {
