@@ -25,6 +25,7 @@
 
 	.nursinghome-back-link {
 		margin: 1rem 0 3rem 0;
+		color: $black;
 	}
 }
 
@@ -97,7 +98,7 @@
 .page-update-popup {
 	margin-top: 12px;
 	margin-left: 20px;
-	color: $primary-purple;
+	color: $primary-blue;
 	font-weight: 700;
 
 	&.error {

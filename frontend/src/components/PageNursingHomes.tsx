@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, useContext } from "react";
 import { CardNursingHome } from "./CardNursingHome";
 import FilterItem, { FilterOption } from "./FilterItem";
 import { useHistory, useLocation, Link } from "react-router-dom";
@@ -11,6 +11,7 @@ import i18next, { TranslationKey, useCurrentLanguage, useT } from "../i18n";
 import { NursingHome } from "./types";
 import Commune from "../shared/types/commune";
 import { Translation } from "../shared/types/translation";
+import { HeaderContext, HeaderStyle } from "./header-context";
 
 type Language = string;
 
@@ -61,6 +62,17 @@ const PageNursingHomes: FC = () => {
 	const [filteredNursingHomes, setFilteredNursingHomes] = useState<
 		NursingHome[] | null
 	>(null);
+
+	const { setHeaderStyle } = useContext(HeaderContext);
+
+	useEffect(() => {
+		setHeaderStyle(HeaderStyle.GREEN);
+
+		return () => {
+			setHeaderStyle(HeaderStyle.DEFAULT);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		const listener = (): void => {

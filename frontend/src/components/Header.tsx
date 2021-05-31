@@ -7,6 +7,7 @@ import i18next from "i18next";
 import Cookies from "universal-cookie";
 import AuthTypes from "../shared/types/auth-types";
 import { AuthContext } from "./auth-context";
+import { HeaderContext, HeaderStyle } from "./header-context";
 
 const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
@@ -27,6 +28,7 @@ const Header: FC = () => {
 	const [sessionCookies] = useState<Cookies>(new Cookies());
 
 	const { isAuthenticated, logout } = useContext(AuthContext);
+	const { headerStyle } = useContext(HeaderContext);
 
 	useEffect(() => {
 		setIsMobileMenuOpen(false);
@@ -206,8 +208,25 @@ const Header: FC = () => {
 		);
 	}
 
+	const headerStyleClass = (): string => {
+		switch (headerStyle) {
+			case HeaderStyle.GREEN:
+				return "header--green";
+			case HeaderStyle.BLUE:
+				return "header--blue";
+			default:
+				return "";
+		}
+	};
+
 	return (
-		<header className={"header " + (updatePage ? "header-fixed" : "")}>
+		<header
+			className={
+				"header " +
+				(updatePage ? "header-fixed" : "") +
+				headerStyleClass()
+			}
+		>
 			<a className="jump-to-content" href="#content">
 				{linkJumpToContent}
 			</a>

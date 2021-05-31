@@ -1,4 +1,5 @@
 @import "variables.scss";
+@import "placeholders.scss";
 
 .card-list-and-map-container {
 	display: flex;
@@ -56,7 +57,6 @@
 	padding: 14px 20px;
 	flex-wrap: wrap;
 	border-bottom: 1px solid $border-color;
-	border-top: 1px solid $border-color;
 	display: flex;
 	flex-grow: 1;
 	align-items: center;

@@ -5,6 +5,7 @@
 	flex-direction: column;
 	align-items: center;
 	margin-bottom: 80px;
+	background-color: $sky-blue;
 }
 
 .nursinghome-info-list dt {
@@ -141,7 +142,7 @@ $hero-border: 5px solid white;
 }
 
 .nursinghome-hero-placeholder {
-	background-color: $primary-purple;
+	background-color: $primary-blue;
 	height: 480px;
 	display: none;
 }
@@ -149,6 +150,7 @@ $hero-border: 5px solid white;
 .nursinghome-back-link {
 	display: block;
 	margin-bottom: 32px;
+	color: $black;
 
 	&::before {
 		content: "←";
@@ -262,7 +264,9 @@ $hero-border: 5px solid white;
 	padding: 24px;
 	margin-bottom: 20px;
 	border: 1px solid $light-gray;
-	border-radius: $border-radius;
+	border-radius: $border-radius-lg;
+	background-color: $white;
+	box-shadow: 0px 0px 5px lighten($black, 75%);
 }
 
 .nursinghome-details-box h3 {

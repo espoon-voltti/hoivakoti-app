@@ -75,19 +75,17 @@
 			}
 
 			&.checked {
-				background-color: darken($primary-purple, 5%);
+				background-color: $primary-blue;
 			}
 
 			&.unchecked {
 				border-radius: $border-radius;
 				background-color: transparent;
-				border-color: $secondary-purple;
+				border-color: $black;
 				color: $text-color;
 
 				&:hover {
-					background-color: $primary-purple;
-					color: $text-color;
-					border-color: transparent;
+					text-decoration: underline;
 				}
 			}
 		}
