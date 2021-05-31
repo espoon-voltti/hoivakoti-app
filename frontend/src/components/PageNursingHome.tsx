@@ -443,7 +443,7 @@ const PageNursingHome: FC = () => {
 		setHeaderStyle(HeaderStyle.BLUE);
 
 		return () => {
-			setHeaderStyle(HeaderStyle.DEFAULT);
+			setHeaderStyle(null);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

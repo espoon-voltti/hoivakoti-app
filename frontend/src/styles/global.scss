@@ -242,6 +242,16 @@ strong {
 	background-color: $black;
 	border-color: transparent;
 	color: $white;
+
+	&:disabled {
+		background-color: $ligher-gray;
+		color: $dark-gray;
+		cursor: default;
+
+		&:hover {
+			background-color: $ligher-gray;
+		}
+	}
 }
 
 .btn-secondary {

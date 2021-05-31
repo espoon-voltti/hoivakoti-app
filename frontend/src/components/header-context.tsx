@@ -1,14 +1,13 @@
 import React, { createContext, FC, useState } from "react";
 
 export enum HeaderStyle {
-	DEFAULT = "default",
 	GREEN = "green",
 	BLUE = "blue",
 }
 
 interface HeaderContextState {
-	headerStyle: HeaderStyle;
-	setHeaderStyle: (color: HeaderStyle) => void;
+	headerStyle: HeaderStyle | null;
+	setHeaderStyle: (color: HeaderStyle | null) => void;
 }
 
 export const HeaderContext = createContext<HeaderContextState>(
@@ -16,13 +15,7 @@ export const HeaderContext = createContext<HeaderContextState>(
 );
 
 const HeaderContextProvider: FC = ({ children }) => {
-	const [headerStyle, setHeaderBorderColor] = useState<HeaderStyle>(
-		HeaderStyle.DEFAULT,
-	);
-
-	const setHeaderStyle = (color: HeaderStyle): void => {
-		setHeaderBorderColor(color);
-	};
+	const [headerStyle, setHeaderStyle] = useState<HeaderStyle | null>(null);
 
 	return (
 		<HeaderContext.Provider value={{ headerStyle, setHeaderStyle }}>

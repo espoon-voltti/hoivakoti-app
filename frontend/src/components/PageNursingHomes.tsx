@@ -69,7 +69,7 @@ const PageNursingHomes: FC = () => {
 		setHeaderStyle(HeaderStyle.GREEN);
 
 		return () => {
-			setHeaderStyle(HeaderStyle.DEFAULT);
+			setHeaderStyle(null);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
