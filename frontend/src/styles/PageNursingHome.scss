@@ -161,6 +161,7 @@ $hero-border: 5px solid white;
 .nursinghome-forward-link {
 	display: block;
 	margin-bottom: 32px;
+	color: $black;
 
 	&::after {
 		content: "→";
