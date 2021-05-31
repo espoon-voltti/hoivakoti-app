@@ -1,4 +1,5 @@
 @import "variables.scss";
+@import "placeholders.scss";
 
 $header-height: 80px;
 
@@ -17,6 +18,7 @@ $header-height: 80px;
 	display: block;
 	text-align: center;
 	margin: 20px 0 50px 0;
+	color: $black;
 }
 
 .jump-to-content {
@@ -37,7 +39,7 @@ $header-height: 80px;
 .jump-to-content:focus {
 	top: 5px;
 	left: 5px;
-	background: $primary-purple;
+	background: $primary-blue;
 	color: $text-color;
 	-webkit-transition: top 0.1s ease-in, background 0.5s linear;
 	transition: top 0.1s ease-in, background 0.5s linear;
@@ -46,6 +48,8 @@ $header-height: 80px;
 }
 
 .header {
+	@extend %border-bottom-orange;
+
 	display: flex;
 	height: $header-height;
 	padding: 0 20px;
@@ -55,6 +59,14 @@ $header-height: 80px;
 
 	@media print {
 		justify-content: center;
+	}
+
+	&--green {
+		@extend %border-bottom-green;
+	}
+
+	&--blue {
+		@extend %border-bottom-blue;
 	}
 }
 
@@ -206,7 +218,7 @@ $header-height: 80px;
 }
 
 .nav-menu a:hover {
-	border-bottom: 3px solid $primary-purple;
+	border-bottom: 3px solid $black;
 	text-decoration: none;
 }
 
@@ -215,7 +227,7 @@ $header-height: 80px;
 }
 
 .nav-menu li a.selected {
-	background-color: $yellow;
+	background-color: $peach;
 
 	&:hover {
 		border-bottom: none;
@@ -261,7 +273,7 @@ $header-height: 80px;
 }
 
 .nav-menu--language a:hover {
-	border-bottom: 3px solid $primary-purple;
+	border-bottom: 3px solid $primary-blue;
 	text-decoration: none;
 }
 
@@ -335,7 +347,7 @@ $header-height: 80px;
 		text-decoration: underline;
 	}
 	#page-nav ul.nav-menu li a.selected {
-		background-color: $yellow;
+		background-color: $peach;
 		color: $text-color;
 	}
 
