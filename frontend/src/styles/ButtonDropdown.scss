@@ -41,6 +41,7 @@
 }
 
 .button-dropdown-variant-primary .button-dropdown-active {
+	border-color: $gray;
 	color: $text-color;
 
 	.button-dropdown-caret {
