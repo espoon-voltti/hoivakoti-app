@@ -13,7 +13,7 @@ import {
 import Header from "./Header";
 import Footer from "./Footer";
 import ErrorBoundary from "./ErrorBoundary";
-import { useCurrentLanguage } from "../i18n";
+import { useCurrentLanguage, useT } from "../i18n";
 import PageError from "./PageError";
 import ScrollToTop from "./ScrollToTop";
 import PageAccessibility from "./PageAccessibility";
@@ -50,6 +50,8 @@ const App: React.FC = () => {
 		}
 	}, [currentLanguage, currentPath]);
 
+	const loadingText = useT("loadingText");
+
 	return (
 		<ErrorBoundary>
 			<div id="app">
@@ -59,7 +61,7 @@ const App: React.FC = () => {
 					<AuthContextProvider>
 						<HeaderContextProvider>
 							<Header />
-							<Suspense fallback={<div>Ladataan...</div>}>
+							<Suspense fallback={<div>{loadingText}</div>}>
 								<main id="content">
 									<Switch>
 										<Route
