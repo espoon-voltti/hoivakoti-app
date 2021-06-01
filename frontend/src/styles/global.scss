@@ -141,6 +141,12 @@ body {
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 16px;
 	color: $text-color;
+
+	* {
+		&:focus {
+			outline-color: $primary-blue;
+		}
+	}
 }
 
 p {
@@ -252,6 +258,12 @@ strong {
 			background-color: $ligher-gray;
 		}
 	}
+
+	&:focus {
+		outline-style: solid;
+		outline-offset: 0.2rem;
+		outline-width: 0.15rem;
+	}
 }
 
 .btn-secondary {
@@ -272,6 +284,12 @@ strong {
 
 	&:hover {
 		text-decoration: underline;
+	}
+
+	&:focus {
+		outline-style: solid;
+		outline-offset: 0.2rem;
+		outline-width: 0.15rem;
 	}
 }
 
