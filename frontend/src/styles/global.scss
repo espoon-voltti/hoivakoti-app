@@ -385,3 +385,13 @@ textarea {
 	white-space: nowrap;
 	width: 1px;
 }
+
+.loading-container {
+	padding: 3rem 2rem 0 2rem;
+	max-width: 42.5rem;
+	margin: 0 auto;
+
+	.loading-text {
+		margin-bottom: 2.5rem;
+	}
+}
