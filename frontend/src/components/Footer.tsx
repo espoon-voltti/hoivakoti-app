@@ -26,6 +26,8 @@ const Footer: FC = () => {
 							config.PUBLIC_FILES_URL + "/logo-lu-sote-black.svg"
 						}
 						alt="Länsi-Uudenmaa sote logo"
+						width="59"
+						height="59"
 					/>
 				</a>
 			</div>
