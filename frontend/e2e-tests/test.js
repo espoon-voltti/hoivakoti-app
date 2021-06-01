@@ -17,7 +17,7 @@ module.exports = {
 			.waitForElementVisible("body")
 			.click("a[lang=sv-SV]")
 			.pause(300)
-			.assert.containsText(".title", "Vårdhemmen i Esbo")
+			.assert.containsText(".title", "Vårdhemmen i Länsi-Uudenmaa")
 			.click("a[lang=fi-FI]")
 			.pause(300)
 			.assert.containsText(".title", "Länsi-Uudenmaan hoivakodit")
