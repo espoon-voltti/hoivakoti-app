@@ -1,11 +1,11 @@
 export const translations = {
 	appTitle: {
 		"fi-FI": "Länsi-Uudenmaan hoivakodit",
-		"sv-FI": "Länsi-Uudenmaan hoivakodit",
+		"sv-FI": "Vårdhemmen i Länsi-Uudenmaa",
 	},
 	titleTemplate: {
 		"fi-FI": "%s | Länsi-Uudenmaan hoivakodit",
-		"sv-FI": "%s | Länsi-Uudenmaan hoivakodit",
+		"sv-FI": "%s | Vårdhemmen i Länsi-Uudenmaa",
 	},
 	navHome: { "fi-FI": "Etusivu", "sv-FI": "Förstasidan" },
 	navNursingHomes: { "fi-FI": "Hoivakodit", "sv-FI": "Vårdhem" },
