@@ -1,11 +1,11 @@
 export const translations = {
 	appTitle: {
 		"fi-FI": "Länsi-Uudenmaan hoivakodit",
-		"sv-FI": "Vårdhemmen i Esbo",
+		"sv-FI": "Vårdhem i Västra Nyland",
 	},
 	titleTemplate: {
 		"fi-FI": "%s | Länsi-Uudenmaan hoivakodit",
-		"sv-FI": "%s | Vårdhemmen i Esbo",
+		"sv-FI": "%s | Vårdhem i Västra Nyland",
 	},
 	navHome: { "fi-FI": "Etusivu", "sv-FI": "Förstasidan" },
 	navNursingHomes: { "fi-FI": "Hoivakodit", "sv-FI": "Vårdhem" },
@@ -34,7 +34,7 @@ export const translations = {
 	},
 	communePickerLabel: {
 		"fi-FI": "Mikä on kotikuntasi?",
-		"sv-FI": "Mikä on kotikuntasi?",
+		"sv-FI": "Vilken är din hemkommun?",
 	},
 	landingIngress1: {
 		"fi-FI":
@@ -328,7 +328,7 @@ export const translations = {
 	},
 	linkToPublicPage: {
 		"fi-FI": "Siirry hoivakodin sivulle",
-		"sv-FI": "Siirry hoivakodin sivulle",
+		"sv-FI": "Gå till vårdhemmets sida",
 	},
 	anchorDetailsBox: {
 		"fi-FI": ">> Hoivakodin yhteystiedot",
@@ -800,7 +800,7 @@ export const translations = {
 	},
 	reportScoreHeader: {
 		"fi-FI": "Valvontakäynnit",
-		"sv-FI": "Valvontakäynnit",
+		"sv-FI": "Tillsynsbesök",
 	},
 	latestVisit: {
 		"fi-FI": "Viimeisin valvontakäynti",
@@ -824,7 +824,7 @@ export const translations = {
 	},
 	fromRelatives: {
 		"fi-FI": "Palautetta omaisilta",
-		"sv-FI": "Palautetta omaisilta",
+		"sv-FI": "Respons av anhöriga",
 	},
 	customerReviewsBy: {
 		"fi-FI": "Asiakkaiden antamat arviot",
@@ -848,7 +848,7 @@ export const translations = {
 	},
 	average: {
 		"fi-FI": "Keskiarvo",
-		"sv-FI": "Keskiarvo",
+		"sv-FI": "Medeltal",
 	},
 	reviewFooterHeader: {
 		"fi-FI": "Miten arviointeja kerätään?",
@@ -858,7 +858,7 @@ export const translations = {
 		"fi-FI":
 			"Omainen voi tehdä arvioinnin kotikunnan antamalla tunnuksella. Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja. Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo sekä antamalla vapaata palautetta.",
 		"sv-FI":
-			"Omainen voi tehdä arvioinnin kotikunnan antamalla tunnuksella. Portaaliin ei tallenneta arvioinnin tekijän henkilötietoja. Arvio tehdään valitsemalla tyytyväisyyttä kuvaava numeroarvo sekä antamalla vapaata palautetta.",
+			"En anhörig kan göra en bedömning genom att logga in med en kod som hemkommunen gett. Personuppgifter om den som gör bedömningen lagras inte i portalen. Bedömningen görs genom att man väljer ett nummervärde som beskriver nöjdheten samt ger fri respons.",
 	},
 	reviewFooterPart2: {
 		"fi-FI":
@@ -869,13 +869,13 @@ export const translations = {
 		"fi-FI":
 			"Tyytyväisyyskyselyn tulokset näytetään vasta kun tuloksia on vähintään viisi.",
 		"sv-FI":
-			"Tyytyväisyyskyselyn tulokset näytetään vasta kun tuloksia on vähintään viisi.",
+			"Resultaten av nöjdhetsenkäten visas när det finns minst fem svar.",
 	},
 	reviewFooterPart4: {
 		"fi-FI":
 			"Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) kotikunnan palautepalvelun kautta:",
 		"sv-FI":
-			"Asiakas ja/tai omainen voi antaa palautetta hoivakodin toiminnasta (esimerkiksi yksittäisistä tilanteista) kotikunnan palautepalvelun kautta:",
+			"Klienten och/eller en anhörig kan ge respons på vårdhemmets verksamhet (till exempel på enskilda situationer) via hemkommunens responstjänst:",
 	},
 	reviewFooterLink: {
 		"fi-FI": "Espoon kaupungin palautepalvelun kautta.",
@@ -957,7 +957,7 @@ export const translations = {
 	},
 	feedbackAverage: {
 		"fi-FI": "Keskiarvo tulossa",
-		"sv-FI": "Keskiarvo tulossa",
+		"sv-FI": "Medeltalet publiceras inom kort",
 	},
 	"Suomi|Ruotsi": {
 		"fi-FI": "Suomi|Ruotsi",
@@ -1199,7 +1199,7 @@ export const translations = {
 		"fi-FI":
 			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palveluasumisen hankinnassa",
 		"sv-FI":
-			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palveluasumisen hankinnassa",
+			"Kommuner för vars invånare tjänsteproducenten erbjuder serviceboende med heldygnsomsorg för äldre",
 	},
 	filterCommune: {
 		"fi-FI": "Valitse kotikunta",
@@ -1220,8 +1220,7 @@ export const translations = {
 	selectCommuneLabel: {
 		"fi-FI":
 			"Haku näyttää kotikuntasi asukkaille palveluita tarjoavat hoivakodit",
-		"sv-FI":
-			"Haku näyttää kotikuntasi asukkaille palveluita tarjoavat hoivakodit",
+		"sv-FI": "Sökningen visar vårdhem för invånare i din hemkommun",
 	},
 	charactersLeft: {
 		"fi-FI": "merkkiä jäljellä",
@@ -1291,7 +1290,7 @@ export const translations = {
 	},
 	feedbackResponseHeader: {
 		"fi-FI": "Hoivakodin vastaus",
-		"sv-FI": "Hoivakodin vastaus",
+		"sv-FI": "Vårdhemmets svar",
 	},
 	noFeedbackYet: {
 		"fi-FI": "Ei vielä palautteita.",
@@ -1523,7 +1522,7 @@ export const translations = {
 	},
 	surveillanceTitle: {
 		"fi-FI": "Hoivakotien valvonta",
-		"sv-FI": "Hoivakotien valvonta",
+		"sv-FI": "Tillsyn över vårdhem",
 	},
 	homepageFaqTitle: {
 		"fi-FI": "Usein kysyttyjä kysymyksiä",
@@ -1621,28 +1620,28 @@ export const translations = {
 	},
 	changeNursingHomeCommunes: {
 		"fi-FI": "Muokkaa hoivakodin kotikuntia",
-		"sv-FI": "Muokkaa hoivakodin kotikuntia",
+		"sv-FI": "Redigera hemkommuner",
 	},
 	surveillanceDescription: {
 		"fi-FI":
 			"Kunnat valvovat, että hoivakotien toiminta on sovittujen laatuvaatimusten ja muiden kriteerien mukaista. Siksi teemme hoivakoteihin valvontakäyntejä: osan valvontakäynneistä sovimme hoivakotien kanssa etukäteen ja osan käynneistä teemme ennalta ilmoittamatta. Teemme valvontakäynnin myös silloin, kun asukkaat, omaiset tai muut asianosaiset ilmoittavat hoivakotiin liittyvistä huolenaiheista.",
 		"sv-FI":
-			"Kunnat valvovat, että hoivakotien toiminta on sovittujen laatuvaatimusten ja muiden kriteerien mukaista. Siksi teemme hoivakoteihin valvontakäyntejä: osan valvontakäynneistä sovimme hoivakotien kanssa etukäteen ja osan käynneistä teemme ennalta ilmoittamatta. Teemme valvontakäynnin myös silloin, kun asukkaat, omaiset tai muut asianosaiset ilmoittavat hoivakotiin liittyvistä huolenaiheista.",
+			"Kommunerna övervakar att vårdhemmen följer kvalitetskraven och andra kriterier. Därför gör vi tillsynsbesök i vårdhemmen: en del av tillsynsbesöken avtalar vi på förhand med vårdhemmen och en del av besöken gör vi utan förhandsanmälan. Vi gör ett tillsynsbesök också om boende, anhöriga eller andra berörda meddelar om saker som bekymrar dem på vårdhemmet.",
 	},
 	surveyOpenAnswerInstruction1: {
 		"fi-FI":
 			"Anna yleistä palautetta hoivakodin laadusta. Palaute julkaistaan kun se on hyväksytty. Palautteen antajan nimi pysyy piilossa. Tietoja joista voidaan tunnistaa henkilö, ei voida julkaista.",
 		"sv-FI":
-			"Anna yleistä palautetta hoivakodin laadusta. Palaute julkaistaan kun se on hyväksytty. Palautteen antajan nimi pysyy piilossa. Tietoja joista voidaan tunnistaa henkilö, ei voida julkaista.",
+			"Ge allmän respons på vårdhemmets kvalitet. Responsen publiceras när den har godkänts. Responsgivarens namn publiceras inte. Uppgifter som gör det möjligt att identifiera en person kan inte publiceras.",
 	},
 	surveyOpenAnswerInstruction2: {
 		"fi-FI":
 			"Jos haluat antaa tietoja jostain tietystä henkilöstä tai tilanteesta tai haluat palautteeseen henkilökohtaisen vastauksen, anna palaute kunnan oman <0>palautekanavan</0> kautta.",
 		"sv-FI":
-			"Jos haluat antaa tietoja jostain tietystä henkilöstä tai tilanteesta tai haluat palautteeseen henkilökohtaisen vastauksen, anna palaute kunnan oman <0>palautekanavan</0> kautta.",
+			"Om du vill lämna information om en viss person eller en viss situation eller om du vill ha ett personligt svar på responsen, ge respons via kommunens egen <0>responskanal</0>.",
 	},
 	linkReadMoreSurveillance: {
 		"fi-FI": "Lue lisää valvonnasta",
-		"sv-FI": "Lue lisää valvonnasta",
+		"sv-FI": "Läs mer om tillsynen",
 	},
 };
