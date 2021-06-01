@@ -60,8 +60,17 @@ const App: React.FC = () => {
 					<AuthContextProvider>
 						<HeaderContextProvider>
 							<Header />
-							<Suspense fallback={<div>{loadingText}</div>}>
-								<main id="content">
+
+							<main id="content">
+								<Suspense
+									fallback={
+										<div className="loading-container">
+											<span className="loading-text">
+												{loadingText}
+											</span>
+										</div>
+									}
+								>
 									<Switch>
 										<Route
 											exact
@@ -158,8 +167,8 @@ const App: React.FC = () => {
 											)}
 										/>
 									</Switch>
-								</main>
-							</Suspense>
+								</Suspense>
+							</main>
 						</HeaderContextProvider>
 					</AuthContextProvider>
 					<Footer />
