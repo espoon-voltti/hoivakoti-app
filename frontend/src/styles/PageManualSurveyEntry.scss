@@ -17,16 +17,6 @@
 	border-bottom: 1px solid $border-color;
 	padding: 2rem 0 3rem 0;
 	margin-bottom: 1rem;
-
-	&-last {
-		margin-bottom: 0;
-		border: none;
-	}
-
-	.nursinghome-back-link {
-		margin: 1rem 0 3rem 0;
-		color: $black;
-	}
 }
 
 .page-update-title {
@@ -38,20 +28,9 @@
 	font-size: 0.8rem;
 }
 
-.page-update-status {
-	width: 100%;
-	text-align: right;
-	margin: 1rem auto 0 auto;
-}
-
 .page-update-controls {
 	margin: 0;
 	padding: 0 0 0 0;
-
-	& .radio-container {
-		cursor: pointer;
-		padding-left: 30px;
-	}
 }
 
 .page-update-cancel {

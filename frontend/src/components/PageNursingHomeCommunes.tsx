@@ -8,7 +8,7 @@ import Checkbox from "./Checkbox";
 import config from "./config";
 import { GetNursingHomeResponse, NursingHome } from "./types";
 
-import "../styles/PageNursingHomeCommunes.scss";
+import "../styles/PageUpdate.scss";
 
 interface ParamsTypes {
 	id: string;
