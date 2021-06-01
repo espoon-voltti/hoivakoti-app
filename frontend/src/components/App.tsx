@@ -65,9 +65,9 @@ const App: React.FC = () => {
 								<Suspense
 									fallback={
 										<div className="loading-container">
-											<span className="loading-text">
+											<h2 className="loading-text">
 												{loadingText}
-											</span>
+											</h2>
 										</div>
 									}
 								>
