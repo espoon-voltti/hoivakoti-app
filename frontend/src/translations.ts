@@ -1,11 +1,11 @@
 export const translations = {
 	appTitle: {
 		"fi-FI": "Länsi-Uudenmaan hoivakodit",
-		"sv-FI": "Vårdhemmen i Länsi-Uudenmaa",
+		"sv-FI": "Vårdhem i Västra Nyland",
 	},
 	titleTemplate: {
 		"fi-FI": "%s | Länsi-Uudenmaan hoivakodit",
-		"sv-FI": "%s | Vårdhemmen i Länsi-Uudenmaa",
+		"sv-FI": "%s | Vårdhem i Västra Nyland",
 	},
 	navHome: { "fi-FI": "Etusivu", "sv-FI": "Förstasidan" },
 	navNursingHomes: { "fi-FI": "Hoivakodit", "sv-FI": "Vårdhem" },
@@ -34,7 +34,7 @@ export const translations = {
 	},
 	communePickerLabel: {
 		"fi-FI": "Mikä on kotikuntasi?",
-		"sv-FI": "Mikä on kotikuntasi?",
+		"sv-FI": "Vilken är din hemkommun?",
 	},
 	landingIngress1: {
 		"fi-FI":
@@ -1199,7 +1199,7 @@ export const translations = {
 		"fi-FI":
 			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palveluasumisen hankinnassa",
 		"sv-FI":
-			"Kunnat, joihin palveluntuottaja on ilmoittautunut ikääntyneiden tehostetun palveluasumisen hankinnassa",
+			"Kommuner för vars invånare tjänsteproducenten erbjuder serviceboende med heldygnsomsorg för äldre",
 	},
 	filterCommune: {
 		"fi-FI": "Valitse kotikunta",
@@ -1220,8 +1220,7 @@ export const translations = {
 	selectCommuneLabel: {
 		"fi-FI":
 			"Haku näyttää kotikuntasi asukkaille palveluita tarjoavat hoivakodit",
-		"sv-FI":
-			"Haku näyttää kotikuntasi asukkaille palveluita tarjoavat hoivakodit",
+		"sv-FI": "Sökningen visar vårdhem för invånare i din hemkommun",
 	},
 	charactersLeft: {
 		"fi-FI": "merkkiä jäljellä",
@@ -1621,7 +1620,7 @@ export const translations = {
 	},
 	changeNursingHomeCommunes: {
 		"fi-FI": "Muokkaa hoivakodin kotikuntia",
-		"sv-FI": "Muokkaa hoivakodin kotikuntia",
+		"sv-FI": "Redigera hemkommuner",
 	},
 	surveillanceDescription: {
 		"fi-FI":
