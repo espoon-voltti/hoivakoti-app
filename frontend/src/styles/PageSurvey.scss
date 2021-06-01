@@ -1,9 +1,5 @@
 @import "variables.scss";
 
-.page-survey-container {
-	width: 100%;
-}
-
 .page-survey-section {
 	width: 100%;
 	border-bottom: 1px solid $border-color;
@@ -11,7 +7,7 @@
 }
 
 .survey-card-container {
-	width: 1100px;
+	width: 100%;
 	margin: auto;
 	text-align: center;
 }
@@ -169,4 +165,35 @@
 .login-input-label {
 	display: block;
 	margin-bottom: 10px;
+}
+
+.login-container {
+	margin-top: 20vh;
+	margin-bottom: 150px;
+	margin-left: 15vw;
+
+	h2 {
+		margin-bottom: 60px;
+	}
+
+	div {
+		margin-top: 40px;
+		margin-bottom: -10px;
+		width: 350px;
+	}
+
+	input {
+		border: none;
+		border-bottom: solid 1px $border-color;
+		font-size: 25px;
+		line-height: 35px;
+	}
+
+	.align-right {
+		text-align: right;
+	}
+
+	span {
+		margin-right: 40px;
+	}
 }

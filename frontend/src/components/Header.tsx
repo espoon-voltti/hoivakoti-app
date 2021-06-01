@@ -34,6 +34,18 @@ const Header: FC = () => {
 		setIsMobileMenuOpen(false);
 	}, [location.pathname, location.search]);
 
+	const [headerStyleClass, setHeaderStyleClass] = useState<string>("");
+
+	useEffect(() => {
+		if (headerStyle === HeaderStyle.GREEN) {
+			setHeaderStyleClass("header--green");
+		} else if (headerStyle === HeaderStyle.BLUE) {
+			setHeaderStyleClass("header--blue");
+		} else {
+			setHeaderStyleClass("");
+		}
+	}, [headerStyle]);
+
 	const navHome = useT("navHome");
 	const navNursingHomes = useT("navNursingHomes");
 	const navInformation = useT("navInformation");
@@ -208,23 +220,12 @@ const Header: FC = () => {
 		);
 	}
 
-	const headerStyleClass = (): string => {
-		switch (headerStyle) {
-			case HeaderStyle.GREEN:
-				return "header--green";
-			case HeaderStyle.BLUE:
-				return "header--blue";
-			default:
-				return "";
-		}
-	};
-
 	return (
 		<header
 			className={
 				"header " +
 				(updatePage ? "header-fixed" : "") +
-				headerStyleClass()
+				headerStyleClass
 			}
 		>
 			<a className="jump-to-content" href="#content">
@@ -238,6 +239,8 @@ const Header: FC = () => {
 							config.PUBLIC_FILES_URL + "/logo-lu-sote-black.svg"
 						}
 						alt="Länsi-Uudenmaa sote logo"
+						width="59"
+						height="59"
 					/>
 					<h1 className="title">{useT("appTitle")}</h1>
 				</Link>

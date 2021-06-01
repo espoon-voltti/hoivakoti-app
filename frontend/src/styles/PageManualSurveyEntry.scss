@@ -1,19 +1,80 @@
 @import "variables.scss";
 
+.page-update {
+	position: relative;
+	padding: 40px 20px 20px 20px;
+}
+
+.page-update-content {
+	max-width: 680px;
+	margin: 0 auto 70px auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.page-update-section {
+	max-width: 680px;
+	border-bottom: 1px solid $border-color;
+	padding: 2rem 0 3rem 0;
+	margin-bottom: 1rem;
+}
+
+.page-update-title {
+	margin-top: 1em;
+}
+
+.page-update-info {
+	margin: 1.5rem 0 0.5rem 0;
+	font-size: 0.8rem;
+}
+
+.page-update-controls {
+	margin: 0;
+	padding: 0 0 0 0;
+}
+
+.page-update-cancel {
+	border-width: 1px;
+	cursor: pointer;
+	justify-content: center;
+	padding-bottom: calc(0.375em - 1px);
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+	padding-top: calc(0.375em - 1px);
+	text-align: center;
+	white-space: nowrap;
+	font-size: 14px;
+	font-weight: 700;
+	min-width: 7em;
+	height: 3em;
+	color: $text-color;
+	border: 1px solid $light-gray;
+	border-radius: $border-radius;
+}
+
+.nav-save {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 24px;
+
+	* {
+		margin-right: 8px;
+	}
+}
+
 .manual-survey-question {
 	margin-bottom: 35px;
-    input {
-        border: none;
-        border-bottom: solid 1px $border-color;
-        font-size: 18px;
+	input {
+		border: none;
+		border-bottom: solid 1px $border-color;
+		font-size: 18px;
 		line-height: 18px;
 		margin-left: 5px;
 		width: 50px;
 		text-align: center;
-    }
-
-    span {
-		font-size: 14px;
 	}
 
+	span {
+		font-size: 14px;
+	}
 }
