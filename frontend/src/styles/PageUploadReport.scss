@@ -35,6 +35,10 @@
 	& .radio-container {
 		cursor: pointer;
 		padding-left: 30px;
+
+		.radio-label {
+			width: auto;
+		}
 	}
 }
 
