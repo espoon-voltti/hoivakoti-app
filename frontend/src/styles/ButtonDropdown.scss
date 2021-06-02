@@ -26,21 +26,18 @@
 	color: $text-color;
 	background: none;
 	padding: 10px;
-	border: 1px solid $secondary-purple;
+	border: 1px solid $black;
 	border-radius: $border-radius;
 	white-space: nowrap;
 	user-select: none;
 
-	&:disabled {
-		cursor: default;
-		opacity: 0.5;
-	}
 	&:hover {
 		border-color: $text-color;
 	}
 }
 
 .button-dropdown-variant-primary .button-dropdown-active {
+	border-color: $gray;
 	color: $text-color;
 
 	.button-dropdown-caret {

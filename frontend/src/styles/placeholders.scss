@@ -1,0 +1,46 @@
+@import "variables.scss";
+
+%border-bottom-orange {
+	border-bottom: solid 1rem;
+	border-image: linear-gradient(
+			90deg,
+			$yellow 0%,
+			$yellow 20%,
+			$orange 20%,
+			$orange 50%,
+			$orange 80%,
+			$yellow 80%,
+			$yellow 100%
+		)
+		3;
+}
+
+%border-bottom-green {
+	border-bottom: solid 1rem;
+	border-image: linear-gradient(
+			90deg,
+			$yellow 0%,
+			$yellow 20%,
+			$green 20%,
+			$green 50%,
+			$green 80%,
+			$yellow 80%,
+			$yellow 100%
+		)
+		3;
+}
+
+%border-bottom-blue {
+	border-bottom: solid 1rem;
+	border-image: linear-gradient(
+			90deg,
+			$yellow 0%,
+			$yellow 20%,
+			$secondary-blue 20%,
+			$secondary-blue 50%,
+			$secondary-blue 80%,
+			$yellow 80%,
+			$yellow 100%
+		)
+		3;
+}

@@ -14,7 +14,9 @@ export default function ScrollToTop(): null {
 				}
 			}, 250);
 		} else {
-			window.scrollTo(0, 0);
+			if (window.scrollY !== 0) {
+				window.scrollTo(0, 0);
+			}
 		}
 	}, [pathname, hash]);
 

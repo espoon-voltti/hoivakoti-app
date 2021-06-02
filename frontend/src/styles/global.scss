@@ -141,6 +141,12 @@ body {
 	font-family: filson-pro, Verdana, "Open sans", sans-serif;
 	font-size: 16px;
 	color: $text-color;
+
+	* {
+		&:focus {
+			outline-color: $primary-blue;
+		}
+	}
 }
 
 p {
@@ -239,15 +245,31 @@ strong {
 	min-width: 7em;
 	height: 3em;
 	border-radius: $border-radius;
-	background-color: $primary-purple;
+	background-color: $black;
 	border-color: transparent;
-	color: $text-color;
+	color: $white;
+
+	&:disabled {
+		background-color: $ligher-gray;
+		color: $dark-gray;
+		cursor: default;
+
+		&:hover {
+			background-color: $ligher-gray;
+		}
+	}
+
+	&:focus {
+		outline-style: solid;
+		outline-offset: 0.2rem;
+		outline-width: 0.15rem;
+	}
 }
 
 .btn-secondary {
 	border-radius: $border-radius;
 	background-color: transparent;
-	border-color: $secondary-purple;
+	border-color: $black;
 	color: $text-color;
 }
 
@@ -258,24 +280,30 @@ strong {
 	padding: 12px !important;
 	background: none !important;
 	color: $text-color;
-	border: solid 1px $secondary-purple;
+	border: solid 1px $black;
 
 	&:hover {
 		text-decoration: underline;
 	}
+
+	&:focus {
+		outline-style: solid;
+		outline-offset: 0.2rem;
+		outline-width: 0.15rem;
+	}
 }
 
 .btn:hover {
-	background-color: darken($primary-purple, 5%);
+	background-color: $gray;
 }
 
 .btn-secondary:hover {
-	background-color: $secondary-purple;
+	background-color: $black;
 	border-color: transparent;
 }
 
 .btn:active {
-	background-color: darken($primary-purple, 5%);
+	background-color: $gray;
 	border-color: transparent;
 }
 
@@ -374,4 +402,14 @@ textarea {
 	position: absolute;
 	white-space: nowrap;
 	width: 1px;
+}
+
+.loading-container {
+	padding: 3rem 2rem 0 2rem;
+	max-width: 42.5rem;
+	margin: 0 auto;
+
+	.loading-text {
+		margin-bottom: 2.5rem;
+	}
 }

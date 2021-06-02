@@ -5,6 +5,10 @@
 	display: flex;
 	align-items: center;
 	margin-bottom: 10px;
+
+	.radio-label {
+		width: 100%;
+	}
 }
 
 .radio-button {
@@ -15,7 +19,7 @@
 }
 
 .radio-button:focus + .radio-label .radio-box {
-	box-shadow: 0px 0px 1px 1px $link-color;
+	box-shadow: 0px 0px 2px 3px $primary-blue;
 }
 
 .radio-box {
@@ -50,7 +54,6 @@
 .radio-label {
 	display: flex;
 	align-items: center;
-	width: 100%;
 	padding: 4px 5px;
 	margin-left: -5px;
 	cursor: pointer;

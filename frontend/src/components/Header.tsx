@@ -7,6 +7,7 @@ import i18next from "i18next";
 import Cookies from "universal-cookie";
 import AuthTypes from "../shared/types/auth-types";
 import { AuthContext } from "./auth-context";
+import { HeaderContext, HeaderStyle } from "./header-context";
 
 const setLanguage = (lng: Language): void => {
 	i18next.changeLanguage(lng);
@@ -27,10 +28,23 @@ const Header: FC = () => {
 	const [sessionCookies] = useState<Cookies>(new Cookies());
 
 	const { isAuthenticated, logout } = useContext(AuthContext);
+	const { headerStyle } = useContext(HeaderContext);
 
 	useEffect(() => {
 		setIsMobileMenuOpen(false);
 	}, [location.pathname, location.search]);
+
+	const [headerStyleClass, setHeaderStyleClass] = useState<string>("");
+
+	useEffect(() => {
+		if (headerStyle === HeaderStyle.GREEN) {
+			setHeaderStyleClass("header--green");
+		} else if (headerStyle === HeaderStyle.BLUE) {
+			setHeaderStyleClass("header--blue");
+		} else {
+			setHeaderStyleClass("");
+		}
+	}, [headerStyle]);
 
 	const navHome = useT("navHome");
 	const navNursingHomes = useT("navNursingHomes");
@@ -207,7 +221,13 @@ const Header: FC = () => {
 	}
 
 	return (
-		<header className={"header " + (updatePage ? "header-fixed" : "")}>
+		<header
+			className={
+				"header " +
+				(updatePage ? "header-fixed" : "") +
+				headerStyleClass
+			}
+		>
 			<a className="jump-to-content" href="#content">
 				{linkJumpToContent}
 			</a>
@@ -219,6 +239,8 @@ const Header: FC = () => {
 							config.PUBLIC_FILES_URL + "/logo-lu-sote-black.svg"
 						}
 						alt="Länsi-Uudenmaa sote logo"
+						width="59"
+						height="59"
 					/>
 					<h1 className="title">{useT("appTitle")}</h1>
 				</Link>

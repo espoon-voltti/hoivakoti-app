@@ -174,136 +174,146 @@ const PageLanding: FC = () => {
 			</div>
 
 			<div className="content-column">
-				<section className="content-block">
-					<h2>{homepageHeading}</h2>
-					<p className="ingress">{homepageIngress}</p>
-				</section>
-				<section className="content-block">
-					<div className="anchor-list">
-						<a href="#contact-list" className="btn anchor-link">
-							{homepageAnchor1}
-						</a>
-						<a href="#about-service" className="btn anchor-link">
-							{homepageAnchor2}
-						</a>
-						<a href="#faq" className="btn anchor-link">
-							{homepageAnchor3}
-						</a>
+				<section className="content-block-container content-block-container--vanilla">
+					<div className="content-block">
+						<h2>{homepageHeading}</h2>
+						<p className="ingress">{homepageIngress}</p>
+					</div>
+					<div className="content-block">
+						<div className="anchor-list">
+							<a href="#contact-list" className="btn anchor-link">
+								{homepageAnchor1}
+							</a>
+							<a
+								href="#about-service"
+								className="btn anchor-link"
+							>
+								{homepageAnchor2}
+							</a>
+							<a href="#faq" className="btn anchor-link">
+								{homepageAnchor3}
+							</a>
+						</div>
+					</div>
+					<div className="content-block">
+						<h2>{whoAreServicesForTitle}</h2>
+						<Trans i18nKey="defaultNamespace:whoAreServicesForContent">
+							<p></p>
+							<p></p>
+						</Trans>
 					</div>
 				</section>
-				<section className="content-block">
-					<h2>{whoAreServicesForTitle}</h2>
-					<Trans i18nKey="defaultNamespace:whoAreServicesForContent">
-						<p></p>
-						<p></p>
-					</Trans>
-				</section>
-				<section className="content-block" id="contact-list">
-					<h2>{howToApplyTitle}</h2>
-					<p>{howToApplyDesc}</p>
-					<ol>
-						<Trans i18nKey="defaultNamespace:howToApplySteps">
-							<li></li>
-							<li></li>
-							<li></li>
-						</Trans>
-					</ol>
-					<p>{contactDesc}</p>
-					<ul>
-						{contactItems.map((item, index) => (
-							<li
-								key={`contact-item-${index}`}
-								dangerouslySetInnerHTML={{ __html: item }}
-							></li>
-						))}
-					</ul>
-				</section>
-				<section className="content-block">
-					<h2>{howToPickTitle}</h2>
-					<p>{howToPickContent1}</p>
-					<p>{howToPickContent2}</p>
-					<p>{howToPickContent3}</p>
-					<p
-						dangerouslySetInnerHTML={{ __html: howToPickContent4 }}
-					></p>
-				</section>
-				<section className="content-block" id="about-service">
-					<h2>{whatServicesIncludesTitle}</h2>
-					<p>
-						<Trans
-							i18nKey="defaultNamespace:whatServicesIncludesContent1"
-							components={[
-								// eslint-disable-next-line react/jsx-key
-								<a
-									href={servicePromiseLink}
-									target="_blank"
-									rel="noopener noreferrer"
-								/>,
-							]}
-						></Trans>
-					</p>
-
-					<p>{whatServicesIncludesContent2}</p>
-					<p>{whatServicesIncludesContent3}</p>
-					<p>{whatServicesIncludesContent4}</p>
-					<p>{whatServicesIncludesContent5}</p>
-				</section>
-				<section className="content-block">
-					<h2>{paymentsTitle}</h2>
-					<p>{paymentsContent}</p>
-				</section>
-				<section className="content-block" id="surveillance">
-					<h2>{surveillanceTitle}</h2>
-					<p>{surveillanceDescription}</p>
-				</section>
-				<section className="content-block" id="faq">
-					<h3>{homepageFaqTitle}</h3>
-					<dl className="faq-list">
-						<dt>{faq1Title}</dt>
-						<dd>
-							<Trans i18nKey="defaultNamespace:faq1Content">
-								<p></p>
-								<p></p>
-								<p></p>
+				<section className="content-block-container ">
+					<div className="content-block" id="contact-list">
+						<h2>{howToApplyTitle}</h2>
+						<p>{howToApplyDesc}</p>
+						<ol>
+							<Trans i18nKey="defaultNamespace:howToApplySteps">
+								<li></li>
+								<li></li>
+								<li></li>
 							</Trans>
-						</dd>
-						<dt>{faq2Title}</dt>
-						<dd>
-							<p>{faq2Content}</p>
-						</dd>
-						<dt>{faq3Title}</dt>
-						<dd>
-							<p>{faq3Content}</p>
-						</dd>
-						<dt>{faq4Title}</dt>
-						<dd>
-							<p>{faq4Content}</p>
-						</dd>
-						<dt>{faq5Title}</dt>
-						<dd>
-							<p>{faq5Content}</p>
-						</dd>
-						<dt>{faq6Title}</dt>
-						<dd>
-							<p>{faq6Content}</p>
-						</dd>
-						<dt>{faq7Title}</dt>
-						<dd>
-							<p>{faq7Content}</p>
-						</dd>
-						<dt>{faq8Title}</dt>
-						<dd>
-							<p>{faq8Content}</p>
-						</dd>
-						<dt>{faq9Title}</dt>
-						<dd>
-							<p>{faq9Content}</p>
-						</dd>
-					</dl>
+						</ol>
+						<p>{contactDesc}</p>
+						<ul>
+							{contactItems.map((item, index) => (
+								<li
+									key={`contact-item-${index}`}
+									dangerouslySetInnerHTML={{ __html: item }}
+								></li>
+							))}
+						</ul>
+					</div>
+					<div className="content-block">
+						<h2>{howToPickTitle}</h2>
+						<p>{howToPickContent1}</p>
+						<p>{howToPickContent2}</p>
+						<p>{howToPickContent3}</p>
+						<p
+							dangerouslySetInnerHTML={{
+								__html: howToPickContent4,
+							}}
+						></p>
+					</div>
+					<div className="content-block" id="about-service">
+						<h2>{whatServicesIncludesTitle}</h2>
+						<p>
+							<Trans
+								i18nKey="defaultNamespace:whatServicesIncludesContent1"
+								components={[
+									// eslint-disable-next-line react/jsx-key
+									<a
+										href={servicePromiseLink}
+										target="_blank"
+										rel="noopener noreferrer"
+									/>,
+								]}
+							></Trans>
+						</p>
+						<p>{whatServicesIncludesContent2}</p>
+						<p>{whatServicesIncludesContent3}</p>
+						<p>{whatServicesIncludesContent4}</p>
+						<p>{whatServicesIncludesContent5}</p>
+					</div>
+					<div className="content-block">
+						<h2>{paymentsTitle}</h2>
+						<p>{paymentsContent}</p>
+					</div>
+					<div className="content-block" id="surveillance">
+						<h2>{surveillanceTitle}</h2>
+						<p>{surveillanceDescription}</p>
+					</div>
 				</section>
-				<a className="backToTopLink" href="#pageTop">
-					{linkBacktoTop}
-				</a>
+				<section className="content-block-container content-block-container--blue">
+					<div className="content-block" id="faq">
+						<h2>{homepageFaqTitle}</h2>
+						<dl className="faq-list">
+							<dt>{faq1Title}</dt>
+							<dd>
+								<Trans i18nKey="defaultNamespace:faq1Content">
+									<p></p>
+									<p></p>
+									<p></p>
+								</Trans>
+							</dd>
+							<dt>{faq2Title}</dt>
+							<dd>
+								<p>{faq2Content}</p>
+							</dd>
+							<dt>{faq3Title}</dt>
+							<dd>
+								<p>{faq3Content}</p>
+							</dd>
+							<dt>{faq4Title}</dt>
+							<dd>
+								<p>{faq4Content}</p>
+							</dd>
+							<dt>{faq5Title}</dt>
+							<dd>
+								<p>{faq5Content}</p>
+							</dd>
+							<dt>{faq6Title}</dt>
+							<dd>
+								<p>{faq6Content}</p>
+							</dd>
+							<dt>{faq7Title}</dt>
+							<dd>
+								<p>{faq7Content}</p>
+							</dd>
+							<dt>{faq8Title}</dt>
+							<dd>
+								<p>{faq8Content}</p>
+							</dd>
+							<dt>{faq9Title}</dt>
+							<dd>
+								<p>{faq9Content}</p>
+							</dd>
+						</dl>
+					</div>
+					<a className="backToTopLink" href="#pageTop">
+						{linkBacktoTop}
+					</a>
+				</section>
 			</div>
 		</div>
 	);
