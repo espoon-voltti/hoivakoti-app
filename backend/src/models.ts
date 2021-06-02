@@ -533,6 +533,17 @@ export async function UpdateNursingHomeSurveyQuestion(
 		});
 }
 
+export async function RemoveNursingHomeSurveyQuestion(
+	id: number,
+	surveyId: string,
+): Promise<any> {
+	const result = await knex("NursingHomeSurveyQuestions")
+		.where({ id: id, survey_id: surveyId })
+		.del();
+
+	return result;
+}
+
 export async function AddNursingHomeSurveyKeys(amount: number): Promise<any[]> {
 	let keys: any[] = [];
 	for (let i = 0; i < amount; i++) {
