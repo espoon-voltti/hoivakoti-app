@@ -94,14 +94,14 @@ const PageLanding: FC = () => {
 		contactItemSiuntio,
 	];
 
+	const karviainen = useT("karviainen");
+
 	const LUCommunes: Translation = {
 		[Commune.EPO]: useT("espoo"),
 		[Commune.HNK]: useT("hanko"),
 		[Commune.INK]: useT("inkoo"),
 		[Commune.KAU]: useT("kauniainen"),
-		[Commune.PKA]: `${useT("karviainen")} (${useT("karkkila")}, ${useT(
-			"vihti",
-		)})`,
+		[Commune.PKA]: `${karviainen} (${useT("karkkila")}, ${useT("vihti")})`,
 		[Commune.KRN]: useT("kirkkonummi"),
 		[Commune.LHJ]: useT("lohja"),
 		[Commune.RPO]: useT("raasepori"),
@@ -114,11 +114,18 @@ const PageLanding: FC = () => {
 			const value = LUCommunes[key];
 
 			const checked = selectedCommune
-				? selectedCommune.includes(value)
+				? selectedCommune.includes(value) ||
+				  value.indexOf(selectedCommune) !== -1
 				: false;
 
+			let name = value;
+
+			if (key === Commune.PKA) {
+				name = karviainen;
+			}
+
 			return {
-				name: value,
+				name: name,
 				label: value,
 				type: "radio",
 				checked: checked,
