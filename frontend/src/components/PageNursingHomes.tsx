@@ -41,7 +41,7 @@ interface SearchFilters {
 	readonly language?: Language;
 	readonly ara?: boolean;
 	readonly lah?: boolean;
-	readonly kotikunta?: string[];
+	readonly kotikunta?: string;
 }
 
 const PageNursingHomes: FC = () => {
@@ -99,7 +99,9 @@ const PageNursingHomes: FC = () => {
 		[Commune.HNK]: useT("hanko"),
 		[Commune.INK]: useT("inkoo"),
 		[Commune.KAU]: useT("kauniainen"),
-		[Commune.PKA]: useT("karviainen"),
+		[Commune.PKA]: `${useT("karviainen")} (${useT("karkkila")}, ${useT(
+			"vihti",
+		)})`,
 		[Commune.KRN]: useT("kirkkonummi"),
 		[Commune.LHJ]: useT("lohja"),
 		[Commune.RPO]: useT("raasepori"),
@@ -166,6 +168,8 @@ const PageNursingHomes: FC = () => {
 		useT("vantaa"),
 		useT("vihti"),
 	];
+
+	const karviainen = useT("karviainen");
 
 	//City or district can appear in Finnish or Swedish regardless of the current language.
 	const citiesAndDistrictsMapFI: Translation = {
@@ -277,11 +281,7 @@ const PageNursingHomes: FC = () => {
 	const ara = parsed.ara !== undefined ? parsed.ara === "true" : undefined;
 	const lah = parsed.lah !== undefined ? parsed.lah === "true" : undefined;
 
-	const commune = parsed.kotikunta
-		? !Array.isArray(parsed.kotikunta)
-			? [parsed.kotikunta]
-			: parsed.kotikunta
-		: undefined;
+	const commune = parsed.kotikunta ? (parsed.kotikunta as string) : undefined;
 
 	const searchFilters: SearchFilters = {
 		alue: area,
@@ -369,11 +369,15 @@ const PageNursingHomes: FC = () => {
 					const filtersToKeys = Object.keys(LUCommunes).filter(
 						commune => {
 							const key = commune as Commune;
+
 							if (
 								searchFilters.kotikunta &&
-								searchFilters.kotikunta.includes(
+								(searchFilters.kotikunta.includes(
 									LUCommunes[key],
-								)
+								) ||
+									LUCommunes[key].indexOf(
+										searchFilters.kotikunta,
+									) !== -1)
 							) {
 								return key;
 							}
@@ -446,13 +450,22 @@ const PageNursingHomes: FC = () => {
 		...Object.keys(LUCommunes).map<FilterOption>(key => {
 			const value = LUCommunes[key];
 
+			const checked = searchFilters.kotikunta
+				? searchFilters.kotikunta.includes(value) ||
+				  value.indexOf(searchFilters.kotikunta) !== -1
+				: false;
+
+			let name = value;
+
+			if (key === Commune.PKA) {
+				name = karviainen;
+			}
+
 			return {
-				name: value,
+				name: name,
 				label: value,
 				type: "radio",
-				checked: searchFilters.kotikunta
-					? searchFilters.kotikunta.includes(LUCommunes[key])
-					: false,
+				checked: checked,
 			};
 		}),
 	];
@@ -590,10 +603,8 @@ const PageNursingHomes: FC = () => {
 				label={labelCustomerCommune}
 				prefix="commune"
 				value={
-					searchFilters.kotikunta !== undefined
-						? searchFilters.kotikunta.length <= 2
-							? searchFilters.kotikunta.join(", ")
-							: `(${searchFilters.kotikunta.length} ${filterSelections})`
+					searchFilters.kotikunta && searchFilters.kotikunta !== ""
+						? searchFilters.kotikunta
 						: null
 				}
 				values={optionsCustomerCommune}

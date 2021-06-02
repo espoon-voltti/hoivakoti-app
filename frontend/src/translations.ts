@@ -1484,9 +1484,9 @@ export const translations = {
 	},
 	whatServicesIncludesContent1: {
 		"fi-FI":
-			"Kaikki Hoivakotiportaalissa esiteltävät hoivakodit noudattavat Länsi-Uudenmaankuntien yhteisiä periaatteita palvelun sisällöstä ja laadusta. <a href=''>Lue lisää palvelukonseptista</a> (pdf).",
+			"Kaikki Hoivakotiportaalissa esiteltävät hoivakodit noudattavat Länsi-Uudenmaankuntien yhteisiä periaatteita palvelun sisällöstä ja laadusta. <0>Lue lisää palvelukonseptista</0>.",
 		"sv-FI":
-			"Alla vårdhem som presenteras i Vårdhemsportalen följer Västra Nylands kommuners gemensamma principer för servicens innehåll och kvalitet. <a href=''>Läs mer om servicekonceptet</a> (pdf).",
+			"Alla vårdhem som presenteras i Vårdhemsportalen följer Västra Nylands kommuners gemensamma principer för servicens innehåll och kvalitet. <0>Läs mer om servicekonceptet</0> (den svenska version är på kommande).",
 	},
 	whatServicesIncludesContent2: {
 		"fi-FI":
