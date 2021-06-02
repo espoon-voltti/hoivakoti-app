@@ -39,6 +39,7 @@ import {
 	DeleteNursingHomePics,
 	AddNursingHomeSurveyQuestion as AddNursingHomeSurveyQuestionDB,
 	UpdateNursingHomeSurveyQuestion as UpdateNursingHomeSurveyQuestionDB,
+	RemoveNursingHomeSurveyQuestion as RemoveNursingHomeSurveyQuestionDB,
 	SubmitSurveyData as SubmitSurveyDataDB,
 	SubmitSurveyResponse as SubmitSurveyResponseDB,
 	SubmitFeedbackResponse as SubmitFeedbackResponseDB,
@@ -543,6 +544,25 @@ export async function UpdateNursingHomeSurveyQuestion(
 		ctx.request.body.active,
 	);
 	return "updated";
+}
+
+export async function RemoveNursingHomeSurveyQuestion(
+	ctx: Context,
+): Promise<string | null> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+	const requestPw = ctx.request.body && ctx.request.body.adminPassword;
+	const isPwValid =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		requestPw === adminPw;
+	if (!isPwValid) return null;
+
+	await RemoveNursingHomeSurveyQuestionDB(
+		ctx.request.body.id,
+		ctx.request.body.survey_id,
+	);
+
+	return "deleted";
 }
 
 export async function AddNursingHomeSurveyKeys(

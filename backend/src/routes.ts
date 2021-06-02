@@ -48,6 +48,7 @@ import {
 	RefreshKeycloakAccessToken,
 	LogoutKeycloakAccessToken,
 	BatchUpdateCustomerCommunes,
+	RemoveNursingHomeSurveyQuestion,
 } from "./controllers";
 import config from "./config";
 
@@ -230,6 +231,11 @@ router.post("/api/survey/add-questions", async ctx => {
 
 router.post("/api/survey/update-question", async ctx => {
 	const res = await UpdateNursingHomeSurveyQuestion(ctx);
+	ctx.body = res;
+});
+
+router.del("/api/survey/remove-question", async ctx => {
+	const res = await RemoveNursingHomeSurveyQuestion(ctx);
 	ctx.body = res;
 });
 
