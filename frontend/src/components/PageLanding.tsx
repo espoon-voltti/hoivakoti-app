@@ -50,7 +50,8 @@ const PageLanding: FC = () => {
 	const whatServicesIncludesContent4 = useT("whatServicesIncludesContent4");
 	const whatServicesIncludesContent5 = useT("whatServicesIncludesContent5");
 
-	const servicePromiseLink = `${config.PUBLIC_FILES_URL}/documents/palvelukonsepti-2021-${currentLanguage}.pdf`;
+	// const servicePromiseLink = `${config.PUBLIC_FILES_URL}/documents/palvelukonsepti-2021-${currentLanguage}.pdf`;
+	const servicePromiseLink = `${config.PUBLIC_FILES_URL}/documents/palvelukonsepti-2021-fi-FI.pdf`;
 
 	const paymentsTitle = useT("paymentsTitle");
 	const paymentsContent = useT("paymentsContent");
