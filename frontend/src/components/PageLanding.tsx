@@ -1,15 +1,17 @@
 import React, { FC, useState } from "react";
 import "../styles/landing.scss";
-import { useT } from "../i18n";
+import { useCurrentLanguage, useT } from "../i18n";
 import { useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
 import FilterItem, { FilterOption } from "./FilterItem";
 import queryString from "query-string";
 import { Translation } from "../shared/types/translation";
 import Commune from "../shared/types/commune";
+import config from "./config";
 
 const PageLanding: FC = () => {
 	const history = useHistory();
+	const currentLanguage = useCurrentLanguage();
 
 	const locationPickerPlaceholder = useT("locationPickerPlaceholder");
 	const linkBacktoTop = useT("linkBacktoTop");
@@ -43,11 +45,13 @@ const PageLanding: FC = () => {
 	const howToPickContent4 = useT("howToPickContent4");
 
 	const whatServicesIncludesTitle = useT("whatServicesIncludesTitle");
-	const whatServicesIncludesContent1 = useT("whatServicesIncludesContent1");
 	const whatServicesIncludesContent2 = useT("whatServicesIncludesContent2");
 	const whatServicesIncludesContent3 = useT("whatServicesIncludesContent3");
 	const whatServicesIncludesContent4 = useT("whatServicesIncludesContent4");
 	const whatServicesIncludesContent5 = useT("whatServicesIncludesContent5");
+
+	// const servicePromiseLink = `${config.PUBLIC_FILES_URL}/documents/palvelukonsepti-2021-${currentLanguage}.pdf`;
+	const servicePromiseLink = `${config.PUBLIC_FILES_URL}/documents/palvelukonsepti-2021-fi-FI.pdf`;
 
 	const paymentsTitle = useT("paymentsTitle");
 	const paymentsContent = useT("paymentsContent");
@@ -90,12 +94,14 @@ const PageLanding: FC = () => {
 		contactItemSiuntio,
 	];
 
+	const karviainen = useT("karviainen");
+
 	const LUCommunes: Translation = {
 		[Commune.EPO]: useT("espoo"),
 		[Commune.HNK]: useT("hanko"),
 		[Commune.INK]: useT("inkoo"),
 		[Commune.KAU]: useT("kauniainen"),
-		[Commune.PKA]: useT("karviainen"),
+		[Commune.PKA]: `${karviainen} (${useT("karkkila")}, ${useT("vihti")})`,
 		[Commune.KRN]: useT("kirkkonummi"),
 		[Commune.LHJ]: useT("lohja"),
 		[Commune.RPO]: useT("raasepori"),
@@ -108,11 +114,18 @@ const PageLanding: FC = () => {
 			const value = LUCommunes[key];
 
 			const checked = selectedCommune
-				? selectedCommune.includes(value)
+				? selectedCommune.includes(value) ||
+				  value.indexOf(selectedCommune) !== -1
 				: false;
 
+			let name = value;
+
+			if (key === Commune.PKA) {
+				name = karviainen;
+			}
+
 			return {
-				name: value,
+				name: name,
 				label: value,
 				type: "radio",
 				checked: checked,
@@ -234,11 +247,19 @@ const PageLanding: FC = () => {
 					</div>
 					<div className="content-block" id="about-service">
 						<h2>{whatServicesIncludesTitle}</h2>
-						<p
-							dangerouslySetInnerHTML={{
-								__html: whatServicesIncludesContent1,
-							}}
-						></p>
+						<p>
+							<Trans
+								i18nKey="defaultNamespace:whatServicesIncludesContent1"
+								components={[
+									// eslint-disable-next-line react/jsx-key
+									<a
+										href={servicePromiseLink}
+										target="_blank"
+										rel="noopener noreferrer"
+									/>,
+								]}
+							></Trans>
+						</p>
 						<p>{whatServicesIncludesContent2}</p>
 						<p>{whatServicesIncludesContent3}</p>
 						<p>{whatServicesIncludesContent4}</p>
