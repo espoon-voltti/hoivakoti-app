@@ -99,7 +99,9 @@ const PageLanding: FC = () => {
 		[Commune.HNK]: useT("hanko"),
 		[Commune.INK]: useT("inkoo"),
 		[Commune.KAU]: useT("kauniainen"),
-		[Commune.PKA]: useT("karviainen"),
+		[Commune.PKA]: `${useT("karviainen")} (${useT("karkkila")}, ${useT(
+			"vihti",
+		)})`,
 		[Commune.KRN]: useT("kirkkonummi"),
 		[Commune.LHJ]: useT("lohja"),
 		[Commune.RPO]: useT("raasepori"),
