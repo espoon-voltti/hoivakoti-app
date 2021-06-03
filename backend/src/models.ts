@@ -444,14 +444,34 @@ export async function InsertNursingHomeToDB(
 	const existing_id = await GetNursingHomeIDFromName(nursingHome.name);
 	// Nursing home with this name already exists
 	if (existing_id.length > 0) {
+		// const uuid = existing_id[0].id;
+		// await knex("NursingHomes")
+		// 	.where({ id: uuid })
+		// 	.update({
+		// 		...nursingHome,
+		// 		geolocation: geoloc["features"][0],
+		// 		district: postal_code_to_district[nursingHome.postal_code],
+		// 	});
+
 		const uuid = existing_id[0].id;
-		await knex("NursingHomes")
-			.where({ id: uuid })
-			.update({
-				...nursingHome,
-				geolocation: geoloc["features"][0],
-				district: postal_code_to_district[nursingHome.postal_code],
+
+		const basicUpdateKey = hashWithSalt(
+			uuid,
+			process.env.ADMIN_PASSWORD as string,
+		).slice(0, 10);
+		await knex("NursingHomes").insert({
+			id: uuid,
+			...nursingHome,
+			geolocation: geoloc["features"][0],
+			district: postal_code_to_district[nursingHome.postal_code],
+			basic_update_key: basicUpdateKey,
+		});
+		if (nursingHome.city != "Espoo" && nursingHome.city != "Esbo") {
+			await knex.table("NursingHomeReports").insert({
+				nursinghome_id: uuid,
+				status: "no-info",
 			});
+		}
 
 		return uuid;
 	} else {
@@ -1030,6 +1050,24 @@ export async function DeleteNursingHome(id: string): Promise<number> {
 		.where({ id: id })
 		.del();
 	return result;
+}
+
+export async function DeleteNursingHomeByUpdateKey(
+	id: string,
+	updateId: string,
+): Promise<boolean> {
+	const result = await knex("NursingHomes")
+		.where({
+			id: id,
+			basic_update_key: updateId,
+		})
+		.del();
+
+	if (result < 1) {
+		return false;
+	}
+
+	return true;
 }
 
 export async function UpdateNursingHomeInformation(
@@ -1647,6 +1685,25 @@ export async function addDummyNursingHome(): Promise<string> {
 	const testNursingHomeId = await InsertNursingHomeToDB(nursinghome);
 
 	await UpdateCustomerCommunesForNursingHome(testNursingHomeId, [
+		Commune.EPO,
+	]);
+
+	const duplicateNursingHome: NursingHome = {
+		name: "Testi 1",
+		owner: "Omistaja 1",
+		postal_code: "00010",
+		city: "Espoo",
+		address: "Tie 1",
+		language: "Suomi",
+		tour_info:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem.",
+	};
+
+	const testDuplicateNursingHomeId = await InsertNursingHomeToDB(
+		duplicateNursingHome,
+	);
+
+	await UpdateCustomerCommunesForNursingHome(testDuplicateNursingHomeId, [
 		Commune.EPO,
 	]);
 

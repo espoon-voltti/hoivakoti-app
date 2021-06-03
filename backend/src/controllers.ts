@@ -55,12 +55,13 @@ import {
 	RefreshToken as RefreshTokenDB,
 	LogoutAccessToken as LogoutAccessTokenDB,
 	BatchUpdateCustomerCommunes as BatchUpdateCustomerCommunesDB,
+	DeleteNursingHomeByUpdateKey,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
+import { NursingHome } from "./nursinghome-typings";
 import Knex = require("knex");
 import { Context } from "koa";
-import { NursingHome } from "./nursinghome-typings";
 
 export async function AddNursingHome(ctx: any): Promise<string> {
 	await InsertNursingHomeToDB({
@@ -226,6 +227,73 @@ export async function DeleteNursingHome(ctx: any): Promise<number | null> {
 	const result = await DeleteNursingHomeDB(id);
 	await DeleteNursingHomePics(id);
 	return result;
+}
+
+export async function FindAndDeleteDuplicateNursingHomes(
+	ctx: any,
+): Promise<any> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+
+	const { adminPassword } = ctx.request.body;
+
+	const hasPassword = !!adminPassword;
+
+	if (!hasPassword) {
+		ctx.response.status = 403;
+
+		return {
+			error: "Credentials are required!",
+		};
+	}
+
+	const isValidPassword =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		adminPassword === adminPw;
+
+	if (!isValidPassword) {
+		ctx.response.status = 401;
+
+		return {
+			error: "Invalid credentials!",
+		};
+	}
+
+	const nursingHomesById = await GetNursingHomeDB(ctx.params.id);
+
+	const hasDuplicates =
+		nursingHomesById.length && nursingHomesById.length > 1;
+
+	if (!hasDuplicates) {
+		return { message: "No duplicates found. No further actions needed." };
+	}
+
+	const basicUpdateKeys = nursingHomesById.map((nursingHome: any) => {
+		return {
+			basicUpdateKey: nursingHome.basic_update_key,
+			id: nursingHome.id,
+			deleted: false,
+		};
+	});
+
+	if (basicUpdateKeys && basicUpdateKeys.length) {
+		const duplicateRequest = basicUpdateKeys.slice(1);
+
+		await Promise.all(
+			duplicateRequest.map(async (basicUpdateItem: any) => {
+				const removeNursingSuccess = await DeleteNursingHomeByUpdateKey(
+					basicUpdateItem.id,
+					basicUpdateItem.basicUpdateKey,
+				);
+
+				basicUpdateItem.deleted = removeNursingSuccess;
+
+				return basicUpdateItem;
+			}),
+		);
+
+		return duplicateRequest;
+	}
 }
 
 export async function UpdateNursingHomeInformation(
