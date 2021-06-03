@@ -68,8 +68,9 @@
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
-	max-height: 270px;
-	width: 650px;
+	width: 41rem;
+	max-height: 20rem;
+
 	@media screen and (max-width: 1024px) {
 		max-height: calc(100vh - 200px);
 		width: auto;

@@ -151,12 +151,15 @@ const PageNursingHomes: FC = () => {
 		useT("tapiola"),
 	];
 	const espoo = useT("espoo");
+
 	const otherCities = [
 		useT("hanko"),
 		useT("helsinki"),
 		useT("hyvinkää"),
+		useT("inkoo"),
 		useT("järvenpää"),
 		useT("karkkila"),
+		useT("kauniainen"),
 		useT("kerava"),
 		useT("kirkkonummi"),
 		useT("lohja"),
@@ -201,6 +204,10 @@ const PageNursingHomes: FC = () => {
 			"sv-FI",
 			"hyvinkää",
 		)]: getTranslationByLanguage("fi-FI", "hyvinkää"),
+		[getTranslationByLanguage("sv-FI", "inkoo")]: getTranslationByLanguage(
+			"fi-FI",
+			"inkoo",
+		),
 		[getTranslationByLanguage(
 			"sv-FI",
 			"järvenpää",
@@ -217,6 +224,10 @@ const PageNursingHomes: FC = () => {
 			"sv-FI",
 			"karkkila",
 		)]: getTranslationByLanguage("fi-FI", "karkkila"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"kauniainen",
+		)]: getTranslationByLanguage("fi-FI", "kauniainen"),
 		[getTranslationByLanguage("sv-FI", "kerava")]: getTranslationByLanguage(
 			"fi-FI",
 			"kerava",
