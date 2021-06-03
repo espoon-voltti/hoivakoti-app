@@ -6,10 +6,11 @@ import "../styles/PageReportsAdmin.scss";
 import config from "./config";
 import queryString from "query-string";
 import axios from "axios";
-import { useCurrentLanguage, useT } from "../i18n";
+import i18next, { TranslationKey, useCurrentLanguage, useT } from "../i18n";
 import { NursingHome } from "./types";
 import { AuthContext } from "./auth-context";
 import City, { cityTranslations } from "../shared/types/city";
+import { Translation } from "../shared/types/translation";
 
 type Language = string;
 
@@ -20,6 +21,25 @@ interface SearchFilters {
 	readonly lah?: boolean;
 	readonly name?: string;
 }
+
+const getTranslationByLanguage = (
+	language: Language,
+	key: TranslationKey,
+): string => {
+	return i18next.getResource(language, "defaultNamespace", key);
+};
+
+const reverseObjectKeyValues = (obj: Translation): Translation => {
+	const reversedObject: Translation = {};
+
+	for (const key in obj) {
+		const value = obj[key];
+
+		reversedObject[value] = key;
+	}
+
+	return reversedObject;
+};
 
 const PageReportsAdmin: FC = () => {
 	const { userRoles, isAdmin } = useContext(AuthContext);
@@ -53,8 +73,10 @@ const PageReportsAdmin: FC = () => {
 		useT("hanko"),
 		useT("helsinki"),
 		useT("hyvinkää"),
+		useT("inkoo"),
 		useT("järvenpää"),
 		useT("karkkila"),
+		useT("kauniainen"),
 		useT("kerava"),
 		useT("kirkkonummi"),
 		useT("lohja"),
@@ -67,38 +89,109 @@ const PageReportsAdmin: FC = () => {
 		useT("vihti"),
 	];
 
-	const citiesAndDistrictsToFinnish = {
-		"Esbo centrum": "Espoon keskus",
-		Esboviken: "Espoonlahti",
-		Alberga: "Leppävaara",
-		Mattby: "Matinkylä",
-		Hagalund: "Tapiola",
-		Helsingfors: "Helsinki",
-		Hyvinge: "Hyvinkää",
-		Träskända: "Järvenpää",
-		Karis: "Karjaa",
-		Hangö: "Hanko",
-		Högfors: "Karkkila",
-		Kervo: "Kerava",
-		Kyrkslätt: "Kirkkonummi",
-		Lojo: "Lohja",
-		Nurmijärvi: "Nurmijärvi",
-		Raseborg: "Raasepori",
-		Sibbo: "Sipoo",
-		Sjundeå: "Siuntio",
-		Ekenäs: "Tammisaari",
-		Tusby: "Tuusula",
-		Vanda: "Vantaa",
-		Vichtis: "Vihti",
+	//City or district can appear in Finnish or Swedish regardless of the current language.
+	const citiesAndDistrictsMapFI: Translation = {
+		[getTranslationByLanguage(
+			"sv-FI",
+			"espoon keskus",
+		)]: getTranslationByLanguage("fi-FI", "espoon keskus"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"espoonlahti",
+		)]: getTranslationByLanguage("fi-FI", "espoonlahti"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"leppävaara",
+		)]: getTranslationByLanguage("fi-FI", "leppävaara"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"matinkylä",
+		)]: getTranslationByLanguage("fi-FI", "matinkylä"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"tapiola",
+		)]: getTranslationByLanguage("fi-FI", "tapiola"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"helsinki",
+		)]: getTranslationByLanguage("fi-FI", "helsinki"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"hyvinkää",
+		)]: getTranslationByLanguage("fi-FI", "hyvinkää"),
+		[getTranslationByLanguage("sv-FI", "inkoo")]: getTranslationByLanguage(
+			"fi-FI",
+			"inkoo",
+		),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"järvenpää",
+		)]: getTranslationByLanguage("fi-FI", "järvenpää"),
+		[getTranslationByLanguage("sv-FI", "karjaa")]: getTranslationByLanguage(
+			"fi-FI",
+			"karjaa",
+		),
+		[getTranslationByLanguage("sv-FI", "hanko")]: getTranslationByLanguage(
+			"fi-FI",
+			"hanko",
+		),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"karkkila",
+		)]: getTranslationByLanguage("fi-FI", "karkkila"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"kauniainen",
+		)]: getTranslationByLanguage("fi-FI", "kauniainen"),
+		[getTranslationByLanguage("sv-FI", "kerava")]: getTranslationByLanguage(
+			"fi-FI",
+			"kerava",
+		),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"kirkkonummi",
+		)]: getTranslationByLanguage("fi-FI", "kirkkonummi"),
+		[getTranslationByLanguage("sv-FI", "lohja")]: getTranslationByLanguage(
+			"fi-FI",
+			"lohja",
+		),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"nurmijärvi",
+		)]: getTranslationByLanguage("fi-FI", "nurmijärvi"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"raasepori",
+		)]: getTranslationByLanguage("fi-FI", "raasepori"),
+		[getTranslationByLanguage("sv-FI", "sipoo")]: getTranslationByLanguage(
+			"fi-FI",
+			"sipoo",
+		),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"siuntio",
+		)]: getTranslationByLanguage("fi-FI", "siuntio"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"tammisaari",
+		)]: getTranslationByLanguage("fi-FI", "tammisaari"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"tuusula",
+		)]: getTranslationByLanguage("fi-FI", "tuusula"),
+		[getTranslationByLanguage("sv-FI", "vantaa")]: getTranslationByLanguage(
+			"fi-FI",
+			"vantaa",
+		),
+		[getTranslationByLanguage("sv-FI", "vihti")]: getTranslationByLanguage(
+			"fi-FI",
+			"vihti",
+		),
 	};
 
-	const citiesAndDistrictsToSwedish = {
-		"Espoon keskus": "Esbo centrum",
-		Espoonlahti: "Esboviken",
-		Leppävaara: "Alberga",
-		Matinkylä: "Mattby",
-		Tapiola: "Hagalund",
-	};
+	const citiesAndDistrictsMapSV: Translation = reverseObjectKeyValues(
+		citiesAndDistrictsMapFI,
+	);
 
 	useEffect(() => {
 		if (!isAdmin) {
@@ -237,12 +330,10 @@ const PageReportsAdmin: FC = () => {
 						(!searchFilters.alue.includes(nursinghome.district) &&
 							!searchFilters.alue.includes(nursinghome.city)) &&
 						!searchFilters.alue.includes(
-							(citiesAndDistrictsToFinnish as any)[
-								nursinghome.city
-							],
+							(citiesAndDistrictsMapFI as any)[nursinghome.city],
 						) &&
 						!searchFilters.alue.includes(
-							(citiesAndDistrictsToSwedish as any)[
+							(citiesAndDistrictsMapSV as any)[
 								nursinghome.district
 							],
 						)
@@ -256,12 +347,10 @@ const PageReportsAdmin: FC = () => {
 						(!preselected.includes(nursinghome.district) &&
 							!preselected.includes(nursinghome.city)) &&
 						!preselected.includes(
-							(citiesAndDistrictsToFinnish as any)[
-								nursinghome.city
-							],
+							(citiesAndDistrictsMapFI as any)[nursinghome.city],
 						) &&
 						!preselected.includes(
-							(citiesAndDistrictsToSwedish as any)[
+							(citiesAndDistrictsMapSV as any)[
 								nursinghome.district
 							],
 						)
