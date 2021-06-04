@@ -312,7 +312,7 @@ export const translations = {
 	},
 	btnClear: { "fi-FI": "Tyhjennä", "sv-FI": "Rensa" },
 	btnSave: { "fi-FI": "Tallenna", "sv-FI": "Spara" },
-	btnSelect: { "fi-FI": "Valitse", "sv-FI": "Valitse" },
+	btnSelect: { "fi-FI": "Valitse", "sv-FI": "Välj" },
 	btnSend: { "fi-FI": "Lähetä", "sv-FI": "Skicka" },
 	summaryLabel: { "fi-FI": "hoivakotia", "sv-FI": "vårdhem" },
 	loadingText: { "fi-FI": "Ladataan...", "sv-FI": "Laddar..." },
