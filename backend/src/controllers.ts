@@ -291,6 +291,7 @@ export async function FindAndDeleteDuplicateNursingHomes(
 		},
 	);
 
+	//Keep the first occurance as the "original" nursing home
 	const duplicatesRequest = filteredUpdateKeys.slice(1);
 
 	if (duplicatesRequest && duplicatesRequest.length) {
