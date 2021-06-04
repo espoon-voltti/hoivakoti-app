@@ -453,24 +453,6 @@ export async function InsertNursingHomeToDB(
 				district: postal_code_to_district[nursingHome.postal_code],
 			});
 
-		const basicUpdateKey = hashWithSalt(
-			uuid,
-			process.env.ADMIN_PASSWORD as string,
-		).slice(0, 10);
-		await knex("NursingHomes").insert({
-			id: uuid,
-			...nursingHome,
-			geolocation: geoloc["features"][0],
-			district: postal_code_to_district[nursingHome.postal_code],
-			basic_update_key: basicUpdateKey,
-		});
-		if (nursingHome.city != "Espoo" && nursingHome.city != "Esbo") {
-			await knex.table("NursingHomeReports").insert({
-				nursinghome_id: uuid,
-				status: "no-info",
-			});
-		}
-
 		return uuid;
 	} else {
 		const uuid = hashWithSalt(
