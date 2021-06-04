@@ -176,6 +176,10 @@ const PageNursingHomes: FC = () => {
 
 	//City or district can appear in Finnish or Swedish regardless of the current language.
 	const citiesAndDistrictsMapFI: Translation = {
+		[getTranslationByLanguage("sv-FI", "espoo")]: getTranslationByLanguage(
+			"fi-FI",
+			"espoo",
+		),
 		[getTranslationByLanguage(
 			"sv-FI",
 			"espoon keskus",
@@ -278,6 +282,28 @@ const PageNursingHomes: FC = () => {
 		citiesAndDistrictsMapFI,
 	);
 
+	const languageMapFI: Translation = {
+		[getTranslationByLanguage(
+			"sv-FI",
+			"filterFinnish",
+		)]: getTranslationByLanguage("fi-FI", "filterFinnish"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"filterSwedish",
+		)]: getTranslationByLanguage("fi-FI", "filterSwedish"),
+	};
+
+	const araMapFI: Translation = {
+		[getTranslationByLanguage(
+			"sv-FI",
+			"filterYes",
+		)]: getTranslationByLanguage("fi-FI", "filterYes"),
+		[getTranslationByLanguage(
+			"sv-FI",
+			"filterNo",
+		)]: getTranslationByLanguage("fi-FI", "filterNo"),
+	};
+
 	const hasFilters = search !== "";
 	const isFilterDisabled = nursingHomes === null;
 
@@ -307,12 +333,16 @@ const PageNursingHomes: FC = () => {
 			const filteredNursingHomes:
 				| NursingHome[]
 				| null = nursingHomes.filter(nursinghome => {
-				if (searchFilters.alue && searchFilters.alue.length > 0) {
-					const notInCorrectArea =
-						!searchFilters.alue.includes(nursinghome.district) &&
-						!searchFilters.alue.includes(nursinghome.city);
+				if (searchFilters.alue) {
+					const nursingHomeInCorrectArea =
+						searchFilters.alue.includes(nursinghome.city) ||
+						searchFilters.alue.includes(nursinghome.district);
 
-					let notInCorrectAreaTranslation;
+					if (nursingHomeInCorrectArea) {
+						return true;
+					}
+
+					let nursingHomeInCorrectAreaTranslation;
 
 					if (currentLanguage === "sv-FI") {
 						const cityKey = Object.keys(
@@ -326,7 +356,7 @@ const PageNursingHomes: FC = () => {
 							);
 						});
 
-						notInCorrectAreaTranslation = !searchFilters.alue.includes(
+						nursingHomeInCorrectAreaTranslation = searchFilters.alue.includes(
 							cityKey as string,
 						);
 					} else {
@@ -341,39 +371,12 @@ const PageNursingHomes: FC = () => {
 							);
 						});
 
-						notInCorrectAreaTranslation = !searchFilters.alue.includes(
+						nursingHomeInCorrectAreaTranslation = searchFilters.alue.includes(
 							cityKey as string,
 						);
 					}
 
-					if (notInCorrectArea && notInCorrectAreaTranslation) {
-						return false;
-					}
-				}
-
-				const notCorrectLanguage =
-					searchFilters.language &&
-					nursinghome.language &&
-					!nursinghome.language.includes(searchFilters.language);
-
-				if (notCorrectLanguage) {
-					return false;
-				}
-
-				const notARADestination =
-					searchFilters.ara !== undefined &&
-					((nursinghome.ara === filterYes && !searchFilters.ara) ||
-						(nursinghome.ara === filterNo && searchFilters.ara));
-
-				if (notARADestination) {
-					return false;
-				}
-
-				const notLahDestination =
-					searchFilters.lah && nursinghome.lah !== searchFilters.lah;
-
-				if (notLahDestination) {
-					return false;
+					return nursingHomeInCorrectAreaTranslation;
 				}
 
 				if (searchFilters.kotikunta) {
@@ -404,9 +407,53 @@ const PageNursingHomes: FC = () => {
 						);
 					});
 
-					if (!inCorrectCommune) {
-						return false;
+					return inCorrectCommune;
+				}
+
+				if (searchFilters.language) {
+					let nursingHomeHasCorrectLanguage;
+
+					if (currentLanguage === "sv-FI") {
+						nursingHomeHasCorrectLanguage =
+							nursinghome.language &&
+							nursinghome.language.includes(
+								languageMapFI[searchFilters.language],
+							);
+					} else {
+						nursingHomeHasCorrectLanguage =
+							nursinghome.language &&
+							nursinghome.language.includes(
+								searchFilters.language,
+							);
 					}
+
+					return nursingHomeHasCorrectLanguage;
+				}
+
+				if (searchFilters.ara !== undefined) {
+					let nursingHomeIsARADestination;
+
+					if (currentLanguage === "sv-FI") {
+						nursingHomeIsARADestination =
+							nursinghome.ara !== null &&
+							searchFilters.ara === true &&
+							nursinghome.ara === araMapFI[filterYes];
+					} else {
+						nursingHomeIsARADestination =
+							nursinghome.ara !== null &&
+							searchFilters.ara === true &&
+							nursinghome.ara === filterYes;
+					}
+
+					return nursingHomeIsARADestination;
+				}
+
+				if (searchFilters.lah !== undefined) {
+					const nursingHomeHasLAH =
+						nursinghome.lah !== null &&
+						searchFilters.lah === nursinghome.lah;
+
+					return nursingHomeHasLAH;
 				}
 
 				return true;
