@@ -55,12 +55,13 @@ import {
 	RefreshToken as RefreshTokenDB,
 	LogoutAccessToken as LogoutAccessTokenDB,
 	BatchUpdateCustomerCommunes as BatchUpdateCustomerCommunesDB,
+	DeleteNursingHomeByUpdateKey,
 } from "./models";
 
 import { NursingHomesFromCSV, FetchAndSaveImagesFromCSV } from "./services";
+import { NursingHome } from "./nursinghome-typings";
 import Knex = require("knex");
 import { Context } from "koa";
-import { NursingHome } from "./nursinghome-typings";
 
 export async function AddNursingHome(ctx: any): Promise<string> {
 	await InsertNursingHomeToDB({
@@ -226,6 +227,99 @@ export async function DeleteNursingHome(ctx: any): Promise<number | null> {
 	const result = await DeleteNursingHomeDB(id);
 	await DeleteNursingHomePics(id);
 	return result;
+}
+
+export async function FindAndDeleteDuplicateNursingHomes(
+	ctx: any,
+): Promise<any> {
+	const adminPw = process.env.ADMIN_PASSWORD;
+
+	const { adminPassword } = ctx.request.body;
+
+	const hasPassword = !!adminPassword;
+
+	if (!hasPassword) {
+		ctx.response.status = 403;
+
+		return {
+			error: "Credentials are required!",
+		};
+	}
+
+	const isValidPassword =
+		typeof adminPw === "string" &&
+		adminPw.length > 0 &&
+		adminPassword === adminPw;
+
+	if (!isValidPassword) {
+		ctx.response.status = 401;
+
+		return {
+			error: "Invalid credentials!",
+		};
+	}
+
+	const nursingHomesById = await GetNursingHomeDB(ctx.params.id);
+
+	const hasDuplicates =
+		nursingHomesById.length && nursingHomesById.length > 1;
+
+	if (!hasDuplicates) {
+		ctx.response.status = 404;
+
+		return { message: "No duplicates found. No further actions needed." };
+	}
+
+	const basicUpdateKeys = nursingHomesById.map((nursingHome: any) => {
+		return {
+			basicUpdateKey: nursingHome.basic_update_key,
+			id: nursingHome.id,
+			deleted: false,
+		};
+	});
+
+	//Remove items with duplicate update keys
+	const seen: string[] = [];
+
+	const filteredUpdateKeys = basicUpdateKeys.filter(
+		(basicUpdateItem: any) => {
+			if (!seen.includes(basicUpdateItem.basicUpdateKey)) {
+				seen.push(basicUpdateItem.basicUpdateKey);
+
+				return basicUpdateItem;
+			}
+		},
+	);
+
+	//Keep the first occurance as the "original" nursing home
+	const duplicatesRequest = filteredUpdateKeys.slice(1);
+
+	if (duplicatesRequest && duplicatesRequest.length) {
+		await Promise.all(
+			duplicatesRequest.map(async (basicUpdateItem: any) => {
+				const removeNursingHomeSuccess = await DeleteNursingHomeByUpdateKey(
+					basicUpdateItem.id,
+					basicUpdateItem.basicUpdateKey,
+				);
+
+				basicUpdateItem.deleted = removeNursingHomeSuccess;
+
+				return basicUpdateItem;
+			}),
+		);
+
+		if (duplicatesRequest && duplicatesRequest.length) {
+			return { items: duplicatesRequest };
+		} else {
+			return { message: "No items removed" };
+		}
+	} else {
+		ctx.response.status = 404;
+
+		return {
+			message: "Was not able to find duplicates with unique fields.",
+		};
+	}
 }
 
 export async function UpdateNursingHomeInformation(

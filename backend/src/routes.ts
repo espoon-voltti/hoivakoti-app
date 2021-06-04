@@ -49,6 +49,7 @@ import {
 	LogoutKeycloakAccessToken,
 	BatchUpdateCustomerCommunes,
 	RemoveNursingHomeSurveyQuestion,
+	FindAndDeleteDuplicateNursingHomes,
 } from "./controllers";
 import config from "./config";
 
@@ -113,6 +114,10 @@ router.get("/api/nursing-homes/:id", async ctx => {
 
 router.del("/api/nursing-homes/:id", async ctx => {
 	ctx.body = await DeleteNursingHome(ctx);
+});
+
+router.del("/api/nursing-homes/remove-duplicates/:id", async ctx => {
+	ctx.body = await FindAndDeleteDuplicateNursingHomes(ctx);
 });
 
 router.post("/api/nursing-homes/:id/update/:key", async ctx => {
