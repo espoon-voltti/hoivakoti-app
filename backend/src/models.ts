@@ -1032,6 +1032,24 @@ export async function DeleteNursingHome(id: string): Promise<number> {
 	return result;
 }
 
+export async function DeleteNursingHomeByUpdateKey(
+	id: string,
+	updateId: string,
+): Promise<boolean> {
+	const result = await knex("NursingHomes")
+		.where({
+			id: id,
+			basic_update_key: updateId,
+		})
+		.del();
+
+	if (result < 1) {
+		return false;
+	}
+
+	return true;
+}
+
 export async function UpdateNursingHomeInformation(
 	id: string,
 	basicUpdateKey: string,
