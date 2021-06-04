@@ -176,6 +176,10 @@ const PageNursingHomes: FC = () => {
 
 	//City or district can appear in Finnish or Swedish regardless of the current language.
 	const citiesAndDistrictsMapFI: Translation = {
+		[getTranslationByLanguage("sv-FI", "espoo")]: getTranslationByLanguage(
+			"fi-FI",
+			"espoo",
+		),
 		[getTranslationByLanguage(
 			"sv-FI",
 			"espoon keskus",
@@ -330,31 +334,49 @@ const PageNursingHomes: FC = () => {
 				| NursingHome[]
 				| null = nursingHomes.filter(nursinghome => {
 				if (searchFilters.alue) {
-					let nursingHomeInCorrectArea;
+					const nursingHomeInCorrectArea =
+						searchFilters.alue.includes(nursinghome.city) ||
+						searchFilters.alue.includes(nursinghome.district);
 
-					if (currentLanguage === "sv-FI") {
-						nursingHomeInCorrectArea =
-							searchFilters.alue.includes(nursinghome.city) ||
-							searchFilters.alue.includes(nursinghome.district) ||
-							searchFilters.alue.includes(
-								citiesAndDistrictsMapFI[nursinghome.city],
-							) ||
-							searchFilters.alue.includes(
-								citiesAndDistrictsMapFI[nursinghome.district],
-							);
-					} else {
-						nursingHomeInCorrectArea =
-							searchFilters.alue.includes(nursinghome.city) ||
-							searchFilters.alue.includes(nursinghome.district) ||
-							searchFilters.alue.includes(
-								citiesAndDistrictsMapSV[nursinghome.city],
-							) ||
-							searchFilters.alue.includes(
-								citiesAndDistrictsMapSV[nursinghome.district],
-							);
+					if (nursingHomeInCorrectArea) {
+						return true;
 					}
 
-					return nursingHomeInCorrectArea;
+					let nursingHomeInCorrectAreaTranslation;
+
+					if (currentLanguage === "sv-FI") {
+						const cityKey = Object.keys(
+							citiesAndDistrictsMapFI,
+						).find(translation => {
+							return (
+								citiesAndDistrictsMapFI[translation] ===
+									nursinghome.city ||
+								citiesAndDistrictsMapFI[translation] ===
+									nursinghome.district
+							);
+						});
+
+						nursingHomeInCorrectAreaTranslation = searchFilters.alue.includes(
+							cityKey as string,
+						);
+					} else {
+						const cityKey = Object.keys(
+							citiesAndDistrictsMapSV,
+						).find(translation => {
+							return (
+								citiesAndDistrictsMapSV[translation] ===
+									nursinghome.city ||
+								citiesAndDistrictsMapSV[translation] ===
+									nursinghome.district
+							);
+						});
+
+						nursingHomeInCorrectAreaTranslation = searchFilters.alue.includes(
+							cityKey as string,
+						);
+					}
+
+					return nursingHomeInCorrectAreaTranslation;
 				}
 
 				if (searchFilters.kotikunta) {
