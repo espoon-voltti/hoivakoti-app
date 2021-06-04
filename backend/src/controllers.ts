@@ -265,6 +265,8 @@ export async function FindAndDeleteDuplicateNursingHomes(
 		nursingHomesById.length && nursingHomesById.length > 1;
 
 	if (!hasDuplicates) {
+		ctx.response.status = 404;
+
 		return { message: "No duplicates found. No further actions needed." };
 	}
 
@@ -276,23 +278,46 @@ export async function FindAndDeleteDuplicateNursingHomes(
 		};
 	});
 
-	if (basicUpdateKeys && basicUpdateKeys.length) {
-		const duplicateRequest = basicUpdateKeys.slice(1);
+	//Remove items with duplicate update keys
+	const seen: string[] = [];
 
+	const filteredUpdateKeys = basicUpdateKeys.filter(
+		(basicUpdateItem: any) => {
+			if (!seen.includes(basicUpdateItem.basicUpdateKey)) {
+				seen.push(basicUpdateItem.basicUpdateKey);
+
+				return basicUpdateItem;
+			}
+		},
+	);
+
+	const duplicatesRequest = filteredUpdateKeys.slice(1);
+
+	if (duplicatesRequest && duplicatesRequest.length) {
 		await Promise.all(
-			duplicateRequest.map(async (basicUpdateItem: any) => {
-				const removeNursingSuccess = await DeleteNursingHomeByUpdateKey(
+			duplicatesRequest.map(async (basicUpdateItem: any) => {
+				const removeNursingHomeSuccess = await DeleteNursingHomeByUpdateKey(
 					basicUpdateItem.id,
 					basicUpdateItem.basicUpdateKey,
 				);
 
-				basicUpdateItem.deleted = removeNursingSuccess;
+				basicUpdateItem.deleted = removeNursingHomeSuccess;
 
 				return basicUpdateItem;
 			}),
 		);
 
-		return duplicateRequest;
+		if (duplicatesRequest && duplicatesRequest.length) {
+			return { items: duplicatesRequest };
+		} else {
+			return { message: "No items removed" };
+		}
+	} else {
+		ctx.response.status = 404;
+
+		return {
+			message: "Was not able to find duplicates with unique fields.",
+		};
 	}
 }
 

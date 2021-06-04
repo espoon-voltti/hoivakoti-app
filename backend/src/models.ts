@@ -444,16 +444,14 @@ export async function InsertNursingHomeToDB(
 	const existing_id = await GetNursingHomeIDFromName(nursingHome.name);
 	// Nursing home with this name already exists
 	if (existing_id.length > 0) {
-		// const uuid = existing_id[0].id;
-		// await knex("NursingHomes")
-		// 	.where({ id: uuid })
-		// 	.update({
-		// 		...nursingHome,
-		// 		geolocation: geoloc["features"][0],
-		// 		district: postal_code_to_district[nursingHome.postal_code],
-		// 	});
-
 		const uuid = existing_id[0].id;
+		await knex("NursingHomes")
+			.where({ id: uuid })
+			.update({
+				...nursingHome,
+				geolocation: geoloc["features"][0],
+				district: postal_code_to_district[nursingHome.postal_code],
+			});
 
 		const basicUpdateKey = hashWithSalt(
 			uuid,
