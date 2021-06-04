@@ -1686,25 +1686,6 @@ export async function addDummyNursingHome(): Promise<string> {
 		Commune.EPO,
 	]);
 
-	const duplicateNursingHome: NursingHome = {
-		name: "Testi 1",
-		owner: "Omistaja 1",
-		postal_code: "00010",
-		city: "Espoo",
-		address: "Tie 1",
-		language: "Suomi",
-		tour_info:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus egestas efficitur. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem. Nunc iaculis, lorem id iaculis suscipit, nisl mauris elementum sem.",
-	};
-
-	const testDuplicateNursingHomeId = await InsertNursingHomeToDB(
-		duplicateNursingHome,
-	);
-
-	await UpdateCustomerCommunesForNursingHome(testDuplicateNursingHomeId, [
-		Commune.EPO,
-	]);
-
 	const nursinghome2: NursingHome = {
 		name: "Testi 2 Nursinghome with a very long name",
 		owner: "Omistaja 2",
