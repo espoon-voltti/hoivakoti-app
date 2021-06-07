@@ -338,10 +338,6 @@ const PageNursingHomes: FC = () => {
 						searchFilters.alue.includes(nursinghome.city) ||
 						searchFilters.alue.includes(nursinghome.district);
 
-					if (nursingHomeInCorrectArea) {
-						return true;
-					}
-
 					let nursingHomeInCorrectAreaTranslation;
 
 					if (currentLanguage === "sv-FI") {
@@ -376,7 +372,12 @@ const PageNursingHomes: FC = () => {
 						);
 					}
 
-					return nursingHomeInCorrectAreaTranslation;
+					if (
+						!nursingHomeInCorrectArea &&
+						!nursingHomeInCorrectAreaTranslation
+					) {
+						return false;
+					}
 				}
 
 				if (searchFilters.kotikunta) {
@@ -407,7 +408,9 @@ const PageNursingHomes: FC = () => {
 						);
 					});
 
-					return inCorrectCommune;
+					if (!inCorrectCommune) {
+						return false;
+					}
 				}
 
 				if (searchFilters.language) {
@@ -427,7 +430,9 @@ const PageNursingHomes: FC = () => {
 							);
 					}
 
-					return nursingHomeHasCorrectLanguage;
+					if (!nursingHomeHasCorrectLanguage) {
+						return false;
+					}
 				}
 
 				if (searchFilters.ara !== undefined) {
@@ -435,17 +440,23 @@ const PageNursingHomes: FC = () => {
 
 					if (currentLanguage === "sv-FI") {
 						nursingHomeIsARADestination =
-							nursinghome.ara !== null &&
-							searchFilters.ara === true &&
-							nursinghome.ara === araMapFI[filterYes];
+							(nursinghome.ara === araMapFI[filterYes] &&
+								searchFilters.ara) ||
+							(nursinghome.ara === araMapFI[filterNo] &&
+								!searchFilters.ara) ||
+							(nursinghome.ara === null && !searchFilters.ara);
 					} else {
 						nursingHomeIsARADestination =
-							nursinghome.ara !== null &&
-							searchFilters.ara === true &&
-							nursinghome.ara === filterYes;
+							(nursinghome.ara === filterYes &&
+								searchFilters.ara) ||
+							(nursinghome.ara === filterNo &&
+								!searchFilters.ara) ||
+							(nursinghome.ara === null && !searchFilters.ara);
 					}
 
-					return nursingHomeIsARADestination;
+					if (!nursingHomeIsARADestination) {
+						return false;
+					}
 				}
 
 				if (searchFilters.lah !== undefined) {
@@ -453,7 +464,9 @@ const PageNursingHomes: FC = () => {
 						nursinghome.lah !== null &&
 						searchFilters.lah === nursinghome.lah;
 
-					return nursingHomeHasLAH;
+					if (!nursingHomeHasLAH) {
+						return false;
+					}
 				}
 
 				return true;
